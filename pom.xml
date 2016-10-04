@@ -71,6 +71,9 @@
   </properties>
 
   <build>
+  	<finalName>tams</finalName>
+  	<directory>${user.home}/apache-tomcat/webapps</directory>
+  	
     <resources>
       <resource>
         <directory>src/main/resources</directory>

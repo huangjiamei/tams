@@ -3,8 +3,9 @@
  *
  * @author 洪明坚
  */
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.UT;
 
+import cn.edu.cqu.ngtl.dataobject.CM.CMProgram;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
@@ -28,32 +29,14 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 	@GeneratedValue(generator="utDepartmentSeq")
     @SequenceGenerator(name="utDepartmentSeq",sequenceName="UNITIME_DEPARTMENT_S",allocationSize=1)
 	private Integer id;
-	public Integer getId() {
-		return this.id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	@Column(name = "NAME")
 	@Label("name")
 	private String name;
-	public String getName() {
-		return this.name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Column(name = "CODE")
 	@Label("code")
 	private String deptcode;
-	public String getDeptcode() {
-		return this.deptcode;
-	}
-	public void setDeptcode(String deptcode) {
-		this.deptcode = deptcode;
-	}
 
 	@Column(name = "SHORTNAME")
 	private String shortName;
@@ -73,44 +56,79 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 	@OneToMany(mappedBy="department")
 	private List<UTInstructor> utInstructors;
 	
-	public List<CMProgram> getPrograms() {
-		return this.programs;
-	}
-	public void setPrograms(List<CMProgram> programs) {
-		this.programs = programs;
-	}
-	
 	@OneToMany(mappedBy="department")
 	@JsonIgnore
 	private List<UTStudent> students;
-	public List<UTStudent> getStudents() {
-		return this.students;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setStudents(List<UTStudent> students) {
-		this.students = students;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDeptcode() {
+		return deptcode;
+	}
+
+	public void setDeptcode(String deptcode) {
+		this.deptcode = deptcode;
+	}
+
 	public String getShortName() {
 		return shortName;
 	}
+
 	public void setShortName(String shortName) {
 		this.shortName = shortName;
 	}
+
 	public String getUniversityId() {
 		return universityId;
 	}
+
 	public void setUniversityId(String universityId) {
 		this.universityId = universityId;
 	}
+
 	public UTUniversity getUtUniversity() {
 		return utUniversity;
 	}
+
 	public void setUtUniversity(UTUniversity utUniversity) {
 		this.utUniversity = utUniversity;
 	}
+
+	public List<CMProgram> getPrograms() {
+		return programs;
+	}
+
+	public void setPrograms(List<CMProgram> programs) {
+		this.programs = programs;
+	}
+
 	public List<UTInstructor> getUtInstructors() {
 		return utInstructors;
 	}
+
 	public void setUtInstructors(List<UTInstructor> utInstructors) {
 		this.utInstructors = utInstructors;
+	}
+
+	public List<UTStudent> getStudents() {
+		return students;
+	}
+
+	public void setStudents(List<UTStudent> students) {
+		this.students = students;
 	}
 }

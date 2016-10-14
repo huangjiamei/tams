@@ -3,7 +3,7 @@
  *
  * @author 洪明坚
  */
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
@@ -25,40 +25,16 @@ public class UTBuilding extends DataObjectBase implements Serializable {
 	@Id
 	@Column(name = "UNIQUEID")
 	private Integer id;
-	public Integer getId() {
-		return this.id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
 
 	@Column(name = "NAME")
 	@Label("name")
 	private String name;
-	public String getName() {
-		return this.name;
-	}
-	public void setName(String name) {
-		this.name = name;
-	}
 
 	@Column(name = "COORDINATE_X")
 	private String gpsX;
-	public String getGpsX() {
-		return this.gpsX;
-	}
-	public void setGpsX(String gpsX) {
-		this.gpsX = gpsX;
-	}
 
 	@Column(name = "COORDINATE_Y")
 	private String gpsY;
-	public String getGpsY() {
-		return this.gpsY;
-	}
-	public void setGpsY(String gpsY) {
-		this.gpsY = gpsY;
-	}
 
 	@Column(name="CAMPUS_ID")
 	private Integer campusId;
@@ -70,22 +46,60 @@ public class UTBuilding extends DataObjectBase implements Serializable {
 	@OneToMany(mappedBy="building")
 	@JsonIgnore
 	private List<UTRoom> rooms;
-	public List<UTRoom> getRooms() {
-		return this.rooms;
+
+	public Integer getId() {
+		return id;
 	}
-	public void setRooms(List<UTRoom> rooms) {
-		this.rooms = rooms;
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGpsX() {
+		return gpsX;
+	}
+
+	public void setGpsX(String gpsX) {
+		this.gpsX = gpsX;
+	}
+
+	public String getGpsY() {
+		return gpsY;
+	}
+
+	public void setGpsY(String gpsY) {
+		this.gpsY = gpsY;
+	}
+
 	public Integer getCampusId() {
 		return campusId;
 	}
+
 	public void setCampusId(Integer campusId) {
 		this.campusId = campusId;
 	}
+
 	public UTCampus getUtCampus() {
 		return utCampus;
 	}
+
 	public void setUtCampus(UTCampus utCampus) {
 		this.utCampus = utCampus;
+	}
+
+	public List<UTRoom> getRooms() {
+		return rooms;
+	}
+
+	public void setRooms(List<UTRoom> rooms) {
+		this.rooms = rooms;
 	}
 }

@@ -5,7 +5,7 @@
  * @author Bill
  *
  */
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
@@ -57,6 +57,5 @@ public class UTUniversity extends DataObjectBase implements Serializable {
 	public void setCode(String code) {
 		this.code = code;
 	}
-
 
 }

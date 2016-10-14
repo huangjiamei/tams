@@ -106,6 +106,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageClassInfo" p:title="zhuye">
+                    <property name="items">
+                        <list>
+                            <ref bean="ClassInfoPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

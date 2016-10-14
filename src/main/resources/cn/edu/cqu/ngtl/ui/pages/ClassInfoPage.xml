@@ -68,123 +68,57 @@
                 </bean>
 
                 <!--body-->
-                <bean parent="Uif-VerticalBoxSection">
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="box box-info">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-info">
+                                              p:additionalCssClasses="">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
+                                                    <bean parent="Uif-GridGroup"
+                                                          p:layoutManager.renderRowFirstCellHeader="false">
+                                                        <property name="layoutManager.numberOfColumns" value="4"/>
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-search"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="任务列表"
-                                                                      p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="复制"
-                                                                      p:methodToCall="exportApplicantExcel"
-                                                                      p:style="float:right!important;font-size:14px; margin-right: 10px;background=forestgreen!important;"
-                                                                      p:additionalCssClasses="bg-success"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean id="taskListTable"
-                                                                      parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="12">
-                                                                    <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
-                                                                    <!--<property name="headerText" value="Table Layout" />-->
-                                                                    <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
-                                                                    <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
-                                                                    <property name="layoutManager.richTable.render" value="true"/>
-
-                                                                    <!--打开useServerPaging会报js error？？-->
-                                                                    <!--<property name="useServerPaging" value="true" />-->
-
-                                                                    <property name="renderAddLine" value="false"/>
-                                                                    <property name="renderLineActions" value="true"/>
-                                                                    <!--<property name="readOnly" value="true"/>-->
-
-
-                                                                    <!--<property name="layoutManager.richTable.templateOptions">-->
-                                                                    <!--<map merge="true">-->
-                                                                    <!--<entry key="sDom" value="&lt;'top't&gt;&lt;'bottom'ilp&gt;"/>-->
-                                                                    <!--<entry key="sPaginationType" value="full_numbers"/>-->
-                                                                    <!--</map>-->
-                                                                    <!--</property>-->
-                                                                    <property name="disclosure.render" value="false"/>
-
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-InputField" p:label="  "
-                                                                                  p:propertyName="check1">
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-CheckboxControl"/>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-DataField" p:label="编号"
-                                                                                  p:propertyName="field1"/>
-                                                                            <bean parent="Uif-DataField" p:label="主题"
-                                                                                  p:propertyName="field2"
-                                                                                  p:sortAs="numeric"/>
-                                                                            <bean parent="Uif-DataField" p:label="类型"
-                                                                                  p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="描述"
-                                                                                  p:propertyName="field3"
-                                                                                  p:sortAs="kuali_date"/>
-                                                                            <bean parent="Uif-DataField" p:label="作者"
-                                                                                  p:propertyName="field4"/>
-                                                                            <bean parent="Uif-DataField" p:label="指派给"
-                                                                                  p:propertyName="field4"/>
-                                                                            <bean parent="Uif-DataField" p:label="更新于"
-                                                                                  p:propertyName="date1"/>
-                                                                            <bean parent="Uif-DataField" p:label="开始时间"
-                                                                                  p:propertyName="date1"/>
-                                                                            <bean parent="Uif-DataField" p:label="完成时间"
-                                                                                  p:propertyName="date1"/>
-                                                                            <bean parent="Uif-DataField" p:label="学时"
-                                                                                  p:propertyName="field4"/>
-                                                                            <bean parent="Uif-DataField" p:label="%完成"
-                                                                                  p:propertyName="field4"/>
-                                                                            <bean parent="Uif-DataField" p:label="耗时"
-                                                                                  p:propertyName="field4"/>
-                                                                        </list>
-                                                                    </property>
-                                                                    <property name="lineActions">
-                                                                        <list>
-                                                                            <bean parent="Uif-HorizontalBoxSection">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-ActionImage"
-                                                                                              p:methodToCall="deleteApplicant">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-ActionImage"
-                                                                                              p:methodToCall="deleteApplicant">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="课程名称" p:colSpan="3"
+                                                                      p:fieldLabel.colSpan="1" p:messageText="高等数学"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="课程编号" p:messageText="MATH12"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="课程类别" p:messageText="公共基础"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="学时" p:messageText="64"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="学分" p:messageText="5.0 "/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="必修/选修" p:messageText="必修"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="授课年级/专业" p:messageText="软件工程2014级"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="所属学院" p:messageText="数统学院"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="授课年级/专业" p:messageText="？？？？？"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="教学班号" p:messageText="001"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="上课教师人数" p:messageText="1"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="上课教师" p:messageText="阴文革"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="选课人数" p:messageText="400"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="拟配备的助教数" p:messageText="1"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="助教预计工时" p:messageText="40"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="成绩评定方式" p:messageText=" "/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:label="平时成绩占考试成绩比例" p:messageText="40%"/>
                                                             </list>
                                                         </property>
                                                     </bean>

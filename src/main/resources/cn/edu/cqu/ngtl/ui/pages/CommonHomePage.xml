@@ -65,7 +65,7 @@
                         <list>
                             <!--左半部分 个人信息-->
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="col-lg-3">
+                                  p:additionalCssClasses="col-lg-4">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"

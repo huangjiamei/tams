@@ -40,7 +40,6 @@ public class TestController extends UifControllerBase{
     public ModelAndView getTeacherCoursePage(@ModelAttribute("KualiForm") UifFormBase form){
         TestForm testForm=(TestForm) form;
 
-//        return this.getModelAndView(testForm, "pageApplyForTaForm");
         return this.getModelAndView(testForm, "pageCourseTeacher");
     }
 
@@ -54,13 +53,18 @@ public class TestController extends UifControllerBase{
     public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form){
         TestForm testForm=(TestForm) form;
         return this.getModelAndView(testForm, "pageCommonHome");
-//        return this.getModelAndView(testForm, "pageTaskList");
     }
 
     @RequestMapping(params = "methodToCall=getTaskListPage")
     public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form){
         TestForm testForm=(TestForm) form;
         return this.getModelAndView(testForm, "pageTaskList");
+    }
+
+    @RequestMapping(params = "methodToCall=getClassInfo")
+    public ModelAndView getClassInfo(@ModelAttribute("KualiForm") UifFormBase form){
+        TestForm testForm=(TestForm) form;
+        return this.getModelAndView(testForm, "pageClassInfo");
     }
 
     @Override

@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;

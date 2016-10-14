@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.UT;
 
 /**
  * 学生的dataobject，通过JPA与数据库关联
@@ -6,6 +6,7 @@ package cn.edu.cqu.ngtl.dataobject;
  * @author 洪明坚
  */
 
+import cn.edu.cqu.ngtl.dataobject.CM.CMProgram;
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
 import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
@@ -28,6 +29,7 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	
 	@Column(name = "PROGRAM2_ID")
 	private Integer program2Id;
+
 	@Column(name = "PROGRAMF_ID")
 	private Integer programfId;
 	
@@ -41,12 +43,6 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="PROGRAM_ID", insertable = false, updatable = false)
 	private CMProgram program;
-	public CMProgram getProgram() {
-		return this.program;
-	}
-	public void setProgram(CMProgram program) {
-		this.program = program;
-	}
 	
 	@Column(name = "GENDER")
 	@Label("gender")
@@ -71,12 +67,6 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="DEPARTMENT_ID",insertable = false, updatable = false)
 	private UTDepartment department;
-	public UTDepartment getDepartment() {
-		return this.department;
-	}
-	public void setDepartment(UTDepartment department) {
-		this.department = department;
-	}
 	
 	@Column(name = "GRADE")
 	@Label("grade")
@@ -105,132 +95,168 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	@Column(name = "ENROLLED")
 	@Label("ENROLLED")
 	private String enrolled;
-	
-	public String getEnrolled() {
-		return enrolled;
-	}
-	public void setEnrolled(String enrolled) {
-		this.enrolled = enrolled;
-	}
-	
-	
-	public String getEmail() {
-		return email;
-	}
-	public void setEmail(String email) {
-		this.email = email;
-	}
 
 	@OneToOne
 	@JoinColumn(name="CAMPUS_ID",insertable = false, updatable = false)
 	private UTCampus utCampus;
-	
-	public String getGrade() {
-		return this.grade;
+
+	public String getId() {
+		return id;
 	}
-	public void setGrade(String grade) {
-		this.grade = grade;
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public Integer getProgram2Id() {
+		return program2Id;
+	}
+
+	public void setProgram2Id(Integer program2Id) {
+		this.program2Id = program2Id;
+	}
+
+	public Integer getProgramfId() {
+		return programfId;
+	}
+
+	public void setProgramfId(Integer programfId) {
+		this.programfId = programfId;
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
 
 	public Integer getProgramId() {
-		return this.programId;
+		return programId;
 	}
+
 	public void setProgramId(Integer programId) {
 		this.programId = programId;
 	}
-	public Integer getProgram2Id() {
-		return this.program2Id;
+
+	public CMProgram getProgram() {
+		return program;
 	}
-	public void setProgram2Id(Integer program2Id) {
-		this.program2Id = program2Id;
+
+	public void setProgram(CMProgram program) {
+		this.program = program;
 	}
-	public Integer getProgramfId() {
-		return this.programfId;
-	}
-	public void setProgramfId(Integer programfId) {
-		this.programfId = programfId;
-	}
-	public String getIdNumber() {
-		return idNumber;
-	}
-	public void setIdNumber(String idNumber) {
-		this.idNumber = idNumber;
-	}
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+
 	public String getGender() {
 		return gender;
 	}
+
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
-	public Integer getDepartmentId() {
-		return departmentId;
-	}
-	public void setDepartmentId(Integer departmentId) {
-		this.departmentId = departmentId;
-	}
-	public String getVirtual() {
-		return virtual;
-	}
-	public void setVirtual(String virtual) {
-		this.virtual = virtual;
-	}
+
 	public String getIdType() {
 		return idType;
 	}
+
 	public void setIdType(String idType) {
 		this.idType = idType;
 	}
-	public String getAdminunit() {
-		return adminunit;
+
+	public String getIdNumber() {
+		return idNumber;
 	}
-	public void setAdminunit(String adminunit) {
-		this.adminunit = adminunit;
+
+	public void setIdNumber(String idNumber) {
+		this.idNumber = idNumber;
 	}
-	public String getAdmission() {
-		return admission;
-	}
-	public void setAdmission(String admission) {
-		this.admission = admission;
-	}
+
 	public String getAuthId() {
 		return authId;
 	}
+
 	public void setAuthId(String authId) {
 		this.authId = authId;
 	}
+
+	public Integer getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(Integer departmentId) {
+		this.departmentId = departmentId;
+	}
+
+	public UTDepartment getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(UTDepartment department) {
+		this.department = department;
+	}
+
+	public String getGrade() {
+		return grade;
+	}
+
+	public void setGrade(String grade) {
+		this.grade = grade;
+	}
+
+	public String getVirtual() {
+		return virtual;
+	}
+
+	public void setVirtual(String virtual) {
+		this.virtual = virtual;
+	}
+
+	public String getAdmission() {
+		return admission;
+	}
+
+	public void setAdmission(String admission) {
+		this.admission = admission;
+	}
+
+	public String getAdminunit() {
+		return adminunit;
+	}
+
+	public void setAdminunit(String adminunit) {
+		this.adminunit = adminunit;
+	}
+
 	public Integer getCampusId() {
 		return campusId;
 	}
-	
+
 	public void setCampusId(Integer campusId) {
 		this.campusId = campusId;
 	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEnrolled() {
+		return enrolled;
+	}
+
+	public void setEnrolled(String enrolled) {
+		this.enrolled = enrolled;
+	}
+
 	public UTCampus getUtCampus() {
 		return utCampus;
 	}
+
 	public void setUtCampus(UTCampus utCampus) {
 		this.utCampus = utCampus;
-	}
-	
-	@Override
-	public String toString() {
-		return "UTStudent [id=" + id + ", program2Id=" + program2Id + ", programfId=" + programfId + ", name=" + name
-				+ ", programId=" + programId + ", program=" + program + ", gender=" + gender + ", idType=" + idType
-				+ ", idNumber=" + idNumber + ", authId=" + authId + ", departmentId=" + departmentId + ", department="
-				+ department + ", grade=" + grade + ", virtual=" + virtual + ", admission=" + admission + ", adminunit="
-				+ adminunit + ", campusId=" + campusId + ", email=" + email + ", utCampus=" + utCampus + "]";
 	}
 }

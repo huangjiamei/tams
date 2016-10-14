@@ -3,13 +3,12 @@
  *
  * @author 洪明坚
  */
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
 
 import javax.persistence.*;
-import java.beans.Transient;
 import java.io.Serializable;
 
 @Entity
@@ -59,20 +58,6 @@ public class UTInstructor extends DataObjectBase implements Serializable {
 	@JoinColumn(name="DEPARTMENT_ID",insertable = false, updatable = false)
 	private UTDepartment department;
 
-	@Override
-	@Transient
-	public String toString()
-	{
-		if(this.name==null)
-			return "名称为空";
-		else if(this.department==null)
-			return "学院为空"+" 姓名:" + this.name +" 身份认证号：" + this.getIdNumber();
-		else if(this.getIdNumber()==null)
-			return "身份认证号为空";
-		else
-			return "姓名:" + this.name + ", 学院:" + this.department.getName()+" 身份认证号：" + this.getIdNumber();
-	}
-	
 	public String getId() {
 		return id;
 	}

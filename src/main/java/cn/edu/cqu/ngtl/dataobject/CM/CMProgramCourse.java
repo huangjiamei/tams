@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.dataobject;
+package cn.edu.cqu.ngtl.dataobject.CM;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
@@ -126,7 +126,5 @@ public class CMProgramCourse extends DataObjectBase implements Serializable {
     }
 
     /** End of Setter and Getter **/
-
-    /** Addition functions **/
 
 }

@@ -27,22 +27,40 @@ public class TestController extends UifControllerBase{
         return this.getModelAndView(testForm, "pageTest1");
     }
 
-    @RequestMapping(params = "methodToCall=getTeacherCoursePage")
-    public ModelAndView getDivPage(@ModelAttribute("KualiForm") UifFormBase form){
-        TestForm testForm=(TestForm) form;
-        return this.getModelAndView(testForm, "pageCourseTeacher");
-    }
-
     @RequestMapping(params = "methodToCall=getDatatablePage")
     public ModelAndView getDatatablePage(@ModelAttribute("KualiForm") UifFormBase form){
         TestForm testForm=(TestForm) form;
         return this.getModelAndView(testForm, "pageDatatable");
     }
 
+
+
+
+    @RequestMapping(params = "methodToCall=getTeacherCoursePage")
+    public ModelAndView getTeacherCoursePage(@ModelAttribute("KualiForm") UifFormBase form){
+        TestForm testForm=(TestForm) form;
+
+//        return this.getModelAndView(testForm, "pageApplyForTaForm");
+        return this.getModelAndView(testForm, "pageCourseTeacher");
+    }
+
+    @RequestMapping(params = "methodToCall=getApplyTAPage")
+    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form){
+        TestForm testForm=(TestForm) form;
+        return this.getModelAndView(testForm, "pageApplyForTaForm");
+    }
+
     @RequestMapping(params = "methodToCall=getCommonHome")
     public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form){
         TestForm testForm=(TestForm) form;
         return this.getModelAndView(testForm, "pageCommonHome");
+//        return this.getModelAndView(testForm, "pageTaskList");
+    }
+
+    @RequestMapping(params = "methodToCall=getTaskListPage")
+    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form){
+        TestForm testForm=(TestForm) form;
+        return this.getModelAndView(testForm, "pageTaskList");
     }
 
     @Override

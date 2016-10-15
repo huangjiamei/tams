@@ -221,8 +221,6 @@
                                                                       p:propertyName="field4"/>
                                                                 <bean parent="Uif-DataField" p:label="上课教师数"
                                                                       p:propertyName="field4"/>
-
-
                                                             </list>
                                                         </property>
                                                         <property name="lineActions">
@@ -230,17 +228,16 @@
                                                                 <bean parent="Uif-VerticalBoxSection">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-ActionImage"
-                                                                                  p:methodToCall="deleteApplicant">
-                                                                                <property name="confirmationDialog">
-                                                                                    <ref bean="applicantDeleteConfirmationDialog"/>
-                                                                                </property>
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>
-                                                                                </property>
-                                                                            </bean>
-
+                                                                            <bean parent="Uif-PrimaryActionButton"  p:actionLabel="查看"
+                                                                                  p:methodToCall="getTaskListDetail"/>
+                                                                            <!--<bean parent="Uif-ActionImage"-->
+                                                                                  <!--p:methodToCall="getTaskListDetail"-->
+                                                                                  <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->
+                                                                                <!--<property name="actionImage">-->
+                                                                                    <!--<bean parent="Uif-Image"-->
+                                                                                          <!--p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -256,9 +253,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean id="getTaskDetailBtn" parent="Uif-PrimaryActionButton"
+                      p:actionLabel="查看任务详情，此按钮隐藏" p:navigateToPageId="pageTaskList"
+                      p:style="display:none" />
             </list>
         </property>
     </bean>
+
 
     <bean id="applicantDeleteConfirmationDialog" parent="Uif-DialogGroup">
         <property name="headerText" value="警告："/>

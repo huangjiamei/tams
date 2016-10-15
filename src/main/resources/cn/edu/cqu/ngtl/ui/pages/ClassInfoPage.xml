@@ -78,7 +78,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info">
+                                  p:additionalCssClasses="box box-info  col-lg-5">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"

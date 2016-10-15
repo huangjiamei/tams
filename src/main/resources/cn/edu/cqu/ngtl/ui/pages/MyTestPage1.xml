@@ -563,23 +563,15 @@
                 </bean>
 
 
-                <bean parent="Uif-InputField" >
-                    <property name="control">
-                        <bean parent="Uif-OptionListControl">
-                            <property name="options">
-                                <list>
-                                    <bean parent="Uif-KeyValueLocation" p:key="4" p:value="home"
-                                          p:location.href="#"/>
-                                    <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                    p:location.href="http://www.baidu.com"/>
-                                    <bean parent="Uif-KeyLabelPair"  p:key="2" p:value="课程"/>
-                                    <bean parent="Uif-KeyLabelPair"  p:key="3" p:value="课程信息"/>
-                                </list>
-                            </property>
-                        </bean>
+                <bean parent="Uif-HorizontalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
+                                  p:methodToCall="getTaskListDetail"
+                                  p:id="ST-DemoButton1"/>
+                        </list>
                     </property>
                 </bean>
-
             </list>
         </property>
     </bean>

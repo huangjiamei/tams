@@ -157,7 +157,7 @@
                                                         <property name="headerText" value="Table Layout" />
                                                         <!--<property name="headerText" value="Table Layout" />-->
                                                         <property name="collectionObjectClass"
-                                                                  value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                  value="cn.edu.cqu.ngtl.viewobject.course.CourseTeacherViewObject"/>
                                                         <property name="propertyName" value="collection"/>
                                                         <property name="layoutManager.renderSequenceField" value="false"/>
                                                         <property name="layoutManager.richTable.render" value="true"/>
@@ -189,11 +189,11 @@
                                                                               p:style=" width=25px;height=25px;"/>
                                                                     </property>
                                                                 </bean>
-                                                                <bean parent="Uif-DataField" p:label="学院" p:propertyName="field1"/>
-                                                                <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="field2"
+                                                                <bean parent="Uif-DataField" p:label="学院" p:propertyName="departmentName"/>
+                                                                <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"
                                                                       p:sortAs="numeric"/>
                                                                 <bean parent="Uif-DataField" p:label="课程编号"
-                                                                      p:propertyName="field3"/>
+                                                                      p:propertyName="courseCode"/>
                                                                 <bean parent="Uif-DataField" p:label="教学班" p:propertyName="date1"
                                                                       p:sortAs="kuali_date"/>
                                                                 <bean parent="Uif-DataField" p:label="教师" p:propertyName="field4"/>
@@ -204,15 +204,15 @@
                                                                 <bean parent="Uif-DataField" p:label="拟配备助教数"
                                                                       p:propertyName="field4"/>
                                                                 <bean parent="Uif-DataField" p:label="状态" p:propertyName="field4"/>
-                                                                <bean parent="Uif-DataField" p:label="学时" p:propertyName="field4"/>
-                                                                <bean parent="Uif-DataField" p:label="学分" p:propertyName="field4"/>
+                                                                <bean parent="Uif-DataField" p:label="学时" p:propertyName="courseHour"/>
+                                                                <bean parent="Uif-DataField" p:label="学分" p:propertyName="courseCredit"/>
                                                                 <bean parent="Uif-DataField" p:label="选修/必修"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="isRequired"/>
                                                                 <bean parent="Uif-DataField" p:label="课程类型"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="courseClassification"/>
                                                                 <bean parent="Uif-DataField" p:label="授课年级"
-                                                                      p:propertyName="field4"/>
-                                                                <bean parent="Uif-DataField" p:label="专业" p:propertyName="field4"/>
+                                                                      p:propertyName="sessionYear"/>
+                                                                <bean parent="Uif-DataField" p:label="专业" p:propertyName="programName"/>
                                                                 <bean parent="Uif-DataField" p:label="学生人数"
                                                                       p:propertyName="field4"/>
                                                                 <bean parent="Uif-DataField" p:label="教学班数"

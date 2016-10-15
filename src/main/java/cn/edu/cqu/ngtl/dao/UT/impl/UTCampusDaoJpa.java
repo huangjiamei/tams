@@ -3,7 +3,11 @@ package cn.edu.cqu.ngtl.dao.UT.impl;
 import cn.edu.cqu.ngtl.dao.UT.UTCampusDao;
 import cn.edu.cqu.ngtl.dataobject.UT.UTCampus;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+@Repository
+@Component("UTCampusDaoJpa")
 public class UTCampusDaoJpa implements UTCampusDao {
 
 	@Override

@@ -105,8 +105,9 @@
 		<constructor-arg value="enrollAccountApp"/>
 	</bean>
 	<util:list id="jpaPackagesToScan">
-		<!-- 未来需要在这里指定dataobject等包的路径-->
-		<!--<value>com.yunteng.ngtl.exam.converter</value>-->
+		<!-- 重要！这里是dataobjects的bao -->
+		<value>cn.edu.cqu.ngtl.dataobject</value>
+		<value>cn.edu.cqu.ngtl.tools.converter</value>
 	</util:list>
 	<util:list id="managedClassNames"/>
 	<util:list id="additionalMetadataProviders"/>

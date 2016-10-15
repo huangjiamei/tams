@@ -40,6 +40,9 @@ public class UTCourse extends DataObjectBase implements Serializable {
 	@Label("Course name")
 	private String name;
 
+	@Column(name="COURSE_HOUR")
+	private String hour;
+
 	@Column(name = "CREDIT")
 	@Label("Credit")
 	@UifValidCharactersConstraintBeanName("NumericPatternConstraint")
@@ -95,6 +98,14 @@ public class UTCourse extends DataObjectBase implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getHour() {
+		return hour;
+	}
+
+	public void setHour(String hour) {
+		this.hour = hour;
 	}
 
 	public Integer getCredit() {

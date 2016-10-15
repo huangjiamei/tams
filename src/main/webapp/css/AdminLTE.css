@@ -337,7 +337,7 @@ a:focus {
 }
 .content-header > .breadcrumb > li > a {
   color: #444;
-  text-decoration: none;
+  text-decoration: none!important;
   display: inline-block;
 }
 .content-header > .breadcrumb > li > a > .fa,
@@ -355,7 +355,8 @@ a:focus {
     top: 0;
     right: 0;
     float: none;
-    background: #d2d6de;
+    font-size: 18px;
+    /*background: #d2d6de;*/
     padding-left: 10px;
   }
   .content-header > .breadcrumb li:before {

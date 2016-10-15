@@ -35,31 +35,37 @@
     <bean id="ClassInfoPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
-                <bean id="taskListPageHeader" parent="Uif-HorizontalBoxSection">
+                <bean id="taskListPageHeader" parent="Uif-VerticalBoxSection"
+                      p:additionalCssClasses="content-header">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-MessageField" p:messageText="课程信息"
-                                  p:additionalCssClasses="headerTitle" p:style="margin-top:3px"/>
+                            <bean parent="Uif-HeaderThree" p:headerText="课程信息" />
 
                             <!-- 右上角 当前路径 -->
-                            <bean id="HomePageHeader" parent="Uif-HorizontalBoxSection"
-                                  p:style="float:right!important;"
-                                  p:additionalCssClasses="pageHeaderBox">
+                            <bean id="ClassInfoHeader" parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-Icon" p:iconClass="icon-home"/>
-                                        <bean parent="Uif-Link" p:href="https://www.baidu.com"
-                                              p:additionalCssClasses="boxheaderTitle" p:linkText="主页"
-                                              p:style="margin-top:3px"/>
-                                        <bean parent="Uif-Label" p:labelText=" > "/>
-                                        <bean parent="Uif-Link" p:href="https://www.baidu.com"
-                                              p:additionalCssClasses="boxheaderTitle" p:linkText="课程"
-                                              p:style="margin-top:3px"/>
-                                        <bean parent="Uif-Label" p:labelText=" > "/>
-                                        <bean parent="Uif-Link" p:href="https://www.baidu.com"
-                                              p:additionalCssClasses="boxheaderTitle" p:linkText="课程信息"
-                                              p:style="margin-top:3px"/>
+                                        <bean parent="Uif-Icon" p:iconClass="icon-home"
+                                            p:style="float:left!important;"/>
+                                        <bean parent="Uif-InputField">
+                                            <property name="control">
+                                                <bean parent="Uif-OptionListControl"
+                                                      p:additionalCssClasses="breadcrumb"
+                                                      p:style="background: transparent!important;">
+                                                    <property name="options">
+                                                        <list>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
+                                                                  p:location.href="http://www.baidu.com"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
+                                                                  p:location.href="http://www.baidu.com"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="课程信息"/>
+                                                        </list>
+                                                    </property>
+                                                </bean>
+                                            </property>
+                                        </bean>
                                     </list>
                                 </property>
                             </bean>

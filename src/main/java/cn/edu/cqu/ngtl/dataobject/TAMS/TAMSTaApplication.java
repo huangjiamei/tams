@@ -41,31 +41,67 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     private Integer verNbr;
 
-    public String getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
-    public void setId(String id) { this.id = id; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public String getApplicationId() { return applicationId; }
+    public String getApplicationId() {
+        return applicationId;
+    }
 
-    public void setApplicationId(String applicationId) { this.applicationId = applicationId; }
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
 
-    public String getApplicationClassId() { return applicationClassId; }
+    public String getApplicationClassId() {
+        return applicationClassId;
+    }
 
-    public void setApplicationClassId(String applicationClassId) { this.applicationClassId = applicationClassId; }
+    public void setApplicationClassId(String applicationClassId) {
+        this.applicationClassId = applicationClassId;
+    }
 
-    public String getApplicationStatus() { return applicationTime; }
+    public String getApplicationStatus() {
+        return applicationStatus;
+    }
 
-    public void setApplicationStatus(String applicationStatus) { this.applicationStatus = applicationStatus; }
+    public void setApplicationStatus(String applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
 
-    public String getNote() { return note; }
+    public String getApplicationTime() {
+        return applicationTime;
+    }
 
-    public void setNote(String note) { this.note = note; }
+    public void setApplicationTime(String applicationTime) {
+        this.applicationTime = applicationTime;
+    }
 
-    public String getObjId() { return objId; }
+    public String getNote() {
+        return note;
+    }
 
-    public void setObjId(String objId) { this.objId = objId; }
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-    public Integer getVerNbr() { return verNbr; }
+    public String getObjId() {
+        return objId;
+    }
 
-    public void setVerNbr(Integer verNbr) { this.verNbr = verNbr; }
+    public void setObjId(String objId) {
+        this.objId = objId;
+    }
+
+    public Integer getVerNbr() {
+        return verNbr;
+    }
+
+    public void setVerNbr(Integer verNbr) {
+        this.verNbr = verNbr;
+    }
 }

@@ -4,7 +4,6 @@ import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.security.Timestamp;
 
 /**
  * Created by 金祖增 on 2016/10/16.
@@ -15,9 +14,7 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     //private static final long serialVersionUID = -1543515532501167011L;
     @Id
     @Column(name = "UNIQUEID")
-    @GeneratedValue(generator="tamsTaSeq")
-    @SequenceGenerator(name="tamsTaSeq",sequenceName="?",allocationSize=1)
-    private Integer id;
+    private String id;
 
     @Column(name="TA_TYPE")
     private String type;
@@ -29,16 +26,16 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     private String taId;
 
     @Column(name = "TA_START_TIME")
-    private Timestamp startTime;
+    private String startTime;
 
     @Column(name = "TA_END_TIME")
-    private Timestamp endTime;
+    private String endTime;
 
-    public Integer getId() {
+    public String getId() {
         return this.id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -66,19 +63,19 @@ public class TAMSTa extends DataObjectBase implements Serializable {
         this.taId = taId;
     }
 
-    public Timestamp getTaStartTime() {
+    public String getTaStartTime() {
         return this.startTime;
     }
 
-    public void setTaStartTime(Timestamp startTime) {
+    public void setTaStartTime(String startTime) {
         this.startTime = startTime;
     }
 
-    public Timestamp getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(Timestamp endTime) {
+    public void setEndTime(String endTime) {
         this.endTime = endTime;
     }
 }

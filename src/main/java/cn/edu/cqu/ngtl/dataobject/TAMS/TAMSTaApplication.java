@@ -20,13 +20,13 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "ID")
-    private Integer id;
+    private String id;
 
     @Column(name = "APPLICATION_ID")
-    private Integer applicationId;
+    private String applicationId;
 
     @Column(name = "APPLICATION_CALSS_ID")
-    private Integer applicationClassId;
+    private String applicationClassId;
 
     @Column(name = "APPLICATION_STATUS")
     private String applicationStatus;
@@ -38,22 +38,22 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     private String note;
 
     @Column(name = "OBJ_ID")
-    private Integer objId;
+    private String objId;
 
     @Column(name = "VER_NBR")
     private Integer verNbr;
 
-    public Integer getId() { return id; }
+    public String getId() { return id; }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(String id) { this.id = id; }
 
-    public Integer getApplicationId() { return applicationId; }
+    public String getApplicationId() { return applicationId; }
 
-    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+    public void setApplicationId(String applicationId) { this.applicationId = applicationId; }
 
-    public Integer getApplicationClassId() { return applicationClassId; }
+    public String getApplicationClassId() { return applicationClassId; }
 
-    public void setApplicationClassId(Integer applicationClassId) { this.applicationClassId = applicationClassId; }
+    public void setApplicationClassId(String applicationClassId) { this.applicationClassId = applicationClassId; }
 
     public String getApplicationStatus() { return applicationTime; }
 
@@ -63,9 +63,9 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     public void setNote(String note) { this.note = note; }
 
-    public Integer getObjId() { return objId; }
+    public String getObjId() { return objId; }
 
-    public void setObjId(Integer objId) { this.objId = objId; }
+    public void setObjId(String objId) { this.objId = objId; }
 
     public Integer getVerNbr() { return verNbr; }
 

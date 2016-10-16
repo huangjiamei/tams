@@ -20,13 +20,13 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "ID")
-    private Integer id;
+    private String id;
 
     @Column(name = "APPLICATION_ID")
-    private Integer applicationId;
+    private String applicationId;
 
     @Column(name = "APPLICATION_CALSS_ID")
-    private Integer applicationClassId;
+    private String applicationClassId;
 
     @Column(name = "APPLICATION_STATUS")
     private String applicationStatus;
@@ -37,37 +37,71 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @Column(name = "NOTE")
     private String note;
 
-    @Column(name = "OBJ_ID")
-    private Integer objId;
+    private String objId;
 
-    @Column(name = "VER_NBR")
     private Integer verNbr;
 
-    public Integer getId() { return id; }
+    public String getId() {
+        return id;
+    }
 
-    public void setId(Integer id) { this.id = id; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public Integer getApplicationId() { return applicationId; }
+    public String getApplicationId() {
+        return applicationId;
+    }
 
-    public void setApplicationId(Integer applicationId) { this.applicationId = applicationId; }
+    public void setApplicationId(String applicationId) {
+        this.applicationId = applicationId;
+    }
 
-    public Integer getApplicationClassId() { return applicationClassId; }
+    public String getApplicationClassId() {
+        return applicationClassId;
+    }
 
-    public void setApplicationClassId(Integer applicationClassId) { this.applicationClassId = applicationClassId; }
+    public void setApplicationClassId(String applicationClassId) {
+        this.applicationClassId = applicationClassId;
+    }
 
-    public String getApplicationStatus() { return applicationTime; }
+    public String getApplicationStatus() {
+        return applicationStatus;
+    }
 
-    public void setApplicationStatus(String applicationStatus) { this.applicationStatus = applicationStatus; }
+    public void setApplicationStatus(String applicationStatus) {
+        this.applicationStatus = applicationStatus;
+    }
 
-    public String getNote() { return note; }
+    public String getApplicationTime() {
+        return applicationTime;
+    }
 
-    public void setNote(String note) { this.note = note; }
+    public void setApplicationTime(String applicationTime) {
+        this.applicationTime = applicationTime;
+    }
 
-    public Integer getObjId() { return objId; }
+    public String getNote() {
+        return note;
+    }
 
-    public void setObjId(Integer objId) { this.objId = objId; }
+    public void setNote(String note) {
+        this.note = note;
+    }
 
-    public Integer getVerNbr() { return verNbr; }
+    public String getObjId() {
+        return objId;
+    }
 
-    public void setVerNbr(Integer verNbr) { this.verNbr = verNbr; }
+    public void setObjId(String objId) {
+        this.objId = objId;
+    }
+
+    public Integer getVerNbr() {
+        return verNbr;
+    }
+
+    public void setVerNbr(Integer verNbr) {
+        this.verNbr = verNbr;
+    }
 }

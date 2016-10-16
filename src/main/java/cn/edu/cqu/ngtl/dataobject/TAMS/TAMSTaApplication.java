@@ -37,10 +37,8 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @Column(name = "NOTE")
     private String note;
 
-    @Column(name = "OBJ_ID")
     private String objId;
 
-    @Column(name = "VER_NBR")
     private Integer verNbr;
 
     public String getId() { return id; }

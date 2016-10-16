@@ -79,6 +79,13 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTaskDetail");
     }
 
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageAddNewTask");
+    }
+
+
     // ------------ 部分后台调用 --------------
     @RequestMapping(params = {"pageId=pageCourseTeacher", "methodToCall=getTaskListDetail"})
     public ModelAndView getTaskListDetail(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,

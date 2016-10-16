@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+
+.breadcrumb > li + li:before {
+    content: '>\00a0' !important;
+}
+
+.breadcrumb {
+    font-size: 16px !important;
+}
+
+.box-header {
+
+}
+
+.box-header > span {
+    width: 30px;
+    height: 30px;
+}
+.box-btngroup{
+    float: right;
+    margin-right: 20px;
+}
+.box-btngroup > button {
+    float: left;
+    font-size: 14px;
+    margin-left: 10px;
+    width: 80px;
+    height: 30px;
+}

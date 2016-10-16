@@ -8,16 +8,12 @@
 package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "UNITIME_UNIVERSITY")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTUniversity extends DataObjectBase implements Serializable {
 
 	@Id
@@ -27,11 +23,9 @@ public class UTUniversity extends DataObjectBase implements Serializable {
 	private Integer id;
 
 	@Column(name = "NAME")
-	@Label("NAME")
 	private String name;
 	
 	@Column(name = "CODE")
-	@Label("CODE")
 	private String code;
 
 	public Integer getId() {

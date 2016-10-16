@@ -8,9 +8,6 @@ package cn.edu.cqu.ngtl.dataobject.UT;
 
 import cn.edu.cqu.ngtl.dataobject.CM.CMProgram;
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +15,6 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "UNITIME_STUDENT")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTStudent extends DataObjectBase implements Serializable {
 
 	private static final long serialVersionUID = 5887523683868231299L;
@@ -34,7 +30,6 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	private Integer programfId;
 	
 	@Column(name = "NAME")
-	@Label("name")
 	private String name;
 	
 	@Column(name = "PROGRAM_ID")
@@ -45,23 +40,18 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	private CMProgram program;
 	
 	@Column(name = "GENDER")
-	@Label("gender")
 	private String gender;
 	
 	@Column(name = "ID_TYPE")
-	@Label("ID_TYPE")
 	private String idType;
 	
 	@Column(name = "ID_NUMBER")
-	@Label("ID_NUMBER")
 	private String idNumber;
 	
 	@Column(name = "AUTH_ID")
-	@Label("AUTH_ID")
 	private String authId;
 	
 	@Column(name = "DEPARTMENT_ID")
-	@Label("DEPARTMENT_ID")
 	private Integer departmentId;
 	
 	@ManyToOne
@@ -69,31 +59,24 @@ public class UTStudent extends DataObjectBase implements Serializable {
 	private UTDepartment department;
 	
 	@Column(name = "GRADE")
-	@Label("grade")
 	private String grade;
 	
 	@Column(name = "VIRTUAL")
-	@Label("VIRTUAL")
 	private String virtual;
 	
 	@Column(name = "ADMISSION")
-	@Label("ADMISSION")
 	private String admission;
 	
 	@Column(name = "ADMINUNIT")
-	@Label("ADMINUNIT")
 	private String adminunit;
 	
 	@Column(name = "CAMPUS_ID")
-	@Label("CAMPUS_ID")
 	private Integer campusId;
 	
 	@Column(name = "E_MAIL")
-	@Label("E_MAIL")
 	private String email;
 	
 	@Column(name = "ENROLLED")
-	@Label("ENROLLED")
 	private String enrolled;
 
 	@OneToOne

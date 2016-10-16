@@ -8,9 +8,6 @@ package cn.edu.cqu.ngtl.dataobject.UT;
 import cn.edu.cqu.ngtl.dataobject.CM.CMProgram;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,7 +16,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "UNITIME_DEPARTMENT")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTDepartment extends DataObjectBase implements Serializable {
 
 	private static final long serialVersionUID = 5141119396887080869L;
@@ -31,18 +27,15 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 	private Integer id;
 
 	@Column(name = "NAME")
-	@Label("name")
 	private String name;
 
 	@Column(name = "CODE")
-	@Label("code")
 	private String deptcode;
 
 	@Column(name = "SHORTNAME")
 	private String shortName;
 	
 	@Column(name = "UNIVERSITY_ID")
-	@Label("UNIVERSITY_ID")
 	private String universityId;
 	
 	@ManyToOne

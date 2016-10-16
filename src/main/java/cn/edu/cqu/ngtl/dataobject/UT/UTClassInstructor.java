@@ -2,8 +2,6 @@ package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -14,14 +12,12 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "UNITIME_CLASS_INSTRUCTOR")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTClassInstructor extends DataObjectBase implements Serializable{
 
 	private static final long serialVersionUID = -8255539470163746200L;
 
 	@Id
 	@Column(name = "UNIQUEID")
-	@Label("uniqueid")
 	private Integer id;
 
 	@ManyToOne
@@ -29,11 +25,9 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 	private UTClass utClass;
 
 	@Column(name = "CLASS_ID")
-	@Label("CLASS_ID")
 	private Integer classId;
 
 	@Column(name = "INSTRUCTOR_ID")
-	@Label("INSTRUCTOR_ID")
 	private String instructorId;
 
 	@ManyToOne

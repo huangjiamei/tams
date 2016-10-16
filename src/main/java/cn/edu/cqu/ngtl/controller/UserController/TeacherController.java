@@ -30,7 +30,7 @@ public class TeacherController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTeacherCoursePage")
     public ModelAndView getDivPage(@ModelAttribute("KualiForm") UifFormBase form){
         ViewDetailInfoForm infoForm=(ViewDetailInfoForm) form;
-        infoForm.setColleciton(teacherService.getAllCoursesMappedByDepartment());
+        infoForm.setCollection(teacherService.getAllCoursesMappedByDepartment());
 
         return this.getModelAndView(infoForm, "pageCourseTeacher");
     }

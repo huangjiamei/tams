@@ -25,7 +25,7 @@ public class CMProgramCourseDaoJpa implements CMProgramCourseDao {
                 criteria.build()
         );
 
-        return qr.getResults().get(0);
+        return qr.getResults().isEmpty()?null:qr.getResults().get(0);
 
     }
 

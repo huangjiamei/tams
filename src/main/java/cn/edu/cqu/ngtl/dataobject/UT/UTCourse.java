@@ -7,8 +7,6 @@ package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 import org.kuali.rice.krad.data.provider.annotation.UifValidCharactersConstraintBeanName;
 
 import javax.persistence.*;
@@ -17,7 +15,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "UNITIME_COURSE", uniqueConstraints = {@UniqueConstraint(columnNames={"SUBJECT_ID", "COURSE_NBR"})})
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTCourse extends DataObjectBase implements Serializable {
 
 	private static final long serialVersionUID = 1093561351610847631L;
@@ -39,6 +36,9 @@ public class UTCourse extends DataObjectBase implements Serializable {
 	@Column(name = "NAME")
 	@Label("Course name")
 	private String name;
+
+	@Column(name="COURSE_HOUR")
+	private String hour;
 
 	@Column(name = "CREDIT")
 	@Label("Credit")
@@ -95,6 +95,14 @@ public class UTCourse extends DataObjectBase implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getHour() {
+		return hour;
+	}
+
+	public void setHour(String hour) {
+		this.hour = hour;
 	}
 
 	public Integer getCredit() {

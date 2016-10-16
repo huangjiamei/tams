@@ -46,15 +46,10 @@ in configuration files outside of the project.
 
   <param name="dev.mode">true</param>
 
-      
   <param name="datasource.ojb.platform">Oracle</param>
-
-    
-  <param name="datasource.url">jdbc:oracle:thin:@10.254.9.30:1521:orcl </param>
+  <param name="datasource.url">jdbc:oracle:thin:@10.254.9.30:1521:orcl</param>
   <param name="datasource.username">RICE</param>
   <param name="datasource.password">RICE</param>
-
-
 
   <param name="config.location">classpath:META-INF/common-config-defaults.xml</param>
   <param name="config.location">classpath:META-INF/common-config-locations.xml</param>

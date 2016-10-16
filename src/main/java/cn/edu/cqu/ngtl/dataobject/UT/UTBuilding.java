@@ -7,9 +7,6 @@ package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,7 +14,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "UNITIME_BUILDING")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTBuilding extends DataObjectBase implements Serializable {
 
 	private static final long serialVersionUID = 2815620281514105119L;
@@ -27,7 +23,6 @@ public class UTBuilding extends DataObjectBase implements Serializable {
 	private Integer id;
 
 	@Column(name = "NAME")
-	@Label("name")
 	private String name;
 
 	@Column(name = "COORDINATE_X")

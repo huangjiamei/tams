@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dataobject.CM;
 
+import cn.edu.cqu.ngtl.dataobject.UT.UTCourse;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
@@ -29,6 +30,14 @@ public class CMProgramCourse extends DataObjectBase implements Serializable {
     @Column(name="PROGRAM_ID")
     private Integer programId;
 
+    @Column(name="COURSE_ID")
+    private Integer courseId;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="COURSE_ID", updatable=false,insertable=false)
+    private UTCourse course;
+
     @ManyToOne
     @JsonIgnore
     @JoinColumn(name="CLASSIFICATION_ID", insertable=false, updatable=false)
@@ -52,6 +61,22 @@ public class CMProgramCourse extends DataObjectBase implements Serializable {
     private String semester;
 
     /** Start Setter and Getter **/
+
+    public Integer getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
+
+    public UTCourse getCourse() {
+        return course;
+    }
+
+    public void setCourse(UTCourse course) {
+        this.course = course;
+    }
 
     public Integer getId() {
         return id;

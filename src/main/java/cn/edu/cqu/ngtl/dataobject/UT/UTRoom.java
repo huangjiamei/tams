@@ -6,16 +6,12 @@
 package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "UNITIME_ROOM")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTRoom extends DataObjectBase implements Serializable {
 
 	private static final long serialVersionUID = -7810921207047858809L;
@@ -25,7 +21,6 @@ public class UTRoom extends DataObjectBase implements Serializable {
 	private Integer id;
 
 	@Column(name = "NAME")
-	@Label("name")
 	private String name;
 
 	@Column(name = "CAPACITY")

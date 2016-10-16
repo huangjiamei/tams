@@ -1,0 +1,591 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+                           http://www.springframework.org/schema/jee
+                           http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+                           http://www.springframework.org/schema/jms
+                           http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+                           http://www.springframework.org/schema/lang
+                           http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/oxm
+                           http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <bean id="MyTestPage1" parent="Uif-VerticalBoxSection">
+        <property name="items">
+            <list>
+                <bean id="photo" parent="Uif-Image"
+                      p:altText="照片"
+                      p:source="http://a1.jikexueyuan.com/home/201505/27/7244/55651b48625c4.jpg"/>
+                <!--<bean parent="muif-div" p:style="height:100px;width:100px; background:red;"/>-->
+                <bean parent="Uif-HorizontalBoxGroup" p:style="height:100px;width:100px; background:red;"/>
+                <bean parent="Uif-BoxGroupBase"/>
+                <bean parent="Uif-VerticalBoxSection" p:style="height:100px;width:100px; background:red;">
+                    <property name="items">
+                        <list>
+                            <bean id="photo2" parent="Uif-Image"
+                                  p:altText="照片"
+                                  p:source="http://a1.jikexueyuan.com/home/201505/27/7244/55651b48625c4.jpg"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-HorizontalBoxGroup" p:style="height:100px;width:100px; background:red;">
+                    <property name="items">
+                        <list>
+                            <bean id="photo3" parent="Uif-Image"
+                                  p:altText="照片"
+                                  p:source="http://a1.jikexueyuan.com/home/201505/27/7244/55651b48625c4.jpg"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-HorizontalBoxSection" p:style="height:100px;width:100px; background:red;"/>
+
+                <bean parent="Uif-HorizontalBoxGroup" p:style="height:100px;width:100px; background:red;"/>
+
+
+                <bean id="photo4" parent="Uif-Image"
+                      p:altText="照片"
+                      p:source="http://a1.jikexueyuan.com/home/201505/27/7244/55651b48625c4.jpg"/>
+
+                <!--<bean parent="Uif-GridGroup"-->
+                <!--p:layoutManager.numberOfColumns="2" p:layoutManager.applyDefaultCellWidths="false"-->
+                <!--p:layoutManager.renderAlternatingHeaderColumns="false">-->
+                <!--<property name="items">-->
+                <!--<list>-->
+                <!--<bean parent="Uif-HorizontalFieldGroup" p:label="Select some colors">-->
+                <!--<property name="items">-->
+                <!--<list>-->
+                <!--<bean parent="Uif-InputField"  p:fieldLabel.render="false">-->
+                <!--<property name="control">-->
+                <!--<bean parent="Uif-CheckboxControl" p:checkboxLabel="Red"/>-->
+                <!--</property>-->
+                <!--</bean>-->
+                <!--<bean parent="Uif-InputField"  p:fieldLabel.render="false">-->
+                <!--<property name="control">-->
+                <!--<bean parent="Uif-CheckboxControl" p:checkboxLabel="Green"/>-->
+                <!--</property>-->
+                <!--</bean>-->
+                <!--<bean parent="Uif-InputField"  p:fieldLabel.render="false">-->
+                <!--<property name="control">-->
+                <!--<bean parent="Uif-CheckboxControl" p:checkboxLabel="Blue"/>-->
+                <!--</property>-->
+                <!--</bean>-->
+                <!--</list>-->
+                <!--</property>-->
+                <!--</bean>-->
+                <!--<bean parent="Uif-InputField" p:label="Field 3" />-->
+                <!--<bean parent="Uif-HorizontalFieldGroup">-->
+                <!--<property name="items">-->
+                <!--<list>-->
+                <!--<bean parent="Uif-InputField" p:label="Field 4" />-->
+                <!--<bean parent="Uif-InputField" p:label="Field 5" />-->
+                <!--</list>-->
+                <!--</property>-->
+                <!--</bean>-->
+                <!--</list>-->
+                <!--</property>-->
+                <!--</bean>-->
+
+                <bean parent="Uif-GridGroup"
+                      p:layoutManager.renderRowFirstCellHeader="false">
+                    <property name="layoutManager.numberOfColumns" value="4"/>
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-InputField" p:label="姓名" p:colSpan="3"
+                                  p:fieldLabel.colSpan="1" p:propertyName="inputField1"
+                                  p:fieldLabel.cssClasses="null"/>
+
+                            <bean parent="MyUif-InputField" p:label="Field 2" p:propertyName="inputField2"/>
+                            <bean parent="Uif-InputField" p:label="Field 3" p:propertyName="inputField3"/>
+                            <bean parent="Uif-InputField" p:label="Field 2" p:propertyName="inputField4"/>
+                            <bean parent="Uif-InputField" p:label="Field 3" p:propertyName="inputField9"/>
+                            <bean parent="Uif-MessageField" p:label="message2" p:messageText="inputField123"/>
+                            <bean parent="Uif-MessageField" p:label="message1" p:messageText="inputField6">
+                                <property name="cssClasses">
+                                    <list>
+                                        <value>logo</value>
+                                    </list>
+                                </property>
+                            </bean>
+                            <!--<bean parent="Uif-InputField" p:label="Field 3" p:propertyName="inputField7"  p:widgetInputOnly="true" />-->
+                            <!--<bean parent="Uif-InputField" p:label="Field 2" p:propertyName="inputField8"  p:widgetInputOnly="true" />-->
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="MyUif-InputField" p:label="my Field 2" p:propertyName="inputField2"/>
+                <bean parent="Uif-InputField" p:label="Field 3" p:propertyName="inputField3"/>
+
+
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box">
+                    <property name="items">
+                        <list>
+                            <!--header-->
+                            <bean parent="Uif-MessageField" p:messageText="Striped Full Width Table"
+                                  p:additionalCssClasses="box-title"/>
+
+                            <!--body-->
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box-body no-padding">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-GridGroup" p:layoutManager.applyDefaultCellWidths="false"
+                                              p:layoutManager.renderAlternatingHeaderColumns="false"
+                                              p:layoutManager.applyAlternatingRowStyles="true"
+                                              p:additionalCssClasses="table table-striped">
+                                            <property name="layoutManager.numberOfColumns" value="4"/>
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-Message" p:style="width: 10px" p:messageText="#"/>
+                                                    <bean parent="Uif-Message" p:messageText="Task"/>
+                                                    <bean parent="Uif-Message" p:messageText="Progress"/>
+                                                    <bean parent="Uif-Message" p:style="width: 40px" p:messageText="Label"/>
+
+                                                    <!--第一个-->
+                                                    <bean parent="Uif-Message"  p:messageText="1."/>
+                                                    <bean parent="Uif-Message" p:messageText="Update software"/>
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="progress progress-xs">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar progress-bar-danger"
+                                                                      p:style="width: 55%"></bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-Message" p:messageText="55%"
+                                                          p:additionalCssClasses="badge bg-red"/>
+
+                                                    <!--第二个-->
+                                                    <bean parent="Uif-Message"  p:messageText="2."/>
+                                                    <bean parent="Uif-Message" p:messageText="Update 2"/>
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="progress progress-xs">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar progress-bar-yellow"
+                                                                      p:style="width: 15%"></bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-Message" p:messageText="15%"
+                                                          p:additionalCssClasses="badge bg-yellow"/>
+
+                                                    <!--第3个-->
+                                                    <bean parent="Uif-Message"  p:messageText="3."/>
+                                                    <bean parent="Uif-Message" p:messageText="Cron job running"/>
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="progress progress-xs progress-striped active">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar bg-light-blue"
+                                                                      p:style="width: 30%"></bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-Message" p:messageText="30%"
+                                                          p:additionalCssClasses="badge bg-light-blue"/>
+
+                                                    <!--第4个-->
+                                                    <bean parent="Uif-Message"  p:messageText="4."/>
+                                                    <bean parent="Uif-Message" p:messageText="Fix and squish bugs"/>
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="progress progress-xs progress-striped active">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar progress-bar-success"
+                                                                      p:style="width: 90%"></bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-Message" p:messageText="90%"
+                                                          p:additionalCssClasses="badge bg-green"/>
+
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box">
+                    <property name="items">
+                        <list>
+                            <!--header-->
+                            <bean parent="Uif-MessageField" p:messageText="Striped Full Width Table"
+                                  p:additionalCssClasses="box-title"/>
+
+                            <!--body-->
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box-body no-padding">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-GridGroup"
+                                              p:layoutManager.renderAlternatingHeaderColumns="true">
+                                            <property name="layoutManager.numberOfColumns" value="4"/>
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="#" p:messageText="Task"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="Progress" p:messageText="Label"/>
+
+                                                    <bean parent="Uif-MessageField" p:label="1."
+                                                          p:messageText="Update software"/>
+                                                    <bean parent="Uif-HorizontalBoxGroup"
+                                                          p:additionalCssClasses="progress progress-xs">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar progress-bar-danger"
+                                                                      p:style="width: 55%"></bean>
+                                                                <bean parent="Uif-MessageField" p:messageText="55%"
+                                                                      p:additionalCssClasses="badge bg-red"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+
+                                                    <bean parent="Uif-MessageField" p:label="1."
+                                                          p:messageText="Update software"/>
+                                                    <bean parent="Uif-VerticalBoxSection" p:colSpan="1"
+                                                          p:additionalCssClasses="progress progress-xs">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar progress-bar-yellow"
+                                                                      p:style="width: 15%"></bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-MessageField" p:messageText="15%" p:colSpan="1"
+                                                          p:additionalCssClasses="badge bg-yellow"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+
+                <bean parent="Uif-GridGroup"
+                      p:layoutManager.numberOfColumns="4" p:layoutManager.applyDefaultCellWidths="false"
+                      p:layoutManager.renderAlternatingHeaderColumns="false"
+                      p:layoutManager.renderRowFirstCellHeader="true">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="Field 4" p:propertyName="inputField15"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="Field 4" p:propertyName="inputField17"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="Field 4" p:propertyName="inputField19"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="Field 5" p:propertyName="inputField16"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="Field 5" p:propertyName="inputField18"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="Field 5" p:propertyName="inputField20"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-GridGroup"
+                      p:layoutManager.numberOfColumns="4"
+                      p:layoutManager.suppressLineWrapping="true"
+                      p:layoutManager.renderAlternatingHeaderColumns="true">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:blue;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:blue;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:black;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:yellow;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:pink;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-GridGroup"
+                      p:layoutManager.numberOfColumns="4"
+                      p:layoutManager.renderRowFirstCellHeader="true">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:blue;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:blue;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:black;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:yellow;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:pink;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-GridGroup"
+                      p:layoutManager.numberOfColumns="4"
+                      p:layoutManager.renderAlternatingHeaderColumns="true">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-HorizontalBoxSection" p:rowSpan="2">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:blue;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:blue;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection" p:rowSpan="1">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:red;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection" p:rowSpan="3" >
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:black;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection"  p:rowSpan="1">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:yellow;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection" p:rowSpan="1">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:green;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-HorizontalBoxSection" p:rowSpan="1">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="important;height:100px;width:100px; background:pink;"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="MyUif-InputField" parent="MyUif-InputField-parentBean"/>
+    <bean id="MyUif-InputField-parentBean" abstract="true" class="org.kuali.rice.krad.uif.field.InputFieldBase"
+          parent="Uif-DataField" scope="prototype">
+        <property name="template" value="/krad/WEB-INF/ftl/components/field/dataInputField.ftl"/>
+        <property name="templateName" value="uif_dataInputField"/>
+        <property name="cssClasses">
+            <list>
+                <value>null</value>
+            </list>
+        </property>
+        <property name="postInputCssClasses">
+            <list>
+                <value>input-group-btn</value>
+            </list>
+        </property>
+        <property name="validationMessages">
+            <bean parent="Uif-FieldValidationMessages"/>
+        </property>
+    </bean>
+
+
+</beans>

@@ -6,7 +6,6 @@
 package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.Label;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -24,31 +23,24 @@ public class UTInstructor extends DataObjectBase implements Serializable {
 	private String id;
 
 	@Column(name = "NAME")
-	@Label("name")
 	private String name;
 
 	@Column(name = "CODE")
-	@Label("CODE")
 	private String code;
 	
 	@Column(name = "GENDER")
-	@Label("GENDER")
 	private String gender;
 
 	@Column(name = "PHONE_NUMBER")
-	@Label("PHONE_NUMBER")
 	private String phoneNumber;
 	
 	@Column(name = "ID_TYPE")
-	@Label("ID_TYPE")
 	private Integer idType;
 	
 	@Column(name = "ID_NUMBER")
-	@Label("ID_NUMBER")
 	private String idNumber;
 	
 	@Column(name = "POSITION")
-	@Label("POSITION")
 	private String position;
 	
 	@Column(name = "DEPARTMENT_ID")

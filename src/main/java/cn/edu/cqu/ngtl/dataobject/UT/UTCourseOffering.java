@@ -1,8 +1,6 @@
 package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,7 +8,6 @@ import java.util.List;
 
 @Entity
 @Table(name = "UNITIME_COURSE_OFFERING")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTCourseOffering extends DataObjectBase implements Serializable {
 
 	@Id

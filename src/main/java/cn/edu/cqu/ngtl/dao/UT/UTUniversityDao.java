@@ -8,12 +8,4 @@ public interface UTUniversityDao {
 
 	List<UTUniversity> getAllUniversities();
 
-	UTUniversity getEXMUniversityByUniversityCodeAndUniversityName(String code, String name);
-
-	UTUniversity saveEXMUniversity(UTUniversity exmUniversity);
-
-	void deleteEXMUniversity(UTUniversity exmUniversity);
-
-	UTUniversity getIdByUniversityCode(String code);
-
 }

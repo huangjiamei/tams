@@ -7,15 +7,12 @@ package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.Label;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "UNITIME_CLASS_RELATION")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTClassRelation extends DataObjectBase implements Serializable {
 	
 	private static final long serialVersionUID = 1918731649037685178L;

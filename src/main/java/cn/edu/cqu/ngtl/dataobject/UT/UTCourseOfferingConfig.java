@@ -1,15 +1,12 @@
 package cn.edu.cqu.ngtl.dataobject.UT;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
-import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "UNITIME_COURSE_OFFERING_CONFIG")
-@UifAutoCreateViews({ UifAutoCreateViewType.INQUIRY, UifAutoCreateViewType.LOOKUP })
 public class UTCourseOfferingConfig extends DataObjectBase implements Serializable{
 
 	private static final long serialVersionUID = 1421778150066946005L;

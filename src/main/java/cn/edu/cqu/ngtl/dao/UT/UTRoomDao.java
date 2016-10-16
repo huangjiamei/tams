@@ -9,6 +9,4 @@ public interface UTRoomDao {
 
     List<UTRoom> getAllRooms();
 
-    List<UTRoom> getRoomsByCampusIdForExam(Integer campusId);
-
 }

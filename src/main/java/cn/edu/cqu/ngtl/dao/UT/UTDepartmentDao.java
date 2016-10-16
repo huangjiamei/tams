@@ -10,13 +10,5 @@ public interface UTDepartmentDao {
 	
 	List<UTDepartment> getAllUTDepartments();
 	
-	UTDepartment getUTDepartmentByDepartmentName(String name);
-	
-	UTDepartment getEXMDepartmentByDepartmentCodeAndDepartmentName(String deptcode, String name);
-	
-	UTDepartment saveEXMDepartment(UTDepartment exmDepartment);
-	
-	UTDepartment getUTDepartmentByCode(String deptCode);
-	
 	void deleteEXMDepartment(UTDepartment exmDepartment);
 }

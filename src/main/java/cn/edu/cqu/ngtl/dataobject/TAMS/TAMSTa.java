@@ -32,7 +32,7 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     private String endTime;
 
     public String getId() {
-        return this.id;
+        return id;
     }
 
     public void setId(String id) {
@@ -40,7 +40,7 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     }
 
     public String getType() {
-        return this.type;
+        return type;
     }
 
     public void setType(String type) {
@@ -48,26 +48,26 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     }
 
     public String getTaClass() {
-        return this.taClass;
+        return taClass;
     }
 
-    public void setTaClass(String taclass) {
+    public void setTaClass(String taClass) {
         this.taClass = taClass;
     }
 
     public String getTaId() {
-        return this.taId;
+        return taId;
     }
 
     public void setTaId(String taId) {
         this.taId = taId;
     }
 
-    public String getTaStartTime() {
-        return this.startTime;
+    public String getStartTime() {
+        return startTime;
     }
 
-    public void setTaStartTime(String startTime) {
+    public void setStartTime(String startTime) {
         this.startTime = startTime;
     }
 

@@ -113,6 +113,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageTaskDetail" p:title="zhuye">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaskDetailPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

@@ -41,15 +41,19 @@ public class TeacherServiceImpl implements ITeacherService {
             /** Access DataBase */
             CMProgramCourse programCourse = programCourseDao.selectByCourseId(currentCourse.getId());
 
+            if (programCourse != null) {
+                viewObject.setCourseClassification(programCourse.getClassification().getName());
+                viewObject.setIsRequired((programCourse.getRequired()== CM_COURSE.REQUIRED) ? "必修" : "选修");
+                viewObject.setProgramName(programCourse.getProgram().getName());
+            }
+
             viewObject.setInstructors(clazz.getUtInstructors());
             viewObject.setDepartmentName(currentCourse.getDepartment().getName());
             viewObject.setCourseName(currentCourse.getName());
             viewObject.setCourseHour(currentCourse.getHour());
-            viewObject.setCourseClassification(programCourse.getClassification().getName());
             viewObject.setCourseCode(currentCourse.getCodeR());
             viewObject.setCourseCredit(currentCourse.getCredit());
-            viewObject.setIsRequired((programCourse.getRequired()== CM_COURSE.REQUIRED) ? "必修" : "选修");
-            viewObject.setProgramName(programCourse.getProgram().getName());
+
 
             viewObjects.add(viewObject);
         }

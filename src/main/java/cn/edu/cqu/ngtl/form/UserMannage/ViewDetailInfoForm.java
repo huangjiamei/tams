@@ -14,13 +14,13 @@ public class ViewDetailInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = 8220820300868876320L;
 
-    private List<CourseTeacherViewObject> colleciton = new ArrayList<>();
+    private List<CourseTeacherViewObject> collection = new ArrayList<>();
 
-    public List<CourseTeacherViewObject> getColleciton() {
-        return colleciton;
+    public List<CourseTeacherViewObject> getCollection() {
+        return collection;
     }
 
-    public void setColleciton(List<CourseTeacherViewObject> colleciton) {
-        this.colleciton = colleciton;
+    public void setCollection(List<CourseTeacherViewObject> collection) {
+        this.collection = collection;
     }
 }

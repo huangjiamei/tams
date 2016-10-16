@@ -32,47 +32,25 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="TestNav" parent="Uif-MenuNavigationGroup" >
-        <property name="items">
-            <list>
-                <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 1" p:navigateToPageId="Demo-NavigationGroup-ViewPage1"/>
-                <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 2" p:navigateToPageId="Demo-NavigationGroup-ViewPage2"/>
-                <bean parent="Uif-SidebarToggleMenu" p:toggleText="More Content">
-                    <property name="menuItems">
-                        <list>
-                            <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 3"
-                                  p:navigateToPageId="Demo-NavigationGroup-ViewPage3"/>
-                            <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 4"
-                                  p:navigateToPageId="Demo-NavigationGroup-ViewPage4"/>
-                            <bean parent="Uif-MenuAction" p:actionLabel="Action Script4" p:actionScript="alert('Menu Script');"/>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
-
-
-
-    <bean id="FlyPanel" parent="Uif-VerticalBoxSection" >
-        <property name="items">
-            <list>
-                <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 1" p:navigateToPageId="Demo-NavigationGroup-ViewPage1"/>
-                <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 2" p:navigateToPageId="Demo-NavigationGroup-ViewPage2"/>
-                <bean parent="Uif-SidebarToggleMenu" p:toggleText="More Content">
-                    <property name="menuItems">
-                        <list>
-                            <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 3"
-                                  p:navigateToPageId="Demo-NavigationGroup-ViewPage3"/>
-                            <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 4"
-                                  p:navigateToPageId="Demo-NavigationGroup-ViewPage4"/>
-                            <bean parent="Uif-MenuAction" p:actionLabel="Action Script4" p:actionScript="alert('Menu Script');"/>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
+    <bean id="TestNav" parent="Uif-MenuNavigationGroup" p:additionalCssClasses="main-sidebar">
+    <property name="items">
+        <list>
+            <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 1" p:navigateToPageId="Demo-NavigationGroup-ViewPage1"/>
+            <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 2" p:navigateToPageId="Demo-NavigationGroup-ViewPage2"/>
+            <bean parent="Uif-SidebarToggleMenu" p:toggleText="More Content">
+                <property name="menuItems">
+                    <list>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 3"
+                              p:navigateToPageId="Demo-NavigationGroup-ViewPage3"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="Page 4"
+                              p:navigateToPageId="Demo-NavigationGroup-ViewPage4"/>
+                        <bean parent="Uif-MenuAction" p:actionLabel="Action Script4" p:actionScript="alert('Menu Script');"/>
+                    </list>
+                </property>
+            </bean>
+        </list>
+    </property>
+</bean>
 
 
 </beans>

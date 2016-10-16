@@ -32,13 +32,12 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="TestHeader" parent="Uif-ApplicationHeaderBase" >
-        <!--<property name="applicationNavigation.brandImage">-->
-            <!--<bean parent="Uif-Image" p:style="width:150px;margin: 2px 5px;"-->
-                  <!--p:source="@{#ConfigProperties['application.url']}/images/logo.png" />-->
-        <!--</property>-->
-        <!--<property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />-->
-
+    <bean id="TestHeader" parent="Uif-ApplicationHeaderBase" p:additionalCssClasses="">
+        <property name="applicationNavigation.brandImage">
+            <bean parent="Uif-Image" p:style="width:150px;margin: 2px 5px;"
+                  p:source="@{#ConfigProperties['application.url']}/images/logo.png" />
+        </property>
+        <property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />
         <property name="applicationNavigation.items">
             <list>
                 <!--<bean parent="Uif-MessageField" p:messageText="当前学期：" p:additionalCssClasses="headerMessage"/>-->

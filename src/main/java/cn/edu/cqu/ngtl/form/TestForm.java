@@ -1,5 +1,7 @@
 package cn.edu.cqu.ngtl.form;
 
+import cn.edu.cqu.ngtl.dataobject.TestObject;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -108,39 +110,302 @@ public class TestForm extends BaseForm {
     private String inputField98;
     private String inputField99;
 
+    private boolean radio1;
+    private boolean radio2;
+    private boolean radio3;
+    private boolean radio4;
+    private boolean radio5;
+    private boolean radio6;
+    private boolean radio7;
+    private boolean radio8;
+    private boolean radio9;
+    private boolean radio10;
+    private boolean radio11;
+    private boolean radio12;
+    private boolean radio13;
+    private boolean radio14;
+    private boolean radio15;
+    private boolean radio16;
+    private boolean radio17;
+    private boolean radio18;
+    private boolean radio19;
+    private boolean radio20;
+    private boolean radio21;
+    private boolean radio22;
+    private boolean radio23;
+    private boolean radio24;
+    private boolean radio25;
+    private boolean radio26;
+    private boolean radio27;
+    private boolean radio28;
+    private boolean radio29;
 
-    private List<DatatableTestObject> collection = new ArrayList<DatatableTestObject>();
+
+    private List<TestObject> collection = new ArrayList<TestObject>();
 
     public TestForm() {
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "14", "17", "18"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"20", "21", "22"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"8", "9", "10", "11", "12"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"2", "3", "4", "5", "6"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "14", "15", "16", "17", "18"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "20", "21",  "24"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "143", "151", "126", "137", "164"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "144", "155", "166", "177", "188"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"14", "17", "17"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "5", "5", "4", "6", "6"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "5", "5", "5", "5", "5"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "7", "3", "1", "9", "11"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "8", "9", "10", "11", "12"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "2", "3", "4", "5", "6"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"14", "15", "16", "17", "18"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"20", "21", "22", "23", "24"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "143", "151", "126", "137", "164"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "144", "155", "166", "177", "188"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15), "14", "15", "15", "17", "17"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"5", "5", "4", "6", "6"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"5", "5", "5", "5", "5"));
-        getCollection().add(new DatatableTestObject(new Date(2016,10,15),"7", "3", "1", "9", "11"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "14", "17", "18"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"20", "21", "22"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"8", "9", "10", "11", "12"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"2", "3", "4", "5", "6"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "14", "15", "16", "17", "18"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "20", "21",  "24"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "143", "151", "126", "137", "164"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "144", "155", "166", "177", "188"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"14", "17", "17"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "5", "5", "4", "6", "6"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "5", "5", "5", "5", "5"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "7", "3", "1", "9", "11"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "8", "9", "10", "11", "12"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "2", "3", "4", "5", "6"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"14", "15", "16", "17", "18"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"20", "21", "22", "23", "24"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "143", "151", "126", "137", "164"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "144", "155", "166", "177", "188"));
+        getCollection().add(new TestObject(new Date(2016,10,15), "14", "15", "15", "17", "17"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "4", "6", "6"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "5", "5", "5"));
+        getCollection().add(new TestObject(new Date(2016,10,15),"7", "3", "1", "9", "11"));
     }
 
-    public List<DatatableTestObject> getCollection() {
+
+    public boolean isRadio1() {
+        return radio1;
+    }
+
+    public void setRadio1(boolean radio1) {
+        this.radio1 = radio1;
+    }
+
+    public boolean isRadio2() {
+        return radio2;
+    }
+
+    public void setRadio2(boolean radio2) {
+        this.radio2 = radio2;
+    }
+
+    public boolean isRadio3() {
+        return radio3;
+    }
+
+    public void setRadio3(boolean radio3) {
+        this.radio3 = radio3;
+    }
+
+    public boolean isRadio4() {
+        return radio4;
+    }
+
+    public void setRadio4(boolean radio4) {
+        this.radio4 = radio4;
+    }
+
+    public boolean isRadio5() {
+        return radio5;
+    }
+
+    public void setRadio5(boolean radio5) {
+        this.radio5 = radio5;
+    }
+
+    public boolean isRadio6() {
+        return radio6;
+    }
+
+    public void setRadio6(boolean radio6) {
+        this.radio6 = radio6;
+    }
+
+    public boolean isRadio7() {
+        return radio7;
+    }
+
+    public void setRadio7(boolean radio7) {
+        this.radio7 = radio7;
+    }
+
+    public boolean isRadio8() {
+        return radio8;
+    }
+
+    public void setRadio8(boolean radio8) {
+        this.radio8 = radio8;
+    }
+
+    public boolean isRadio9() {
+        return radio9;
+    }
+
+    public void setRadio9(boolean radio9) {
+        this.radio9 = radio9;
+    }
+
+    public boolean isRadio10() {
+        return radio10;
+    }
+
+    public void setRadio10(boolean radio10) {
+        this.radio10 = radio10;
+    }
+
+    public boolean isRadio11() {
+        return radio11;
+    }
+
+    public void setRadio11(boolean radio11) {
+        this.radio11 = radio11;
+    }
+
+    public boolean isRadio12() {
+        return radio12;
+    }
+
+    public void setRadio12(boolean radio12) {
+        this.radio12 = radio12;
+    }
+
+    public boolean isRadio13() {
+        return radio13;
+    }
+
+    public void setRadio13(boolean radio13) {
+        this.radio13 = radio13;
+    }
+
+    public boolean isRadio14() {
+        return radio14;
+    }
+
+    public void setRadio14(boolean radio14) {
+        this.radio14 = radio14;
+    }
+
+    public boolean isRadio15() {
+        return radio15;
+    }
+
+    public void setRadio15(boolean radio15) {
+        this.radio15 = radio15;
+    }
+
+    public boolean isRadio16() {
+        return radio16;
+    }
+
+    public void setRadio16(boolean radio16) {
+        this.radio16 = radio16;
+    }
+
+    public boolean isRadio17() {
+        return radio17;
+    }
+
+    public void setRadio17(boolean radio17) {
+        this.radio17 = radio17;
+    }
+
+    public boolean isRadio18() {
+        return radio18;
+    }
+
+    public void setRadio18(boolean radio18) {
+        this.radio18 = radio18;
+    }
+
+    public boolean isRadio19() {
+        return radio19;
+    }
+
+    public void setRadio19(boolean radio19) {
+        this.radio19 = radio19;
+    }
+
+    public boolean isRadio20() {
+        return radio20;
+    }
+
+    public void setRadio20(boolean radio20) {
+        this.radio20 = radio20;
+    }
+
+    public boolean isRadio21() {
+        return radio21;
+    }
+
+    public void setRadio21(boolean radio21) {
+        this.radio21 = radio21;
+    }
+
+    public boolean isRadio22() {
+        return radio22;
+    }
+
+    public void setRadio22(boolean radio22) {
+        this.radio22 = radio22;
+    }
+
+    public boolean isRadio23() {
+        return radio23;
+    }
+
+    public void setRadio23(boolean radio23) {
+        this.radio23 = radio23;
+    }
+
+    public boolean isRadio24() {
+        return radio24;
+    }
+
+    public void setRadio24(boolean radio24) {
+        this.radio24 = radio24;
+    }
+
+    public boolean isRadio25() {
+        return radio25;
+    }
+
+    public void setRadio25(boolean radio25) {
+        this.radio25 = radio25;
+    }
+
+    public boolean isRadio26() {
+        return radio26;
+    }
+
+    public void setRadio26(boolean radio26) {
+        this.radio26 = radio26;
+    }
+
+    public boolean isRadio27() {
+        return radio27;
+    }
+
+    public void setRadio27(boolean radio27) {
+        this.radio27 = radio27;
+    }
+
+    public boolean isRadio28() {
+        return radio28;
+    }
+
+    public void setRadio28(boolean radio28) {
+        this.radio28 = radio28;
+    }
+
+    public boolean isRadio29() {
+        return radio29;
+    }
+
+    public void setRadio29(boolean radio29) {
+        this.radio29 = radio29;
+    }
+
+    public List<TestObject> getCollection() {
         return collection;
     }
 
-    public void setCollection(List<DatatableTestObject> collection) {
+    public void setCollection(List<TestObject> collection) {
         this.collection = collection;
     }
 

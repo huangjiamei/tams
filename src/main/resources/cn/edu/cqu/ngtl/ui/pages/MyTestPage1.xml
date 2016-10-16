@@ -562,6 +562,16 @@
                     </property>
                 </bean>
 
+
+                <bean parent="Uif-HorizontalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
+                                  p:methodToCall="getTaskListDetail"
+                                  p:id="ST-DemoButton1"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

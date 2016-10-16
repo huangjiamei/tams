@@ -38,7 +38,7 @@
                 <bean parent="Uif-Disclosure-TableCollectionSection" p:layoutManager.numberOfColumns="9">
                     <property name="headerText" value="Table Layout" />
                     <property name="collectionObjectClass"
-                              value="cn.edu.cqu.ngtl.form.DatatableTestObject" />
+                              value="cn.edu.cqu.ngtl.dataobject.TestObject" />
                     <property name="propertyName" value="collection" />
                     <property name="layoutManager.renderSequenceField" value="false" />
                     <property name="layoutManager.richTable.render" value="true" />

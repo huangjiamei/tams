@@ -1,4 +1,4 @@
-﻿@CHARSET "UTF-8";
+﻿﻿@CHARSET "UTF-8";
 .daterangepicker td.off{
 	display:table-cell;
 }
@@ -274,7 +274,8 @@ body{
 }
 
 .pageHeaderBox .headerTitle{
-    margin-left: 5px;
+    margin-left: 15px;
+    font-size: 20px!important;
 }
 .pageContentBox{
 	padding: 30px;
@@ -382,6 +383,7 @@ body{
 .box-header > .boxheaderTitle,
 .box-header > [class*="icon-"]{
   font-size: 18px;
+    margin-left: 10px;
 }  
 .box .box-body {
     padding: 10px;
@@ -462,7 +464,7 @@ body{
     padding: 10px;
     width: 33.3333%;
 } */
-#photo{
+.photo{
     margin: 0 auto;
     width: 45%;
     float: none!important;

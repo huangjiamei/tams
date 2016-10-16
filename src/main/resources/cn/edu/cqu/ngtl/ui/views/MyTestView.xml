@@ -33,30 +33,27 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <!-- 注意这个id，url可以通过指定viewId就来访问这个view -->
-    <bean id="MyTestView" parent="Uif-FormView"
-          p:applicationTitleText="我的测试页面" p:additonalCssClasses="flypanels-container">
+    <bean id="MyTestView" parent="Uif-FormView" p:applicationTitleText="我的测试页面">
         <property name="additionalCssFiles">
             <list>
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/bootstrap.css</value>
-                <value>css/flyPanels.css</value>
-
+                <value>css/exam.css</value>
+                <value>css/uif.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
                 <!--<value>scripts/fullcalendar.js</value>-->
-                <value>scripts/exam_526.js</value>
-                <value>scripts/flypanels.min.js</value>
+                <!--<value>scripts/exam_526.js</value>-->
             </list>
         </property>
 
         <property name="applicationHeader">
             <bean id="MyHeader" parent="TestHeader" />
         </property>
-
         <property name="navigation">
             <bean id="MyNav" parent="TestNav" />
         </property>
@@ -81,7 +78,7 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageCourseTeacher" p:additionalCssClasses="content-wrapper" p:title="datatable测试">
+                <bean parent="Uif-Page" p:id="pageCourseTeacher" p:title="datatable测试">
                     <property name="items">
                         <list>
                             <ref bean="CourseTeacherPage"/>
@@ -92,6 +89,27 @@
                     <property name="items">
                         <list>
                             <ref bean="ApplyForTaFormPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageCommonHome" p:title="zhuye">
+                    <property name="items">
+                        <list>
+                            <ref bean="CommonHomePage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageTaskList" p:title="zhuye">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaskListPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageClassInfo" p:title="zhuye">
+                    <property name="items">
+                        <list>
+                            <ref bean="ClassInfoPage"/>
                         </list>
                     </property>
                 </bean>

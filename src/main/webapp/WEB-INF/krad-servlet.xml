@@ -42,5 +42,7 @@
   <context:component-scan base-package="org.kuali.rice.core.web"/>
   <context:component-scan base-package="org.kuali.rice.kew.impl.peopleflow"/>
   <context:component-scan base-package="org.kuali.rice.kew.actionlist"/>
-  <context:component-scan base-package="cn.edu.cqu.ngtl"/>
+    <context:component-scan base-package="cn.edu.cqu.ngtl.controller"/>
+    <context:component-scan base-package="cn.edu.cqu.ngtl.service"/>
+    <context:component-scan base-package="cn.edu.cqu.ngtl.dao"/>
 </beans>

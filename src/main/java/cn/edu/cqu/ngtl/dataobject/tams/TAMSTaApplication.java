@@ -37,10 +37,6 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @Column(name = "NOTE")
     private String note;
 
-    private String objId;
-
-    private Integer verNbr;
-
     public String getId() {
         return id;
     }
@@ -89,19 +85,4 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
         this.note = note;
     }
 
-    public String getObjId() {
-        return objId;
-    }
-
-    public void setObjId(String objId) {
-        this.objId = objId;
-    }
-
-    public Integer getVerNbr() {
-        return verNbr;
-    }
-
-    public void setVerNbr(Integer verNbr) {
-        this.verNbr = verNbr;
-    }
 }

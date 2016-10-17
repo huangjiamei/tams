@@ -1,6 +1,6 @@
 package cn.edu.cqu.ngtl.viewobject.course;
 
-import cn.edu.cqu.ngtl.dataobject.UT.UTInstructor;
+import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 
 import java.util.List;
 

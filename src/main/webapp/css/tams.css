@@ -1,0 +1,11 @@
+﻿.nav, .navbar, .navbar-header, .navbar-collapse {
+    clear: none;
+}
+
+
+/*居中block*/
+.col-center-block {
+    float: none;
+    display: block;
+    margin: 0 auto;
+}

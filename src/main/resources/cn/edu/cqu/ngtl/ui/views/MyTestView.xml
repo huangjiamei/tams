@@ -39,8 +39,9 @@
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/bootstrap.css</value>
+                <value>css/tams.css</value>
                 <value>css/exam.css</value>
-                <value>css/uif.css</value>
+                <!--<value>css/uif.css</value>-->
             </list>
         </property>
         <property name="additionalScriptFiles">
@@ -54,9 +55,9 @@
         <property name="applicationHeader">
             <bean id="MyHeader" parent="TestHeader" />
         </property>
-        <property name="navigation">
-            <bean id="MyNav" parent="TestNav" />
-        </property>
+        <!--<property name="navigation">-->
+            <!--<bean id="MyNav" parent="TestNav" />-->
+        <!--</property>-->
 
         <property name="items">
             <!--这是一个page列表，一个view可以包含多个page，但是每次通过pageId访问其中的一个-->

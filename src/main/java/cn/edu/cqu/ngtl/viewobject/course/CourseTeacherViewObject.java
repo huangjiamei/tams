@@ -1,13 +1,12 @@
 package cn.edu.cqu.ngtl.viewobject.course;
 
-import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
-
-import java.util.List;
-
 /**
  * Created by tangjing on 16-10-15.
+ * Latest modified on 2016-10-17
  */
 public class CourseTeacherViewObject {
+
+    private boolean checkbox;
 
     private String departmentName;
 
@@ -15,9 +14,30 @@ public class CourseTeacherViewObject {
 
     private String courseCode;
 
-    private List<UTInstructor> instructors;
+    private String classNumber;
 
-    private Integer courseCredit;
+    private String instructorName;
+
+    /**
+     * 暂时缺失的参数
+     */
+    private String workTime;
+
+    private String allowance;
+
+    private String protocalAssistantNumber;
+
+    private String judgeStatus;
+
+    private String studentCounts;
+
+    private String classCounts;
+
+    private String instructorCounts;
+
+    /** End */
+
+    private String courseCredit;
 
     private String courseHour;
 
@@ -28,6 +48,14 @@ public class CourseTeacherViewObject {
     private String sessionYear;
 
     private String programName;
+
+    public boolean isCheckbox() {
+        return checkbox;
+    }
+
+    public void setCheckbox(boolean checkbox) {
+        this.checkbox = checkbox;
+    }
 
     public String getDepartmentName() {
         return departmentName;
@@ -53,19 +81,83 @@ public class CourseTeacherViewObject {
         this.courseCode = courseCode;
     }
 
-    public List<UTInstructor> getInstructors() {
-        return instructors;
+    public String getClassNumber() {
+        return classNumber;
     }
 
-    public void setInstructors(List<UTInstructor> instructors) {
-        this.instructors = instructors;
+    public void setClassNumber(String classNumber) {
+        this.classNumber = classNumber;
     }
 
-    public Integer getCourseCredit() {
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
+
+    public String getWorkTime() {
+        return workTime;
+    }
+
+    public void setWorkTime(String workTime) {
+        this.workTime = workTime;
+    }
+
+    public String getAllowance() {
+        return allowance;
+    }
+
+    public void setAllowance(String allowance) {
+        this.allowance = allowance;
+    }
+
+    public String getProtocalAssistantNumber() {
+        return protocalAssistantNumber;
+    }
+
+    public void setProtocalAssistantNumber(String protocalAssistantNumber) {
+        this.protocalAssistantNumber = protocalAssistantNumber;
+    }
+
+    public String getJudgeStatus() {
+        return judgeStatus;
+    }
+
+    public void setJudgeStatus(String judgeStatus) {
+        this.judgeStatus = judgeStatus;
+    }
+
+    public String getStudentCounts() {
+        return studentCounts;
+    }
+
+    public void setStudentCounts(String studentCounts) {
+        this.studentCounts = studentCounts;
+    }
+
+    public String getClassCounts() {
+        return classCounts;
+    }
+
+    public void setClassCounts(String classCounts) {
+        this.classCounts = classCounts;
+    }
+
+    public String getInstructorCounts() {
+        return instructorCounts;
+    }
+
+    public void setInstructorCounts(String instructorCounts) {
+        this.instructorCounts = instructorCounts;
+    }
+
+    public String getCourseCredit() {
         return courseCredit;
     }
 
-    public void setCourseCredit(Integer courseCredit) {
+    public void setCourseCredit(String courseCredit) {
         this.courseCredit = courseCredit;
     }
 

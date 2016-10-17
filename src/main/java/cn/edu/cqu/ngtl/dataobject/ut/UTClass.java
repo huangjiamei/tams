@@ -25,6 +25,9 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@Column(name = "COURSEOFFERING_ID")
 	private Integer courseOfferingId;
 
+    @Column(name = "CLASS_NBR")
+    private String classNumber;
+
 	@ManyToOne
 	@JoinColumn(name = "COURSEOFFERING_ID", insertable = false, updatable = false)
 	private UTCourseOffering courseOffering;
@@ -182,4 +185,11 @@ public class UTClass extends DataObjectBase implements Serializable {
         this.minPerWeek = minPerWeek;
     }
 
+    public String getClassNumber() {
+        return classNumber;
+    }
+
+    public void setClassNumber(String classNumber) {
+        this.classNumber = classNumber;
+    }
 }

@@ -183,7 +183,7 @@
                                                                 <!--<bean parent="Uif-InputField" p:propertyName="paidTime"-->
                                                                 <!--p:readOnlyDisplayReplacement="@{#line.studentId==null?' ':#line.paidTime==null? '否':'是'}"-->
                                                                 <!--p:readOnly="true" p:label="缴费" />-->
-                                                                <bean parent="Uif-InputField" p:label="学院" p:propertyName="check1">
+                                                                <bean parent="Uif-InputField" p:label="学院" p:propertyName="checkbox">
                                                                     <property name="control">
                                                                         <bean parent="Uif-CheckboxControl"
                                                                               p:style=" width=25px;height=25px;"/>
@@ -194,16 +194,16 @@
                                                                       p:sortAs="numeric"/>
                                                                 <bean parent="Uif-DataField" p:label="课程编号"
                                                                       p:propertyName="courseCode"/>
-                                                                <bean parent="Uif-DataField" p:label="教学班" p:propertyName="date1"
+                                                                <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"
                                                                       p:sortAs="kuali_date"/>
-                                                                <bean parent="Uif-DataField" p:label="教师" p:propertyName="field4"/>
+                                                                <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
                                                                 <bean parent="Uif-DataField" p:label="耗费工时"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="workTime"/>
                                                                 <bean parent="Uif-DataField" p:label="津贴估算"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="allowance"/>
                                                                 <bean parent="Uif-DataField" p:label="拟配备助教数"
-                                                                      p:propertyName="field4"/>
-                                                                <bean parent="Uif-DataField" p:label="状态" p:propertyName="field4"/>
+                                                                      p:propertyName="protocalAssistantNumber"/>
+                                                                <bean parent="Uif-DataField" p:label="状态" p:propertyName="judgeStatus"/>
                                                                 <bean parent="Uif-DataField" p:label="学时" p:propertyName="courseHour"/>
                                                                 <bean parent="Uif-DataField" p:label="学分" p:propertyName="courseCredit"/>
                                                                 <bean parent="Uif-DataField" p:label="选修/必修"
@@ -214,11 +214,11 @@
                                                                       p:propertyName="sessionYear"/>
                                                                 <bean parent="Uif-DataField" p:label="专业" p:propertyName="programName"/>
                                                                 <bean parent="Uif-DataField" p:label="学生人数"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="studentCounts"/>
                                                                 <bean parent="Uif-DataField" p:label="教学班数"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="classCounts"/>
                                                                 <bean parent="Uif-DataField" p:label="上课教师数"
-                                                                      p:propertyName="field4"/>
+                                                                      p:propertyName="instructorCounts"/>
 
 
                                                             </list>

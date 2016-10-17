@@ -1,8 +1,8 @@
 package cn.edu.cqu.ngtl.security;
 
 import cn.edu.cqu.ngtl.bo.User;
-import cn.edu.cqu.ngtl.service.UserService.UserInfoService;
-import cn.edu.cqu.ngtl.service.UserService.impl.UserInfoServiceImpl;
+import cn.edu.cqu.ngtl.service.userservice.UserInfoService;
+import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;

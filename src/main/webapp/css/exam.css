@@ -135,17 +135,17 @@ headr .row{
 	float: none;
 }
 
-#PortalHeader .dropdown-menu{
+#MyHeader .dropdown-menu{
     width: 240px;
    padding: 0;
 }
 
-#PortalHeader .dropdown-menu li{
+#MyHeader .dropdown-menu li{
     text-align: center;
     list-style: none;
 }
 
-#PortalHeader .dropdown-menu .userInfoPic{
+#MyHeader .dropdown-menu .userInfoPic{
     width: 90px;
     height: 90px;
     border-radius: 50%;
@@ -154,18 +154,18 @@ headr .row{
     border-color: rgba(255, 255, 255, 0.2);
 }
 
-#PortalHeader ul.nav > li:nth-child(4) > ul > li:nth-child(1),
-#PortalHeader ul.nav > li:nth-child(4) > ul > li:nth-child(2){
+#MyHeader ul.nav > li:nth-child(4) > ul > li:nth-child(1),
+#MyHeader ul.nav > li:nth-child(4) > ul > li:nth-child(2){
    background-color:#3c8dbc;
 }
 
-#PortalHeader .dropdown-menu .userInfoMeg{
+#MyHeader .dropdown-menu .userInfoMeg{
     font-size: 18px;
     color: rgba(255, 255, 255, 0.8);
     padding: 0 0 20px;
 }
 
-#PortalHeader .dropdown-menu .userInfoBtn{
+#MyHeader .dropdown-menu .userInfoBtn{
     box-shadow: none;
     float: left;
     margin: 10px 20px;
@@ -173,22 +173,22 @@ headr .row{
 }
 
 
-#PortalHeader ul.nav > li:nth-child(3) > ul {
+#MyHeader ul.nav > li:nth-child(3) > ul {
     padding: 0 5px 20px 0;
 }
 
 
-#PortalHeader .dropdown-menu .mainMenuLink{
+#MyHeader .dropdown-menu .mainMenuLink{
     width: 50%;
     float: left;
     margin:15px 0;
 }
 
-#PortalHeader .dropdown-menu .mainMenuLink a{
+#MyHeader .dropdown-menu .mainMenuLink a{
     font-size: 2em;
 }
 
-#PortalHeader .dropdown-menu .mainMenuLink a:hover{
+#MyHeader .dropdown-menu .mainMenuLink a:hover{
     background-color: #fff;
     text-decoration: none;
 }
@@ -209,7 +209,7 @@ headr .row{
 	color:#00a65a !important
 }
 
-#PortalHeader .dropdown-menu .mainMenuMeg{
+#MyHeader .dropdown-menu .mainMenuMeg{
     position: absolute;
 }
 
@@ -233,7 +233,7 @@ headr .row{
     left: 143px;
 }
 
-#PortalHeader .toolbar{
+#MyHeader .toolbar{
 	display:none!important;
 }
 
@@ -353,7 +353,7 @@ body{
     border-radius: 3px;
     background: #ffffff;
     margin-bottom: 20px;
-    width: 100%;
+    /*width: 100%;*/
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
@@ -383,8 +383,7 @@ body{
 .box-header > .boxheaderTitle,
 .box-header > [class*="icon-"]{
   font-size: 18px;
-    margin-left: 10px;
-}  
+}
 .box .box-body {
     padding: 10px;
     -webkit-border-top-left-radius: 0;
@@ -406,9 +405,7 @@ body{
     margin:0;
 }
 
-.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12{
-    margin-right: 0;
-}
+
 
 .btn-primary {
     background-color: #3c8dbc;
@@ -678,9 +675,9 @@ body{
     text-decoration: none;
 }
 #Uif-BreadcrumbWrapper .uif-breadcrumbs>li>span {
-     padding: 0; 
+     padding: 0;
      float: none;
-    color: #000; 
+    color: #000;
 }
 #Uif-BreadcrumbWrapper .uif-breadcrumbs>li:last-child>span {
     font-weight: normal;

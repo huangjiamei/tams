@@ -60,6 +60,8 @@
                                     </list>
                                 </property>
                             </bean>
+
+
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary col-md-6">
                                 <property name="items">
                                     <list>
@@ -90,151 +92,6 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <!--隐藏的搜索框，需要用js放置进页面-->
-                            <!--<bean parent="Uif-VerticalBoxSection"-->
-                                  <!--p:additionalCssClasses="box" p:style="display:none">-->
-                                <!--<property name="items">-->
-                                    <!--<list>-->
-                                        <!--<bean parent="Uif-TabGroup">-->
-                                            <!--<property name="items">-->
-                                                <!--<list>-->
-                                                    <!--<bean parent="Uif-VerticalBoxSection" p:headerText="批量查询">-->
-                                                        <!--<property name="items">-->
-                                                            <!--<list>-->
-                                                                <!--<bean parent="Uif-HorizontalBoxSection">-->
-                                                                    <!--<property name="items">-->
-                                                                        <!--<list>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="学院"-->
-                                                                                  <!--p:propertyName="field4">-->
-                                                                                <!--<property name="optionsFinder">-->
-                                                                                    <!--<bean class="com.yunteng.ngtl.exam.tool.UTDepartmentOptionFinder"-->
-                                                                                          <!--p:blankOption="true"/>-->
-                                                                                <!--</property>-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="课程名称"-->
-                                                                                  <!--p:propertyName="field4"-->
-                                                                                  <!--p:refreshWhenChangedPropertyNames="field5">-->
-                                                                                <!--&lt;!&ndash;<property name="optionsFinder">&ndash;&gt;-->
-                                                                                    <!--&lt;!&ndash;<bean&ndash;&gt;-->
-                                                                                            <!--&lt;!&ndash;class="com.yunteng.ngtl.exam.tool.AIPProgramOptionFinder"/>&ndash;&gt;-->
-                                                                                <!--&lt;!&ndash;</property>&ndash;&gt;-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="年级"-->
-                                                                                  <!--p:propertyName="AIPsearchGradeId"-->
-                                                                                  <!--p:optionsFinderClass="com.yunteng.ngtl.exam.tool.GradeOptionFinder">-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="报考语言"-->
-                                                                                  <!--p:propertyName="AIPsearchExamId"-->
-                                                                                  <!--p:optionsFinderClass="com.yunteng.ngtl.exam.tool.ExamOptionFinder">-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="校区"-->
-                                                                                  <!--p:optionsFinderClass="com.yunteng.ngtl.exam.tool.CampusOptionFinder"-->
-                                                                                  <!--p:propertyName="AIPsearchCampusId">-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
-                                                                                  <!--p:actionLabel="查询"-->
-                                                                                  <!--p:additionalCssClasses="icon-search"-->
-                                                                                  <!--p:methodToCall="searchBatchApplicant"-->
-                                                                                  <!--p:style="margin:15px"/>-->
-
-                                                                            <!--<bean parent="Uif-InputField" p:label="报考语言"-->
-                                                                                  <!--p:propertyName="applicantLanguage"-->
-                                                                                  <!--p:optionsFinderClass="com.yunteng.ngtl.exam.tool.ExmLanguageTypeOptionFinder"-->
-                                                                                  <!--p:style="display:none">-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:propertyName="applicantLevelId"-->
-                                                                                  <!--p:label="级别"-->
-                                                                                  <!--p:optionsFinderClass="com.yunteng.ngtl.exam.tool.ExamLevelOptionFinder"-->
-                                                                                  <!--p:style="display:none">-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl"/>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                        <!--</list>-->
-                                                                    <!--</property>-->
-                                                                <!--</bean>-->
-
-                                                            <!--</list>-->
-                                                        <!--</property>-->
-                                                    <!--</bean>-->
-
-                                                    <!--<bean parent="Uif-VerticalBoxSection" p:headerText="单个查询">-->
-                                                        <!--<property name="items">-->
-                                                            <!--<list>-->
-                                                                <!--<bean parent="Uif-HorizontalBoxSection">-->
-                                                                    <!--<property name="items">-->
-                                                                        <!--<list>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="学号"-->
-                                                                                  <!--p:propertyName="AIPsearchStudentCode"/>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="证件号"-->
-                                                                                  <!--p:propertyName="AIPsearchIdNumber"/>-->
-                                                                            <!--<bean parent="Uif-InputField" p:label="姓名"-->
-                                                                                  <!--p:propertyName="AIPsearchStudentName"/>-->
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
-                                                                                  <!--p:actionLabel="查询"-->
-                                                                                  <!--p:methodToCall="searchCaseApplicant"-->
-                                                                                  <!--p:style="margin:15px"-->
-                                                                                  <!--p:additionalCssClasses="icon-search"/>-->
-                                                                        <!--</list>-->
-                                                                    <!--</property>-->
-                                                                <!--</bean>-->
-
-                                                            <!--</list>-->
-                                                        <!--</property>-->
-                                                    <!--</bean>-->
-                                                <!--</list>-->
-                                            <!--</property>-->
-                                        <!--</bean>-->
-                                    <!--</list>-->
-                                <!--</property>-->
-                            <!--</bean>-->
-                            <!--&lt;!&ndash;下面这块像是输入框？不清楚&ndash;&gt;-->
-                            <!--<bean id="ApplicantInfoContainer" parent="Uif-HorizontalBoxSection"-->
-                                  <!--p:style="display:none">-->
-                                <!--<property name="items">-->
-                                    <!--<list>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantStuName"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantGender"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantDegree"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantdDuration"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantdStudentId"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantGrade"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantdDept"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantdCampus"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantidType"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantidNumber"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantLanguageType"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantLevel"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantOrderAmt"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantPaidTime"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantNumber"/>-->
-                                        <!--<bean parent="Uif-InputField" p:propertyName="applicantTicketNumber"/>-->
-                                        <!--<bean id="ApplicantPageButton" parent="Uif-PrimaryActionButton"-->
-                                              <!--p:actionLabel="搜索" p:methodToCall="ApplicantPageTest"-->
-                                              <!--p:refreshId="ApplicantInfoPage"/>-->
-                                    <!--</list>-->
-                                <!--</property>-->
-                            <!--</bean>-->
-                            <!--表格正文-->
                             <bean parent="Uif-VerticalBoxSection"
                                   p:additionalCssClasses="box box-info">
                                 <property name="items">
@@ -371,16 +228,16 @@
                                                                 <bean parent="Uif-VerticalBoxSection">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"  p:actionLabel="查看"-->
-                                                                                  <!--p:methodToCall="getTaskListDetail"/>-->
-                                                                            <bean parent="Uif-ActionImage"
-                                                                                  p:methodToCall="getTaskListDetail"
-                                                                                  p:successCallback="jQuery('#getTaskDetailBtn').click();">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>
-                                                                                </property>
-                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"  p:actionLabel="查看"
+                                                                                  p:methodToCall="getTaskListDetail"/>
+                                                                            <!--<bean parent="Uif-ActionImage"-->
+                                                                                  <!--p:methodToCall="getTaskListDetail"-->
+                                                                                  <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->
+                                                                                <!--<property name="actionImage">-->
+                                                                                    <!--<bean parent="Uif-Image"-->
+                                                                                          <!--p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>

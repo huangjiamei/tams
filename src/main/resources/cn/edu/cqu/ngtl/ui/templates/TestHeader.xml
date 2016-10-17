@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="TestHeader" parent="Uif-ApplicationHeaderBase" p:additionalCssClasses="">
+    <bean id="TestHeader" parent="Uif-ApplicationHeaderBase" >
         <property name="applicationNavigation.brandImage">
             <bean parent="Uif-Image" p:style="width:150px;margin: 2px 5px;"
                   p:source="@{#ConfigProperties['application.url']}/images/logo.png" />
@@ -40,7 +40,8 @@
         <property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />
         <property name="applicationNavigation.items">
             <list>
-                <!--<bean parent="Uif-MessageField" p:messageText="当前学期：" p:additionalCssClasses="headerMessage"/>-->
+                <bean parent="Uif-MessageField" p:messageText="当前学期：" p:additionalCssClasses="headerMessage"/>
+                <bean parent="Uif-MessageField" p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage" p:style="margin-right:5px;"/>
                 <!--<bean parent="Uif-MessageField" p:messageText="@{new com.yunteng.ngtl.exam.dao.impl.EXMCetTimeInfoDaoJpa().getCurrentEXMCetTimeInfo().getTimeInfoName()}" p:additionalCssClasses="headerMessage" p:style="margin-right:5px;"/>-->
                 <bean id="examMainMenu" parent="Uif-DropdownToggleMenu"
                       p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="mainMenu">

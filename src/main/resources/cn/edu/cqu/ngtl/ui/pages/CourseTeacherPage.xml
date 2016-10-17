@@ -50,10 +50,8 @@
                                         <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-Image"
-                                                          p:source="http://imgsrc.baidu.com/forum/w%3D580/sign=4ba25a29554e9258a63486e6ac83d1d1/ba25b899a9014c082c879ae8097b02087af4f4c4.jpg">
-
-                                                    </bean>
+                                                    <bean parent="Uif-Image" p:additionalCssClasses="photo"
+                                                          p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
                                                 </list>
                                             </property>
                                         </bean>
@@ -75,10 +73,8 @@
                                         <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-Image"
-                                                          p:source="http://imgsrc.baidu.com/forum/w%3D580/sign=4ba25a29554e9258a63486e6ac83d1d1/ba25b899a9014c082c879ae8097b02087af4f4c4.jpg">
-
-                                                    </bean>
+                                                    <bean parent="Uif-Image" p:additionalCssClasses="photo"
+                                                          p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
                                                 </list>
                                             </property>
                                         </bean>
@@ -228,15 +224,16 @@
                                                                 <bean parent="Uif-VerticalBoxSection">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-PrimaryActionButton"  p:actionLabel="查看"
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="查看"
                                                                                   p:methodToCall="getTaskListDetail"/>
                                                                             <!--<bean parent="Uif-ActionImage"-->
-                                                                                  <!--p:methodToCall="getTaskListDetail"-->
-                                                                                  <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->
-                                                                                <!--<property name="actionImage">-->
-                                                                                    <!--<bean parent="Uif-Image"-->
-                                                                                          <!--p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>-->
-                                                                                <!--</property>-->
+                                                                            <!--p:methodToCall="getTaskListDetail"-->
+                                                                            <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->
+                                                                            <!--<property name="actionImage">-->
+                                                                            <!--<bean parent="Uif-Image"-->
+                                                                            <!--p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>-->
+                                                                            <!--</property>-->
                                                                             <!--</bean>-->
                                                                         </list>
                                                                     </property>
@@ -255,7 +252,7 @@
                 </bean>
                 <bean id="getTaskDetailBtn" parent="Uif-PrimaryActionButton"
                       p:actionLabel="查看任务详情，此按钮隐藏" p:navigateToPageId="pageTaskList"
-                      p:style="display:none" />
+                      p:style="display:none"/>
             </list>
         </property>
     </bean>

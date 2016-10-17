@@ -3,6 +3,8 @@ package cn.edu.cqu.ngtl.service.UserService.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.UT.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dao.UT.impl.UTStudentDaoJpa;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_PERM_T_DaoJpa;
 import cn.edu.cqu.ngtl.dataobject.UT.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.UT.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;

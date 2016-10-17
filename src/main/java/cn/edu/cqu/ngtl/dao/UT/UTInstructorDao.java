@@ -13,4 +13,6 @@ public interface UTInstructorDao {
 	 
 	UTInstructor getInstructorByNameAndCode(String name, String code);
 
+	UTInstructor getInstructorByIdWithoutCache(String Id);
+
 }

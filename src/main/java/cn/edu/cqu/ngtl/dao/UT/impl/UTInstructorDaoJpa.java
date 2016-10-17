@@ -54,4 +54,8 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		return qr.getResults().isEmpty()?null:qr.getResults().get(0);
 	}
 
+	@Override
+	public UTInstructor getInstructorByIdWithoutCache(String Id) {
+		return KradDataServiceLocator.getDataObjectService().find(UTInstructor.class, Id);
+	}
 }

@@ -38,49 +38,28 @@
                   p:source="@{#ConfigProperties['application.url']}/images/logo.png" />
         </property>
         <property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />
+
         <property name="applicationNavigation.items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="当前学期：" p:additionalCssClasses="headerMessage"/>
-                <bean parent="Uif-MessageField" p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage" p:style="margin-right:5px;"/>
-                <!--<bean parent="Uif-MessageField" p:messageText="@{new com.yunteng.ngtl.exam.dao.impl.EXMCetTimeInfoDaoJpa().getCurrentEXMCetTimeInfo().getTimeInfoName()}" p:additionalCssClasses="headerMessage" p:style="margin-right:5px;"/>-->
-                <bean id="examMainMenu" parent="Uif-DropdownToggleMenu"
-                      p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="mainMenu">
-                    <property name="menuItems">
+                <bean parent="Uif-HorizontalBoxSection">
+                    <property name="items">
                         <list>
-                            <bean parent="Uif-LinkField" p:readOnly="true"
-                                  p:additionalCssClasses="mainMenuLink text-blue"
-                                  p:link.iconClass="icon-home5" p:title="重庆大学主页" p:target="_blank"
-                                  p:link.href="http://cqu.edu.cn/" />
-                            <bean parent="Uif-MessageField" p:messageText="重庆大学主页"
-                                  p:additionalCssClasses="mainMenuMeg text11" />
-                            <bean parent="Uif-LinkField" p:readOnly="true"
-                                  p:additionalCssClasses="mainMenuLink text-yellow"
-                                  p:link.iconClass="icon-money" p:title="重庆大学财务系统" p:target="_blank"
-                                  p:link.href="http://urp.cwc.cqu.edu.cn/" />
-                            <bean parent="Uif-MessageField" p:messageText="财务系统"
-                                  p:additionalCssClasses="mainMenuMeg text12" />
-                            <bean parent="Uif-LinkField" p:readOnly="true"
-                                  p:additionalCssClasses="mainMenuLink text-red" p:link.iconClass="icon-library"
-                                  p:title="重庆大学图书馆" p:target="_blank" p:link.href="http://lib.cqu.edu.cn/" />
-                            <bean parent="Uif-MessageField" p:messageText="数字图书馆"
-                                  p:additionalCssClasses="mainMenuMeg text21" />
-                            <bean parent="Uif-LinkField" p:readOnly="true"
-                                  p:additionalCssClasses="mainMenuLink text-green"
-                                  p:link.iconClass="icon-desktop" p:title="重庆大学信息化服务" p:target="_blank"
-                                  p:link.href="http://is.cqu.edu.cn/" />
-                            <bean parent="Uif-MessageField" p:messageText="信息化服务"
-                                  p:additionalCssClasses="mainMenuMeg text22" />
+                            <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
+                            <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
+                            <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="pull-right"
+                                  p:actionScript="showDialog('guideMapDialog');" p:style="margin-top:15px;"/>
                         </list>
                     </property>
                 </bean>
 
             </list>
         </property>
+        <!--不知道这是什么但是一删就报错-->
         <property name="applicationToolbar">
-            <bean parent="PortalToolbar" />
+            <bean id="toobar" parent="PortalToolbar" />
         </property>
     </bean>
-
+    <!--不知道这是什么但是一删就报错-->
     <bean id="PortalToolbar" parent="Uif-CssGridGroup" p:render="@{!renderedInDialog}">
         <property name="template"
                   value="/krad/WEB-INF/ftl/components/group/groupContentWrap.ftl" />
@@ -102,4 +81,102 @@
             </list>
         </property>
     </bean>
+
+
+    <bean id="guideMapDialog" parent="Uif-DialogGroup" p:style="z-index:9999;">
+        <property name="layoutManager">
+            <bean parent="Uif-VerticalBoxLayout"/>
+        </property>
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection" p:headerText="助教管理">
+                    <!-- property to activate disclosure -->
+                    <property name="disclosure.render" value="true"/>
+                    <!--设置下拉列表默认关闭-->
+                    <property name="disclosure.defaultOpen" value="false"/>
+                    <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                    <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                    <property name="items">
+                        <list>
+                            <bean parent="tamsMap"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-VerticalBoxSection" p:headerText="某某管理">
+                    <!-- property to activate disclosure -->
+                    <property name="disclosure.render" value="true"/>
+                    <!--设置下拉列表默认关闭-->
+                    <property name="disclosure.defaultOpen" value="false"/>
+                    <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                    <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                    <property name="items">
+                        <list>
+                            <bean parent="tamsMap"/>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+
+    </bean>
+
+
+    <!--tams网站导航-->
+    <bean id="tamsMap" parent="Uif-VerticalBoxSection">
+        <property name="items">
+            <list>
+                <bean parent="Uif-SimpleGroup">
+                    <property name="items">
+                        <list>
+                            <bean parent="Demo-Menu-Researcher-ProposalGroup"/>
+                            <bean parent="Demo-Menu-Researcher-AwardGroup"/>
+                            <bean parent="Demo-Menu-Researcher-NegotiationGroup"/>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
+        <property name="items">
+            <list>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-SimpleHeaderFour" p:headerText="Lists"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                       p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Demo-Menu-Researcher-AwardGroup" parent="Uif-MenuList" p:headerText="Awards">
+        <property name="items">
+            <list>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Demo-Menu-Researcher-NegotiationGroup" parent="Uif-MenuList" p:headerText="Negotiations">
+        <property name="items">
+            <list>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+            </list>
+        </property>
+    </bean>
+
+
+
+
 </beans>

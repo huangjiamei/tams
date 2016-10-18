@@ -83,98 +83,92 @@
 
 
                 <!--row 1-->
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="">
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="box box-info col-md-5 col-md-offset-1"
+                                  p:style="padding:5px;width=250px!important;">
                                 <property name="items">
                                     <list>
-
-                                        <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-info col-md-5 col-md-offset-1"
-                                              p:style="padding:5px;width=250px!important;">
+                                        <bean parent="Uif-HorizontalBoxSection">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-HorizontalBoxSection">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="我的信息"
-                                                                      p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <!--头像-->
-                                                    <bean id="user-header-img" parent="Uif-Image"
-                                                          p:additionalCssClasses="photo"
-                                                          p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
-                                                    <!--具体信息的表格-->
-                                                    <bean parent="Uif-GridGroup"
-                                                          p:style="width=500px!important;"
-                                                          p:additionalCssClasses="box-body"
-                                                          p:layoutManager.renderRowFirstCellHeader="false">
-                                                        <property name="layoutManager.numberOfColumns" value="2"/>
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-MessageField" p:label="学号"
-                                                                      p:messageText="1"/>
-                                                                <bean parent="Uif-MessageField" p:label="姓名"
-                                                                      p:messageText="牛顿"/>
-                                                                <bean parent="Uif-MessageField" p:label="专业"
-                                                                      p:messageText="软件工程"/>
-                                                                <bean parent="Uif-MessageField" p:label="电子邮箱"
-                                                                      p:messageText="niudun@cqu.edu.cn"/>
-                                                                <bean parent="Uif-MessageField" p:label="联系电话"
-                                                                      p:messageText="12345"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:style="float:right;">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="更多"
-                                                                      p:actionScript="alert('更多');"
-                                                                      p:id="btn-moreinfo"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
+                                                    <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                    <bean parent="Uif-MessageField" p:messageText="我的信息"
+                                                          p:additionalCssClasses="boxheaderTitle"/>
                                                 </list>
                                             </property>
                                         </bean>
-
-
-
-
-                                        <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-success col-md-5">
+                                        <!--头像-->
+                                        <bean id="user-header-img" parent="Uif-Image"
+                                              p:additionalCssClasses="photo"
+                                              p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
+                                        <!--具体信息的表格-->
+                                        <bean parent="Uif-GridGroup"
+                                              p:style="width=500px!important;"
+                                              p:additionalCssClasses="box-body"
+                                              p:layoutManager.renderRowFirstCellHeader="false">
+                                            <property name="layoutManager.numberOfColumns" value="2"/>
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-user"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="待定信息"
-                                                                      p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-body">
-                                                    </bean>
-
+                                                    <bean parent="Uif-MessageField" p:label="学号"
+                                                          p:messageText="1"/>
+                                                    <bean parent="Uif-MessageField" p:label="姓名"
+                                                          p:messageText="牛顿"/>
+                                                    <bean parent="Uif-MessageField" p:label="专业"
+                                                          p:messageText="软件工程"/>
+                                                    <bean parent="Uif-MessageField" p:label="电子邮箱"
+                                                          p:messageText="niudun@cqu.edu.cn"/>
+                                                    <bean parent="Uif-MessageField" p:label="联系电话"
+                                                          p:messageText="12345"/>
                                                 </list>
                                             </property>
+                                        </bean>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:style="float:right;">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-PrimaryActionButton"
+                                                          p:actionLabel="更多"
+                                                          p:actionScript="alert('更多');"
+                                                          p:id="btn-moreinfo"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+
+
+
+
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="box box-success col-md-5">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:additionalCssClasses="box-header">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-Icon" p:iconClass="icon-user"/>
+                                                    <bean parent="Uif-MessageField" p:messageText="待定信息"
+                                                          p:additionalCssClasses="boxheaderTitle"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:additionalCssClasses="box-body">
                                         </bean>
 
                                     </list>
                                 </property>
                             </bean>
+
                         </list>
                     </property>
                 </bean>
+
             </list>
         </property>
     </bean>

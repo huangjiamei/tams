@@ -22,21 +22,10 @@ import java.util.List;
 public class TestController extends UifControllerBase {
 
 
-    @RequestMapping("/func")
-    public void func() {
-        System.out.println("func");
-    }
-
     @RequestMapping(params = "methodToCall=getMyInformationPage")
     public ModelAndView getMyInformationPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
         return this.getModelAndView(testForm, "pageTest1");
-    }
-
-    @RequestMapping(params = "methodToCall=getDatatablePage")
-    public ModelAndView getDatatablePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageDatatable");
     }
 
 

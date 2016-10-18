@@ -35,53 +35,6 @@
     <bean id="CommonHomePage" parent="Uif-VerticalBoxSection"  p:additionalCssClasses="container" p:style="margin:0 auto;" >
         <property name="items">
             <list>
-
-                <!--row 1-->
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                    <property name="items">
-                        <list>
-                            <bean id="CommonHomePageHeader" parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
-                               <property name="items">
-                                    <list>
-
-                                        <!-- 左上角 -->
-                                        <bean parent="Uif-HeaderThree" p:headerText="公共主页" />
-
-
-                                        <!-- 右上角 当前路径 -->
-                                        <bean id="ClassInfoHeader" parent="Uif-VerticalBoxSection"
-                                          p:additionalCssClasses="breadcrumb">
-                                        <property name="items">
-                                            <list>
-                                                <bean parent="Uif-Icon" p:iconClass="icon-home"
-                                                      p:style="float:left!important;"/>
-                                                <bean parent="Uif-InputField">
-                                                    <property name="control">
-                                                        <bean parent="Uif-OptionListControl"
-                                                              p:additionalCssClasses="breadcrumb"
-                                                              p:style="background: transparent!important;">
-                                                            <property name="options">
-                                                                <list>
-                                                                    <bean parent="Uif-KeyLabelPair" p:key="1" p:value="主页"/>
-                                                                </list>
-                                                            </property>
-                                                        </bean>
-                                                    </property>
-                                                </bean>
-                                            </list>
-                                        </property>
-                                    </bean>
-
-                                    </list>
-                                </property>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
-
-
-
                 <!--row 1-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
@@ -95,10 +48,11 @@
                                               p:style="padding:5px;width=250px!important;">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-user"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="我的信息"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
@@ -155,7 +109,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-user"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="待定信息"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>

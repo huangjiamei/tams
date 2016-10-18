@@ -72,13 +72,6 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-Page" p:id="pageDatatable" p:title="datatable测试">
-                    <property name="items">
-                        <list>
-                            <ref bean="DataTableTestPage"/>
-                        </list>
-                    </property>
-                </bean>
                 <bean parent="Uif-Page" p:id="pageCourseTeacher" p:title="datatable测试">
                     <property name="items">
                         <list>

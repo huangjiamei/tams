@@ -28,6 +28,12 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTest1");
     }
 
+    @RequestMapping(params = "methodToCall=getEditor")
+    public ModelAndView getEditor(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageEditor");
+    }
+
 
     // ------------ pages‘≠–Õ --------------
 

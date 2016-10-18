@@ -32,43 +32,21 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <!--自定义css的boxLayoutManager-->
-    <bean id="Tams-SimpleBoxLayout" parent="Tams-SimpleBoxLayout-parentBean"/>
-    <bean id="Tams-SimpleBoxLayout-parentBean" abstract="true" parent="Uif-BoxLayoutBase">
-        <property name="cssClasses">
+    <bean id="editorPage" parent="Uif-VerticalBoxSection"
+          p:additionalCssClasses="box box-info">
+        <property name="items">
             <list>
-                <value>NULL</value>
-            </list>
-        </property>
-        <property name="itemStyleClasses">
-            <list>
-                <value>NULL</value>
+                <bean parent="Uif-VerticalBoxSection"
+                      p:additionalCssClasses="box-body">
+                    <property name="onDocumentReadyScript" value="UE.getEditor('editor');" />
+                    <property name="items">
+                        <list>
+                            <bean id="editor" parent="Uif-VerticalBoxSection">
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>
-
-    <bean id="Tams-SimpleBoxGroup" parent="Tams-SimpleBoxGroup-parentBean"/>
-    <bean id="Tams-SimpleBoxGroup-parentBean" abstract="true" parent="Uif-BoxGroupBase" scope="prototype">
-        <property name="cssClasses">
-            <list>
-                <value>NULL</value>
-            </list>
-        </property>
-        <property name="layoutManager">
-            <bean parent="Tams-SimpleBoxLayout"/>
-        </property>
-    </bean>
-
-    <bean id="Tams-SimpleBoxSection" parent="Tams-SimpleBoxSection-parentBean"/>
-    <bean id="Tams-SimpleBoxSection-parentBean" abstract="true" parent="Tams-SimpleBoxGroup" scope="prototype">
-        <property name="cssClasses">
-            <list>
-                <value>NULL</value>
-            </list>
-        </property>
-
-    </bean>
-
-
-
 </beans>

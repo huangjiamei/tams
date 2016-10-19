@@ -2,10 +2,8 @@ package cn.edu.cqu.ngtl.service.userservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMProgramCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
-import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
-import cn.edu.cqu.ngtl.dataobject.enums.CM_COURSE;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTClassInfoDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.userservice.ITeacherService;
 import cn.edu.cqu.ngtl.viewobject.course.CourseTeacherViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +18,10 @@ import java.util.List;
 @Service
 public class TeacherServiceImpl implements ITeacherService {
 
+
+    @Autowired
+    private UTClassInfoDaoJpa utClassInfoDaoJpa;
+
     @Autowired
     private CMProgramCourseDao programCourseDao;
 
@@ -32,34 +34,30 @@ public class TeacherServiceImpl implements ITeacherService {
         List<CourseTeacherViewObject> viewObjects = new ArrayList<>();
 
         /** Access DataBase */
-        List<UTClass> classes = classDao.selectAllMappedByDepartment();
-
-        for(UTClass clazz : classes) {
+        List<UTClassInformation> classes = utClassInfoDaoJpa.getAllClassInformation();
+        for (UTClassInformation clazz : classes) {
             CourseTeacherViewObject viewObject = new CourseTeacherViewObject();
 
-            if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
-                viewObject.setInstructorName(clazz.getUtInstructors().get(0).getName());
+            //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
+            viewObject.setInstructorName("test");
 
             viewObject.setClassNumber(clazz.getClassNumber());
 
-            if(clazz.getCourseOffering() != null) {
-                UTCourse currentCourse = clazz.getCourseOffering().getCourse();
-                viewObject.setDepartmentName(currentCourse.getDepartment().getName());
-                viewObject.setCourseName(currentCourse.getName());
-                viewObject.setCourseHour(currentCourse.getHour());
-                viewObject.setCourseCode(currentCourse.getCodeR());
-                viewObject.setCourseCredit(currentCourse.getCredit().toString());
+            viewObject.setDepartmentName(clazz.getDeptName());
+            viewObject.setCourseName(clazz.getCourseName());
+            viewObject.setCourseHour(clazz.getHour());
+            viewObject.setCourseCode(clazz.getCourseCode());
+            viewObject.setCourseCredit(clazz.getCredit().toString());
 
-                /** Access DataBase */
-                CMProgramCourse programCourse = programCourseDao.selectByCourseId(currentCourse.getId());
+            /** Access DataBase */
+            /** 等待最新的性能解决方案    **/
+            //CMProgramCourse programCourse = programCourseDao.selectByCourseId(clazz.getCourseId());
 
-                if (programCourse != null) {
-                    viewObject.setCourseClassification(programCourse.getClassification().getName());
-                    viewObject.setIsRequired((programCourse.getRequired()== CM_COURSE.REQUIRED) ? "必修" : "选修");
-                    viewObject.setProgramName(programCourse.getProgram().getName());
-                }
-            }
-
+            //if (programCourse != null) {
+            viewObject.setCourseClassification("test");
+            viewObject.setIsRequired("必修");
+            viewObject.setProgramName("CS");
+            //}
             viewObjects.add(viewObject);
         }
 

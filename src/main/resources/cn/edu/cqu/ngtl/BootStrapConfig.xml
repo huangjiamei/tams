@@ -27,6 +27,10 @@ in configuration files outside of the project.
 -->
 <config>
 
+
+
+  <param name="http.port">8080</param>
+  <param name="application.host">127.0.0.1</param>
   <param name="rice.logging.configure">true</param>
 
   <param name="location.mode">LOCAL</param>
@@ -52,12 +56,6 @@ in configuration files outside of the project.
   <param name="datasource.url">jdbc:oracle:thin:@10.254.9.30:1521:orcl</param>
   <param name="datasource.username">RICE</param>
   <param name="datasource.password">RICE</param>
-
-    <!--<param name="datasource.ojb.platform">MySQL</param>-->
-    <!--<param name="datasource.url">jdbc:mysql://localhost:3306/rice</param>-->
-    <!--<param name="datasource.username">root</param>-->
-    <!--<param name="datasource.password">123321</param>-->
-
 
   <param name="config.location">classpath:META-INF/common-config-defaults.xml</param>
   <param name="config.location">classpath:META-INF/common-config-locations.xml</param>

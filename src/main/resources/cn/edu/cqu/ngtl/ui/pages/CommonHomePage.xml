@@ -91,7 +91,8 @@
                                   p:style="padding:5px;width=250px!important;">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-HorizontalBoxSection">
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:additionalCssClasses="box-header">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-Icon" p:iconClass="icon-info"/>
@@ -144,25 +145,25 @@
 
 
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-success col-md-5">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-HorizontalBoxSection"
-                                              p:additionalCssClasses="box-header">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-Icon" p:iconClass="icon-user"/>
-                                                    <bean parent="Uif-MessageField" p:messageText="待定信息"
-                                                          p:additionalCssClasses="boxheaderTitle"/>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                        <bean parent="Uif-HorizontalBoxSection"
-                                              p:additionalCssClasses="box-body">
-                                        </bean>
+                                              p:additionalCssClasses="box box-success col-md-5">
+                                    <property name="items">
+                                        <list>
+                                            <bean parent="Uif-HorizontalBoxSection"
+                                                  p:additionalCssClasses="box-header">
+                                                <property name="items">
+                                                    <list>
+                                                        <bean parent="Uif-Icon" p:iconClass="icon-user"/>
+                                                        <bean parent="Uif-MessageField" p:messageText="待定信息"
+                                                              p:additionalCssClasses="boxheaderTitle"/>
+                                                    </list>
+                                                </property>
+                                            </bean>
+                                            <bean parent="Uif-HorizontalBoxSection"
+                                                  p:additionalCssClasses="box-body">
+                                            </bean>
 
-                                    </list>
-                                </property>
+                                        </list>
+                                    </property>
                             </bean>
 
                         </list>

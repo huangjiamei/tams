@@ -8,7 +8,7 @@ import org.kuali.rice.krad.UserSession;
  *
  * @author Bill
  */
-public interface UserInfoService {
+public interface IUserInfoService {
 	/**
 	 * [hasPermission 目前权限管理所使用的权限判定方法]
 	 * @param  user     [bo-用户]

@@ -12,7 +12,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Created by hp on 2016/10/7.
@@ -29,7 +28,7 @@ public class TestController extends UifControllerBase {
     }
 
 
-    // ------------ pages原型 --------------
+    // ------------ pages鍘熷瀷 --------------
 
     @RequestMapping(params = "methodToCall=getTeacherCoursePage")
     public ModelAndView getTeacherCoursePage(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -75,7 +74,7 @@ public class TestController extends UifControllerBase {
     }
 
 
-    // ------------ 部分后台调用 --------------
+    // ------------ 閮ㄥ垎鍚庡彴璋冪敤 --------------
     @RequestMapping(params = {"pageId=pageCourseTeacher", "methodToCall=getTaskListDetail"})
     public ModelAndView getTaskListDetail(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                           HttpServletResponse response) throws Exception {
@@ -91,8 +90,8 @@ public class TestController extends UifControllerBase {
 
         }
 
-        // FIXME: 2016/10/15 可以触发successCallback，但是btn的navigatetoPage出错
-        // FIXME: 2016/10/15 即使换成btn也会出错？？普通的申请表用btn提交不会有这种问题，可能与datatable的特性有关？
+        // FIXME: 2016/10/15 鍙互瑙﹀彂successCallback锛屼絾鏄痓tn鐨刵avigatetoPage鍑洪敊
+        // FIXME: 2016/10/15 鍗充娇鎹㈡垚btn涔熶細鍑洪敊锛燂紵鏅�氱殑鐢宠琛ㄧ敤btn鎻愪氦涓嶄細鏈夎繖绉嶉棶棰橈紝鍙兘涓巇atatable鐨勭壒鎬ф湁鍏筹紵
         return this.getModelAndView(testForm, "pageTaskList");
     }
 

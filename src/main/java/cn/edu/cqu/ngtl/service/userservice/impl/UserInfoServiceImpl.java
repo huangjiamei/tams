@@ -11,16 +11,18 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
-import cn.edu.cqu.ngtl.service.userservice.UserInfoService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import org.kuali.rice.kim.api.services.KimApiServiceLocator;
 import org.kuali.rice.krad.UserSession;
+import org.springframework.stereotype.Service;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class UserInfoServiceImpl implements UserInfoService {
+@Service
+public class UserInfoServiceImpl implements IUserInfoService {
 
 	@Override
 	public boolean isCollegeStaff(String principalId) {

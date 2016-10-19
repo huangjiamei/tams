@@ -36,16 +36,20 @@
           p:additionalCssClasses="box box-info">
         <property name="items">
             <list>
-                <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="box-body">
+
+                <!--p:propertyName="editorContent" 对应form中的editorContent-->
+                <bean id="editor" parent="Uif-InputField" p:propertyName="editorContent">
                     <property name="onDocumentReadyScript" value="UE.getEditor('editor');" />
-                    <property name="items">
-                        <list>
-                            <bean id="editor" parent="Uif-VerticalBoxSection">
-                            </bean>
-                        </list>
+                    <property name="control">
+                        <!-- 注意：下面这个input的id必定为{inputfieldid}_control-->
+                        <bean parent="Uif-TextAreaControl" p:style="height:0;visibility: hidden!important;"/>
                     </property>
                 </bean>
+
+                <bean id="editor-submit-btn" parent="Uif-PrimaryActionButton"
+                      p:methodToCall="submitEditorContent"
+                      p:preSubmitCall="return doEditorPreSubmit('editor','editor_control');"
+                      p:actionLabel="提交" />
             </list>
         </property>
     </bean>

@@ -133,5 +133,17 @@
 			</list>
 		</property>
 	</bean>
-
+	<bean id="sampleAppModuleService" class="org.kuali.rice.krad.service.impl.ModuleServiceBase">
+		<property name="moduleConfiguration" ref="enrollModuleConfiguration"/>
+	</bean>
+	<bean class="org.kuali.rice.core.framework.resourceloader.RiceSpringResourceLoaderConfigurer">
+		<property name="localServiceName" value="SampleAppContext"/>
+	</bean>
+	<bean id="configurationService" class="org.kuali.rice.core.framework.resourceloader.GlobalResourceLoaderServiceFactoryBean">
+		<property name="serviceName" value="kualiConfigurationService"/>
+	</bean>
+	<bean id="rice.ksb.serviceBus"
+		  class="org.kuali.rice.core.framework.resourceloader.GlobalResourceLoaderServiceFactoryBean">
+		<property name="serviceName" value="rice.ksb.serviceBus"/>
+	</bean>
 </beans>

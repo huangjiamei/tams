@@ -1,7 +1,7 @@
 package cn.edu.cqu.ngtl.security;
 
 import cn.edu.cqu.ngtl.bo.User;
-import cn.edu.cqu.ngtl.service.userservice.UserInfoService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -145,7 +145,7 @@ public class LoginFilter implements Filter {
 
         String Agent = httpRequest.getHeader("User-Agent");
 
-        UserInfoService userinfoservice = new UserInfoServiceImpl();
+        IUserInfoService userinfoservice = new UserInfoServiceImpl();
         User loginUser = userinfoservice.getUserByUserSession(userSession);
         userSession.addObject("user", loginUser);
 

@@ -31,12 +31,13 @@
                            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <bean id="CourseTeacherPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="CourseTeacherPage" parent="Uif-VerticalBoxSection"
+          p:additionalCssClasses="container" p:style="margin:0 auto;">
         <property name="items">
             <list>
                 <!--header-->
                 <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header">
+                      p:additionalCssClasses="content-header row">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -72,10 +73,10 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary col-md-6">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary col-md-5 col-md-offset-1">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
@@ -98,7 +99,7 @@
                             </bean>
 
 
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary col-md-6">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary col-md-5">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
@@ -127,7 +128,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info">
+                                  p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-HorizontalBoxSection"
@@ -190,7 +191,7 @@
                                                         <property name="layoutManager.richTable.render" value="true"/>
 
                                                         <!--打开useServerPaging会报js error？？-->
-                                                        <!--<property name="useServerPaging" value="true" />-->
+                                                        <property name="useServerPaging" value="true" />
 
                                                         <property name="renderAddLine" value="false"/>
                                                         <property name="renderLineActions" value="true"/>
@@ -204,6 +205,7 @@
                                                         <!--</map>-->
                                                         <!--</property>-->
                                                         <property name="disclosure.render" value="false"/>
+
 
                                                         <property name="items">
                                                             <list>

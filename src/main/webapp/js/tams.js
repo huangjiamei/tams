@@ -14,7 +14,12 @@
 //
 // });
 
-function initEditor(id) {
-    alert(id);
-    var ue = UE.getEditor(id);
+function doEditorPreSubmit(editorID,transferID) {
+
+    // alert('asdf');
+    // alert(UE.getEditor(editorID).getPlainTxt());
+    jQuery('#' + transferID).val(UE.getEditor(editorID).getPlainTxt());
+    return true;
 }
+
+

@@ -190,7 +190,7 @@
                                                         <property name="layoutManager.richTable.render" value="true"/>
 
                                                         <!--打开useServerPaging会报js error？？-->
-                                                        <!--<property name="useServerPaging" value="true" />-->
+                                                        <property name="useServerPaging" value="true" />
 
                                                         <property name="renderAddLine" value="false"/>
                                                         <property name="renderLineActions" value="true"/>

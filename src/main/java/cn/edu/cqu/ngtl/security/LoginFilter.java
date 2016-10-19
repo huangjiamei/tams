@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.security;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.log4j.MDC;
@@ -13,7 +14,6 @@ import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.exception.AuthenticationException;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -26,9 +26,6 @@ import java.net.URLEncoder;
  * Created by hp on 2016/10/16.
  */
 public class LoginFilter implements Filter {
-
-    @Autowired
-    private IUserInfoService userInfoService;
 
     private final static String KRAD_PATH="hello";
     private final static String CONTROLLER_PATH="mytest";
@@ -148,7 +145,8 @@ public class LoginFilter implements Filter {
 
         String Agent = httpRequest.getHeader("User-Agent");
 
-        User loginUser = userInfoService.getUserByUserSession(userSession);
+        IUserInfoService userinfoservice = new UserInfoServiceImpl();
+        User loginUser = userinfoservice.getUserByUserSession(userSession);
         userSession.addObject("user", loginUser);
 
         httpRequest.getSession().setAttribute(KRADConstants.USER_SESSION_KEY, userSession);

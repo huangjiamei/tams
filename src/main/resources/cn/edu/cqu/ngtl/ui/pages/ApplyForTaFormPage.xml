@@ -90,7 +90,7 @@
                         <list>
                             <!--申请表-->
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info col-lg-10 col-lg-offset-1"
+                                  p:additionalCssClasses="box box-info col-md-10 col-md-offset-1"
                                   p:style="padding:20px">
                                 <property name="items">
                                     <list>

@@ -1,7 +1,8 @@
 @CHARSET "UTF-8";
 
-﻿.nav, .navbar, .navbar-header, .navbar-collapse {
-    clear: none;
+.navbar-brand {
+    height:0px!important;
+    padding: 0px 0px!important;
 }
 
 /*居中block*/

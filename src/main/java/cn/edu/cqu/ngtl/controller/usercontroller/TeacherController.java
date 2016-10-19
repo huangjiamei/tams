@@ -1,7 +1,8 @@
 package cn.edu.cqu.ngtl.controller.usercontroller;
 
 import cn.edu.cqu.ngtl.form.usermannage.ViewDetailInfoForm;
-import cn.edu.cqu.ngtl.service.userservice.ITeacherService;
+import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
+import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class TeacherController extends UifControllerBase {
 
     @Autowired
-    private ITeacherService teacherService;
+    private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private ITAConverter taConverter;
 
     @Override
     protected UifFormBase createInitialForm() {
@@ -30,7 +34,11 @@ public class TeacherController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTeacherCoursePage")
     public ModelAndView getDivPage(@ModelAttribute("KualiForm") UifFormBase form){
         ViewDetailInfoForm infoForm=(ViewDetailInfoForm) form;
-        infoForm.setCollection(teacherService.getAllCoursesMappedByDepartment());
+        infoForm.setCollection(
+                taConverter.classInfoToViewObject(
+                        courseInfoService.getAllCoursesMappedByDepartment()
+                )
+        );
 
         return this.getModelAndView(infoForm, "pageCourseTeacher");
     }

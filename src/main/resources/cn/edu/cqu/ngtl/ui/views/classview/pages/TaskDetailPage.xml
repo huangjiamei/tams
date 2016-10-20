@@ -43,11 +43,11 @@
                             <bean parent="Uif-HeaderOne" p:headerText="课程研讨/讨论 001"/>
 
                             <!-- 右上角 当前路径 -->
-                            <bean parent="Uif-VerticalBoxSection"
+                            <bean parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-Icon" p:iconClass="icon-home"
+                                        <bean parent="Uif-Icon" p:iconClass="icon-home myIcon"
                                               p:style="float:left!important;"/>
                                         <bean parent="Uif-InputField">
                                             <property name="control">
@@ -144,7 +144,7 @@
                                 </property>
                             </bean>
                             <bean parent="Uif-GridGroup"
-                                  p:layoutManager.renderRowFirstCellHeader="false">
+                                                                     p:layoutManager.renderRowFirstCellHeader="false">
                                 <property name="layoutManager.numberOfColumns" value="4"/>
                                 <property name="items">
                                     <list>

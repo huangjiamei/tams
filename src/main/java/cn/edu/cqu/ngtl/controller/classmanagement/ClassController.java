@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 public class ClassController extends UifControllerBase {
 
 
+
     @RequestMapping(params = "methodToCall=getClassInfoPage")
     public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;

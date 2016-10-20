@@ -20,6 +20,11 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/mytest")
 public class TestController extends UifControllerBase {
 
+    @RequestMapping(params = "methodToCall=getEditor")
+    public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageEditor");
+    }
 
     @RequestMapping(params = "methodToCall=submitEditorContent")
     public void submitEditorContent(@ModelAttribute("KualiForm") UifFormBase form ,HttpServletRequest request, HttpServletResponse response){
@@ -29,7 +34,6 @@ public class TestController extends UifControllerBase {
         System.out.println(content);
 
     }
-
 
     @Override
     protected UifFormBase createInitialForm() {

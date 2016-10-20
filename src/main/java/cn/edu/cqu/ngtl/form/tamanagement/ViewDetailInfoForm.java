@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.form.usermannage;
+package cn.edu.cqu.ngtl.form.tamanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject;

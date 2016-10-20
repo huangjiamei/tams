@@ -63,11 +63,11 @@
                                                                 <property name="options">
                                                                     <list>
                                                                         <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                              p:location.viewId="MyTestView" p:location.controllerMapping="/mytest"
+                                                                              p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                               p:location.methodToCall="getCommonHome"/>
                                                                         <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
-                                                                              p:location.viewId="MyTestView" p:location.controllerMapping="/teacher"
-                                                                              p:location.methodToCall="getTeacherCoursePage"/>
+                                                                              p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                              p:location.methodToCall="getClassListPage"/>
                                                                         <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教申请"/>
                                                                     </list>
                                                                 </property>

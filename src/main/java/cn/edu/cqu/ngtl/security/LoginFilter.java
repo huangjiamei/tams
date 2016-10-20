@@ -27,10 +27,10 @@ import java.net.URLEncoder;
  */
 public class LoginFilter implements Filter {
 
-    private final static String KRAD_PATH="";
+    private final static String KRAD_PATH="portal";
     private final static String CONTROLLER_PATH="home";
-    private final static String HOMEPAGE_METHOD="getCommonHome";
     private final static String VIEW_ID="PortalView";
+    private final static String HOMEPAGE_METHOD="getCommonHome";
 
     static Logger logger = Logger.getLogger(LoginFilter.class);
     private String loginPath;
@@ -137,6 +137,7 @@ public class LoginFilter implements Filter {
         }
 
         UserSession userSession = new UserSession(user);
+
 
         // Test if session was successfully build for this user
         if (userSession.getPerson() == null) {

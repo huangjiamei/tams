@@ -62,7 +62,7 @@ in configuration files outside of the project.
   <param name="config.location">${alt.config.location}</param>
   <param name="version">tams :: ${project.version} :: Rice ${rice.version}</param>
 
-  <param name="krad.url" override="true">${application.url}</param>
+  <param name="krad.url" override="true">${application.url}/portal</param>
   <param name="testview" override="false">MyTestView</param>
 
 

@@ -31,7 +31,7 @@
                            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <bean id="CourseTeacherPage" parent="Uif-VerticalBoxSection"
+    <bean id="ClassListPage" parent="Uif-VerticalBoxSection"
           p:additionalCssClasses="container" p:style="margin:0 auto;">
         <property name="items">
             <list>
@@ -58,7 +58,7 @@
                                                     <property name="options">
                                                         <list>
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                  p:location.viewId="MyTestView" p:location.controllerMapping="/mytest"
+                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="2" p:value="课程"/>
                                                         </list>

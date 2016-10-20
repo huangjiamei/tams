@@ -2,7 +2,7 @@ package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.viewobject.course.CourseTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,12 +15,12 @@ import java.util.List;
 public class TAConverterimpl implements ITAConverter {
 
     @Override
-    public List<CourseTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
+    public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
-        List<CourseTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
+        List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
 
         for (UTClassInformation information : informationlist) {
-            CourseTeacherViewObject viewObject = new CourseTeacherViewObject();
+            ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
             //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
             viewObject.setInstructorName("test");

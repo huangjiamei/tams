@@ -1,7 +1,9 @@
 package cn.edu.cqu.ngtl.service.taservice.impl;
 
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,9 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class TAServiceimpl implements ITAService {
 
+    @Autowired
+    private UTClassInfoDao classInfoDao;
+
     @Override
-    public UTClass getClassInfoById(Integer id) {
-        return null;
+    public UTClassInformation getClassInfoById(Integer id) {
+        return classInfoDao.getOneById(id);
     }
 
 }

@@ -24,29 +24,29 @@ public class UnitimeDayOfWeekConverter implements AttributeConverter<String, Int
         }
         int result = 0;
         for (int i = 0; i < objectValue.length(); i++) {
-//            switch (objectValue.charAt(i)) {
-//                case '一':
-//                    result += 64;
-//                    break;
-//                case '2':
-//                    result += 32;
-//                    break;
-//                case '三':
-//                    result += 16;
-//                    break;
-//                case '四':
-//                    result += 8;
-//                    break;
-//                case '五':
-//                    result += 4;
-//                    break;
-//                case '六':
-//                    result += 2;
-//                    break;
-//                case '日':
-//                    result += 1;
-//                    break;
-//            }
+            switch (objectValue.charAt(i)) {
+                case '一':
+                    result += 64;
+                    break;
+                case '二':
+                    result += 32;
+                    break;
+                case '三':
+                    result += 16;
+                    break;
+                case '四':
+                    result += 8;
+                    break;
+                case '五':
+                    result += 4;
+                    break;
+                case '六':
+                    result += 2;
+                    break;
+                case '日':
+                    result += 1;
+                    break;
+            }
         }
 
         return result;

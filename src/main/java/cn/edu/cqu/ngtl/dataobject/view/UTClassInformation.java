@@ -10,10 +10,12 @@ import java.io.Serializable;
 
 /**
  * Created by awake on 2016-10-18.
+ *
+ * 绑定视图的实体，方法和绑定一般的表格一样  JPA mapping View
  */
 
 @Entity
-@Table(name="TEST")
+@Table(name="UNITIME_CLASS_INFORMATION")
 public class UTClassInformation extends DataObjectBase implements Serializable {
 
     @Column(name="LIMIT")

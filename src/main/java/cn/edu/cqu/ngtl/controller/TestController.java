@@ -20,61 +20,14 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/mytest")
 public class TestController extends UifControllerBase {
 
-    // ------------ pages原型 --------------
 
-//    @RequestMapping(params = "methodToCall=getTeacherCoursePage")
-//    public ModelAndView getTeacherCoursePage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//
-//        return this.getModelAndView(testForm, "pageCourseTeacher");
-//    }
-//
-//    @RequestMapping(params = "methodToCall=getApplyTAPage")
-//    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//        return this.getModelAndView(testForm, "pageApplyForTaForm");
-//    }
-
-//    @RequestMapping(params = "methodToCall=getCommonHome")
-//    public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//        return this.getModelAndView(testForm, "pageCommonHome");
-//    }
-
-//    @RequestMapping(params = "methodToCall=getTaskListPage")
-//    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//        return this.getModelAndView(testForm, "pageTaskList");
-//    }
-//
-//    @RequestMapping(params = "methodToCall=getClassInfoPage")
-//    public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//        return this.getModelAndView(testForm, "pageClassInfo");
-//    }
-//
-//    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-//    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//        return this.getModelAndView(testForm, "pageTaskDetail");
-//    }
-//
-//    @RequestMapping(params = "methodToCall=getAddTaskPage")
-//    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        TestForm testForm = (TestForm) form;
-//        return this.getModelAndView(testForm, "pageAddNewTask");
-//    }
-
-
-    // ------------ 部分后台调用 --------------
-
-
-    @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
-    public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
-                                     HttpServletResponse response) throws Exception {
+    @RequestMapping(params = "methodToCall=submitEditorContent")
+    public void submitEditorContent(@ModelAttribute("KualiForm") UifFormBase form ,HttpServletRequest request, HttpServletResponse response){
         TestForm testForm = (TestForm) form;
 
-        return this.getModelAndView(testForm, "pageCommonHome");
+        String content=testForm.getEditorContent();
+        System.out.println(content);
+
     }
 
 

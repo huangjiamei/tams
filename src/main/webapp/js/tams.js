@@ -2,15 +2,24 @@
  * Created by DELL on 2016-10-16.
  */
 
-//保持col-in-center-block的居中
-$(window).resize(function(){
+// $(window).resize(function(){
+//
+//     $('.col-in-center-block').css({
+//         display:'inline-block',
+//
+//         width: ($(window).width()
+//         - $('.col-in-center-block').outerWidth())/2,
+//
+//     });
+//
+// });
 
-    $('.col-in-center-block').css({
-        display:'inline-block',
+function doEditorPreSubmit(editorID,transferID) {
 
-        width: ($(window).width()
-        - $('.col-in-center-block').outerWidth())/2,
+    // alert('asdf');
+    // alert(UE.getEditor(editorID).getPlainTxt());
+    jQuery('#' + transferID).val(UE.getEditor(editorID).getPlainTxt());
+    return true;
+}
 
-    });
 
-});

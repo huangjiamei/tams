@@ -184,7 +184,7 @@
                                                         <property name="headerText" value="Table Layout"/>
                                                         <!--<property name="headerText" value="Table Layout" />-->
                                                         <property name="collectionObjectClass"
-                                                                  value="cn.edu.cqu.ngtl.viewobject.course.CourseTeacherViewObject"/>
+                                                                  value="cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject"/>
                                                         <property name="propertyName" value="collection"/>
                                                         <property name="layoutManager.renderSequenceField"
                                                                   value="false"/>

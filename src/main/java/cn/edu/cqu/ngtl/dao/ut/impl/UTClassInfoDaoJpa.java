@@ -19,7 +19,6 @@ public class UTClassInfoDaoJpa implements UTClassInfoDao {
 
     EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
-
     @Override
     public List<UTClassInformation> getAllClassInformation(){
         Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION",UTClassInformation.class);
@@ -27,8 +26,9 @@ public class UTClassInfoDaoJpa implements UTClassInfoDao {
         return result;
     }
 
-
-
-
+    @Override
+    public UTClassInformation getOneById(Integer id) {
+        return KRADServiceLocator.getDataObjectService().find(UTClassInformation.class, id);
+    }
 
 }

@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.ut;
 
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+
 import java.util.List;
 
 /**
@@ -10,5 +11,6 @@ public interface UTClassInfoDao {
 
      List<UTClassInformation> getAllClassInformation();
 
+    UTClassInformation getOneById(Integer id);
 
 }

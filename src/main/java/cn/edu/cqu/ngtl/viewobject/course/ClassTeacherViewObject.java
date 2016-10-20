@@ -4,7 +4,7 @@ package cn.edu.cqu.ngtl.viewobject.course;
  * Created by tangjing on 16-10-15.
  * Latest modified on 2016-10-17
  */
-public class CourseTeacherViewObject {
+public class ClassTeacherViewObject {
 
     private boolean checkbox;
 

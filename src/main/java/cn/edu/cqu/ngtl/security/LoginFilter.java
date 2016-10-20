@@ -30,7 +30,7 @@ public class LoginFilter implements Filter {
     private final static String KRAD_PATH="hello";
     private final static String CONTROLLER_PATH="mytest";
     private final static String HOMEPAGE_METHOD="getCommonHome";
-    private final static String VIEW_ID="MyTestView";
+    private final static String VIEW_ID="PortalView";
 
     static Logger logger = Logger.getLogger(LoginFilter.class);
     private String loginPath;

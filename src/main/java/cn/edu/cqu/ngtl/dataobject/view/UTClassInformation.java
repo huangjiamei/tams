@@ -1,19 +1,20 @@
 package cn.edu.cqu.ngtl.dataobject.view;
 
+import cn.edu.cqu.ngtl.tools.converter.UnitimeDayOfWeekConverter;
+import cn.edu.cqu.ngtl.tools.converter.UnitimeTimeSlotConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
  * Created by awake on 2016-10-18.
+ *
+ * 绑定视图的实体，方法和绑定一般的表格一样  JPA mapping View
  */
 
 @Entity
-@Table(name="TEST")
+@Table(name="UNITIME_CLASS_INFORMATION")
 public class UTClassInformation extends DataObjectBase implements Serializable {
 
     @Column(name="LIMIT")
@@ -30,14 +31,12 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name="UNIQUEID")
     private Integer id;
 
-    /** 等一个Converter */
-    //@Convert(converter = UnitimeDayOfWeekConverter.class)
+    @Convert(converter = UnitimeDayOfWeekConverter.class)
     @Column(name = "ASSIGNMENT_DAY")
     private String dayOfWeek;
 
-    /** 等一个Converter */
     @Column(name = "ASSIGNMENT_TIME")
-    //@Convert(converter = UnitimeTimeSlotConverter.class)
+    @Convert(converter = UnitimeTimeSlotConverter.class)
     private String timeSlot;
 
     @Column(name = "ROOM_ID")

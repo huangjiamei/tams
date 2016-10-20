@@ -379,7 +379,7 @@ This file contains custom application specific web.xml content.
 
   <servlet-mapping>
     <servlet-name>krad</servlet-name>
-    <url-pattern>/hello/*</url-pattern>
+    <url-pattern>/*</url-pattern>
   </servlet-mapping>
 
   <session-config>

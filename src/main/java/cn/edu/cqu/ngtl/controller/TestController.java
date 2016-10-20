@@ -43,11 +43,11 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageApplyForTaForm");
     }
 
-    @RequestMapping(params = "methodToCall=getCommonHome")
-    public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageCommonHome");
-    }
+//    @RequestMapping(params = "methodToCall=getCommonHome")
+//    public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form) {
+//        TestForm testForm = (TestForm) form;
+//        return this.getModelAndView(testForm, "pageCommonHome");
+//    }
 
     @RequestMapping(params = "methodToCall=getTaskListPage")
     public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {

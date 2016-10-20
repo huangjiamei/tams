@@ -27,8 +27,8 @@ import java.net.URLEncoder;
  */
 public class LoginFilter implements Filter {
 
-    private final static String KRAD_PATH="hello";
-    private final static String CONTROLLER_PATH="mytest";
+    private final static String KRAD_PATH="";
+    private final static String CONTROLLER_PATH="home";
     private final static String HOMEPAGE_METHOD="getCommonHome";
     private final static String VIEW_ID="PortalView";
 

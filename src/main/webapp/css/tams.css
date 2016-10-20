@@ -12,6 +12,10 @@
     margin: 0 auto;
 }
 
+.breadcrumb > li + li:before {
+    content: ">\00a0"!important;
+}
+
 
 .box-btngroup{
     float: right;
@@ -24,4 +28,15 @@
     width: 80px;
     height: 30px;
 }
+
+
+.myIcon{
+    float: left!important;
+    margin-top:11px!important;
+}
+
+.navigationDialog{
+    width:80%;
+}
+
 

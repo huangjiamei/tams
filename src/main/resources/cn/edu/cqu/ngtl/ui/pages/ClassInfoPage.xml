@@ -43,11 +43,11 @@
                             <bean parent="Uif-HeaderThree" p:headerText="课程信息" />
 
                             <!-- 右上角 当前路径 -->
-                            <bean parent="Uif-VerticalBoxSection"
+                            <bean parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-Icon" p:iconClass="icon-home"
+                                        <bean parent="Uif-Icon" p:iconClass="icon-home myIcon"
                                               p:style="float:left!important;"/>
                                         <bean parent="Uif-InputField">
                                             <property name="control">

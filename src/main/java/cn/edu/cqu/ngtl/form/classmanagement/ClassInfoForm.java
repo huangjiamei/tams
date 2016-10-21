@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.form.tamanagement;
+package cn.edu.cqu.ngtl.form.classmanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject;
@@ -8,11 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tangjing on 16-10-12.
+ * Created by awake on 2016-10-21.
  */
-public class ViewDetailInfoForm extends BaseForm implements Serializable {
+public class ClassInfoForm extends BaseForm implements Serializable {
 
-    private static final long serialVersionUID = 8220820300868876320L;
+
+    private static final long serialVersionUID = 230347454225549981L;
 
     private List<ClassTeacherViewObject> collection = new ArrayList<>();
 
@@ -23,4 +24,6 @@ public class ViewDetailInfoForm extends BaseForm implements Serializable {
     public void setCollection(List<ClassTeacherViewObject> collection) {
         this.collection = collection;
     }
+
+
 }

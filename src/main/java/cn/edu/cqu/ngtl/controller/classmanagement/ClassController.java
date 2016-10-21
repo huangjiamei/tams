@@ -1,18 +1,17 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
-import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.form.TestForm;
-import cn.edu.cqu.ngtl.form.tamanagement.ViewDetailInfoForm;
+import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
+import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -23,6 +22,11 @@ import javax.servlet.http.HttpServletResponse;
 public class ClassController extends UifControllerBase {
 
 
+    @Autowired
+    private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private ITAConverter taConverter;
 
     @RequestMapping(params = "methodToCall=getClassInfoPage")
     public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -44,7 +48,7 @@ public class ClassController extends UifControllerBase {
 
     @RequestMapping(params = "methodToCall=getClassListPage")
     public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        ViewDetailInfoForm infoForm = (ViewDetailInfoForm) form;
+        ClassInfoForm infoForm = (ClassInfoForm) form;
         return this.getModelAndView(infoForm, "pageClassList");
     }
 
@@ -66,7 +70,7 @@ public class ClassController extends UifControllerBase {
      */
     @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getTaskListPage"})
     public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        ViewDetailInfoForm infoForm = (ViewDetailInfoForm) form;
+        ClassInfoForm infoForm = (ClassInfoForm) form;
 
         try {
             CollectionControllerServiceImpl.CollectionActionParameters params =
@@ -82,10 +86,32 @@ public class ClassController extends UifControllerBase {
     }
 
 
-
     @Override
     protected UifFormBase createInitialForm() {
-        return new ViewDetailInfoForm();
+        return new ClassInfoForm();
+    }
+
+      /**
+       *
+       * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassesInfoPage&viewId=ClassView
+       *
+       * **/
+    @RequestMapping(params = "methodToCall=getClassesInfoPage")
+    public ModelAndView getClassesInfoPage(@ModelAttribute("KualiForm") UifFormBase form){
+        ClassInfoForm infoForm=(ClassInfoForm) form;
+        infoForm.setCollection(
+                taConverter.classInfoToViewObject(
+                        courseInfoService.getAllCoursesMappedByDepartment()
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageClassList");
+    }
+
+    @RequestMapping(params = "methodToCall=getTAInfoPage")
+    public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form){
+        //TODO
+        return null;
     }
 
 }

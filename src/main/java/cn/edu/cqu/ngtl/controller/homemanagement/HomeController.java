@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.controller.homemanagement;
 
-import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.form.TestForm;
+import cn.edu.cqu.ngtl.form.commonhome.CommonHomePage;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.springframework.stereotype.Controller;
@@ -18,13 +17,13 @@ public class HomeController extends UifControllerBase {
 
     @RequestMapping(params = "methodToCall=getCommonHome")
     public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form) {
-        BaseForm baseForm = (BaseForm) form;
-        return this.getModelAndView(baseForm, "pageCommonHome");
+        CommonHomePage homeForm = (CommonHomePage) form;
+        return this.getModelAndView(homeForm, "pageCommonHome");
     }
 
     @Override
     protected UifFormBase createInitialForm() {
-        return new BaseForm();
+        return new CommonHomePage();
     }
 
 }

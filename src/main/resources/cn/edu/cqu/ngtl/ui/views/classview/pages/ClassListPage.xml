@@ -143,7 +143,7 @@
                                                           p:style="float:right!important;font-size:14px;margin-right: 10px;background=orange!important;"
                                                           p:additionalCssClasses="bg-orange"/>
                                                     <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
-                                                          p:methodToCall="exportApplicantExcel"
+                                                          p:methodToCall="exportClassListExcel"
                                                           p:style="float:right!important;font-size:14px; margin-right: 10px;background=forestgreen!important;"
                                                           p:additionalCssClasses="bg-success"/>
                                                 </list>

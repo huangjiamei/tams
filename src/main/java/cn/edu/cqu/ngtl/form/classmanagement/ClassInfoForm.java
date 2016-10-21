@@ -15,14 +15,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = 230347454225549981L;
 
-    private List<ClassTeacherViewObject> collection = new ArrayList<>();
+    private List<ClassTeacherViewObject> classList = new ArrayList<>();
 
-    public List<ClassTeacherViewObject> getCollection() {
-        return collection;
+    public List<ClassTeacherViewObject> getClassList() {
+        return classList;
     }
 
-    public void setCollection(List<ClassTeacherViewObject> collection) {
-        this.collection = collection;
+    public void setClassList(List<ClassTeacherViewObject> classList) {
+        this.classList = classList;
     }
 
 

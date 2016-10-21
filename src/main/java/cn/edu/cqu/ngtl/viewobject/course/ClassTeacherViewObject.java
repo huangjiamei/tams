@@ -6,7 +6,7 @@ package cn.edu.cqu.ngtl.viewobject.course;
  */
 public class ClassTeacherViewObject {
 
-    private boolean checkbox;
+    private boolean checked;
 
     private String departmentName;
 
@@ -49,12 +49,12 @@ public class ClassTeacherViewObject {
 
     private String programName;
 
-    public boolean isCheckbox() {
-        return checkbox;
+    public boolean isChecked() {
+        return checked;
     }
 
-    public void setCheckbox(boolean checkbox) {
-        this.checkbox = checkbox;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public String getDepartmentName() {

@@ -55,7 +55,7 @@ public class ClassController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getClassListPage")
     public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm=(ClassInfoForm) form;
-        infoForm.setCollection(
+        infoForm.setClassList(
                 taConverter.classInfoToViewObject(
                         courseInfoService.getAllCoursesMappedByDepartment()
                 )
@@ -88,7 +88,7 @@ public class ClassController extends UifControllerBase {
                     new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
             int index = params.getSelectedLineIndex();
 
-//            TestObject object = infoForm.getCollection().get(index);
+//            TestObject object = infoForm.getClassList().get(index);
         } catch (Exception e) {
 
         }

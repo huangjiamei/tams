@@ -234,8 +234,8 @@
     <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
         <property name="items">
             <list>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&amp;viewId=ClassView"
+                      p:linkText="教学班"/>
                 <bean parent="Uif-Link" p:href="http://www.kuali.org"
                       p:linkText="Kuali Website"/>
                 <bean parent="Uif-Link" p:href="http://www.kuali.org"

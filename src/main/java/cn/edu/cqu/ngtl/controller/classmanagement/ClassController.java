@@ -46,9 +46,20 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageAddNewTask");
     }
 
+
+    /**
+     *
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
+     *
+     * **/
     @RequestMapping(params = "methodToCall=getClassListPage")
     public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        ClassInfoForm infoForm = (ClassInfoForm) form;
+        ClassInfoForm infoForm=(ClassInfoForm) form;
+        infoForm.setCollection(
+                taConverter.classInfoToViewObject(
+                        courseInfoService.getAllCoursesMappedByDepartment()
+                )
+        );
         return this.getModelAndView(infoForm, "pageClassList");
     }
 
@@ -89,23 +100,6 @@ public class ClassController extends UifControllerBase {
     @Override
     protected UifFormBase createInitialForm() {
         return new ClassInfoForm();
-    }
-
-      /**
-       *
-       * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassesInfoPage&viewId=ClassView
-       *
-       * **/
-    @RequestMapping(params = "methodToCall=getClassesInfoPage")
-    public ModelAndView getClassesInfoPage(@ModelAttribute("KualiForm") UifFormBase form){
-        ClassInfoForm infoForm=(ClassInfoForm) form;
-        infoForm.setCollection(
-                taConverter.classInfoToViewObject(
-                        courseInfoService.getAllCoursesMappedByDepartment()
-                )
-        );
-
-        return this.getModelAndView(infoForm, "pageClassList");
     }
 
     @RequestMapping(params = "methodToCall=getTAInfoPage")

@@ -40,6 +40,27 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageEditor");
     }
 
+
+    /**
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getAddTaskPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageAddNewTask");
+    }
+
+
+    /**
+     * 此方法只处理editor的content，所以不能直接使用
+     *
+     * 后台开发时需新建一个method用于处理类型、主题、editor等所有内容，同时修改newtaskpage.xml中btn的methodtocall
+     * @param form
+     * @param request
+     * @param response
+     */
     @RequestMapping(params = "methodToCall=submitEditorContent")
     public void submitEditorContent(@ModelAttribute("KualiForm") UifFormBase form ,HttpServletRequest request, HttpServletResponse response){
         TestForm testForm = (TestForm) form;
@@ -73,6 +94,9 @@ public class TestController extends UifControllerBase {
         }
         // TODO: 2016/10/21 给前端返回处理结果
     }
+
+
+
 
     @Override
     protected UifFormBase createInitialForm() {

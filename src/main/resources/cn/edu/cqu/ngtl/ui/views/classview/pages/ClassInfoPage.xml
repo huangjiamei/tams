@@ -59,10 +59,10 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="教学班列表"
                                                                   p:location.viewId="ClassView" p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="课程信息"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="需要后期用js更名"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -80,7 +80,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info  col-lg-5">
+                                  p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -94,29 +94,29 @@
                                                             <list>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="课程名称" p:colSpan="3"
-                                                                      p:fieldLabel.colSpan="1" p:messageText="高等数学"/>
+                                                                      p:fieldLabel.colSpan="1" p:messageText="@{detailInfoViewObject.className}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="课程编号" p:messageText="MATH12"/>
+                                                                      p:label="课程编号" p:messageText="@{detailInfoViewObject.classId}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="课程类别" p:messageText="公共基础"/>
+                                                                      p:label="课程类别" p:messageText="@{detailInfoViewObject.classKind}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="学时" p:messageText="64"/>
+                                                                      p:label="学时" p:messageText="@{detailInfoViewObject.classHour}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="学分" p:messageText="5.0 "/>
+                                                                      p:label="学分" p:messageText="@{detailInfoViewObject.credit}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="必修/选修" p:messageText="必修"/>
+                                                                      p:label="必修/选修" p:messageText="@{detailInfoViewObject.required}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="授课年级/专业" p:messageText="软件工程2014级"/>
+                                                                      p:label="授课年级/专业" p:messageText="@{detailInfoViewObject.departmentAndGrade}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="所属学院" p:messageText="数统学院"/>
+                                                                      p:label="所属学院" p:messageText="@{detailInfoViewObject.courseDepartment}"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="授课年级/专业" p:messageText="？？？？？"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="教学班号" p:messageText="001"/>
+                                                                      p:label="教学班号" p:messageText="?????"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="上课教师人数" p:messageText="1"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="上课教师" p:messageText="阴文革"/>
+                                                                      p:label="上课教师" p:messageText="@{detailInfoViewObject.instructor}"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="选课人数" p:messageText="400"/>
                                                                 <bean parent="Uif-MessageField"
@@ -124,7 +124,7 @@
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="助教预计工时" p:messageText="40"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="成绩评定方式" p:messageText=" "/>
+                                                                      p:label="成绩评定方式" p:messageText="@{detailInfoViewObject.grade}"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="平时成绩占考试成绩比例" p:messageText="40%"/>
                                                             </list>

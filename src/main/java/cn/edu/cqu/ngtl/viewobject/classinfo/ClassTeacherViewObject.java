@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.viewobject.course;
+package cn.edu.cqu.ngtl.viewobject.classinfo;
 
 import javax.persistence.Transient;
 
@@ -7,6 +7,8 @@ import javax.persistence.Transient;
  * Latest modified on 2016-10-17
  */
 public class ClassTeacherViewObject {
+
+    private Integer id;
 
     private boolean checked;
 
@@ -102,6 +104,13 @@ public class ClassTeacherViewObject {
         return contents;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public boolean isChecked() {
         return checked;

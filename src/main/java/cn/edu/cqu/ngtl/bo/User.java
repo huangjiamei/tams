@@ -17,7 +17,7 @@ public class User implements Serializable {
 	
 	private String name;	//姓名
 
-	private String code;	//prncpl_ID
+	private String code;	//prncpl_ID pk
 
 	private Integer departmentId;	//所在学院Id
 

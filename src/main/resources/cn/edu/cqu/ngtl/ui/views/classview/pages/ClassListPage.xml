@@ -184,7 +184,7 @@
                                                         <property name="headerText" value="Table Layout"/>
                                                         <!--<property name="headerText" value="Table Layout" />-->
                                                         <property name="collectionObjectClass"
-                                                                  value="cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject"/>
+                                                                  value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                         <property name="propertyName" value="classList"/>
                                                         <property name="layoutManager.renderSequenceField"
                                                                   value="false"/>
@@ -217,6 +217,8 @@
                                                                         <bean parent="Uif-CheckboxControl"/>
                                                                     </property>
                                                                 </bean>
+                                                                <bean parent="Uif-DataField" p:propertyName="id"
+                                                                p:style="visibility=hidden"/>
                                                                 <bean parent="Uif-DataField" p:label="学院" p:propertyName="departmentName"/>
                                                                 <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"
                                                                       p:sortAs="numeric"/>
@@ -257,8 +259,10 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:ajaxSubmit="false"
                                                                                   p:actionLabel="查看"
-                                                                                  p:methodToCall="getTaskListDetail"/>
+                                                                                  p:methodToCall="getClassInfoPage"/>
+
                                                                             <!--<bean parent="Uif-ActionImage"-->
                                                                             <!--p:methodToCall="getTaskListDetail"-->
                                                                             <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->

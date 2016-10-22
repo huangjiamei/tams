@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.taservice;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 
 /**
@@ -8,5 +9,9 @@ import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 public interface ITAService {
 
     UTClassInformation getClassInfoById(Integer id);
+
+    UTClass applicationTable(Integer classId);
+
+    UTClass applicationAssitantTable(Integer classId);
 
 }

@@ -1,9 +1,10 @@
-package cn.edu.cqu.ngtl.viewobject.course;
+package cn.edu.cqu.ngtl.viewobject.classinfo;
 
 /**
  * Created by 金祖增 on 2016/10/20.
  */
 public class ApplyViewObject {
+
     private String courseName;
 
     private String teacherName;
@@ -18,7 +19,7 @@ public class ApplyViewObject {
 
     private String grade;
 
-    private Short isRequired;
+    private String isRequired;
 
     private String classNumber;
 
@@ -86,11 +87,11 @@ public class ApplyViewObject {
         this.grade = grade;
     }
 
-    public Short getRequired() {
+    public String getRequired() {
         return isRequired;
     }
 
-    public void setRequired(Short required) {
+    public void setRequired(String required) {
         isRequired = required;
     }
 

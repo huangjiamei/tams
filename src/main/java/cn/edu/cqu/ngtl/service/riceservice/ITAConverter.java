@@ -1,7 +1,12 @@
 package cn.edu.cqu.ngtl.service.riceservice;
 
+import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 
 import java.util.List;
 
@@ -11,5 +16,11 @@ import java.util.List;
 public interface ITAConverter {
 
     List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informations);
+
+    ApplyViewObject classInfoToApplyObject(User user, UTClass clazz);
+
+    ApplyAssistantViewObject applyAssistantToTableViewObject(User user, UTClass clazz);
+
+    ClassDetailInfoViewObject classInfoToViewObject(UTClass classId);
 
 }

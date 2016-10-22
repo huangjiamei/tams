@@ -14,9 +14,10 @@ import org.springframework.stereotype.Repository;
 public class CMCourseClassificationDaoJpa implements CMCourseClassificationDao{
 
     @Override
-    public CMCourseClassification getCMCourseClassficationById(Integer id)
-    {
+    public CMCourseClassification selectOneById(Integer id) {
+
         return KRADServiceLocator.getDataObjectService().find(CMCourseClassification.class, id);
+
     }
 
 }

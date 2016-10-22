@@ -16,7 +16,15 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private List<ClassTeacherViewObject> classList = new ArrayList<>();
 
+    private ClassTeacherViewObject curClassObject;
 
+    public ClassTeacherViewObject getCurClassObject() {
+        return curClassObject;
+    }
+
+    public void setCurClassObject(ClassTeacherViewObject curClassObject) {
+        this.curClassObject = curClassObject;
+    }
 
     public List<ClassTeacherViewObject> getClassList() {
         return classList;

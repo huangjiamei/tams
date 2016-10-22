@@ -59,10 +59,10 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="教学班列表"
                                                                   p:location.viewId="ClassView" p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="课程信息"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="@{curClassObject.courseName},需要后期用js更名"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -80,7 +80,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info  col-lg-5">
+                                  p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -94,9 +94,9 @@
                                                             <list>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="课程名称" p:colSpan="3"
-                                                                      p:fieldLabel.colSpan="1" p:messageText="高等数学"/>
+                                                                      p:fieldLabel.colSpan="1" p:messageText="@{curClassObject.courseName}"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="课程编号" p:messageText="MATH12"/>
+                                                                      p:label="课程编号" p:messageText="@{curClassObject.courseCode}"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="课程类别" p:messageText="公共基础"/>
                                                                 <bean parent="Uif-MessageField"
@@ -104,7 +104,7 @@
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="学分" p:messageText="5.0 "/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="必修/选修" p:messageText="必修"/>
+                                                                      p:label="必修/选修" p:messageText="@{curClassObject.isRequired}"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="授课年级/专业" p:messageText="软件工程2014级"/>
                                                                 <bean parent="Uif-MessageField"

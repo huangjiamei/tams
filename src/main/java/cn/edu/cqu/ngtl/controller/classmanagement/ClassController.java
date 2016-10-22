@@ -38,25 +38,6 @@ public class ClassController extends UifControllerBase {
     @Autowired
     private ITAConverter taConverter;
 
-    @RequestMapping(params = "methodToCall=getClassInfoPage")
-    public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageClassInfo");
-    }
-
-    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
-
-    @RequestMapping(params = "methodToCall=getAddTaskPage")
-    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageAddNewTask");
-    }
-
-
     /**
      *
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
@@ -73,15 +54,84 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageClassList");
     }
 
+    /**
+     * pageId限定了只接受来自pageClassList的请求
+     * 从classlist跳转到某个class对应的classInfoPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getClassInfoPage"})
+    public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        try {
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+            int index = params.getSelectedLineIndex();
+
+            ClassTeacherViewObject classObject = infoForm.getClassList().get(index);
+            infoForm.setCurClassObject(classObject);
+
+        } catch (Exception e) {
+
+        }
+        return this.getModelAndView(infoForm, "pageClassInfo");
+    }
+
+
+    // region # 暂时不可用的方法
+
+    @RequestMapping(params = "methodToCall=getTaskDetailPage")
+    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTaskDetail");
+    }
+
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageAddNewTask");
+    }
+
     @RequestMapping(params = "methodToCall=getApplyTAPage")
     public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
         return this.getModelAndView(testForm, "pageApplyForTaForm");
     }
 
+    //    /**
+//     * pageId限定了只接受来自pageClassList的请求
+//     * 从classlist跳转到某个class对应的talss
+//     * @param form
+//     * @return
+//     */
+//    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getTaskListPage"})
+//    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+//        ClassInfoForm infoForm = (ClassInfoForm) form;
+//
+//        try {
+//            CollectionControllerServiceImpl.CollectionActionParameters params =
+//                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+//            int index = params.getSelectedLineIndex();
+//
+////            TestObject object = infoForm.getClassList().get(index);
+//        } catch (Exception e) {
+//
+//        }
+//
+//        return this.getModelAndView(infoForm, "pageTaskList");
+//    }
 
-    // -------------------------------------------------
+    // endregion
 
+
+    /**
+     * 将表格打印为excel，整体可用，各列具体参数还需修改
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(params = {"pageId=pageClassList","methodToCall=exportClassListExcel"})
     public ModelAndView exportClassListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                              HttpServletResponse response) throws Exception {
@@ -105,28 +155,10 @@ public class ClassController extends UifControllerBase {
     }
 
 
-    /**
-     * pageId限定了只接受来自pageClassList的请求
-     * 从classlist跳转到某个class对应的tasklist
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getTaskListPage"})
-    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        ClassInfoForm infoForm = (ClassInfoForm) form;
 
-        try {
-            CollectionControllerServiceImpl.CollectionActionParameters params =
-                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
-            int index = params.getSelectedLineIndex();
 
-//            TestObject object = infoForm.getClassList().get(index);
-        } catch (Exception e) {
 
-        }
 
-        return this.getModelAndView(infoForm, "pageTaskList");
-    }
 
 
     @Override

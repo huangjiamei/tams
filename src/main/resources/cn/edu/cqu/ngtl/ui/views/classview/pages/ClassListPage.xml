@@ -257,8 +257,10 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:ajaxSubmit="false"
                                                                                   p:actionLabel="查看"
-                                                                                  p:methodToCall="getTaskListDetail"/>
+                                                                                  p:methodToCall="getClassInfoPage"/>
+
                                                                             <!--<bean parent="Uif-ActionImage"-->
                                                                             <!--p:methodToCall="getTaskListDetail"-->
                                                                             <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->

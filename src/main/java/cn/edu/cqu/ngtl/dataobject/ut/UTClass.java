@@ -25,12 +25,12 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@Column(name = "COURSEOFFERING_ID")
 	private Integer courseOfferingId;
 
+    @ManyToOne
+    @JoinColumn(name = "COURSEOFFERING_ID", insertable = false, updatable = false)
+    private UTCourseOffering courseOffering;
+
     @Column(name = "CLASS_NBR")
     private String classNumber;
-
-	@ManyToOne
-	@JoinColumn(name = "COURSEOFFERING_ID", insertable = false, updatable = false)
-	private UTCourseOffering courseOffering;
 
 	@Column(name = "SUBPART_ID")
 	private Integer subpartId;

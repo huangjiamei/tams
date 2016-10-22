@@ -32,4 +32,8 @@ public class UTClassDaoJpa implements UTClassDao {
 
     }
 
+    @Override
+    public UTClass selectByClassId(Integer id) {
+        return KradDataServiceLocator.getDataObjectService().find(UTClass.class, id);
+    }
 }

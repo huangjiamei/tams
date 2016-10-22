@@ -110,6 +110,8 @@ public class TestForm extends BaseForm {
     private String inputField98;
     private String inputField99;
 
+    private String editorContent;
+
     private boolean radio1;
     private boolean radio2;
     private boolean radio3;
@@ -168,6 +170,13 @@ public class TestForm extends BaseForm {
         getCollection().add(new TestObject(new Date(2016,10,15),"7", "3", "1", "9", "11"));
     }
 
+    public String getEditorContent() {
+        return editorContent;
+    }
+
+    public void setEditorContent(String editorContent) {
+        this.editorContent = editorContent;
+    }
 
     public boolean isRadio1() {
         return radio1;

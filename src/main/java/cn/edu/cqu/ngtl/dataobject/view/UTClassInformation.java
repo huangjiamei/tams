@@ -1,11 +1,10 @@
 package cn.edu.cqu.ngtl.dataobject.view;
 
+import cn.edu.cqu.ngtl.tools.converter.UnitimeDayOfWeekConverter;
+import cn.edu.cqu.ngtl.tools.converter.UnitimeTimeSlotConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -32,14 +31,12 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name="UNIQUEID")
     private Integer id;
 
-    /** 等一个Converter */
-    //@Convert(converter = UnitimeDayOfWeekConverter.class)
+    @Convert(converter = UnitimeDayOfWeekConverter.class)
     @Column(name = "ASSIGNMENT_DAY")
     private String dayOfWeek;
 
-    /** 等一个Converter */
     @Column(name = "ASSIGNMENT_TIME")
-    //@Convert(converter = UnitimeTimeSlotConverter.class)
+    @Convert(converter = UnitimeTimeSlotConverter.class)
     private String timeSlot;
 
     @Column(name = "ROOM_ID")

@@ -83,36 +83,127 @@
     </bean>
 
 
-    <bean id="guideMapDialog" parent="Uif-DialogGroup" p:style="z-index:9999;">
+    <bean id="guideMapDialog" parent="Uif-DialogGroup"
+          p:dialogCssClass="navigationDialog"
+          p:style="z-index:9999;">
         <property name="layoutManager">
-            <bean parent="Uif-VerticalBoxLayout"/>
+            <bean parent="Uif-VerticalBoxLayout" p:style="width:60%;"/>
         </property>
         <property name="items">
             <list>
-                <bean parent="Uif-VerticalBoxSection" p:headerText="助教管理">
-                    <!-- property to activate disclosure -->
-                    <property name="disclosure.render" value="true"/>
-                    <!--设置下拉列表默认关闭-->
-                    <property name="disclosure.defaultOpen" value="false"/>
-                    <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                    <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
-                    <property name="items">
-                        <list>
-                            <bean parent="tamsMap"/>
-                        </list>
-                    </property>
-                </bean>
+                <!--<bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="row">-->
+                    <!--<property name="items">-->
+                        <!--<list>-->
+                            <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="" p:headerText="助教管理">-->
+                                <!--&lt;!&ndash; property to activate disclosure &ndash;&gt;-->
+                                <!--<property name="disclosure.render" value="true"/>-->
+                                <!--&lt;!&ndash;设置下拉列表默认关闭&ndash;&gt;-->
+                                <!--<property name="disclosure.defaultOpen" value="false"/>-->
+                                <!--<property name="disclosure.collapsedIconClass" value="icon-folder"/>-->
+                                <!--<property name="disclosure.expandedIconClass" value="icon-folder-open"/>-->
+                                <!--<property name="items">-->
+                                    <!--<list>-->
+                                        <!--<bean parent="tamsMap"/>-->
+                                    <!--</list>-->
+                                <!--</property>-->
+                            <!--</bean>-->
+                        <!--</list>-->
+                    <!--</property>-->
+                <!--</bean>-->
 
-                <bean parent="Uif-VerticalBoxSection" p:headerText="某某管理">
-                    <!-- property to activate disclosure -->
-                    <property name="disclosure.render" value="true"/>
-                    <!--设置下拉列表默认关闭-->
-                    <property name="disclosure.defaultOpen" value="false"/>
-                    <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                    <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                <!--2324324-->
+
+
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="tamsMap"/>
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
+                                  p:headerText="助教管理2">
+                                <!-- property to activate disclosure -->
+                                <property name="disclosure.render" value="true"/>
+                                <!--设置下拉列表默认关闭-->
+                                <property name="disclosure.defaultOpen" value="false"/>
+                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="tamsMap"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
+                                  p:headerText="某某管理3">
+                                <!-- property to activate disclosure -->
+                                <property name="disclosure.render" value="true"/>
+                                <!--设置下拉列表默认关闭-->
+                                <property name="disclosure.defaultOpen" value="false"/>
+                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="tamsMap"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
+                                  p:headerText="某某管理4">
+                                <!-- property to activate disclosure -->
+                                <property name="disclosure.render" value="true"/>
+                                <!--设置下拉列表默认关闭-->
+                                <property name="disclosure.defaultOpen" value="false"/>
+                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="tamsMap"/>
+                                    </list>
+                                </property>
+                            </bean>
+
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
+                                  p:headerText="某某管理4">
+                                <!-- property to activate disclosure -->
+                                <property name="disclosure.render" value="true"/>
+                                <!--设置下拉列表默认关闭-->
+                                <property name="disclosure.defaultOpen" value="false"/>
+                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="tamsMap"/>
+                                    </list>
+                                </property>
+                            </bean>
+
+
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
+                                  p:headerText="某某管理">
+                                <!-- property to activate disclosure -->
+                                <property name="disclosure.render" value="true"/>
+                                <!--设置下拉列表默认关闭-->
+                                <property name="disclosure.defaultOpen" value="false"/>
+                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="tamsMap"/>
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
+                                  p:headerText="某某管理">
+                                <!-- property to activate disclosure -->
+                                <property name="disclosure.render" value="true"/>
+                                <!--设置下拉列表默认关闭-->
+                                <property name="disclosure.defaultOpen" value="false"/>
+                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
+                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="tamsMap"/>
+                                    </list>
+                                </property>
+                            </bean>
                         </list>
                     </property>
                 </bean>
@@ -143,8 +234,8 @@
     <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
         <property name="items">
             <list>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&amp;viewId=ClassView"
+                      p:linkText="教学班"/>
                 <bean parent="Uif-Link" p:href="http://www.kuali.org"
                       p:linkText="Kuali Website"/>
                 <bean parent="Uif-Link" p:href="http://www.kuali.org"

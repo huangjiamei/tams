@@ -2,6 +2,11 @@ package cn.edu.cqu.ngtl.controller;
 
 import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.form.TestForm;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+import org.kuali.rice.krad.uif.lifecycle.LifecycleElementState;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -12,6 +17,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by hp on 2016/10/7.
@@ -20,89 +29,50 @@ import javax.servlet.http.HttpServletResponse;
 @RequestMapping("/mytest")
 public class TestController extends UifControllerBase {
 
-
-    @RequestMapping(params = "methodToCall=getMyInformationPage")
-    public ModelAndView getMyInformationPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    /**
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getEditor&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getEditor")
+    public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTest1");
+        return this.getModelAndView(testForm, "pageEditor");
     }
 
-
-    // ------------ pages原型 --------------
-
-    @RequestMapping(params = "methodToCall=getTeacherCoursePage")
-    public ModelAndView getTeacherCoursePage(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = "methodToCall=submitEditorContent")
+    public void submitEditorContent(@ModelAttribute("KualiForm") UifFormBase form ,HttpServletRequest request, HttpServletResponse response){
         TestForm testForm = (TestForm) form;
 
-        return this.getModelAndView(testForm, "pageCourseTeacher");
-    }
+        String content=testForm.getEditorContent();
+        System.out.println(content);
 
-    @RequestMapping(params = "methodToCall=getApplyTAPage")
-    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageApplyForTaForm");
-    }
+        Pattern pattern = Pattern.compile("<img.+>.+\\.[a-z A-Z 0-9]*");
+        Matcher matcher = pattern.matcher(content);
 
-    @RequestMapping(params = "methodToCall=getCommonHome")
-    public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageCommonHome");
-    }
-
-    @RequestMapping(params = "methodToCall=getTaskListPage")
-    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskList");
-    }
-
-    @RequestMapping(params = "methodToCall=getClassInfo")
-    public ModelAndView getClassInfo(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageClassInfo");
-    }
-
-    @RequestMapping(params = "methodToCall=getTaskDetail")
-    public ModelAndView getTaskDetail(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
-
-    @RequestMapping(params = "methodToCall=getAddTaskPage")
-    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageAddNewTask");
-    }
-
-
-    // ------------ 部分后台调用 --------------
-    @RequestMapping(params = {"pageId=pageCourseTeacher", "methodToCall=getTaskListDetail"})
-    public ModelAndView getTaskListDetail(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
-                                          HttpServletResponse response) throws Exception {
-        TestForm testForm = (TestForm) form;
-
-        try {
-            CollectionControllerServiceImpl.CollectionActionParameters params =
-                    new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
-            int index = params.getSelectedLineIndex();
-
-            TestObject object = testForm.getCollection().get(index);
-        } catch (Exception e) {
-
+        // 附件list，每个item包括img和a两部分
+        List<String> fileList=new ArrayList<>();
+        while(matcher.find()){
+            fileList.add(matcher.group());
         }
+        // 去除附件带来的文本，得到用户输入的纯文本
+        String plainContent=matcher.replaceAll("").trim();
+        System.out.println("plainContent:\n"+plainContent);
 
-        // FIXME: 2016/10/15 可以触发successCallback，但是btn的navigatetoPage出错
-        // FIXME: 2016/10/15 即使换成btn也会出错？？普通的申请表用btn提交不会有这种问题，可能与datatable的特性有关？
-        return this.getModelAndView(testForm, "pageTaskList");
+        // 处理每个上传的文件
+        for(String file:fileList){
+            Document doc = Jsoup.parse(file);
+            Element link = doc.getElementsByTag("a").first();
+            String herf=link.attr("href");      // 文件实际存储路径，如ueditor/upload/image/213092109472194812.jpg
+            String title=link.attr("title");    // 文件原名，test.jpg
+
+            Element img=doc.getElementsByTag("img").first();
+            System.out.println(String.format("title=%s\nherf=%s\nimg:%s\n",title,herf,img));
+
+            // TODO: 2016/10/21 存入数据库
+        }
+        // TODO: 2016/10/21 给前端返回处理结果
     }
-
-    @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
-    public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
-                                     HttpServletResponse response) throws Exception {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageCommonHome");
-    }
-
 
     @Override
     protected UifFormBase createInitialForm() {

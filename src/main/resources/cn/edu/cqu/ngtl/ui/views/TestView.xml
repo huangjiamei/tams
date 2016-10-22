@@ -82,6 +82,31 @@
                         </list>
                     </property>
                 </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaskList" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaskListPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageApplyForTaForm" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="ApplyForTaFormPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaskDetail" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaskDetailPage"/>
+                        </list>
+                    </property>
+                </bean>
+
             </list>
         </property>
     </bean>

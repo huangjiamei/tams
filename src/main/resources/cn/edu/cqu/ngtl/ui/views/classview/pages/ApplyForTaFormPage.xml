@@ -123,8 +123,10 @@
                                                 </list>
                                             </property>
                                         </bean>
+
                                         <bean parent="Uif-InputField" p:label="申请理由及特长" p:propertyName="inputField10"
-                                              p:instructionalText="具体样式、宽高还需调整">
+                                              p:additionalCssClasses="row"
+                                        p:style="width:100%;height=500px;">
                                             <property name="control">
                                                 <bean parent="Uif-TextAreaControl"/>
                                             </property>

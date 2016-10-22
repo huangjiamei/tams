@@ -79,7 +79,7 @@
                 </bean>
 
                 <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="box box-info col-lg-3">
+                      p:additionalCssClasses="box box-info row col-md-11 col-md-offset-1">
                     <property name="items">
                         <list>
                             <bean parent="Uif-HorizontalBoxSection"

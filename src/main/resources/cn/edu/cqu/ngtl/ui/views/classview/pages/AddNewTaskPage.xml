@@ -37,7 +37,7 @@
             <list>
                 <!--header-->
                 <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header">
+                      p:additionalCssClasses="content-header row">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -89,7 +89,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
+                                  p:additionalCssClasses="box box-info">
                                 <property name="items">
                                     <list>
                                         <!--box header:小图标小标题+右上角btn-->
@@ -121,7 +121,8 @@
                                                 <list>
                                                     <bean parent="Uif-InputField"
                                                           p:additionalCssClasses="form-group col-md-3 col-md-offset-1"
-                                                          p:label="类型*" p:instructionalText=""
+                                                          p:label="类型" p:instructionalText=""
+                                                          p:required="true"
                                                           p:propertyName="inputField12" p:width="auto">
                                                         <property name="control">
                                                             <bean parent="Uif-DropdownControl"
@@ -132,13 +133,14 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-InputField" p:label="主题*"
+                                                    <bean parent="Uif-InputField" p:label="主题"
+                                                          p:required="true"
                                                           p:additionalCssClasses="col-md-3 col-md-offset-1"
                                                           p:propertyName="inputField15"/>
 
                                                     <bean parent="Uif-InputField"
                                                           p:additionalCssClasses="form-group col-md-3 col-md-offset-1"
-                                                          p:label="指派*" p:instructionalText=""
+                                                          p:label="指派" p:instructionalText=""
                                                           p:propertyName="inputField13" p:width="auto">
                                                         <property name="control">
                                                             <bean parent="Uif-DropdownControl"
@@ -160,6 +162,7 @@
                                                 <list>
                                                     <!--p:propertyName="editorContent" 对应form中的editorContent-->
                                                     <bean id="editor" parent="Uif-InputField"
+                                                          p:additionalCssClasses="form-group col-md-11 col-md-offset-1"
                                                           p:propertyName="editorContent">
                                                         <property name="onDocumentReadyScript"
                                                                   value="UE.getEditor('editor');"/>
@@ -204,7 +207,7 @@
 
                                                     <bean parent="Uif-InputField"
                                                           p:additionalCssClasses="form-group col-md-3 col-md-offset-1"
-                                                          p:label="完成度*" p:instructionalText=""
+                                                          p:label="完成度" p:instructionalText=""
                                                           p:propertyName="inputField13" p:width="auto">
                                                         <property name="control">
                                                             <bean parent="Uif-DropdownControl"
@@ -224,7 +227,8 @@
                                               p:additionalCssClasses="row">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-InputField" p:label="单份耗时*"
+                                                    <bean parent="Uif-InputField" p:label="单份耗时"
+                                                          p:required="true"
                                                           p:additionalCssClasses="col-md-3 col-md-offset-1"
                                                           p:propertyName="inputField18"/>
                                                     <bean parent="Uif-InputField" p:label="总耗时"
@@ -253,6 +257,7 @@
                         </list>
                     </property>
                 </bean>
+
             </list>
         </property>
     </bean>

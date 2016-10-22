@@ -9,7 +9,7 @@ import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,7 @@ public class TAConverterimpl implements ITAConverter {
             ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
             //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
+            viewObject.setId(information.getId());
             viewObject.setInstructorName("test");
 
             viewObject.setClassNumber(information.getClassNumber());
@@ -153,14 +154,14 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public ClassInfoViewObject classInfoToViewObject(UTClass clazz) {
-        ClassInfoViewObject classInfoViewObject = new ClassInfoViewObject();
+    public ClassDetailInfoViewObject classInfoToViewObject(UTClass clazz) {
+        ClassDetailInfoViewObject classDetailInfoViewObject = new ClassDetailInfoViewObject();
 
         UTCourse course = new UTCourse();
 
         if(clazz!=null){
             course = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getCourse() : null;
-            classInfoViewObject.setClassNumber(clazz.getClassNumber());
+            classDetailInfoViewObject.setClassNumber(clazz.getClassNumber());
 
             StringBuilder sb = new StringBuilder();
             if(clazz.getUtInstructors()!=null){
@@ -168,53 +169,53 @@ public class TAConverterimpl implements ITAConverter {
                     sb.append(instructor.getName() + ",\n");
                 }
             }
-            classInfoViewObject.setInstructor(sb.toString());
-        }
-
-        if(course != null){
-
-            classInfoViewObject.setClassId(course.getCodeR());
-            classInfoViewObject.setClassHour(course.getHour());
-            classInfoViewObject.setCredit(course.getCredit()+"");
+            classDetailInfoViewObject.setInstructor(sb.toString());
         }
 
         UTSession session = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getSession() : null;
         CMProgramCourse programCourse = new CMProgramCourse();
         CMProgram program = new CMProgram();
 
+        if(course != null){
+            classDetailInfoViewObject.setClassId(course.getCodeR());
+            classDetailInfoViewObject.setClassHour(course.getHour());
+            classDetailInfoViewObject.setCredit(course.getCredit()+"");
+            programCourse = courseInfoService.getProgramCourseByCourseId(course.getId());
+        }
+
         if(programCourse != null){
 
-            classInfoViewObject.setRequired((programCourse.getRequired() == 1) ? "必修" : "选修");
+            classDetailInfoViewObject.setRequired((programCourse.getRequired() == 1) ? "必修" : "选修");
             if(programCourse.getClassification() != null)
-                classInfoViewObject.setClassKind(programCourse.getClassification().getName());
+                classDetailInfoViewObject.setClassKind(programCourse.getClassification().getName());
 
-            classInfoViewObject.setClassName(programCourse.getProgram() != null ?
+            classDetailInfoViewObject.setClassName(programCourse.getProgram() != null ?
                     programCourse.getProgram().getName() : null);
 
             program = programCourse.getProgram() != null ? programCourse.getProgram() : null;
-        }
 
-        if(session != null) {
+            if(session != null) {
 
-            Integer year = (Integer.parseInt(programCourse.getSemester()) + 1) / 2;
+                Integer year = (Integer.parseInt(programCourse.getSemester()) + 1) / 2;
 
-            classInfoViewObject.setDepartmentAndGrade((Integer.parseInt(session.getYear()) - year) + "");
+                classDetailInfoViewObject.setDepartmentAndGrade((Integer.parseInt(session.getYear()) - year) + "");
 
+            }
         }
 
         UTDepartment department = new UTDepartment();
 
         if(program != null){
-            classInfoViewObject.setClassName(program.getName());
+            classDetailInfoViewObject.setClassName(program.getName());
 
             department = program.getDepartment() != null ? program.getDepartment() :null;
         }
 
         if(department != null){
-            classInfoViewObject.setCourseDepartment(department.getName());
+            classDetailInfoViewObject.setCourseDepartment(department.getName());
         }
 
-        return classInfoViewObject;
+        return classDetailInfoViewObject;
     }
 
 }

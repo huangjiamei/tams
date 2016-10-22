@@ -5,7 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 
 import java.util.List;
@@ -21,6 +21,6 @@ public interface ITAConverter {
 
     ApplyAssistantViewObject applyAssistantToTableViewObject(User user, UTClass clazz);
 
-    ClassInfoViewObject classInfoToViewObject(UTClass classId);
+    ClassDetailInfoViewObject classInfoToViewObject(UTClass classId);
 
 }

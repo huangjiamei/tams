@@ -1,10 +1,12 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.TestForm;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -64,12 +66,26 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         try {
+            /**
+             * param in
+             */
             CollectionControllerServiceImpl.CollectionActionParameters params =
                     new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
             int index = params.getSelectedLineIndex();
 
             ClassTeacherViewObject classObject = infoForm.getClassList().get(index);
-            infoForm.setCurClassObject(classObject);
+            /**
+             * param in end
+             */
+            Integer id = classObject.getId();
+
+            UTClass utClass = classInfoService.getClassInfoById(classObject.getId());
+
+            ClassDetailInfoViewObject detailInfoViewObject = taConverter.classInfoToViewObject(
+                    utClass
+            );
+
+            infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
         } catch (Exception e) {
 

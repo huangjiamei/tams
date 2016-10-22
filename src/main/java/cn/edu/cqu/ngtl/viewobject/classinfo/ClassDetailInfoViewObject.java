@@ -3,7 +3,7 @@ package cn.edu.cqu.ngtl.viewobject.classinfo;
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
  */
-public class ClassInfoViewObject {
+public class ClassDetailInfoViewObject {
 
     // 课程名称//
     private String className;

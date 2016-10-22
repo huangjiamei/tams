@@ -8,6 +8,8 @@ import javax.persistence.Transient;
  */
 public class ClassTeacherViewObject {
 
+    private Integer id;
+
     private boolean checked;
 
     private String departmentName;
@@ -102,6 +104,13 @@ public class ClassTeacherViewObject {
         return contents;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public boolean isChecked() {
         return checked;

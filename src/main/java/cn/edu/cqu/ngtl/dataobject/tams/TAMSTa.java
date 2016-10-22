@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by 金祖增 on 2016/10/16.
  */
 @Entity
-@Table(name = "TAMS_CLASS_TA_APPLICATION")
+@Table(name = "TAMS_TA")
 public class TAMSTa extends DataObjectBase implements Serializable {
     //private static final long serialVersionUID = -1543515532501167011L;
     @Id

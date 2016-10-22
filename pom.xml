@@ -68,6 +68,10 @@
     <maven.failsafe.skip>true</maven.failsafe.skip>
     <plugin.compiler.source>1.7</plugin.compiler.source>
     <plugin.compiler.target>1.7</plugin.compiler.target>
+
+    <!-- tams 添加-->
+    <apache.poi.version>3.13</apache.poi.version>
+
   </properties>
 
   <build>
@@ -546,5 +550,25 @@
       <artifactId>jsoup</artifactId>
       <version>1.9.2</version>
     </dependency>
+
+    <!--导出excel所用-->
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi</artifactId>
+      <version>${apache.poi.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-excelant</artifactId>
+      <version>${apache.poi.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.poi</groupId>
+      <artifactId>poi-ooxml</artifactId>
+      <version>${apache.poi.version}</version>
+    </dependency>
+
   </dependencies>
 </project>

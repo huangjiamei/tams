@@ -1,10 +1,17 @@
 package cn.edu.cqu.ngtl.service.classservice;
 
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassInfoViewObject;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+
+import java.util.List;
 
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
  */
 public interface IClassInfoService {
-    ClassInfoViewObject getClassInfoById(Integer classId);
+
+    List<UTClassInformation> getAllClassesMappedByDepartment();
+
+    UTClass getClassInfoById(Integer classId);
+
 }

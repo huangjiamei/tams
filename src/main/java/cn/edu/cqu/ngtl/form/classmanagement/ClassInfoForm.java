@@ -1,7 +1,7 @@
 package cn.edu.cqu.ngtl.form.classmanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;

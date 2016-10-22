@@ -1,7 +1,7 @@
 package cn.edu.cqu.ngtl.service.taservice.impl;
 
+import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
-import cn.edu.cqu.ngtl.dao.ut.impl.UTClassDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -18,7 +18,7 @@ public class TAServiceimpl implements ITAService {
     private UTClassInfoDao classInfoDao;
 
     @Autowired
-    private UTClassDaoJpa classDaoJpa;
+    private UTClassDao classDao;
 
     @Override
     public UTClassInformation getClassInfoById(Integer id) {
@@ -28,10 +28,18 @@ public class TAServiceimpl implements ITAService {
     @Override
     public UTClass applicationTable(Integer classId) {
 
-        UTClass clazz = classDaoJpa.selectByClassId(classId);
+        UTClass clazz = classDao.selectByClassId(classId);
 
         return clazz;
 
     }
 
+    @Override
+    public UTClass applicationAssitantTable(Integer classId) {
+
+        UTClass clazz = classDao.selectByClassId(classId);
+
+        return clazz;
+
+    }
 }

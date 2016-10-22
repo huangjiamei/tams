@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.viewobject.course;
+package cn.edu.cqu.ngtl.viewobject.classinfo;
 
 import javax.persistence.Transient;
 

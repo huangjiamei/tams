@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.viewobject.course;
+package cn.edu.cqu.ngtl.viewobject.classinfo;
 
 /**
  * Created by long2ice
@@ -9,6 +9,7 @@ package cn.edu.cqu.ngtl.viewobject.course;
 public class ApplyAssistantViewObject {
 
     private String username;
+
     private String studentId;
     //导师
     private String teacher;
@@ -18,6 +19,7 @@ public class ApplyAssistantViewObject {
     private String g_Major;
 
     private String phone;
+
     private String classHour;
     //申请课程老师
     private String applyTeacher;

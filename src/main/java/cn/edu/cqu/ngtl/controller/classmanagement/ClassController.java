@@ -2,10 +2,10 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.form.TestForm;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
-import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -33,7 +33,7 @@ public class ClassController extends UifControllerBase {
 
 
     @Autowired
-    private ICourseInfoService courseInfoService;
+    private IClassInfoService classInfoService;
 
     @Autowired
     private ITAConverter taConverter;
@@ -48,7 +48,7 @@ public class ClassController extends UifControllerBase {
         ClassInfoForm infoForm=(ClassInfoForm) form;
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(
-                        courseInfoService.getAllCoursesMappedByDepartment()
+                        classInfoService.getAllClassesMappedByDepartment()
                 )
         );
         return this.getModelAndView(infoForm, "pageClassList");

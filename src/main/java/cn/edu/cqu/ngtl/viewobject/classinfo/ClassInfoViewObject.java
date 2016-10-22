@@ -50,6 +50,17 @@ public class ClassInfoViewObject {
     // 平时成绩占比
     private String gradePercent;
 
+    // 授课年级学院
+    private String departmentAndGrade;
+
+    public String getDepartmentAndGrade() {
+        return departmentAndGrade;
+    }
+
+    public void setDepartmentAndGrade(String departmentAndGrade) {
+        this.departmentAndGrade = departmentAndGrade;
+    }
+
     public String getClassName() {
         return className;
     }

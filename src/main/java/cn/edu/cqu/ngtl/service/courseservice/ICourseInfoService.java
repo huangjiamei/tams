@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.courseservice;
 
+import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 
 import java.util.List;
@@ -10,5 +11,7 @@ import java.util.List;
 public interface ICourseInfoService {
 
     List<UTClassInformation> getAllCoursesMappedByDepartment();
+
+    CMProgramCourse getProgramCourseByCourseId(Integer courseId);
 
 }

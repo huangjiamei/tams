@@ -1,6 +1,8 @@
 package cn.edu.cqu.ngtl.service.courseservice.impl;
 
+import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTClassInfoDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,9 @@ public class CourseInfoServiceimpl implements ICourseInfoService {
 
     @Autowired
     private UTClassInfoDaoJpa utClassInfoDaoJpa;
+
+    @Autowired
+    private CMProgramCourseDaoJpa programCourseDaoJpa;
 
     @Override
     public List<UTClassInformation> getAllCoursesMappedByDepartment() {
@@ -33,4 +38,10 @@ public class CourseInfoServiceimpl implements ICourseInfoService {
         return classInformations;
     }
 
+    @Override
+    public CMProgramCourse getProgramCourseByCourseId(Integer courseId) {
+
+        return programCourseDaoJpa.selectByCourseId(courseId);
+
+    }
 }

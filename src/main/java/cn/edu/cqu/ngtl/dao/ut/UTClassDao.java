@@ -11,6 +11,6 @@ public interface UTClassDao {
 
     List<UTClass> selectAllMappedByDepartment();
 
-    UTClass getUTClassByID(Integer id);
+    UTClass selectByClassId(Integer id);
 
 }

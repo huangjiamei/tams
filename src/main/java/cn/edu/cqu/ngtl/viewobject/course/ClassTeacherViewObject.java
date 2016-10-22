@@ -1,12 +1,14 @@
 package cn.edu.cqu.ngtl.viewobject.course;
 
+import javax.persistence.Transient;
+
 /**
  * Created by tangjing on 16-10-15.
  * Latest modified on 2016-10-17
  */
 public class ClassTeacherViewObject {
 
-    private boolean checkbox;
+    private boolean checked;
 
     private String departmentName;
 
@@ -49,12 +51,64 @@ public class ClassTeacherViewObject {
 
     private String programName;
 
-    public boolean isCheckbox() {
-        return checkbox;
+
+    @Transient
+    public static String[] getAttrTittles(){
+        String[] attrTittles={
+                "序号"
+                ,"姓名"
+                ,"性别"
+                ,"学号"
+                ,"证件类型"
+                ,"证件号码"
+                ,"学历"
+                ,"学制"
+                ,"入学年份"
+                ,"年级"
+                ,"院系"
+                ,"专业"
+                ,"班级"
+                ,"学籍所在校"
+                ,"科目编号"
+                ,"电子邮箱"
+                ,"学籍所在校"
+                ,"科目编号"
+                ,"电子邮箱"
+        };
+        return attrTittles;
+    }
+    @Transient
+    public String[] getContents(){
+        String[] contents=new String[18];
+        contents[0]=getDepartmentName();
+        contents[1]=getCourseName();
+        contents[2]=getCourseCode();
+        contents[3]=getClassNumber();
+        contents[4]=getInstructorName();
+        contents[5]=getDepartmentName();
+        contents[6]=getCourseName();
+        contents[7]=getCourseCode();
+        contents[8]=getClassNumber();
+        contents[9]=getInstructorName();
+        contents[10]=getDepartmentName();
+        contents[11]=getCourseName();
+        contents[12]=getCourseCode();
+        contents[13]=getClassNumber();
+        contents[14]=getInstructorName();
+        contents[15]=getDepartmentName();
+        contents[16]=getCourseName();
+        contents[17]=getCourseCode();
+
+        return contents;
     }
 
-    public void setCheckbox(boolean checkbox) {
-        this.checkbox = checkbox;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public String getDepartmentName() {

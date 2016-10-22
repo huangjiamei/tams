@@ -143,7 +143,7 @@
                                                           p:style="float:right!important;font-size:14px;margin-right: 10px;background=orange!important;"
                                                           p:additionalCssClasses="bg-orange"/>
                                                     <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
-                                                          p:methodToCall="exportApplicantExcel"
+                                                          p:methodToCall="exportClassListExcel"
                                                           p:style="float:right!important;font-size:14px; margin-right: 10px;background=forestgreen!important;"
                                                           p:additionalCssClasses="bg-success"/>
                                                 </list>
@@ -185,7 +185,7 @@
                                                         <!--<property name="headerText" value="Table Layout" />-->
                                                         <property name="collectionObjectClass"
                                                                   value="cn.edu.cqu.ngtl.viewobject.course.ClassTeacherViewObject"/>
-                                                        <property name="propertyName" value="collection"/>
+                                                        <property name="propertyName" value="classList"/>
                                                         <property name="layoutManager.renderSequenceField"
                                                                   value="false"/>
                                                         <property name="layoutManager.richTable.render" value="true"/>
@@ -212,10 +212,9 @@
                                                                 <!--<bean parent="Uif-InputField" p:propertyName="paidTime"-->
                                                                 <!--p:readOnlyDisplayReplacement="@{#line.studentId==null?' ':#line.paidTime==null? '否':'是'}"-->
                                                                 <!--p:readOnly="true" p:label="缴费" />-->
-                                                                <bean parent="Uif-InputField" p:label="学院" p:propertyName="checkbox">
+                                                                <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
                                                                     <property name="control">
-                                                                        <bean parent="Uif-CheckboxControl"
-                                                                              p:style=" width=25px;height=25px;"/>
+                                                                        <bean parent="Uif-CheckboxControl"/>
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-DataField" p:label="学院" p:propertyName="departmentName"/>

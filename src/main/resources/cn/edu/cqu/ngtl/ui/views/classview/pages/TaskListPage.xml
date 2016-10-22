@@ -111,7 +111,7 @@
                                                                     <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                    <property name="propertyName" value="classList"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="true"/>

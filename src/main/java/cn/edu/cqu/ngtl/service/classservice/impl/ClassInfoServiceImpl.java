@@ -6,10 +6,12 @@ import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassInfoViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
  */
+@Service
 public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired

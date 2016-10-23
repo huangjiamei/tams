@@ -30,6 +30,20 @@ import java.util.regex.Pattern;
 public class TestController extends UifControllerBase {
 
     /**
+     * 测试用page
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTestPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTestPage")
+    public ModelAndView getTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTest");
+    }
+
+
+
+    /**
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getEditor&viewId=TestView
      * @param form
      * @return

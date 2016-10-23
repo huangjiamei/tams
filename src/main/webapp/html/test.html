@@ -2,24 +2,51 @@
 <html>
  <head>
   <title>Test</title>
+
+  <link rel="stylesheet" href="../css/bootstrap.min.css">
   <style>
    .parent { width:980px;height:250px;margin:0 auto;text-align:center;background-color:#999;}
    .children {display:inline-block;width:100px;height:250px;}
    *+ html .children { display:inline;zoom:1;}
    * html .children { display:inline;zoom:1;}
+   
+   
+   .c{
+    /*width:100%;*/
+    background: black;
+    height:500px;
+   }
+   
+   .b{
+    position: relative;
+    /*width:100%;*/
+    /*left:10%;*/
+    background-color: blue;
+    height:100px;
+   }
+   
+   .bb{
+    /*width:30%;*/
+    background: red;
+    height:50px;
+   }
   </style>
+  
+  
  </head>
  <body>
-  <div class="parent">
-   <div class="children" style="background-color:green;"></div>
-   <div class="children" style="background-color:red;"></div>
-   <div class="children" style="background-color:yellow;"></div>
-   <div class="children" style="background-color:blue;"></div>
-   <div class="children" style="background-color:green;"></div>
-   <div class="children" style="background-color:red;"></div>
-   <div class="children" style="background-color:yellow;"></div>
-   <div class="children" style="background-color:blue;"></div>
-   <div class="children" style="background-color:green;"></div>
+ <div class="c col-md-7 col-md-offset-1">
+  <div class="b ">
+   <div class="bb col-md-6" style="background: green;"></div>
+   <div class="bb col-md-6"></div>
+   
   </div>
+  <!--<div class="b col-md-6" style="background: green;"></div>-->
+  <!--<div class="b col-md-6"></div>-->
+  
+ </div>
+ 
+ 
+  
  </body>
 </html>

@@ -30,6 +30,20 @@ import java.util.regex.Pattern;
 public class TestController extends UifControllerBase {
 
     /**
+     * 测试用page
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTestPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTestPage")
+    public ModelAndView getTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTest");
+    }
+
+
+
+    /**
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getEditor&viewId=TestView
      * @param form
      * @return
@@ -95,8 +109,40 @@ public class TestController extends UifControllerBase {
         // TODO: 2016/10/21 给前端返回处理结果
     }
 
+    /**
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskListPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskListPage")
+    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTaskList");
+    }
 
 
+    /**
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getApplyTAPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getApplyTAPage")
+    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageApplyForTaForm");
+    }
+
+    /**
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskDetailPage")
+    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTaskDetail");
+    }
 
     @Override
     protected UifFormBase createInitialForm() {

@@ -35,8 +35,8 @@
     <bean id="ClassInfoPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
-                <bean id="taskListPageHeader" parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header">
+                <bean parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -80,7 +80,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info col-md-11 col-md-offset-1">
+                                  p:additionalCssClasses="box box-info  col-md-10 col-md-offset-1">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"

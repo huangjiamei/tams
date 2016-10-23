@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container" p:style="margin:0 auto;">
+    <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
 
@@ -41,7 +41,7 @@
                     <property name="items">
                         <list>
                             <!--页面header-->
-                            <bean id="applyForTaFormPageHeader" parent="Uif-VerticalBoxSection"
+                            <bean id="applyForTaFormPageHeader" parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
                                 <property name="items">
                                     <list>

@@ -36,8 +36,8 @@
         <property name="items">
             <list>
                 <!--header-->
-                <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header row">
+                <bean parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -85,22 +85,19 @@
                 </bean>
 
                 <!--body-->
-                <bean parent="Uif-VerticalBoxSection">
+                <bean parent="Uif-VerticalBoxSection"
+                      p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info">
+                            <!--box header:小图标小标题+右上角btn-->
+                            <bean parent="Uif-HorizontalBoxSection"
+                                  p:additionalCssClasses="box-header">
                                 <property name="items">
                                     <list>
-                                        <!--box header:小图标小标题+右上角btn-->
-                                        <bean parent="Uif-HorizontalBoxSection"
-                                              p:additionalCssClasses="box-header">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-Icon" p:iconClass="icon-info"/>
-                                                    <bean parent="Uif-MessageField" p:messageText="任务信息"
-                                                          p:additionalCssClasses="boxheaderTitle"/>
-                                                    <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
+                                        <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                        <bean parent="Uif-MessageField" p:messageText="任务信息"
+                                              p:additionalCssClasses="boxheaderTitle"/>
+                                        <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
 
                                                     <bean parent="Uif-HorizontalBoxSection"
                                                           p:style="float: right!important;">
@@ -114,13 +111,17 @@
                                             </property>
                                         </bean>
 
-                                        <!--类型，主题，指派-->
-                                        <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="row">
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="box-body">
+                                <property name="items">
+                                    <list>
+                                        <!--类型，主题，纸牌-->
+                                        <bean parent="Uif-HorizontalBoxSection"
+                                              p:additionalCssClasses="">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-InputField"
-                                                          p:additionalCssClasses="form-group col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="form-group col-md-4"
                                                           p:label="类型" p:instructionalText=""
                                                           p:required="true"
                                                           p:propertyName="inputField12" p:width="auto">
@@ -135,11 +136,11 @@
 
                                                     <bean parent="Uif-InputField" p:label="主题"
                                                           p:required="true"
-                                                          p:additionalCssClasses="col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="col-md-4"
                                                           p:propertyName="inputField15"/>
 
                                                     <bean parent="Uif-InputField"
-                                                          p:additionalCssClasses="form-group col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="form-group col-md-4"
                                                           p:label="指派" p:instructionalText=""
                                                           p:propertyName="inputField13" p:width="auto">
                                                         <property name="control">
@@ -156,34 +157,27 @@
                                         </bean>
 
                                         <!--editor-->
-                                        <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="row">
-                                            <property name="items">
-                                                <list>
-                                                    <!--p:propertyName="editorContent" 对应form中的editorContent-->
-                                                    <bean id="editor" parent="Uif-InputField"
-                                                          p:additionalCssClasses="form-group col-md-11 col-md-offset-1"
-                                                          p:propertyName="editorContent">
-                                                        <property name="onDocumentReadyScript"
-                                                                  value="UE.getEditor('editor');"/>
-                                                        <property name="control">
-                                                            <!-- 注意：下面这个input的id必定为{inputfieldid}_control-->
-                                                            <bean parent="Uif-TextAreaControl"
-                                                                  p:style="height:0;visibility: hidden!important;"/>
-                                                        </property>
-                                                    </bean>
-                                                </list>
+                                        <!--p:propertyName="editorContent" 对应form中的editorContent-->
+                                        <bean id="editor" parent="Uif-InputField"
+                                              p:additionalCssClasses="form-group col-md-10 col-md-offset-1"
+                                              p:propertyName="editorContent">
+                                            <property name="onDocumentReadyScript"
+                                                      value="UE.getEditor('editor');"/>
+                                            <property name="control">
+                                                <!-- 注意：下面这个input的id必定为{inputfieldid}_control-->
+                                                <bean parent="Uif-TextAreaControl"
+                                                      p:style="height:0;visibility: hidden!important;"/>
                                             </property>
                                         </bean>
 
 
                                         <!--起始时间~完成度-->
                                         <bean parent="Uif-HorizontalBoxSection"
-                                              p:additionalCssClasses="row">
+                                              p:additionalCssClasses="">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-InputField" p:label="起始时间"
-                                                          p:additionalCssClasses="col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="col-md-4"
                                                           p:propertyName="inputField16">
                                                         <property name="control">
                                                             <bean parent="Uif-TextControl" p:size="10">
@@ -194,7 +188,7 @@
                                                         </property>
                                                     </bean>
                                                     <bean parent="Uif-InputField" p:label="完成时间"
-                                                          p:additionalCssClasses="col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="col-md-4"
                                                           p:propertyName="inputField17">
                                                         <property name="control">
                                                             <bean parent="Uif-TextControl" p:size="10">
@@ -206,7 +200,7 @@
                                                     </bean>
 
                                                     <bean parent="Uif-InputField"
-                                                          p:additionalCssClasses="form-group col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="form-group col-md-4"
                                                           p:label="完成度" p:instructionalText=""
                                                           p:propertyName="inputField13" p:width="auto">
                                                         <property name="control">
@@ -224,15 +218,15 @@
 
                                         <!--单份耗时，总耗时，文件-->
                                         <bean parent="Uif-HorizontalBoxSection"
-                                              p:additionalCssClasses="row">
+                                              p:additionalCssClasses="">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-InputField" p:label="单份耗时"
                                                           p:required="true"
-                                                          p:additionalCssClasses="col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="col-md-4"
                                                           p:propertyName="inputField18"/>
                                                     <bean parent="Uif-InputField" p:label="总耗时"
-                                                          p:additionalCssClasses="col-md-3 col-md-offset-1"
+                                                          p:additionalCssClasses="col-md-4"
                                                           p:propertyName="inputField19"/>
 
                                                     <!--<bean parent="Uif-InputField" p:label="文件"-->
@@ -258,7 +252,10 @@
                     </property>
                 </bean>
 
+
             </list>
         </property>
     </bean>
+
+
 </beans>

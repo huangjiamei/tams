@@ -39,7 +39,7 @@
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/bootstrap.css</value>
-                <value>css/exam.css</value>
+                <!--<value>css/exam.css</value>-->
                 <value>css/tams.css</value>
 
                 <!--<value>css/uif.css</value>-->

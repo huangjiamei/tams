@@ -36,7 +36,7 @@
         <property name="items">
             <list>
                 <bean parent="Uif-HorizontalBoxSection"
-                      p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
+                      p:additionalCssClasses="content-header">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -79,78 +79,84 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="box box-info  col-md-10 col-md-offset-1">
-                                <property name="items">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                                <property name="items"  >
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="">
+                                              p:additionalCssClasses="box box-info">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-GridGroup"
-                                                          p:layoutManager.renderRowFirstCellHeader="false">
-                                                        <property name="layoutManager.numberOfColumns" value="4"/>
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="课程名称" p:colSpan="3"
-                                                                      p:fieldLabel.colSpan="1" p:messageText="@{curClassObject.courseName}"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="课程编号" p:messageText="@{curClassObject.courseCode}"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="课程类别" p:messageText="公共基础"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="学时" p:messageText="64"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="学分" p:messageText="5.0 "/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="必修/选修" p:messageText="@{curClassObject.isRequired}"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="授课年级/专业" p:messageText="软件工程2014级"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="所属学院" p:messageText="数统学院"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="授课年级/专业" p:messageText="？？？？？"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="教学班号" p:messageText="001"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="上课教师人数" p:messageText="1"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="上课教师" p:messageText="阴文革"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="选课人数" p:messageText="400"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="拟配备的助教数" p:messageText="1"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="助教预计工时" p:messageText="40"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="成绩评定方式" p:messageText=" "/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="平时成绩占考试成绩比例" p:messageText="40%"/>
+                                                                <bean parent="Uif-GridGroup"
+                                                                      p:layoutManager.renderRowFirstCellHeader="false">
+                                                                    <property name="layoutManager.numberOfColumns" value="4"/>
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="课程名称" p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1" p:messageText="@{curClassObject.courseName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="课程编号" p:messageText="@{curClassObject.courseCode}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="课程类别" p:messageText="公共基础"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学时" p:messageText="64"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学分" p:messageText="5.0 "/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="必修/选修" p:messageText="@{curClassObject.isRequired}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="授课年级/专业" p:messageText="软件工程2014级"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="所属学院" p:messageText="数统学院"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="授课年级/专业" p:messageText="？？？？？"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="教学班号" p:messageText="001"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="上课教师人数" p:messageText="1"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="上课教师" p:messageText="阴文革"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="选课人数" p:messageText="400"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="拟配备的助教数" p:messageText="1"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="助教预计工时" p:messageText="40"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="成绩评定方式" p:messageText=" "/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="平时成绩占考试成绩比例" p:messageText="40%"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>
                                                 </list>
                                             </property>
                                         </bean>
-                                    </list>
-                                </property>
-                            </bean>
+
+                        </list>
+                    </property>
+                </bean>
                         </list>
                     </property>
                 </bean>
 
 
-
-                <bean  parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header">
-                    <property name="items">
-                        <list>
-                            <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="任务一览" />
-                        </list>
-                    </property>
-                </bean>
+                <!--<bean  parent="Uif-VerticalBoxSection"-->
+                      <!--p:additionalCssClasses="content-header">-->
+                    <!--<property name="items">-->
+                        <!--<list>-->
+                            <!--&lt;!&ndash; 左上角 &ndash;&gt;-->
+                            <!--<bean parent="Uif-HeaderThree" p:headerText="任务一览" />-->
+                        <!--</list>-->
+                    <!--</property>-->
+                <!--</bean>-->
 
                 <!--任务列表-->
                 <!--<bean parent="Uif-VerticalBoxSection"-->

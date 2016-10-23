@@ -36,7 +36,7 @@
         <property name="items">
             <list>
                 <bean id="taskListPageHeader" parent="Uif-HorizontalBoxSection"
-                      p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
+                      p:additionalCssClasses="content-header">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -76,14 +76,14 @@
                 </bean>
 
                 <!--body-->
-                <bean parent="Uif-VerticalBoxSection">
+                <bean parent="Uif-VerticalBoxSection"  p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
+                                              p:additionalCssClasses="box box-info">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-HorizontalBoxSection"

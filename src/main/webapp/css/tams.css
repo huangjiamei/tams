@@ -126,6 +126,16 @@ body{
     border-color:transparent;
 }
 
+/* 导出、复制等btn的统一样式 */
+.tamsbtn{
+    font-size:14px;
+    margin-left: 5px;
+    margin-right:5px;
+    width:80px;
+    height:30px;
+    border-width:0;
+}
+
 /* content */
 /* content-header*/
 .content-header {
@@ -164,8 +174,10 @@ body{
     margin-bottom: 0;
 }
 
-
-
+/* edit、delete等action之前用于确认的dialog的样式 */
+.actionDialog{
+    margin-top: 35%;
+}
 
 
 

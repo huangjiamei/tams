@@ -124,6 +124,23 @@
                         </list>
                     </property>
                 </bean>
+
+                <bean parent="Uif-Page" p:id="pageCourseManager" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="CourseManagerPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTermManagement" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TermManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
+
             </list>
         </property>
     </bean>

@@ -145,6 +145,7 @@ public class TestController extends UifControllerBase {
     }
 
     /**
+     * 获取类别管理页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getConsolePage&viewId=TestView
      * @param form
      * @return
@@ -155,6 +156,63 @@ public class TestController extends UifControllerBase {
 
         return this.getModelAndView(testForm, "pageConsole");
     }
+
+    /**
+     * 获取课程负责人页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getCourseManagerPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getCourseManagerPage")
+    public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageCourseManager");
+    }
+
+    /**
+     * 编辑课程负责人信息
+     * 只接受来自pageCourseManager的请求
+     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
+     * @param form
+     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageCourseManager，需要考虑使用ajax实现局部刷新
+     */
+    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=updateCourseManager"})
+    public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        System.out.println("updateCourseManager/nupdateCourseManager/n");
+
+        return this.getModelAndView(testForm, "pageCourseManager");
+    }
+
+    /**
+     * 获取term(学期或批次)管理页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTermManagePage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTermManagePage")
+    public ModelAndView getTermManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTermManagement");
+    }
+
+    /**
+     * 编辑term(即学期或批次)信息
+     * 只接受来自pageTermManagement的请求
+     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
+     * @param form
+     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageTermManagement，需要考虑使用ajax实现局部刷新
+     */
+    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=updateTerm"})
+    public ModelAndView updateTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        System.out.println("updateCourseManager/nupdateCourseManager/n");
+
+        return this.getModelAndView(testForm, "pageTermManagement");
+    }
+
 
     @Override
     protected UifFormBase createInitialForm() {

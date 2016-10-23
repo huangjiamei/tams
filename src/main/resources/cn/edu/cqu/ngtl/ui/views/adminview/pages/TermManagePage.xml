@@ -290,7 +290,6 @@
 
 
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
-          p:dialogCssClass="actionDialog"
           p:headerText="修改批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
@@ -341,7 +340,6 @@
     </bean>
 
     <bean id="confirmDeleteTermDialog" parent="Uif-DialogGroup"
-          p:dialogCssClass="actionDialog"
           p:headerText="删除批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>

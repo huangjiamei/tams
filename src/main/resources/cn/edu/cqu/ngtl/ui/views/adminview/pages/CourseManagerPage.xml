@@ -232,14 +232,13 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
-                <bean parent="Uif-PrimaryActionButton" p:actionLabecclasscontrol="确定"
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
                       p:ajaxSubmit="false" p:methodToCall="updateCourseManager" p:successCallback="alert('回调成功')" />
             </list>
         </property>
     </bean>
 
     <bean id="confirmDeleteManagerDialog" parent="Uif-DialogGroup"
-          p:dialogCssClass="actionDialog"
           p:headerText="删除课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>

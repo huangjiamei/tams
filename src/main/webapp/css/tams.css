@@ -175,9 +175,9 @@ body{
 }
 
 /* edit、delete等action之前用于确认的dialog的样式 */
-.actionDialog{
-    margin-top: 35%;
-}
+/*.actionDialog{*/
+    /*margin-top: 35%;*/
+/*}*/
 
 
 
@@ -192,6 +192,11 @@ body{
 .uif-inputField input[type="text"].form-control{
     height: 32px!important;
     width: 100%!important;;
+}
+
+/* 所有dialog往屏幕中间移动*/
+.modal-content{
+    margin-top: 35%;
 }
 
 

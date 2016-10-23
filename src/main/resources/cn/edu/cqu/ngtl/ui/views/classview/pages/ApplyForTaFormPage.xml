@@ -110,16 +110,25 @@
                                             <property name="layoutManager.numberOfColumns" value="4"/>
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-InputField" p:label="姓名" p:colSpan="3"
-                                                          p:fieldLabel.colSpan="1" p:propertyName="inputField1"/>
-                                                    <bean parent="Uif-InputField" p:label="学号" p:propertyName="inputField2"/>
-                                                    <bean parent="Uif-InputField" p:label="导师" p:propertyName="inputField3"/>
-                                                    <bean parent="Uif-InputField" p:label="本科专业" p:propertyName="inputField4"/>
-                                                    <bean parent="Uif-InputField" p:label="研究生专业" p:propertyName="inputField5"/>
-                                                    <bean parent="Uif-InputField" p:label="联系方式" p:propertyName="inputField6"/>
-                                                    <bean parent="Uif-InputField" p:label="学时数" p:propertyName="inputField7"/>
-                                                    <bean parent="Uif-InputField" p:label="申请课程教师" p:propertyName="inputField8"/>
-                                                    <bean parent="Uif-InputField" p:label="申请课程类型" p:propertyName="inputField9"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="姓名" p:colSpan="3"
+                                                          p:fieldLabel.colSpan="1" p:messageText="姓名"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="学号" p:messageText="201331231"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="导师" p:messageText="导师1"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="本科专业" p:messageText="公共基础"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="研究生专业" p:messageText="64"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="联系方式" p:messageText="5.0 "/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="学时数" p:messageText="64"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="申请课程教师" p:messageText="软件工程2014级"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="申请课程类型" p:messageText="数统学院"/>
                                                 </list>
                                             </property>
                                         </bean>

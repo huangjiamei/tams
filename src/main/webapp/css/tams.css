@@ -176,6 +176,12 @@ body{
     width: 100%;
 }
 
+/* 修改表格中inputfiled的宽高 */
+.uif-inputField input[type="text"].form-control{
+    height: 32px!important;
+    width: 100%!important;;
+}
+
 
 /**  修改uif end   */
 

@@ -159,7 +159,7 @@
                                         <!--editor-->
                                         <!--p:propertyName="editorContent" 对应form中的editorContent-->
                                         <bean id="editor" parent="Uif-InputField"
-                                              p:additionalCssClasses="form-group col-md-10 col-md-offset-1"
+                                              p:additionalCssClasses="form-group col-md-12"
                                               p:propertyName="editorContent">
                                             <property name="onDocumentReadyScript"
                                                       value="UE.getEditor('editor');"/>

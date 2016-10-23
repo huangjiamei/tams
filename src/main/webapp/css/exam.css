@@ -55,7 +55,7 @@ body {
 }
 
 headr .row{
-	margin-right: -7.5px; 
+	margin-right: -7.5px;
 }
 
 
@@ -108,12 +108,12 @@ headr .row{
 }
 
 .nav-list>li .submenu .submenu{
-    overflow: hidden; 
+    overflow: hidden;
     display: none;
 }
 
 #Uif-Navigation .nav.nav-list .active .submenu .active a {
-    margin-right:0px; 
+    margin-right:0px;
     border-right: 1px solid #ccc!important;
 }
 
@@ -316,7 +316,7 @@ body{
     font-weight: 700;
 }
 
-#CetApplyContent .CETinfoList div, 
+#CetApplyContent .CETinfoList div,
 #CetApplyContent .CETinfoList div select{
     font-size: 15px;
 }
@@ -336,7 +336,7 @@ body{
     margin-left: 10px;
     font-size: 14px;
     list-style-type: disc;
-}	
+}
 #CetApplyPageDialog header button{
 	display:none !important;
 } */
@@ -412,9 +412,9 @@ body{
     border-color: #367fa9;
 }
 
-.btn-primary:hover, 
+.btn-primary:hover,
 .btn-primary:active,
-.btn-primary.active, 
+.btn-primary.active,
 .btn-primary:focus{
 	color: #fff;
     border-color: #204d74;
@@ -490,7 +490,7 @@ body{
 #ShowExamplePhotoBtn{
     margin: 7px;
 }
- 
+
 /*#cardButton{
     margin:10px 20px;
 }
@@ -712,7 +712,7 @@ body{
     margin: 5px 8px 5px 5px;
 }
 
-#UpdateApplicantDialog .CETinfoList div, 
+#UpdateApplicantDialog .CETinfoList div,
 #UpdateApplicantDialog .CETinfoList div select{
     font-size: 15px;
 }
@@ -782,8 +782,8 @@ body{
 .nav-tabs>li.active{
 	border-top-color: #3c8dbc;
 }
-.nav-tabs>li.active>a, 
-.nav-tabs>li.active>a:hover, 
+.nav-tabs>li.active>a,
+.nav-tabs>li.active>a:hover,
 .nav-tabs>li.active>a:focus{
 	border-top-color: transparent;
 	border-left-color:#ddd;
@@ -797,7 +797,7 @@ body{
 .nav-tabs>li>a {
    color:#555;
    margin-right: 0px;
-   border-radius: 0px; 
+   border-radius: 0px;
 }
 
 .nav>li>a:hover, .nav>li>a:focus {

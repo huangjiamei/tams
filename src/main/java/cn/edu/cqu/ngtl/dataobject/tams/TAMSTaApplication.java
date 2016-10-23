@@ -1,11 +1,9 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -32,6 +30,7 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     private String applicationStatus;
 
     @Column(name = "APPLICATION_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String applicationTime;
 
     @Column(name = "NOTE")

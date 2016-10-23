@@ -35,7 +35,7 @@
     <bean id="TaskListPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
-                <bean id="taskListPageHeader" parent="Uif-VerticalBoxSection"
+                <bean id="taskListPageHeader" parent="Uif-HorizontalBoxSection"
                       p:additionalCssClasses="content-header">
                     <property name="items">
                         <list>
@@ -76,10 +76,10 @@
                 </bean>
 
                 <!--body-->
-                <bean parent="Uif-VerticalBoxSection">
+                <bean parent="Uif-VerticalBoxSection"  p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -107,17 +107,13 @@
                                                                 <bean id="taskListTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="12">
-                                                                    <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
-                                                                    <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="classList"/>
+                                                                    <property name="propertyName" value="collection"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="true"/>
 
-                                                                    <!--打开useServerPaging会报js error？？-->
-                                                                    <!--<property name="useServerPaging" value="true" />-->
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="true"/>

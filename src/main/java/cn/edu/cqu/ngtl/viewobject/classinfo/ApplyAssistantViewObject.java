@@ -26,6 +26,17 @@ public class ApplyAssistantViewObject {
     //申请课程类型
     private String applyCourseType;
 
+    //隐藏属性
+    private Integer classId;
+
+    public Integer getClassId() {
+        return classId;
+    }
+
+    public void setClassId(Integer classId) {
+        this.classId = classId;
+    }
+
     public String getUsername() {
         return username;
     }

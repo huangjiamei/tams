@@ -6,13 +6,13 @@ package cn.edu.cqu.ngtl.viewobject.classinfo;
 public class ClassDetailInfoViewObject {
 
     // 课程名称//
-    private String className;
+    private String courseName;
 
     // 课程编号//
-    private String classId;
+    private String courseId;
 
     // 课程类别//
-    private String classKind;
+    private String courseClassification;
 
     // 学时//
     private String classHour;
@@ -59,30 +59,6 @@ public class ClassDetailInfoViewObject {
 
     public void setDepartmentAndGrade(String departmentAndGrade) {
         this.departmentAndGrade = departmentAndGrade;
-    }
-
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String className) {
-        this.className = className;
-    }
-
-    public String getClassId() {
-        return classId;
-    }
-
-    public void setClassId(String classId) {
-        this.classId = classId;
-    }
-
-    public String getClassKind() {
-        return classKind;
-    }
-
-    public void setClassKind(String classKind) {
-        this.classKind = classKind;
     }
 
     public String getClassHour() {
@@ -180,4 +156,30 @@ public class ClassDetailInfoViewObject {
     public void setGradePercent(String gradePercent) {
         this.gradePercent = gradePercent;
     }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getCourseClassification() {
+        return courseClassification;
+    }
+
+    public void setCourseClassification(String courseClassification) {
+        this.courseClassification = courseClassification;
+    }
+
+
 }

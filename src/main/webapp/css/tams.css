@@ -1,22 +1,107 @@
 @CHARSET "UTF-8";
 
+
+*{
+    font-family:"Microsoft YaHei UI";
+}
+
+body{
+    background-color: #ecf0f5;
+}
+
+
+.photo{
+    margin: 0 auto;
+    float: none!important;
+}
+
+.uif-page{
+    margin-top:40px;
+}
+
+/*View的header样式*/
+.uif-viewHeader {
+    padding: 0px;
+}
+.headerMessage{
+    color: white;
+    margin-top: 14px;
+}
+
+.uif-applicationHeader {
+    background-color: #3C8DBC;
+    /*导航栏固定在顶部*/
+    position:fixed!important;
+}
+
+.uif-applicationHeader .navbar {
+    background-color: #3C8DBC;
+}
+
+.uif-applicationHeader .navbar .nav li.active a {
+    background: #337CA7;
+}
+
+.nav .open>a, .nav .open>a:hover,
+.nav .open>a:focus{
+    background-color:#337CA7;
+}
+
+.uif-applicationHeader .navbar a:hover,
+.uif-applicationHeader .navbar a:focus{
+    background:#337CA7;
+}
+
+
+.uif-applicationHeader .navbar div.logoBrand {
+    width: 250px;
+    height: 50px;
+    position: absolute;
+    top: 0;
+    margin-left: -7px;
+}
+.uif-header .toolbar{
+    display:none!important;
+}
+
 .navbar-brand {
     height:0px!important;
     padding: 0px 0px!important;
 }
 
-/*居中block*/
-.col-center-block {
-    float: none;
-    display: block;
+/* 导航栏 */
+.navigationDialog{
+    width:80%;
+}
+
+.container{
     margin: 0 auto;
+    width: 100%;
+    padding: 0 0;
 }
 
-.breadcrumb > li + li:before {
-    content: ">\00a0"!important;
+/* box */
+/* box-header */
+.box-header {
+    color: #444;
+    display: block;
+    padding: 10px;
+    position: relative;
 }
 
+.box-header > *{
+    display: inline-block;
 
+    margin: 0;
+    line-height: 1;
+    float: none;
+}
+.box-header > .boxheaderTitle,
+.box-header > [class*="icon-"]{
+    font-size: 18px;
+}
+
+/*box-header的btn*/
 .box-btngroup{
     float: right;
     margin-right: 20px;
@@ -29,20 +114,80 @@
     height: 30px;
 }
 
+/* 背景颜色 */
+.bg-teal {
+    background-color: #39cccc !important;
+}
+.bg-orange {
+    background-color: #ff851b !important;
+}
+.bg-success {
+    background-color: #00a65a !important;
+}
+.bg-red {
+    background-color: #dd4b39 !important;
+}
 
+.btn[class*='bg-']:hover {
+    -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
+    box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
+    border-color:transparent;
+}
+
+/* content */
+/* content-header*/
+.content-header {
+    padding: 0!important;
+}
+/* 面包线home图标*/
 .myIcon{
     float: left!important;
-    margin-top:11px!important;
+}
+/* 面包线‘*/
+.breadcrumb *{
+    padding-left:0px!important;
+    padding-top:0px!important;
+    padding-right:0px!important;
+    margin:0px!important;
+
+}
+.breadcrumb {
+    padding-right:0px!important;
+    margin-right:0px!important;
+
+}
+.breadcrumb > li + li:before {
+    content: ">\00a0"!important;
 }
 
-.navigationDialog{
-    width:80%;
+.uif-disclosure{
+    overflow-x: scroll;
 }
+.uif-disclosure>.uif-sectionHeader, .uif-disclosure .DTTT_container,
+.uif-disclosure .dataTables_processing{
+    display:none;
+}
+
+.uif-disclosure>.dataTables_wrapper{
+    margin-bottom: 0;
+}
+
+
+
+
 
 
 /**  修改uif   */
+
+/* 用途待补充 */
 .form-control{
     width: 100%;
+}
+
+/* 修改表格中inputfiled的宽高 */
+.uif-inputField input[type="text"].form-control{
+    height: 32px!important;
+    width: 100%!important;;
 }
 
 

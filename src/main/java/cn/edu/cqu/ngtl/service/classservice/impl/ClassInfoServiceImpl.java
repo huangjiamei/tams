@@ -2,7 +2,9 @@ package cn.edu.cqu.ngtl.service.classservice.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
+import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private UTClassDao classDao;
+
+    @Autowired
+    private UTStudentDao studentDao;
 
     @Override
     public List<UTClassInformation> getAllClassesMappedByDepartment() {
@@ -44,5 +49,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         UTClass clazz = classDao.selectByClassId(classId);
 
         return clazz;
+    }
+
+    @Override
+    public UTStudent getStudentInfoById(String stuId) {
+        return studentDao.getUTStudentById(stuId);
     }
 }

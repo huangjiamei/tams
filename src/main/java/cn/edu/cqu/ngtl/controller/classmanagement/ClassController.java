@@ -6,11 +6,14 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -40,14 +43,15 @@ public class ClassController extends UifControllerBase {
     @Autowired
     private ITAConverter taConverter;
 
+    @Autowired
+    private ITAService taService;
+
     /**
-     *
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
-     *
-     * **/
+     **/
     @RequestMapping(params = "methodToCall=getClassListPage")
     public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        ClassInfoForm infoForm=(ClassInfoForm) form;
+        ClassInfoForm infoForm = (ClassInfoForm) form;
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(
                         classInfoService.getAllClassesMappedByDepartment()
@@ -59,6 +63,7 @@ public class ClassController extends UifControllerBase {
     /**
      * pageId限定了只接受来自pageClassList的请求
      * 从classlist跳转到某个class对应的classInfoPage
+     *
      * @param form
      * @return
      */
@@ -108,10 +113,38 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageAddNewTask");
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getApplyTAPage&viewId=ClassView
+     **/
     @RequestMapping(params = "methodToCall=getApplyTAPage")
-    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageApplyForTaForm");
+    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String stuId = userSession.getLoggedInUserPrincipalId();
+        //TODO
+        stuId = "20131840";
+
+        Integer classId = 290739;
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        infoForm.setApplyAssistantViewObject(
+                taConverter.applyAssistantToTableViewObject(
+                        classInfoService.getStudentInfoById(stuId),
+                        classInfoService.getClassInfoById(classId)
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageApplyForTaForm");
+    }
+
+    @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
+    public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
+
+        return null;
     }
 
     //    /**
@@ -169,11 +202,6 @@ public class ClassController extends UifControllerBase {
 
         return this.performRedirect(infoForm,baseUrl+ File.separator+filePath);
     }
-
-
-
-
-
 
 
 

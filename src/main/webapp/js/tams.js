@@ -2,33 +2,217 @@
  * Created by DELL on 2016-10-16.
  */
 
-// $(window).resize(function(){
-//
-//     $('.col-in-center-block').css({
-//         display:'inline-block',
-//
-//         width: ($(window).width()
-//         - $('.col-in-center-block').outerWidth())/2,
-//
-//     });
-//
-// });
-
-/**
- * æ¯æ¬¡ç‚¹å‡»btnéƒ½ä¼šæäº¤ä¸¤æ¬¡ï¼Œ
- * æ‰€æœ‰é¦–å…ˆåˆ¤æ–­transferå’Œeditorä¸­å†…å®¹æ˜¯å¦æœ‰åŒºåˆ«ï¼Œå†…å®¹ä¸åŒæ—¶æ‰ä¼šæäº¤
- * @param editorID
- * @param transferID
- * @returns {boolean}
- */
 function doEditorPreSubmit(editorID,transferID) {
-    var content=UE.getEditor(editorID).getPlainTxt();
-    if (document.getElementById(transferID).value==content){
-        return false;
-    }else{
-        jQuery('#' + transferID).val(content);
-        return true;
+
+    // alert('asdf');
+    // alert(UE.getEditor(editorID).getPlainTxt());
+    jQuery('#' + transferID).val(UE.getEditor(editorID).getPlainTxt());
+    return true;
+}
+
+/*
+    ClassListPageÖÐµÄ±í¸ñ¼ÓÔØÇ°µ÷ÓÃ
+    ÓÃÓÚÖØ»æ±í¸ñÖÐµÄËÑË÷¿Ø¼þ(ÒòriceÏÞÖÆ)£¬²¢ÇÒÎª¸÷ËÑË÷ÊäÈë¿Ø¼þ¼ÓÈëÊÂ¼þ¼àÌý
+ */
+function getClassTableReady() {
+
+    //µÃµ½±íÖÐÊý¾Ý
+    var table =jQuery('#ClassListPageTable table').DataTable();
+
+    //Òþ²ØµÄlistÖÐµÄinput
+    var searchHiddenList = jQuery('#SearchCondContainer > div > input');
+
+    //ÔÚ±íÖÐ¼ÓÒ»ÐÐ
+    jQuery('#ClassListPageTable table thead').append( '<tr><tr>' );
+
+
+    //´æ´¢ËùÓÐ¿ÉÑ¡µÄoption
+    var selectGradeHtml=document.getElementsByName("AIPsearchGradeId")[0].innerHTML;//Äê¼¶
+    var selectBelongDeptHtml=document.getElementsByName("AIPsearchDepartmentId")[0].innerHTML;//Ñ§Ôº
+    var selectCampusHtml=document.getElementsByName("AIPsearchCampusId")[0].innerHTML;//Ð£Çø
+    var selectLtypeHtml=document.getElementsByName("applicantLanguage")[0].innerHTML;//ÀàÐÍ
+    var selectLevelHtml=document.getElementsByName("applicantLevelId")[0].innerHTML;//¼¶±ð
+
+
+    //È·¶¨¿É¼ûÑ§Ôº
+    var selectDeptHtml;
+    //²é¿´µ±Ç°ÓÃ»§µÄÑ§ÔºID
+    var userDeptId = document.querySelector("#userDeptId > p").innerHTML;
+    //ÈôÎª½ÌÎñ´¦Ôò¿É¼ûËùÓÐÑ§Ôº
+    if(userDeptId.trim() == "114819126"){
+        selectDeptHtml = selectBelongDeptHtml;
+        document.getElementsByName("AIPsearchDepartmentId")[0].value = document.getElementsByName("applicantdDept")[0].value;
+    }else{//Èôµ±Ç°ÓÃ»§²»ÊôÓÚ½ÌÎñ´¦
+        //½«¿ÉÑ¡µÄÑ§ÔºÉèÖÃÎªµ±Ç°ÓÃ»§µÄÑ§Ôº
+        selectDeptHtml = '<option selected="selected" value="'+userDeptId+'">'+document.querySelector("#userDeptName > p").innerHTML+'</option>';
+        //½«Ñ¡ÖÐ²é¿´µÄÑ§ÔºÉèÖÃÎªµ±Ç°ÓÃ»§Ñ§Ôº
+        document.getElementsByName("applicantdDept")[0].value = userDeptId;
     }
+
+    var htmlArr = new Array();
+    htmlArr[6] = selectGradeHtml;
+    htmlArr[7] = selectDeptHtml;
+    htmlArr[8] = selectCampusHtml;
+    htmlArr[11] = selectLtypeHtml;
+    htmlArr[12] = selectLevelHtml;
+
+
+
+    jQuery('#ClassListPageTable table thead tr:eq(0) th').each( function ( i ) {//¶ÔÓÚ±í¸ñµÄÃ¿Ò»ÁÐ
+        var thwidth = this.style.width;
+        jQuery('#ClassListPageTable table thead tr:eq(1)').append( '<th></th>' );
+        var column = table.column( i );
+        if(i==1 || i==5){ //ÐÕÃûºÍÑ§ºÅ
+            var txt = jQuery('<input type="text" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'" value="'+jQuery(searchHiddenList[i-1]).val()+'" style="font-weight:normal;width:45px;">')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty())
+                .on( {keyup: function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).val().replace(/(^[\n\s]*)|([\n\s]*$)/g, "");
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                } ,
+                    keydown: function(e){
+                        var key = e.which;
+                        if(key == 13 && document.activeElement.id == jQuery(searchHiddenList[i-1]).attr("name")){
+                            e.preventDefault();
+                            table.page(0).draw(false);
+                            if(table.page() > 0) {
+                                table.page(0).draw(false);
+                            }
+                            jQuery("#ApplicantPageButton").click();
+                        }
+                    }
+                });
+        }
+        else if(i==10||(i>14 && i<17)){ //Ö¤¼þºÅ||±¨ÃûÐòºÅ||×¼¿¼Ö¤ºÅ
+            var txt = jQuery('<input type="text" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'" value="'+jQuery(searchHiddenList[i-1]).val()+'" style="font-weight:normal;width:80px;">')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( {keyup: function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).val().replace(/(^[\n\s]*)|([\n\s]*$)/g, "");
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                } ,
+                    keydown: function(e){
+                        var key = e.which;
+                        if(key == 13 && document.activeElement.id == jQuery(searchHiddenList[i-1]).attr("name")){
+                            e.preventDefault();
+                            table.page(0).draw(false);
+                            if(table.page() > 0) {
+                                table.page(0).draw(false);
+                            }
+                            jQuery("#ApplicantPageButton").click();
+                        }
+                    }
+                });
+        }
+        else if(i==3 || i==4 || i==9 || i==13){//Ñ§Àú||Ñ§ÖÆ||Ö¤¼þÀàÐÍ||Ó¦½»½ð¶î
+            var txt = jQuery('<input type="text" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'" value="'+jQuery(searchHiddenList[i-1]).val()+'" style="font-weight:normal;width:25px;">')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( {keyup: function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).val().replace(/(^[\n\s]*)|([\n\s]*$)/g, "");
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                } ,
+                    keydown: function(e){
+                        var key = e.which;
+                        if(key == 13 && document.activeElement.id == jQuery(searchHiddenList[i-1]).attr("name")){
+                            e.preventDefault();
+                            table.page(0).draw(false);
+                            if(table.page() > 0) {
+                                table.page(0).draw(false);
+                            }
+                            jQuery("#ApplicantPageButton").click();
+                        }
+                    }
+                });
+        }
+        else if(i==2){//ÐÔ±ð
+            var select = jQuery('<select style="font-weight:normal;height:24px;width:30px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'
+                +'<option value selected ="selected"></option>'
+                +'<option value="F">Å®</option>'
+                +'<option value="M">ÄÐ</option>'
+                +'</select>')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( 'change', function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).find("option:selected").val();
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                    table.page(0).draw(false);
+                    if(table.page() > 0) {
+                        table.page(0).draw(false);
+                    }
+                    jQuery("#ApplicantPageButton").click();
+                } );
+            select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
+        }
+        else if(i==6||i==8||i==12){//Äê¼¶||Ð£Çø||ÓïÑÔ¼¶±ð
+            var select = jQuery('<select style="font-weight:normal;height:24px;width:30px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'+htmlArr[i]+'</select>')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( 'change', function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).find("option:selected").val();
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                    console.info(table.page());
+                    table.page(0).draw(false);
+                    if(table.page() > 0) {
+                        table.page(0).draw(false);
+                    }
+                    jQuery("#ApplicantPageButton").click();
+                } );
+            select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
+        }
+        else if(i==11){//ÓïÑÔÀàÐÍ
+            var select = jQuery('<select style="font-weight:normal;height:24px;width:50px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'+htmlArr[i]+'</select>')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( 'change', function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).find("option:selected").val();
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                    console.info(table.page());
+                    table.page(0).draw(false);
+                    if(table.page() > 0) {
+                        table.page(0).draw(false);
+                    }
+                    jQuery("#ApplicantPageButton").click();
+                } );
+            select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
+        }
+        else if(i==7){//Ñ§Ôº
+            var select = jQuery('<select style="font-weight:normal;height:24px;width:80px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'+htmlArr[i]+'</select>')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( 'change', function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).find("option:selected").val();
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                    console.info(table.page());
+                    table.page(0).draw(false);
+                    if(table.page() > 0) {
+                        table.page(0).draw(false);
+                    }
+                    jQuery("#ApplicantPageButton").click();
+                } );
+            select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
+        }
+        else if(i==14){//ÊÇ·ñ½É·Ñ
+            var select = jQuery('<select style="font-weight:normal;height:24px;width:30px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'
+                +'<option value selected ="selected"></option>'
+                +'<option value="0">·ñ</option>'
+                +'<option value="1">ÊÇ</option>'
+                +'</select>')
+                .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
+                .on( 'change', function () {
+                    var val = jQuery("#"+jQuery(searchHiddenList[i-1]).attr("name")).find("option:selected").val();
+                    var obj = document.getElementsByName(jQuery(searchHiddenList[i-1]).attr("name"))[0];
+                    obj.value = val;
+                    if(table.page() > 0) {
+                        table.page(0).draw(false);
+                    }
+                    jQuery("#ApplicantPageButton").click();
+                } );
+            select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
+        }
+    })
+
+
 }
 
 

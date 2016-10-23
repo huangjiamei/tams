@@ -172,11 +172,6 @@ public class ClassController extends UifControllerBase {
 
 
 
-
-
-
-
-
     @Override
     protected UifFormBase createInitialForm() {
         return new ClassInfoForm();

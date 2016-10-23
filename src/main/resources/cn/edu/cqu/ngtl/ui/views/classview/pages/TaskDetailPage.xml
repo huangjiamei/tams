@@ -35,8 +35,8 @@
     <bean id="TaskDetailPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
-                <bean id="taskDetailHeader" parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header">
+                <bean id="taskDetailHeader" parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -77,152 +77,157 @@
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="box box-info col-lg-3">
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-HorizontalBoxSection"
-                                  p:additionalCssClasses="box-header">
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-Icon" p:iconClass="icon-info" />
-                                        <bean parent="Uif-MessageField" p:messageText="任务信息"
-                                              p:additionalCssClasses="boxheaderTitle"/>
-                                        <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
-
                                         <bean parent="Uif-HorizontalBoxSection"
-                                              p:style="float: right!important;">
+                                              p:additionalCssClasses="box-header">
                                             <property name="items">
                                                 <list>
-                                                    <!--右上角btnlist-->
-                                                    <bean parent="Uif-PrimaryActionButton" p:actionLabel="更新"
-                                                          p:actionImagePlacement="LEFT"
-                                                          p:methodToCall="exportApplicantPhoto"
-                                                          p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
-                                                          p:additionalCssClasses="bg-teal">
-                                                        <property name="actionImage">
-                                                            <bean parent="Uif-Image" p:width="18" p:height="18"
-                                                                  p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
+                                                    <bean parent="Uif-Icon" p:iconClass="icon-info" />
+                                                    <bean parent="Uif-MessageField" p:messageText="任务信息"
+                                                          p:additionalCssClasses="boxheaderTitle"/>
+                                                    <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
+
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:style="float: right!important;">
+                                                        <property name="items">
+                                                            <list>
+                                                                <!--右上角btnlist-->
+                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="更新"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="exportApplicantPhoto"
+                                                                      p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
+                                                                      p:additionalCssClasses="bg-teal">
+                                                                    <property name="actionImage">
+                                                                        <bean parent="Uif-Image" p:width="18" p:height="18"
+                                                                              p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="复制"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="exportApplicantPhoto"
+                                                                      p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
+                                                                      p:additionalCssClasses="bg-success">
+                                                                    <property name="actionImage">
+                                                                        <bean parent="Uif-Image"  p:width="18" p:height="18"
+                                                                              p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="删除"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="exportApplicantPhoto"
+                                                                      p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
+                                                                      p:additionalCssClasses="bg-red">
+                                                                    <property name="actionImage">
+                                                                        <bean parent="Uif-Image" p:width="18" p:height="18"
+                                                                              p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
                                                         </property>
                                                     </bean>
-                                                    <bean parent="Uif-PrimaryActionButton" p:actionLabel="复制"
-                                                          p:actionImagePlacement="LEFT"
-                                                          p:methodToCall="exportApplicantPhoto"
-                                                          p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
-                                                          p:additionalCssClasses="bg-success">
-                                                        <property name="actionImage">
-                                                            <bean parent="Uif-Image"  p:width="18" p:height="18"
-                                                                  p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-PrimaryActionButton" p:actionLabel="删除"
-                                                          p:actionImagePlacement="LEFT"
-                                                          p:methodToCall="exportApplicantPhoto"
-                                                          p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
-                                                          p:additionalCssClasses="bg-red">
-                                                        <property name="actionImage">
-                                                            <bean parent="Uif-Image" p:width="18" p:height="18"
-                                                                  p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
-                                                        </property>
-                                                    </bean>
+
                                                 </list>
                                             </property>
                                         </bean>
-
-                                    </list>
-                                </property>
-                            </bean>
-                            <bean parent="Uif-VerticalBoxSection"
-                                  p:style="padding:5px">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-MessageField"
-                                              p:messageText="由 阴文革 在 大约 2 小时 之前 添加， 更新于 2 小时 之前。"
-                                              p:additionalCssClasses="boxheaderTitle"/>
-                                    </list>
-                                </property>
-                            </bean>
-                            <bean parent="Uif-GridGroup"
-                                                                     p:layoutManager.renderRowFirstCellHeader="false">
-                                <property name="layoutManager.numberOfColumns" value="4"/>
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="类型" p:colSpan="3"
-                                              p:fieldLabel.colSpan="1" p:messageText="课程研讨/讨论"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="主题" p:messageText=" 第一次课堂讨论"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="指派" p:messageText="牛顿"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="起始时间" p:messageText="2016-8-9"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="完成时间" p:messageText="2016-8-10"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="单份耗时" p:messageText="2h"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="总耗时" p:messageText="2h"/>
-                                        <!--可以换成progressbar？-->
-                                        <!--<bean parent="Uif-MessageField"-->
-                                        <!--p:label="%完成" p:messageText="55%"/>-->
-                                        <bean parent="Uif-Message" p:messageText="完成度"
-                                              p:style="text-align:right!important;"/>
-                                        <bean parent="Uif-HorizontalBoxSection"
-                                              p:additionalCssClasses="progress progress-xs progress-striped active">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="progress-bar progress-bar-danger"
-                                                          p:style="width: 55%"/>
-                                                    <bean parent="Uif-MessageField" p:messageText="55%"
-                                                          p:additionalCssClasses="badge bg-red"/>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                        <!--<bean parent="Uif-HorizontalBoxSection">-->
-                                        <!--<property name="items">-->
-                                        <!--<list>-->
-                                        <!--<bean parent="Uif-VerticalBoxSection"-->
-                                        <!--p:additionalCssClasses="progress progress-xs progress-striped active">-->
-                                        <!--<property name="items">-->
-                                        <!--<list>-->
-                                        <!--<bean parent="Uif-VerticalBoxSection"-->
-                                        <!--p:additionalCssClasses="progress-bar bg-light-blue"-->
-                                        <!--p:style="width: 30%"></bean>-->
-                                        <!--</list>-->
-                                        <!--</property>-->
-                                        <!--</bean>-->
-                                        <!--<bean parent="Uif-Message" p:messageText="30%"-->
-                                        <!--p:additionalCssClasses="badge bg-light-blue"/>-->
-                                        <!--</list>-->
-                                        <!--</property>-->
-                                        <!--</bean>-->
-
-
-                                        <bean parent="Uif-MessageField"
-                                              p:label="文件" p:messageText="未指定文件"/>
-                                        <bean parent="Uif-MessageField"
-                                              p:label="描述" p:colSpan="3"
-                                              p:fieldLabel.colSpan="1"
-                                              p:messageText="准备相应的课堂讨论材料，辅助组织课堂讨论。课后完成讨论结果的提交。"/>
-                                    </list>
-                                </property>
-                            </bean>
-                            <!--历史记录部分-->
-                            <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-HeaderTwo" p:headerText="历史记录"/>
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:style="padding:5px">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-MessageField"
-                                                          p:messageText="由 周元生 发表于 大约 1 天 小时 之前"
+                                                          p:messageText="由 阴文革 在 大约 2 小时 之前 添加， 更新于 2 小时 之前。"
                                                           p:additionalCssClasses="boxheaderTitle"/>
-                                                    <bean parent="Uif-HeaderThree" p:headerText="动态的ul如何添加解决方法未知"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                        <bean parent="Uif-GridGroup"
+                                              p:layoutManager.renderRowFirstCellHeader="false">
+                                            <property name="layoutManager.numberOfColumns" value="4"/>
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="类型" p:colSpan="3"
+                                                          p:fieldLabel.colSpan="1" p:messageText="课程研讨/讨论"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="主题" p:messageText=" 第一次课堂讨论"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="指派" p:messageText="牛顿"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="起始时间" p:messageText="2016-8-9"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="完成时间" p:messageText="2016-8-10"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="单份耗时" p:messageText="2h"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="总耗时" p:messageText="2h"/>
+                                                    <!--可以换成progressbar？-->
+                                                    <!--<bean parent="Uif-MessageField"-->
+                                                    <!--p:label="%完成" p:messageText="55%"/>-->
+                                                    <bean parent="Uif-Message" p:messageText="完成度"
+                                                          p:style="text-align:right!important;"/>
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="progress progress-xs progress-striped active">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="progress-bar progress-bar-danger"
+                                                                      p:style="width: 55%"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="55%"
+                                                                      p:additionalCssClasses="badge bg-red"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <!--<bean parent="Uif-HorizontalBoxSection">-->
+                                                    <!--<property name="items">-->
+                                                    <!--<list>-->
+                                                    <!--<bean parent="Uif-VerticalBoxSection"-->
+                                                    <!--p:additionalCssClasses="progress progress-xs progress-striped active">-->
+                                                    <!--<property name="items">-->
+                                                    <!--<list>-->
+                                                    <!--<bean parent="Uif-VerticalBoxSection"-->
+                                                    <!--p:additionalCssClasses="progress-bar bg-light-blue"-->
+                                                    <!--p:style="width: 30%"></bean>-->
+                                                    <!--</list>-->
+                                                    <!--</property>-->
+                                                    <!--</bean>-->
+                                                    <!--<bean parent="Uif-Message" p:messageText="30%"-->
+                                                    <!--p:additionalCssClasses="badge bg-light-blue"/>-->
+                                                    <!--</list>-->
+                                                    <!--</property>-->
+                                                    <!--</bean>-->
+
+
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="文件" p:messageText="未指定文件"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="描述" p:colSpan="3"
+                                                          p:fieldLabel.colSpan="1"
+                                                          p:messageText="准备相应的课堂讨论材料，辅助组织课堂讨论。课后完成讨论结果的提交。"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                        <!--历史记录部分-->
+                                        <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-HeaderTwo" p:headerText="历史记录"/>
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:style="padding:5px">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:messageText="由 周元生 发表于 大约 1 天 小时 之前"
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                                <bean parent="Uif-HeaderThree" p:headerText="动态的ul如何添加解决方法未知"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
                                                 </list>
                                             </property>
                                         </bean>
@@ -232,6 +237,7 @@
                         </list>
                     </property>
                 </bean>
+
             </list>
         </property>
     </bean>

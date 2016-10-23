@@ -104,7 +104,7 @@
                                         <!--头像-->
                                         <bean id="user-header-img" parent="Uif-Image"
                                               p:additionalCssClasses="photo"
-                                              p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
+                                              p:source="@{#ConfigProperties['application.url']}/images/maruko.gif"/>
                                         <!--具体信息的表格-->
                                         <bean parent="Uif-GridGroup"
                                               p:style="width=500px!important;"

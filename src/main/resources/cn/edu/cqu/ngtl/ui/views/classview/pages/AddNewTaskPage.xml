@@ -36,8 +36,8 @@
         <property name="items">
             <list>
                 <!--header-->
-                <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="content-header">
+                <bean parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="content-header col-md-10 col-md-offset-1">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
@@ -82,7 +82,7 @@
 
                 <!--body-->
                 <bean parent="Uif-VerticalBoxSection"
-                      p:additionalCssClasses="box box-info col-md-5">
+                      p:additionalCssClasses="box box-info col-md-10 col-md-offset-1">
                     <property name="items">
                         <list>
                             <!--box header:小图标小标题+右上角btn-->
@@ -108,7 +108,7 @@
                             </bean>
 
                             <bean parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="">
+                                  p:additionalCssClasses="box-body">
                                 <property name="items">
                                     <list>
                                         <!--类型，主题，纸牌-->

@@ -73,30 +73,30 @@ public class TAConverterimpl implements ITAConverter {
 
         CMProgramCourse programCourse = new CMProgramCourse();
 
-        if(course != null) {
+        if (course != null) {
             viewObject.setCourseName(course.getName());
 
             viewObject.setCoureseNumber(course.getCodeR().toString());
 
             viewObject.setStudyTime(course.getHour());
 
-            viewObject.setStudyCode(course.getCredit()+"");
+            viewObject.setStudyCode(course.getCredit() + "");
 
             programCourse = courseInfoService.getProgramCourseByCourseId(course.getId());
         }
 
-        if(programCourse != null) {
+        if (programCourse != null) {
 
             viewObject.setRequired((programCourse.getRequired() == 1) ? "必修" : "选修");
 
-            if(programCourse.getClassification() != null)
+            if (programCourse.getClassification() != null)
                 viewObject.setCourseType(programCourse.getClassification().getName());
 
             viewObject.setProgramName(programCourse.getProgram() != null ?
                     programCourse.getProgram().getName() : null);
         }
 
-        if(session != null) {
+        if (session != null) {
 
             Integer year = (Integer.parseInt(programCourse.getSemester()) + 1) / 2;
 
@@ -104,9 +104,9 @@ public class TAConverterimpl implements ITAConverter {
 
         }
         //--------------------------目前没有值的加了默认---------------------------------------
-        viewObject.setStudentNumber(100+"");
+        viewObject.setStudentNumber(100 + "");
 
-        viewObject.setAssisstantNumber(1+"");
+        viewObject.setAssisstantNumber(1 + "");
 
         return viewObject;
     }
@@ -115,17 +115,17 @@ public class TAConverterimpl implements ITAConverter {
 
         ApplyAssistantViewObject viewObject = new ApplyAssistantViewObject();
 
-        if(user != null){
+        if (user != null) {
 
             viewObject.setUsername(user.getName());
             viewObject.setStudentId(user.getType());
 
         }
 
-        if(clazz != null){
+        if (clazz != null) {
             StringBuilder sb = new StringBuilder();
-            if(clazz.getUtInstructors()!=null){
-                for(UTInstructor instructor : clazz.getUtInstructors()){
+            if (clazz.getUtInstructors() != null) {
+                for (UTInstructor instructor : clazz.getUtInstructors()) {
                     sb.append(instructor.getName() + ",\n");
                 }
             }
@@ -136,13 +136,13 @@ public class TAConverterimpl implements ITAConverter {
 
         CMProgramCourse programCourse = new CMProgramCourse();
 
-        if(course != null){
+        if (course != null) {
             programCourse = courseInfoService.getProgramCourseByCourseId(course.getId());
 
             viewObject.setClassHour(course.getHour());
         }
 
-        if(programCourse != null){
+        if (programCourse != null) {
             viewObject.setApplyCourseType(programCourse.getProgram() != null ?
                     programCourse.getProgram().getName() : null);
         }
@@ -159,61 +159,64 @@ public class TAConverterimpl implements ITAConverter {
 
         UTCourse course = new UTCourse();
 
-        if(clazz!=null){
-            course = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getCourse() : null;
+        if (clazz != null) {
             classDetailInfoViewObject.setClassNumber(clazz.getClassNumber());
+            course = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getCourse() : null;
 
+            //classInstructor为空的数据库，无法查询
             StringBuilder sb = new StringBuilder();
-            if(clazz.getUtInstructors()!=null){
-                for(UTInstructor instructor : clazz.getUtInstructors()){
+            Integer countTeacherNum = 0;
+            if (clazz.getUtInstructors() != null) {
+
+                for (UTInstructor instructor : clazz.getUtInstructors()) {
+                    countTeacherNum++;
                     sb.append(instructor.getName() + ",\n");
                 }
             }
             classDetailInfoViewObject.setInstructor(sb.toString());
+            classDetailInfoViewObject.setInstructorNumber(countTeacherNum.toString());
         }
 
         UTSession session = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getSession() : null;
         CMProgramCourse programCourse = new CMProgramCourse();
         CMProgram program = new CMProgram();
 
-        if(course != null){
-            classDetailInfoViewObject.setClassId(course.getCodeR());
-            classDetailInfoViewObject.setClassHour(course.getHour());
-            classDetailInfoViewObject.setCredit(course.getCredit()+"");
+        if (course != null) {
+            classDetailInfoViewObject.setCourseName(course.getName());
+            classDetailInfoViewObject.setCourseId(course.getCodeR());
+            classDetailInfoViewObject.setClassHour(course.getHour());   //目前为空
+            classDetailInfoViewObject.setCredit(course.getCredit() + "");
             programCourse = courseInfoService.getProgramCourseByCourseId(course.getId());
         }
 
-        if(programCourse != null){
+        if (programCourse != null) {
 
             classDetailInfoViewObject.setRequired((programCourse.getRequired() == 1) ? "必修" : "选修");
-            if(programCourse.getClassification() != null)
-                classDetailInfoViewObject.setClassKind(programCourse.getClassification().getName());
+            if (programCourse.getClassification() != null)
+                classDetailInfoViewObject.setCourseClassification(programCourse.getClassification().getName());
 
-            classDetailInfoViewObject.setClassName(programCourse.getProgram() != null ?
-                    programCourse.getProgram().getName() : null);
 
             program = programCourse.getProgram() != null ? programCourse.getProgram() : null;
 
-            if(session != null) {
+
+            UTDepartment department = new UTDepartment();
+            if (session != null) {
 
                 Integer year = (Integer.parseInt(programCourse.getSemester()) + 1) / 2;
 
-                classDetailInfoViewObject.setDepartmentAndGrade((Integer.parseInt(session.getYear()) - year) + "");
+
+                if (program != null) {
+
+                    classDetailInfoViewObject.setDepartmentAndGrade((Integer.parseInt(session.getYear()) - year) + "/" + program.getName());
+                    department = program.getDepartment() != null ? program.getDepartment() : null;
+                }
+                if (department != null) {
+                    classDetailInfoViewObject.setCourseDepartment(department.getName());
+                }
 
             }
         }
 
-        UTDepartment department = new UTDepartment();
-
-        if(program != null){
-            classDetailInfoViewObject.setClassName(program.getName());
-
-            department = program.getDepartment() != null ? program.getDepartment() :null;
-        }
-
-        if(department != null){
-            classDetailInfoViewObject.setCourseDepartment(department.getName());
-        }
 
         return classDetailInfoViewObject;
     }

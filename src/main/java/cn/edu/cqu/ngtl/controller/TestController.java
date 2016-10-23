@@ -144,6 +144,18 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTaskDetail");
     }
 
+    /**
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getConsolePage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getConsolePage")
+    public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageConsole");
+    }
+
     @Override
     protected UifFormBase createInitialForm() {
         return new TestForm();

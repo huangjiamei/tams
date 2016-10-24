@@ -120,6 +120,10 @@ body{
     background-color: #dd4b39 !important;
 }
 
+.bg-grey{
+    background-color: grey!important;
+}
+
 .btn[class*='bg-']:hover {
     -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
@@ -199,6 +203,10 @@ body{
     margin-top: 35%;
 }
 
+/* 让collection table的action格子短一点*/
+.uif-collection-column-action{
+    width:10%!important;
+}
 
 /**  修改uif end   */
 

@@ -228,6 +228,115 @@
                                     </list>
                                 </property>
                             </bean>
+
+                            <!--第5个方块-->
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"
+                                  p:style="clear:none!important;">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="small-box bg-teal">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="inner">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-HeaderThree" p:headerText="5"
+                                                                      p:additionalCssClasses="headerCss"/>
+                                                                <bean parent="Uif-Message" p:messageText="课程管理"
+                                                                      p:additionalCssClasses="zzz"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="icon">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="fa fa-book"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-Link" p:href="#"
+                                                          p:style="float:none!important;"
+                                                          p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+
+                            <!--第6个方块-->
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"
+                                  p:style="clear:none!important;">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="small-box bg-yellow">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="inner">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-HeaderThree" p:headerText="12"
+                                                                      p:additionalCssClasses="headerCss"/>
+                                                                <bean parent="Uif-Message" p:messageText="任务管理"
+                                                                      p:additionalCssClasses="zzz"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="icon">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="fa fa-bar-chart"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-Link" p:href="#"
+                                                          p:style="float:none!important;"
+                                                          p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+
+
+                            <!--第7个方块-->
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"
+                                  p:style="clear:none!important;">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="small-box bg-green">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="inner">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-HeaderThree" p:headerText="6"
+                                                                      p:additionalCssClasses="headerCss"/>
+                                                                <bean parent="Uif-Message" p:messageText="助教管理"
+                                                                      p:additionalCssClasses="zzz"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="icon">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="fa fa-users"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-Link" p:href="#"
+                                                          p:style="float:none!important;"
+                                                          p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
                         </list>
                     </property>
                 </bean>

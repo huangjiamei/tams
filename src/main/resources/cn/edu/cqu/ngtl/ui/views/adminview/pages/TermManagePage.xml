@@ -79,6 +79,7 @@
                     </property>
                 </bean>
 
+                <!--批次管理表格-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
@@ -126,11 +127,11 @@
                                                                       p:style="float: left!important;">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--右上角btnlist-->
+                                                                            <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="exportApplicantPhoto"
+                                                                                  p:successCallback="showDialog('addNewTermDialog')"
                                                                                   p:additionalCssClasses="bg-teal tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image"
@@ -289,6 +290,59 @@
     </bean>
 
 
+    <bean id="addNewTermDialog" parent="Uif-DialogGroup"
+          p:headerText="添加批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-GridGroup">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:label="批次名称"
+                                              p:propertyName="inputField89"/>
+                                        <bean parent="Uif-InputField" p:label="经费"
+                                              p:propertyName="inputField90"/>
+                                        <bean parent="Uif-InputField" p:label="开始时间"
+                                              p:propertyName="inputField91">
+                                            <property name="control">
+                                                <bean parent="Uif-TextControl" p:size="10">
+                                                    <property name="datePicker">
+                                                        <bean parent="Uif-DatePicker"/>
+                                                    </property>
+                                                </bean>
+                                            </property>
+                                        </bean>
+                                        <bean parent="Uif-InputField" p:label="完成时间"
+                                              p:propertyName="inputField92">
+                                            <property name="control">
+                                                <bean parent="Uif-TextControl" p:size="10">
+                                                    <property name="datePicker">
+                                                        <bean parent="Uif-DatePicker"/>
+                                                    </property>
+                                                </bean>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback="alert('btn无methodtocall回调成功')"/>
+            </list>
+        </property>
+    </bean>
+
+
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
           p:headerText="修改批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
@@ -300,6 +354,8 @@
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
+                                        <bean parent="Uif-InputField" p:label="批次名称"
+                                              p:propertyName="inputField89"/>
                                         <bean parent="Uif-InputField" p:label="经费"
                                               p:propertyName="inputField19"/>
                                         <bean parent="Uif-InputField" p:label="开始时间"

@@ -180,7 +180,10 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=updateCourseManager"})
     public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-        System.out.println("updateCourseManager/nupdateCourseManager/n");
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
+        int index = params.getSelectedLineIndex();
+        System.out.println("updateCourseManager ,index: "+index);
 
         return this.getModelAndView(testForm, "pageCourseManager");
     }
@@ -208,9 +211,53 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=updateTerm"})
     public ModelAndView updateTerm(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-        System.out.println("updateCourseManager/nupdateCourseManager/n");
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
+        int index = params.getSelectedLineIndex();
+        System.out.println("updateTerm ,index: "+index);
+
 
         return this.getModelAndView(testForm, "pageTermManagement");
+    }
+
+    /**
+     * 获取课程类别管理页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getCourseCategoryPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getCourseCategoryPage")
+    public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageCourseCategory");
+    }
+
+    /**
+     * 获取助教类别管理页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaCategoryPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaCategoryPage")
+    public ModelAndView getTaCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTaCategory");
+    }
+
+    /**
+     * 获取助教类别管理页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskCategoryPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskCategoryPage")
+    public ModelAndView getTaskCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTaskCategory");
     }
 
 

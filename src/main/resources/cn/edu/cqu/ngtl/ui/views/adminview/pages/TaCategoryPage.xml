@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="CourseManagerPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="TaCategoryPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
                 <bean parent="Uif-HorizontalBoxSection"
@@ -40,7 +40,7 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="课程负责人管理"/>
+                            <bean parent="Uif-HeaderThree" p:headerText="助教类别管理"/>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -65,8 +65,13 @@
                                                                   p:location.viewId="AdminView"
                                                                   p:location.controllerMapping="/admin"
                                                                   p:location.methodToCall="getConsolePage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3"
-                                                                  p:value="课程负责人管理"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="3"
+                                                                  p:value="类别管理"
+                                                                  p:location.viewId="AdminView"
+                                                                  p:location.controllerMapping="/admin"
+                                                                  p:location.methodToCall="getConsolePage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="4"
+                                                                  p:value="助教类别管理"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -80,7 +85,7 @@
                 </bean>
 
                 <!--body-->
-                <!--课程负责人表-->
+                <!--助教类别管理表格-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
@@ -96,55 +101,78 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="课程负责人"
+                                                                <bean parent="Uif-MessageField" p:messageText="助教类别"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="导出EXCEL"
-                                                                      p:methodToCall=""
-                                                                      p:style="float:right!important;font-size:14px; margin-right: 10px;"
-                                                                      p:additionalCssClasses="bg-success"/>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: right!important;">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--右上角btnlist-->
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="box-body">
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <!--搜索框-->
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: left!important;">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--文字搜索-->
-                                                                            <bean parent="Uif-InputField" p:label="课程名称"
-                                                                                  p:propertyName="inputField1"/>
-                                                                            <bean parent="Uif-InputField" p:label="课程编号"
-                                                                                  p:propertyName="inputField2"/>
-                                                                            <bean parent="Uif-InputField" p:label="负责人"
-                                                                                  p:propertyName="inputField3"/>
-                                                                            <bean parent="Uif-InputField" p:label="职工号"
-                                                                                  p:propertyName="inputField4"/>
-
+                                                                            <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="查询"
-                                                                                  p:additionalCssClasses="icon-search"
-                                                                                  p:style="margin:15px"/>
-                                                                            <!--p:methodToCall="searchBatchApplicant"-->
+                                                                                  p:actionLabel="返回"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="bg-grey tamsbtn">
+                                                                                <property name="actionImage">
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:width="18" p:height="18"
+                                                                                          p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="添加"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:successCallback="showDialog('addTaCategoryDialog')"
+                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
+                                                                                <property name="actionImage">
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:width="18" p:height="18"
+                                                                                          p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
+                                                                                </property>
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
 
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="box-body">
+                                                        <property name="items">
+                                                            <list>
                                                                 <!--table-->
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="4">
+                                                                      p:layoutManager.numberOfColumns="1">
                                                                     <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
+                                                                    <property name="headerText" value="Table Layout"/>
+                                                                    <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
                                                                     <property name="propertyName" value="collection"/>
-                                                                    <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="true"/>
 
+                                                                    <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
+                                                                    <property name="layoutManager.renderSequenceField"
+                                                                              value="false"/>
+                                                                    <property name="layoutManager.generateAutoSequence"
+                                                                              value="false"/>
                                                                     <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true"/>
 
@@ -152,22 +180,11 @@
                                                                     <property name="renderLineActions" value="true"/>
                                                                     <property name="disclosure.render" value="false"/>
 
+
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-InputField" p:label="" p:propertyName="checked">-->
-                                                                            <!--<property name="control">-->
-                                                                            <!--<bean parent="Uif-CheckboxControl"/>-->
-                                                                            <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <bean parent="Uif-DataField" p:label="课程"
+                                                                            <bean parent="Uif-DataField" p:label="课程类别"
                                                                                   p:propertyName="field4"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程号"
-                                                                                  p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程负责人"
-                                                                                  p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="职工号"
-                                                                                  p:propertyName="field4"
-                                                                                  p:sortAs="numeric"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -175,18 +192,19 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
+                                                                                        <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
                                                                                         <bean parent="Uif-ActionImage">
                                                                                             <property name="confirmationDialog">
-                                                                                                <ref bean="confirmEditManagerDialog" />
+                                                                                                <ref bean="editTaCategoryDialog"/>
                                                                                             </property>
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
+                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean parent="Uif-ActionImage">
                                                                                             <property name="confirmationDialog">
-                                                                                                <ref bean="confirmDeleteManagerDialog" />
+                                                                                                <ref bean="deleteTaCategoryDialog" />
                                                                                             </property>
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
@@ -211,44 +229,88 @@
                         </list>
                     </property>
                 </bean>
+
             </list>
         </property>
     </bean>
 
-    <bean id="confirmEditManagerDialog" parent="Uif-DialogGroup"
-          p:headerText="编辑课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+    <bean id="addTaCategoryDialog" parent="Uif-DialogGroup"
+          p:headerText="添加批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重编辑课程负责人，如需编辑请联系系统维护人员！" />
-                <bean parent="Uif-InputField" p:label="课程名"
-                      p:propertyName="inputField30"/>
-                <bean parent="Uif-InputField" p:label="课程编号"
-                      p:propertyName="inputField31"/>
-                <bean parent="Uif-InputField" p:label="课程负责人"
-                      p:propertyName="inputField32"/>
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-GridGroup">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-MessageField" p:label="类别"
+                                              p:messageText="助教"/>
+                                        <bean parent="Uif-InputField" p:label="名称"
+                                              p:propertyName="inputField20"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback="alert('btn无methodtocall回调成功')"/>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="editTaCategoryDialog" parent="Uif-DialogGroup"
+          p:headerText="修改课程类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重修改批次，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-GridGroup">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-MessageField" p:label="类别"
+                                              p:messageText="助教"/>
+                                        <bean parent="Uif-InputField" p:label="名称"
+                                              p:propertyName="inputField20"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:ajaxSubmit="false" p:methodToCall="updateCourseCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="deleteTaCategoryDialog" parent="Uif-DialogGroup"
+          p:headerText="删除课程类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除批次，如需删除请联系系统维护人员！" />
             </list>
         </property>
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="updateCourseManager" p:successCallback="alert('回调成功')" />
-            </list>
-        </property>
-    </bean>
-
-    <bean id="confirmDeleteManagerDialog" parent="Uif-DialogGroup"
-          p:headerText="删除课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
-        <property name="items">
-            <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" />
-            </list>
-        </property>
-        <property name="footer.items">
-            <list>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="deleteCourseManager" p:successCallback="alert('回调成功')" />
+                      p:ajaxSubmit="false" p:methodToCall="deleteTerm" p:successCallback="alert('回调成功')" />
             </list>
         </property>
     </bean>

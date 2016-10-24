@@ -236,6 +236,7 @@ public class TAConverterimpl implements ITAConverter {
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
         application.setNote(form.getApplyReason());
+        application.setEduBackground(form.getEduBackground());
 
         return application;
     }

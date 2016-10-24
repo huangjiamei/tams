@@ -62,7 +62,7 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="教学班列表"
                                                                   p:location.viewId="ClassView" p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="@{detailInfoViewObject.courseName},需要后期用js"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="@{detailInfoViewObject.courseName}"/>
                                                         </list>
                                                     </property>
                                                 </bean>

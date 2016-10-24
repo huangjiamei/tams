@@ -138,7 +138,7 @@
                                                             <bean parent="Uif-TextAreaControl"/>
                                                         </property>
                                                     </bean>
-                                                    <bean parent="Uif-InputField" p:label="学历" p:propertyName="test">
+                                                    <bean parent="Uif-InputField" p:label="学历" p:propertyName="eduBackground">
                                                         <property name="control">
                                                             <bean parent="Uif-HorizontalRadioControl" p:delimiter="  ">
                                                                 <property name="options">

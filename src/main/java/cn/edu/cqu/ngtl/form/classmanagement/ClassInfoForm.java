@@ -34,16 +34,17 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     String condSessionYear;
     String condProgramName;
 
-    /** 测试用 */
-    String test;
+    /** 页面上的学历选项 */
+    String eduBackground;
 
-    public String getTest() {
-        return test;
+    public String getEduBackground() {
+        return eduBackground;
     }
 
-    public void setTest(String test) {
-        this.test = test;
+    public void setEduBackground(String eduBackground) {
+        this.eduBackground = eduBackground;
     }
+
     /**********/
 
     public void setCondDepartmentName(String condDepartmentName) {

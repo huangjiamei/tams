@@ -18,12 +18,14 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(generator="tamsTaApplicationSeq")
+    @SequenceGenerator(name="tamsTaApplicationSeq",sequenceName="TAMS_TA_APPLICATION_S",allocationSize=1)
     private String id;
 
-    @Column(name = "APPLICATION_ID")
+    @Column(name = "APPLICANT_ID")
     private String applicationId;
 
-    @Column(name = "APPLICATION_CALSS_ID")
+    @Column(name = "APPLICATION_CLASS_ID")
     private String applicationClassId;
 
     @Column(name = "APPLICATION_STATUS")
@@ -35,6 +37,18 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Column(name = "NOTE")
     private String note;
+
+    @Column(name = "EDU_BACKGROUND")
+    private String eduBackground;
+
+
+    public String getEduBackground() {
+        return eduBackground;
+    }
+
+    public void setEduBackground(String eduBackground) {
+        this.eduBackground = eduBackground;
+    }
 
     public String getId() {
         return id;

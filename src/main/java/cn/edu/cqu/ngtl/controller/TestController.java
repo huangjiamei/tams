@@ -145,7 +145,7 @@ public class TestController extends UifControllerBase {
     }
 
     /**
-     * 获取类别管理页面
+     * 获取类别管理&系统管理员页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getConsolePage&viewId=TestView
      * @param form
      * @return

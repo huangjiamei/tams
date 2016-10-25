@@ -175,15 +175,18 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="confirmEditManagerDialog" />
-                                                                                            </property>
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-                                                                                            </property>
-                                                                                        </bean>
+                                                                                        <!--<bean parent="Uif-EditLineInDialogSaveAction"/>-->
+                                                                                        <!--<bean parent="Uif-DeleteLineAction"-->
+                                                                                              <!--p:confirmationPromptText="Are you sure you wish to delete line: @{#line.field4}?"/>-->
+                                                                                        <!--<bean parent="Uif-ActionImage">-->
+                                                                                            <!--<property name="confirmationDialog">-->
+                                                                                                <!--<ref bean="confirmEditManagerDialog" />-->
+                                                                                            <!--</property>-->
+                                                                                            <!--<property name="actionImage">-->
+                                                                                                <!--<bean parent="Uif-Image"-->
+                                                                                                      <!--p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
                                                                                         <bean parent="Uif-ActionImage">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="confirmDeleteManagerDialog" />

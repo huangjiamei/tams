@@ -93,6 +93,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pagePermissionManagement" p:title="更新角色">
+                    <property name="items">
+                        <list>
+                            <ref bean="PermissionManagementPage" />
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

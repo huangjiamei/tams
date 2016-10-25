@@ -26,4 +26,10 @@ public class KRIM_PERM_T_DaoJpa implements KRIM_PERM_T_Dao {
 				KRIM_PERM_T.class, criteria.build());
 		return qr.getResults();
 	}
+
+	@Override
+	public void addPermissions(KRIM_PERM_T krim_perm_t) {
+		// TODO Auto-generated method stub
+		KradDataServiceLocator.getDataObjectService().save(krim_perm_t);
+	}
 }

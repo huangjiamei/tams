@@ -1,0 +1,123 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+                           http://www.springframework.org/schema/jee
+                           http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+                           http://www.springframework.org/schema/jms
+                           http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+                           http://www.springframework.org/schema/lang
+                           http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/oxm
+                           http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    <bean id="PermissionManagementPage" parent="Uif-VerticalBoxSection">
+        <!-- same with 416 -->
+        <property name="items">
+            <list>
+                <bean id="PermissionManagementHeader" parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="pageHeaderBox">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-Icon" p:iconClass="icon-user" />
+                            <bean parent="Uif-MessageField" p:messageText="权限管理"
+                                  p:additionalCssClasses="headerTitle" p:style="margin-top:3px"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-info">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-HorizontalBoxSection"
+                                  p:additionalCssClasses="box-header">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-Icon" p:iconClass="icon-table" />
+                                        <bean parent="Uif-MessageField" p:messageText="权限列表"
+                                              p:additionalCssClasses="boxheaderTitle" />
+                                        <bean parent="Uif-PrimaryActionButton" p:actionLabel="添加权限"
+                                              p:methodToCall="addPermssion" p:style="float:right!important;font-size:14px"
+                                              p:additionalCssClasses="icon-plus bg-success btn-flat box-tools" />
+                                    </list>
+                                </property>
+                            </bean>
+
+
+
+
+
+                            <bean parent="Uif-TableCollectionSection">
+                                <property name="collectionObjectClass"
+                                          value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T" />
+                                <property name="propertyName" value="RMPkrimPermTs" />
+                                <property name="layoutManager.richTable.render" value="false" />
+                                <property name="layoutManager.renderSequenceField"
+                                          value="true" />
+                                <property name="renderAddLine" value="false" />
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField" p:propertyName="description"
+                                              p:readOnly="true" p:label="权限名称" />
+                                        <bean parent="Uif-InputField" p:propertyName="name"
+                                              p:readOnly="true" p:label="权限内容" />
+                                        <bean parent="Uif-InputField" p:propertyName="active"
+                                              p:label="权限状态" p:readOnly="true">
+                                            <property name="control">
+                                                <bean parent="Uif-DropdownControl">
+                                                    <property name="options">
+                                                        <list>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="Y" p:value="可用" />
+                                                            <bean parent="Uif-KeyLabelPair" p:key="N" p:value="失效" />
+                                                        </list>
+                                                    </property>
+                                                </bean>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                                <property name="lineActions">
+                                    <list>
+                                        <bean parent="Uif-ActionImage" p:methodToCall="updateExmKrimPerm"
+                                              p:successCallback="jQuery('#updateRoleBtn').click();">
+                                            <property name="actionImage">
+                                                <bean parent="Uif-Image"
+                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+
+                            <bean id="updateRoleBtn" parent="Uif-PrimaryActionButton"
+                                  p:actionLabel="修改角色" p:navigateToPageId="pageUpdateRole"
+                                  p:style="display:none" />
+
+
+                        </list>
+                    </property>
+                </bean>
+
+            </list>
+        </property>
+    </bean>
+</beans>

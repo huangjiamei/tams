@@ -34,6 +34,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private KRIM_ROLE_T RMPkrimRoleT;
     private List<KRIM_PERM_T> RMPkrimPermTs;
 
+
     /**
      * 用户角色管理页面
      */

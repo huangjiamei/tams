@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
-import org.kuali.rice.krad.uif.UifParameters;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
@@ -44,14 +43,13 @@ public class adminController extends UifControllerBase {
      * @param form
      * @param request
      * @param response
-     * @return
+     * @return  角色管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getRoleManagerPage")
     public ModelAndView getRoleManagerPage(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                            HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-        String formKeyParam = request.getParameter(UifParameters.FORM_KEY);
         infoForm.setRMPkrimRoleTs(new KRIM_ROLE_T_DaoJpa().getAllKrimRoleTs());
 
         return this.getModelAndView(infoForm, "pageRoleManager");
@@ -63,23 +61,36 @@ public class adminController extends UifControllerBase {
      * @param form
      * @param request
      * @param response
-     * @return
+     * @return    用户管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getUserRoleManagerPage")
     public ModelAndView getUserRoleManagerPage(@ModelAttribute("KualiForm") UifFormBase form,
                                                HttpServletRequest request, HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-//        List<UTDepartment> utDepartment = new UTDepartmentDaoJpa().getAllUTDepartments();
-//        for(UTDepartment utDet:utDepartment){
         infoForm.setURMutInstructors(new UTInstructorDaoJpa().getAllInstructors());
-//        }
-
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
 
     /**
-     *
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getPermissionManagementPage&viewId=AdminView
+     * @param form
+     * @param request
+     * @param response
+     * @return    用户管理页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getPermissionManagementPage")
+    public ModelAndView getPermissionManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                               HttpServletRequest request, HttpServletResponse response) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        List<KRIM_PERM_T> krimPermTs = new ArrayList<KRIM_PERM_T>(new KRIM_PERM_T_DaoJpa().getAllPermissions());
+        infoForm.setRMPkrimPermTs(krimPermTs);
+        return this.getModelAndView(infoForm, "pagePermissionManagement");
+    }
+
+    /**
+     *   更新角色
      * @param form
      * @param request
      * @param response
@@ -115,6 +126,15 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
 
+
+    /**
+     *  新增角色
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
     @RequestMapping(params = "methodToCall=addExmKrimRole")
     public ModelAndView addExmKrimRole(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
@@ -126,16 +146,22 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
 
+    /**
+     * 保存角色
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+
     @RequestMapping(params = "methodToCall=saveExmKrimRole")
     public ModelAndView saveExmKrimRole(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                         HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-
         KRIM_ROLE_T_Dao krimRoleTDao = new KRIM_ROLE_T_DaoJpa();
         List<KRIM_ROLE_T> krimRoleTs = new ArrayList<KRIM_ROLE_T>(infoForm.getRMPkrimRoleTs());
-
         KRIM_ROLE_T krimRoleT = infoForm.getRMPkrimRoleT();
-
         if (krimRoleT == null) {
             infoForm.setErrMsg("角色为空");
             return this.showDialog("errWarnDialog", true, infoForm);
@@ -161,7 +187,13 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
 
-
+    /**
+     * 选择用户
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(params = "methodToCall=selectURMInstructor")
     public ModelAndView selectURMInstructor(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                             HttpServletResponse response) {
@@ -195,6 +227,13 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageUpdateUserRoleManager");
     }
 
+    /**
+     * 保存用户
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     */
     @RequestMapping(params = "methodToCall=saveURMPuser")
     public ModelAndView saveURMPuser(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                      HttpServletResponse response) {
@@ -205,6 +244,9 @@ public class adminController extends UifControllerBase {
         new KRIM_ROLE_MBR_T_DaoJpa().saveKrimRoleMbrTByPrncpltAndRoles(krimPrncplT, krimRoleTs);
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
+
+
+
 
     @Override
     protected UifFormBase createInitialForm() {

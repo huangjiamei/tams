@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.controller;
 
 import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.form.TestForm;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -201,24 +202,59 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTermManagement");
     }
 
+    @RequestMapping(params = "methodToCall=selectTermObj")
+    public ModelAndView selectTermObj(
+            @ModelAttribute("KualiForm") UifFormBase form)throws Exception {
+        TestForm testForm = (TestForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
+        int index = params.getSelectedLineIndex();
+        TestObject object=testForm.getCollection().get(index);
+
+        testForm.setCurObject(object);
+//        testForm.setDialogInput1(object.getField4()); // filed4为testObj中的属性，对应批次名称
+//        testForm.setDialogInput2(object.getField2()); // filed2为testObj中的属性，对应总预算金额
+        return this.getModelAndView(testForm, "pageTermManagement");
+    }
+
+
     /**
      * 编辑term(即学期或批次)信息
      * 只接受来自pageTermManagement的请求
-     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
      * @param form
-     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageTermManagement，需要考虑使用ajax实现局部刷新
+     * @return
      */
     @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=updateTerm"})
     public ModelAndView updateTerm(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
 
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
-        int index = params.getSelectedLineIndex();
-        System.out.println("updateTerm ,index: "+index);
+        // 这个curobj会直接影响collection的数据，所以不需要对collection做额外操作
+        TestObject curObj=testForm.getCurObject();
+
+        // TODO: 2016/10/25 存入数据库
 
 
-        return this.getModelAndView(testForm, "pageTermManagement");
+        return this.getTermManagePage(testForm);
+    }
+
+    /**
+     * 添加term(即学期或批次)信息
+     * 只接受来自pageTermManagement的请求
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=addNewTerm"})
+    public ModelAndView addNewTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        // 新添加的term，对应外部的dialog
+        TestObject newObject=testForm.getNewObject();
+
+        testForm.getCollection().add(newObject);
+        // TODO: 2016/10/25 存入数据库
+
+
+        return this.getTermManagePage(testForm);
     }
 
     /**

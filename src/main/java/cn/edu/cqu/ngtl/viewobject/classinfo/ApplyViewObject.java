@@ -11,7 +11,7 @@ public class ApplyViewObject {
 
     private String teacherType;     //教师工号
 
-    private String coureseNumber;
+    private String courseNumber;
 
     private String courseType;
 
@@ -55,12 +55,12 @@ public class ApplyViewObject {
         this.teacherType = teacherType;
     }
 
-    public String getCoureseNumber() {
-        return coureseNumber;
+    public String getCourseNumber() {
+        return courseNumber;
     }
 
-    public void setCoureseNumber(String coureseNumber) {
-        this.coureseNumber = coureseNumber;
+    public void setCourseNumber(String courseNumber) {
+        this.courseNumber = courseNumber;
     }
 
     public String getCourseType() {

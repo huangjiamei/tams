@@ -179,21 +179,20 @@
                                                             </bean>
                                                             <bean parent="Uif-Disclosure-TableCollectionSection" p:layoutManager.numberOfColumns="4">
                                                                 <!--<property name="headerText" value="考核任务"/>-->
-                                                                <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                <!--<property name="collectionObjectClass" value="org.kuali.rice.krad.demo.uif.form.UITestObject"/>-->
+                                                                <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                 <property name="renderAddBlankLineButton" value="true"/>
-                                                                <property name="propertyName" value="collection"/>
+                                                                <property name="propertyName" value="classList"/>
                                                                 <property name="layoutManager.generateAutoSequence" value="true"/>
                                                                 <property name="layoutManager.richTable.render" value="true"/>
                                                                 <property name="items">
                                                                     <list>
                                                                         <bean parent="Uif-InputField" p:label="任务类型" p:fieldLabel.wrapperCssClasses="demo-customHeader"
-                                                                              p:propertyName="field6" p:required="true" p:wrapperCssClasses="demo-customCell1,demo-customCell2"/>
-                                                                        <bean parent="Uif-InputField" p:label="次数" p:propertyName="field7"
+                                                                              p:propertyName="departmentName" p:required="true" p:wrapperCssClasses="demo-customCell1,demo-customCell2"/>
+                                                                        <bean parent="Uif-InputField" p:label="次数" p:propertyName="departmentName"
                                                                               p:required="true" p:wrapperCssClasses="demo-customCell3"/>
-                                                                        <bean parent="Uif-InputField" p:label="耗时" p:propertyName="field8"
+                                                                        <bean parent="Uif-InputField" p:label="耗时" p:propertyName="departmentName"
                                                                               p:required="true"/>
-                                                                        <bean parent="Uif-InputField" p:label="预算" p:propertyName="field0"
+                                                                        <bean parent="Uif-InputField" p:label="预算" p:propertyName="departmentName"
                                                                               p:required="true">
                                                                         </bean>
                                                                     </list>
@@ -209,11 +208,11 @@
                                                                                 <list>
                                                                                     <bean parent="Uif-InputField"
                                                                                           p:label="耗时总计"
-                                                                                          p:propertyName="inputField61"
+                                                                                          p:propertyName="eduBackground"
                                                                                           p:defaultValue="38"/>
                                                                                     <bean parent="Uif-InputField"
                                                                                           p:label="预算总计"
-                                                                                          p:propertyName="inputField62"
+                                                                                          p:propertyName="eduBackground"
                                                                                           p:defaultValue="760"/>
                                                                                     </list>
                                                                              </property>

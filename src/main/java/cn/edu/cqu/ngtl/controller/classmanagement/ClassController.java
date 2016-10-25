@@ -98,21 +98,6 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageClassInfo");
     }
 
-
-    // region # 暂时不可用的方法
-
-    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
-
-    @RequestMapping(params = "methodToCall=getAddTaskPage")
-    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageAddNewTask");
-    }
-
     /**
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getApplyTAPage&viewId=ClassView
      **/
@@ -147,7 +132,25 @@ public class ClassController extends UifControllerBase {
         return null;
     }
 
+
+    // region # 暂时不可用的方法
+
+    @RequestMapping(params = "methodToCall=getTaskDetailPage")
+    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTaskDetail");
+    }
+
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageAddNewTask");
+    }
+
+
     //    /**
+
+
 //     * pageId限定了只接受来自pageClassList的请求
 //     * 从classlist跳转到某个class对应的talss
 //     * @param form

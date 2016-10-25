@@ -99,7 +99,7 @@
                                                                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
                                                                       p:methodToCall="exportApplicantPhoto"
                                                                       p:style="float:right!important;font-size:14px;margin-right: 10px;background=orange!important;"
-                                                                      p:additionalCssClasses="bg-orange"/>
+                                                                      p:additionalCssClasses="bg-orange tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>

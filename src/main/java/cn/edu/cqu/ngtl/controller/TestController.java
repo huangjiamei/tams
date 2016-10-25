@@ -63,11 +63,12 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageDeclareClass");
     }
 
-//    http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getZhuJiaoTest&viewId=TestView
-    @RequestMapping(params = "methodToCall=getZhuJiaoTest")
-    public ModelAndView getZhuJiaoTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    // http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getReviewForTeacherPage&viewId=TestView
+    @RequestMapping(params = "methodToCall=getReviewForTeacherPage")
+    public ModelAndView getReviewForTeacherPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageZhuJiaoTest");
+
+        return this.getModelAndView(testForm, "pageReviewForTeacher");
     }
 
     @RequestMapping(params = "methodToCall=getZhuJiaoApply")
@@ -140,18 +141,6 @@ public class TestController extends UifControllerBase {
         TestForm testForm = (TestForm) form;
 
         return this.getModelAndView(testForm, "pageTaskList");
-    }
-
-
-    /**
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getApplyTAPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getApplyTAPage")
-    public ModelAndView getApplyTAPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageApplyForTaForm");
     }
 
     /**

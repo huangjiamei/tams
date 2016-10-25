@@ -1,0 +1,295 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+                           http://www.springframework.org/schema/jee
+                           http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+                           http://www.springframework.org/schema/jms
+                           http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+                           http://www.springframework.org/schema/lang
+                           http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/oxm
+                           http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+    <bean id="TaReviewForTeacher" parent="Uif-VerticalBoxSection"
+          p:additionalCssClasses="container" >
+        <property name="items">
+            <list>
+                <!--header-->
+                <bean parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="content-header">
+                    <property name="items">
+                        <list>
+                            <!-- 左上角 -->
+                            <bean parent="Uif-HeaderThree" p:headerText="助教考核"/>
+
+                            <!-- 右上角 当前路径 -->
+                            <bean parent="Uif-HorizontalBoxSection"
+                                  p:additionalCssClasses="breadcrumb">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-Icon" p:iconClass="icon-home myIcon"
+                                              p:style="float:left!important;"/>
+                                        <bean parent="Uif-InputField">
+                                            <property name="control">
+                                                <bean parent="Uif-OptionListControl"
+                                                      p:additionalCssClasses="breadcrumb"
+                                                      p:style="background: transparent!important;">
+                                                    <property name="options">
+                                                        <list>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
+                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.methodToCall="getCommonHome"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教(无链接)"
+                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.methodToCall="getCommonHome"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教考核"/>
+                                                        </list>
+                                                    </property>
+                                                </bean>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                                <property name="items"  >
+                                    <list>
+                                         <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="box box-info">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="考核信息"
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="box-body">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-GridGroup"
+                                                                      p:layoutManager.numberOfColumns="4"
+                                                                      p:style="margin-top:10px">
+                                                                    <property name="headerText" value="考核信息"/>
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="课程名称" p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1" p:messageText="名称"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="上课教师" p:messageText="教师"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="教学班号" p:messageText="123"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="课程类别" p:messageText="类型"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学时" p:messageText="64"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学分" p:messageText="5.0"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="选课人数" p:messageText="400"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="任课校区" p:messageText="虎溪"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="授课年级/专业" p:messageText="2013"/>
+
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="助教姓名" p:messageText="abc"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学号(职工号)" p:messageText="20141754"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学历" p:messageText="硕士"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="所在学院" p:messageText="ab数统学院c"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="专业" p:messageText="abc"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="导师" p:messageText="abc"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="手机号码" p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1" p:messageText="123456789011"/>
+
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="课程"-->
+                                                                                  <!--p:colSpan="3"-->
+                                                                                  <!--p:messageText="高等数学"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="教师"-->
+                                                                                  <!--p:defaultValue="阴文革"-->
+                                                                                  <!--p:propertyName="inputField1"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="职工号"-->
+                                                                                  <!--p:defaultValue="XXXXXXXXXX"-->
+                                                                                  <!--p:propertyName="inputField2"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="课程编号"-->
+                                                                                  <!--p:defaultValue="MATH12"-->
+                                                                                  <!--p:propertyName="inputField3"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="课程类别"-->
+                                                                                  <!--p:defaultValue="公共基础"-->
+                                                                                  <!--p:propertyName="inputField4"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="授课专业"-->
+                                                                                  <!--p:defaultValue="软件工程"-->
+                                                                                  <!--p:propertyName="inputField5"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="授课年级"-->
+                                                                                  <!--p:defaultValue="2016"-->
+                                                                                  <!--p:propertyName="inputField6"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="必修/选修">-->
+                                                                                <!--<property name="control">-->
+                                                                                    <!--<bean parent="Uif-DropdownControl">-->
+                                                                                        <!--<property name="options">-->
+                                                                                            <!--<list>-->
+                                                                                                <!--<bean parent="Uif-KeyValueLocation" p:key="1" p:value="必修"/>-->
+                                                                                                <!--<bean parent="Uif-KeyValueLocation" p:key="2" p:value="选修"/>-->
+                                                                                            <!--</list>-->
+                                                                                        <!--</property>-->
+                                                                                    <!--</bean>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="教学班号"-->
+                                                                                  <!--p:defaultValue="101"-->
+                                                                                  <!--p:propertyName="inputField7"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="学时"-->
+                                                                                  <!--p:defaultValue="64"-->
+                                                                                  <!--p:propertyName="inputField8"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="学分"-->
+                                                                                  <!--p:defaultValue="5.0"-->
+                                                                                  <!--p:propertyName="inputField9"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="学生人数"-->
+                                                                                  <!--p:defaultValue="100"-->
+                                                                                  <!--p:propertyName="inputField10"/>-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                                  <!--p:label="拟配备助教数"-->
+                                                                                  <!--p:defaultValue="1"-->
+                                                                                  <!--p:propertyName="inputField11"/>-->
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <!--任务类型、次数...评论-->
+                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:layoutManager.numberOfColumns="5">
+                                                                    <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                    <property name="propertyName" value="collection"/>
+                                                                    <property name="layoutManager.renderSequenceField"
+                                                                              value="false"/>
+                                                                    <property name="layoutManager.richTable.render" value="false"/>
+
+                                                                    <property name="useServerPaging" value="true" />
+
+                                                                    <property name="renderAddLine" value="false"/>
+                                                                    <property name="renderLineActions" value="true"/>
+                                                                    <property name="readOnly" value="true"/>
+
+                                                                    <property name="disclosure.render" value="false"/>
+
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-DataField" p:label="任务类型" p:propertyName="field0"/>
+                                                                            <bean parent="Uif-DataField" p:label="次数" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="完成情况"
+                                                                                  p:propertyName="field2"/>
+                                                                            <bean parent="Uif-DataField" p:label="点赞比" p:propertyName="field3"/>
+                                                                            <bean parent="Uif-DataField" p:label="评论数" p:propertyName="field4"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-HeaderTwo" p:headerText="[b]意见[/b]"/>
+                                                                            <bean parent="Uif-InputField" p:propertyName="inputField40"
+                                                                                  p:style="width:70%;height=300px;">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"/>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="">
+                                                                                <property name="items"  >
+                                                                                    <list>
+                                                                                        <bean parent="Uif-InputField"
+                                                                                              p:propertyName="inputField97">
+                                                                                            <property name="control">
+                                                                                                <bean parent="Uif-DropdownControl">
+                                                                                                    <property name="options">
+                                                                                                        <list>
+                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="1" p:value="优"/>
+                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="良"/>
+                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="中"/>
+                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="差"/>
+                                                                                                        </list>
+                                                                                                    </property>
+                                                                                                </bean>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean parent="Uif-PrimaryActionButton" p:actionLabel="查看优秀助教申请表"
+                                                                                              p:additionalCssClasses="bg-success"
+                                                                                              p:actionScript="alert('查看优秀助教');"/>
+                                                                                        </list>
+                                                                            </property>
+                                                                            </bean>
+
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
+                                                                      p:actionScript="alert('You clicked a button');"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+</beans>

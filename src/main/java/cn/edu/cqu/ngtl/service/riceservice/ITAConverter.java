@@ -1,8 +1,11 @@
 package cn.edu.cqu.ngtl.service.riceservice;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
@@ -19,8 +22,10 @@ public interface ITAConverter {
 
     ApplyViewObject classInfoToApplyObject(User user, UTClass clazz);
 
-    ApplyAssistantViewObject applyAssistantToTableViewObject(User user, UTClass clazz);
+    ApplyAssistantViewObject applyAssistantToTableViewObject(UTStudent student, UTClass clazz);
 
     ClassDetailInfoViewObject classInfoToViewObject(UTClass classId);
+
+    TAMSTaApplication submitInfoToTaApplication(ClassInfoForm form);
 
 }

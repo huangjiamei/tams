@@ -13,7 +13,7 @@ public interface ITAService {
 
     UTClass applicationTable(Integer classId);
 
-    UTClass applicationAssitantTable(Integer classId);
+    UTClass applicationAssistantTable(Integer classId);
 
     boolean submitApplicationAssistant(TAMSTaApplication application);
 }

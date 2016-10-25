@@ -40,7 +40,7 @@ public class TAServiceimpl implements ITAService {
     }
 
     @Override
-    public UTClass applicationAssitantTable(Integer classId) {
+    public UTClass applicationAssistantTable(Integer classId) {
 
         UTClass clazz = classDao.selectByClassId(classId);
 

@@ -103,6 +103,13 @@
                         </list>
                     </property>
                 </bean>
+                <!--<bean parent="Uif-Page" p:id="pageAddNewTask" p:title="提交申请">-->
+                    <!--<property name="items">-->
+                        <!--<list>-->
+                            <!--<ref bean="DeclareClassPage"/>-->
+                        <!--</list>-->
+                    <!--</property>-->
+                <!--</bean>-->
             </list>
         </property>
     </bean>

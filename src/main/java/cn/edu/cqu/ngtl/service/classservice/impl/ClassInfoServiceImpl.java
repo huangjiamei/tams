@@ -31,7 +31,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public List<UTClassInformation> getAllClassesMappedByDepartment() {
 
         /** Access DataBase */
-        List<UTClassInformation> classInformations = classInfoDao.getAllClassInformation();
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
         for (UTClassInformation perInformation : classInformations) {
 
             /** Access DataBase */

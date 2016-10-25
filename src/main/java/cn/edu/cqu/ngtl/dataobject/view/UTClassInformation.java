@@ -45,6 +45,10 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "COURSEOFFERING_ID")
     private Integer courseOfferingId;
 
+
+    @Column(name = "SESSION_ID")
+    private Integer sessionId;
+
     @Column(name = "DATE_PATTERN_ID")
     private Integer datePatternId;
 
@@ -97,6 +101,15 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
 
     public void setLimit(Integer limit) {
         this.limit = limit;
+    }
+
+
+    public Integer getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Integer sessionId) {
+        this.sessionId = sessionId;
     }
 
 

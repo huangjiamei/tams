@@ -1,9 +1,7 @@
 package cn.edu.cqu.ngtl.service.taservice.impl;
 
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -21,9 +19,6 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private UTClassDao classDao;
-
-    @Autowired
-    private TAMSTaApplicationDao tamsTaApplicationDao;
 
     @Override
     public UTClassInformation getClassInfoById(Integer id) {
@@ -46,14 +41,5 @@ public class TAServiceimpl implements ITAService {
 
         return clazz;
 
-    }
-
-    @Override
-    public boolean submitApplicationAssistant(TAMSTaApplication application) {
-
-        if(tamsTaApplicationDao.insertOne(application))
-            return true;
-
-        return false;
     }
 }

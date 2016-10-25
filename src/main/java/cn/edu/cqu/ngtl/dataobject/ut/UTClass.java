@@ -6,8 +6,6 @@
 
 package cn.edu.cqu.ngtl.dataobject.ut;
 
-import cn.edu.cqu.ngtl.tools.converter.UnitimeDayOfWeekConverter;
-import cn.edu.cqu.ngtl.tools.converter.UnitimeTimeSlotConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -46,12 +44,12 @@ public class UTClass extends DataObjectBase implements Serializable {
 
 	@Column(name = "ASSIGNMENT_DAY")
 	/** 等一个Converter */
-	@Convert(converter = UnitimeDayOfWeekConverter.class)
+	//@Convert(converter = UnitimeDayOfWeekConverter.class)
 	private String dayOfWeek;
 
 	@Column(name = "ASSIGNMENT_TIME")
 	/** 等一个Converter */
-	@Convert(converter = UnitimeTimeSlotConverter.class)
+	//@Convert(converter = UnitimeTimeSlotConverter.class)
 	private String timeSlot;
 
 	@Column(name = "ROOM_ID")

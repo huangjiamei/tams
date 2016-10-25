@@ -1,9 +1,11 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
-import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 import java.io.Serializable;
 
 /**
@@ -18,37 +20,22 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "ID")
-    @GeneratedValue(generator="tamsTaApplicationSeq")
-    @SequenceGenerator(name="tamsTaApplicationSeq",sequenceName="TAMS_TA_APPLICATION_S",allocationSize=1)
     private String id;
 
-    @Column(name = "APPLICANT_ID")
+    @Column(name = "APPLICATION_ID")
     private String applicationId;
 
-    @Column(name = "APPLICATION_CLASS_ID")
+    @Column(name = "APPLICATION_CALSS_ID")
     private String applicationClassId;
 
     @Column(name = "APPLICATION_STATUS")
     private String applicationStatus;
 
     @Column(name = "APPLICATION_TIME")
-    @Convert(converter = StringDateConverter.class)
     private String applicationTime;
 
     @Column(name = "NOTE")
     private String note;
-
-    @Column(name = "EDU_BACKGROUND")
-    private String eduBackground;
-
-
-    public String getEduBackground() {
-        return eduBackground;
-    }
-
-    public void setEduBackground(String eduBackground) {
-        this.eduBackground = eduBackground;
-    }
 
     public String getId() {
         return id;

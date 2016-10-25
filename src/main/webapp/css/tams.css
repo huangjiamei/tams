@@ -15,8 +15,8 @@ body{
     float: none!important;
 }
 
-.uif-page{
-    margin-top:40px;
+.container{
+    margin:0 auto;
 }
 
 /*View的header样式*/
@@ -30,8 +30,6 @@ body{
 
 .uif-applicationHeader {
     background-color: #3C8DBC;
-    /*导航栏固定在顶部*/
-    position:fixed!important;
 }
 
 .uif-applicationHeader .navbar {
@@ -72,12 +70,6 @@ body{
 /* 导航栏 */
 .navigationDialog{
     width:80%;
-}
-
-.container{
-    margin: 0 auto;
-    width: 100%;
-    padding: 0 0;
 }
 
 /* box */

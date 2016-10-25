@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.form.classmanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 
@@ -34,18 +33,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     String condSessionYear;
     String condProgramName;
 
-    /** 页面上的学历选项 */
-    String eduBackground;
-
-    public String getEduBackground() {
-        return eduBackground;
-    }
-
-    public void setEduBackground(String eduBackground) {
-        this.eduBackground = eduBackground;
-    }
-
-    /**********/
 
     public void setCondDepartmentName(String condDepartmentName) {
         this.condDepartmentName = condDepartmentName;
@@ -159,34 +146,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<ClassTeacherViewObject> classList = new ArrayList<>();
 
     private ClassDetailInfoViewObject detailInfoViewObject;
-
-    /**
-     * 学生申请助教页面相关
-     */
-
-    private ApplyAssistantViewObject applyAssistantViewObject;
-
-    private String applyReason;
-
-    /**
-     * 学生申请助教页面结束
-     */
-
-    public String getApplyReason() {
-        return applyReason;
-    }
-
-    public void setApplyReason(String applyReason) {
-        this.applyReason = applyReason;
-    }
-
-    public ApplyAssistantViewObject getApplyAssistantViewObject() {
-        return applyAssistantViewObject;
-    }
-
-    public void setApplyAssistantViewObject(ApplyAssistantViewObject applyAssistantViewObject) {
-        this.applyAssistantViewObject = applyAssistantViewObject;
-    }
 
     public List<ClassTeacherViewObject> getClassList() {
         return classList;

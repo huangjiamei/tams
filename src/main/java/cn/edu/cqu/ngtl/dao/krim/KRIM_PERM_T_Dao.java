@@ -11,4 +11,7 @@ public interface KRIM_PERM_T_Dao {
 	 * @return [权限列表]
 	 */
 	public List<KRIM_PERM_T> getAllPermissions();
+
+
+	public void addPermissions(KRIM_PERM_T krim_perm_t);
 }

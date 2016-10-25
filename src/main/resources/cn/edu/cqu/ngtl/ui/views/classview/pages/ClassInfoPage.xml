@@ -64,7 +64,8 @@
                                                                   p:location.viewId="ClassView"
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="@{detailInfoViewObject.courseName}"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3"
+                                                                  p:value="@{detailInfoViewObject.courseName},需要后期用js"/>
                                                         </list>
                                                     </property>
                                                 </bean>

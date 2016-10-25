@@ -1,6 +1,5 @@
 package cn.edu.cqu.ngtl.service.taservice;
 
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 
@@ -15,5 +14,4 @@ public interface ITAService {
 
     UTClass applicationAssistantTable(Integer classId);
 
-    boolean submitApplicationAssistant(TAMSTaApplication application);
 }

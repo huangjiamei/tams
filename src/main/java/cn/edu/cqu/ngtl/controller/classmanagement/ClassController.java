@@ -148,6 +148,18 @@ public class ClassController extends UifControllerBase {
         return null;
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=pageDeclareClass&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=pageDeclareClass")
+    public ModelAndView pageDeclareClass(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageDeclareClass");
+    }
+
     //    /**
 //     * pageId限定了只接受来自pageClassList的请求
 //     * 从classlist跳转到某个class对应的talss

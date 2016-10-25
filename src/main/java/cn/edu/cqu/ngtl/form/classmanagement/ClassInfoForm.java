@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.form.classmanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 
@@ -171,6 +172,24 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /**
      * 学生申请助教页面结束
      */
+
+    /**
+     * 老师提交申请页面相关
+     */
+
+    private ApplyViewObject applyViewObject;
+
+    /**
+     * 结束
+     */
+
+    public ApplyViewObject getApplyViewObject() {
+        return applyViewObject;
+    }
+
+    public void setApplyViewObject(ApplyViewObject applyViewObject) {
+        this.applyViewObject = applyViewObject;
+    }
 
     public String getApplyReason() {
         return applyReason;

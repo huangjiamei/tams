@@ -103,7 +103,7 @@
                                                                         <bean parent="Uif-MessageField"
                                                                               p:label="课程"
                                                                               p:colSpan="3"
-                                                                              p:messageText="高等数学"/>
+                                                                              p:messageText="@{applyViewObject.courseName}"/>
                                                                         <bean parent="Uif-MessageField"
                                                                               p:label="教师"
                                                                               p:messageText="阴文革"/>

@@ -200,10 +200,10 @@ body{
 
 /* 所有dialog往屏幕中间移动*/
 .modal-content{
-    margin-top: 35%;
+    margin-top: 25%;
 }
 
-/* 让collection table的action格子短一点*/
+/* 让collection table的action格子短一点，暂时无效*/
 .uif-collection-column-action{
     width:10%!important;
 }

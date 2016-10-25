@@ -21,18 +21,6 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Component("UTClassDaoJpa")
 public class UTClassDaoJpa implements UTClassDao {
 
-    @Override
-    public List<UTClass> selectAllMappedByDepartment() {
-
-        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("minPerWeek" , 90));
-        QueryResults<UTClass> qr = KradDataServiceLocator.getDataObjectService().findMatching(
-                UTClass.class,
-                criteria.build()
-        );
-
-        return qr.getResults().subList(0, 20);
-
-    }
 
     @Override
     public UTClass selectByClassId(Integer id) {

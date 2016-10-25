@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -147,6 +149,23 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageAddNewTask");
     }
 
+
+    /**
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getRequestTaPage&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getRequestTaPage")
+    public ModelAndView getRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        infoForm.setApplyViewObject(new ApplyViewObject());
+        infoForm.setClassList(
+                new ArrayList<ClassTeacherViewObject>()
+        );
+
+        return this.getModelAndView(infoForm, "pageRequestTa");
+    }
 
     //    /**
 

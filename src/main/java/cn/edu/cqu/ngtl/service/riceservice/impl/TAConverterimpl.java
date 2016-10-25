@@ -80,7 +80,7 @@ public class TAConverterimpl implements ITAConverter {
         if (course != null) {
             viewObject.setCourseName(course.getName());
 
-            viewObject.setCoureseNumber(course.getCodeR().toString());
+            viewObject.setCourseNumber(course.getCodeR().toString());
 
             viewObject.setStudyTime(course.getHour());
 

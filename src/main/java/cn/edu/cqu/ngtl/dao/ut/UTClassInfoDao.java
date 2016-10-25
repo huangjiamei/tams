@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface UTClassInfoDao {
 
-     List<UTClassInformation> getAllClassInformation();
+     List<UTClassInformation> getAllCurrentClassInformation();
 
     UTClassInformation getOneById(Integer id);
 

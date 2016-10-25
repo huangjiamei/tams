@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.ut.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
@@ -20,8 +21,9 @@ public class UTClassInfoDaoJpa implements UTClassInfoDao {
     EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Override
-    public List<UTClassInformation> getAllClassInformation(){
-        Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION",UTClassInformation.class);
+    public List<UTClassInformation> getAllCurrentClassInformation(){
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION t WHERE t.SESSION_ID='"+curSession.getId()+"'",UTClassInformation.class);
         List<UTClassInformation> result = query.getResultList();
         return result;
     }

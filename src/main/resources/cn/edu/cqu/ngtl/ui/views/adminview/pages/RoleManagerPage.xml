@@ -111,12 +111,9 @@
 								<bean id="updateRoleBtn" parent="Uif-PrimaryActionButton"
 								p:actionLabel="修改角色" p:navigateToPageId="pageUpdateRole"
 								p:style="display:none" />
-							
-							
 						</list>
 					</property>
 				</bean>
-
 			</list>
 		</property>
 	</bean>

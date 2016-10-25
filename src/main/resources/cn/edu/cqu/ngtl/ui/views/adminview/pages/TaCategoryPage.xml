@@ -279,7 +279,7 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-MessageField" p:label="类别"
-                                              p:messageText="助教"/>
+                                              p:messageText="助教" p:readOnlyDisplayReplacement="@{#line.field4}"/>
                                         <bean parent="Uif-InputField" p:label="名称"
                                               p:propertyName="inputField20"/>
                                     </list>

@@ -249,10 +249,8 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
-                                                                                        <bean parent="Uif-ActionImage">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="confirmEditTermDialog"/>
-                                                                                            </property>
+                                                                                        <bean parent="Uif-ActionImage"  p:methodToCall="selectTermObj"
+                                                                                              p:successCallback="showDialog('confirmEditTermDialog')">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -302,11 +300,12 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="批次名称"
-                                              p:propertyName="inputField89"/>
+                                              p:propertyName="newObject.field1"/>
                                         <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="inputField90"/>
+                                              p:propertyName="newObject.field2"/>
+
                                         <bean parent="Uif-InputField" p:label="开始时间"
-                                              p:propertyName="inputField91">
+                                              p:propertyName="newObject.field3" >
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -316,7 +315,7 @@
                                             </property>
                                         </bean>
                                         <bean parent="Uif-InputField" p:label="完成时间"
-                                              p:propertyName="inputField92">
+                                              p:propertyName="newObject.field4">
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -336,11 +335,13 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <!-- 下面的ajax如果为true就不能访问后台 -->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback=""/>
             </list>
         </property>
     </bean>
+
 
 
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
@@ -355,11 +356,12 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="批次名称"
-                                              p:propertyName="inputField89"/>
+                                              p:propertyName="curObject.field4"/>
                                         <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="inputField19"/>
+                                              p:propertyName="curObject.field2"/>
+
                                         <bean parent="Uif-InputField" p:label="开始时间"
-                                              p:propertyName="inputField20">
+                                              p:propertyName="curObject.field3" >
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -369,7 +371,7 @@
                                             </property>
                                         </bean>
                                         <bean parent="Uif-InputField" p:label="完成时间"
-                                              p:propertyName="inputField21">
+                                              p:propertyName="curObject.field4">
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -390,7 +392,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                p:ajaxSubmit="false" p:methodToCall="updateTerm" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                p:ajaxSubmit="true" p:methodToCall="updateTerm" p:successCallback=""/>
             </list>
         </property>
     </bean>

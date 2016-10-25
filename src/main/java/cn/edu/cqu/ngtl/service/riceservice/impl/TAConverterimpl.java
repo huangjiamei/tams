@@ -3,10 +3,13 @@ package cn.edu.cqu.ngtl.service.riceservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
@@ -15,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -111,18 +115,24 @@ public class TAConverterimpl implements ITAConverter {
         return viewObject;
     }
 
-    public ApplyAssistantViewObject applyAssistantToTableViewObject(User user, UTClass clazz) {
+    public ApplyAssistantViewObject applyAssistantToTableViewObject(UTStudent student, UTClass clazz) {
 
         ApplyAssistantViewObject viewObject = new ApplyAssistantViewObject();
 
-        if (user != null) {
+        if (student != null) {
 
-            viewObject.setUsername(user.getName());
-            viewObject.setStudentId(user.getType());
+            viewObject.setUsername(student.getName());
+            viewObject.setStudentId(student.getId());
+            viewObject.setUg_Major(student.getProgram() != null ?
+                    student.getProgram().getName() : null);
 
+            /** 需要修改 */
+            viewObject.setG_Major("挖掘机");
         }
 
         if (clazz != null) {
+            viewObject.setClassId(clazz.getId());
+
             StringBuilder sb = new StringBuilder();
             if (clazz.getUtInstructors() != null) {
                 for (UTInstructor instructor : clazz.getUtInstructors()) {
@@ -146,9 +156,6 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setApplyCourseType(programCourse.getProgram() != null ?
                     programCourse.getProgram().getName() : null);
         }
-
-        //缺失
-        viewObject.setApplyTeacher("缺省");
 
         return viewObject;
     }
@@ -221,4 +228,16 @@ public class TAConverterimpl implements ITAConverter {
         return classDetailInfoViewObject;
     }
 
+    @Override
+    public TAMSTaApplication submitInfoToTaApplication(ClassInfoForm form) {
+        TAMSTaApplication application = new TAMSTaApplication();
+
+        application.setApplicationId(form.getApplyAssistantViewObject().getStudentId());
+        application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
+        application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
+        application.setNote(form.getApplyReason());
+        application.setEduBackground(form.getEduBackground());
+
+        return application;
+    }
 }

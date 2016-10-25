@@ -47,13 +47,11 @@ public class ClassController extends UifControllerBase {
     private ITAService taService;
 
     /**
-     *
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
-     *
-     * **/
+     **/
     @RequestMapping(params = "methodToCall=getClassListPage")
     public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        ClassInfoForm infoForm=(ClassInfoForm) form;
+        ClassInfoForm infoForm = (ClassInfoForm) form;
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(
                         classInfoService.getAllClassesMappedByDepartment()
@@ -65,6 +63,7 @@ public class ClassController extends UifControllerBase {
     /**
      * pageId限定了只接受来自pageClassList的请求
      * 从classlist跳转到某个class对应的classInfoPage
+     *
      * @param form
      * @return
      */

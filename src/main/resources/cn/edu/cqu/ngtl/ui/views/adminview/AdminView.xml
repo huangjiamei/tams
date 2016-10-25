@@ -65,6 +65,34 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageRoleManager" p:title="角色管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="RoleManagerPage" />
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageUserRoleManager" p:title="用户管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="UserRoleManagerPage" />
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageUpdateUserRoleManager" p:title="更新用户角色管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="UpdateUserRoleManagerPage" />
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageUpdateRole" p:title="更新角色">
+                    <property name="items">
+                        <list>
+                            <ref bean="UpdateRolePage" />
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

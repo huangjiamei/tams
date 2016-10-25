@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.form;
 
+import cn.edu.cqu.ngtl.bo.User;
 import org.kuali.rice.krad.web.form.UifFormBase;
 
 /**
@@ -9,7 +10,24 @@ import org.kuali.rice.krad.web.form.UifFormBase;
  * 所有系统所需的公共form数据都放在该Form
  *
  */
-public class BaseForm extends UifFormBase {
+public class BaseForm extends UifFormBase  {
 
+    private User user;
+    private Integer currenSessionId;
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public Integer getCurrenSessionId() {
+        return currenSessionId;
+    }
+
+    public void setCurrenSessionId(Integer currenSessionId) {
+        this.currenSessionId = currenSessionId;
+    }
 }

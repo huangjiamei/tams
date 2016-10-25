@@ -9,4 +9,7 @@ public interface UTSessionDao {
 
     UTSession getUTSessionById(Integer id);
 
+    public UTSession getCurrentSession();
+    public UTSession setCurrentSession(UTSession utSession);
+
 }

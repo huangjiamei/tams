@@ -15,7 +15,7 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Repository
 public class KRIM_PERM_T_DaoJpa implements KRIM_PERM_T_Dao {
 	
-	private static String nameSpace ="KR_EXM";
+	private static String nameSpace ="KR_TAMS";
 	
 	@Override
 	public List<KRIM_PERM_T> getAllPermissions() {

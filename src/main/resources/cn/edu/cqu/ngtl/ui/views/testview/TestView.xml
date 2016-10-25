@@ -39,11 +39,12 @@
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/bootstrap.css</value>
-                <!--<value>css/exam.css</value>-->
-                <value>css/tams.css</value>
+                <value>css/font-awesome.min.css</value>
                 <value>ueditor/themes/iframe.css</value>
                 <value>ueditor/third-party/codemirror/codemirror.css</value>
                 <value>ueditor/themes/default/css/ueditor.min.css</value>
+
+
 
                 <value>css/tams.css</value>
             </list>
@@ -112,6 +113,54 @@
                     <property name="items">
                         <list>
                             <ref bean="TaskDetailPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageConsole" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="ConsolePage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageCourseManager" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="CourseManagerPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTermManagement" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TermManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageCourseCategory" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="CourseCategoryPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaCategory" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaCategoryPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaskCategory" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaskCategoryPage"/>
                         </list>
                     </property>
                 </bean>

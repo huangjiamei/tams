@@ -128,10 +128,24 @@ body{
     background-color: #dd4b39 !important;
 }
 
+.bg-grey{
+    background-color: grey!important;
+}
+
 .btn[class*='bg-']:hover {
     -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
     border-color:transparent;
+}
+
+/* 导出、复制等btn的统一样式 */
+.tamsbtn{
+    font-size:14px;
+    margin-left: 5px;
+    margin-right:5px;
+    width:80px;
+    height:30px;
+    border-width:0;
 }
 
 /* content */
@@ -172,8 +186,10 @@ body{
     margin-bottom: 0;
 }
 
-
-
+/* edit、delete等action之前用于确认的dialog的样式 */
+/*.actionDialog{*/
+    /*margin-top: 35%;*/
+/*}*/
 
 
 
@@ -190,6 +206,15 @@ body{
     width: 100%!important;;
 }
 
+/* 所有dialog往屏幕中间移动*/
+.modal-content{
+    margin-top: 25%;
+}
+
+/* 让collection table的action格子短一点，暂时无效*/
+.uif-collection-column-action{
+    width:10%!important;
+}
 
 /**  修改uif end   */
 

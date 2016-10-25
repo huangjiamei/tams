@@ -175,34 +175,34 @@ public class ClassController extends UifControllerBase {
 
     /**
      * 将表格打印为excel，整体可用，各列具体参数还需修改
+     *
      * @param form
      * @param request
      * @param response
      * @return
      * @throws Exception
      */
-    @RequestMapping(params = {"pageId=pageClassList","methodToCall=exportClassListExcel"})
+    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportClassListExcel"})
     public ModelAndView exportClassListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                              HttpServletResponse response) throws Exception {
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
 
-        if(infoForm.getClassList()==null){
+        if (infoForm.getClassList() == null) {
             // TODO: 2016/10/21 错误处理
 //            examForm.setErrMsg("导出内容为空");
             return this.showDialog("errWarnDialog", true, infoForm);
         }
 
-        List<ClassTeacherViewObject> classList= infoForm.getClassList();
-        String fileName = "教学班列表"+"-"+GlobalVariables.getUserSession().getLoggedInUserPrincipalId()+"-"+System.currentTimeMillis()+".xls";
+        List<ClassTeacherViewObject> classList = infoForm.getClassList();
+        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + System.currentTimeMillis() + ".xls";
 
-        String filePath = new ExcelServiceImpl().printClasslistExcel(classList, "exportfolder",fileName, "2003");
+        String filePath = new ExcelServiceImpl().printClasslistExcel(classList, "exportfolder", fileName, "2003");
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm,baseUrl+ File.separator+filePath);
+        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
     }
-
 
 
     @Override
@@ -211,7 +211,7 @@ public class ClassController extends UifControllerBase {
     }
 
     @RequestMapping(params = "methodToCall=getTAInfoPage")
-    public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         //TODO
         return null;
     }

@@ -65,6 +65,31 @@
                         </list>
                     </property>
                 </bean>
+
+                <bean parent="Uif-Page" p:id="pageDeclareClass" p:title="cz1996">
+                    <property name="items">
+                        <list>
+                            <ref bean="DeclareClassPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageZhuJiaoApply" p:title="cz1996">
+                    <property name="items">
+                        <list>
+                            <ref bean="ZhuJiaoApplyPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageZhuJiaoTest" p:title="cz1996">
+                    <property name="items">
+                        <list>
+                            <ref bean="ZhuJiaoTestPage"/>
+                        </list>
+                    </property>
+                </bean>
+
             </list>
         </property>
     </bean>

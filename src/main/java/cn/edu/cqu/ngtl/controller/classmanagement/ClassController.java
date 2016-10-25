@@ -69,6 +69,12 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageApplyForTaForm");
     }
 
+//    @RequestMapping(params = "methodToCall=getDeclareClassPage")
+//    public ModelAndView getDeclareClassPage(@ModelAttribute("KualiForm") UifFormBase form) {
+//        TestForm testForm = (TestForm) form;
+//        return this.getModelAndView(testForm, "pageDeclareClass");
+//    }
+
 
     // -------------------------------------------------
 

@@ -40,6 +40,27 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageEditor");
     }
 
+//    http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getDeclareClass&viewId=TestView
+
+    @RequestMapping(params = "methodToCall=getDeclareClass")
+    public ModelAndView getDeclareClassPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageDeclareClass");
+    }
+
+//    http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getZhuJiaoTest&viewId=TestView
+    @RequestMapping(params = "methodToCall=getZhuJiaoTest")
+    public ModelAndView getZhuJiaoTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageZhuJiaoTest");
+    }
+
+    @RequestMapping(params = "methodToCall=getZhuJiaoApply")
+    public ModelAndView getZhuJiaoApplyPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageZhuJiaoApply");
+    }
+
     @RequestMapping(params = "methodToCall=submitEditorContent")
     public void submitEditorContent(@ModelAttribute("KualiForm") UifFormBase form ,HttpServletRequest request, HttpServletResponse response){
         TestForm testForm = (TestForm) form;

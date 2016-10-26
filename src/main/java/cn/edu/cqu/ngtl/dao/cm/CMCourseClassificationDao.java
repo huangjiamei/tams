@@ -19,4 +19,5 @@ public interface CMCourseClassificationDao {
 
     boolean deleteOneByEntity(CMCourseClassification courseClassification);
 
+    CMCourseClassification selectOneByName(String name);
 }

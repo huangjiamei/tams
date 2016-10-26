@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 
 import java.util.List;
 
@@ -17,4 +18,9 @@ public interface IAdminService {
 
     boolean removeCourseClassificationById(Integer id);
 
+    List<TAMSTaCategory> getAllTaCategories();
+
+    boolean addTaCategory(TAMSTaCategory newTaCategory);
+
+    boolean changeTaCategoryByEntiy(TAMSTaCategory tamsTaCategory);
 }

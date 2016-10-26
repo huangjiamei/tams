@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.form.adminmanagement;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 
@@ -28,6 +29,16 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private CMCourseClassification oldClassification;
 
     /**
+     * 助教类别管理页面
+     */
+
+    private List<TAMSTaCategory> allTaCategories;
+
+    private TAMSTaCategory newTaCategory;
+
+    private TAMSTaCategory oldTaCategory;
+
+    /**
      * 页面错误信息
      */
     private String errMsg;
@@ -49,6 +60,30 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public TAMSTaCategory getNewTaCategory() {
+        return newTaCategory;
+    }
+
+    public void setNewTaCategory(TAMSTaCategory newTaCategory) {
+        this.newTaCategory = newTaCategory;
+    }
+
+    public TAMSTaCategory getOldTaCategory() {
+        return oldTaCategory;
+    }
+
+    public void setOldTaCategory(TAMSTaCategory oldTaCategory) {
+        this.oldTaCategory = oldTaCategory;
+    }
+
+    public List<TAMSTaCategory> getAllTaCategories() {
+        return allTaCategories;
+    }
+
+    public void setAllTaCategories(List<TAMSTaCategory> allTaCategories) {
+        this.allTaCategories = allTaCategories;
+    }
 
     public CMCourseClassification getOldClassification() {
         return oldClassification;

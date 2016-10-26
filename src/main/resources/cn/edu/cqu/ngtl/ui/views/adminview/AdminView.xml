@@ -107,6 +107,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageTaCategory" p:title="课程类别管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaCategoryPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

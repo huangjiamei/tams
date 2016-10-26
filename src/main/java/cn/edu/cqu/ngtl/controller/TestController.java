@@ -263,21 +263,10 @@ public class TestController extends UifControllerBase {
         return this.getTermManagePage(testForm);
     }
 
-    /**
-     * 获取助教类别管理页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaCategoryPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getTaCategoryPage")
-    public ModelAndView getTaCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
 
-        return this.getModelAndView(testForm, "pageTaCategory");
-    }
 
     /**
-     * 获取助教类别管理页面
+     * 获取任务类别管理页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskCategoryPage&viewId=TestView
      * @param form
      * @return

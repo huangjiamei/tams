@@ -235,7 +235,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="updateCourseManager" p:successCallback="alert('回调成功')" />
+                      p:ajaxSubmit="false" p:methodToCall="saveUpdateCourseManager" p:successCallback="alert('回调成功')" />
             </list>
         </property>
     </bean>

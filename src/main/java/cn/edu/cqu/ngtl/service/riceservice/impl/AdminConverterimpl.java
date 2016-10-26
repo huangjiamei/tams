@@ -27,6 +27,7 @@ public class AdminConverterimpl implements IAdminConverter {
             UTCourse utCourse = new UTCourseDaoJpa().selectOneById(tamsCourseManager.getCourseId());
             if(utCourse!=null) {
                 CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
+                courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
                 courseManagerViewObject.setCourseNm(utCourse.getName());
                 courseManagerViewObject.setCourseNmb(utCourse.getCodeR());
                 courseManagerViewObject.setCourseManager(tamsCourseManager.getUtInstructor().getName());

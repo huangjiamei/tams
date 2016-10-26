@@ -2,12 +2,9 @@ package cn.edu.cqu.ngtl.controller;
 
 import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.form.TestForm;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.kuali.rice.krad.uif.lifecycle.LifecycleElementState;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -264,19 +261,6 @@ public class TestController extends UifControllerBase {
 
 
         return this.getTermManagePage(testForm);
-    }
-
-    /**
-     * 获取课程类别管理页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getCourseCategoryPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getCourseCategoryPage")
-    public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageCourseCategory");
     }
 
     /**

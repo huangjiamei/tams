@@ -24,7 +24,7 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean addOneOnlyWithName(String name) {
+    public boolean addCourseClassificationOnlyWithName(String name) {
         CMCourseClassification courseClassification = new CMCourseClassification();
         courseClassification.setName(name);
 
@@ -32,7 +32,7 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean changeNameById(Integer id, String name) {
+    public boolean changeCourseClassificationNameById(Integer id, String name) {
         CMCourseClassification courseClassification = courseClassificationDao.selectOneById(id);
 
         if(courseClassification == null)
@@ -45,7 +45,7 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean removeOneById(Integer id) {
+    public boolean removeCourseClassificationById(Integer id) {
         CMCourseClassification courseClassification = courseClassificationDao.selectOneById(id);
 
         if(courseClassification == null)

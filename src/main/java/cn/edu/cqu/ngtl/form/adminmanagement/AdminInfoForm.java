@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.form.adminmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
@@ -16,10 +17,15 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = -1974217788100313751L;
 
+    /**
+     * 课程类别管理页面
+     */
 
+    private List<CMCourseClassification> allClassifications;
 
+    private String newClassification;
 
-
+    private CMCourseClassification oldClassification;
 
     /**
      * 页面错误信息
@@ -44,6 +50,29 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
 
+    public CMCourseClassification getOldClassification() {
+        return oldClassification;
+    }
+
+    public void setOldClassification(CMCourseClassification oldClassification) {
+        this.oldClassification = oldClassification;
+    }
+
+    public String getNewClassification() {
+        return newClassification;
+    }
+
+    public void setNewClassification(String newClassification) {
+        this.newClassification = newClassification;
+    }
+
+    public List<CMCourseClassification> getAllClassifications() {
+        return allClassifications;
+    }
+
+    public void setAllClassifications(List<CMCourseClassification> allClassifications) {
+        this.allClassifications = allClassifications;
+    }
 
     public String getErrMsg() {
         return errMsg;

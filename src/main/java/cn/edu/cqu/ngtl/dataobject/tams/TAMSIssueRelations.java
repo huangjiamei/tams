@@ -2,10 +2,7 @@ package cn.edu.cqu.ngtl.dataobject.tams;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -17,6 +14,8 @@ public class TAMSIssueRelations extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsIssueRelations")
+    @SequenceGenerator(name="tamsIssueRelations",sequenceName="TAMS_ISSUE_RELATIONS_S",allocationSize=1)
     private String id;
 
     @Column(name = "SOURCE_ID")

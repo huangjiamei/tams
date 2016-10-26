@@ -3,10 +3,7 @@ package cn.edu.cqu.ngtl.dataobject.tams;
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.omg.dds.PRESENTATION_QOS_POLICY_ID;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,6 +15,8 @@ public class TAMSIssueUpdateDetail extends DataObjectBase implements Serializabl
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsIssueUpdateDetail")
+    @SequenceGenerator(name="tamsIssueUpdateDetail",sequenceName="TAMS_ISSUE_UPDATE_DETAILS",allocationSize=1)
     private String id;
 
     @Column(name = "ISSUE_UPDATE_ID")

@@ -3,10 +3,7 @@ package cn.edu.cqu.ngtl.dataobject.tams;
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.uif.UifConstants;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,6 +15,8 @@ public class TAMSAttachments extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsAttachments")
+    @SequenceGenerator(name="tamsAttachments",sequenceName="TAMS_ATTACHMENTS_S",allocationSize=1)
     private String id;
 
     @Column(name = "CONTAINER_ID")
@@ -39,7 +38,7 @@ public class TAMSAttachments extends DataObjectBase implements Serializable{
     private String digest;
 
     @Column(name = "DOWNLOAD_TIMES")
-    private String downliadTimes;
+    private String downloadTimes;
 
     @Column(name = "AUTHOR_ID")
     private String authorId;
@@ -109,12 +108,12 @@ public class TAMSAttachments extends DataObjectBase implements Serializable{
         this.digest = digest;
     }
 
-    public String getDownliadTimes() {
-        return downliadTimes;
+    public String getDownloadTimes() {
+        return downloadTimes;
     }
 
-    public void setDownliadTimes(String downliadTimes) {
-        this.downliadTimes = downliadTimes;
+    public void setDownloadTimes(String downloadTimes) {
+        this.downloadTimes = downloadTimes;
     }
 
     public String getAuthorId() {

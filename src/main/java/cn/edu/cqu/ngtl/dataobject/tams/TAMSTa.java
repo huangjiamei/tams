@@ -14,6 +14,8 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     //private static final long serialVersionUID = -1543515532501167011L;
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsTa")
+    @SequenceGenerator(name="tamsTa",sequenceName="TAMS_TA_S",allocationSize=1)
     private String id;
 
     @Column(name="TA_TYPE")

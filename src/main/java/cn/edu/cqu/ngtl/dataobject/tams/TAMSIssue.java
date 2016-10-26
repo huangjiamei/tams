@@ -3,10 +3,7 @@ package cn.edu.cqu.ngtl.dataobject.tams;
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.uif.UifConstants;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,6 +15,8 @@ public class TAMSIssue extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsIssue")
+    @SequenceGenerator(name="tamsIssue",sequenceName="TAMS_ISSUE_S",allocationSize=1)
     private String id;
 
     @Column(name = "ISSUE_TYPE")
@@ -38,17 +37,17 @@ public class TAMSIssue extends DataObjectBase implements Serializable{
     @Column(name = "ISSUE_STATUS")
     private String issueStatus;
 
-    @Column(name = "ASSIGNED_TO_DO")
-    private String assignedToDo;
+    @Column(name = "ASSIGNED_TO_ID")
+    private String assignedToId;
 
     @Column(name = "PRIORITY_ID")
     private String priorityID;
 
-    @Column(name = "CREATE_TIME")
-    private String createTime;
+    @Column(name = "CREATED_TIME")
+    private String createdTime;
 
-    @Column(name = "UPDATE_TIME")
-    private String updateTime;
+    @Column(name = "UPDATED_TIME")
+    private String updatedTime;
 
     @Column(name = "START_TIME")
     private String startTime;
@@ -121,12 +120,12 @@ public class TAMSIssue extends DataObjectBase implements Serializable{
         this.issueStatus = issueStatus;
     }
 
-    public String getAssignedToDo() {
-        return assignedToDo;
+    public String getAssignedToId() {
+        return assignedToId;
     }
 
-    public void setAssignedToDo(String assignedToDo) {
-        this.assignedToDo = assignedToDo;
+    public void setAssignedToId(String assignedToId) {
+        this.assignedToId = assignedToId;
     }
 
     public String getPriorityID() {
@@ -137,20 +136,20 @@ public class TAMSIssue extends DataObjectBase implements Serializable{
         this.priorityID = priorityID;
     }
 
-    public String getCreateTime() {
-        return createTime;
+    public String getCreatedTime() {
+        return createdTime;
     }
 
-    public void setCreateTime(String createTime) {
-        this.createTime = createTime;
+    public void setCreatedTime(String createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public String getUpdateTime() {
-        return updateTime;
+    public String getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUpdateTime(String updateTime) {
-        this.updateTime = updateTime;
+    public void setUpdatedTime(String updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     public String getStartTime() {

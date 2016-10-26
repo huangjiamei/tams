@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
@@ -18,6 +19,8 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "ID")
+    @GeneratedValue(generator="tamsTaApplication")
+    @SequenceGenerator(name="tamsTaApplication",sequenceName="TAMS_TA_APPLICATION_S",allocationSize=1)
     private String id;
 
     @Column(name = "APPLICATION_ID")
@@ -35,6 +38,29 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
 
     @Column(name = "NOTE")
     private String note;
+
+    @Column(name = "SESSION_ID")
+    private Integer sessinId;
+
+    @ManyToOne
+    @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
+    private UTSession curSession;
+
+    public Integer getSessinId() {
+        return sessinId;
+    }
+
+    public void setSessinId(Integer sessinId) {
+        this.sessinId = sessinId;
+    }
+
+    public UTSession getCurSession() {
+        return curSession;
+    }
+
+    public void setCurSession(UTSession curSession) {
+        this.curSession = curSession;
+    }
 
     public String getId() {
         return id;

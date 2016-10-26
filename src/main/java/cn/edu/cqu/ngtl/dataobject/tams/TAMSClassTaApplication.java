@@ -1,11 +1,9 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,6 +16,8 @@ public class TAMSClassTaApplication extends DataObjectBase implements Serializab
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsClassTaApplication")
+    @SequenceGenerator(name="tamsClassTaApplication",sequenceName="TAMS_CLASS_TA_APPLICATION_S",allocationSize=1)
     private String id;
 
     @Column(name = "APPLICANT_ID")
@@ -34,6 +34,29 @@ public class TAMSClassTaApplication extends DataObjectBase implements Serializab
 
     @Column(name = "NOTE")
     private String note;
+
+    @Column(name = "SESSION_ID")
+    private Integer sessinId;
+
+    @ManyToOne
+    @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
+    private UTSession curSession;
+
+    public Integer getSessinId() {
+        return sessinId;
+    }
+
+    public void setSessinId(Integer sessinId) {
+        this.sessinId = sessinId;
+    }
+
+    public UTSession getCurSession() {
+        return curSession;
+    }
+
+    public void setCurSession(UTSession curSession) {
+        this.curSession = curSession;
+    }
 
     public String getId() {
         return id;

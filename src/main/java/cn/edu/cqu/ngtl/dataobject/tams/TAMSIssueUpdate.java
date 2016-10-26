@@ -3,10 +3,7 @@ package cn.edu.cqu.ngtl.dataobject.tams;
 import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.uif.UifConstants;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 /**
@@ -18,6 +15,8 @@ public class TAMSIssueUpdate extends DataObjectBase implements Serializable{
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsIssueUpdate")
+    @SequenceGenerator(name="tamsIssueUpdate",sequenceName="TAMS_ISSUE_UPDATE_S",allocationSize=1)
     private String id;
 
     @Column(name = "ISSUE_ID")
@@ -26,11 +25,11 @@ public class TAMSIssueUpdate extends DataObjectBase implements Serializable{
     @Column(name = "UPDATER_ID")
     private String updaterId;
 
-    @Column(name = "UPDATER_CONTENT")
-    private String updaterContent;
+    @Column(name = "UPDATE_CONTENT")
+    private String updateContent;
 
-    @Column(name = "UPDATER_TIME")
-    private String updaterTime;
+    @Column(name = "UPDATE_TIME")
+    private String updateTime;
 
     public String getId() {
         return id;
@@ -56,19 +55,19 @@ public class TAMSIssueUpdate extends DataObjectBase implements Serializable{
         this.updaterId = updaterId;
     }
 
-    public String getUpdaterContent() {
-        return updaterContent;
+    public String getUpdateContent() {
+        return updateContent;
     }
 
-    public void setUpdaterContent(String updaterContent) {
-        this.updaterContent = updaterContent;
+    public void setUpdateContent(String updateContent) {
+        this.updateContent = updateContent;
     }
 
-    public String getUpdaterTime() {
-        return updaterTime;
+    public String getUpdateTime() {
+        return updateTime;
     }
 
-    public void setUpdaterTime(String updaterTime) {
-        this.updaterTime = updaterTime;
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 }

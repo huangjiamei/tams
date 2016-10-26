@@ -114,6 +114,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageTaskCategory" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaskCategoryPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

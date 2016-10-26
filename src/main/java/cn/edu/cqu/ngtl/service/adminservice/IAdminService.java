@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 
 import java.util.List;
@@ -23,4 +24,10 @@ public interface IAdminService {
     boolean addTaCategory(TAMSTaCategory newTaCategory);
 
     boolean changeTaCategoryByEntiy(TAMSTaCategory tamsTaCategory);
+
+    boolean removeTaCategoryById(Integer id);
+
+    List<TAMSIssueType> getAllIssueTypes();
+
+    boolean addTaIssueType(TAMSIssueType issueType);
 }

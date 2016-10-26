@@ -16,4 +16,8 @@ public interface TAMSTaCategoryDao {
     boolean insertOneByEntity(TAMSTaCategory newTaCategory);
 
     boolean updateOneByEntity(TAMSTaCategory tamsTaCategory);
+
+    TAMSTaCategory selectOneById(Integer id);
+
+    boolean deleteOneByEntity(TAMSTaCategory tamsTaCategory);
 }

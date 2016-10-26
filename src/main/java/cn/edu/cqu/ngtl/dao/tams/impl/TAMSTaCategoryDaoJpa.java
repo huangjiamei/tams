@@ -51,4 +51,19 @@ public class TAMSTaCategoryDaoJpa implements TAMSTaCategoryDao {
         return KRADServiceLocator.getDataObjectService().save(tamsTaCategory) != null;
 
     }
+
+    @Override
+    public TAMSTaCategory selectOneById(Integer id) {
+
+        return KRADServiceLocator.getDataObjectService().find(TAMSTaCategory.class, id);
+
+    }
+
+    @Override
+    public boolean deleteOneByEntity(TAMSTaCategory tamsTaCategory) {
+
+        KRADServiceLocator.getDataObjectService().delete(tamsTaCategory);
+
+        return true;
+    }
 }

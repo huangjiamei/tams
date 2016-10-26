@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.form.adminmanagement;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
@@ -17,6 +18,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
 
     private static final long serialVersionUID = -1974217788100313751L;
+
+    /**
+     * 任务类别管理页面
+     */
+
+    private List<TAMSIssueType> allIssueTypes;
+
+    private TAMSIssueType newIssueType;
 
     /**
      * 课程类别管理页面
@@ -60,6 +69,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public TAMSIssueType getNewIssueType() {
+        return newIssueType;
+    }
+
+    public void setNewIssueType(TAMSIssueType newIssueType) {
+        this.newIssueType = newIssueType;
+    }
+
+    public List<TAMSIssueType> getAllIssueTypes() {
+        return allIssueTypes;
+    }
+
+    public void setAllIssueTypes(List<TAMSIssueType> allIssueTypes) {
+        this.allIssueTypes = allIssueTypes;
+    }
 
     public TAMSTaCategory getNewTaCategory() {
         return newTaCategory;

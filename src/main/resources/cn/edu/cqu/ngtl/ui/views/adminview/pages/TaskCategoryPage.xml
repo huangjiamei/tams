@@ -162,8 +162,8 @@
                                                                     <property name="headerText" value="Table Layout"/>
                                                                     <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType"/>
+                                                                    <property name="propertyName" value="allIssueTypes"/>
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="true"/>
 
@@ -182,7 +182,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="课程类别"
-                                                                                  p:propertyName="field4"/>
+                                                                                  p:propertyName="typeName"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -246,7 +246,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="任务"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="inputField20"/>
+                                              p:propertyName="newIssueType.typeName"/>
                                     </list>
                                 </property>
                             </bean>
@@ -259,7 +259,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:ajaxSubmit="false" p:methodToCall="addNewIssueType" p:successCallback="alert('btn无methodtocall回调成功')"/>
             </list>
         </property>
     </bean>
@@ -279,7 +279,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="任务"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="inputField20"/>
+                                              p:propertyName="newClassification"/>
                                     </list>
                                 </property>
                             </bean>

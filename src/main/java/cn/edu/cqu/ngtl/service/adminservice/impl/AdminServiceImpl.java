@@ -1,8 +1,10 @@
 package cn.edu.cqu.ngtl.service.adminservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSIssueTypeDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSTaCategoryDao tamsTaCategoryDao;
+
+    @Autowired
+    private TAMSIssueTypeDao issueTypeDao;
 
     @Override
     public List<CMCourseClassification> getAllClassification() {
@@ -89,5 +94,33 @@ public class AdminServiceImpl implements IAdminService{
             return false;
 
         return tamsTaCategoryDao.updateOneByEntity(tamsTaCategory);
+    }
+
+    @Override
+    public boolean removeTaCategoryById(Integer id) {
+        TAMSTaCategory tamsTaCategory = tamsTaCategoryDao.selectOneById(id);
+
+        if(tamsTaCategory == null)
+            return false;
+
+        return tamsTaCategoryDao.deleteOneByEntity(tamsTaCategory);
+    }
+
+    @Override
+    public List<TAMSIssueType> getAllIssueTypes() {
+
+        return issueTypeDao.selectAll();
+
+    }
+
+    @Override
+    public boolean addTaIssueType(TAMSIssueType issueType) {
+
+        TAMSIssueType isInDataBase = issueTypeDao.selectOneByTypeName(issueType.getTypeName());
+
+        if(isInDataBase != null)
+            return false;
+
+        return issueTypeDao.insertOneByEntity(issueType);
     }
 }

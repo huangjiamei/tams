@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
@@ -392,7 +393,7 @@ public class adminController extends UifControllerBase {
     }
 
     /**
-     * 编辑课程大类
+     * 编辑助教类别
      * pageCourseCategory
      * @param form
      * @return
@@ -404,6 +405,55 @@ public class adminController extends UifControllerBase {
         adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory());
 
         return this.getTaCategoryPage(form);
+    }
+
+    /**
+     * 删除助教类别
+     * pageCourseCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=deleteTaCategory"})
+    public ModelAndView deleteTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        if(adminService.removeTaCategoryById(Integer.parseInt(adminInfoForm.getOldTaCategory().getId())))
+            return this.getTaCategoryPage(form);
+        else
+            //应该返回错误页面
+            return this.getTaCategoryPage(form);
+    }
+
+    /**
+     * 获取任务类别管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTaskCategoryPage&viewId=AdminView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskCategoryPage")
+    public ModelAndView getTaskCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminInfoForm.setNewIssueType(new TAMSIssueType());
+
+        adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());
+
+        return this.getModelAndView(adminInfoForm, "pageTaskCategory");
+    }
+
+    /**
+     * 添加新的任务类别
+     * pageTaskCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaskCategory", "methodToCall=addNewIssueType"})
+    public ModelAndView addNewIssueType(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminService.addTaIssueType(adminInfoForm.getNewIssueType());
+
+        return this.getTaskCategoryPage(form);
     }
 
     @Override

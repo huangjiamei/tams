@@ -83,7 +83,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @param request
      * @param response
-     * @return    用户管理页面
+     * @return    权限页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getPermissionManagementPage")

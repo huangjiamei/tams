@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.omg.dds.PRESENTATION_QOS_POLICY_ID;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -16,10 +15,10 @@ public class TAMSIssueUpdateDetail extends DataObjectBase implements Serializabl
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsIssueUpdateDetail")
-    @SequenceGenerator(name="tamsIssueUpdateDetail",sequenceName="TAMS_ISSUE_UPDATE_DETAILS",allocationSize=1)
+    @SequenceGenerator(name="tamsIssueUpdateDetail",sequenceName="TAMS_ISSUE_UPDATE_DETAIL_S",allocationSize=1)
     private String id;
 
-    @Column(name = "ISSUE_UPDATE_ID")
+   @Column(name = "ISSUE_UPDATE_ID")
     private String issueUpdateId;
 
     @Column(name = "UPDATE_ATTRIBUTE")

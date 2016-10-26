@@ -2,12 +2,16 @@ package cn.edu.cqu.ngtl.controller.adminmanagement;
 
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
+import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
+import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +29,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class adminController extends UifControllerBase {
+
 
     /**
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getConsolePage&viewId=AdminView
@@ -243,6 +248,56 @@ public class adminController extends UifControllerBase {
         List<KRIM_ROLE_T> krimRoleTs = infoForm.getURMPkrimRoleTs();
         new KRIM_ROLE_MBR_T_DaoJpa().saveKrimRoleMbrTByPrncpltAndRoles(krimPrncplT, krimRoleTs);
         return this.getModelAndView(infoForm, "pageUserRoleManager");
+    }
+
+
+    /**
+     * 获取课程负责人页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseManagerPage&viewId=AdminView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getCourseManagerPage")
+    public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        infoForm.setCourseManagerViewObjects(new AdminConverterimpl().getCourseManagerToTableViewObject(
+                new TAMSCourseManagerDaoJpa().getAllCourseManager()
+        ));
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+
+    /**
+     * 编辑课程负责人信息
+     * 只接受来自pageCourseManager的请求
+     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
+     * @param form
+     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageCourseManager，需要考虑使用ajax实现局部刷新
+     */
+    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=updateCourseManager"})
+    public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
+        infoForm.setSelectedCourseManagerObject(selectedObject);
+        infoForm.setCourseNm(selectedObject.getCourseNm());
+        infoForm.setCourseNmb(selectedObject.getCourseNmb());
+        infoForm.setCourseManager(selectedObject.getCourseManager());
+        infoForm.setInstructorCode(selectedObject.getInstructorCode());
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+
+    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=saveUpdateCourseManager"})
+    public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CourseManagerViewObject selectedObject =infoForm.getSelectedCourseManagerObject();
+        selectedObject.setInstructorCode(infoForm.getInstructorCode());
+
+
+        return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
 

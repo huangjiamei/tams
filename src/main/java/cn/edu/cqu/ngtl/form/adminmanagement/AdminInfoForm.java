@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 
 import java.io.Serializable;
 import java.util.List;
@@ -16,10 +17,19 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = -1974217788100313751L;
 
-
-
-
-
+    /**
+     * 课程负责人管理页面
+     */
+    private String courseNm;
+    private String courseNmb;
+    private String courseManager;
+    private String InstructorCode;
+    private List<CourseManagerViewObject> courseManagerViewObjects;
+    private String searchCourseNm;
+    private String searchCourseNmb;
+    private String searchCourseManager;
+    private String searchCourseInsCode;
+    private CourseManagerViewObject selectedCourseManagerObject;
 
     /**
      * 页面错误信息
@@ -107,5 +117,85 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setURMsearchDepartmentId(String URMsearchDepartmentId) {
         this.URMsearchDepartmentId = URMsearchDepartmentId;
+    }
+
+    public String getCourseNm() {
+        return courseNm;
+    }
+
+    public void setCourseNm(String courseNm) {
+        this.courseNm = courseNm;
+    }
+
+    public String getCourseNmb() {
+        return courseNmb;
+    }
+
+    public void setCourseNmb(String courseNmb) {
+        this.courseNmb = courseNmb;
+    }
+
+    public String getCourseManager() {
+        return courseManager;
+    }
+
+    public void setCourseManager(String courseManager) {
+        this.courseManager = courseManager;
+    }
+
+    public String getInstructorCode() {
+        return InstructorCode;
+    }
+
+    public void setInstructorCode(String instructorCode) {
+        InstructorCode = instructorCode;
+    }
+
+    public List<CourseManagerViewObject> getCourseManagerViewObjects() {
+        return courseManagerViewObjects;
+    }
+
+    public void setCourseManagerViewObjects(List<CourseManagerViewObject> courseManagerViewObjects) {
+        this.courseManagerViewObjects = courseManagerViewObjects;
+    }
+
+    public String getSearchCourseNm() {
+        return searchCourseNm;
+    }
+
+    public void setSearchCourseNm(String searchCourseNm) {
+        this.searchCourseNm = searchCourseNm;
+    }
+
+    public String getSearchCourseNmb() {
+        return searchCourseNmb;
+    }
+
+    public void setSearchCourseNmb(String searchCourseNmb) {
+        this.searchCourseNmb = searchCourseNmb;
+    }
+
+    public String getSearchCourseManager() {
+        return searchCourseManager;
+    }
+
+    public void setSearchCourseManager(String searchCourseManager) {
+        this.searchCourseManager = searchCourseManager;
+    }
+
+    public String getSearchCourseInsCode() {
+        return searchCourseInsCode;
+    }
+
+    public void setSearchCourseInsCode(String searchCourseInsCode) {
+        this.searchCourseInsCode = searchCourseInsCode;
+    }
+
+    public CourseManagerViewObject getSelectedCourseManagerObject() {
+        return selectedCourseManagerObject;
+    }
+
+    public void setSelectedCourseManagerObject(CourseManagerViewObject selectedCourseManagerObject) {
+        this.selectedCourseManagerObject = selectedCourseManagerObject;
     }
 }

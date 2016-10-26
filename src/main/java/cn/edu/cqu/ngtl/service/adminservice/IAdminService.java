@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 
 import java.util.List;
 
@@ -16,5 +17,8 @@ public interface IAdminService {
     boolean changeNameById(Integer id, String name);
 
     boolean removeOneById(Integer id);
+
+
+    List<TAMSCourseManager> getAllCourseManager();
 
 }

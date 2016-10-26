@@ -116,13 +116,13 @@
                                                                         <list>
                                                                             <!--文字搜索-->
                                                                             <bean parent="Uif-InputField" p:label="课程名称"
-                                                                                  p:propertyName="inputField1"/>
+                                                                                  p:propertyName="searchCourseNm"/>
                                                                             <bean parent="Uif-InputField" p:label="课程编号"
-                                                                                  p:propertyName="inputField2"/>
+                                                                                  p:propertyName="searchCourseNmb"/>
                                                                             <bean parent="Uif-InputField" p:label="负责人"
-                                                                                  p:propertyName="inputField3"/>
+                                                                                  p:propertyName="searchCourseManager"/>
                                                                             <bean parent="Uif-InputField" p:label="职工号"
-                                                                                  p:propertyName="inputField4"/>
+                                                                                  p:propertyName="searchCourseInsCode"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
@@ -138,8 +138,8 @@
                                                                       p:layoutManager.numberOfColumns="4">
                                                                     <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject"/>
+                                                                    <property name="propertyName" value="courseManagerViewObjects"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render"
@@ -160,13 +160,13 @@
                                                                             <!--</property>-->
                                                                             <!--</bean>-->
                                                                             <bean parent="Uif-DataField" p:label="课程"
-                                                                                  p:propertyName="field4"/>
+                                                                                  p:propertyName="courseNm"/>
                                                                             <bean parent="Uif-DataField" p:label="课程号"
-                                                                                  p:propertyName="field2"/>
+                                                                                  p:propertyName="courseNmb"/>
                                                                             <bean parent="Uif-DataField" p:label="课程负责人"
-                                                                                  p:propertyName="field3"/>
+                                                                                  p:propertyName="courseManager"/>
                                                                             <bean parent="Uif-DataField" p:label="职工号"
-                                                                                  p:propertyName="field4"
+                                                                                  p:propertyName="InstructorCode"
                                                                                   p:sortAs="numeric"/>
                                                                         </list>
                                                                     </property>
@@ -178,15 +178,13 @@
                                                                                         <!--<bean parent="Uif-EditLineInDialogSaveAction"/>-->
                                                                                         <!--<bean parent="Uif-DeleteLineAction"-->
                                                                                               <!--p:confirmationPromptText="Are you sure you wish to delete line: @{#line.field4}?"/>-->
-                                                                                        <!--<bean parent="Uif-ActionImage">-->
-                                                                                            <!--<property name="confirmationDialog">-->
-                                                                                                <!--<ref bean="confirmEditManagerDialog" />-->
-                                                                                            <!--</property>-->
-                                                                                            <!--<property name="actionImage">-->
-                                                                                                <!--<bean parent="Uif-Image"-->
-                                                                                                      <!--p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />-->
-                                                                                            <!--</property>-->
-                                                                                        <!--</bean>-->
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="updateCourseManager"
+                                                                                              p:successCallback="showDialog('confirmEditManagerDialog')">
+                                                                                            <property name="actionImage">
+                                                                                                <bean parent="Uif-Image"
+                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
+                                                                                            </property>
+                                                                                        </bean>
                                                                                         <bean parent="Uif-ActionImage">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="confirmDeleteManagerDialog" />
@@ -223,12 +221,14 @@
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重编辑课程负责人，如需编辑请联系系统维护人员！" />
-                <bean parent="Uif-InputField" p:label="课程名"
-                      p:propertyName="inputField30"/>
-                <bean parent="Uif-InputField" p:label="课程编号"
-                      p:propertyName="inputField31"/>
-                <bean parent="Uif-InputField" p:label="课程负责人"
-                      p:propertyName="inputField32"/>
+                <bean parent="Uif-InputField" p:label="课程名" p:readOnly="true"
+                      p:propertyName="courseNm"/>
+                <bean parent="Uif-InputField" p:label="课程编号" p:readOnly="true"
+                      p:propertyName="courseNmb"/>
+                <bean parent="Uif-InputField" p:label="课程负责人" p:readOnly="true"
+                      p:propertyName="courseManager"/>
+                <bean parent="Uif-InputField" p:label="职工号"
+                      p:propertyName="InstructorCode"/>
             </list>
         </property>
         <property name="footer.items">

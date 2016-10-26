@@ -100,6 +100,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageCourseManager" p:title="更新角色">
+                    <property name="items">
+                        <list>
+                            <ref bean="CourseManagerPage" />
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

@@ -35,8 +35,6 @@
     <bean id="CommonHomePage" parent="Uif-VerticalBoxSection"  p:additionalCssClasses="container" >
         <property name="items">
             <list>
-
-
                 <bean id="CommonHomePageHeader" parent="Uif-HorizontalBoxSection"
                       p:additionalCssClasses="content-header">
                    <property name="items">

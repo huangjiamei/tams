@@ -31,6 +31,17 @@ public class UTSession extends DataObjectBase implements Serializable {
     @Convert(converter = StringDateConverter.class)
     private String endDate;
 
+    @Column(name="ACTIVE")
+    private String active;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
     public Integer getId() {
         return id;
     }

@@ -33,31 +33,21 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <!-- 注意这个id，url可以通过指定viewId就来访问这个view -->
-    <bean id="TestView" parent="Uif-FormView" p:applicationTitleText="主页">
+    <bean id="AdminView" parent="Uif-FormView" p:applicationTitleText="管理台">
         <property name="additionalCssFiles">
             <list>
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/bootstrap.css</value>
-                <value>css/font-awesome.min.css</value>
-                <value>ueditor/themes/iframe.css</value>
-                <value>ueditor/third-party/codemirror/codemirror.css</value>
-                <value>ueditor/themes/default/css/ueditor.min.css</value>
-
-
-
                 <value>css/tams.css</value>
+                <value>css/font-awesome.min.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <value>ueditor/ueditor.config.js</value>
-                <value>ueditor/ueditor.all.min.js</value>
-                <value>ueditor/lang/zh-cn/zh-cn.js</value>
-                <value>/themes/kboot/scripts/kboot.2.5.12.min.js</value>
-
-                <value>js/tams.js</value>
+                <!--<value>scripts/fullcalendar.js</value>-->
+                <!--<value>scripts/exam_526.js</value>-->
             </list>
         </property>
 
@@ -68,112 +58,48 @@
         <property name="items">
             <!--这是一个page列表，一个view可以包含多个page，但是每次通过pageId访问其中的一个-->
             <list merge="true">
-
-                <bean parent="Uif-Page" p:id="pageTest" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="TestPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageEditor" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="editorPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageAddNewTask" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="AddNewTaskPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageTaskList" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="TaskListPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageApplyForTaForm" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="ApplyForTaFormPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageTaskDetail" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="TaskDetailPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageConsole" p:title="">
+                <bean parent="Uif-Page" p:id="pageConsole" p:title="系统管理台">
                     <property name="items">
                         <list>
                             <ref bean="ConsolePage"/>
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-Page" p:id="pageCourseManager" p:title="">
+                <bean parent="Uif-Page" p:id="pageRoleManager" p:title="角色管理">
                     <property name="items">
                         <list>
-                            <ref bean="CourseManagerPage"/>
+                            <ref bean="RoleManagerPage" />
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-Page" p:id="pageTermManagement" p:title="">
+                <bean parent="Uif-Page" p:id="pageUserRoleManager" p:title="用户管理">
                     <property name="items">
                         <list>
-                            <ref bean="TermManagementPage"/>
+                            <ref bean="UserRoleManagerPage" />
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-Page" p:id="pageCourseCategory" p:title="">
+                <bean parent="Uif-Page" p:id="pageUpdateUserRoleManager" p:title="更新用户角色管理">
                     <property name="items">
                         <list>
-                            <ref bean="CourseCategoryPage"/>
+                            <ref bean="UpdateUserRoleManagerPage" />
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-Page" p:id="pageTaCategory" p:title="">
+                <bean parent="Uif-Page" p:id="pageUpdateRole" p:title="更新角色">
                     <property name="items">
                         <list>
-                            <ref bean="TaCategoryPage"/>
+                            <ref bean="UpdateRolePage" />
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-Page" p:id="pageTaskCategory" p:title="">
+                <bean parent="Uif-Page" p:id="pagePermissionManagement" p:title="更新角色">
                     <property name="items">
                         <list>
-                            <ref bean="TaskCategoryPage"/>
+                            <ref bean="PermissionManagementPage" />
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-Page" p:id="pageReviewForTeacher" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="TaReviewForTeacher"/>
-                        </list>
-                    </property>
-                </bean>
-
-
             </list>
         </property>
     </bean>

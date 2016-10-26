@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
@@ -26,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -98,21 +100,6 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageClassInfo");
     }
 
-
-    // region # 暂时不可用的方法
-
-    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
-
-    @RequestMapping(params = "methodToCall=getAddTaskPage")
-    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageAddNewTask");
-    }
-
     /**
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getApplyTAPage&viewId=ClassView
      **/
@@ -147,7 +134,42 @@ public class ClassController extends UifControllerBase {
         return null;
     }
 
+
+    // region # 暂时不可用的方法
+
+    @RequestMapping(params = "methodToCall=getTaskDetailPage")
+    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTaskDetail");
+    }
+
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageAddNewTask");
+    }
+
+
+    /**
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getRequestTaPage&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getRequestTaPage")
+    public ModelAndView getRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        infoForm.setApplyViewObject(new ApplyViewObject());
+        infoForm.setClassList(
+                new ArrayList<ClassTeacherViewObject>()
+        );
+
+        return this.getModelAndView(infoForm, "pageRequestTa");
+    }
+
     //    /**
+
+
 //     * pageId限定了只接受来自pageClassList的请求
 //     * 从classlist跳转到某个class对应的talss
 //     * @param form
@@ -175,34 +197,34 @@ public class ClassController extends UifControllerBase {
 
     /**
      * 将表格打印为excel，整体可用，各列具体参数还需修改
+     *
      * @param form
      * @param request
      * @param response
      * @return
      * @throws Exception
      */
-    @RequestMapping(params = {"pageId=pageClassList","methodToCall=exportClassListExcel"})
+    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportClassListExcel"})
     public ModelAndView exportClassListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                              HttpServletResponse response) throws Exception {
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
 
-        if(infoForm.getClassList()==null){
+        if (infoForm.getClassList() == null) {
             // TODO: 2016/10/21 错误处理
 //            examForm.setErrMsg("导出内容为空");
             return this.showDialog("errWarnDialog", true, infoForm);
         }
 
-        List<ClassTeacherViewObject> classList= infoForm.getClassList();
-        String fileName = "教学班列表"+"-"+GlobalVariables.getUserSession().getLoggedInUserPrincipalId()+"-"+System.currentTimeMillis()+".xls";
+        List<ClassTeacherViewObject> classList = infoForm.getClassList();
+        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + System.currentTimeMillis() + ".xls";
 
-        String filePath = new ExcelServiceImpl().printClasslistExcel(classList, "exportfolder",fileName, "2003");
+        String filePath = new ExcelServiceImpl().printClasslistExcel(classList, "exportfolder", fileName, "2003");
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm,baseUrl+ File.separator+filePath);
+        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
     }
-
 
 
     @Override
@@ -211,7 +233,7 @@ public class ClassController extends UifControllerBase {
     }
 
     @RequestMapping(params = "methodToCall=getTAInfoPage")
-    public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         //TODO
         return null;
     }

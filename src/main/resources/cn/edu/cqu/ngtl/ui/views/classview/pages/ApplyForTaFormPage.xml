@@ -32,6 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
+    <!--学生应聘助教-->
     <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
@@ -99,7 +100,7 @@
                                                                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
                                                                       p:methodToCall="exportApplicantPhoto"
                                                                       p:style="float:right!important;font-size:14px;margin-right: 10px;background=orange!important;"
-                                                                      p:additionalCssClasses="bg-orange"/>
+                                                                      p:additionalCssClasses="bg-orange tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -138,7 +139,7 @@
                                                             <bean parent="Uif-TextAreaControl"/>
                                                         </property>
                                                     </bean>
-                                                    <bean parent="Uif-InputField" p:label="学历" p:propertyName="test">
+                                                    <bean parent="Uif-InputField" p:label="学历" p:propertyName="eduBackground">
                                                         <property name="control">
                                                             <bean parent="Uif-HorizontalRadioControl" p:delimiter="  ">
                                                                 <property name="options">

@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.form;
 
 import cn.edu.cqu.ngtl.dataobject.TestObject;
+import org.aspectj.weaver.ast.Test;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -110,6 +111,18 @@ public class TestForm extends BaseForm {
     private String inputField98;
     private String inputField99;
 
+    private String dialogInput1;
+    private String dialogInput2;
+    private String dialogInput3;
+    private String dialogInput4;
+    private String dialogInput5;
+    private String dialogInput6;
+    private String dialogInput7;
+    private String dialogInput8;
+    private String dialogInput9;
+    private String dialogInput10;
+
+
     private String editorContent;
 
     private boolean radio1;
@@ -143,9 +156,14 @@ public class TestForm extends BaseForm {
     private boolean radio29;
 
 
+    private TestObject curObject;
+    private TestObject newObject;
     private List<TestObject> collection = new ArrayList<TestObject>();
 
     public TestForm() {
+        // 如果要用object传参，必须保证obj不是空值
+        newObject=new TestObject();
+
         getCollection().add(new TestObject(new Date(2016,10,15), "14", "17", "18"));
         getCollection().add(new TestObject(new Date(2016,10,15),"20", "21", "22"));
         getCollection().add(new TestObject(new Date(2016,10,15),"8", "9", "10", "11", "12"));
@@ -168,6 +186,102 @@ public class TestForm extends BaseForm {
         getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "4", "6", "6"));
         getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "5", "5", "5"));
         getCollection().add(new TestObject(new Date(2016,10,15),"7", "3", "1", "9", "11"));
+    }
+
+    public TestObject getNewObject() {
+        return newObject;
+    }
+
+    public void setNewObject(TestObject newObject) {
+        this.newObject = newObject;
+    }
+
+    public String getDialogInput1() {
+        return dialogInput1;
+    }
+
+    public void setDialogInput1(String dialogInput1) {
+        this.dialogInput1 = dialogInput1;
+    }
+
+    public String getDialogInput2() {
+        return dialogInput2;
+    }
+
+    public void setDialogInput2(String dialogInput2) {
+        this.dialogInput2 = dialogInput2;
+    }
+
+    public String getDialogInput3() {
+        return dialogInput3;
+    }
+
+    public void setDialogInput3(String dialogInput3) {
+        this.dialogInput3 = dialogInput3;
+    }
+
+    public String getDialogInput4() {
+        return dialogInput4;
+    }
+
+    public void setDialogInput4(String dialogInput4) {
+        this.dialogInput4 = dialogInput4;
+    }
+
+    public String getDialogInput5() {
+        return dialogInput5;
+    }
+
+    public void setDialogInput5(String dialogInput5) {
+        this.dialogInput5 = dialogInput5;
+    }
+
+    public String getDialogInput6() {
+        return dialogInput6;
+    }
+
+    public void setDialogInput6(String dialogInput6) {
+        this.dialogInput6 = dialogInput6;
+    }
+
+    public String getDialogInput7() {
+        return dialogInput7;
+    }
+
+    public void setDialogInput7(String dialogInput7) {
+        this.dialogInput7 = dialogInput7;
+    }
+
+    public String getDialogInput8() {
+        return dialogInput8;
+    }
+
+    public void setDialogInput8(String dialogInput8) {
+        this.dialogInput8 = dialogInput8;
+    }
+
+    public String getDialogInput9() {
+        return dialogInput9;
+    }
+
+    public void setDialogInput9(String dialogInput9) {
+        this.dialogInput9 = dialogInput9;
+    }
+
+    public String getDialogInput10() {
+        return dialogInput10;
+    }
+
+    public void setDialogInput10(String dialogInput10) {
+        this.dialogInput10 = dialogInput10;
+    }
+
+    public TestObject getCurObject() {
+        return curObject;
+    }
+
+    public void setCurObject(TestObject curObject) {
+        this.curObject = curObject;
     }
 
     public String getEditorContent() {

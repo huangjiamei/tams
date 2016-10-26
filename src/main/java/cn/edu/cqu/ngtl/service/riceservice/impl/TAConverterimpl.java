@@ -80,7 +80,7 @@ public class TAConverterimpl implements ITAConverter {
         if (course != null) {
             viewObject.setCourseName(course.getName());
 
-            viewObject.setCoureseNumber(course.getCodeR().toString());
+            viewObject.setCourseNumber(course.getCodeR().toString());
 
             viewObject.setStudyTime(course.getHour());
 
@@ -236,6 +236,7 @@ public class TAConverterimpl implements ITAConverter {
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
         application.setNote(form.getApplyReason());
+        application.setEduBackground(form.getEduBackground());
 
         return application;
     }

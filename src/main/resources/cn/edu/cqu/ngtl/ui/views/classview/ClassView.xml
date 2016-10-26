@@ -103,6 +103,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageRequestTa" p:title="提交申请">
+                    <property name="items">
+                        <list>
+                            <ref bean="RequestTaPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

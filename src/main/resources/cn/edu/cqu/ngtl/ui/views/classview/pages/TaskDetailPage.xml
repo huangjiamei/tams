@@ -104,8 +104,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton" p:actionLabel="更新"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
-                                                                                  p:additionalCssClasses="bg-teal">
+                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image" p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
@@ -114,8 +113,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton" p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
-                                                                                  p:additionalCssClasses="bg-success">
+                                                                                  p:additionalCssClasses="bg-success tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image"  p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
@@ -124,8 +122,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton" p:actionLabel="删除"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:style="font-size:14px;margin-right:10px;width:80px;height:30px;"
-                                                                                  p:additionalCssClasses="bg-red">
+                                                                                  p:additionalCssClasses="bg-red tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image" p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>

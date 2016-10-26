@@ -22,6 +22,9 @@ public class TestObject implements Serializable {
 
     private boolean check1;
 
+    public TestObject() {
+    }
+
     public TestObject(Date date1, String field0, String field3, String field4) {
         this.date1 = date1;
         this.field0 = field0;

@@ -141,22 +141,6 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-Page" p:id="pageCourseCategory" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="CourseCategoryPage"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-Page" p:id="pageTaCategory" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="TaCategoryPage"/>
-                        </list>
-                    </property>
-                </bean>
-
                 <bean parent="Uif-Page" p:id="pageTaskCategory" p:title="">
                     <property name="items">
                         <list>

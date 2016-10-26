@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 
 import java.util.List;
 
@@ -12,13 +13,18 @@ public interface IAdminService {
 
     List<CMCourseClassification> getAllClassification();
 
-    boolean addOneOnlyWithName(String name);
+    boolean addCourseClassificationOnlyWithName(String name);
 
-    boolean changeNameById(Integer id, String name);
+    boolean changeCourseClassificationNameById(Integer id, String name);
 
-    boolean removeOneById(Integer id);
+    boolean removeCourseClassificationById(Integer id);
 
 
     List<TAMSCourseManager> getAllCourseManager();
 
+    List<TAMSTaCategory> getAllTaCategories();
+
+    boolean addTaCategory(TAMSTaCategory newTaCategory);
+
+    boolean changeTaCategoryByEntiy(TAMSTaCategory tamsTaCategory);
 }

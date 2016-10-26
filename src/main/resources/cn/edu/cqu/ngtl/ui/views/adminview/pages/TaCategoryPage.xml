@@ -163,8 +163,8 @@
                                                                     <property name="headerText" value="Table Layout"/>
                                                                     <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory"/>
+                                                                    <property name="propertyName" value="allTaCategories"/>
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="true"/>
 
@@ -183,8 +183,10 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-DataField" p:label="课程类别"
-                                                                                  p:propertyName="field4"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教类别"
+                                                                                  p:propertyName="name"/>
+                                                                            <bean parent="Uif-DataField" p:label="描述"
+                                                                                  p:propertyName="description"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -193,19 +195,15 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
-                                                                                        <bean parent="Uif-ActionImage">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="editTaCategoryDialog"/>
-                                                                                            </property>
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTa"
+                                                                                              p:successCallback="showDialog('editTaCategoryDialog')">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-ActionImage">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="deleteTaCategoryDialog" />
-                                                                                            </property>
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTa"
+                                                                                              p:successCallback="showDialog('deleteTaCategoryDialog')">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
@@ -248,7 +246,9 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="助教"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="inputField20"/>
+                                              p:propertyName="newTaCategory.name"/>
+                                        <bean parent="Uif-InputField" p:label="描述"
+                                              p:propertyName="newTaCategory.description"/>
                                     </list>
                                 </property>
                             </bean>
@@ -261,7 +261,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:ajaxSubmit="false" p:methodToCall="addTaCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
             </list>
         </property>
     </bean>
@@ -281,7 +281,9 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="助教" p:readOnlyDisplayReplacement="@{#line.field4}"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="inputField20"/>
+                                              p:propertyName="oldTaCategory.name"/>
+                                        <bean parent="Uif-InputField" p:label="描述"
+                                              p:propertyName="oldTaCategory.description"/>
                                     </list>
                                 </property>
                             </bean>
@@ -294,7 +296,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="updateCourseCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:ajaxSubmit="false" p:methodToCall="updateTaCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
             </list>
         </property>
     </bean>
@@ -310,7 +312,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="deleteTerm" p:successCallback="alert('回调成功')" />
+                      p:ajaxSubmit="false" p:methodToCall="deleteTermTaCategory" p:successCallback="alert('回调成功')" />
             </list>
         </property>
     </bean>

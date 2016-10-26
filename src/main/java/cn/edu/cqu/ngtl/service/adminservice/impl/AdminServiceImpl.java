@@ -2,8 +2,10 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -24,6 +26,9 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSCourseManagerDao tamsCourseManagerDao;
 
+    @Autowired
+    private TAMSTaCategoryDao tamsTaCategoryDao;
+
     @Override
     public List<CMCourseClassification> getAllClassification() {
         List<CMCourseClassification> courseClassifications = courseClassificationDao.selectAll();
@@ -31,7 +36,12 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean addOneOnlyWithName(String name) {
+    public boolean addCourseClassificationOnlyWithName(String name) {
+
+        if(courseClassificationDao.selectOneByName(name) != null)
+            //存在同名数据
+            return false;
+
         CMCourseClassification courseClassification = new CMCourseClassification();
         courseClassification.setName(name);
 
@@ -39,10 +49,13 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean changeNameById(Integer id, String name) {
+    public boolean changeCourseClassificationNameById(Integer id, String name) {
         CMCourseClassification courseClassification = courseClassificationDao.selectOneById(id);
 
         if(courseClassification == null)
+            return false;
+        if(courseClassificationDao.selectOneByName(name) != null)
+            //存在同名数据
             return false;
 
         courseClassification.setId(id);
@@ -52,13 +65,37 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean removeOneById(Integer id) {
+    public boolean removeCourseClassificationById(Integer id) {
         CMCourseClassification courseClassification = courseClassificationDao.selectOneById(id);
 
         if(courseClassification == null)
             return false;
 
         return courseClassificationDao.deleteOneByEntity(courseClassification);
+    }
+
+    @Override
+    public List<TAMSTaCategory> getAllTaCategories() {
+        List<TAMSTaCategory> tamsTaCategories = tamsTaCategoryDao.selectAll();
+        return tamsTaCategories.size() != 0 ? tamsTaCategories : null;
+    }
+
+    @Override
+    public boolean addTaCategory(TAMSTaCategory newTaCategory) {
+        if(tamsTaCategoryDao.selectOneByName(newTaCategory.getName()) != null)
+            //存在同名数据
+            return false;
+
+        return tamsTaCategoryDao.insertOneByEntity(newTaCategory);
+    }
+
+    @Override
+    public boolean changeTaCategoryByEntiy(TAMSTaCategory tamsTaCategory) {
+        if(tamsTaCategoryDao.selectOneByName(tamsTaCategory.getName()) != null)
+            //存在同名数据
+            return false;
+
+        return tamsTaCategoryDao.updateOneByEntity(tamsTaCategory);
     }
 
     @Override

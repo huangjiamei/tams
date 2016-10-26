@@ -3,10 +3,7 @@ import org.kuali.rice.krad.bo.DataObjectBase;
 import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViewType;
 import org.kuali.rice.krad.data.provider.annotation.UifAutoCreateViews;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
@@ -18,6 +15,8 @@ public class CMCourseClassification extends DataObjectBase implements Serializab
 
 	@Id
 	@Column(name = "UNIQUEID")
+	@GeneratedValue(generator="cmCourseClassification")
+	@SequenceGenerator(name="cmCourseClassification",sequenceName="CM_COURSE_CLASSIFICATION_S",allocationSize=1)
 	private Integer id;
 
 	@Column(name = "NAME")

@@ -5,14 +5,17 @@ import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
+import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +32,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/admin")
 public class adminController extends UifControllerBase {
+
+    @Autowired
+    private IAdminService adminService;
 
 
     /**
@@ -250,6 +256,15 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
 
+    /**
+     * 获取课程类别管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&viewId=AdminView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getCourseCategoryPage")
+    public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
     /**
      * 获取课程负责人页面
@@ -301,7 +316,149 @@ public class adminController extends UifControllerBase {
     }
 
 
+        adminInfoForm.setAllClassifications(
+                adminService.getAllClassification()
+        );
 
+        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+    }
+
+    /**
+     * 添加新的课程大类
+     * pageCourseCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=addNewCategory"})
+    public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        // 新添加的term，对应外部的dialog
+
+        adminService.addCourseClassificationOnlyWithName(adminInfoForm.getNewClassification());
+
+        return this.getCourseCategoryPage(form);
+    }
+
+    /**
+     * 编辑/删除现有项返回方法
+     * pageCourseCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=selectCurObj"})
+    public ModelAndView selectCurObj(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        adminInfoForm.setOldClassification(adminInfoForm.getAllClassifications().get(index));
+
+        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+    }
+
+    /**
+     * 编辑课程大类
+     * pageCourseCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=updateCourseCategory"})
+    public ModelAndView updateCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
+                adminInfoForm.getOldClassification().getName());
+
+        return this.getCourseCategoryPage(form);
+    }
+
+    /**
+     * 删除课程大类
+     * pageCourseCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=deleteTermCourseCategory"})
+    public ModelAndView deleteTermCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        if(adminService.removeCourseClassificationById(adminInfoForm.getOldClassification().getId()))
+            return this.getCourseCategoryPage(form);
+        else
+            //应该返回错误页面
+            return this.getCourseCategoryPage(form);
+    }
+
+    /**
+     * 获取助教类别管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTaCategoryPage&viewId=AdminView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaCategoryPage")
+    public ModelAndView getTaCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminInfoForm.setNewTaCategory(new TAMSTaCategory());
+
+        adminInfoForm.setAllTaCategories(
+                adminService.getAllTaCategories()
+        );
+
+        return this.getModelAndView(adminInfoForm, "pageTaCategory");
+    }
+
+    /**
+     * 添加新的助教类别
+     * pageTaCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=addTaCategory"})
+    public ModelAndView addTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminService.addTaCategory(adminInfoForm.getNewTaCategory());
+
+        return this.getTaCategoryPage(form);
+    }
+
+    /**
+     * 编辑/删除现有项返回方法
+     * pageTaCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=selectCurTa"})
+    public ModelAndView selectCurTa(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
+
+        return this.getModelAndView(adminInfoForm, "pageTaCategory");
+    }
+
+    /**
+     * 编辑课程大类
+     * pageCourseCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=updateTaCategory"})
+    public ModelAndView updateTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory());
+
+        return this.getTaCategoryPage(form);
+    }
 
     @Override
     protected UifFormBase createInitialForm() {

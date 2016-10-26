@@ -317,7 +317,7 @@ public class adminController extends UifControllerBase {
         adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
                 adminInfoForm.getOldClassification().getName());
 
-        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+        return this.getCourseCategoryPage(form);
     }
 
     /**
@@ -331,10 +331,10 @@ public class adminController extends UifControllerBase {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
         if(adminService.removeCourseClassificationById(adminInfoForm.getOldClassification().getId()))
-            return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+            return this.getCourseCategoryPage(form);
         else
             //应该返回错误页面
-            return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+            return this.getCourseCategoryPage(form);
     }
 
     @Override

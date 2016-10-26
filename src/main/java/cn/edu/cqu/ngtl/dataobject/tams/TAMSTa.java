@@ -33,6 +33,9 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "TA_END_TIME")
     private String endTime;
 
+    @Column(name = "SESSION_ID")
+    private String sessionId;
+
     public String getId() {
         return id;
     }
@@ -79,5 +82,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setEndTime(String endTime) {
         this.endTime = endTime;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
     }
 }

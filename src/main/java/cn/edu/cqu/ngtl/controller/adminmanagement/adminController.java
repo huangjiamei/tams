@@ -2,13 +2,17 @@ package cn.edu.cqu.ngtl.controller.adminmanagement;
 
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -34,24 +38,30 @@ public class adminController extends UifControllerBase {
     @Autowired
     private IAdminService adminService;
 
+    @Autowired
+    private TAMSCourseManagerDaoJpa tamsCourseManagerDaoJpa;
+
+
     /**
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getConsolePage&viewId=AdminView
+     *
      * @param form
      * @return
      */
     @RequestMapping(params = "methodToCall=getConsolePage")
     public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm infoForm= (AdminInfoForm) form;
+        AdminInfoForm infoForm = (AdminInfoForm) form;
 
         return this.getModelAndView(infoForm, "pageConsole");
     }
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getRoleManagerPage&viewId=AdminView
+     *
      * @param form
      * @param request
      * @param response
-     * @return  角色管理页面
+     * @return 角色管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getRoleManagerPage")
@@ -66,10 +76,11 @@ public class adminController extends UifControllerBase {
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getUserRoleManagerPage&viewId=AdminView
+     *
      * @param form
      * @param request
      * @param response
-     * @return    用户管理页面
+     * @return 用户管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getUserRoleManagerPage")
@@ -82,15 +93,16 @@ public class adminController extends UifControllerBase {
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getPermissionManagementPage&viewId=AdminView
+     *
      * @param form
      * @param request
      * @param response
-     * @return    权限页面
+     * @return 权限页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getPermissionManagementPage")
     public ModelAndView getPermissionManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                               HttpServletRequest request, HttpServletResponse response) throws Exception {
+                                                    HttpServletRequest request, HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         List<KRIM_PERM_T> krimPermTs = new ArrayList<KRIM_PERM_T>(new KRIM_PERM_T_DaoJpa().getAllPermissions());
         infoForm.setRMPkrimPermTs(krimPermTs);
@@ -98,7 +110,8 @@ public class adminController extends UifControllerBase {
     }
 
     /**
-     *   更新角色
+     * 更新角色
+     *
      * @param form
      * @param request
      * @param response
@@ -136,7 +149,8 @@ public class adminController extends UifControllerBase {
 
 
     /**
-     *  新增角色
+     * 新增角色
+     *
      * @param form
      * @param request
      * @param response
@@ -156,6 +170,7 @@ public class adminController extends UifControllerBase {
 
     /**
      * 保存角色
+     *
      * @param form
      * @param request
      * @param response
@@ -197,6 +212,7 @@ public class adminController extends UifControllerBase {
 
     /**
      * 选择用户
+     *
      * @param form
      * @param request
      * @param response
@@ -237,6 +253,7 @@ public class adminController extends UifControllerBase {
 
     /**
      * 保存用户
+     *
      * @param form
      * @param request
      * @param response
@@ -256,13 +273,13 @@ public class adminController extends UifControllerBase {
     /**
      * 获取课程类别管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&viewId=AdminView
+     *
      * @param form
      * @return
      */
     @RequestMapping(params = "methodToCall=getCourseCategoryPage")
     public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
         adminInfoForm.setAllClassifications(
                 adminService.getAllClassification()
         );
@@ -271,17 +288,76 @@ public class adminController extends UifControllerBase {
     }
 
     /**
+     * 获取课程负责人页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseManagerPage&viewId=AdminView
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getCourseManagerPage")
+    public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        infoForm.setCourseManagerViewObjects(new AdminConverterimpl().getCourseManagerToTableViewObject(
+                new TAMSCourseManagerDaoJpa().getAllCourseManager()
+        ));
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+
+    /**
+     * 编辑课程负责人信息
+     * 只接受来自pageCourseManager的请求
+     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
+     *
+     * @param form
+     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageCourseManager，需要考虑使用ajax实现局部刷新
+     */
+    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=updateCourseManager"})
+    public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
+        infoForm.setSelectedCourseManagerObject(selectedObject);
+        infoForm.setCourseNm(selectedObject.getCourseNm());
+        infoForm.setCourseNmb(selectedObject.getCourseNmb());
+        infoForm.setCourseManager(selectedObject.getCourseManager());
+        infoForm.setInstructorCode(selectedObject.getInstructorCode());
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+
+    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=saveUpdateCourseManager"})
+    public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CourseManagerViewObject selectedObject = infoForm.getSelectedCourseManagerObject();
+        TAMSCourseManager tamsCourseManager = tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId());
+        UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByNameAndCode(infoForm.getCourseManager(),infoForm.getInstructorCode());
+        if(newManager!=null) {
+            tamsCourseManager.setCourseManagerId(newManager.getId());
+            tamsCourseManagerDaoJpa.saveCourseManager(tamsCourseManager);
+            //TODO 页面数据无法刷新
+            return this.getCourseManagerPage(form);
+        }else{
+            infoForm.setErrMsg("查无此人");
+        }
+        //TODO 报错页面待做
+        return null;
+    }
+
+
+    /**
      * 添加新的课程大类
      * pageCourseCategory
+     *
      * @param form
      * @return
      */
     @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=addNewCategory"})
     public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
         // 新添加的term，对应外部的dialog
-
         adminService.addCourseClassificationOnlyWithName(adminInfoForm.getNewClassification());
 
         return this.getCourseCategoryPage(form);
@@ -290,6 +366,7 @@ public class adminController extends UifControllerBase {
     /**
      * 编辑/删除现有项返回方法
      * pageCourseCategory
+     *
      * @param form
      * @return
      */
@@ -309,6 +386,7 @@ public class adminController extends UifControllerBase {
     /**
      * 编辑课程大类
      * pageCourseCategory
+     *
      * @param form
      * @return
      */
@@ -325,6 +403,7 @@ public class adminController extends UifControllerBase {
     /**
      * 删除课程大类
      * pageCourseCategory
+     *
      * @param form
      * @return
      */
@@ -332,7 +411,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView deleteTermCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        if(adminService.removeCourseClassificationById(adminInfoForm.getOldClassification().getId()))
+        if (adminService.removeCourseClassificationById(adminInfoForm.getOldClassification().getId()))
             return this.getCourseCategoryPage(form);
         else
             //应该返回错误页面
@@ -342,6 +421,7 @@ public class adminController extends UifControllerBase {
     /**
      * 获取助教类别管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTaCategoryPage&viewId=AdminView
+     *
      * @param form
      * @return
      */
@@ -361,6 +441,7 @@ public class adminController extends UifControllerBase {
     /**
      * 添加新的助教类别
      * pageTaCategory
+     *
      * @param form
      * @return
      */
@@ -376,6 +457,7 @@ public class adminController extends UifControllerBase {
     /**
      * 编辑/删除现有项返回方法
      * pageTaCategory
+     *
      * @param form
      * @return
      */
@@ -395,6 +477,7 @@ public class adminController extends UifControllerBase {
     /**
      * 编辑助教类别
      * pageCourseCategory
+     *
      * @param form
      * @return
      */

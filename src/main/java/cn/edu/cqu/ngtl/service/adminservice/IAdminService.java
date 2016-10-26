@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 
@@ -18,6 +19,9 @@ public interface IAdminService {
     boolean changeCourseClassificationNameById(Integer id, String name);
 
     boolean removeCourseClassificationById(Integer id);
+
+
+    List<TAMSCourseManager> getAllCourseManager();
 
     List<TAMSTaCategory> getAllTaCategories();
 

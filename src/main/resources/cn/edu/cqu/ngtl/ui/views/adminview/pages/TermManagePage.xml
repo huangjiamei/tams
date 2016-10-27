@@ -168,12 +168,12 @@
                                                                         <list>
                                                                             <!--文字搜索-->
                                                                             <bean parent="Uif-InputField" p:label="批次名称"
-                                                                                  p:propertyName="inputField1"/>
+                                                                                  p:propertyName="newClassification"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="总预算金额"
-                                                                                  p:propertyName="inputField2"/>
+                                                                                  p:propertyName="newClassification"/>
                                                                             <bean parent="Uif-InputField" p:label="开始时间"
-                                                                                  p:propertyName="inputField3">
+                                                                                  p:propertyName="newClassification">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
                                                                                           p:size="10">
@@ -184,7 +184,7 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:label="结束时间"
-                                                                                  p:propertyName="inputField4">
+                                                                                  p:propertyName="newClassification">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
                                                                                           p:size="10">
@@ -210,8 +210,8 @@
                                                                     <property name="headerText" value="Table Layout"/>
                                                                     <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>
+                                                                    <property name="propertyName" value="allTerms"/>
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="false"/>
 
@@ -231,15 +231,15 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="批次名称"
-                                                                                  p:propertyName="field4"/>
+                                                                                  p:propertyName="termName"/>
                                                                             <bean parent="Uif-DataField" p:label="总预算金额"
-                                                                                  p:propertyName="field2"
+                                                                                  p:propertyName="budget"
                                                                                   p:sortAs="numeric"/>
                                                                             <bean parent="Uif-DataField" p:label="开始时间"
-                                                                                  p:propertyName="field3"
+                                                                                  p:propertyName="startDate"
                                                                                   p:sortAs="kuali_date"/>
                                                                             <bean parent="Uif-DataField" p:label="结束时间"
-                                                                                  p:propertyName="field4"
+                                                                                  p:propertyName="endDate"
                                                                                   p:sortAs="kuali_date"/>
                                                                         </list>
                                                                     </property>
@@ -300,12 +300,12 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="批次名称"
-                                              p:propertyName="newObject.field1"/>
+                                              p:propertyName="newTerm.termName"/>
                                         <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="newObject.field2"/>
+                                              p:propertyName="newTerm.budget"/>
 
                                         <bean parent="Uif-InputField" p:label="开始时间"
-                                              p:propertyName="newObject.field3" >
+                                              p:propertyName="newTerm.startDate" >
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -315,7 +315,7 @@
                                             </property>
                                         </bean>
                                         <bean parent="Uif-InputField" p:label="完成时间"
-                                              p:propertyName="newObject.field4">
+                                              p:propertyName="newTerm.endDate">
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -356,12 +356,12 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="批次名称"
-                                              p:propertyName="curObject.field4"/>
+                                              p:propertyName="newClassification"/>
                                         <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="curObject.field2"/>
+                                              p:propertyName="newClassification"/>
 
                                         <bean parent="Uif-InputField" p:label="开始时间"
-                                              p:propertyName="curObject.field3" >
+                                              p:propertyName="newClassification" >
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -371,7 +371,7 @@
                                             </property>
                                         </bean>
                                         <bean parent="Uif-InputField" p:label="完成时间"
-                                              p:propertyName="curObject.field4">
+                                              p:propertyName="newClassification">
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">

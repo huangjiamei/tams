@@ -11,7 +11,7 @@ public interface UTInstructorDao {
 
 	List<UTInstructor> getAllInstructors();
 	 
-	UTInstructor getInstructorByNameAndCode(String name, String code);
+	UTInstructor getInstructorByCode(String code);
 
 	UTInstructor getInstructorByIdWithoutCache(String Id);
 

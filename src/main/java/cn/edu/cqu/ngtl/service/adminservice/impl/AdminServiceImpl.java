@@ -4,10 +4,12 @@ import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSIssueTypeDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -33,6 +35,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSIssueTypeDao issueTypeDao;
+
+    @Autowired
+    private UTSessionDao sessionDao;
 
     @Override
     public List<CMCourseClassification> getAllClassification() {
@@ -139,4 +144,22 @@ public class AdminServiceImpl implements IAdminService{
         return allTamsCourseManagers;
     }
 
+    @Override
+    public List<UTSession> getAllSessions() {
+
+        return sessionDao.selectAll();
+
+    }
+
+    @Override
+    public boolean addTerm(UTSession session) {
+        UTSession isExist = sessionDao.selectByYearAndTerm(session.getYear(), session.getTerm());
+
+        if(isExist != null)
+            return false;
+        
+        //// FIXME: 16-10-27 还需要处理预算
+
+        return sessionDao.insertOneByEntity(session);
+    }
 }

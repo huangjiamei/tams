@@ -45,7 +45,7 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 	}
 
 	@Override
-	public UTInstructor getInstructorByNameAndCode(String name, String code) {
+	public UTInstructor getInstructorByCode( String code) {
 
 		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates((like("code" , "%"+ code + '%')));
 		QueryResults<UTInstructor> qr = KradDataServiceLocator.getDataObjectService().findMatching(

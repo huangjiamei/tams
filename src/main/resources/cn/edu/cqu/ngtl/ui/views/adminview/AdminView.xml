@@ -93,14 +93,14 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pagePermissionManagement" p:title="更新角色">
+                <bean parent="Uif-Page" p:id="pagePermissionManagement" p:title="权限管理">
                     <property name="items">
                         <list>
                             <ref bean="PermissionManagementPage" />
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageCourseManager" p:title="更新角色">
+                <bean parent="Uif-Page" p:id="pageCourseManager" p:title="课程管理">
                     <property name="items">
                         <list>
                             <ref bean="CourseManagerPage" />
@@ -114,17 +114,24 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageTaCategory" p:title="课程类别管理">
+                <bean parent="Uif-Page" p:id="pageTaCategory" p:title="助教类别管理">
                     <property name="items">
                         <list>
                             <ref bean="TaCategoryPage"/>
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageTaskCategory" p:title="">
+                <bean parent="Uif-Page" p:id="pageTaskCategory" p:title="任务类别管理">
                     <property name="items">
                         <list>
                             <ref bean="TaskCategoryPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageTermManagement" p:title="批次管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="TermManagementPage"/>
                         </list>
                     </property>
                 </bean>

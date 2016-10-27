@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
@@ -239,5 +240,39 @@ public class TAConverterimpl implements ITAConverter {
         application.setEduBackground(form.getEduBackground());
 
         return application;
+    }
+
+    @Override
+    public List<TermManagerViewObject> termInfoToViewObject(List<UTSession> sessions) {
+
+        List<TermManagerViewObject> viewObjects = new ArrayList<>(sessions.size());
+
+        for(UTSession session : sessions) {
+            TermManagerViewObject viewObject = new TermManagerViewObject();
+            viewObject.setTermName(session.getYear() + "年" + session.getTerm() + "季");
+            viewObject.setEndDate(session.getEndDate());
+            viewObject.setStartDate(session.getBeginDate());
+
+            //// FIXME: 16-10-27 日后需要加上预算信息
+            viewObject.setBudget(100000);
+
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
+    }
+
+    @Override
+    public UTSession newTermToDataObject(TermManagerViewObject newTerm) {
+        UTSession session = new UTSession();
+
+        //// FIXME: 16-10-27 需要通过前端返回两个数据
+        session.setYear("2016");
+        session.setTerm("秋");
+
+        session.setBeginDate(newTerm.getStartDate());
+        session.setEndDate(newTerm.getEndDate());
+
+        return session;
     }
 }

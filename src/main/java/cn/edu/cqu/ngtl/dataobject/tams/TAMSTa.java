@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -35,6 +36,10 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     @Column(name = "SESSION_ID")
     private String sessionId;
+
+    @ManyToOne
+    @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
+    private UTSession curSession;
 
     public String getId() {
         return id;
@@ -90,5 +95,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setSessionId(String sessionId) {
         this.sessionId = sessionId;
+    }
+
+    public UTSession getCurSession() {
+        return curSession;
+    }
+
+    public void setCurSession(UTSession curSession) {
+        this.curSession = curSession;
     }
 }

@@ -101,8 +101,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public boolean changeTaCategoryByEntiy(TAMSTaCategory tamsTaCategory) {
-        if(tamsTaCategoryDao.selectOneByName(tamsTaCategory.getName()) != null)
-            //存在同名数据
+        TAMSTaCategory isExist = tamsTaCategoryDao.selectOneByName(tamsTaCategory.getName());
+        if(isExist != null && ! isExist.getId().equals(tamsTaCategory.getId()))
+            //存在同名数据,而且非本数据
             return false;
 
         return tamsTaCategoryDao.updateOneByEntity(tamsTaCategory);

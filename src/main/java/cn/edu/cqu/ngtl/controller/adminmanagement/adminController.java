@@ -500,7 +500,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=deleteTaCategory"})
+    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=deleteTaCategory"})
     public ModelAndView deleteTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
@@ -577,6 +577,19 @@ public class adminController extends UifControllerBase {
         ));
 
         return this.getTermManagePage(adminInfoForm);
+    }
+
+    /**
+     * 编辑term(即学期或批次)信息
+     * 只接受来自pageTermManagement的请求
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=updateTerm"})
+    public ModelAndView updateTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        return this.getTermManagePage(form);
     }
 
     @Override

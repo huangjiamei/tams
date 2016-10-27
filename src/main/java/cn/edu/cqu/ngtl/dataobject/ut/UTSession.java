@@ -15,6 +15,8 @@ public class UTSession extends DataObjectBase implements Serializable {
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="utSession")
+    @SequenceGenerator(name="utSession",sequenceName="UNITIME_SESSION_S",allocationSize=1)
     private Integer id;
 
     @Column(name="YEAR")

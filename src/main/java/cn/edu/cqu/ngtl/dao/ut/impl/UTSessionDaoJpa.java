@@ -80,6 +80,6 @@ public class UTSessionDaoJpa implements UTSessionDao{
         QueryResults<UTSession> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                 UTSession.class, criteria.build());
 
-        return qr.getResults() != null ? qr.getResults().get(0) : null;
+        return qr.getResults().size() != 0 ? qr.getResults().get(0) : null;
     }
 }

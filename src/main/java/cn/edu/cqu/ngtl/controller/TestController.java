@@ -212,28 +212,6 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTermManagement");
     }
 
-
-    /**
-     * 编辑term(即学期或批次)信息
-     * 只接受来自pageTermManagement的请求
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=updateTerm"})
-    public ModelAndView updateTerm(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        // 这个curobj会直接影响collection的数据，所以不需要对collection做额外操作
-        TestObject curObj=testForm.getCurObject();
-
-        // TODO: 2016/10/25 存入数据库
-
-
-        return null;//this.getTermManagePage(testForm);
-    }
-
-
-
     @Override
     protected UifFormBase createInitialForm() {
         return new TestForm();

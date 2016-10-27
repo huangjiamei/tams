@@ -55,7 +55,7 @@ public class TAMSTaCategoryDaoJpa implements TAMSTaCategoryDao {
     @Override
     public TAMSTaCategory selectOneById(Integer id) {
 
-        return KRADServiceLocator.getDataObjectService().find(TAMSTaCategory.class, id);
+        return KRADServiceLocator.getDataObjectService().find(TAMSTaCategory.class, id.toString());
 
     }
 

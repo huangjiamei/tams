@@ -319,6 +319,7 @@ public class adminController extends UifControllerBase {
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
+        infoForm.setCourseManagerIndex(index);
         infoForm.setSelectedCourseManagerObject(selectedObject);
         infoForm.setCourseNm(selectedObject.getCourseNm());
         infoForm.setCourseNmb(selectedObject.getCourseNmb());
@@ -333,12 +334,14 @@ public class adminController extends UifControllerBase {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         CourseManagerViewObject selectedObject = infoForm.getSelectedCourseManagerObject();
         TAMSCourseManager tamsCourseManager = tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId());
-        UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByNameAndCode(infoForm.getCourseManager(),infoForm.getInstructorCode());
+        UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByCode(infoForm.getInstructorCode());
         if(newManager!=null) {
             tamsCourseManager.setCourseManagerId(newManager.getId());
             tamsCourseManagerDaoJpa.saveCourseManager(tamsCourseManager);
+            infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setCourseManager(newManager.getName());
+            infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setInstructorCode(newManager.getCode());
             //TODO 页面数据无法刷新
-            return this.getCourseManagerPage(form);
+            return this.getModelAndView(infoForm, "pageCourseManager");
         }else{
             infoForm.setErrMsg("查无此人");
         }

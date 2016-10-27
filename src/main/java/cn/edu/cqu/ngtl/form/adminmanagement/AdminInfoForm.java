@@ -60,6 +60,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String searchCourseManager;
     private String searchCourseInsCode;
     private CourseManagerViewObject selectedCourseManagerObject;
+    private Integer courseManagerIndex;
+
 
     /**
      * 页面错误信息
@@ -290,5 +292,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setSelectedCourseManagerObject(CourseManagerViewObject selectedCourseManagerObject) {
         this.selectedCourseManagerObject = selectedCourseManagerObject;
+    }
+
+    public Integer getCourseManagerIndex() {
+        return courseManagerIndex;
+    }
+
+    public void setCourseManagerIndex(Integer courseManagerIndex) {
+        this.courseManagerIndex = courseManagerIndex;
     }
 }

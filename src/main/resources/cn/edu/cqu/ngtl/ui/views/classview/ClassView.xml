@@ -42,7 +42,7 @@
                 <!--<value>css/exam.css</value>-->
                 <value>css/tams.css</value>
                 <value>css/font-awesome.min.css</value>
-
+                <value>css/site.css</value>
                 <!--<value>css/uif.css</value>-->
             </list>
         </property>
@@ -51,6 +51,7 @@
                 <!--存放自定义js-->
                 <!--<value>scripts/fullcalendar.js</value>-->
                 <!--<value>scripts/exam_526.js</value>-->
+                <value>js/main.js</value>
             </list>
         </property>
 

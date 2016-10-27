@@ -41,6 +41,7 @@
                 <value>css/bootstrap.css</value>
                 <!--<value>css/exam.css</value>-->
                 <value>css/tams.css</value>
+                <value>css/site.css</value>
 
                 <!--<value>css/uif.css</value>-->
             </list>
@@ -48,8 +49,8 @@
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <!--<value>scripts/fullcalendar.js</value>-->
-                <!--<value>scripts/exam_526.js</value>-->
+                <!--<value>js/jquery-1.9.1.js</value>-->
+                <value>js/main.js</value>
             </list>
         </property>
 

@@ -10,6 +10,42 @@ function doEditorPreSubmit(editorID,transferID) {
     return true;
 }
 
+
+
+    !function(a) {
+        a(".esmenu .nav-pills a:first").tab("show");
+
+        a('[data-toggle="tooltip"]').tooltip();
+
+        a(window).click(function(e) {
+            1 != e.which && 0 != e.which || a("#megamenu-items").collapse("hide");
+        });
+
+        a("#megamenu-items").click(function(a) {
+            a.stopPropagation()
+        });
+
+        a("#megamenu-items").on("shown.bs.collapse", function() {
+            a(".esmenu .menu-icon").removeClass("fa-pulse");
+        });
+
+        a("#megamenu-items").on("show.bs.collapse", function() {
+            ajQuery(".esmenu .menu-icon").addClass("fa-pulse");
+        });
+
+        a(".esmenu .nav-pills a").click(function(e) {
+            e.preventDefault(), jQuery(this).tab("show");
+        });
+
+        a(".esmenu .close").click(function() {
+            a(".esmenu .nav-pills a.active").removeClass("active");
+            a(".esmenu .tab-content div.active").removeClass("active");
+        });
+    }(jQuery)
+
+
+
+
 /*
     ClassListPage中的表格加载前调用
     用于重绘表格中的搜索控件(因rice限制)，并且为各搜索输入控件加入事件监听

@@ -316,33 +316,36 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return 现在是关闭了btn的ajaxsubmit然后redict回pageCourseManager，需要考虑使用ajax实现局部刷新
      */
-    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=updateCourseManager"})
+    @RequestMapping(params = {"methodToCall=updateCourseManager"})
     public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
+        infoForm.setCourseManagerIndex(index);
         infoForm.setSelectedCourseManagerObject(selectedObject);
         infoForm.setCourseNm(selectedObject.getCourseNm());
         infoForm.setCourseNmb(selectedObject.getCourseNmb());
         infoForm.setCourseManager(selectedObject.getCourseManager());
         infoForm.setInstructorCode(selectedObject.getInstructorCode());
-        return this.getModelAndView(infoForm, "pageCourseManager");
+        return this.showDialog("confirmEditManagerDialog",true,infoForm);
     }
 
 
-    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=saveUpdateCourseManager"})
+    @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         CourseManagerViewObject selectedObject = infoForm.getSelectedCourseManagerObject();
         TAMSCourseManager tamsCourseManager = tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId());
-        UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByNameAndCode(infoForm.getCourseManager(),infoForm.getInstructorCode());
+        UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByCode(infoForm.getInstructorCode());
         if(newManager!=null) {
             tamsCourseManager.setCourseManagerId(newManager.getId());
             tamsCourseManagerDaoJpa.saveCourseManager(tamsCourseManager);
-            //TODO 页面数据无法刷新
-            return this.getCourseManagerPage(form);
+            infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setCourseManager(newManager.getName());
+            infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setInstructorCode(newManager.getCode());
+            infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setId(newManager.getId());
+            return this.getModelAndView(infoForm, "pageCourseManager");
         }else{
             infoForm.setErrMsg("查无此人");
         }
@@ -352,13 +355,28 @@ public class adminController extends UifControllerBase {
 
 
     /**
+     *
+     */
+    @RequestMapping(params = {"methodToCall=deleteCourseManager"})
+    public ModelAndView deleteCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
+        tamsCourseManagerDaoJpa.deleteCourseManager(tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId()));
+        infoForm.getCourseManagerViewObjects().remove(index);
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+    /**
      * 添加新的课程大类
      * pageCourseCategory
      *
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=addNewCategory"})
+    @RequestMapping(params = {"methodToCall=addNewCategory"})
     public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         // 新添加的term，对应外部的dialog
@@ -384,7 +402,7 @@ public class adminController extends UifControllerBase {
 
         adminInfoForm.setOldClassification(adminInfoForm.getAllClassifications().get(index));
 
-        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+        return this.showDialog("editCourseCategoryDialog", true, adminInfoForm);
     }
 
     /**
@@ -394,13 +412,16 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=updateCourseCategory"})
-    public ModelAndView updateCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = {"methodToCall=updateCourseCategory"})
+    public ModelAndView updateCourseCategory(@ModelAttribute("KualiForm") UifFormBase form,
+                                             HttpServletRequest request,
+                                             HttpServletResponse response) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
         adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
                 adminInfoForm.getOldClassification().getName());
 
+//        return this.getModelAndView(examForm, "pageSetExmTimeInfo");
         return this.getCourseCategoryPage(form);
     }
 
@@ -411,7 +432,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=deleteTermCourseCategory"})
+    @RequestMapping(params = {"methodToCall=deleteTermCourseCategory"})
     public ModelAndView deleteTermCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
@@ -449,7 +470,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=addTaCategory"})
+    @RequestMapping(params = {"methodToCall=addTaCategory"})
     public ModelAndView addTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
@@ -475,7 +496,7 @@ public class adminController extends UifControllerBase {
 
         adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
 
-        return this.getModelAndView(adminInfoForm, "pageTaCategory");
+        return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
     }
 
     /**
@@ -485,7 +506,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=updateTaCategory"})
+    @RequestMapping(params = {"methodToCall=updateTaCategory"})
     public ModelAndView updateTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
@@ -500,15 +521,35 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=deleteTaCategory"})
+    @RequestMapping(params = {"methodToCall=deleteTaCategory"})
     public ModelAndView deleteTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
 
-        if(adminService.removeTaCategoryById(Integer.parseInt(adminInfoForm.getOldTaCategory().getId())))
+        /**
+         * FIXME：下面的代码会包如下错误
+         * org.springframework.dao.InvalidDataAccessApiUsageException:
+         * You have provided an instance of an incorrect PK class for this find operation.
+         * Class expected : class java.lang.String, Class received : class java.lang.Integer.;
+         * ..
+         * .
+         *
+         */
+
+       /* TAMSTaCategory taCategory=adminInfoForm.getAllTaCategories().get(index);
+
+        if(adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))){
+            adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
             return this.getTaCategoryPage(form);
-        else
-            //应该返回错误页面
+        }
+        else{
+            // 应该返回错误页面
+
             return this.getTaCategoryPage(form);
+        }*/
+        return this.getTaCategoryPage(form);
     }
 
     /**
@@ -534,7 +575,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageTaskCategory", "methodToCall=addNewIssueType"})
+    @RequestMapping(params = {"methodToCall=addNewIssueType"})
     public ModelAndView addNewIssueType(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
@@ -568,7 +609,7 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=addNewTerm"})
+    @RequestMapping(params = { "methodToCall=addNewTerm"})
     public ModelAndView addNewTerm(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 

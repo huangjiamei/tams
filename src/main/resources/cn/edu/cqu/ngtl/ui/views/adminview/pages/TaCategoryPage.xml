@@ -157,23 +157,20 @@
                                                         <property name="items">
                                                             <list>
                                                                 <!--table-->
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                <bean id="taCategoryTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="1">
-                                                                    <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
                                                                     <property name="headerText" value="Table Layout"/>
-                                                                    <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory"/>
                                                                     <property name="propertyName" value="allTaCategories"/>
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="true"/>
+                                                                              value="false"/>
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.generateAutoSequence"
                                                                               value="false"/>
-                                                                    <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>
@@ -194,16 +191,16 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTa"
-                                                                                              p:successCallback="showDialog('editTaCategoryDialog')">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTa">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTa"
-                                                                                              p:successCallback="showDialog('deleteTaCategoryDialog')">
+                                                                                        <bean parent="Uif-ActionImage">
+                                                                                            <property name="confirmationDialog">
+                                                                                                <ref bean="deleteTaCategoryDialog" />
+                                                                                            </property>
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
@@ -295,8 +292,10 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="updateTaCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:methodToCall="updateTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"
+                      p:refreshId="taCategoryTable"/>
             </list>
         </property>
     </bean>
@@ -312,7 +311,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="deleteTaCategory" p:successCallback="alert('回调成功')" />
+                      p:methodToCall="deleteTaCategory"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

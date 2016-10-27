@@ -333,7 +333,7 @@ public class adminController extends UifControllerBase {
     }
 
 
-    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=saveUpdateCourseManager"})
+    @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         CourseManagerViewObject selectedObject = infoForm.getSelectedCourseManagerObject();
@@ -353,6 +353,21 @@ public class adminController extends UifControllerBase {
         return null;
     }
 
+
+    /**
+     *
+     */
+    @RequestMapping(params = {"methodToCall=deleteCourseManager"})
+    public ModelAndView deleteCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
+        tamsCourseManagerDaoJpa.deleteCourseManager(tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId()));
+        infoForm.getCourseManagerViewObjects().remove(index);
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
 
     /**
      * 添加新的课程大类

@@ -16,4 +16,6 @@ public interface TAMSCourseManagerDao {
 
     public void saveCourseManager(TAMSCourseManager tamsCourseManager);
 
+    public void deleteCourseManager(TAMSCourseManager tamsCourseManager);
+
 }

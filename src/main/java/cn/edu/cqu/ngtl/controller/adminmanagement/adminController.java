@@ -11,6 +11,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
@@ -40,6 +41,9 @@ public class adminController extends UifControllerBase {
 
     @Autowired
     private TAMSCourseManagerDaoJpa tamsCourseManagerDaoJpa;
+
+    @Autowired
+    private ITAConverter taConverter;
 
 
     /**
@@ -537,6 +541,42 @@ public class adminController extends UifControllerBase {
         adminService.addTaIssueType(adminInfoForm.getNewIssueType());
 
         return this.getTaskCategoryPage(form);
+    }
+
+    /**
+     * 获取term(学期或批次)管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTermManagePage&viewId=AdminView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTermManagePage")
+    public ModelAndView getTermManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminInfoForm.setAllTerms(
+                taConverter.termInfoToViewObject(
+                        adminService.getAllSessions()
+                )
+        );
+
+        return this.getModelAndView(adminInfoForm, "pageTermManagement");
+    }
+
+    /**
+     * 添加term(即学期或批次)信息
+     * 只接受来自pageTermManagement的请求
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=addNewTerm"})
+    public ModelAndView addNewTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminService.addTerm(taConverter.newTermToDataObject(
+                adminInfoForm.getNewTerm()
+        ));
+
+        return this.getTermManagePage(adminInfoForm);
     }
 
     @Override

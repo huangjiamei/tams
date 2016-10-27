@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 
 import java.util.List;
 
@@ -20,7 +21,6 @@ public interface IAdminService {
 
     boolean removeCourseClassificationById(Integer id);
 
-
     List<TAMSCourseManager> getAllCourseManager();
 
     List<TAMSTaCategory> getAllTaCategories();
@@ -34,4 +34,8 @@ public interface IAdminService {
     List<TAMSIssueType> getAllIssueTypes();
 
     boolean addTaIssueType(TAMSIssueType issueType);
+
+    List<UTSession> getAllSessions();
+
+    boolean addTerm(UTSession session);
 }

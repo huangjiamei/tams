@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
 
     private static final long serialVersionUID = -1974217788100313751L;
+
+    /**
+     * 批次管理页面
+     */
+
+    private List<TermManagerViewObject> allTerms;
+
+    private TermManagerViewObject newTerm;
 
     /**
      * 任务类别管理页面
@@ -85,6 +94,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public TermManagerViewObject getNewTerm() {
+        return newTerm;
+    }
+
+    public void setNewTerm(TermManagerViewObject newTerm) {
+        this.newTerm = newTerm;
+    }
+
+    public List<TermManagerViewObject> getAllTerms() {
+        return allTerms;
+    }
+
+    public void setAllTerms(List<TermManagerViewObject> allTerms) {
+        this.allTerms = allTerms;
+    }
 
     public TAMSIssueType getNewIssueType() {
         return newIssueType;

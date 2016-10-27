@@ -195,18 +195,7 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageCourseManager");
     }
 
-    /**
-     * 获取term(学期或批次)管理页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTermManagePage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getTermManagePage")
-    public ModelAndView getTermManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
 
-        return this.getModelAndView(testForm, "pageTermManagement");
-    }
 
     @RequestMapping(params = "methodToCall=selectTermObj")
     public ModelAndView selectTermObj(
@@ -240,28 +229,10 @@ public class TestController extends UifControllerBase {
         // TODO: 2016/10/25 存入数据库
 
 
-        return this.getTermManagePage(testForm);
+        return null;//this.getTermManagePage(testForm);
     }
 
-    /**
-     * 添加term(即学期或批次)信息
-     * 只接受来自pageTermManagement的请求
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=addNewTerm"})
-    public ModelAndView addNewTerm(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
 
-        // 新添加的term，对应外部的dialog
-        TestObject newObject=testForm.getNewObject();
-
-        testForm.getCollection().add(newObject);
-        // TODO: 2016/10/25 存入数据库
-
-
-        return this.getTermManagePage(testForm);
-    }
 
     @Override
     protected UifFormBase createInitialForm() {

@@ -43,5 +43,13 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
     }
 
 
+    @Override
+    public void deleteCourseManager(TAMSCourseManager tamsCourseManager){
+        KRADServiceLocator.getDataObjectService().delete(tamsCourseManager);
+    }
+
+
+
+
 
 }

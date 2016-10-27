@@ -213,7 +213,7 @@
                                                                               value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
                                                                     <property name="propertyName" value="collection"/>
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="true"/>
+                                                                              value="false"/>
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"

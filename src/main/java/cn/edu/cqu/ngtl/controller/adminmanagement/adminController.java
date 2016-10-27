@@ -380,7 +380,8 @@ public class adminController extends UifControllerBase {
 
         adminInfoForm.setOldClassification(adminInfoForm.getAllClassifications().get(index));
 
-        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+//        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+        return this.showDialog("editCourseCategoryDialog", true, adminInfoForm);
     }
 
     /**
@@ -397,6 +398,7 @@ public class adminController extends UifControllerBase {
         adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
                 adminInfoForm.getOldClassification().getName());
 
+//        return this.getModelAndView(examForm, "pageSetExmTimeInfo");
         return this.getCourseCategoryPage(form);
     }
 
@@ -471,7 +473,7 @@ public class adminController extends UifControllerBase {
 
         adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
 
-        return this.getModelAndView(adminInfoForm, "pageTaCategory");
+        return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
     }
 
     /**

@@ -329,7 +329,7 @@ public class adminController extends UifControllerBase {
         infoForm.setCourseNmb(selectedObject.getCourseNmb());
         infoForm.setCourseManager(selectedObject.getCourseManager());
         infoForm.setInstructorCode(selectedObject.getInstructorCode());
-        return this.getModelAndView(infoForm, "pageCourseManager");
+        return this.showDialog("confirmEditManagerDialog",true,infoForm);
     }
 
 
@@ -344,7 +344,7 @@ public class adminController extends UifControllerBase {
             tamsCourseManagerDaoJpa.saveCourseManager(tamsCourseManager);
             infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setCourseManager(newManager.getName());
             infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setInstructorCode(newManager.getCode());
-            //TODO 页面数据无法刷新
+            infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setId(newManager.getId());
             return this.getModelAndView(infoForm, "pageCourseManager");
         }else{
             infoForm.setErrMsg("查无此人");

@@ -178,8 +178,7 @@
                                                                                         <!--<bean parent="Uif-EditLineInDialogSaveAction"/>-->
                                                                                         <!--<bean parent="Uif-DeleteLineAction"-->
                                                                                               <!--p:confirmationPromptText="Are you sure you wish to delete line: @{#line.field4}?"/>-->
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="updateCourseManager"
-                                                                                              p:successCallback="showDialog('confirmEditManagerDialog')">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="updateCourseManager">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />

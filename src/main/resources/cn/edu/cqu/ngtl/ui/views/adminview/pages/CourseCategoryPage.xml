@@ -157,7 +157,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <!--table-->
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                <bean id="courseCategoryTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="1">
                                                                     <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
                                                                     <property name="headerText" value="Table Layout"/>
@@ -166,7 +166,7 @@
                                                                               value="cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification"/>
                                                                     <property name="propertyName" value="allClassifications"/>
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="true"/>
+                                                                              value="false"/>
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
@@ -193,8 +193,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurObj"
-                                                                                              p:successCallback="showDialog('editCourseCategoryDialog')">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurObj">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -257,14 +256,14 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:ajaxSubmit="false" p:methodToCall="addNewCategory"/>
             </list>
         </property>
     </bean>
 
 
     <bean id="editCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改课程类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="修改课程类别">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -289,8 +288,10 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="updateCourseCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:methodToCall="updateCourseCategory" p:successCallback="dismissDialog('editCourseCategoryDialog');"
+                      p:refreshId="courseCategoryTable"/>
             </list>
         </property>
     </bean>

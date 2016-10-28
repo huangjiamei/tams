@@ -15,17 +15,21 @@
  */
 package cn.edu.cqu.ngtl.dataobject.krim;
 
+import org.kuali.rice.krad.bo.DataObjectBase;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
 @Table(name = "KRIM_PERM_T")
-public class KRIM_PERM_T implements Serializable {
+public class KRIM_PERM_T extends DataObjectBase implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
     @Column(name = "PERM_ID")
+	@GeneratedValue(generator="krim_perm_t")
+	@SequenceGenerator(name="krim_perm_t",sequenceName="KRIM_PERM_T_S",allocationSize=1)
     protected String id;
 
     @Column(name = "NMSPC_CD")

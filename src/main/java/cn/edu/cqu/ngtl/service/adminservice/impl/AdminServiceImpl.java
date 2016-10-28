@@ -173,4 +173,14 @@ public class AdminServiceImpl implements IAdminService{
 
         return issueTypeDao.updateOneByEntity(issueType);
     }
+
+    @Override
+    public boolean removeIssueTypeById(String id) {
+        TAMSIssueType issueType = issueTypeDao.selectOneById(id);
+
+        if(issueType == null)
+            return false;
+
+        return issueTypeDao.deleteOneByEntity(issueType);
+    }
 }

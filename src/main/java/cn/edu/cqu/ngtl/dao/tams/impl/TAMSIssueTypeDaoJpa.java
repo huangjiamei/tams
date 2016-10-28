@@ -52,4 +52,19 @@ public class TAMSIssueTypeDaoJpa implements TAMSIssueTypeDao{
         return KRADServiceLocator.getDataObjectService().save(issueType) != null;
 
     }
+
+    @Override
+    public TAMSIssueType selectOneById(String id) {
+
+        return  KRADServiceLocator.getDataObjectService().find(TAMSIssueType.class, id);
+
+    }
+
+    @Override
+    public boolean deleteOneByEntity(TAMSIssueType issueType) {
+
+        KRADServiceLocator.getDataObjectService().delete(issueType);
+
+        return true;
+    }
 }

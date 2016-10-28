@@ -40,4 +40,6 @@ public interface IAdminService {
     boolean addTerm(UTSession session);
 
     boolean changeIssueType(TAMSIssueType issueType);
+
+    boolean removeIssueTypeById(String id);
 }

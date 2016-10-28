@@ -745,6 +745,32 @@ public class adminController extends UifControllerBase {
     }
 
     /**
+     * 删除任务类别
+     * pageTaskCategory
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=deleteTaskCategory"})
+    public ModelAndView deleteTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        TAMSIssueType issueType = adminInfoForm.getAllIssueTypes().get(index);
+
+        if(adminService.removeIssueTypeById(issueType.getId())){
+            //adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
+            return this.getTaskCategoryPage(form);
+        }
+        else{
+            // 应该返回错误页面
+
+            return this.getTaskCategoryPage(form);
+        }
+    }
+
+    /**
      * 获取term(学期或批次)管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTermManagePage&viewId=AdminView
      * @param form

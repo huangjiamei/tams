@@ -16,4 +16,8 @@ public interface TAMSIssueTypeDao {
     TAMSIssueType selectOneByTypeName(String typeName);
 
     boolean updateOneByEntity(TAMSIssueType issueType);
+
+    TAMSIssueType selectOneById(String id);
+
+    boolean deleteOneByEntity(TAMSIssueType issueType);
 }

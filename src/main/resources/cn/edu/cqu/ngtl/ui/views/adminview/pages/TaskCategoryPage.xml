@@ -256,7 +256,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="addNewIssueType" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -306,7 +306,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="deleteTaskCategory" p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

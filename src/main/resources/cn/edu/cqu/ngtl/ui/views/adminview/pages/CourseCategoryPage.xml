@@ -258,7 +258,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewCategory"/>
+                      p:methodToCall="addNewCategory" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

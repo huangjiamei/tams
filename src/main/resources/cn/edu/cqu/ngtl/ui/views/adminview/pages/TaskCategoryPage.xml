@@ -136,7 +136,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:successCallback="showDialog('addTaskCategoryDialog')"
+                                                                                  p:methodToCall="xxxx"
                                                                                   p:additionalCssClasses="bg-teal tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image"
@@ -256,7 +256,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewIssueType" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

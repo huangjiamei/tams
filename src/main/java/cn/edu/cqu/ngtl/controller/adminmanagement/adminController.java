@@ -407,6 +407,18 @@ public class adminController extends UifControllerBase {
     }
 
     /**
+     * clf指代Classification
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=selectNewCourse"})
+    public ModelAndView selectNewClf(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        return this.showDialog("addCourseCategoryDialog", true, adminInfoForm);
+    }
+
+    /**
      * 编辑课程大类
      * pageCourseCategory
      *
@@ -422,7 +434,6 @@ public class adminController extends UifControllerBase {
         adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
                 adminInfoForm.getOldClassification().getName());
 
-//        return this.getModelAndView(examForm, "pageSetExmTimeInfo");
         return this.getCourseCategoryPage(form);
     }
 
@@ -500,6 +511,19 @@ public class adminController extends UifControllerBase {
         return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
     }
 
+
+    /**
+     * 获取addTaDialog前要调用的方法
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=selectNewTa"})
+    public ModelAndView selectNewTa(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        adminInfoForm.setNewTaCategory(new TAMSTaCategory());
+
+        return this.showDialog("addTaCategoryDialog", true, adminInfoForm);
+    }
     /**
      * 编辑助教类别
      * pageCourseCategory

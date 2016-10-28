@@ -136,7 +136,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:successCallback="showDialog('addTaCategoryDialog')"
+                                                                                  p:methodToCall="selectNewTa"
                                                                                   p:additionalCssClasses="bg-teal tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image"
@@ -230,7 +230,7 @@
     </bean>
 
     <bean id="addTaCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="添加助教类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -258,7 +258,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addTaCategory" p:successCallback="alert('btn无methodtocall回调成功')"/>
+                      p:methodToCall="addTaCategory" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

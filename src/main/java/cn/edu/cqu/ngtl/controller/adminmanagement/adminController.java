@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
@@ -605,23 +606,22 @@ public class adminController extends UifControllerBase {
          * org.springframework.dao.InvalidDataAccessApiUsageException:
          * You have provided an instance of an incorrect PK class for this find operation.
          * Class expected : class java.lang.String, Class received : class java.lang.Integer.;
-         * ..
-         * .
          *
          */
-
        /* TAMSTaCategory taCategory=adminInfoForm.getAllTaCategories().get(index);
-
         if(adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))){
             adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
             return this.getTaCategoryPage(form);
         }
         else{
-            // 应该返回错误页面
-
+             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
             return this.getTaCategoryPage(form);
         }*/
-        return this.getTaCategoryPage(form);
+
+        // 返回错误信息
+        adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+        return this.showDialog("adminErrDialog", true, adminInfoForm);
     }
 
     /**

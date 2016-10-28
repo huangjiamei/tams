@@ -266,9 +266,8 @@ public class TAConverterimpl implements ITAConverter {
     public UTSession newTermToDataObject(TermManagerViewObject newTerm) {
         UTSession session = new UTSession();
 
-        //// FIXME: 16-10-27 需要通过前端返回两个数据
-        session.setYear("2016");
-        session.setTerm("秋");
+        session.setYear(newTerm.getTermYear());
+        session.setTerm(newTerm.getTermTerm());
 
         session.setBeginDate(newTerm.getStartDate());
         session.setEndDate(newTerm.getEndDate());

@@ -4,7 +4,6 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
-import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
@@ -93,6 +92,7 @@ public class adminController extends UifControllerBase {
                                                HttpServletRequest request, HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         infoForm.setURMutInstructors(new UTInstructorDaoJpa().getAllInstructors());
+
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
 

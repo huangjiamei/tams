@@ -200,7 +200,7 @@
 																				<property name="items">
 																					<list>
 																						<bean parent="Uif-ActionImage" p:methodToCall="updateExmKrimRole"
-																							  p:successCallback="jQuery('#updateRoleBtn').click();">
+																							  p:ajaxSubmit="false">
 																							<property name="actionImage">
 																								<bean parent="Uif-Image"
 																									  p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
@@ -215,10 +215,6 @@
 															</list>
 														</property>
 													</bean>
-
-													<bean id="updateRoleBtn" parent="Uif-PrimaryActionButton"
-														  p:actionLabel="修改角色" p:navigateToPageId="pageUpdateRole"
-														  p:style="display:none" />
 												</list>
 											</property>
 										</bean>

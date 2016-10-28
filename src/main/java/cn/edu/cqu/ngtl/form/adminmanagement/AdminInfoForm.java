@@ -53,6 +53,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<TAMSTaCategory> allTaCategories;
 
+    private TAMSTaCategory taCategoryObj;
+
     private TAMSTaCategory newTaCategory;
 
     private TAMSTaCategory oldTaCategory;
@@ -88,6 +90,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String permissionContent;
     private String permissionStatus;
     private Integer permissionIndex;
+
     /**
      * 用户角色管理页面
      */
@@ -96,6 +99,15 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+
+    public TAMSTaCategory getTaCategoryObj() {
+        return taCategoryObj;
+    }
+
+    public void setTaCategoryObj(TAMSTaCategory taCategoryObj) {
+        this.taCategoryObj = taCategoryObj;
+    }
 
     public TermManagerViewObject getNewTerm() {
         return newTerm;

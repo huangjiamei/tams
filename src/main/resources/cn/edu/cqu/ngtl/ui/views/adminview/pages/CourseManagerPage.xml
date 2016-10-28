@@ -154,11 +154,6 @@
 
                                                                 <property name="items">
                                                                     <list>
-                                                                        <!--<bean parent="Uif-InputField" p:label="" p:propertyName="checked">-->
-                                                                        <!--<property name="control">-->
-                                                                        <!--<bean parent="Uif-CheckboxControl"/>-->
-                                                                        <!--</property>-->
-                                                                        <!--</bean>-->
                                                                         <bean parent="Uif-DataField" p:label="课程"
                                                                               p:propertyName="courseNm"/>
                                                                         <bean parent="Uif-DataField" p:label="课程号"
@@ -166,8 +161,7 @@
                                                                         <bean parent="Uif-DataField" p:label="课程负责人"
                                                                               p:propertyName="courseManager"/>
                                                                         <bean parent="Uif-DataField" p:label="职工号"
-                                                                              p:propertyName="InstructorCode"
-                                                                              p:sortAs="numeric"/>
+                                                                              p:propertyName="InstructorCode"/>
                                                                     </list>
                                                                 </property>
                                                                 <property name="lineActions">

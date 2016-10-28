@@ -151,8 +151,9 @@
 																	<property name="collectionObjectClass"
 																			  value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor" />
 																	<property name="propertyName" value="URMutInstructors" />
+
 																	<property name="layoutManager.richTable.render"
-																			  value="false"/>
+																			  value="true"/>
 
 																	<!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
 																	<property name="layoutManager.renderSequenceField"
@@ -163,21 +164,22 @@
 																	<property name="useServerPaging" value="true"/>
 
 																	<property name="renderAddLine" value="false"/>
-																	<!--<property name="renderLineActions" value="true"/>-->
-																	<!--<property name="disclosure.render" value="false"/>-->
+																	<property name="renderLineActions" value="true"/>
+																	<property name="disclosure.render" value="false"/>
+
 
 																	<property name="items">
 																		<list>
-																			<bean parent="Uif-InputField" p:propertyName="department.name" p:readOnly="true"
+																			<bean parent="Uif-DataField" p:propertyName="department.name"
 																				  p:label="学院" />
-																			<bean parent="Uif-InputField" p:propertyName="name" p:readOnly="true"
+																			<bean parent="Uif-DataField" p:propertyName="name"
 																				  p:label="姓名" />
-																			<bean parent="Uif-InputField" p:propertyName="gender"
-																				  p:readOnly="true" p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}" />
-																			<bean parent="Uif-InputField" p:propertyName="code" p:readOnly="true"
+																			<bean parent="Uif-DataField" p:propertyName="gender"
+																				  p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}" />
+																			<bean parent="Uif-DataField" p:propertyName="code"
 																				  p:label="工号" />
-																			<bean parent="Uif-InputField" p:propertyName="idNumber"
-																				  p:readOnly="true" p:label="统一认证号" />
+																			<bean parent="Uif-DataField" p:propertyName="idNumber" p:label="统一认证号"
+																				  p:sortAs="numeric"/>
 																		</list>
 																	</property>
 																	<property name="lineActions">

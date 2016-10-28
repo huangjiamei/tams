@@ -46,8 +46,7 @@
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <!--<value>scripts/fullcalendar.js</value>-->
-                <!--<value>scripts/exam_526.js</value>-->
+                <value>js/tams.js</value>
             </list>
         </property>
 

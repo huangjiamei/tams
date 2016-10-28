@@ -115,6 +115,74 @@ public class adminController extends UifControllerBase {
     }
 
     /**
+     * 新增权限对话框
+     * @param form
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=addPermissionDialog")
+    public ModelAndView addPermissionDialog(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        infoForm.setPermissionNM("");
+        infoForm.setPermissionContent("");
+        infoForm.setPermissionIndex(null);
+        return this.showDialog("savePermissionDialog",true,infoForm);
+    }
+
+
+    /**
+     * 保存新增权限
+     * @param form
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=savePermission")
+    public ModelAndView savePermission(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        KRIM_PERM_T krimPermTs = new KRIM_PERM_T();
+        if(infoForm.getPermissionIndex()!=null){
+            krimPermTs = infoForm.getRMPkrimPermTs().get(infoForm.getPermissionIndex());
+        }
+        String permissionNM = infoForm.getPermissionNM();
+        String permissionContent = infoForm.getPermissionContent();
+        String permissionStatus = infoForm.getPermissionStatus();
+
+        krimPermTs.setName(permissionNM);
+        krimPermTs.setDescription(permissionContent);
+        krimPermTs.setActive(permissionStatus);
+        //TODO 权限属性分类
+        krimPermTs.setTemplateId("56");
+        new KRIM_PERM_T_DaoJpa().addPermissions(krimPermTs);
+        if(infoForm.getPermissionIndex()==null) {
+            infoForm.getRMPkrimPermTs().add(krimPermTs);
+        }else{
+            infoForm.getRMPkrimPermTs().set((infoForm.getPermissionIndex()),krimPermTs);
+        }
+        return this.getModelAndView(infoForm, "pagePermissionManagement");
+    }
+
+    /**
+     *
+     * @param form
+     * @return
+     * @throws Exception
+     */
+
+    @RequestMapping(params = "methodToCall=updateKrimPerm")
+    public ModelAndView updateKrimPerm(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
+        KRIM_PERM_T krim_perm_t = new KRIM_PERM_T();
+        infoForm.setPermissionNM(selectedKrim_perm_t.getName());
+        infoForm.setPermissionContent(selectedKrim_perm_t.getDescription());
+        infoForm.setPermissionStatus(selectedKrim_perm_t.getActive());
+        infoForm.setPermissionIndex(index);
+        return this.showDialog("savePermissionDialog",true,infoForm);
+    }
+
+    /**
      * 更新角色
      *
      * @param form
@@ -148,7 +216,6 @@ public class adminController extends UifControllerBase {
 
         infoForm.setRMPkrimRoleT(krimRoleT);
         infoForm.setRMPkrimPermTs(krimPermTs);
-        System.out.println(infoForm.isUpdateComponentRequest());
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
 
@@ -333,6 +400,11 @@ public class adminController extends UifControllerBase {
         return this.showDialog("confirmEditManagerDialog",true,infoForm);
     }
 
+    /**
+     * 更新课程负责人
+     * @param form
+     * @return
+     */
 
     @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -356,7 +428,7 @@ public class adminController extends UifControllerBase {
 
 
     /**
-     *
+     * 删除课程负责人
      */
     @RequestMapping(params = {"methodToCall=deleteCourseManager"})
     public ModelAndView deleteCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {

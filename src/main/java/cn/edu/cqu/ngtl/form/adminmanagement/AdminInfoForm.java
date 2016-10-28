@@ -84,8 +84,10 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<KRIM_ROLE_T> RMPkrimRoleTs;
     private KRIM_ROLE_T RMPkrimRoleT;
     private List<KRIM_PERM_T> RMPkrimPermTs;
-
-
+    private String permissionNM;
+    private String permissionContent;
+    private String permissionStatus;
+    private Integer permissionIndex;
     /**
      * 用户角色管理页面
      */
@@ -325,5 +327,37 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setCourseManagerIndex(Integer courseManagerIndex) {
         this.courseManagerIndex = courseManagerIndex;
+    }
+
+    public String getPermissionNM() {
+        return permissionNM;
+    }
+
+    public void setPermissionNM(String permissionNM) {
+        this.permissionNM = permissionNM;
+    }
+
+    public String getPermissionContent() {
+        return permissionContent;
+    }
+
+    public void setPermissionContent(String permissionContent) {
+        this.permissionContent = permissionContent;
+    }
+
+    public String getPermissionStatus() {
+        return permissionStatus;
+    }
+
+    public void setPermissionStatus(String permissionStatus) {
+        this.permissionStatus = permissionStatus;
+    }
+
+    public Integer getPermissionIndex() {
+        return permissionIndex;
+    }
+
+    public void setPermissionIndex(Integer permissionIndex) {
+        this.permissionIndex = permissionIndex;
     }
 }

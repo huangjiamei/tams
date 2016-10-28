@@ -30,6 +30,7 @@ public class KRIM_PERM_T_DaoJpa implements KRIM_PERM_T_Dao {
 	@Override
 	public void addPermissions(KRIM_PERM_T krim_perm_t) {
 		// TODO Auto-generated method stub
+		krim_perm_t.setNamespaceCode(nameSpace);
 		KradDataServiceLocator.getDataObjectService().save(krim_perm_t);
 	}
 }

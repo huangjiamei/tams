@@ -239,7 +239,7 @@
                                                                         <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="callout callout-info" p:style="high:100px;width:100%;background:blue;">
                                                                             <property name="items">
                                                                                 <list>
-                                                                                    <bean parent="Uif-HeaderFour" p:headerText="任务时间过长，请秀给后重新提交"/>
+                                                                                    <bean parent="Uif-HeaderFour" p:headerText="任务时间过长，请修改后重新提交"/>
                                                                                     <bean parent="Uif-HeaderFour" p:headerText="2016-08-20  10:25"
                                                                                           p:style="float:right"/>
                                                                                 </list>

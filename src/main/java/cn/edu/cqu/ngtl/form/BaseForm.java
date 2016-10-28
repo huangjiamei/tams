@@ -15,19 +15,28 @@ public class BaseForm extends UifFormBase  {
     private User user;
     private Integer currenSessionId;
 
+    /*
+	* 错误信息
+	*/
+    private String errMsg;
+
     public User getUser() {
         return user;
     }
-
     public void setUser(User user) {
         this.user = user;
     }
-
     public Integer getCurrenSessionId() {
         return currenSessionId;
     }
-
     public void setCurrenSessionId(Integer currenSessionId) {
         this.currenSessionId = currenSessionId;
+    }
+
+    public String getErrMsg() {
+        return errMsg;
+    }
+    public void setErrMsg(String errMsg) {
+        this.errMsg = errMsg;
     }
 }

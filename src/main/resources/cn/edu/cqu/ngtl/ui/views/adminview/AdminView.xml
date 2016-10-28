@@ -138,4 +138,18 @@
             </list>
         </property>
     </bean>
+
+    <bean id="adminErrDialog" parent="Uif-DialogGroup" p:additionalCssClasses="errWarnDialog">
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-MessageField" p:messageText="@{errMsg}" />
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
 </beans>

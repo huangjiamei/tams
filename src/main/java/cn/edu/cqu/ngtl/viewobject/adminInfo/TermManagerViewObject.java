@@ -7,11 +7,37 @@ public class TermManagerViewObject {
 
     private String termName;
 
+    /**
+     * 批次年份
+     */
+    private String termYear;
+
+    /**
+     * 批次季度
+     */
+    private String termTerm;
+
     private Integer budget;
 
     private String startDate;
 
     private String endDate;
+
+    public String getTermYear() {
+        return termYear;
+    }
+
+    public void setTermYear(String termYear) {
+        this.termYear = termYear;
+    }
+
+    public String getTermTerm() {
+        return termTerm;
+    }
+
+    public void setTermTerm(String termTerm) {
+        this.termTerm = termTerm;
+    }
 
     public String getTermName() {
         return termName;

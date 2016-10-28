@@ -299,8 +299,26 @@
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-InputField" p:label="批次名称"
-                                              p:propertyName="newTerm.termName"/>
+                                        <bean parent="Uif-InputField" p:label="批次年份"
+                                              p:propertyName="newTerm.termYear">
+                                            <property name="optionsFinder">
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                            </property>
+                                            <property name="control">
+                                                <bean parent="Uif-DropdownControl" />
+                                            </property>
+                                        </bean>
+
+                                        <bean parent="Uif-InputField" p:label="批次季度"
+                                              p:propertyName="newTerm.termTerm">
+                                            <property name="optionsFinder">
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                            </property>
+                                            <property name="control">
+                                                <bean parent="Uif-DropdownControl" />
+                                            </property>
+                                        </bean>
+
                                         <bean parent="Uif-InputField" p:label="经费"
                                               p:propertyName="newTerm.budget"/>
 
@@ -355,8 +373,26 @@
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-InputField" p:label="批次名称"
-                                              p:propertyName="newClassification"/>
+                                        <bean parent="Uif-InputField" p:label="批次年份"
+                                              p:propertyName="newClassification">
+                                            <property name="optionsFinder">
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                            </property>
+                                            <property name="control">
+                                                <bean parent="Uif-DropdownControl" />
+                                            </property>
+                                        </bean>
+
+                                        <bean parent="Uif-InputField" p:label="批次季度"
+                                              p:propertyName="newClassification">
+                                            <property name="optionsFinder">
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                            </property>
+                                            <property name="control">
+                                                <bean parent="Uif-DropdownControl" />
+                                            </property>
+                                        </bean>
+
                                         <bean parent="Uif-InputField" p:label="经费"
                                               p:propertyName="newClassification"/>
 

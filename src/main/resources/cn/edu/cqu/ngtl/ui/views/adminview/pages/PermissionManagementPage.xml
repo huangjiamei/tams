@@ -56,7 +56,7 @@
                                         <bean parent="Uif-MessageField" p:messageText="权限列表"
                                               p:additionalCssClasses="boxheaderTitle" />
                                         <bean parent="Uif-PrimaryActionButton" p:actionLabel="添加权限"
-                                              p:methodToCall="addPermssion" p:style="float:right!important;font-size:14px"
+                                              p:methodToCall="addPermissionDialog" p:style="float:right!important;font-size:14px"
                                               p:additionalCssClasses="icon-plus bg-success btn-flat box-tools" />
                                     </list>
                                 </property>
@@ -97,26 +97,79 @@
                                 </property>
                                 <property name="lineActions">
                                     <list>
-                                        <bean parent="Uif-ActionImage" p:methodToCall="updateExmKrimPerm"
-                                              p:successCallback="jQuery('#updateRoleBtn').click();">
+                                        <bean parent="Uif-ActionImage" p:methodToCall="updateKrimPerm">
                                             <property name="actionImage">
                                                 <bean parent="Uif-Image"
                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
                                             </property>
                                         </bean>
+                                        <bean parent="Uif-ActionImage">
+                                            <property name="confirmationDialog">
+                                                <ref bean="deletePermissionDialog" />
+                                            </property>
+                                            <property name="actionImage">
+                                                <bean parent="Uif-Image"
+                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
+                                            </property>
+                                        </bean>
                                     </list>
                                 </property>
                             </bean>
-
-                            <bean id="updateRoleBtn" parent="Uif-PrimaryActionButton"
-                                  p:actionLabel="修改角色" p:navigateToPageId="pageUpdateRole"
-                                  p:style="display:none" />
-
-
                         </list>
                     </property>
                 </bean>
+            </list>
+        </property>
+    </bean>
 
+    <bean id="savePermissionDialog" parent="Uif-DialogGroup"
+          p:headerText="添加权限" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-GridGroup">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-InputField" p:label="权限名称"
+                                  p:propertyName="permissionNM"/>
+                            <bean parent="Uif-InputField" p:label="权限内容"
+                                  p:propertyName="permissionContent"/>
+                            <bean parent="Uif-InputField" p:label="权限状态" p:propertyName="permissionStatus">
+                                <property name="optionsFinder">
+                                    <bean class="cn.edu.cqu.ngtl.optionfinder.IsActiveFinder"
+                                          p:blankOption="false" />
+                                </property>
+                                <property name="control">
+                                    <bean parent="Uif-DropdownControl" />
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="savePermission"  p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="deletePermissionDialog" parent="Uif-DialogGroup"
+          p:headerText="删除权限" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除权限，如需删除请联系系统维护人员！" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="deletePermission"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

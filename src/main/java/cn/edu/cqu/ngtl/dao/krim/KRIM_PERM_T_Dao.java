@@ -14,4 +14,7 @@ public interface KRIM_PERM_T_Dao {
 
 
 	public void addPermissions(KRIM_PERM_T krim_perm_t);
+
+
+	public void delPermissions(KRIM_PERM_T krim_perm_t);
 }

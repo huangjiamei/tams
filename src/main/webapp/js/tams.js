@@ -9,43 +9,42 @@ function doEditorPreSubmit(editorID,transferID) {
     jQuery('#' + transferID).val(UE.getEditor(editorID).getPlainTxt());
     return true;
 }
-
 /*
-    ClassListPageÖÐµÄ±í¸ñ¼ÓÔØÇ°µ÷ÓÃ
-    ÓÃÓÚÖØ»æ±í¸ñÖÐµÄËÑË÷¿Ø¼þ(ÒòriceÏÞÖÆ)£¬²¢ÇÒÎª¸÷ËÑË÷ÊäÈë¿Ø¼þ¼ÓÈëÊÂ¼þ¼àÌý
+    ClassListPageï¿½ÐµÄ±ï¿½ï¿½ï¿½ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½
+    ï¿½ï¿½ï¿½ï¿½ï¿½Ø»ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½(ï¿½ï¿½riceï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¼ï¿½ï¿½ï¿½ï¿½ï¿½
  */
 function getClassTableReady() {
 
-    //µÃµ½±íÖÐÊý¾Ý
+    //ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     var table =jQuery('#ClassListPageTable table').DataTable();
 
-    //Òþ²ØµÄlistÖÐµÄinput
+    //ï¿½ï¿½ï¿½Øµï¿½listï¿½Ðµï¿½input
     var searchHiddenList = jQuery('#SearchCondContainer > div > input');
 
-    //ÔÚ±íÖÐ¼ÓÒ»ÐÐ
+    //ï¿½Ú±ï¿½ï¿½Ð¼ï¿½Ò»ï¿½ï¿½
     jQuery('#ClassListPageTable table thead').append( '<tr><tr>' );
 
 
-    //´æ´¢ËùÓÐ¿ÉÑ¡µÄoption
-    var selectGradeHtml=document.getElementsByName("AIPsearchGradeId")[0].innerHTML;//Äê¼¶
+    //ï¿½æ´¢ï¿½ï¿½ï¿½Ð¿ï¿½Ñ¡ï¿½ï¿½option
+    var selectGradeHtml=document.getElementsByName("AIPsearchGradeId")[0].innerHTML;//ï¿½ê¼¶
     var selectBelongDeptHtml=document.getElementsByName("AIPsearchDepartmentId")[0].innerHTML;//Ñ§Ôº
-    var selectCampusHtml=document.getElementsByName("AIPsearchCampusId")[0].innerHTML;//Ð£Çø
-    var selectLtypeHtml=document.getElementsByName("applicantLanguage")[0].innerHTML;//ÀàÐÍ
-    var selectLevelHtml=document.getElementsByName("applicantLevelId")[0].innerHTML;//¼¶±ð
+    var selectCampusHtml=document.getElementsByName("AIPsearchCampusId")[0].innerHTML;//Ð£ï¿½ï¿½
+    var selectLtypeHtml=document.getElementsByName("applicantLanguage")[0].innerHTML;//ï¿½ï¿½ï¿½ï¿½
+    var selectLevelHtml=document.getElementsByName("applicantLevelId")[0].innerHTML;//ï¿½ï¿½ï¿½ï¿½
 
 
-    //È·¶¨¿É¼ûÑ§Ôº
+    //È·ï¿½ï¿½ï¿½É¼ï¿½Ñ§Ôº
     var selectDeptHtml;
-    //²é¿´µ±Ç°ÓÃ»§µÄÑ§ÔºID
+    //ï¿½é¿´ï¿½ï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½Ñ§ÔºID
     var userDeptId = document.querySelector("#userDeptId > p").innerHTML;
-    //ÈôÎª½ÌÎñ´¦Ôò¿É¼ûËùÓÐÑ§Ôº
+    //ï¿½ï¿½Îªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É¼ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§Ôº
     if(userDeptId.trim() == "114819126"){
         selectDeptHtml = selectBelongDeptHtml;
         document.getElementsByName("AIPsearchDepartmentId")[0].value = document.getElementsByName("applicantdDept")[0].value;
-    }else{//Èôµ±Ç°ÓÃ»§²»ÊôÓÚ½ÌÎñ´¦
-        //½«¿ÉÑ¡µÄÑ§ÔºÉèÖÃÎªµ±Ç°ÓÃ»§µÄÑ§Ôº
+    }else{//ï¿½ï¿½ï¿½ï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú½ï¿½ï¿½ï¿½
+        //ï¿½ï¿½ï¿½ï¿½Ñ¡ï¿½ï¿½Ñ§Ôºï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ç°ï¿½Ã»ï¿½ï¿½ï¿½Ñ§Ôº
         selectDeptHtml = '<option selected="selected" value="'+userDeptId+'">'+document.querySelector("#userDeptName > p").innerHTML+'</option>';
-        //½«Ñ¡ÖÐ²é¿´µÄÑ§ÔºÉèÖÃÎªµ±Ç°ÓÃ»§Ñ§Ôº
+        //ï¿½ï¿½Ñ¡ï¿½Ð²é¿´ï¿½ï¿½Ñ§Ôºï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ç°ï¿½Ã»ï¿½Ñ§Ôº
         document.getElementsByName("applicantdDept")[0].value = userDeptId;
     }
 
@@ -58,11 +57,11 @@ function getClassTableReady() {
 
 
 
-    jQuery('#ClassListPageTable table thead tr:eq(0) th').each( function ( i ) {//¶ÔÓÚ±í¸ñµÄÃ¿Ò»ÁÐ
+    jQuery('#ClassListPageTable table thead tr:eq(0) th').each( function ( i ) {//ï¿½ï¿½ï¿½Ú±ï¿½ï¿½ï¿½Ã¿Ò»ï¿½ï¿½
         var thwidth = this.style.width;
         jQuery('#ClassListPageTable table thead tr:eq(1)').append( '<th></th>' );
         var column = table.column( i );
-        if(i==1 || i==5){ //ÐÕÃûºÍÑ§ºÅ
+        if(i==1 || i==5){ //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ§ï¿½ï¿½
             var txt = jQuery('<input type="text" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'" value="'+jQuery(searchHiddenList[i-1]).val()+'" style="font-weight:normal;width:45px;">')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty())
                 .on( {keyup: function () {
@@ -83,7 +82,7 @@ function getClassTableReady() {
                     }
                 });
         }
-        else if(i==10||(i>14 && i<17)){ //Ö¤¼þºÅ||±¨ÃûÐòºÅ||×¼¿¼Ö¤ºÅ
+        else if(i==10||(i>14 && i<17)){ //Ö¤ï¿½ï¿½ï¿½ï¿½||ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½||×¼ï¿½ï¿½Ö¤ï¿½ï¿½
             var txt = jQuery('<input type="text" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'" value="'+jQuery(searchHiddenList[i-1]).val()+'" style="font-weight:normal;width:80px;">')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
                 .on( {keyup: function () {
@@ -104,7 +103,7 @@ function getClassTableReady() {
                     }
                 });
         }
-        else if(i==3 || i==4 || i==9 || i==13){//Ñ§Àú||Ñ§ÖÆ||Ö¤¼þÀàÐÍ||Ó¦½»½ð¶î
+        else if(i==3 || i==4 || i==9 || i==13){//Ñ§ï¿½ï¿½||Ñ§ï¿½ï¿½||Ö¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½||Ó¦ï¿½ï¿½ï¿½ï¿½ï¿½
             var txt = jQuery('<input type="text" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'" value="'+jQuery(searchHiddenList[i-1]).val()+'" style="font-weight:normal;width:25px;">')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
                 .on( {keyup: function () {
@@ -125,11 +124,11 @@ function getClassTableReady() {
                     }
                 });
         }
-        else if(i==2){//ÐÔ±ð
+        else if(i==2){//ï¿½Ô±ï¿½
             var select = jQuery('<select style="font-weight:normal;height:24px;width:30px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'
                 +'<option value selected ="selected"></option>'
                 +'<option value="F">Å®</option>'
-                +'<option value="M">ÄÐ</option>'
+                +'<option value="M">ï¿½ï¿½</option>'
                 +'</select>')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
                 .on( 'change', function () {
@@ -144,7 +143,7 @@ function getClassTableReady() {
                 } );
             select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
         }
-        else if(i==6||i==8||i==12){//Äê¼¶||Ð£Çø||ÓïÑÔ¼¶±ð
+        else if(i==6||i==8||i==12){//ï¿½ê¼¶||Ð£ï¿½ï¿½||ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½
             var select = jQuery('<select style="font-weight:normal;height:24px;width:30px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'+htmlArr[i]+'</select>')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
                 .on( 'change', function () {
@@ -160,7 +159,7 @@ function getClassTableReady() {
                 } );
             select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
         }
-        else if(i==11){//ÓïÑÔÀàÐÍ
+        else if(i==11){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             var select = jQuery('<select style="font-weight:normal;height:24px;width:50px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'+htmlArr[i]+'</select>')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
                 .on( 'change', function () {
@@ -192,11 +191,11 @@ function getClassTableReady() {
                 } );
             select.find("option[value="+jQuery(searchHiddenList[i-1]).val()+"]").attr("selected",true);
         }
-        else if(i==14){//ÊÇ·ñ½É·Ñ
+        else if(i==14){//ï¿½Ç·ï¿½É·ï¿½
             var select = jQuery('<select style="font-weight:normal;height:24px;width:30px;" id="'+jQuery(searchHiddenList[i-1]).attr("name")+'">'
                 +'<option value selected ="selected"></option>'
-                +'<option value="0">·ñ</option>'
-                +'<option value="1">ÊÇ</option>'
+                +'<option value="0">ï¿½ï¿½</option>'
+                +'<option value="1">ï¿½ï¿½</option>'
                 +'</select>')
                 .appendTo( jQuery( '#ClassListPageTable table thead tr:eq(1) th:eq('+i+')' ).empty() )
                 .on( 'change', function () {

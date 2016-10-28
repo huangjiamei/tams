@@ -111,7 +111,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="#"
+                                                    <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
                                                           p:style="float:none!important;"
                                                           p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
                                                 </list>
@@ -134,7 +134,7 @@
                                                             <list>
                                                                 <bean parent="Uif-HeaderThree" p:headerText="6"
                                                                       p:additionalCssClasses="headerCss"/>
-                                                                <bean parent="Uif-Message" p:messageText="角色管理"
+                                                                <bean parent="Uif-Message" p:messageText="用户管理"
                                                                       p:additionalCssClasses="zzz"/>
                                                             </list>
                                                         </property>
@@ -147,7 +147,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="#"
+                                                    <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"
                                                           p:style="float:none!important;"
                                                           p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
                                                 </list>
@@ -255,7 +255,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="#"
+                                                    <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"
                                                           p:style="float:none!important;"
                                                           p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
                                                 </list>
@@ -291,7 +291,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="#"
+                                                    <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
                                                           p:style="float:none!important;"
                                                           p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
                                                 </list>
@@ -328,7 +328,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="#"
+                                                    <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
                                                           p:style="float:none!important;"
                                                           p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
                                                 </list>

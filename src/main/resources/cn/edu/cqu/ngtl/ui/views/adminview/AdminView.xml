@@ -46,8 +46,7 @@
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <!--<value>scripts/fullcalendar.js</value>-->
-                <!--<value>scripts/exam_526.js</value>-->
+                <value>js/tams.js</value>
             </list>
         </property>
 
@@ -132,6 +131,20 @@
                     <property name="items">
                         <list>
                             <ref bean="TermManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="adminErrDialog" parent="Uif-DialogGroup" p:additionalCssClasses="errWarnDialog">
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-MessageField" p:messageText="@{errMsg}" />
                         </list>
                     </property>
                 </bean>

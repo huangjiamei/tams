@@ -113,6 +113,102 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 
+
+    //TODO 新增和删除对话框的实例  START
+    /**
+     * 新增权限对话框   新增的对话框将属性设为空值再直接弹对话框
+     * @param form
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=addPermissionDialog")
+    public ModelAndView addPermissionDialog(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        infoForm.setPermissionNM("");
+        infoForm.setPermissionContent("");
+        infoForm.setPermissionIndex(null);
+        return this.showDialog("savePermissionDialog",true,infoForm);
+    }
+
+    /**
+     * 更新的对话框需要取到当前需要修改的对象，然后将该对象中的值赋予对话框中的相应字段中。然后再弹对话框
+     * PS:务必将选择对象的index放入到form中（或者用其他方法记录下来）
+     * @param form
+     * @return
+     * @throws Exception
+     */
+
+    @RequestMapping(params = "methodToCall=updateKrimPerm")
+    public ModelAndView updateKrimPerm(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
+        KRIM_PERM_T krim_perm_t = new KRIM_PERM_T();
+        infoForm.setPermissionNM(selectedKrim_perm_t.getName());         //给dialog中的字段赋值
+        infoForm.setPermissionContent(selectedKrim_perm_t.getDescription());
+        infoForm.setPermissionStatus(selectedKrim_perm_t.getActive());
+        infoForm.setPermissionIndex(index);                  //记录index
+        return this.showDialog("savePermissionDialog",true,infoForm);
+    }
+
+    /**
+     * 保存/新增权限二合一方法
+     * 根据index的值去判断页面执行的是更新还是新增操作。index如果值是null，则页面是进行的新增操作；反之则是进行的更新操作
+     * PS:数据库操作结束之后务必将更新的对象重新放入到页面的显示对象中
+     * @param form
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=savePermission")
+    public ModelAndView savePermission(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        KRIM_PERM_T krimPermTs = new KRIM_PERM_T();
+        if(infoForm.getPermissionIndex()!=null){
+            krimPermTs = infoForm.getRMPkrimPermTs().get(infoForm.getPermissionIndex());
+        }
+        String permissionNM = infoForm.getPermissionNM();
+        String permissionContent = infoForm.getPermissionContent();
+        String permissionStatus = infoForm.getPermissionStatus();
+
+        krimPermTs.setName(permissionNM);
+        krimPermTs.setDescription(permissionContent);
+        krimPermTs.setActive(permissionStatus);
+        //TODO 权限属性分类
+        krimPermTs.setTemplateId("56");
+        new KRIM_PERM_T_DaoJpa().addPermissions(krimPermTs);
+        if(infoForm.getPermissionIndex()==null) {
+            infoForm.getRMPkrimPermTs().add(krimPermTs);   //根据不同的操作对页面显示对象进行修改
+        }else{
+            infoForm.getRMPkrimPermTs().set((infoForm.getPermissionIndex()),krimPermTs);
+        }
+        return this.getModelAndView(infoForm, "pagePermissionManagement");
+    }
+
+    //TODO 新增和删除对话框的实例  END
+
+    /**
+     * 删除权限
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+
+    @RequestMapping(params = "methodToCall=deletePermission")
+    public ModelAndView deletePermission(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
+                                         HttpServletResponse response) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
+        new KRIM_PERM_T_DaoJpa().delPermissions(selectedKrim_perm_t);
+        infoForm.getRMPkrimPermTs().remove(index);
+        return this.getModelAndView(infoForm, "pagePermissionManagement");
+    }
+
+
     /**
      * 更新角色
      *
@@ -147,7 +243,6 @@ public class adminController extends UifControllerBase {
 
         infoForm.setRMPkrimRoleT(krimRoleT);
         infoForm.setRMPkrimPermTs(krimPermTs);
-        System.out.println(infoForm.isUpdateComponentRequest());
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
 
@@ -171,6 +266,7 @@ public class adminController extends UifControllerBase {
 
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
+
 
     /**
      * 保存角色
@@ -332,6 +428,11 @@ public class adminController extends UifControllerBase {
         return this.showDialog("confirmEditManagerDialog",true,infoForm);
     }
 
+    /**
+     * 更新课程负责人
+     * @param form
+     * @return
+     */
 
     @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -355,7 +456,7 @@ public class adminController extends UifControllerBase {
 
 
     /**
-     *
+     * 删除课程负责人
      */
     @RequestMapping(params = {"methodToCall=deleteCourseManager"})
     public ModelAndView deleteCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -406,6 +507,18 @@ public class adminController extends UifControllerBase {
     }
 
     /**
+     * clf指代Classification
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=selectNewCourse"})
+    public ModelAndView selectNewClf(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        return this.showDialog("addCourseCategoryDialog", true, adminInfoForm);
+    }
+
+    /**
      * 编辑课程大类
      * pageCourseCategory
      *
@@ -421,7 +534,6 @@ public class adminController extends UifControllerBase {
         adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
                 adminInfoForm.getOldClassification().getName());
 
-//        return this.getModelAndView(examForm, "pageSetExmTimeInfo");
         return this.getCourseCategoryPage(form);
     }
 
@@ -499,6 +611,19 @@ public class adminController extends UifControllerBase {
         return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
     }
 
+
+    /**
+     * 获取addTaDialog前要调用的方法
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=selectNewTa"})
+    public ModelAndView selectNewTa(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        adminInfoForm.setNewTaCategory(new TAMSTaCategory());
+
+        return this.showDialog("addTaCategoryDialog", true, adminInfoForm);
+    }
     /**
      * 编辑助教类别
      * pageCourseCategory

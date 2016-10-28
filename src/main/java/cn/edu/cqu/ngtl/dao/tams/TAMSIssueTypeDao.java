@@ -15,4 +15,5 @@ public interface TAMSIssueTypeDao {
 
     TAMSIssueType selectOneByTypeName(String typeName);
 
+    boolean updateOneByEntity(TAMSIssueType issueType);
 }

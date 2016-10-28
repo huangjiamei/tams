@@ -136,7 +136,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:successCallback="showDialog('addTaskCategoryDialog')"
+                                                                                  p:methodToCall="selectCurTask"
                                                                                   p:additionalCssClasses="bg-teal tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image"
@@ -190,8 +190,7 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!--下面这段还没有后台代码，后台添加之后请删除本行注释-->
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="xxxx">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTask">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -243,7 +242,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="任务"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="newIssueType.typeName"/>
+                                              p:propertyName="issueType.typeName"/>
                                     </list>
                                 </property>
                             </bean>
@@ -276,7 +275,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="任务"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="newClassification"/>
+                                              p:propertyName="issueType.typeName"/>
                                     </list>
                                 </property>
                             </bean>
@@ -290,7 +289,7 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:successCallback="dismissDialog('editTaskCategoryDialog');"/>
+                      p:methodToCall="updateTaskCategory" p:successCallback="dismissDialog('editTaskCategoryDialog');"/>
             </list>
         </property>
     </bean>

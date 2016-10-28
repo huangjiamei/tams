@@ -38,4 +38,6 @@ public interface IAdminService {
     List<UTSession> getAllSessions();
 
     boolean addTerm(UTSession session);
+
+    boolean changeIssueType(TAMSIssueType issueType);
 }

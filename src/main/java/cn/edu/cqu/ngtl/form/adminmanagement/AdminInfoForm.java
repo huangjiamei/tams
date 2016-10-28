@@ -35,7 +35,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<TAMSIssueType> allIssueTypes;
 
-    private TAMSIssueType newIssueType;
+    private TAMSIssueType issueType;
 
     /**
      * 课程类别管理页面
@@ -111,12 +111,12 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.allTerms = allTerms;
     }
 
-    public TAMSIssueType getNewIssueType() {
-        return newIssueType;
+    public TAMSIssueType getIssueType() {
+        return issueType;
     }
 
-    public void setNewIssueType(TAMSIssueType newIssueType) {
-        this.newIssueType = newIssueType;
+    public void setIssueType(TAMSIssueType issueType) {
+        this.issueType = issueType;
     }
 
     public List<TAMSIssueType> getAllIssueTypes() {

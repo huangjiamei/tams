@@ -44,4 +44,12 @@ public class TAMSIssueTypeDaoJpa implements TAMSIssueTypeDao{
 
         return qr.getResults().isEmpty()?null:qr.getResults().get(0);
     }
+
+
+    @Override
+    public boolean updateOneByEntity(TAMSIssueType issueType) {
+
+        return KRADServiceLocator.getDataObjectService().save(issueType) != null;
+
+    }
 }

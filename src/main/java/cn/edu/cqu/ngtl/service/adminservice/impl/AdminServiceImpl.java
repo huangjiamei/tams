@@ -163,4 +163,14 @@ public class AdminServiceImpl implements IAdminService{
 
         return sessionDao.insertOneByEntity(session);
     }
+
+    @Override
+    public boolean changeIssueType(TAMSIssueType issueType) {
+        TAMSIssueType isExist = issueTypeDao.selectOneByTypeName(issueType.getTypeName());
+        if(isExist != null && ! isExist.getId().equals(issueType.getId()))
+            //存在同名数据,而且非本数据
+            return false;
+
+        return issueTypeDao.updateOneByEntity(issueType);
+    }
 }

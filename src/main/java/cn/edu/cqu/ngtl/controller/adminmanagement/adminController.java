@@ -528,28 +528,18 @@ public class adminController extends UifControllerBase {
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
 
-        /**
-         * FIXME：下面的代码会包如下错误
-         * org.springframework.dao.InvalidDataAccessApiUsageException:
-         * You have provided an instance of an incorrect PK class for this find operation.
-         * Class expected : class java.lang.String, Class received : class java.lang.Integer.;
-         * ..
-         * .
-         *
-         */
-
-       /* TAMSTaCategory taCategory=adminInfoForm.getAllTaCategories().get(index);
+        TAMSTaCategory taCategory=adminInfoForm.getAllTaCategories().get(index);
 
         if(adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))){
-            adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
+            //adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
             return this.getTaCategoryPage(form);
         }
         else{
             // 应该返回错误页面
 
             return this.getTaCategoryPage(form);
-        }*/
-        return this.getTaCategoryPage(form);
+        }
+        //return this.getTaCategoryPage(form);
     }
 
     /**
@@ -562,11 +552,40 @@ public class adminController extends UifControllerBase {
     public ModelAndView getTaskCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminInfoForm.setNewIssueType(new TAMSIssueType());
-
         adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());
 
         return this.getModelAndView(adminInfoForm, "pageTaskCategory");
+    }
+
+    /**
+     * 编辑/添加项返回方法
+     * pageTaskCategory
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTaskCategory", "methodToCall=selectCurTask"})
+    public ModelAndView selectCurTask(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        try {
+            //存在index进入edit dialog
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+            int index = params.getSelectedLineIndex();
+
+            adminInfoForm.setIssueType(adminInfoForm.getAllIssueTypes().get((index)));
+
+            return this.showDialog("editTaskCategoryDialog", true, adminInfoForm);
+        }
+        catch (RuntimeException e) {
+            //没有选中则进入catch
+            //进而进入new dialog
+            adminInfoForm.setIssueType(new TAMSIssueType());
+
+            return this.showDialog("addTaskCategoryDialog", true, adminInfoForm);
+        }
+
     }
 
     /**
@@ -579,7 +598,23 @@ public class adminController extends UifControllerBase {
     public ModelAndView addNewIssueType(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminService.addTaIssueType(adminInfoForm.getNewIssueType());
+        adminService.addTaIssueType(adminInfoForm.getIssueType());
+
+        return this.getTaskCategoryPage(form);
+    }
+
+    /**
+     * 编辑任务类别
+     * pageTaskCategory
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=updateTaskCategory"})
+    public ModelAndView updateTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminService.changeIssueType(adminInfoForm.getIssueType());
 
         return this.getTaskCategoryPage(form);
     }

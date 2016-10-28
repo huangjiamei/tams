@@ -103,6 +103,15 @@
                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
                                             </property>
                                         </bean>
+                                        <bean parent="Uif-ActionImage">
+                                            <property name="confirmationDialog">
+                                                <ref bean="deletePermissionDialog" />
+                                            </property>
+                                            <property name="actionImage">
+                                                <bean parent="Uif-Image"
+                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
+                                            </property>
+                                        </bean>
                                     </list>
                                 </property>
                             </bean>
@@ -144,6 +153,23 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
                       p:methodToCall="savePermission"  p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="deletePermissionDialog" parent="Uif-DialogGroup"
+          p:headerText="删除权限" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除权限，如需删除请联系系统维护人员！" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="deletePermission"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

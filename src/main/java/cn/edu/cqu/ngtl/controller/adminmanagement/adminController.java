@@ -4,7 +4,6 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
-import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
@@ -114,8 +113,10 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 
+
+    //TODO 新增和删除对话框的实例  START
     /**
-     * 新增权限对话框
+     * 新增权限对话框   新增的对话框将属性设为空值再直接弹对话框
      * @param form
      * @return
      * @throws Exception
@@ -129,9 +130,32 @@ public class adminController extends UifControllerBase {
         return this.showDialog("savePermissionDialog",true,infoForm);
     }
 
+    /**
+     * 更新的对话框需要取到当前需要修改的对象，然后将该对象中的值赋予对话框中的相应字段中。然后再弹对话框
+     * PS:务必将选择对象的index放入到form中（或者用其他方法记录下来）
+     * @param form
+     * @return
+     * @throws Exception
+     */
+
+    @RequestMapping(params = "methodToCall=updateKrimPerm")
+    public ModelAndView updateKrimPerm(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
+        KRIM_PERM_T krim_perm_t = new KRIM_PERM_T();
+        infoForm.setPermissionNM(selectedKrim_perm_t.getName());         //给dialog中的字段赋值
+        infoForm.setPermissionContent(selectedKrim_perm_t.getDescription());
+        infoForm.setPermissionStatus(selectedKrim_perm_t.getActive());
+        infoForm.setPermissionIndex(index);                  //记录index
+        return this.showDialog("savePermissionDialog",true,infoForm);
+    }
 
     /**
-     * 保存新增权限
+     * 保存/新增权限二合一方法
+     * 根据index的值去判断页面执行的是更新还是新增操作。index如果值是null，则页面是进行的新增操作；反之则是进行的更新操作
+     * PS:数据库操作结束之后务必将更新的对象重新放入到页面的显示对象中
      * @param form
      * @return
      * @throws Exception
@@ -154,33 +178,36 @@ public class adminController extends UifControllerBase {
         krimPermTs.setTemplateId("56");
         new KRIM_PERM_T_DaoJpa().addPermissions(krimPermTs);
         if(infoForm.getPermissionIndex()==null) {
-            infoForm.getRMPkrimPermTs().add(krimPermTs);
+            infoForm.getRMPkrimPermTs().add(krimPermTs);   //根据不同的操作对页面显示对象进行修改
         }else{
             infoForm.getRMPkrimPermTs().set((infoForm.getPermissionIndex()),krimPermTs);
         }
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 
+    //TODO 新增和删除对话框的实例  END
+
     /**
-     *
+     * 删除权限
      * @param form
+     * @param request
+     * @param response
      * @return
      * @throws Exception
      */
 
-    @RequestMapping(params = "methodToCall=updateKrimPerm")
-    public ModelAndView updateKrimPerm(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+    @RequestMapping(params = "methodToCall=deletePermission")
+    public ModelAndView deletePermission(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
+                                         HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
-        KRIM_PERM_T krim_perm_t = new KRIM_PERM_T();
-        infoForm.setPermissionNM(selectedKrim_perm_t.getName());
-        infoForm.setPermissionContent(selectedKrim_perm_t.getDescription());
-        infoForm.setPermissionStatus(selectedKrim_perm_t.getActive());
-        infoForm.setPermissionIndex(index);
-        return this.showDialog("savePermissionDialog",true,infoForm);
+        new KRIM_PERM_T_DaoJpa().delPermissions(selectedKrim_perm_t);
+        infoForm.getRMPkrimPermTs().remove(index);
+        return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
+
 
     /**
      * 更新角色
@@ -239,6 +266,7 @@ public class adminController extends UifControllerBase {
 
         return this.getModelAndView(infoForm, "pageUpdateRole");
     }
+
 
     /**
      * 保存角色

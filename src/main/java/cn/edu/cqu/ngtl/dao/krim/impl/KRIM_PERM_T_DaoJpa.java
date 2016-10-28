@@ -19,7 +19,6 @@ public class KRIM_PERM_T_DaoJpa implements KRIM_PERM_T_Dao {
 	
 	@Override
 	public List<KRIM_PERM_T> getAllPermissions() {
-		// TODO Auto-generated method stub
 		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()
 				.setPredicates(and(equal("namespaceCode" , nameSpace)));
 		QueryResults<KRIM_PERM_T> qr = KradDataServiceLocator.getDataObjectService().findMatching(
@@ -29,8 +28,14 @@ public class KRIM_PERM_T_DaoJpa implements KRIM_PERM_T_Dao {
 
 	@Override
 	public void addPermissions(KRIM_PERM_T krim_perm_t) {
-		// TODO Auto-generated method stub
 		krim_perm_t.setNamespaceCode(nameSpace);
 		KradDataServiceLocator.getDataObjectService().save(krim_perm_t);
 	}
+
+
+	@Override
+	public void delPermissions(KRIM_PERM_T krim_perm_t){
+		KradDataServiceLocator.getDataObjectService().delete(krim_perm_t);
+	}
+
 }

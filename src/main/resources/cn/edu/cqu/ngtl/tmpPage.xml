@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="PermissionManagementPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="UserRoleManagerPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
                 <bean parent="Uif-HorizontalBoxSection"
@@ -40,7 +40,7 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="权限管理"/>
+                            <bean parent="Uif-HeaderThree" p:headerText="用户管理"/>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -71,7 +71,7 @@
                                                                   p:location.controllerMapping="/admin"
                                                                   p:location.methodToCall="getConsolePage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="4"
-                                                                  p:value="权限管理"/>
+                                                                  p:value="用户管理"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -101,7 +101,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-table"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="权限列表"
+                                                                <bean parent="Uif-MessageField" p:messageText="用户角色列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
@@ -134,12 +134,6 @@
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加权限"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="addPermissionDialog"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
-                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -153,11 +147,10 @@
                                                         <property name="items">
                                                             <list>
                                                                 <!--table-->
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="3">
+                                                                <bean  parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T" />
-                                                                    <property name="propertyName" value="RMPkrimPermTs" />
+                                                                              value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor" />
+                                                                    <property name="propertyName" value="URMutInstructors" />
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="false"/>
 
@@ -170,42 +163,30 @@
                                                                     <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>
-                                                                    <property name="renderLineActions" value="true"/>
-                                                                    <property name="disclosure.render" value="false"/>
+                                                                    <!--<property name="renderLineActions" value="true"/>-->
+                                                                    <!--<property name="disclosure.render" value="false"/>-->
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:propertyName="description"
-                                                                                  p:readOnly="true" p:label="权限名称" />
-                                                                            <bean parent="Uif-InputField" p:propertyName="name"
-                                                                                  p:readOnly="true" p:label="权限内容" />
-                                                                            <bean parent="Uif-InputField" p:propertyName="active"
-                                                                                  p:label="权限状态" p:readOnly="true">
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-DropdownControl">
-                                                                                        <property name="options">
-                                                                                            <list>
-                                                                                                <bean parent="Uif-KeyLabelPair" p:key="Y" p:value="可用" />
-                                                                                                <bean parent="Uif-KeyLabelPair" p:key="N" p:value="失效" />
-                                                                                            </list>
-                                                                                        </property>
-                                                                                    </bean>
-                                                                                </property>
-                                                                            </bean>
+                                                                            <bean parent="Uif-InputField" p:propertyName="department.name" p:readOnly="true"
+                                                                                  p:label="学院" />
+                                                                            <bean parent="Uif-InputField" p:propertyName="name" p:readOnly="true"
+                                                                                  p:label="姓名" />
+                                                                            <bean parent="Uif-InputField" p:propertyName="gender"
+                                                                                  p:readOnly="true" p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}" />
+                                                                            <bean parent="Uif-InputField" p:propertyName="code" p:readOnly="true"
+                                                                                  p:label="工号" />
+                                                                            <bean parent="Uif-InputField" p:propertyName="idNumber"
+                                                                                  p:readOnly="true" p:label="统一认证号" />
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-HorizontalBoxSection">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="updateKrimPerm">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
+                                                                            <bean parent="Uif-ActionImage" p:methodToCall="selectURMInstructor"
+                                                                                  p:successCallback="jQuery('#updateUserRoleBtn').click();" p:render="@{#line.idNumber==null? false:true}">
+                                                                                <property name="actionImage">
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
                                                                                 </property>
                                                                             </bean>
                                                                         </list>
@@ -223,43 +204,32 @@
                         </list>
                     </property>
                 </bean>
-            </list>
-        </property>
-    </bean>
 
-    <bean id="savePermissionDialog" parent="Uif-DialogGroup"
-          p:headerText="添加权限" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
-        <property name="items">
-            <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" />
-                <bean parent="Uif-GridGroup">
+                <bean parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="rightGroup box-tools" p:style="display:none">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-InputField" p:label="权限名称"
-                                  p:propertyName="permissionNM"/>
-                            <bean parent="Uif-InputField" p:label="权限内容"
-                                  p:propertyName="permissionContent"/>
-                            <bean parent="Uif-InputField" p:label="权限状态" p:propertyName="permissionStatus">
+                            <bean parent="Uif-MessageField" p:messageText="学院:"
+                                  p:style="line-height:20px;font-weight:700;margin-top: 5px;" />
+                            <bean parent="Uif-InputField" p:propertyName="URMsearchDepartmentId">
                                 <property name="optionsFinder">
-                                    <bean class="cn.edu.cqu.ngtl.optionfinder.IsActiveFinder"
-                                          p:blankOption="false" />
+                                    <bean class="cn.edu.cqu.ngtl.optionfinder.UTDepartmentOptionFinder"
+                                          p:blankOption="true" />
                                 </property>
                                 <property name="control">
                                     <bean parent="Uif-DropdownControl" />
                                 </property>
                             </bean>
+                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="查询"
+                                  p:additionalCssClasses="icon-search btn-flat box-tools"
+                                  p:methodToCall="searchBatchUTInstructors" />
+                            <bean id="updateUserRoleBtn" parent="Uif-PrimaryActionButton"
+                                  p:actionLabel="修改用户角色" p:navigateToPageId="pageUpdateUserRoleManager"
+                                  p:style="display:none" />
                         </list>
                     </property>
                 </bean>
             </list>
         </property>
-        <property name="footer.items">
-            <list>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="savePermission"  p:dialogDismissOption="REQUEST" />
-            </list>
-        </property>
     </bean>
-
 </beans>

@@ -295,8 +295,7 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="updateTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"
-                      p:refreshId="taCategoryTable"/>
+                      p:methodToCall="updateTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"/>
             </list>
         </property>
     </bean>

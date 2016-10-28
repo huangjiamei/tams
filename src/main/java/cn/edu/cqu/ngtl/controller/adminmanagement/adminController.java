@@ -111,6 +111,7 @@ public class adminController extends UifControllerBase {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         List<KRIM_PERM_T> krimPermTs = new ArrayList<KRIM_PERM_T>(new KRIM_PERM_T_DaoJpa().getAllPermissions());
         infoForm.setRMPkrimPermTs(krimPermTs);
+
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 

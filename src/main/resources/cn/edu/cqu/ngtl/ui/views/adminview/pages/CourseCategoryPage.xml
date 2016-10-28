@@ -135,15 +135,10 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加"
+                                                                                  p:actionLabel="添加类别"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:successCallback="showDialog('addCourseCategoryDialog')"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
-                                                                                </property>
+                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -171,9 +166,9 @@
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <property name="layoutManager.generateAutoSequence"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true"/>
 

@@ -1,13 +1,13 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
-	xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
-	xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/aop
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	   xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+	   xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+	   xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+	   xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns:util="http://www.springframework.org/schema/util"
+	   xsi:schemaLocation="http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
                            http://www.springframework.org/schema/beans
                            http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
@@ -31,141 +31,206 @@
                            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-	<bean id="UserRoleManagerPage" parent="Uif-VerticalBoxSection">
-		<!-- same with 416 -->
+
+	<bean id="UserRoleManagerPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
 		<property name="items">
 			<list>
-				<bean id="UserRoleManagerPageHeader" parent="Uif-HorizontalBoxSection"
-					p:additionalCssClasses="pageHeaderBox">
+				<bean parent="Uif-HorizontalBoxSection"
+					  p:additionalCssClasses="content-header">
 					<property name="items">
 						<list>
-							<bean parent="Uif-Icon" p:iconClass="icon-user" />
-							<bean parent="Uif-MessageField" p:messageText="用户管理"
-								p:additionalCssClasses="headerTitle" p:style="margin-top:3px"/>
+							<!-- 左上角 -->
+							<bean parent="Uif-HeaderThree" p:headerText="用户管理"/>
+
+							<!-- 右上角 当前路径 -->
+							<bean parent="Uif-HorizontalBoxSection"
+								  p:additionalCssClasses="breadcrumb">
+								<property name="items">
+									<list>
+										<bean parent="Uif-Icon" p:iconClass="icon-home myIcon"
+											  p:style="float:left!important;"/>
+										<bean parent="Uif-InputField">
+											<property name="control">
+												<bean parent="Uif-OptionListControl"
+													  p:additionalCssClasses="breadcrumb"
+													  p:style="background: transparent!important;">
+													<property name="options">
+														<list>
+															<bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
+																  p:location.viewId="PortalView"
+																  p:location.controllerMapping="/home"
+																  p:location.methodToCall="getCommonHome"/>
+															<bean parent="Uif-KeyValueLocation" p:key="2"
+																  p:value="管理台"
+																  p:location.viewId="AdminView"
+																  p:location.controllerMapping="/admin"
+																  p:location.methodToCall="getConsolePage"/>
+															<bean parent="Uif-KeyValueLocation" p:key="3"
+																  p:value="类别管理"
+																  p:location.viewId="AdminView"
+																  p:location.controllerMapping="/admin"
+																  p:location.methodToCall="getConsolePage"/>
+															<bean parent="Uif-KeyLabelPair" p:key="4"
+																  p:value="用户管理"/>
+														</list>
+													</property>
+												</bean>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
 						</list>
 					</property>
 				</bean>
-				<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-info">
+
+				<!--body-->
+				<!--课程类别管理表格-->
+				<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
 					<property name="items">
 						<list>
-							<bean parent="Uif-HorizontalBoxSection"
-								p:additionalCssClasses="box-header">
+							<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
 								<property name="items">
 									<list>
-										<bean parent="Uif-Icon" p:iconClass="icon-search" />
-										<bean parent="Uif-MessageField" p:messageText="用户角色列表"
-											p:additionalCssClasses="boxheaderTitle" />
-										<bean parent="Uif-HorizontalBoxSection"
-											p:additionalCssClasses="rightGroup box-tools" p:style="display:none">
+										<bean parent="Uif-VerticalBoxSection"
+											  p:additionalCssClasses="box box-info">
 											<property name="items">
 												<list>
-													<bean parent="Uif-MessageField" p:messageText="学院:"
-														p:style="line-height:20px;font-weight:700;margin-top: 5px;" />
-													<bean parent="Uif-InputField" p:propertyName="URMsearchDepartmentId">
-														<property name="optionsFinder">
-															<bean class="cn.edu.cqu.ngtl.optionfinder.UTDepartmentOptionFinder"
-																p:blankOption="true" />
-														</property>
-														<property name="control">
-															<bean parent="Uif-DropdownControl" />
+													<bean parent="Uif-HorizontalBoxSection"
+														  p:additionalCssClasses="box-header">
+														<property name="items">
+															<list>
+																<bean parent="Uif-Icon" p:iconClass="icon-table"/>
+																<bean parent="Uif-MessageField" p:messageText="用户角色列表"
+																	  p:additionalCssClasses="boxheaderTitle"/>
+																<bean parent="Uif-HorizontalBoxSection"
+																	  p:style="float: right!important;">
+																	<property name="items">
+																		<list>
+																			<!--右上角btnlist-->
+																		</list>
+																	</property>
+																</bean>
+															</list>
 														</property>
 													</bean>
-													<bean parent="Uif-PrimaryActionButton" p:actionLabel="查询"
-														p:additionalCssClasses="icon-search btn-flat box-tools"
-														p:methodToCall="searchBatchUTInstructors" />
-													<bean id="updateUserRoleBtn" parent="Uif-PrimaryActionButton"
-														p:actionLabel="修改用户角色" p:navigateToPageId="pageUpdateUserRoleManager"
-														p:style="display:none" />
+													<bean parent="Uif-HorizontalBoxSection"
+														  p:additionalCssClasses="box-header">
+														<property name="items">
+															<list>
+																<bean parent="Uif-HorizontalBoxSection"
+																	  p:style="float: left!important;">
+																	<property name="items">
+																		<list>
+																			<!--左上角btnlist-->
+																			<bean parent="Uif-PrimaryActionButton"
+																				  p:actionLabel="返回"
+																				  p:actionImagePlacement="LEFT"
+																				  p:navigateToPageId="pageConsole"
+																				  p:additionalCssClasses="bg-grey tamsbtn">
+																				<property name="actionImage">
+																					<bean parent="Uif-Image"
+																						  p:width="18" p:height="18"
+																						  p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
+																				</property>
+																			</bean>
+																		</list>
+																	</property>
+																</bean>
+
+															</list>
+														</property>
+													</bean>
+
+													<bean parent="Uif-VerticalBoxSection"
+														  p:additionalCssClasses="box-body">
+														<property name="items">
+															<list>
+																<!--table-->
+																<bean  parent="Uif-Disclosure-TableCollectionSection">
+																	<property name="collectionObjectClass"
+																			  value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor" />
+																	<property name="propertyName" value="URMutInstructors" />
+																	<property name="layoutManager.richTable.render"
+																			  value="false"/>
+
+																	<!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
+																	<property name="layoutManager.renderSequenceField"
+																			  value="true"/>
+																	<property name="layoutManager.generateAutoSequence"
+																			  value="true"/>
+																	<!--打开useServerPaging会报js error？？-->
+																	<property name="useServerPaging" value="true"/>
+
+																	<property name="renderAddLine" value="false"/>
+																	<!--<property name="renderLineActions" value="true"/>-->
+																	<!--<property name="disclosure.render" value="false"/>-->
+
+																	<property name="items">
+																		<list>
+																			<bean parent="Uif-InputField" p:propertyName="department.name" p:readOnly="true"
+																				  p:label="学院" />
+																			<bean parent="Uif-InputField" p:propertyName="name" p:readOnly="true"
+																				  p:label="姓名" />
+																			<bean parent="Uif-InputField" p:propertyName="gender"
+																				  p:readOnly="true" p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}" />
+																			<bean parent="Uif-InputField" p:propertyName="code" p:readOnly="true"
+																				  p:label="工号" />
+																			<bean parent="Uif-InputField" p:propertyName="idNumber"
+																				  p:readOnly="true" p:label="统一认证号" />
+																		</list>
+																	</property>
+																	<property name="lineActions">
+																		<list>
+																			<bean parent="Uif-ActionImage" p:methodToCall="selectURMInstructor"
+																				  p:successCallback="jQuery('#updateUserRoleBtn').click();"
+																				  p:render="@{#line.idNumber==null? false:true}">
+																				<property name="actionImage">
+																					<bean parent="Uif-Image"
+																						  p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
+																				</property>
+																			</bean>
+																		</list>
+																	</property>
+																</bean>
+															</list>
+														</property>
+													</bean>
 												</list>
 											</property>
 										</bean>
 									</list>
 								</property>
 							</bean>
-					<bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
-					    <property name="items">
-						  <list>
-							   <bean id="UserRoleManagerTable" parent="Uif-TableCollectionSection">
-								<property name="collectionObjectClass"
-									value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor" />
-								<property name="propertyName" value="URMutInstructors" />
-							   <!-- <property name="layoutManager.richTable.render" value="false" />
-								<property name="layoutManager.renderSequenceField" value="true" />
-								<property name="renderAddLine" value="false" /> -->
-								
-								<property name="layoutManager.renderSequenceField" value="true" />
-								<property name="renderAddLine" value="false" />
-								<property name="useServerPaging" value="true" />
-								<property name="layoutManager.richTable.render" value="true" />
-								<property name="layoutManager.richTable.templateOptions">
-									<map merge="true">
-										<entry key="sDom" value="&lt;'top't&gt;&lt;'bottom'ilp&gt;" />
-										<entry key="sPaginationType" value="full_numbers" />
-									</map>
-								</property> 
-								<property name="items">
-									<list>
-										<bean parent="Uif-InputField" p:propertyName="department.name" p:readOnly="true"
-											p:label="学院" />
-										<bean parent="Uif-InputField" p:propertyName="name" p:readOnly="true"
-											p:label="姓名" />
-										<bean parent="Uif-InputField" p:propertyName="gender"
-											p:readOnly="true" p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}" />
-										<bean parent="Uif-InputField" p:propertyName="code" p:readOnly="true"
-											p:label="工号" />
-										<bean parent="Uif-InputField" p:propertyName="idNumber"
-											p:readOnly="true" p:label="统一认证号" />
-									</list>
-								</property>
-								<property name="lineActions">
-									<list>
-										<bean parent="Uif-ActionImage" p:methodToCall="selectURMInstructor"
-											p:successCallback="jQuery('#updateUserRoleBtn').click();" p:render="@{#line.idNumber==null? false:true}">
-											<property name="actionImage">
-												<bean parent="Uif-Image"
-													p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-											</property>
-										</bean>
-									</list>
-								</property>
-							  </bean>
-							</list>
-						   </property>
-						</bean>
-					  </list>
+						</list>
 					</property>
 				</bean>
-<!--                <bean id="UserRoleManagermentContainer" parent="Uif-HorizontalBoxSection" p:style="display:none">
-				<property name="items">
-					<list>
-						<bean parent="Uif-InputField" p:propertyName="userRoleDepartmentId"/>
-						<bean parent="Uif-InputField" p:propertyName="userRoleName"/>
-						<bean parent="Uif-InputField" p:propertyName="userRoleGender"/>
-						<bean parent="Uif-InputField" p:propertyName="userRoleCode"/>
-						<bean parent="Uif-InputField" p:propertyName="userRoleIdNumber"/>
-						<bean id="userRoleButton" parent="Uif-PrimaryActionButton" p:actionLabel="搜索"
-				p:methodToCall="searchBatchUTInstructors" p:refreshId="UserRoleManagerPage" />&lt;!&ndash;  p:successCallback="jQuery('#searchAllStudent').click();" &ndash;&gt;
-					</list>
-				</property>
-			</bean>-->
-				<!-- <bean parent="Uif-HorizontalBoxSection"> <property name="items"> 
-					<list> <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header"> 
-					<property name="items"> <list> <bean parent="Uif-Icon" p:iconClass="icon-th-list" 
-					/> <bean parent="Uif-MessageField" p:messageText="用户角色列表" p:additionalCssClasses="boxheaderTitle" 
-					/> </list> </property> </bean> </list> </property> </bean> -->
-				<!-- <bean parent="Uif-HorizontalBoxSection"> <property name="items"> 
-					<list> <bean parent="Uif-InputField" p:label="学院" p:propertyName="URMsearchDepartmentId" 
-					p:optionsFinderClass="cn.edu,cqu.ngtl.tool.UTDepartmentOptionFinder">
-					<property name="control"> <bean parent="Uif-DropdownControl" /> </property> 
-					</bean> <bean parent="Uif-PrimaryActionButton" p:actionLabel="查询" p:additionalCssClasses="icon-search" 
-					p:style="margin: 17px 10px;" p:methodToCall="searchBatchUTInstructors" /> 
-					<bean id="updateUserRoleBtn" parent="Uif-PrimaryActionButton" p:actionLabel="修改用户角色" 
-					p:navigateToPageId="pageUpdateUserRoleManager" p:style="display:none" /> 
-					</list> </property> </bean> -->
 
+				<bean parent="Uif-HorizontalBoxSection"
+					  p:additionalCssClasses="rightGroup box-tools" p:style="display:none">
+					<property name="items">
+						<list>
+							<bean parent="Uif-MessageField" p:messageText="学院:"
+								  p:style="line-height:20px;font-weight:700;margin-top: 5px;" />
+							<bean parent="Uif-InputField" p:propertyName="URMsearchDepartmentId">
+								<property name="optionsFinder">
+									<bean class="cn.edu.cqu.ngtl.optionfinder.UTDepartmentOptionFinder"
+										  p:blankOption="true" />
+								</property>
+								<property name="control">
+									<bean parent="Uif-DropdownControl" />
+								</property>
+							</bean>
+							<bean parent="Uif-PrimaryActionButton" p:actionLabel="查询"
+								  p:additionalCssClasses="icon-search btn-flat box-tools"
+								  p:methodToCall="searchBatchUTInstructors" />
+							<bean id="updateUserRoleBtn" parent="Uif-PrimaryActionButton"
+								  p:actionLabel="修改用户角色" p:navigateToPageId="pageUpdateUserRoleManager"
+								  p:style="display:none" />
+						</list>
+					</property>
+				</bean>
 			</list>
 		</property>
 	</bean>
- 
-	
 </beans>

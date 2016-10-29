@@ -41,13 +41,25 @@
 
         <property name="applicationNavigation.items">
             <list>
-                <bean parent="Uif-HorizontalBoxSection">
+                <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="es-megamenu esmenu">
                     <property name="items">
                         <list>
                             <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
                             <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
-                            <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="pull-right"
-                                  p:actionScript="showDialog('guideMapDialog');" p:style="margin-top:15px;"/>
+                            <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
+                                  p:actionScript="showDialog('navDialog');"
+                                  p:style="margin-top:15px;"/>
+
+
+                            <!--<bean id="examMainMenu" parent="Uif-DropdownToggleMenu"-->
+                                  <!--p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="">-->
+                                  <!--<property name="menuItems">-->
+                                      <!--<list>-->
+                                          <!--<bean parent="megamenu-items"/>-->
+                                      <!--</list>-->
+                                 <!--</property>-->
+                            <!--</bean>-->
+
                         </list>
                     </property>
                 </bean>
@@ -83,101 +95,174 @@
     </bean>
 
 
-    <bean id="guideMapDialog" parent="Uif-DialogGroup"
+    <bean id="navDialog" parent="Uif-DialogGroup"
           p:dialogCssClass="navigationDialog"
+          p:onShowDialogScript="initNavDialog();"
           p:style="z-index:9999;">
         <property name="layoutManager">
-            <bean parent="Uif-VerticalBoxLayout" p:style="width:60%;"/>
+            <bean parent="Uif-VerticalBoxLayout" />
         </property>
         <property name="items">
             <list>
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <bean parent="megamenu-items"/>
+            </list>
+        </property>
+
+    </bean>
+
+
+    <bean id="megamenu-items" parent="Uif-VerticalBoxSection" p:additionalCssClasses="">
+        <property name="items">
+            <list>
+                <bean id="megamenu-content" parent="Uif-VerticalBoxSection" p:additionalCssClasses="esmenu-content">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
-                                  p:headerText="课程管理">
-                                <!-- property to activate disclosure -->
-                                <property name="disclosure.render" value="true"/>
-                                <!--设置下拉列表默认关闭-->
-                                <property name="disclosure.defaultOpen" value="false"/>
-                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
+                            <bean  parent="Uif-VerticalBoxSection" p:additionalCssClasses="tabbable row">
                                 <property name="items">
                                     <list>
-                                        <bean parent="ClassMap"/>
-                                    </list>
-                                </property>
-                            </bean>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
-                                  p:headerText="管理台">
-                                <!-- property to activate disclosure -->
-                                <property name="disclosure.render" value="true"/>
-                                <!--设置下拉列表默认关闭-->
-                                <property name="disclosure.defaultOpen" value="false"/>
-                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
-                                <property name="items">
-                                    <list>
-                                        <bean parent="AdminMap"/>
-                                    </list>
-                                </property>
-                            </bean>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
-                                  p:headerText="某某管理4">
-                                <!-- property to activate disclosure -->
-                                <property name="disclosure.render" value="true"/>
-                                <!--设置下拉列表默认关闭-->
-                                <property name="disclosure.defaultOpen" value="false"/>
-                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
-                                <property name="items">
-                                    <list>
-                                        <bean parent="ClassMap"/>
-                                    </list>
-                                </property>
-                            </bean>
+                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 nav nav-pills nav-stacked">
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-Link" p:href="#nav-course"
+                                                          p:linkText="课程管理"/>
+                                                    <bean parent="Uif-Link" p:href="#nav-admin"
+                                                          p:linkText="管理台"/>
+                                                </list>
+                                            </property>
+                                        </bean>
 
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
-                                  p:headerText="某某管理4">
-                                <!-- property to activate disclosure -->
-                                <property name="disclosure.render" value="true"/>
-                                <!--设置下拉列表默认关闭-->
-                                <property name="disclosure.defaultOpen" value="false"/>
-                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
-                                <property name="items">
-                                    <list>
-                                        <bean parent="ClassMap"/>
-                                    </list>
-                                </property>
-                            </bean>
+                                        <bean  parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-9 menu-sub-items">
+                                            <property name="items">
+                                                <list>
+                                                    <bean  parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-content">
+                                                        <property name="items">
+                                                            <list>
+                                                                <!--放置切换的导航栏-->
+                                                                <bean  id="nav-course" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">
+                                                                    <property name="items">
+                                                                        <list>
+
+                                                                            <bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="课程管理"
+                                                                                              p:additionalCssClasses="boxheaderTitle"/>
+                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
+                                                                                              p:additionalCssClasses="close pull-right"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+
+                                                                                                    <bean   parent="ClassMap"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean   parent="ClassMap"/>
 
 
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
-                                  p:headerText="某某管理">
-                                <!-- property to activate disclosure -->
-                                <property name="disclosure.render" value="true"/>
-                                <!--设置下拉列表默认关闭-->
-                                <property name="disclosure.defaultOpen" value="false"/>
-                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
-                                <property name="items">
-                                    <list>
-                                        <bean parent="ClassMap"/>
-                                    </list>
-                                </property>
-                            </bean>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-6 col-xs-12"
-                                  p:headerText="某某管理">
-                                <!-- property to activate disclosure -->
-                                <property name="disclosure.render" value="true"/>
-                                <!--设置下拉列表默认关闭-->
-                                <property name="disclosure.defaultOpen" value="false"/>
-                                <property name="disclosure.collapsedIconClass" value="icon-folder"/>
-                                <property name="disclosure.expandedIconClass" value="icon-folder-open"/>
-                                <property name="items">
-                                    <list>
-                                        <bean parent="ClassMap"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+
+                                                                                                    <bean   parent="ClassMap"/>
+
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+
+
+
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean  id="nav-admin" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane">
+                                                                    <property name="items">
+                                                                        <list>
+
+
+                                                                            <bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="管理台"
+                                                                                              p:additionalCssClasses="boxheaderTitle"/>
+                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
+                                                                                              p:additionalCssClasses="close pull-right "/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+
+
+                                                                            <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean   parent="AdminMap"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+
+                                                                                                    <bean   parent="AdminMap"/>
+
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+
+                                                                                                    <bean   parent="AdminMap"/>
+
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                            <property name="items">
+                                                                                                <list>
+
+                                                                                                    <bean   parent="AdminMap"/>
+
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                </list>
+                                            </property>
+                                        </bean>
                                     </list>
                                 </property>
                             </bean>
@@ -186,9 +271,7 @@
                 </bean>
             </list>
         </property>
-
     </bean>
-
 
     <!--tams网站导航-->
     <bean id="ClassMap" parent="Uif-VerticalBoxSection">
@@ -203,6 +286,42 @@
                         </list>
                     </property>
                 </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
+        <property name="items">
+            <list>
+                <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&amp;viewId=ClassView"
+                      p:linkText="教学班"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-SimpleHeaderFour" p:headerText="Lists"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Demo-Menu-Researcher-AwardGroup" parent="Uif-MenuList" p:headerText="Awards">
+        <property name="items">
+            <list>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="Demo-Menu-Researcher-NegotiationGroup" parent="Uif-MenuList" p:headerText="Negotiations">
+        <property name="items">
+            <list>
+                <bean parent="Uif-Link" p:href="http://www.kuali.org"
+                      p:linkText="Kuali Website"/>
             </list>
         </property>
     </bean>
@@ -240,43 +359,6 @@
                         </list>
                     </property>
                 </bean>
-            </list>
-        </property>
-    </bean>
-
-
-    <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
-        <property name="items">
-            <list>
-                <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&amp;viewId=ClassView"
-                      p:linkText="教学班"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-                <bean parent="Uif-SimpleHeaderFour" p:headerText="Lists"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                       p:linkText="Kuali Website"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="Demo-Menu-Researcher-AwardGroup" parent="Uif-MenuList" p:headerText="Awards">
-        <property name="items">
-            <list>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="Demo-Menu-Researcher-NegotiationGroup" parent="Uif-MenuList" p:headerText="Negotiations">
-        <property name="items">
-            <list>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
             </list>
         </property>
     </bean>

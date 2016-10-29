@@ -41,12 +41,14 @@
                 <value>css/bootstrap.css</value>
                 <value>css/tams.css</value>
                 <value>css/font-awesome.min.css</value>
+                <value>css/site.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
                 <!--<value>scripts/exam_526.js</value>-->
+                <value>js/tams.js</value>
             </list>
         </property>
 

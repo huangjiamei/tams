@@ -2,7 +2,7 @@
 
 
 *{
-    font-family:"Microsoft YaHei UI";
+    font-family:"Microsoft YaHei UI"!important;
 }
 
 body{
@@ -30,6 +30,7 @@ body{
 
 .uif-applicationHeader {
     background-color: #3C8DBC;
+    position:fixed;
 }
 
 .uif-applicationHeader .navbar {
@@ -70,7 +71,24 @@ body{
 /* 导航栏 */
 .navigationDialog{
     width:80%;
+    margin-top:50px;
 }
+.navigationDialog .modal-content{
+    margin-top: 0;
+}
+#navDialog{
+    background:rgba(0,0,0,0)!important;
+}
+.modal-backdrop {
+    opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
+}
+
+
+.uif-viewContentWrapper{
+    margin-top: 40px;
+}
+
 
 /* box */
 /* box-header */
@@ -203,6 +221,7 @@ body{
 .modal-content{
     margin-top: 25%;
 }
+
 
 /* 让collection table的action格子短一点，暂时无效*/
 .uif-collection-column-action{

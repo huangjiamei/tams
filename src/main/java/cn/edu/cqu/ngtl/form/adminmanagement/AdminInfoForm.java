@@ -88,6 +88,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String permissionContent;
     private String permissionStatus;
     private Integer permissionIndex;
+
     /**
      * 用户角色管理页面
      */

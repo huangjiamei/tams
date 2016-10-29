@@ -135,15 +135,10 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加"
+                                                                                  p:actionLabel="添加助教类别"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="selectNewTa"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
-                                                                                </property>
+                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -295,8 +290,7 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="updateTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"
-                      p:refreshId="taCategoryTable"/>
+                      p:methodToCall="updateTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"/>
             </list>
         </property>
     </bean>

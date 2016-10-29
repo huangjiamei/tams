@@ -141,6 +141,19 @@
                                                                 <bean  id="nav-course" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">
                                                                     <property name="items">
                                                                         <list>
+
+                                                                            <bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="课程管理"
+                                                                                              p:additionalCssClasses="boxheaderTitle"/>
+                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
+                                                                                              p:additionalCssClasses="close pull-right"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
                                                                             <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                                                                                 <property name="items">
                                                                                     <list>
@@ -184,6 +197,22 @@
                                                                 <bean  id="nav-admin" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane">
                                                                     <property name="items">
                                                                         <list>
+
+
+                                                                            <bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="管理台"
+                                                                                              p:additionalCssClasses="boxheaderTitle"/>
+                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
+                                                                                              p:additionalCssClasses="close pull-right "/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+
+
                                                                             <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                                                                                 <property name="items">
                                                                                     <list>

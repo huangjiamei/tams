@@ -137,7 +137,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加助教类别"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="selectNewTa"
+                                                                                  p:methodToCall="selectCurTa"
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
                                                                         </list>
@@ -153,7 +153,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <!--table-->
-                                                                <bean id="taCategoryTable" parent="Uif-Disclosure-TableCollectionSection"
+                                                                   <bean id="taCategoryTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="1">
                                                                     <property name="headerText" value="Table Layout"/>
                                                                     <property name="collectionObjectClass"
@@ -239,9 +239,9 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="助教"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="newTaCategory.name"/>
+                                              p:propertyName="oldTaCategory.name"/>
                                         <bean parent="Uif-InputField" p:label="描述"
-                                              p:propertyName="newTaCategory.description"/>
+                                              p:propertyName="oldTaCategory.description"/>
                                     </list>
                                 </property>
                             </bean>
@@ -254,7 +254,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="addTaCategory" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveTaCategory" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -290,7 +290,7 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="updateTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"/>
+                      p:methodToCall="saveTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"/>
             </list>
         </property>
     </bean>

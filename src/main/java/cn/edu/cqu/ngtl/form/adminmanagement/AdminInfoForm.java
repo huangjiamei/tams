@@ -34,8 +34,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      */
 
     private List<TAMSIssueType> allIssueTypes;
-
     private TAMSIssueType issueType;
+    private Integer issueIndex; // issue=task,index用于区分新建还是编辑操作
 
     /**
      * 课程类别管理页面
@@ -52,10 +52,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      */
 
     private List<TAMSTaCategory> allTaCategories;
-
-    private TAMSTaCategory newTaCategory;
-
     private TAMSTaCategory oldTaCategory;
+    private Integer taIndex;
     /**
      * 课程负责人管理页面
      */
@@ -102,6 +100,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         return newTerm;
     }
 
+    public Integer getIssueIndex() {
+        return issueIndex;
+    }
+
+    public void setIssueIndex(Integer issueIndex) {
+        this.issueIndex = issueIndex;
+    }
+
+    public Integer getTaIndex() {
+        return taIndex;
+    }
+
+    public void setTaIndex(Integer taIndex) {
+        this.taIndex = taIndex;
+    }
+
     public void setNewTerm(TermManagerViewObject newTerm) {
         this.newTerm = newTerm;
     }
@@ -128,14 +142,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setAllIssueTypes(List<TAMSIssueType> allIssueTypes) {
         this.allIssueTypes = allIssueTypes;
-    }
-
-    public TAMSTaCategory getNewTaCategory() {
-        return newTaCategory;
-    }
-
-    public void setNewTaCategory(TAMSTaCategory newTaCategory) {
-        this.newTaCategory = newTaCategory;
     }
 
     public TAMSTaCategory getOldTaCategory() {

@@ -129,26 +129,32 @@
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加"
+                                                                                  p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:successCallback="showDialog('addNewTermDialog')"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="复制"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="bg-success tamsbtn">
+                                                                                  p:navigateToPageId="pageConsole"
+                                                                                  p:additionalCssClasses="bg-grey tamsbtn">
                                                                                 <property name="actionImage">
                                                                                     <bean parent="Uif-Image"
                                                                                           p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
                                                                                 </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="复制"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="xxxx"
+                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
+                                                                                <property name="actionImage">
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:width="18" p:height="18"
+                                                                                          p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="添加"
+                                                                                  p:methodToCall="xxxx"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -197,7 +203,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
                                                                                   p:additionalCssClasses="icon-search"
-                                                                                  p:methodToCall="searchBatchApplicant"
+                                                                                  p:methodToCall="xxxx"
                                                                                   p:style="margin:15px"/>
                                                                         </list>
                                                                     </property>
@@ -206,9 +212,6 @@
                                                                 <!--table-->
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="4">
-                                                                    <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
-                                                                    <property name="headerText" value="Table Layout"/>
-                                                                    <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>
                                                                     <property name="propertyName" value="allTerms"/>
@@ -248,9 +251,7 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
-                                                                                        <bean parent="Uif-ActionImage"  p:methodToCall="selectTermObj"
-                                                                                              p:successCallback="showDialog('confirmEditTermDialog')">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="xxxx">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -353,13 +354,11 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
-                <!-- 下面的ajax如果为true就不能访问后台 -->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="addNewTerm" p:successCallback=""/>
+                      p:methodToCall="savexxxx" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
-
 
 
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
@@ -428,7 +427,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                p:ajaxSubmit="true" p:methodToCall="updateTerm" p:successCallback=""/>
+                      p:methodToCall="savexxxx" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -444,7 +443,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="false" p:methodToCall="deleteTerm" p:successCallback="alert('回调成功')" />
+                      p:methodToCall="deletexxxx"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

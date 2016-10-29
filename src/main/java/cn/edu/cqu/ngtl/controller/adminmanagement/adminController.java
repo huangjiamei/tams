@@ -139,7 +139,6 @@ public class adminController extends UifControllerBase {
      * @return
      * @throws Exception
      */
-
     @RequestMapping(params = "methodToCall=updateKrimPerm")
     public ModelAndView updateKrimPerm(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -289,17 +288,17 @@ public class adminController extends UifControllerBase {
         KRIM_ROLE_T krimRoleT = infoForm.getRMPkrimRoleT();
         if (krimRoleT == null) {
             infoForm.setErrMsg("角色为空");
-            return this.showDialog("errWarnDialog", true, infoForm);
+            return this.showDialog("adminErrDialog", true, infoForm);
         }
         if (krimRoleT.getName() == null) {
             infoForm.setErrMsg("角色名称不能为空");
-            return this.showDialog("errWarnDialog", true, infoForm);
+            return this.showDialog("adminErrDialog", true, infoForm);
         }
         KRIM_ROLE_T checkKrimRoleT = krimRoleTDao.getKrimRoleTByName(krimRoleT.getName());
         if (checkKrimRoleT != null) {
             if (krimRoleT.getId() == null || !krimRoleT.getId().equals(checkKrimRoleT.getId())) {
                 infoForm.setErrMsg("角色名称已存在");
-                return this.showDialog("errWarnDialog", true, infoForm);
+                return this.showDialog("adminErrDialog", true, infoForm);
             }
         }
         krimRoleT = krimRoleTDao.saveKrimRoleT(krimRoleT);
@@ -334,7 +333,7 @@ public class adminController extends UifControllerBase {
 
         if (utInstructor.getIdNumber() == null) {
             infoForm.setErrMsg("该同志没有同一认证号呀");
-            return this.showDialog("errWarnDialog", true, infoForm);
+            return this.showDialog("adminErrDialog", true, infoForm);
         }
 
         List<KRIM_ROLE_MBR_T> krimRoleMbrTs = new ArrayList<>(
@@ -408,11 +407,6 @@ public class adminController extends UifControllerBase {
 
     /**
      * 编辑课程负责人信息
-     * 只接受来自pageCourseManager的请求
-     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
-     *
-     * @param form
-     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageCourseManager，需要考虑使用ajax实现局部刷新
      */
     @RequestMapping(params = {"methodToCall=updateCourseManager"})
     public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -435,7 +429,6 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
-
     @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -568,29 +561,11 @@ public class adminController extends UifControllerBase {
     public ModelAndView getTaCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminInfoForm.setNewTaCategory(new TAMSTaCategory());
-
         adminInfoForm.setAllTaCategories(
                 adminService.getAllTaCategories()
         );
 
         return this.getModelAndView(adminInfoForm, "pageTaCategory");
-    }
-
-    /**
-     * 添加新的助教类别
-     * pageTaCategory
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"methodToCall=addTaCategory"})
-    public ModelAndView addTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
-        adminService.addTaCategory(adminInfoForm.getNewTaCategory());
-
-        return this.getTaCategoryPage(form);
     }
 
     /**
@@ -603,42 +578,49 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=selectCurTa"})
     public ModelAndView selectCurTa(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        try {
+            //存在index进入edit dialog
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+            int index = params.getSelectedLineIndex();
 
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
-        int index = params.getSelectedLineIndex();
+            adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
+            adminInfoForm.setTaIndex(index);
 
-        adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
+            return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
+        }
+        catch (RuntimeException e) {
+            //没有选中则进入catch，进而进入new dialog
+            adminInfoForm.setOldTaCategory(new TAMSTaCategory());
 
-        return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
+            return this.showDialog("addTaCategoryDialog", true, adminInfoForm);
+        }
     }
 
-
     /**
-     * 获取addTaDialog前要调用的方法
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=selectNewTa"})
-    public ModelAndView selectNewTa(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-        adminInfoForm.setNewTaCategory(new TAMSTaCategory());
-
-        return this.showDialog("addTaCategoryDialog", true, adminInfoForm);
-    }
-    /**
-     * 编辑助教类别
-     * pageCourseCategory
+     * add,update助教的方法二合一
+     * 根据是否有index来判断本次操作类型是update还是add
      *
      * @param form
      * @return
      */
-    @RequestMapping(params = {"methodToCall=updateTaCategory"})
-    public ModelAndView updateTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = {"methodToCall=saveTaCategory"})
+    public ModelAndView saveTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory());
-
+        if(adminInfoForm.getTaIndex()!=null){
+            if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+        }else{
+            if(!adminService.addTaCategory(adminInfoForm.getOldTaCategory())){
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                adminInfoForm.setErrMsg("添加助教类别失败(修改为错误提示)");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+        }
         return this.getTaCategoryPage(form);
     }
 
@@ -658,15 +640,13 @@ public class adminController extends UifControllerBase {
         TAMSTaCategory taCategory=adminInfoForm.getAllTaCategories().get(index);
 
         if(adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))){
-            //adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
             return this.getTaCategoryPage(form);
         }
         else{
-            // 应该返回错误页面
-
-            return this.getTaCategoryPage(form);
+            // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
-        //return this.getTaCategoryPage(form);
     }
 
     /**
@@ -700,9 +680,8 @@ public class adminController extends UifControllerBase {
             CollectionControllerServiceImpl.CollectionActionParameters params =
                     new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
             int index = params.getSelectedLineIndex();
-
             adminInfoForm.setIssueType(adminInfoForm.getAllIssueTypes().get((index)));
-
+            adminInfoForm.setIssueIndex(index);
             return this.showDialog("editTaskCategoryDialog", true, adminInfoForm);
         }
         catch (RuntimeException e) {
@@ -716,33 +695,31 @@ public class adminController extends UifControllerBase {
     }
 
     /**
-     * 添加新的任务类别
-     * pageTaskCategory
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"methodToCall=addNewIssueType"})
-    public ModelAndView addNewIssueType(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
-        adminService.addTaIssueType(adminInfoForm.getIssueType());
-
-        return this.getTaskCategoryPage(form);
-    }
-
-    /**
-     * 编辑任务类别
-     * pageTaskCategory
+     * add,update任务类型的方法二合一
+     * 根据是否有index来判断本次操作类型是update还是add
      *
      * @param form
      * @return
      */
-    @RequestMapping(params = {"methodToCall=updateTaskCategory"})
-    public ModelAndView updateTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = {"methodToCall=saveTaskCategory"})
+    public ModelAndView saveTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminService.changeIssueType(adminInfoForm.getIssueType());
-
+        if(adminInfoForm.getIssueIndex()!=null){
+            // index不为空说明要调用update
+            if(!adminService.changeIssueType(adminInfoForm.getIssueType())){
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+        }else{
+            // add
+            if(!adminService.addTaIssueType(adminInfoForm.getIssueType())){
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+        }
         return this.getTaskCategoryPage(form);
     }
 
@@ -762,13 +739,12 @@ public class adminController extends UifControllerBase {
         TAMSIssueType issueType = adminInfoForm.getAllIssueTypes().get(index);
 
         if(adminService.removeIssueTypeById(issueType.getId())){
-            //adminInfoForm.getAllTaCategories().remove(index); // 移除目标obj，更新view
             return this.getTaskCategoryPage(form);
         }
         else{
-            // 应该返回错误页面
-
-            return this.getTaskCategoryPage(form);
+            // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
     }
 

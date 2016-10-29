@@ -12,9 +12,10 @@ function doEditorPreSubmit(editorID,transferID) {
 
 //初始化导航栏对话框
 function initNavDialog() {
-    //隐藏uif-dialog自带的header
-    jQuery(".navigationDialog>.modal-content>.modal-header").hide();
+    //去除uif-dialog自带的header
+    jQuery(".navigationDialog>.modal-content>.modal-header").remove();
 
+    jQuery("#navDialog").removeClass("fade");
     //设置nav-pills中各个选项的点击事件为切换导航栏目
     jQuery(".nav-pills a").click(function(e){
         //将当前导航栏目隐藏

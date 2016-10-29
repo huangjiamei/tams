@@ -2,7 +2,7 @@
 
 
 *{
-    font-family:"Microsoft YaHei UI";
+    font-family:"Microsoft YaHei UI"!important;
 }
 
 body{
@@ -75,6 +75,13 @@ body{
 }
 .navigationDialog .modal-content{
     margin-top: 0;
+}
+#navDialog{
+    background:rgba(0,0,0,0)!important;
+}
+.modal-backdrop {
+    opacity: 0 !important;
+    filter: alpha(opacity=0) !important;
 }
 
 

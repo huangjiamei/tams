@@ -70,6 +70,7 @@ body{
 /* 导航栏 */
 .navigationDialog{
     width:80%;
+    margin-top:50px;
 }
 
 /* box */
@@ -201,6 +202,10 @@ body{
 /* 所有dialog往屏幕中间移动*/
 .modal-content{
     margin-top: 25%;
+}
+
+.navigationDialog .modal-content{
+    margin-top: 0;
 }
 
 /* 让collection table的action格子短一点，暂时无效*/

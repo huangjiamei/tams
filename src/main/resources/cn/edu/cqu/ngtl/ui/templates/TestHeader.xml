@@ -46,25 +46,19 @@
                         <list>
                             <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
                             <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
-                            <!--<bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"-->
-                                  <!--p:actionScript="getNavReady();"-->
-                                  <!--p:style="margin-top:15px;"/>-->
+                            <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
+                                  p:actionScript="showDialog('navDialog');"
+                                  p:style="margin-top:15px;"/>
 
 
-                            <bean id="examMainMenu" parent="Uif-DropdownToggleMenu"
-                                  p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="">
-                                  <property name="menuItems">
-                                      <list>
-                                          <bean parent="megamenu-items"/>
-                                      </list>
-                                 </property>
-                            </bean>
-
-
-
-
-
-
+                            <!--<bean id="examMainMenu" parent="Uif-DropdownToggleMenu"-->
+                                  <!--p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="">-->
+                                  <!--<property name="menuItems">-->
+                                      <!--<list>-->
+                                          <!--<bean parent="megamenu-items"/>-->
+                                      <!--</list>-->
+                                 <!--</property>-->
+                            <!--</bean>-->
 
                         </list>
                     </property>
@@ -101,11 +95,12 @@
     </bean>
 
 
-    <bean id="guideMapDialog" parent="Uif-DialogGroup"
+    <bean id="navDialog" parent="Uif-DialogGroup"
           p:dialogCssClass="navigationDialog"
+          p:onShowDialogScript="initNavDialog();"
           p:style="z-index:9999;">
         <property name="layoutManager">
-            <bean parent="Uif-VerticalBoxLayout" p:style="width:60%;"/>
+            <bean parent="Uif-VerticalBoxLayout" />
         </property>
         <property name="items">
             <list>

@@ -47,6 +47,9 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private CMCourseClassification oldClassification;
 
+    private Integer courseClassificationIndex;
+
+
     /**
      * 助教类别管理页面
      */
@@ -367,4 +370,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setPermissionIndex(Integer permissionIndex) {
         this.permissionIndex = permissionIndex;
     }
+
+    public Integer getCourseClassificationIndex() {
+        return courseClassificationIndex;
+    }
+
+    public void setCourseClassificationIndex(Integer courseClassificationIndex) {
+        this.courseClassificationIndex = courseClassificationIndex;
+    }
+
 }

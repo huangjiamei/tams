@@ -70,11 +70,13 @@ body{
 
 /* 导航栏 */
 .navigationDialog{
-    width:80%;
+    width:97.5%;
     margin-top:50px;
 }
 .navigationDialog .modal-content{
     margin-top: 0;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
 #navDialog{
     background:rgba(0,0,0,0)!important;

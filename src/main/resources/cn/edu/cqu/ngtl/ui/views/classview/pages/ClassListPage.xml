@@ -336,9 +336,6 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-InputField" p:propertyName="paidTime"-->
-                                                                            <!--p:readOnlyDisplayReplacement="@{#line.studentId==null?' ':#line.paidTime==null? '否':'是'}"-->
-                                                                            <!--p:readOnly="true" p:label="缴费" />-->
                                                                             <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>

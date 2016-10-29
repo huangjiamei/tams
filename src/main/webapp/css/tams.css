@@ -130,15 +130,16 @@ body{
     border-color:transparent;
 }
 
-/* 导出、复制等btn的统一样式 */
 .tamsbtn{
     font-size:14px;
     margin-left: 5px;
     margin-right:5px;
-    /*width:100px;*/
     height:30px;
     border-width:0;
+    color: white!important;
+
 }
+/* 导出、复制等btn的统一样式 */
 
 /* content */
 /* content-header*/

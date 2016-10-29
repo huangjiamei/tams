@@ -161,13 +161,27 @@ public class ClassController extends UifControllerBase {
 
         infoForm.setApplyViewObject(new ApplyViewObject());
         infoForm.setClassList(
-                new ArrayList<ClassTeacherViewObject>()
+                taConverter.classInfoToViewObject(
+                        classInfoService.getAllClassesMappedByDepartment()
+                )
         );
 
         return this.getModelAndView(infoForm, "pageRequestTa");
     }
 
-    //    /**
+    @RequestMapping(params = "methodToCall=submitRequestTaPage")
+    public ModelAndView submitRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                         HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        List<ClassTeacherViewObject> classList=infoForm.getClassList();
+
+
+        return this.getModelAndView(infoForm, "pageRequestTa");
+    }
+
+
 
 
 //     * pageId限定了只接受来自pageClassList的请求

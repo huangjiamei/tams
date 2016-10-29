@@ -39,17 +39,13 @@
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/bootstrap.css</value>
-                <!--<value>css/exam.css</value>-->
                 <value>css/tams.css</value>
                 <value>css/font-awesome.min.css</value>
-
-                <!--<value>css/uif.css</value>-->
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <!--<value>scripts/fullcalendar.js</value>-->
                 <!--<value>scripts/exam_526.js</value>-->
             </list>
         </property>

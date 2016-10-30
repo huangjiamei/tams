@@ -30,7 +30,8 @@ body{
 
 .uif-applicationHeader {
     background-color: #3C8DBC;
-    position:fixed;
+    position: relative;
+
 }
 
 .uif-applicationHeader .navbar {
@@ -80,16 +81,13 @@ body{
 }
 #navDialog{
     background:rgba(0,0,0,0)!important;
+    position:absolute!important;
 }
 .modal-backdrop {
     opacity: 0 !important;
     filter: alpha(opacity=0) !important;
 }
 
-
-.uif-viewContentWrapper{
-    margin-top: 40px;
-}
 
 
 /* box */
@@ -240,6 +238,9 @@ body{
 /*整理*/
 .navigationDialog .modal-body{
     padding:0;
+}
+.navigationDialog .modal-body:after{
+    content:normal!important;
 }
 
 .navigationDialog .modal-content {

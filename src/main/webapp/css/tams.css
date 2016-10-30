@@ -258,19 +258,16 @@ body{
     font-weight: 400;
     position: relative;
     text-transform: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    border-bottom: 1px solid rgba(0, 0, 0, .1)!important;
     list-style: none !important;
     background-color: transparent !important
 }
 
-.navigationDialog .nav-stacked {
+.navigationDialog .nav {
     background: #fcfcfc
 }
 
-.navigationDialog .nav-stacked a {
-    float: left;
-    margin-right: 10px !important
-}
+
 
 .navigationDialog>.modal-content {
     -webkit-box-shadow: 0 9px 27px 0 #aaa;
@@ -284,11 +281,11 @@ body{
 .navigationDialog .nav a {
     border-radius: 0;
     cursor: pointer !important;
-    border: 0 !important;
     position: relative;
     font-weight: 700 !important;
     text-transform: uppercase !important;
-    margin-right: 0
+    margin-right: 0;
+    padding-bottom: 4px;
 }
 
 .navigationDialog .nav a:after {
@@ -314,7 +311,7 @@ body{
     color: #1a1a1a !important
 }
 
-.navigationDialog .modal-content a:focus, .navigationDialog .modal-content a:hover,.navigationDialog .modal-content a.active{
+.navigationDialog .modal-content a:focus, .navigationDialog .modal-content a:hover,.navigationDialog .modal-content li.active{
     background: #f4f4f4 !important;
     text-decoration: none!important;
 }

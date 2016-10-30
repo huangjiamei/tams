@@ -19,7 +19,7 @@ function initNavDialog() {
     //设置nav-pills中各个选项的点击事件为切换导航栏目
     jQuery(".navigationDialog .nav a").click(function(e){
         //将当前导航栏目隐藏
-        jQuery(".tab-content .active").removeClass("active").addClass("tab-pane");
+        e.preventDefault();
         //显示选择的导航栏目
         jQuery(this).tab('show');
     });

@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
@@ -14,6 +15,7 @@ import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -27,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 /**
@@ -371,22 +374,6 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
 
-    /**
-     * 获取课程类别管理页面
-     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&viewId=AdminView
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getCourseCategoryPage")
-    public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-        adminInfoForm.setAllClassifications(
-                adminService.getAllClassification()
-        );
-
-        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
-    }
 
     /**
      * 获取课程负责人页面
@@ -465,24 +452,26 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
+
     /**
-     * 添加新的课程大类
-     * pageCourseCategory
+     * 获取课程类别管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&viewId=AdminView
      *
      * @param form
      * @return
      */
-    @RequestMapping(params = {"methodToCall=addNewCategory"})
-    public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = {"methodToCall=getCourseCategoryPage"})
+    public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-        // 新添加的term，对应外部的dialog
-        adminService.addCourseClassificationOnlyWithName(adminInfoForm.getNewClassification());
+        adminInfoForm.setAllClassifications(
+                adminService.getAllClassification()
+        );
 
-        return this.getCourseCategoryPage(form);
+        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
     }
 
     /**
-     * 编辑/删除现有项返回方法
+     * 编辑/添加项返回方法
      * pageCourseCategory
      *
      * @param form
@@ -491,26 +480,20 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=selectCurObj"})
     public ModelAndView selectCurObj(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        try {
+            // if index is exit, then enter edit dialog
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+            int index = params.getSelectedLineIndex();
 
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
-        int index = params.getSelectedLineIndex();
+            adminInfoForm.setClassification(adminInfoForm.getAllClassifications().get(index));
 
-        adminInfoForm.setOldClassification(adminInfoForm.getAllClassifications().get(index));
-
-        return this.showDialog("editCourseCategoryDialog", true, adminInfoForm);
-    }
-
-    /**
-     * clf指代Classification
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=selectNewCourse"})
-    public ModelAndView selectNewClf(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
-        return this.showDialog("addCourseCategoryDialog", true, adminInfoForm);
+            return this.showDialog("editCourseCategoryDialog", true, adminInfoForm);
+        }
+        catch (RuntimeException e) {
+            adminInfoForm.setClassification(new CMCourseClassification());
+            return this.showDialog("addCourseCategoryDialog", true, adminInfoForm);
+        }
     }
 
     /**
@@ -526,8 +509,24 @@ public class adminController extends UifControllerBase {
                                              HttpServletResponse response) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminService.changeCourseClassificationNameById(adminInfoForm.getOldClassification().getId(),
-                adminInfoForm.getOldClassification().getName());
+        adminService.changeCourseClassificationNameById(adminInfoForm.getClassification().getId(),
+                adminInfoForm.getClassification().getName());
+
+        return this.getCourseCategoryPage(form);
+    }
+
+    /**
+     * 添加新的课程大类
+     * pageCourseCategory
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=addNewCategory"})
+    public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        // 新添加的term，对应外部的dialog
+        adminService.addCourseClassificationOnlyWithName(adminInfoForm.getClassification().getName());
 
         return this.getCourseCategoryPage(form);
     }
@@ -542,12 +541,19 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=deleteTermCourseCategory"})
     public ModelAndView deleteTermCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
 
-        if (adminService.removeCourseClassificationById(adminInfoForm.getOldClassification().getId()))
+        int index = params.getSelectedLineIndex();
+
+        CMCourseClassification cmCourseClassification = adminInfoForm.getAllClassifications().get(index);
+
+        if (adminService.removeCourseClassificationById(cmCourseClassification.getId()))
             return this.getCourseCategoryPage(form);
         else
-            //应该返回错误页面
-            return this.getCourseCategoryPage(form);
+            // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
     }
 
     /**
@@ -768,6 +774,75 @@ public class adminController extends UifControllerBase {
     }
 
     /**
+     * 编辑/添加项返回方法
+     * pageTaskCategory
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=selectCurTerm"})
+    public ModelAndView selectCurTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        try {
+            //存在index进入edit dialog
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+            int index = params.getSelectedLineIndex();
+            adminInfoForm.setCurrentTerm(adminInfoForm.getAllTerms().get(index));
+            adminInfoForm.setTermIndex(index);
+            return this.showDialog("confirmEditTermDialog", true, adminInfoForm);
+        }
+        catch (RuntimeException e) {
+            //没有选中则进入catch
+            //进而进入new dialog
+            //// FIXME: 16-10-30 无法实现默认选择当前年份
+            TermManagerViewObject newTerm = new TermManagerViewObject();
+            newTerm.setTermYear(
+                    Integer.toString(
+                            Calendar.getInstance().get(
+                                    Calendar.YEAR
+                            )
+                    )
+            );
+            adminInfoForm.setCurrentTerm(new TermManagerViewObject());
+            adminInfoForm.setTermIndex(null);
+
+            return this.showDialog("addNewTermDialog", true, adminInfoForm);
+        }
+    }
+
+    /**
+     * add,update任务类型的方法二合一
+     * 根据是否有index来判断本次操作类型是update还是add
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=saveTerm"})
+    public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        if(adminInfoForm.getTermIndex()!=null){
+            // index不为空说明要调用update
+            if(!adminService.changeIssueType(adminInfoForm.getIssueType())){
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+        }else{
+            // add
+            if(!adminService.addTerm(taConverter.newTermToDataObject(
+                    adminInfoForm.getCurrentTerm()))){
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+        }
+        return this.getTaskCategoryPage(form);
+    }
+
+    /**
      * 添加term(即学期或批次)信息
      * 只接受来自pageTermManagement的请求
      * @param form
@@ -777,9 +852,6 @@ public class adminController extends UifControllerBase {
     public ModelAndView addNewTerm(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
-        adminService.addTerm(taConverter.newTermToDataObject(
-                adminInfoForm.getNewTerm()
-        ));
 
         return this.getTermManagePage(adminInfoForm);
     }

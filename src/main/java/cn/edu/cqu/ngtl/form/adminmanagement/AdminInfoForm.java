@@ -27,7 +27,9 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<TermManagerViewObject> allTerms;
 
-    private TermManagerViewObject newTerm;
+    private TermManagerViewObject currentTerm;
+
+    private Integer termIndex;
 
     /**
      * 任务类别管理页面
@@ -43,9 +45,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<CMCourseClassification> allClassifications;
 
-    private String newClassification;
-
-    private CMCourseClassification oldClassification;
+    private CMCourseClassification classification;
 
     private Integer courseClassificationIndex;
 
@@ -99,8 +99,20 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
 
-    public TermManagerViewObject getNewTerm() {
-        return newTerm;
+    public Integer getTermIndex() {
+        return termIndex;
+    }
+
+    public void setTermIndex(Integer termIndex) {
+        this.termIndex = termIndex;
+    }
+
+    public TermManagerViewObject getCurrentTerm() {
+        return currentTerm;
+    }
+
+    public void setCurrentTerm(TermManagerViewObject currentTerm) {
+        this.currentTerm = currentTerm;
     }
 
     public Integer getIssueIndex() {
@@ -117,10 +129,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setTaIndex(Integer taIndex) {
         this.taIndex = taIndex;
-    }
-
-    public void setNewTerm(TermManagerViewObject newTerm) {
-        this.newTerm = newTerm;
     }
 
     public List<TermManagerViewObject> getAllTerms() {
@@ -163,20 +171,12 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.allTaCategories = allTaCategories;
     }
 
-    public CMCourseClassification getOldClassification() {
-        return oldClassification;
+    public CMCourseClassification getClassification() {
+        return classification;
     }
 
-    public void setOldClassification(CMCourseClassification oldClassification) {
-        this.oldClassification = oldClassification;
-    }
-
-    public String getNewClassification() {
-        return newClassification;
-    }
-
-    public void setNewClassification(String newClassification) {
-        this.newClassification = newClassification;
+    public void setClassification(CMCourseClassification classification) {
+        this.classification = classification;
     }
 
     public List<CMCourseClassification> getAllClassifications() {

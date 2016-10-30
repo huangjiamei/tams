@@ -152,7 +152,7 @@
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
-                                                                                  p:methodToCall="xxxx"
+                                                                                  p:methodToCall="selectCurTerm"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
@@ -174,12 +174,12 @@
                                                                         <list>
                                                                             <!--文字搜索-->
                                                                             <bean parent="Uif-InputField" p:label="批次名称"
-                                                                                  p:propertyName="newClassification"/>
+                                                                                  p:propertyName="permissionNM"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="总预算金额"
-                                                                                  p:propertyName="newClassification"/>
+                                                                                  p:propertyName="permissionNM"/>
                                                                             <bean parent="Uif-InputField" p:label="开始时间"
-                                                                                  p:propertyName="newClassification">
+                                                                                  p:propertyName="permissionNM">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
                                                                                           p:size="10">
@@ -190,7 +190,7 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:label="结束时间"
-                                                                                  p:propertyName="newClassification">
+                                                                                  p:propertyName="permissionNM">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
                                                                                           p:size="10">
@@ -251,7 +251,7 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="xxxx">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTerm">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -301,9 +301,9 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="批次年份"
-                                              p:propertyName="newTerm.termYear">
+                                              p:propertyName="currentTerm.termYear">
                                             <property name="optionsFinder">
-                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.SessionYearFinder" />
                                             </property>
                                             <property name="control">
                                                 <bean parent="Uif-DropdownControl" />
@@ -311,9 +311,9 @@
                                         </bean>
 
                                         <bean parent="Uif-InputField" p:label="批次季度"
-                                              p:propertyName="newTerm.termTerm">
+                                              p:propertyName="currentTerm.termTerm">
                                             <property name="optionsFinder">
-                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.SessionTermFinder" />
                                             </property>
                                             <property name="control">
                                                 <bean parent="Uif-DropdownControl" />
@@ -321,10 +321,10 @@
                                         </bean>
 
                                         <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="newTerm.budget"/>
+                                              p:propertyName="currentTerm.budget"/>
 
                                         <bean parent="Uif-InputField" p:label="开始时间"
-                                              p:propertyName="newTerm.startDate" >
+                                              p:propertyName="currentTerm.startDate" >
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -334,7 +334,7 @@
                                             </property>
                                         </bean>
                                         <bean parent="Uif-InputField" p:label="完成时间"
-                                              p:propertyName="newTerm.endDate">
+                                              p:propertyName="currentTerm.endDate">
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -355,7 +355,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="savexxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveTerm" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -373,7 +373,7 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="批次年份"
-                                              p:propertyName="newClassification">
+                                              p:propertyName="currentTerm.termYear">
                                             <property name="optionsFinder">
                                                 <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
                                             </property>
@@ -383,7 +383,7 @@
                                         </bean>
 
                                         <bean parent="Uif-InputField" p:label="批次季度"
-                                              p:propertyName="newClassification">
+                                              p:propertyName="currentTerm.termTerm">
                                             <property name="optionsFinder">
                                                 <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
                                             </property>
@@ -393,10 +393,10 @@
                                         </bean>
 
                                         <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="newClassification"/>
+                                              p:propertyName="currentTerm.budget"/>
 
                                         <bean parent="Uif-InputField" p:label="开始时间"
-                                              p:propertyName="newClassification" >
+                                              p:propertyName="currentTerm.startDate" >
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -406,7 +406,7 @@
                                             </property>
                                         </bean>
                                         <bean parent="Uif-InputField" p:label="完成时间"
-                                              p:propertyName="newClassification">
+                                              p:propertyName="currentTerm.endDate">
                                             <property name="control">
                                                 <bean parent="Uif-TextControl" p:size="10">
                                                     <property name="datePicker">
@@ -427,7 +427,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="savexxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveTerm" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

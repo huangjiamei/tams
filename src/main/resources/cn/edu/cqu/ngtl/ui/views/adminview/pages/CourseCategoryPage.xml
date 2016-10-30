@@ -241,7 +241,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="课程"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="newClassification"/>
+                                              p:propertyName="oldClassification.name"/>
                                     </list>
                                 </property>
                             </bean>
@@ -254,7 +254,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveCourseCategory" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="addNewCategory" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -288,8 +288,7 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveCourseCategory" p:successCallback="dismissDialog('editCourseCategoryDialog');"
-                      p:refreshId="courseCategoryTable"/>
+                      p:methodToCall="updateCourseCategory" p:successCallback="dismissDialog('editCourseCategoryDialog');"/>
             </list>
         </property>
     </bean>

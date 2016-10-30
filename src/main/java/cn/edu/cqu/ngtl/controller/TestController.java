@@ -140,6 +140,33 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTaskList");
     }
 
+
+    /**
+     * 获取助教管理页面(包含我的助教列表+申请助教列表)
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaManagementPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaManagementPage")
+    public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTaManagement");
+    }
+
+    /**
+     * 获取助教列表页面(教师看到自己的助教，管理员看到所有人的助教)
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaListPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaListPage")
+    public ModelAndView getTaListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTaList");
+    }
+
     /**
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
      * @param form

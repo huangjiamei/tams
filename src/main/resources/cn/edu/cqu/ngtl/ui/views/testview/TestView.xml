@@ -141,6 +141,22 @@
                     </property>
                 </bean>
 
+                <bean parent="Uif-Page" p:id="pageTaManagement" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaListPage"/>
+                        </list>
+                    </property>
+                </bean>
+
 
             </list>
         </property>

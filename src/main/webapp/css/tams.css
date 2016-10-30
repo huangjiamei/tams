@@ -2,7 +2,7 @@
 
 
 *{
-    font-family:"Microsoft YaHei UI"!important;
+    font-family:"Microsoft YaHei UI";
 }
 
 body{
@@ -228,8 +228,133 @@ body{
 /* 让collection table的action格子短一点，暂时无效*/
 .uif-collection-column-action{
     width:10%!important;
+
 }
 
 /**  修改uif end   */
 
 
+
+
+/*整理导航栏*/
+/*整理*/
+.navigationDialog .modal-body{
+    padding:0;
+}
+
+.navigationDialog .modal-content {
+    color: #282828;
+    list-style: none !important;
+    left: auto;
+    background-color: #fff !important;
+    /* 	border-radius: 0; */
+    padding: 0 !important;
+
+}
+.navigationDialog .modal-content a{
+    display: block;
+    padding:5px 0 5px 0;
+    font-size: 17px;
+    font-weight: 400;
+    position: relative;
+    text-transform: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .1);
+    list-style: none !important;
+    background-color: transparent !important
+}
+
+.navigationDialog .nav-stacked {
+    background: #fcfcfc
+}
+
+.navigationDialog .nav-stacked a {
+    float: left;
+    margin-right: 10px !important
+}
+
+.navigationDialog>.modal-content {
+    -webkit-box-shadow: 0 9px 27px 0 #aaa;
+    -moz-box-shadow: 0 9px 27px 0 #aaa;
+    box-shadow: 0 9px 27px 0 #aaa;
+}
+.navigationDialog .nav {
+    margin-top: 6px
+}
+
+.navigationDialog .nav a {
+    border-radius: 0;
+    cursor: pointer !important;
+    border: 0 !important;
+    position: relative;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    margin-right: 0
+}
+
+.navigationDialog .nav a:after {
+    content: "\f105";
+    color: #1a1a1a;
+    font-family: 'FontAwesome';
+    display: block;
+    right: 10px;
+    width: 0;
+    position: absolute;
+    height: 0;
+    top: 13px;
+    margin-top: 0;
+    margin-right: 10px
+}
+
+.navigationDialog .tab-content div{
+    outline:none!important;
+}
+
+
+.navigationDialog .modal-content a{
+    color: #1a1a1a !important
+}
+
+.navigationDialog .modal-content a:focus, .navigationDialog .modal-content a:hover,.navigationDialog .modal-content a.active{
+    background: #f4f4f4 !important;
+    text-decoration: none!important;
+}
+
+
+@media only screen and (max-width:991px) {
+    body {
+        overflow: visible !important;
+        height: 100%;
+        position: relative
+    }
+    .menu-sub-items {
+        position: absolute !important;
+        top: 0;
+        right: 0;
+        left: 0;
+        margin: 0;
+        padding: 0 !important;
+        z-index: 99999;
+        background: #fff
+    }
+    .navigationDialog .tab-content .row {
+        max-height: 450px;
+        overflow: auto
+    }
+    .navigationDialog .tab-pane {
+        margin: 15px;
+        box-shadow: 0 0 20px #999
+    }
+    .menu-box-header {
+        padding: 11px;
+        border-bottom: 1px solid #e5e5e5;
+        background: #f5f5f5
+    }
+    .menu-box-header>h4 {
+        margin: 0
+    }
+}
+@media (max-width:767px) {
+    .navigationDialog .navbar-nav {
+        margin: 4px -17px !important
+    }
+}

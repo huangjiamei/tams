@@ -98,7 +98,7 @@
     <bean id="navDialog" parent="Uif-DialogGroup"
           p:dialogCssClass="navigationDialog"
           p:onShowDialogScript="initNavDialog();"
-          p:style="z-index:9999;">
+          p:style="z-index:9999;overflow-y:hidden;">
         <property name="layoutManager">
             <bean parent="Uif-VerticalBoxLayout" />
         </property>
@@ -120,13 +120,20 @@
                             <bean  parent="Uif-VerticalBoxSection" p:additionalCssClasses="tabbable row">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 nav nav-pills nav-stacked">
+                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-Link" p:href="#nav-course"
-                                                          p:linkText="课程管理"/>
-                                                    <bean parent="Uif-Link" p:href="#nav-admin"
-                                                          p:linkText="管理台"/>
+                                                    <bean  parent="Uif-MenuList" p:additionalCssClasses="nav" >
+                                                        <property name="items">
+                                                            <list>
+
+                                                                <bean parent="Uif-Link" p:href="#nav-course"
+                                                                      p:linkText="课程管理"/>
+                                                                <bean parent="Uif-Link" p:href="#nav-admin"
+                                                                      p:linkText="管理台"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
                                                 </list>
                                             </property>
                                         </bean>

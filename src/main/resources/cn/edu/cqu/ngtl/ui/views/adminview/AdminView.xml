@@ -45,7 +45,6 @@
         </property>
         <property name="additionalScriptFiles">
             <list>
-                <value>js/tams.js</value>
                 <!--存放自定义js-->
                 <value>js/tams.js</value>
             </list>

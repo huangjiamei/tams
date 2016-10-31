@@ -57,6 +57,8 @@ in configuration files outside of the project.
   <param name="datasource.username">RICE</param>
   <param name="datasource.password">RICE</param>
 
+
+
   <param name="config.location">classpath:META-INF/common-config-defaults.xml</param>
   <param name="config.location">classpath:META-INF/common-config-locations.xml</param>
   <param name="config.location">${alt.config.location}</param>

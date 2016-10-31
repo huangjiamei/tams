@@ -307,9 +307,6 @@
                                                                 <bean id="ClassListPageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="20">
-                                                                    <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
-                                                                    <property name="headerText" value="Table Layout"/>
-                                                                    <!--<property name="headerText" value="Table Layout" />-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>
@@ -317,20 +314,12 @@
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="true"/>
 
-                                                                    <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true" />
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="true"/>
                                                                     <!--<property name="readOnly" value="true"/>-->
 
-
-                                                                    <!--<property name="layoutManager.richTable.templateOptions">-->
-                                                                    <!--<map merge="true">-->
-                                                                    <!--<entry key="sDom" value="&lt;'top't&gt;&lt;'bottom'ilp&gt;"/>-->
-                                                                    <!--<entry key="sPaginationType" value="full_numbers"/>-->
-                                                                    <!--</map>-->
-                                                                    <!--</property>-->
                                                                     <property name="disclosure.render" value="false"/>
 
 

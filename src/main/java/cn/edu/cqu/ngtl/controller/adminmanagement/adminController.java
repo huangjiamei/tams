@@ -797,6 +797,21 @@ public class adminController extends UifControllerBase {
         return this.getTermManagePage(form);
     }
 
+    /**
+     * 获取带charts的经费管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&viewId=AdminView
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getFundsPage")
+    public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+
     @Override
     protected UifFormBase createInitialForm() {
 

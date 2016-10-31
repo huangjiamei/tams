@@ -45,8 +45,11 @@
         </property>
         <property name="additionalScriptFiles">
             <list>
+                <value>js/highcharts/highcharts.js</value>
+                <value>js/highcharts/modules/exporting.js</value>
+                <value>js/highcharts/modules/data.js</value>
+
                 <value>js/tams.js</value>
-                <!--存放自定义js-->
             </list>
         </property>
 
@@ -131,6 +134,13 @@
                     <property name="items">
                         <list>
                             <ref bean="TermManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageFundsManagement" p:title="批次管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="FundsManagementPage"/>
                         </list>
                     </property>
                 </bean>

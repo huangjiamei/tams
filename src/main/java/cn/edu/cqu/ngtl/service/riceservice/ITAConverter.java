@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -32,5 +33,5 @@ public interface ITAConverter {
 
     List<TermManagerViewObject> termInfoToViewObject(List<UTSession> sessions);
 
-    UTSession newTermToDataObject(TermManagerViewObject newTerm);
+    UTSession termToDataObject(TermManagerViewObject newTerm) throws ParseException;
 }

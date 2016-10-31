@@ -375,7 +375,7 @@
                                         <bean parent="Uif-InputField" p:label="批次年份"
                                               p:propertyName="currentTerm.termYear">
                                             <property name="optionsFinder">
-                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.SessionYearFinder" />
                                             </property>
                                             <property name="control">
                                                 <bean parent="Uif-DropdownControl" />
@@ -385,7 +385,7 @@
                                         <bean parent="Uif-InputField" p:label="批次季度"
                                               p:propertyName="currentTerm.termTerm">
                                             <property name="optionsFinder">
-                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.SessionTermFinder" />
                                             </property>
                                             <property name="control">
                                                 <bean parent="Uif-DropdownControl" />

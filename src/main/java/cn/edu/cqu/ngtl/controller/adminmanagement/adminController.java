@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -820,19 +821,20 @@ public class adminController extends UifControllerBase {
      * @return
      */
     @RequestMapping(params = {"methodToCall=saveTerm"})
-    public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
         if(adminInfoForm.getTermIndex()!=null){
             // index不为空说明要调用update
-            if(!adminService.changeIssueType(adminInfoForm.getIssueType())){
+            if(!adminService.changeSession(taConverter.termToDataObject(
+                    adminInfoForm.getCurrentTerm()))){
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
         }else{
             // add
-            if(!adminService.addTerm(taConverter.newTermToDataObject(
+            if(!adminService.addSession(taConverter.termToDataObject(
                     adminInfoForm.getCurrentTerm()))){
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("添加失败(修改为错误提示)");

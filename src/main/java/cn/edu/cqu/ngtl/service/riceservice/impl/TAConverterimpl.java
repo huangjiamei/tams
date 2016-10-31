@@ -18,6 +18,8 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -27,6 +29,9 @@ import java.util.List;
  */
 @Service
 public class TAConverterimpl implements ITAConverter {
+
+    static final SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy");
+    static final SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
     private ICourseInfoService courseInfoService;
@@ -249,9 +254,11 @@ public class TAConverterimpl implements ITAConverter {
 
         for(UTSession session : sessions) {
             TermManagerViewObject viewObject = new TermManagerViewObject();
+            viewObject.setId(session.getId());
             viewObject.setTermName(session.getYear() + "年" + session.getTerm() + "季");
             viewObject.setEndDate(session.getEndDate());
             viewObject.setStartDate(session.getBeginDate());
+            viewObject.setActive(session.getActive());
 
             //// FIXME: 16-10-27 日后需要加上预算信息
             viewObject.setBudget(100000);
@@ -263,14 +270,28 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public UTSession newTermToDataObject(TermManagerViewObject newTerm) {
+    public UTSession termToDataObject(TermManagerViewObject term) throws ParseException {
         UTSession session = new UTSession();
 
-        session.setYear(newTerm.getTermYear());
-        session.setTerm(newTerm.getTermTerm());
+        session.setId(term.getId());
+        session.setYear(term.getTermYear());
+        session.setTerm(term.getTermTerm().substring(0,1));  //去掉"季度"的'度'
+        session.setActive(term.getActive());
 
-        session.setBeginDate(newTerm.getStartDate());
-        session.setEndDate(newTerm.getEndDate());
+        session.setBeginDate(
+                outputFormat.format(
+                        inputFormat.parse(
+                                term.getStartDate()
+                        )
+                )
+        );
+        session.setEndDate(
+                outputFormat.format(
+                        inputFormat.parse(
+                                term.getEndDate()
+                        )
+                )
+        );
 
         return session;
     }

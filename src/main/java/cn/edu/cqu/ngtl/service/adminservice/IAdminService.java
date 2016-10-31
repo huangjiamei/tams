@@ -37,9 +37,11 @@ public interface IAdminService {
 
     List<UTSession> getAllSessions();
 
-    boolean addTerm(UTSession session);
+    boolean addSession(UTSession session);
 
     boolean changeIssueType(TAMSIssueType issueType);
 
     boolean removeIssueTypeById(String id);
+
+    boolean changeSession(UTSession session);
 }

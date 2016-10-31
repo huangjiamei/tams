@@ -20,4 +20,6 @@ public interface UTSessionDao {
     boolean insertOneByEntity(UTSession session);
 
     UTSession selectByYearAndTerm(String year, String term);
+
+    boolean updateOneByEntity(UTSession session);
 }

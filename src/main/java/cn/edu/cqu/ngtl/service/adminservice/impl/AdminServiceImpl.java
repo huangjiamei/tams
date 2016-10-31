@@ -189,12 +189,18 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public boolean changeSession(UTSession session) {
-        UTSession isExist = sessionDao.selectByYearAndTerm(session.getYear(), session.getTerm());
-
-        if(isExist != null && ! isExist.getId().equals(session.getId()))
-            //存在相同数据
-            return false;
 
         return sessionDao.updateOneByEntity(session);
+
+    }
+
+    @Override
+    public boolean removeTermByYearAndTerm(String termYear, String termTerm) {
+        UTSession session = sessionDao.selectByYearAndTerm(termYear, termTerm);
+
+        if(session == null)
+            return false;
+
+        return sessionDao.deleteOneByEntity(session);
     }
 }

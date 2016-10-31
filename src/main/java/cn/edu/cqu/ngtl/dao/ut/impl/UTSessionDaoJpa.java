@@ -89,4 +89,12 @@ public class UTSessionDaoJpa implements UTSessionDao{
         return KRADServiceLocator.getDataObjectService().save(session) != null;
 
     }
+
+    @Override
+    public boolean deleteOneByEntity(UTSession session) {
+
+        KradDataServiceLocator.getDataObjectService().delete(session);
+
+        return true;
+    }
 }

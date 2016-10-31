@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
@@ -35,6 +36,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private UTSessionDao sessionDao;
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
@@ -254,7 +258,6 @@ public class TAConverterimpl implements ITAConverter {
 
         for(UTSession session : sessions) {
             TermManagerViewObject viewObject = new TermManagerViewObject();
-            viewObject.setId(session.getId());
             viewObject.setTermName(session.getYear() + "年" + session.getTerm() + "季");
             viewObject.setEndDate(session.getEndDate());
             viewObject.setStartDate(session.getBeginDate());
@@ -271,13 +274,18 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public UTSession termToDataObject(TermManagerViewObject term) throws ParseException {
-        UTSession session = new UTSession();
+        UTSession session = sessionDao.selectByYearAndTerm(term.getTermYear(),
+                term.getTermTerm().substring(0,1)); //去掉"季度"的'度'
 
-        session.setId(term.getId());
-        session.setYear(term.getTermYear());
-        session.setTerm(term.getTermTerm().substring(0,1));  //去掉"季度"的'度'
+        if(session == null) {
+            session = new UTSession();
+            //新建的预处理
+            session.setYear(term.getTermYear());
+            session.setTerm(term.getTermTerm().substring(0,1));  //去掉"季度"的'度'
+        }
+
+        //新建和编辑的公共部分
         session.setActive(term.getActive());
-
         session.setBeginDate(
                 outputFormat.format(
                         inputFormat.parse(

@@ -5,8 +5,6 @@ package cn.edu.cqu.ngtl.viewobject.adminInfo;
  */
 public class TermManagerViewObject {
 
-    private Integer id;
-
     private String termName;
 
     /**
@@ -33,14 +31,6 @@ public class TermManagerViewObject {
 
     public void setActive(String active) {
         this.active = active;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getTermYear() {

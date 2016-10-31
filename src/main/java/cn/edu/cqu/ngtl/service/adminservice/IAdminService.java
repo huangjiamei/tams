@@ -44,4 +44,6 @@ public interface IAdminService {
     boolean removeIssueTypeById(String id);
 
     boolean changeSession(UTSession session);
+
+    boolean removeTermByYearAndTerm(String termYear, String termTerm);
 }

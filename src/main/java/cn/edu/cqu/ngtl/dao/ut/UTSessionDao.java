@@ -22,4 +22,6 @@ public interface UTSessionDao {
     UTSession selectByYearAndTerm(String year, String term);
 
     boolean updateOneByEntity(UTSession session);
+
+    boolean deleteOneByEntity(UTSession session);
 }

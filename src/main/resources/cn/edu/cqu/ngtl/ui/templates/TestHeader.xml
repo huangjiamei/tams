@@ -360,6 +360,8 @@
                                               p:linkText="助教类别管理"/>
                                         <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
                                               p:linkText="任务类别管理"/>
+                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
+                                              p:linkText="经费管理"/>
                                     </list>
                                 </property>
                             </bean>

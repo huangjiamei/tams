@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -789,7 +790,13 @@ public class adminController extends UifControllerBase {
             CollectionControllerServiceImpl.CollectionActionParameters params =
                     new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
             int index = params.getSelectedLineIndex();
-            adminInfoForm.setCurrentTerm(adminInfoForm.getAllTerms().get(index));
+            TermManagerViewObject termManagerViewObject = adminInfoForm.getAllTerms().get(index);
+            String termName = termManagerViewObject.getTermName();
+            String year = termName.substring(0, termName.indexOf("年"));
+            String term = termName.substring(termName.indexOf("年") + 1);
+            termManagerViewObject.setTermYear(year);
+            termManagerViewObject.setTermTerm(term);
+            adminInfoForm.setCurrentTerm(termManagerViewObject);
             adminInfoForm.setTermIndex(index);
             return this.showDialog("confirmEditTermDialog", true, adminInfoForm);
         }
@@ -820,53 +827,56 @@ public class adminController extends UifControllerBase {
      * @return
      */
     @RequestMapping(params = {"methodToCall=saveTerm"})
-    public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
 
         if(adminInfoForm.getTermIndex()!=null){
             // index不为空说明要调用update
-            if(!adminService.changeIssueType(adminInfoForm.getIssueType())){
+            if(!adminService.changeSession(taConverter.termToDataObject(
+                    adminInfoForm.getCurrentTerm()))){
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
         }else{
             // add
-            if(!adminService.addTerm(taConverter.newTermToDataObject(
+            if(!adminService.addSession(taConverter.termToDataObject(
                     adminInfoForm.getCurrentTerm()))){
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
         }
-        return this.getTaskCategoryPage(form);
-    }
-
-    /**
-     * 添加term(即学期或批次)信息
-     * 只接受来自pageTermManagement的请求
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = { "methodToCall=addNewTerm"})
-    public ModelAndView addNewTerm(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
-
-        return this.getTermManagePage(adminInfoForm);
-    }
-
-    /**
-     * 编辑term(即学期或批次)信息
-     * 只接受来自pageTermManagement的请求
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=updateTerm"})
-    public ModelAndView updateTerm(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-
         return this.getTermManagePage(form);
+    }
+
+    /**
+     * 删除批次
+     * pageTermManagement
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=deleteTermCategory"})
+    public ModelAndView deleteTermCategory(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        TermManagerViewObject termManagerViewObject = adminInfoForm.getAllTerms().get(index);
+
+        String termName = termManagerViewObject.getTermName();
+        String year = termName.substring(0, termName.indexOf("年"));
+        String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("季"));
+        if(adminService.removeTermByYearAndTerm(year,
+                term)){
+            return this.getTermManagePage(form);
+        }
+        else{
+            // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        }
     }
 
     /**
@@ -889,6 +899,5 @@ public class adminController extends UifControllerBase {
 
         return new AdminInfoForm();
     }
-
 
 }

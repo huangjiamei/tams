@@ -23,6 +23,16 @@ public class TermManagerViewObject {
 
     private String endDate;
 
+    private String active;
+
+    public String getActive() {
+        return active;
+    }
+
+    public void setActive(String active) {
+        this.active = active;
+    }
+
     public String getTermYear() {
         return termYear;
     }

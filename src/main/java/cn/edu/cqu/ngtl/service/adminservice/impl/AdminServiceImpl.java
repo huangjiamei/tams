@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSIssueTypeDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
@@ -153,12 +154,14 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public boolean addTerm(UTSession session) {
+    public boolean addSession(UTSession session) {
         UTSession isExist = sessionDao.selectByYearAndTerm(session.getYear(), session.getTerm());
 
         if(isExist != null)
             return false;
-        
+
+        //新建数据的预处理
+        session.setActive(SESSION_ACTIVE.NO);
         //// FIXME: 16-10-27 还需要处理预算
 
         return sessionDao.insertOneByEntity(session);
@@ -182,5 +185,22 @@ public class AdminServiceImpl implements IAdminService{
             return false;
 
         return issueTypeDao.deleteOneByEntity(issueType);
+    }
+
+    @Override
+    public boolean changeSession(UTSession session) {
+
+        return sessionDao.updateOneByEntity(session);
+
+    }
+
+    @Override
+    public boolean removeTermByYearAndTerm(String termYear, String termTerm) {
+        UTSession session = sessionDao.selectByYearAndTerm(termYear, termTerm);
+
+        if(session == null)
+            return false;
+
+        return sessionDao.deleteOneByEntity(session);
     }
 }

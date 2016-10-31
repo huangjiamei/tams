@@ -73,13 +73,28 @@ public class UTSessionDaoJpa implements UTSessionDao{
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()
                 .setPredicates(
                         and(
-                                equal("year" , "year"),
-                                equal("term", "term")
+                                equal("year" , year),
+                                equal("term", term)
                         )
                 );
         QueryResults<UTSession> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                 UTSession.class, criteria.build());
 
         return qr.getResults().size() != 0 ? qr.getResults().get(0) : null;
+    }
+
+    @Override
+    public boolean updateOneByEntity(UTSession session) {
+
+        return KRADServiceLocator.getDataObjectService().save(session) != null;
+
+    }
+
+    @Override
+    public boolean deleteOneByEntity(UTSession session) {
+
+        KradDataServiceLocator.getDataObjectService().delete(session);
+
+        return true;
     }
 }

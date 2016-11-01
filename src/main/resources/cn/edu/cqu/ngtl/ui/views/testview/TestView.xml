@@ -149,13 +149,7 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
-                    <property name="items">
-                        <list>
-                            <ref bean="TaListPage"/>
-                        </list>
-                    </property>
-                </bean>
+
 
 
             </list>

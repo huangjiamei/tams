@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -16,6 +17,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -302,5 +304,51 @@ public class TAConverterimpl implements ITAConverter {
         );
 
         return session;
+    }
+
+    @Override
+    public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
+
+        List<TaInfoViewObject> viewObjects = new ArrayList<>(allTa.size());
+
+        for(TAMSTa ta : allTa) {
+            TaInfoViewObject viewObject = new TaInfoViewObject();
+            UTCourse course = null;
+            List<UTInstructor> instructors = null;
+            if(ta.getTaClass() != null) {
+                viewObject.setClassNumber(ta.getTaClass().getClassNumber());
+                instructors = ta.getTaClass().getUtInstructors();
+                StringBuilder sb = new StringBuilder();
+                if(instructors != null)
+                    for(UTInstructor instructor : instructors)
+                        sb.append(instructor.getName() + "，");
+                viewObject.setInstructorName(sb.toString());
+                if (ta.getTaClass().getCourseOffering() != null) {
+                    course = ta.getTaClass().getCourseOffering().getCourse();
+                    if(course != null) {
+                        viewObject.setCourseName(course.getName());
+                        viewObject.setCourseCode(course.getCodeR());
+                    }
+                }
+            }
+            UTStudent taStu = ta.getTa();
+            if(taStu != null) {
+                viewObject.setTaName(taStu.getName());
+                viewObject.setTaIDNumber(taStu.getId());
+                viewObject.setTaGender(taStu.getGender());
+                viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
+            }
+
+            //暂时缺失的属性
+            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setAdvisorName("缺失");
+            viewObject.setAppraise("缺失");
+            viewObject.setVitality("缺失");
+
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
     }
 }

@@ -132,8 +132,8 @@
                                                             <list>
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject"/>
+                                                                    <property name="propertyName" value="allTaInfo"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -147,30 +147,30 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="check1">
+                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学班" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="教师" p:propertyName="field0"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程编号" p:propertyName="courseCode"/>
+                                                                            <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
 
-                                                                            <bean parent="Uif-DataField" p:label="助教姓名" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教姓名" p:propertyName="taName"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIDNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
-                                                                                  p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="field4"/>
+                                                                                  p:propertyName="taGender"/>
+                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="taBachelorMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
-                                                                                  p:propertyName="field5"/>
+                                                                                  p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
-                                                                                  p:propertyName="field6"/>
+                                                                                  p:propertyName="contactPhone"/>
                                                                             <bean parent="Uif-DataField" p:label="活跃度"
-                                                                                  p:propertyName="field6"/>
+                                                                                  p:propertyName="vitality"/>
                                                                             <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="field6"/>
+                                                                                  p:propertyName="appraise"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

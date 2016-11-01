@@ -178,12 +178,12 @@
                                                                                   p:propertyName="field0"
                                                                                   p:onClickScript="alert('未评价助教，需要换成js');"
                                                                                   p:additionalCssClasses="bg-orange tams-form-label"
-                                                                                  p:render="@{#line.field0!='14'}"/>
-                                                                            <!--<bean parent="Uif-DataField" p:label="评价"-->
-                                                                                  <!--p:propertyName="field0"-->
-                                                                                  <!--p:onClickScript="alert('差评助教，需要换成js');"-->
-                                                                                  <!--p:additionalCssClasses="bg-grey tams-form-label"-->
-                                                                                  <!--p:render="@{#line.field0=='2'}"/>-->
+                                                                                  p:render="@{#line.field0=='20'}"/>
+                                                                            <bean parent="Uif-DataField" p:label="评价"
+                                                                                  p:propertyName="field0"
+                                                                                  p:onClickScript="alert('差评助教，需要换成js');"
+                                                                                  p:additionalCssClasses="bg-grey tams-form-label"
+                                                                                  p:render="@{#line.field0!='20' and #line.field0!='14'}"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

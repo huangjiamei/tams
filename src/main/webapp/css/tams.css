@@ -155,7 +155,6 @@ body{
     height:30px;
     border-width:0;
     color: white!important;
-
 }
 /* 导出、复制等btn的统一样式 */
 
@@ -209,6 +208,18 @@ body{
 /* 用途待补充 */
 .form-control{
     width: 100%;
+}
+
+/* 用于实现助教列表中的'优秀助教'或'还未评价'样式，配合bt-success等使用 */
+.tams-form-label{
+    text-align: center;
+    color:white;
+    border-radius: 5px;
+    padding:5px;
+    vertical-align: middle;
+}
+.tams-form-label:hover{
+    cursor: pointer;
 }
 
 /* 修改表格中inputfiled的宽高 */

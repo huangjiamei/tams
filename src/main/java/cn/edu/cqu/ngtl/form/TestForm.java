@@ -161,6 +161,10 @@ public class TestForm extends BaseForm {
     private List<TestObject> collection = new ArrayList<TestObject>();
 
     public TestForm() {
+        inputField1="14";
+        inputField2="2";
+        radio1=true;
+
         // 如果要用object传参，必须保证obj不是空值
         newObject=new TestObject();
 

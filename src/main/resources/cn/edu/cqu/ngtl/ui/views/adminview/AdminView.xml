@@ -34,6 +34,16 @@
 
     <!-- 注意这个id，url可以通过指定viewId就来访问这个view -->
     <bean id="AdminView" parent="Uif-FormView" p:applicationTitleText="管理台">
+        <property name="additionalMetaTags">
+            <list>
+                <bean parent="Uif-MetaTag" p:name="viewport"
+                      p:content="width=device-width,
+                          initial-scale=1,
+                          maximum-scale=1,
+                          user-scalable=no"/>
+                <!--<value>css/uif.css</value>-->
+            </list>
+        </property>
         <property name="additionalCssFiles">
             <list>
                 <!--这里存放自定义css-->

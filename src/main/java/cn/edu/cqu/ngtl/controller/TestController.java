@@ -39,42 +39,34 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTest");
     }
 
-
-
     /**
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getEditor&viewId=TestView
+     * 获取任务列表页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskListPage&viewId=TestView
      * @param form
      * @return
      */
-    @RequestMapping(params = "methodToCall=getEditor")
-    public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = "methodToCall=getTaskListPage")
+    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageEditor");
+
+        return this.getModelAndView(testForm, "pageTaskList");
     }
 
-//    http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getDeclareClass&viewId=TestView
-
-    @RequestMapping(params = "methodToCall=getDeclareClass")
-    public ModelAndView getDeclareClassPage(@ModelAttribute("KualiForm") UifFormBase form) {
+     /* *********** 任务相关 *********** */
+    /**
+     * 任务详情页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskDetailPage")
+    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageDeclareClass");
-    }
-
-    // http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getReviewForTeacherPage&viewId=TestView
-    @RequestMapping(params = "methodToCall=getReviewForTeacherPage")
-    public ModelAndView getReviewForTeacherPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageReviewForTeacher");
-    }
-
-    @RequestMapping(params = "methodToCall=getZhuJiaoApply")
-    public ModelAndView getZhuJiaoApplyPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageZhuJiaoApply");
+        return this.getModelAndView(testForm, "pageTaskDetail");
     }
 
     /**
+     * 获取添加任务页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getAddTaskPage&viewId=TestView
      * @param form
      * @return
@@ -88,7 +80,6 @@ public class TestController extends UifControllerBase {
 
     /**
      * 此方法只处理editor的content，所以不能直接使用
-     *
      * 后台开发时需新建一个method用于处理类型、主题、editor等所有内容，同时修改newtaskpage.xml中btn的methodtocall
      * @param form
      * @param request
@@ -128,18 +119,25 @@ public class TestController extends UifControllerBase {
         // TODO: 2016/10/21 给前端返回处理结果
     }
 
+    /* *********** 助教相关 *********** */
     /**
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskListPage&viewId=TestView
+     * 获取教师考核助教页面
+     * ttp://127.0.0.1:8080/tams/portal/mytest?methodToCall=getReviewForTeacherPage&viewId=TestView
      * @param form
      * @return
      */
-    @RequestMapping(params = "methodToCall=getTaskListPage")
-    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = "methodToCall=getReviewForTeacherPage")
+    public ModelAndView getReviewForTeacherPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
 
-        return this.getModelAndView(testForm, "pageTaskList");
+        return this.getModelAndView(testForm, "pageReviewForTeacher");
     }
 
+    @RequestMapping(params = "methodToCall=getZhuJiaoApply")
+    public ModelAndView getZhuJiaoApplyPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageZhuJiaoApply");
+    }
 
     /**
      * 获取助教管理页面(包含我的助教列表+申请助教列表)
@@ -156,77 +154,7 @@ public class TestController extends UifControllerBase {
 
 
 
-    /**
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
 
-    /**
-     * 获取类别管理&系统管理员页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getConsolePage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getConsolePage")
-    public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageConsole");
-    }
-
-    /**
-     * 获取课程负责人页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getCourseManagerPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getCourseManagerPage")
-    public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageCourseManager");
-    }
-
-    /**
-     * 编辑课程负责人信息
-     * 只接受来自pageCourseManager的请求
-     * BUG:当前方法直接return pageid会导致url中的MTC和viewid丢失，只留下一个pageid
-     * @param form
-     * @return 现在是关闭了btn的ajaxsubmit然后redict回pageCourseManager，需要考虑使用ajax实现局部刷新
-     */
-    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=updateCourseManager"})
-    public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
-        int index = params.getSelectedLineIndex();
-        System.out.println("updateCourseManager ,index: "+index);
-
-        return this.getModelAndView(testForm, "pageCourseManager");
-    }
-
-
-
-    @RequestMapping(params = "methodToCall=selectTermObj")
-    public ModelAndView selectTermObj(
-            @ModelAttribute("KualiForm") UifFormBase form)throws Exception {
-        TestForm testForm = (TestForm) form;
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(testForm, true);
-        int index = params.getSelectedLineIndex();
-        TestObject object=testForm.getCollection().get(index);
-
-        testForm.setCurObject(object);
-//        testForm.setDialogInput1(object.getField4()); // filed4为testObj中的属性，对应批次名称
-//        testForm.setDialogInput2(object.getField2()); // filed2为testObj中的属性，对应总预算金额
-        return this.getModelAndView(testForm, "pageTermManagement");
-    }
 
     @Override
     protected UifFormBase createInitialForm() {

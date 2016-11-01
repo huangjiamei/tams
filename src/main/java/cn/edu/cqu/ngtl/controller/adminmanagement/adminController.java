@@ -230,14 +230,18 @@ public class adminController extends UifControllerBase {
 
         List<KRIM_ROLE_T> krimRoleTs = new ArrayList<KRIM_ROLE_T>(infoForm.getRMPkrimRoleTs());
 
+        /** 确定点击的角色 **/
         CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         KRIM_ROLE_T krimRoleT = krimRoleTs.get(index);
 
+        /** 根据角色找出所有角色的权限 **/
         List<KRIM_ROLE_PERM_T> krimRolePermTs = new ArrayList<KRIM_ROLE_PERM_T>(
                 new KRIM_ROLE_PERM_T_DaoJpa().getKrimRolePermTsByRole(krimRoleT));
+        /** 列出所有已有权限 **/
         List<KRIM_PERM_T> krimPermTs = new ArrayList<KRIM_PERM_T>(new KRIM_PERM_T_DaoJpa().getAllPermissions());
 
+        /** 给已经有的权限加上勾 **/
         for (KRIM_ROLE_PERM_T krimRolePermT : krimRolePermTs) {
             KRIM_PERM_T tempKrimPermT = krimRolePermT.getKrimPermT();
             if (krimPermTs.contains(tempKrimPermT)) {
@@ -274,7 +278,7 @@ public class adminController extends UifControllerBase {
 
 
     /**
-     * 保存角色
+     * 保存角色以及权限
      *
      * @param form
      * @param request

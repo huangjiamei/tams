@@ -56,7 +56,6 @@ public class KRIM_ROLE_PERM_T_DaoJpa implements KRIM_ROLE_PERM_T_Dao {
 
 	@Override
 	public void saveKrimRolePermTByRoleAndPerms(KRIM_ROLE_T krimRoleT, List<KRIM_PERM_T> krimPermTs) {
-		// TODO Auto-generated method stub
 		RoleService roleService = KimApiServiceLocator.getRoleService();
 		
 		for(KRIM_PERM_T krimPermT:krimPermTs){
@@ -77,8 +76,8 @@ public class KRIM_ROLE_PERM_T_DaoJpa implements KRIM_ROLE_PERM_T_Dao {
 				}
 			}else{
 				if(krimRolePermT!=null&&krimRolePermT.getActive()){
-					krimRolePermT.setActive(false);
-					this.saveKrimRolePermT(krimRolePermT);
+//					krimRolePermT.setActive(false);
+					this.delKrimRolePermT(krimRolePermT);
 					//this.delKrimRolePermT(krimRolePermT);
 					//roleService.revokePermissionFromRole(krimPermT.getId(), krimRoleT.getId());
 				}

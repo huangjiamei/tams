@@ -17,6 +17,7 @@ body{
 
 .container{
     margin:0 auto;
+    padding:0px;
 }
 
 /*View的header样式*/

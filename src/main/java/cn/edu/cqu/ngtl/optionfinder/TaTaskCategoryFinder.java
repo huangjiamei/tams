@@ -30,7 +30,7 @@ public class TaTaskCategoryFinder extends KeyValuesBase{
         List<TAMSIssueType> issueTypes = new TAMSIssueTypeDaoJpa().selectAll();
 
         for (TAMSIssueType issueType : issueTypes) {
-            keyValues.add(new ConcreteKeyValue(issueType.getId(), issueType.getTypeName());
+            keyValues.add(new ConcreteKeyValue(issueType.getId(), issueType.getTypeName()));
         }
 
         return keyValues;

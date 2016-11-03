@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
 import java.text.ParseException;
@@ -38,4 +39,8 @@ public interface ITAConverter {
     UTSession termToDataObject(TermManagerViewObject newTerm) throws ParseException;
 
     List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa);
+
+    List<MyTaViewObject> myTaCombinePayDay(List<TAMSTa> allTaFilteredByUid);
+
+    List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid);
 }

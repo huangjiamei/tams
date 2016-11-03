@@ -1,7 +1,9 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -26,6 +28,11 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @Column(name = "APPLICANT_ID")
     private String applicationId;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="APPLICANT_ID", insertable=false, updatable=false)
+    private UTStudent applicant;
+
     @Column(name = "APPLICATION_CLASS_ID")
     private String applicationClassId;
 
@@ -48,6 +55,14 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @ManyToOne
     @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
     private UTSession curSession;
+
+    public UTStudent getApplicant() {
+        return applicant;
+    }
+
+    public void setApplicant(UTStudent applicant) {
+        this.applicant = applicant;
+    }
 
     public Integer getSessinId() {
         return sessinId;

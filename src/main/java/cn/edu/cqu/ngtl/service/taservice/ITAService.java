@@ -20,5 +20,7 @@ public interface ITAService {
 
     boolean submitApplicationAssistant(TAMSTaApplication application);
 
-    List<TAMSTa> getAllTa(String uId);
+    List<TAMSTa> getAllTaFilteredByUid(String uId);
+
+    List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
 }

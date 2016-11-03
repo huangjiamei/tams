@@ -1,13 +1,11 @@
 package cn.edu.cqu.ngtl.controller;
 
-import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.form.TestForm;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
-import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -138,23 +136,6 @@ public class TestController extends UifControllerBase {
         TestForm testForm = (TestForm) form;
         return this.getModelAndView(testForm, "pageZhuJiaoApply");
     }
-
-    /**
-     * 获取助教管理页面(包含我的助教列表+申请助教列表)
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaManagementPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getTaManagementPage")
-    public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageTaManagement");
-    }
-
-
-
-
 
     @Override
     protected UifFormBase createInitialForm() {

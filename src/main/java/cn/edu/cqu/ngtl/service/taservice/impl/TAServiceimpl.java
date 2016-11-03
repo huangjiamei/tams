@@ -40,6 +40,9 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private UTClassInstructorDao classInstructorDao;
 
+    @Autowired
+    private TAMSTaApplicationDao applicationDao;
+
     @Override
     public UTClassInformation getClassInfoById(Integer id) {
         return classInfoDao.getOneById(id);
@@ -73,7 +76,7 @@ public class TAServiceimpl implements ITAService {
     }
 
     @Override
-    public List<TAMSTa> getAllTa(String uId) {
+    public List<TAMSTa> getAllTaFilteredByUid(String uId) {
 
         //// FIXME: 16-11-1 测试所以加上了!,正式发行的时候务必去掉 非运算符 '!'
         if(!userInfoService.isSysAdmin(uId))
@@ -83,5 +86,13 @@ public class TAServiceimpl implements ITAService {
 
             return taDao.selectByClassId(classIds);
         }
+    }
+
+    @Override
+    public List<TAMSTaApplication> getAllApplicationFilterByUid(String uId) {
+
+        List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+
+        return applicationDao.selectByClassId(classIds);
     }
 }

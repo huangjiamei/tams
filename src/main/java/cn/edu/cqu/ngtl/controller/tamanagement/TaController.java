@@ -43,10 +43,34 @@ public class TaController extends UifControllerBase {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
         taInfoForm.setAllTaInfo(taConverter.taCombineDetailInfo(
-                taService.getAllTa(uId)
+                taService.getAllTaFilteredByUid(uId)
         ));
 
         return this.getModelAndView(taInfoForm, "pageTaList");
+    }
+
+    /**
+     * 获取助教管理页面(包含我的助教列表+申请助教列表)
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaManagementPage")
+    public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        taInfoForm.setAllMyTa(taConverter.myTaCombinePayDay(
+                taService.getAllTaFilteredByUid(uId)
+        ));
+
+        taInfoForm.setAllApplication(taConverter.applicationToViewObject(
+                taService.getAllApplicationFilterByUid(uId)
+        ));
+
+        return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
     @Override

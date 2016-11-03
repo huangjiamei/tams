@@ -57,13 +57,16 @@
                                                     <property name="options">
                                                         <list>
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.viewId="PortalView"
+                                                                  p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
-                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                  p:location.viewId="ClassView"
+                                                                  p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="3" p:value="任务"
-                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                  p:location.viewId="ClassView"
+                                                                  p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getTaskListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="4" p:value="查看任务"/>
                                                         </list>
@@ -81,7 +84,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
-                                <property name="items"  >
+                                <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info">
@@ -91,7 +94,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-info" />
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="任务信息"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
@@ -101,30 +104,36 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--右上角btnlist-->
-                                                                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="更新"
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="更新"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
                                                                                   p:additionalCssClasses="bg-teal tamsbtn">
                                                                                 <property name="actionImage">
-                                                                                    <bean parent="Uif-Image" p:width="18" p:height="18"
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="复制"
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
                                                                                   p:additionalCssClasses="bg-success tamsbtn">
                                                                                 <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"  p:width="18" p:height="18"
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="删除"
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="删除"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
                                                                                   p:additionalCssClasses="bg-red tamsbtn">
                                                                                 <property name="actionImage">
-                                                                                    <bean parent="Uif-Image" p:width="18" p:height="18"
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:width="18" p:height="18"
                                                                                           p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
                                                                                 </property>
                                                                             </bean>
@@ -136,101 +145,312 @@
                                                         </property>
                                                     </bean>
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:style="padding:5px">
+                                                          p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:messageText="由 阴文革 在 大约 2 小时 之前 添加， 更新于 2 小时 之前。"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-GridGroup"
-                                                          p:layoutManager.renderRowFirstCellHeader="false">
-                                                        <property name="layoutManager.numberOfColumns" value="4"/>
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="类型" p:colSpan="3"
-                                                                      p:fieldLabel.colSpan="1" p:messageText="课程研讨/讨论"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="主题" p:messageText=" 第一次课堂讨论"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="指派" p:messageText="牛顿"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="起始时间" p:messageText="2016-8-9"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="完成时间" p:messageText="2016-8-10"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="单份耗时" p:messageText="2h"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="总耗时" p:messageText="2h"/>
-                                                                <!--可以换成progressbar？-->
-                                                                <!--<bean parent="Uif-MessageField"-->
-                                                                <!--p:label="%完成" p:messageText="55%"/>-->
-                                                                <bean parent="Uif-Message" p:messageText="完成度"
-                                                                      p:style="text-align:right!important;"/>
-                                                                <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:additionalCssClasses="progress progress-xs progress-striped active">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:additionalCssClasses="progress-bar progress-bar-danger"
-                                                                                  p:style="width: 55%"/>
-                                                                            <bean parent="Uif-MessageField" p:messageText="55%"
-                                                                                  p:additionalCssClasses="badge bg-red"/>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-                                                                <!--<bean parent="Uif-HorizontalBoxSection">-->
-                                                                <!--<property name="items">-->
-                                                                <!--<list>-->
-                                                                <!--<bean parent="Uif-VerticalBoxSection"-->
-                                                                <!--p:additionalCssClasses="progress progress-xs progress-striped active">-->
-                                                                <!--<property name="items">-->
-                                                                <!--<list>-->
-                                                                <!--<bean parent="Uif-VerticalBoxSection"-->
-                                                                <!--p:additionalCssClasses="progress-bar bg-light-blue"-->
-                                                                <!--p:style="width: 30%"></bean>-->
-                                                                <!--</list>-->
-                                                                <!--</property>-->
-                                                                <!--</bean>-->
-                                                                <!--<bean parent="Uif-Message" p:messageText="30%"-->
-                                                                <!--p:additionalCssClasses="badge bg-light-blue"/>-->
-                                                                <!--</list>-->
-                                                                <!--</property>-->
-                                                                <!--</bean>-->
 
-
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="文件" p:messageText="未指定文件"/>
-                                                                <bean parent="Uif-MessageField"
-                                                                      p:label="描述" p:colSpan="3"
-                                                                      p:fieldLabel.colSpan="1"
-                                                                      p:messageText="准备相应的课堂讨论材料，辅助组织课堂讨论。课后完成讨论结果的提交。"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <!--历史记录部分-->
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-HeaderTwo" p:headerText="历史记录"/>
-                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                      p:style="padding:5px">
+                                                                <bean parent="Uif-GridGroup"
+                                                                      p:layoutManager.renderRowFirstCellHeader="false">
+                                                                    <property name="layoutManager.numberOfColumns"
+                                                                              value="4"/>
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:messageText="由 周元生 发表于 大约 1 天 小时 之前"
-                                                                                  p:additionalCssClasses="boxheaderTitle"/>
-                                                                            <bean parent="Uif-HeaderThree" p:headerText="动态的ul如何添加解决方法未知"/>
+                                                                                  p:label="类型" p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
+                                                                                  p:messageText="课程研讨/讨论"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="主题"
+                                                                                  p:messageText=" 第一次课堂讨论"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="指派" p:messageText="牛顿"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="起始时间"
+                                                                                  p:messageText="2016-8-9"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="完成时间"
+                                                                                  p:messageText="2016-8-10"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="单份耗时" p:messageText="2h"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="总耗时" p:messageText="2h"/>
+                                                                            <!--可以换成progressbar？-->
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                            <!--p:label="%完成" p:messageText="55%"/>-->
+                                                                            <bean parent="Uif-Message"
+                                                                                  p:messageText="完成度"
+                                                                                  p:style="text-align:right!important;"/>
+                                                                            <bean parent="Uif-HorizontalBoxSection"
+                                                                                  p:additionalCssClasses="progress progress-xs progress-striped active">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="progress-bar progress-bar-danger"
+                                                                                              p:style="width: 55%"/>
+                                                                                        <bean parent="Uif-MessageField"
+                                                                                              p:messageText="55%"
+                                                                                              p:additionalCssClasses="badge bg-red"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="文件" p:messageText="未指定文件"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="描述" p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
+                                                                                  p:messageText="准备相应的课堂讨论材料，辅助组织课堂讨论。课后完成讨论结果的提交。"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
+
+                                                                <!--历史记录部分-->
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="row">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-HeaderTwo"
+                                                                                  p:headerText="历史记录"/>
+
+                                                                            <!--具体历史记录-->
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="col-md-12">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <!--重点：要给ul加css 就要用p:layoutManager.cssClasses="timeline"-->
+                                                                                        <!--重点：研究list.ftl发现，要给某个li添加css 就要用到wrapperCssClasses属性(还有wrapperStyle属性)-->
+                                                                                        <bean parent="Uif-MenuList"
+                                                                                              p:style="clear:none!important;"
+                                                                                              p:layoutManager.cssClasses="timeline">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--第一个li 一个红色的时间标签-->
+                                                                                                    <!--问题：message生成的是p标签，css要求必须为span标签-->
+                                                                                                    <!--重点：研究list.ftl发现，要给某个li添加css 就要用到wrapperCssClasses属性(还有wrapperStyle属性)-->
+                                                                                                    <bean parent="Uif-Message"
+                                                                                                          p:messageText="10 Feb. 2014"
+                                                                                                          p:wrapperCssClasses="time-label"
+                                                                                                          p:additionalCssClasses="bg-red"/>
+
+
+                                                                                                    <!-- 第二个li 对应时间标签的timeline body-->
+                                                                                                    <!--受rice限制，取消了li中左侧的icon-->
+                                                                                                    <bean parent="Uif-VerticalBoxSection"
+                                                                                                          p:additionalCssClasses="timeline-item">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-HorizontalBoxSection" >
+                                                                                                                    <property name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="由 "/>
+                                                                                                                            <bean parent="Uif-Link" p:href="#"
+                                                                                                                                  p:linkText="周元生"/>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText=" 发表于 大约 1 天 小时 之前"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-body">
+                                                                                                                    <property name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="完成第一次课堂讨论"/>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="完成度 从 0% 变更为 100%"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-footer">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <!--<bean parent="Uif-Link"-->
+                                                                                                                                  <!--p:href="#"-->
+                                                                                                                                  <!--p:additionalCssClasses="btn btn-primary btn-xs"-->
+                                                                                                                                  <!--p:style="clear:none!important; margin-left:10px;"-->
+                                                                                                                                  <!--p:linkText="read more"/>-->
+                                                                                                                            <!--<bean parent="Uif-Link"-->
+                                                                                                                                  <!--p:href="#"-->
+                                                                                                                                  <!--p:additionalCssClasses="btn btn-danger btn-xs"-->
+                                                                                                                                  <!--p:style="clear:none!important; margin-left:10px;"-->
+                                                                                                                                  <!--p:linkText="delete"/>-->
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <bean parent="Uif-VerticalBoxSection"
+                                                                                                          p:additionalCssClasses="timeline-item">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-HorizontalBoxSection" >
+                                                                                                                    <property name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="由 "/>
+                                                                                                                            <bean parent="Uif-Link" p:href="#"
+                                                                                                                                  p:linkText="陈敬谊"/>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="发表于 大约 1 天 小时 之前"/>
+                                                                                                                            </list>
+                                                                                                                </property>
+                                                                                                                </bean>
+
+                                                                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-body">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="上传文件："/>
+                                                                                                                            <bean parent="Uif-Link" p:href="#"
+                                                                                                                                  p:linkText="第一次课堂讨论.pptx"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-footer">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Link"
+                                                                                                                                  p:href="#"
+                                                                                                                                  p:additionalCssClasses="btn btn-primary btn-xs"
+                                                                                                                                  p:style="clear:none!important; margin-left:10px;"
+                                                                                                                                  p:linkText="read more"/>
+                                                                                                                            <bean parent="Uif-Link"
+                                                                                                                                  p:href="#"
+                                                                                                                                  p:additionalCssClasses="btn btn-danger btn-xs"
+                                                                                                                                  p:style="clear:none!important; margin-left:10px;"
+                                                                                                                                  p:linkText="delete"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+
+                                                                                                    <!--第二天-->
+                                                                                                    <bean parent="Uif-Message"
+                                                                                                          p:messageText="15 Feb. 2016"
+                                                                                                          p:wrapperCssClasses="time-label"
+                                                                                                          p:additionalCssClasses="bg-success"/>
+
+                                                                                                    <!-- 第二个li 对应时间标签的timeline body-->
+                                                                                                    <!--受rice限制，取消了li中左侧的icon-->
+                                                                                                    <bean parent="Uif-VerticalBoxSection"
+                                                                                                          p:additionalCssClasses="timeline-item">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-HeaderThree"
+                                                                                                                      p:headerText="Support Team sent you an email1"
+                                                                                                                      p:additionalCssClasses="timeline-header"/>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-body">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                  weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                  jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                  quora plaxo ideeli hulu weebly balihoo...
+                "/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-footer">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Link"
+                                                                                                                                  p:href="#"
+                                                                                                                                  p:additionalCssClasses="btn btn-primary btn-xs"
+                                                                                                                                  p:style="clear:none!important; margin-left:10px;"
+                                                                                                                                  p:linkText="read more"/>
+                                                                                                                            <bean parent="Uif-Link"
+                                                                                                                                  p:href="#"
+                                                                                                                                  p:additionalCssClasses="btn btn-danger btn-xs"
+                                                                                                                                  p:style="clear:none!important; margin-left:10px;"
+                                                                                                                                  p:linkText="delete"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <bean parent="Uif-VerticalBoxSection"
+                                                                                                          p:additionalCssClasses="timeline-item">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-HeaderThree"
+                                                                                                                      p:headerText="Support Team sent you an email2"
+                                                                                                                      p:additionalCssClasses="timeline-header"/>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-body">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Message"
+                                                                                                                                  p:messageText="Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
+                  weebly ning heekya handango imeem plugg dopplr jibjab, movity
+                  jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
+                  quora plaxo ideeli hulu weebly balihoo...
+                "/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                                                                      p:additionalCssClasses="timeline-footer">
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-Link"
+                                                                                                                                  p:href="#"
+                                                                                                                                  p:additionalCssClasses="btn btn-primary btn-xs"
+                                                                                                                                  p:style="clear:none!important; margin-left:10px;"
+                                                                                                                                  p:linkText="read more"/>
+                                                                                                                            <bean parent="Uif-Link"
+                                                                                                                                  p:href="#"
+                                                                                                                                  p:additionalCssClasses="btn btn-danger btn-xs"
+                                                                                                                                  p:style="clear:none!important; margin-left:10px;"
+                                                                                                                                  p:linkText="delete"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
                                                             </list>
                                                         </property>
                                                     </bean>
+
                                                 </list>
                                             </property>
                                         </bean>

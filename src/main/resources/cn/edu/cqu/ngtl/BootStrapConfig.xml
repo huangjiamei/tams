@@ -67,6 +67,4 @@ in configuration files outside of the project.
   <param name="krad.url" override="true">${application.url}/portal</param>
   <param name="testview" override="false">MyTestView</param>
 
-
-
 </config>

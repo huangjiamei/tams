@@ -250,19 +250,34 @@
                                                                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="">
                                                                                 <property name="items"  >
                                                                                     <list>
-                                                                                        <bean parent="Uif-InputField"
+                                                                                        <!--<bean parent="Uif-InputField" p:label="专业"-->
+                                                                                              <!--p:propertyName="condProgramName"-->
+                                                                                              <!--p:refreshWhenChangedPropertyNames="condDepartmentName">-->
+                                                                                            <!--<property name="optionsFinder">-->
+                                                                                                <!--<bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />-->
+                                                                                            <!--</property>-->
+                                                                                            <!--<property name="control">-->
+                                                                                                <!--<bean parent="Uif-DropdownControl" />-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
+
+                                                                                        <bean parent="Uif-InputField" p:label="评价等级"
                                                                                               p:propertyName="inputField97">
+                                                                                            <property name="optionsFinder">
+                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                                                            </property>
                                                                                             <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl">
-                                                                                                    <property name="options">
-                                                                                                        <list>
-                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="1" p:value="优"/>
-                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="良"/>
-                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="中"/>
-                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="差"/>
-                                                                                                        </list>
-                                                                                                    </property>
-                                                                                                </bean>
+                                                                                                <bean parent="Uif-DropdownControl"/>
+                                                                                                <!--<bean parent="Uif-DropdownControl">-->
+                                                                                                    <!--<property name="options">-->
+                                                                                                        <!--<list>-->
+                                                                                                            <!--<bean parent="Uif-KeyValueLocation" p:key="1" p:value="优"/>-->
+                                                                                                            <!--<bean parent="Uif-KeyValueLocation" p:key="2" p:value="良"/>-->
+                                                                                                            <!--<bean parent="Uif-KeyValueLocation" p:key="2" p:value="中"/>-->
+                                                                                                            <!--<bean parent="Uif-KeyValueLocation" p:key="2" p:value="差"/>-->
+                                                                                                        <!--</list>-->
+                                                                                                    <!--</property>-->
+                                                                                                <!--</bean>-->
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean parent="Uif-PrimaryActionButton" p:actionLabel="查看优秀助教申请表"

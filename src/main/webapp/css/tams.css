@@ -367,3 +367,13 @@ body{
         margin: 4px -17px !important
     }
 }
+
+/* 因为rice中找不到span只能用p替代，所以ugaileAdminLET.css中该部分的css*/
+.timeline > .time-label > p {
+    font-weight: 600;
+    padding: 5px;
+    display: inline-block;
+    background-color: #fff;
+    border-radius: 4px;
+    color: white!important;
+}

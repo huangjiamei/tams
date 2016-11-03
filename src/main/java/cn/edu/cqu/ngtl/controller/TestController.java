@@ -39,6 +39,7 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTest");
     }
 
+     /* *********** 任务相关 *********** */
     /**
      * 获取任务列表页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskListPage&viewId=TestView
@@ -52,7 +53,6 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTaskList");
     }
 
-     /* *********** 任务相关 *********** */
     /**
      * 任务详情页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
@@ -122,7 +122,7 @@ public class TestController extends UifControllerBase {
     /* *********** 助教相关 *********** */
     /**
      * 获取教师考核助教页面
-     * ttp://127.0.0.1:8080/tams/portal/mytest?methodToCall=getReviewForTeacherPage&viewId=TestView
+     * http://127.0.0.1:8080/tams/portal/mytest?methodToCall=getReviewForTeacherPage&viewId=TestView
      * @param form
      * @return
      */

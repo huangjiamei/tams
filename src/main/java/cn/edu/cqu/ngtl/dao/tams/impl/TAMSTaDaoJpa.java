@@ -1,0 +1,46 @@
+package cn.edu.cqu.ngtl.dao.tams.impl;
+
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
+import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+
+/**
+ * Created by tangjing on 16-11-1.
+ */
+@Repository
+@Component("TAMSTaDaoJpa")
+public class TAMSTaDaoJpa implements TAMSTaDao {
+
+    @Override
+    public List<TAMSTa> selectAll() {
+
+        return KRADServiceLocator.getDataObjectService().findAll(TAMSTa.class).getResults();
+
+    }
+
+    @Override
+    public List<TAMSTa> selectByClassId(List<Object> classIds) {
+        List<TAMSTa> tas = new ArrayList<>();
+
+        for(Object classId : classIds) {
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("taClassId", classId));
+            QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                    TAMSTa.class,
+                    criteria.build()
+            );
+            tas.addAll(qr.getResults());
+        }
+
+        return tas.isEmpty()?null:tas;
+    }
+}

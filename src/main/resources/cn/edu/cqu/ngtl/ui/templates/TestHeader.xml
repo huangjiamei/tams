@@ -41,29 +41,10 @@
 
         <property name="applicationNavigation.items">
             <list>
-                <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="es-megamenu esmenu">
-                    <property name="items">
-                        <list>
-                            <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
-                            <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
-                            <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
-                                  p:actionScript="showDialog('navDialog');"
-                                  p:style="margin-top:15px;"/>
-
-
-                            <!--<bean id="examMainMenu" parent="Uif-DropdownToggleMenu"-->
-                                  <!--p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="">-->
-                                  <!--<property name="menuItems">-->
-                                      <!--<list>-->
-                                          <!--<bean parent="megamenu-items"/>-->
-                                      <!--</list>-->
-                                 <!--</property>-->
-                            <!--</bean>-->
-
-                        </list>
-                    </property>
-                </bean>
-
+                <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
+                <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
+                <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
+                      p:actionScript="showDialog('navDialog');"/>
             </list>
         </property>
         <!--不知道这是什么但是一删就报错-->

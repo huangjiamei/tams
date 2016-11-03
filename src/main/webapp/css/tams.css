@@ -17,6 +17,7 @@ body{
 
 .container{
     margin:0 auto;
+    padding:0px;
 }
 
 /*View的header样式*/
@@ -30,8 +31,6 @@ body{
 
 .uif-applicationHeader {
     background-color: #3C8DBC;
-    position: relative;
-
 }
 
 .uif-applicationHeader .navbar {
@@ -52,7 +51,6 @@ body{
     background:#337CA7;
 }
 
-
 .uif-applicationHeader .navbar div.logoBrand {
     width: 250px;
     height: 50px;
@@ -68,6 +66,27 @@ body{
     height:0px!important;
     padding: 0px 0px!important;
 }
+
+@media (min-width: 768px) {
+    /*大屏时页面header固定，内容下移45px*/
+    .navbar-fixed-top,
+    .navbar-fixed-bottom {
+        position: fixed;
+    }
+    .uif-page{
+        margin-top:45px;
+    }
+}
+
+@media (max-width: 768px) {
+    /*小屏时header相对移动*/
+    .navbar-fixed-top,
+    .navbar-fixed-bottom {
+        position: relative!important;
+    }
+}
+
+/*view header end*/
 
 /* 导航栏 */
 .navigationDialog{
@@ -88,6 +107,124 @@ body{
     filter: alpha(opacity=0) !important;
 }
 
+.navigationDialog .modal-body{
+    padding:0;
+}
+.navigationDialog .modal-body:after{
+    content:normal!important;
+}
+
+.navigationDialog .modal-content {
+    color: #282828;
+    list-style: none !important;
+    left: auto;
+    background-color: #fff !important;
+    /* 	border-radius: 0; */
+    padding: 0 !important;
+
+}
+.navigationDialog .modal-content a{
+    display: block;
+    padding:5px 0 5px 0;
+    font-size: 17px;
+    font-weight: 400;
+    position: relative;
+    text-transform: none;
+    border-bottom: 1px solid rgba(0, 0, 0, .1)!important;
+    list-style: none !important;
+    background-color: transparent !important
+}
+
+.navigationDialog .nav {
+    background: #fcfcfc
+}
+
+.navigationDialog>.modal-content {
+    -webkit-box-shadow: 0 9px 27px 0 #aaa;
+    -moz-box-shadow: 0 9px 27px 0 #aaa;
+    box-shadow: 0 9px 27px 0 #aaa;
+}
+.navigationDialog .nav {
+    margin-top: 6px
+}
+
+.navigationDialog .nav a {
+    border-radius: 0;
+    cursor: pointer !important;
+    position: relative;
+    font-weight: 700 !important;
+    text-transform: uppercase !important;
+    margin-right: 0;
+    padding-bottom: 4px;
+}
+
+.navigationDialog .nav a:after {
+    content: "\f105";
+    color: #1a1a1a;
+    font-family: 'FontAwesome';
+    display: block;
+    right: 10px;
+    width: 0;
+    position: absolute;
+    height: 0;
+    top: 13px;
+    margin-top: 0;
+    margin-right: 10px
+}
+
+.navigationDialog .tab-content div{
+    outline:none!important;
+}
+
+
+.navigationDialog .modal-content a{
+    color: #1a1a1a !important
+}
+
+.navigationDialog .modal-content a:focus, .navigationDialog .modal-content a:hover,.navigationDialog .modal-content li.active{
+    background: #f4f4f4 !important;
+    text-decoration: none!important;
+}
+
+@media only screen and (max-width:991px) {
+    body {
+        overflow: visible !important;
+        height: 100%;
+        position: relative
+    }
+    .menu-sub-items {
+        position: absolute !important;
+        top: 0;
+        right: 0;
+        left: 0;
+        margin: 0;
+        padding: 0 !important;
+        z-index: 99999;
+        background: #fff
+    }
+    .navigationDialog .tab-content .row {
+        max-height: 450px;
+        overflow: auto
+    }
+    .navigationDialog .tab-pane {
+        margin: 15px;
+        box-shadow: 0 0 20px #999
+    }
+    .menu-box-header {
+        padding: 11px;
+        border-bottom: 1px solid #e5e5e5;
+        background: #f5f5f5
+    }
+    .menu-box-header>h4 {
+        margin: 0
+    }
+}
+@media (max-width:767px) {
+    .navigationDialog .navbar-nav {
+        margin: 4px -17px !important
+    }
+}
+/*导航栏 end*/
 
 
 /* box */
@@ -123,6 +260,7 @@ body{
     width: 80px;
     height: 30px;
 }
+/*box end*/
 
 /* 背景颜色 */
 .bg-teal {
@@ -240,133 +378,32 @@ body{
 
 }
 
+.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+    padding: 9px;
+}
+
+table.uif-tableCollectionLayout {
+    border:none!important;
+}
+table.uif-tableCollectionLayout tbody tr {
+    border-bottom: 1px solid #ccc;
+}
+table.uif-tableCollectionLayout td {
+    border: none !important;
+
+}
+table.uif-tableCollectionLayout th {
+
+    border:none!important;
+
+
+}
 /**  修改uif end   */
-
-
-
-
-/*整理导航栏*/
-/*整理*/
-.navigationDialog .modal-body{
-    padding:0;
-}
-.navigationDialog .modal-body:after{
-    content:normal!important;
-}
-
-.navigationDialog .modal-content {
-    color: #282828;
-    list-style: none !important;
-    left: auto;
-    background-color: #fff !important;
-    /* 	border-radius: 0; */
-    padding: 0 !important;
-
-}
-.navigationDialog .modal-content a{
-    display: block;
-    padding:5px 0 5px 0;
-    font-size: 17px;
-    font-weight: 400;
-    position: relative;
-    text-transform: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .1)!important;
-    list-style: none !important;
-    background-color: transparent !important
-}
-
-.navigationDialog .nav {
-    background: #fcfcfc
-}
-
-
-
-.navigationDialog>.modal-content {
-    -webkit-box-shadow: 0 9px 27px 0 #aaa;
-    -moz-box-shadow: 0 9px 27px 0 #aaa;
-    box-shadow: 0 9px 27px 0 #aaa;
-}
-.navigationDialog .nav {
-    margin-top: 6px
-}
-
-.navigationDialog .nav a {
-    border-radius: 0;
-    cursor: pointer !important;
-    position: relative;
-    font-weight: 700 !important;
-    text-transform: uppercase !important;
-    margin-right: 0;
-    padding-bottom: 4px;
-}
-
-.navigationDialog .nav a:after {
-    content: "\f105";
-    color: #1a1a1a;
-    font-family: 'FontAwesome';
-    display: block;
-    right: 10px;
-    width: 0;
-    position: absolute;
-    height: 0;
-    top: 13px;
-    margin-top: 0;
-    margin-right: 10px
-}
-
-.navigationDialog .tab-content div{
-    outline:none!important;
-}
-
-
-.navigationDialog .modal-content a{
-    color: #1a1a1a !important
-}
-
-.navigationDialog .modal-content a:focus, .navigationDialog .modal-content a:hover,.navigationDialog .modal-content li.active{
-    background: #f4f4f4 !important;
-    text-decoration: none!important;
-}
-
-
-@media only screen and (max-width:991px) {
-    body {
-        overflow: visible !important;
-        height: 100%;
-        position: relative
-    }
-    .menu-sub-items {
-        position: absolute !important;
-        top: 0;
-        right: 0;
-        left: 0;
-        margin: 0;
-        padding: 0 !important;
-        z-index: 99999;
-        background: #fff
-    }
-    .navigationDialog .tab-content .row {
-        max-height: 450px;
-        overflow: auto
-    }
-    .navigationDialog .tab-pane {
-        margin: 15px;
-        box-shadow: 0 0 20px #999
-    }
-    .menu-box-header {
-        padding: 11px;
-        border-bottom: 1px solid #e5e5e5;
-        background: #f5f5f5
-    }
-    .menu-box-header>h4 {
-        margin: 0
-    }
-}
-@media (max-width:767px) {
-    .navigationDialog .navbar-nav {
-        margin: 4px -17px !important
-    }
-}
 
 /* 因为rice中找不到span只能用p替代，所以ugaileAdminLET.css中该部分的css*/
 .timeline > .time-label > p {
@@ -377,3 +414,7 @@ body{
     border-radius: 4px;
     color: white!important;
 }
+
+
+
+

@@ -1,6 +1,9 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -23,10 +26,20 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     private String type;
 
     @Column(name = "TA_CLASS")
-    private String taClass;
+    private String taClassId;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="TA_CLASS", insertable=false, updatable=false)
+    private UTClass taClass;
 
     @Column(name = "TA_ID")
     private String taId;
+
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="TA_ID", insertable=false, updatable=false)
+    private UTStudent ta;
 
     @Column(name = "TA_START_TIME")
     private String startTime;
@@ -57,11 +70,19 @@ public class TAMSTa extends DataObjectBase implements Serializable {
         this.type = type;
     }
 
-    public String getTaClass() {
+    public String getTaClassId() {
+        return taClassId;
+    }
+
+    public void setTaClassId(String taClassId) {
+        this.taClassId = taClassId;
+    }
+
+    public UTClass getTaClass() {
         return taClass;
     }
 
-    public void setTaClass(String taClass) {
+    public void setTaClass(UTClass taClass) {
         this.taClass = taClass;
     }
 
@@ -71,6 +92,14 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setTaId(String taId) {
         this.taId = taId;
+    }
+
+    public UTStudent getTa() {
+        return ta;
+    }
+
+    public void setTa(UTStudent ta) {
+        this.ta = ta;
     }
 
     public String getStartTime() {

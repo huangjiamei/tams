@@ -135,8 +135,8 @@
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="9">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                                                                    <property name="propertyName" value="allMyTa"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -152,23 +152,23 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="check1">
+                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="姓名" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIdNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
-                                                                                  p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="field4"/>
+                                                                                  p:propertyName="taGender"/>
+                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="taBachelorMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
-                                                                                  p:propertyName="field5"/>
+                                                                                  p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
-                                                                                  p:propertyName="field6"/>
+                                                                                  p:propertyName="contactPhone"/>
                                                                             <bean parent="Uif-DataField" p:label="发薪时间（每月）"
-                                                                                  p:propertyName="field7"/>
+                                                                                  p:propertyName="payDay"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -249,8 +249,8 @@
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="8">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                                                                    <property name="propertyName" value="allApplication"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -265,21 +265,21 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="check1">
+                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="姓名" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIdNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
-                                                                                  p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="field4"/>
+                                                                                  p:propertyName="taGender"/>
+                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="taBachelorMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
-                                                                                  p:propertyName="field5"/>
+                                                                                  p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
-                                                                                  p:propertyName="field6"/>
+                                                                                  p:propertyName="contactPhone"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

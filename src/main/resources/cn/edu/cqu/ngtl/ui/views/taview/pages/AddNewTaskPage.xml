@@ -118,7 +118,7 @@
                                               p:additionalCssClasses="box-body">
                                             <property name="items">
                                                 <list>
-                                                    <!--类型，主题，纸牌-->
+                                                    <!--类型，主题，指派-->
                                                     <bean parent="Uif-HorizontalBoxSection"
                                                           p:additionalCssClasses="">
                                                         <property name="items">

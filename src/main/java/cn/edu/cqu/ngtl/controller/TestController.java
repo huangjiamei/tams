@@ -111,7 +111,7 @@ public class TestController extends UifControllerBase {
 
             Element img=doc.getElementsByTag("img").first();
             System.out.println(String.format("title=%s\nherf=%s\nimg:%s\n",title,herf,img));
-
+            System.out.printf("title=%s\nherf=%d\nimg:%s\n", title, herf, img);
             // TODO: 2016/10/21 存入数据库
         }
         // TODO: 2016/10/21 给前端返回处理结果

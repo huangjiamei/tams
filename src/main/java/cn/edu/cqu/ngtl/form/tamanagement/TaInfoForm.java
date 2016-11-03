@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.form.tamanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
+import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -13,6 +14,16 @@ import java.util.List;
 public class TaInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = 8220820300868876320L;
+
+    /**
+     * 教师评价相关
+     */
+
+    private List<IssueViewObject> allIssues;
+
+    private String evaluateDetail;
+
+    private String evaluate;
 
     /**
      * '我的助教'管理相关
@@ -29,6 +40,30 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private List<TaInfoViewObject> allTaInfo;
 
     /** Getter and Setter **/
+
+    public List<IssueViewObject> getAllIssues() {
+        return allIssues;
+    }
+
+    public void setAllIssues(List<IssueViewObject> allIssues) {
+        this.allIssues = allIssues;
+    }
+
+    public String getEvaluateDetail() {
+        return evaluateDetail;
+    }
+
+    public void setEvaluateDetail(String evaluateDetail) {
+        this.evaluateDetail = evaluateDetail;
+    }
+
+    public String getEvaluate() {
+        return evaluate;
+    }
+
+    public void setEvaluate(String evaluate) {
+        this.evaluate = evaluate;
+    }
 
     public List<MyTaViewObject> getAllApplication() {
         return allApplication;

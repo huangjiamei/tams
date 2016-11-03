@@ -117,26 +117,6 @@ public class TestController extends UifControllerBase {
         // TODO: 2016/10/21 给前端返回处理结果
     }
 
-    /* *********** 助教相关 *********** */
-    /**
-     * 获取教师考核助教页面
-     * ttp://127.0.0.1:8080/tams/portal/mytest?methodToCall=getReviewForTeacherPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getReviewForTeacherPage")
-    public ModelAndView getReviewForTeacherPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-
-        return this.getModelAndView(testForm, "pageReviewForTeacher");
-    }
-
-    @RequestMapping(params = "methodToCall=getZhuJiaoApply")
-    public ModelAndView getZhuJiaoApplyPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageZhuJiaoApply");
-    }
-
     @Override
     protected UifFormBase createInitialForm() {
         return new TestForm();

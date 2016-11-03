@@ -73,6 +73,13 @@ public class TaController extends UifControllerBase {
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
+    @RequestMapping(params = {"pageId=pageTaList", "methodToCall=getTaReviewPage"})
+    public ModelAndView getTaReviewPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        return this.getModelAndView(taInfoForm, "pageReviewForTeacher");
+    }
+
     @Override
     protected UifFormBase createInitialForm() {
 

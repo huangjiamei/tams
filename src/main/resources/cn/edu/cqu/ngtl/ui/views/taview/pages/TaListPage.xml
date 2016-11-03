@@ -198,7 +198,7 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionLabel="前去评价(参考classlistpage，跳转到新页面)"
-                                                                                              p:methodToCall="xxxx"
+                                                                                              p:methodToCall="getTaReviewPage"
                                                                                               p:render="@{#line.appraise!='14'}"/>
                                                                                     </list>
                                                                                 </property>

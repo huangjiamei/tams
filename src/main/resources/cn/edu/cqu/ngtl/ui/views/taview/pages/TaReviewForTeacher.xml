@@ -142,68 +142,6 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="手机号码" p:colSpan="3"
                                                                                   p:fieldLabel.colSpan="1" p:messageText="123456789011"/>
-
-                                                                            <!--<bean parent="Uif-MessageField"-->
-                                                                                  <!--p:label="课程"-->
-                                                                                  <!--p:colSpan="3"-->
-                                                                                  <!--p:messageText="高等数学"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="教师"-->
-                                                                                  <!--p:defaultValue="阴文革"-->
-                                                                                  <!--p:propertyName="inputField1"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="职工号"-->
-                                                                                  <!--p:defaultValue="XXXXXXXXXX"-->
-                                                                                  <!--p:propertyName="inputField2"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="课程编号"-->
-                                                                                  <!--p:defaultValue="MATH12"-->
-                                                                                  <!--p:propertyName="inputField3"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="课程类别"-->
-                                                                                  <!--p:defaultValue="公共基础"-->
-                                                                                  <!--p:propertyName="inputField4"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="授课专业"-->
-                                                                                  <!--p:defaultValue="软件工程"-->
-                                                                                  <!--p:propertyName="inputField5"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="授课年级"-->
-                                                                                  <!--p:defaultValue="2016"-->
-                                                                                  <!--p:propertyName="inputField6"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="必修/选修">-->
-                                                                                <!--<property name="control">-->
-                                                                                    <!--<bean parent="Uif-DropdownControl">-->
-                                                                                        <!--<property name="options">-->
-                                                                                            <!--<list>-->
-                                                                                                <!--<bean parent="Uif-KeyValueLocation" p:key="1" p:value="必修"/>-->
-                                                                                                <!--<bean parent="Uif-KeyValueLocation" p:key="2" p:value="选修"/>-->
-                                                                                            <!--</list>-->
-                                                                                        <!--</property>-->
-                                                                                    <!--</bean>-->
-                                                                                <!--</property>-->
-                                                                            <!--</bean>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="教学班号"-->
-                                                                                  <!--p:defaultValue="101"-->
-                                                                                  <!--p:propertyName="inputField7"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="学时"-->
-                                                                                  <!--p:defaultValue="64"-->
-                                                                                  <!--p:propertyName="inputField8"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="学分"-->
-                                                                                  <!--p:defaultValue="5.0"-->
-                                                                                  <!--p:propertyName="inputField9"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="学生人数"-->
-                                                                                  <!--p:defaultValue="100"-->
-                                                                                  <!--p:propertyName="inputField10"/>-->
-                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                  <!--p:label="拟配备助教数"-->
-                                                                                  <!--p:defaultValue="1"-->
-                                                                                  <!--p:propertyName="inputField11"/>-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -211,8 +149,8 @@
                                                                 <!--任务类型、次数...评论-->
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="5">
-                                                                    <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                    <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject"/>
+                                                                    <property name="propertyName" value="allIssues"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -227,12 +165,12 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-DataField" p:label="任务类型" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="次数" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="任务类型" p:propertyName="issueType"/>
+                                                                            <bean parent="Uif-DataField" p:label="次数" p:propertyName="issueCount"/>
                                                                             <bean parent="Uif-DataField" p:label="完成情况"
-                                                                                  p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="点赞比" p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="评论数" p:propertyName="field4"/>
+                                                                                  p:propertyName="completion"/>
+                                                                            <bean parent="Uif-DataField" p:label="点赞比" p:propertyName="likeRate"/>
+                                                                            <bean parent="Uif-DataField" p:label="评论数" p:propertyName="commentCount"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -241,7 +179,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-HeaderTwo" p:headerText="[b]意见[/b]"/>
-                                                                            <bean parent="Uif-InputField" p:propertyName="inputField40"
+                                                                            <bean parent="Uif-InputField" p:propertyName="evaluateDetail"
                                                                                   p:style="width:70%;height=300px;">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"/>
@@ -251,15 +189,15 @@
                                                                                 <property name="items"  >
                                                                                     <list>
                                                                                         <bean parent="Uif-InputField"
-                                                                                              p:propertyName="inputField97">
+                                                                                              p:propertyName="evaluate">
                                                                                             <property name="control">
                                                                                                 <bean parent="Uif-DropdownControl">
                                                                                                     <property name="options">
                                                                                                         <list>
                                                                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="优"/>
                                                                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="良"/>
-                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="中"/>
-                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="差"/>
+                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="3" p:value="中"/>
+                                                                                                            <bean parent="Uif-KeyValueLocation" p:key="4" p:value="差"/>
                                                                                                         </list>
                                                                                                     </property>
                                                                                                 </bean>

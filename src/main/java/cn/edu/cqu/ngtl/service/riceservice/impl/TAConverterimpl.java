@@ -382,6 +382,8 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid) {
+        if(allApplicationFilterByUid == null)
+            return null;
         List<MyTaViewObject> viewObjects = new ArrayList<>(allApplicationFilterByUid.size());
 
         for(TAMSTaApplication application : allApplicationFilterByUid) {

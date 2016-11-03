@@ -41,29 +41,10 @@
 
         <property name="applicationNavigation.items">
             <list>
-                <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="es-megamenu esmenu">
-                    <property name="items">
-                        <list>
-                            <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
-                            <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
-                            <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
-                                  p:actionScript="showDialog('navDialog');"
-                                  p:style="margin-top:15px;"/>
-
-
-                            <!--<bean id="examMainMenu" parent="Uif-DropdownToggleMenu"-->
-                                  <!--p:iconClass="icon-th" p:toggleCaretClass="" p:additionalCssClasses="">-->
-                                  <!--<property name="menuItems">-->
-                                      <!--<list>-->
-                                          <!--<bean parent="megamenu-items"/>-->
-                                      <!--</list>-->
-                                 <!--</property>-->
-                            <!--</bean>-->
-
-                        </list>
-                    </property>
-                </bean>
-
+                <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
+                <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
+                <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
+                      p:actionScript="showDialog('navDialog');"/>
             </list>
         </property>
         <!--不知道这是什么但是一删就报错-->
@@ -300,7 +281,7 @@
     <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
         <property name="items">
             <list>
-                <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&amp;viewId=ClassView"
+                <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
                       p:linkText="教学班"/>
                 <bean parent="Uif-Link" p:href="http://www.kuali.org"
                       p:linkText="Kuali Website"/>
@@ -342,25 +323,27 @@
                             <bean parent="Uif-MenuList" p:headerText="Negotiations">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
+
+
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/portal/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
                                               p:linkText="控制台(类别管理)"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
                                               p:linkText="角色管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"
                                               p:linkText="用户管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getPermissionManagementPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getPermissionManagementPage&amp;viewId=AdminView"
                                               p:linkText="权限管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
                                               p:linkText="课程负责人管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
                                               p:linkText="批次管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"
                                               p:linkText="课程类别管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
                                               p:linkText="助教类别管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
                                               p:linkText="任务类别管理"/>
-                                        <bean parent="Uif-Link" p:href="http://127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
                                               p:linkText="经费管理"/>
                                     </list>
                                 </property>

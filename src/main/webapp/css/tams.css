@@ -425,6 +425,18 @@ table.uif-tableCollectionLayout th {
 }
 /*修复dashboard中的box变矮的问题 end*/
 
+/*修复表格中progress bar显示*/
+.table td .progress{
+    height: auto;
+    vertical-align: middle;
+}
+
+.table td .progress .progress-bar{
+    height: 10px;
+    margin-top: 3.5px;
+}
+/*修复表格中progress bar显示 end*/
+
 
 
 

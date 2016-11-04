@@ -73,11 +73,25 @@ public class TaController extends UifControllerBase {
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
+
     @RequestMapping(params = {"pageId=pageTaList", "methodToCall=getTaReviewPage"})
     public ModelAndView getTaReviewPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
 
         return this.getModelAndView(taInfoForm, "pageReviewForTeacher");
+    }
+
+    /**
+     * 页面和form还未对应, 无法显示页面内容，页面的控件无法加载，但页面无错
+     * 获取添加任务页面
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getAddTaskPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        return this.getModelAndView(taInfoForm, "pageAddNewTask");
     }
 
     @Override

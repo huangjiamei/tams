@@ -415,6 +415,16 @@ table.uif-tableCollectionLayout th {
     color: white!important;
 }
 
+/*修复dashboard中的box变矮的问题*/
+.small-box .icon{
+    top: -4px;
+}
+
+.small-box > .inner {
+    padding: 25px;
+}
+/*修复dashboard中的box变矮的问题 end*/
+
 
 
 

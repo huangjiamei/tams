@@ -39,6 +39,27 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     private List<TaInfoViewObject> allTaInfo;
 
+    /**
+     * 任务相关
+     */
+    private String taskCategory;
+
+    private String theme;
+
+    private String assignment;
+
+    private String descriptionAndAttachement;
+
+    private String startTime;
+
+    private String endTime;
+
+    private String completionDegree;
+
+    private String singleTimeConsume;
+
+    private String totalTimeConsume;
+
     /** Getter and Setter **/
 
     public List<IssueViewObject> getAllIssues() {
@@ -87,5 +108,77 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setAllMyTa(List<MyTaViewObject> allMyTa) {
         this.allMyTa = allMyTa;
+    }
+
+    public String getTaskCategory() {
+        return taskCategory;
+    }
+
+    public void setTaskCategory(String taskCategory) {
+        this.taskCategory = taskCategory;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getAssignment() {
+        return assignment;
+    }
+
+    public void setAssignment(String assignment) {
+        this.assignment = assignment;
+    }
+
+    public String getDescriptionAndAttachement() {
+        return descriptionAndAttachement;
+    }
+
+    public void setDescriptionAndAttachement(String descriptionAndAttachement) {
+        this.descriptionAndAttachement = descriptionAndAttachement;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getCompletionDegree() {
+        return completionDegree;
+    }
+
+    public void setCompletionDegree(String completionDegree) {
+        this.completionDegree = completionDegree;
+    }
+
+    public String getSingleTimeConsume() {
+        return singleTimeConsume;
+    }
+
+    public void setSingleTimeConsume(String singleTimeConsume) {
+        this.singleTimeConsume = singleTimeConsume;
+    }
+
+    public String getTotalTimeConsume() {
+        return totalTimeConsume;
+    }
+
+    public void setTotalTimeConsume(String totalTimeConsume) {
+        this.totalTimeConsume = totalTimeConsume;
     }
 }

@@ -17,4 +17,5 @@ public interface IClassInfoService {
 
     UTStudent getStudentInfoById(String stuId);
 
+    List<UTClassInformation> getAllClassesFilterByUid(String uId);
 }

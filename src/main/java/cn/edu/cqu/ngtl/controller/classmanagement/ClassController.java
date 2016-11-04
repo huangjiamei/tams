@@ -27,7 +27,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -52,11 +51,15 @@ public class ClassController extends UifControllerBase {
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getClassListPage")
-    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                         HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesMappedByDepartment()
+                        classInfoService.getAllClassesFilterByUid(uId)
                 )
         );
         return this.getModelAndView(infoForm, "pageClassList");

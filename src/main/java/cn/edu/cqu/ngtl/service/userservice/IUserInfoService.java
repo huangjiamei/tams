@@ -41,4 +41,6 @@ public interface IUserInfoService {
 	
 	//是否是学生
 	boolean isStudent(String principalId);
+
+	boolean isInstructor(String principalId);
 }

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,4 +34,17 @@ public class UTClassInfoDaoJpa implements UTClassInfoDao {
         return KRADServiceLocator.getDataObjectService().find(UTClassInformation.class, id);
     }
 
+    @Override
+    public List<UTClassInformation> selectBatchByIds(List<Object> classIds) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<UTClassInformation> informations = new ArrayList<>(classIds.size());
+
+        for(Object classId : classIds) {
+            Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION t WHERE t.SESSION_ID='" + curSession.getId() + "'" + " AND t.UNIQUEID='" + classId + "'",
+                    UTClassInformation.class);
+            informations.addAll(query.getResultList());
+        }
+
+        return informations;
+    }
 }

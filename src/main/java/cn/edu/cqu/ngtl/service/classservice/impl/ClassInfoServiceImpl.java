@@ -2,11 +2,13 @@ package cn.edu.cqu.ngtl.service.classservice.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +28,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private UTStudentDao studentDao;
+
+    @Autowired
+    private IUserInfoService userInfoService;
+
+    @Autowired
+    private UTClassInstructorDao classInstructorDao;
 
     @Override
     public List<UTClassInformation> getAllClassesMappedByDepartment() {
@@ -54,5 +62,19 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public UTStudent getStudentInfoById(String stuId) {
         return studentDao.getUTStudentById(stuId);
+    }
+
+    @Override
+    public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
+        
+        //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
+        if(!userInfoService.isSysAdmin(uId))
+            return this.getAllClassesMappedByDepartment();
+        else if (!userInfoService.isInstructor(uId)) {
+            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+
+            return classInfoDao.selectBatchByIds(classIds);
+        }
+        return null;
     }
 }

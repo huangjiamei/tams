@@ -9,8 +9,9 @@ import java.util.List;
  */
 public interface UTClassInfoDao {
 
-     List<UTClassInformation> getAllCurrentClassInformation();
+    List<UTClassInformation> getAllCurrentClassInformation();
 
     UTClassInformation getOneById(Integer id);
 
+    List<UTClassInformation> selectBatchByIds(List<Object> classIds);
 }

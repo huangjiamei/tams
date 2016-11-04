@@ -46,6 +46,8 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
+        if(informationlist == null || informationlist.size() == 0)
+            return null;
         List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
 
         for (UTClassInformation information : informationlist) {

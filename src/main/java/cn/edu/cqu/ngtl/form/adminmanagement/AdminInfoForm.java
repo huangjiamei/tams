@@ -32,6 +32,60 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private Integer termIndex;
 
     /**
+     * 批次查询条件
+     */
+
+    private String termName;
+
+    private String startTime;
+
+    private String endTime;
+
+    public List<TermManagerViewObject> getOldTerms() {
+        return oldTerms;
+    }
+
+    public void setOldTerms(List<TermManagerViewObject> oldTerms) {
+        this.oldTerms = oldTerms;
+    }
+
+    private List<TermManagerViewObject> oldTerms;
+
+    public String getTermName() {
+        return termName;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(String totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    private String totalMoney;
+
+    /**
      * 任务类别管理页面
      */
 

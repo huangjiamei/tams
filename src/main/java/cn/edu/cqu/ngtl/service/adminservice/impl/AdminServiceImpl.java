@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -151,6 +152,11 @@ public class AdminServiceImpl implements IAdminService{
 
         return sessionDao.selectAll();
 
+    }
+
+    @Override
+    public List<UTSession> getSelectedSessions(String termName, String startTime, String endTime) throws ParseException {
+        return sessionDao.selectByCondition(termName, startTime, endTime);
     }
 
     @Override

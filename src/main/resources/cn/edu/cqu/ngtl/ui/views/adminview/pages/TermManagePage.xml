@@ -174,12 +174,12 @@
                                                                         <list>
                                                                             <!--文字搜索-->
                                                                             <bean parent="Uif-InputField" p:label="批次名称"
-                                                                                  p:propertyName="permissionNM"/>
+                                                                                  p:propertyName="termName"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="总预算金额"
-                                                                                  p:propertyName="permissionNM"/>
+                                                                                  p:propertyName="totalMoney"/>
                                                                             <bean parent="Uif-InputField" p:label="开始时间"
-                                                                                  p:propertyName="permissionNM">
+                                                                                  p:propertyName="startTime">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
                                                                                           p:size="10">
@@ -190,7 +190,7 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:label="结束时间"
-                                                                                  p:propertyName="permissionNM">
+                                                                                  p:propertyName="endTime">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
                                                                                           p:size="10">
@@ -203,7 +203,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
                                                                                   p:additionalCssClasses="icon-search"
-                                                                                  p:methodToCall="xxxx"
+                                                                                  p:methodToCall="searchTerm"
                                                                                   p:style="margin:15px"/>
                                                                         </list>
                                                                     </property>

@@ -14,8 +14,11 @@ import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
+import cn.edu.cqu.ngtl.service.riceservice.impl.TAConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import org.jacorb.imr.Admin;
+import org.kuali.rice.krad.uif.layout.SimpleLayoutManager;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -29,8 +32,10 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -774,10 +779,64 @@ public class adminController extends UifControllerBase {
                         adminService.getAllSessions()
                 )
         );
+        adminInfoForm.setOldTerms(adminInfoForm.getAllTerms());
 
         return this.getModelAndView(adminInfoForm, "pageTermManagement");
     }
 
+    /**
+     * 查询批次
+     * pageTermManage
+     * 三个条件不能缺省
+     * @param form
+     * @return
+     */
+
+    @RequestMapping(params = "methodToCall=searchTerm")
+    public ModelAndView searchTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        String termName = adminInfoForm.getTermName();
+        String startTime = adminInfoForm.getStartTime();
+        String endTime = adminInfoForm.getEndTime();
+
+         if (adminInfoForm.getTotalMoney() != null) {
+            // FIXME: 2016/11/5 暂不使用这一参数，如需使用需修改
+            adminInfoForm.setErrMsg("这一参数不可用");
+
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+         }
+
+        // 参数全空，返回原来值
+        if (termName == null && startTime == null && endTime == null) {
+            int n = adminInfoForm.getOldTerms().size();
+            adminInfoForm.setAllTerms(adminInfoForm.getOldTerms());
+            return this.getModelAndView(adminInfoForm, "pageTermManagement");
+        } else if (termName == null || startTime == null || endTime == null) {
+            // 有参数就不能缺省
+            // FIXME: 2016/11/5 错误提示可以修改，条件也许可以变成缺省，也可以增加条件
+            adminInfoForm.setErrMsg("缺少条件！");
+
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        } else {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            Date begin = format.parse(startTime);
+            Date end = format.parse(endTime);
+            // 时间颠倒
+            if (begin.after(end)) {
+                adminInfoForm.setErrMsg("时间错误，请重新输入!");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+
+            adminInfoForm.setAllTerms(
+                    taConverter.termInfoToViewObject(
+                            adminService.getSelectedSessions(termName, startTime, endTime)
+                    )
+            );
+
+            return this.getModelAndView(adminInfoForm, "pageTermManagement");
+        }
+    }
     /**
      * 编辑/添加项返回方法
      * pageTaskCategory
@@ -882,6 +941,8 @@ public class adminController extends UifControllerBase {
             return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
     }
+
+
 
     /**
      * 获取带charts的经费管理页面

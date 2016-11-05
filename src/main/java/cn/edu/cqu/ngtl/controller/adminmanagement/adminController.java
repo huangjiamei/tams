@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller.adminmanagement;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
@@ -16,6 +17,9 @@ import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import org.kuali.rice.core.api.config.property.ConfigContext;
+import org.kuali.rice.krad.util.GlobalVariables;
+import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -56,12 +60,17 @@ public class adminController extends UifControllerBase {
      * @param form
      * @return
      */
+    /**权限控制Start**/
     @RequestMapping(params = "methodToCall=getConsolePage")
     public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm infoForm = (AdminInfoForm) form;
-
-        return this.getModelAndView(infoForm, "pageConsole");
+        if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
+            AdminInfoForm infoForm = (AdminInfoForm) form;
+            return this.getModelAndView(infoForm, "pageConsole");
+        }
+        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
+        return this.performRedirect(form, redirectUrl.toString());
     }
+    /**权限控制End**/
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getRoleManagerPage&viewId=AdminView
@@ -181,6 +190,11 @@ public class adminController extends UifControllerBase {
         krimPermTs.setActive(permissionStatus);
         //TODO 权限属性分类
         krimPermTs.setTemplateId("56");
+
+        if(new KRIM_PERM_T_DaoJpa().findPermissionByName(permissionNM)!=null){
+            infoForm.setErrMsg("已存在相同权限内容的权限");
+            return this.showDialog("adminErrDialog",true,infoForm);
+        }
         new KRIM_PERM_T_DaoJpa().addPermissions(krimPermTs);
         if(infoForm.getPermissionIndex()==null) {
             infoForm.getRMPkrimPermTs().add(krimPermTs);   //根据不同的操作对页面显示对象进行修改

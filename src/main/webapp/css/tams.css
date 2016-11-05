@@ -91,7 +91,8 @@ body{
 /* 导航栏 */
 .navigationDialog{
     width:97.5%;
-    margin-top:50px;
+    margin-top:0;
+
 }
 .navigationDialog .modal-content{
     margin-top: 0;
@@ -100,7 +101,9 @@ body{
 }
 #navDialog{
     background:rgba(0,0,0,0)!important;
-    position:absolute!important;
+    position: fixed;
+    top:50px;
+
 }
 .modal-backdrop {
     opacity: 0 !important;
@@ -223,6 +226,10 @@ body{
     .navigationDialog .navbar-nav {
         margin: 4px -17px !important
     }
+    #navDialog{
+        position: absolute;
+    }
+
 }
 /*导航栏 end*/
 

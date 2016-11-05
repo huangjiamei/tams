@@ -35,10 +35,25 @@ function initNavDialog() {
  * 要求传入id，数据list
  * @param chartId
  */
-function getPieChart(chartId) {
+function getPieChart(chartId,title,data) {
+    // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
+    Highcharts.setOptions({
+        lang: {
+            printChart:"打印图表",
+            downloadJPEG: "下载JPEG 图片" ,
+            downloadPDF: "下载PDF文档"  ,
+            downloadPNG: "下载PNG 图片"  ,
+            downloadSVG: "下载SVG 矢量图" ,
+            exportButtonTitle: "导出图片"
+        }
+    });
+
     jQuery('#' + chartId).highcharts({
+        credits:{
+          enabled:false
+        },
         title: {
-            text: '学院经费分布'
+            text: title
         },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -78,13 +93,28 @@ function getPieChart(chartId) {
 }
 
 
-function getBarChart(chartId) {
+function getBarChart(chartId,title,data) {
+    // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
+    Highcharts.setOptions({
+        lang: {
+            printChart:"打印图表",
+            downloadJPEG: "下载JPEG 图片" ,
+            downloadPDF: "下载PDF文档"  ,
+            downloadPNG: "下载PNG 图片"  ,
+            downloadSVG: "下载SVG 矢量图" ,
+            exportButtonTitle: "导出图片"
+        }
+    });
+
     jQuery('#' + chartId).highcharts({
+        credits:{
+            enabled:false
+        },
         chart: {
             type: 'column' // 竖柱图
         },
         title: {
-            text: '学院经费比例'
+            text: title
         },
         xAxis: {
             categories: [

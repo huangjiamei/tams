@@ -45,12 +45,10 @@ public class UTClass extends DataObjectBase implements Serializable {
 	private Integer datePatternId;
 
 	@Column(name = "ASSIGNMENT_DAY")
-	/** 等一个Converter */
 	@Convert(converter = UnitimeDayOfWeekConverter.class)
 	private String dayOfWeek;
 
 	@Column(name = "ASSIGNMENT_TIME")
-	/** 等一个Converter */
 	@Convert(converter = UnitimeTimeSlotConverter.class)
 	private String timeSlot;
 

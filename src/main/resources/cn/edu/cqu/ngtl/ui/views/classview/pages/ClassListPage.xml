@@ -255,7 +255,8 @@
                                                                                         <bean parent="Uif-InputField" p:label="授课年级"
                                                                                               p:propertyName="condSessionYear">
                                                                                             <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.SessionYearFinder"
+                                                                                                      p:blankOption="true"/>
                                                                                             </property>
                                                                                             <property name="control">
                                                                                                 <bean parent="Uif-DropdownControl" />
@@ -264,7 +265,8 @@
                                                                                         <bean parent="Uif-InputField" p:label="选修/必修"
                                                                                               p:propertyName="condIsRequired">
                                                                                             <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classView.isRequiredFinder"
+                                                                                                      p:blankOption="true"/>
                                                                                             </property>
 
                                                                                             <property name="control">
@@ -274,7 +276,8 @@
                                                                                         <bean parent="Uif-InputField" p:label="课程类型"
                                                                                               p:propertyName="condCourseClassification">
                                                                                             <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
+                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classView.courseClassificationFinder"
+                                                                                                      p:blankOption="true"/>
                                                                                             </property>
                                                                                             <property name="control">
                                                                                                 <bean parent="Uif-DropdownControl" />

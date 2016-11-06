@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
@@ -809,8 +810,8 @@ public class adminController extends UifControllerBase {
 
         // 参数全空，返回原来值
         if (termName == null && startTime == null && endTime == null) {
-            int n = adminInfoForm.getOldTerms().size();
             adminInfoForm.setAllTerms(adminInfoForm.getOldTerms());
+
             return this.getModelAndView(adminInfoForm, "pageTermManagement");
         } else if (termName == null || startTime == null || endTime == null) {
             // 有参数就不能缺省
@@ -827,13 +828,19 @@ public class adminController extends UifControllerBase {
                 adminInfoForm.setErrMsg("时间错误，请重新输入!");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
-
+            List<UTSession> results = adminService.getSelectedSessions(termName, startTime, endTime);
+            if (results.size() != 0) {
+                String testError = results.get(0).getYear();
+                if (testError.charAt(0) == '1') {
+                    adminInfoForm.setErrMsg("批次名称格式错误，应为\"xxxx年x季\"，例如 2014年秋季");
+                    return this.showDialog("adminErrDialog", true, adminInfoForm);
+                }
+            }
             adminInfoForm.setAllTerms(
                     taConverter.termInfoToViewObject(
-                            adminService.getSelectedSessions(termName, startTime, endTime)
+                        results
                     )
             );
-
             return this.getModelAndView(adminInfoForm, "pageTermManagement");
         }
     }

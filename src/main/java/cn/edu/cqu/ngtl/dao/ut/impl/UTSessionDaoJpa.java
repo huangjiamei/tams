@@ -103,9 +103,20 @@ public class UTSessionDaoJpa implements UTSessionDao{
     }
 
     @Override
-    public List<UTSession> selectByCondition(String termName, String startTime, String endTime) throws ParseException {
-        String year = termName.substring(0, termName.indexOf("年"));
-        String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("年") + 2);
+    public List<UTSession> selectByCondition(String termName, String startTime, String endTime) throws ParseException{
+        String year = null;
+        String term = null;
+        List<UTSession> utSessions = new ArrayList<UTSession>();
+        try {
+            year = termName.substring(0, termName.indexOf("年"));
+            term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("年") + 2);
+        }
+        catch (StringIndexOutOfBoundsException e) {
+            UTSession error = new UTSession();
+            error.setYear("1000");
+            utSessions.add(error);
+            return utSessions;
+        }
         // TODO: 2016/11/5 参数可以模糊化，后期调整 
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()
                 .setPredicates(
@@ -125,13 +136,9 @@ public class UTSessionDaoJpa implements UTSessionDao{
 
         Integer num = qr.getResults().size();
 
-        List<UTSession> utSessions = new ArrayList<UTSession>();
-
         for (int i = 0; i < num; i++) {
             UTSession session = qr.getResults().get(i);
-            if (begin.before(outFormat.parse(session.getBeginDate()))
-                    && end.after(outFormat.parse(session.getEndDate())))
-            {
+            if (begin.before(outFormat.parse(session.getBeginDate())) && end.after(outFormat.parse(session.getEndDate()))) {
                 utSessions.add(qr.getResults().get(i));
             }
         }

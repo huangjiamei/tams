@@ -300,7 +300,7 @@
 
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="查询" p:additionalCssClasses="icon-search"
-                                                                                              p:methodToCall="searchBatchApplicant" p:style="margin:15px" />
+                                                                                              p:methodToCall="searchClassByCondition" p:style="margin:15px" />
 
                                                                                     </list>
                                                                                 </property>

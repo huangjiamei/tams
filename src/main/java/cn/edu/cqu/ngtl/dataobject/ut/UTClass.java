@@ -6,6 +6,7 @@
 
 package cn.edu.cqu.ngtl.dataobject.ut;
 
+import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
 import cn.edu.cqu.ngtl.tools.converter.UnitimeDayOfWeekConverter;
 import cn.edu.cqu.ngtl.tools.converter.UnitimeTimeSlotConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
@@ -67,6 +68,9 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@OrderBy("id")
 	private List<UTInstructor> utInstructors;
 
+    @Transient
+    private CMProgramCourse programCourse;
+
 	/**
 	 * 注：此链接方法和上一个链接方法作用一致，此方法使用ClassInstructor中间类做辅助
 	 * 两者取其一即可
@@ -80,6 +84,14 @@ public class UTClass extends DataObjectBase implements Serializable {
 	/** 最小开课人数 */
 	@Column(name = "MIN_PER_WK")
 	private Integer minPerWeek;
+
+    public CMProgramCourse getProgramCourse() {
+        return programCourse;
+    }
+
+    public void setProgramCourse(CMProgramCourse programCourse) {
+        this.programCourse = programCourse;
+    }
 
     public Integer getId() {
         return id;

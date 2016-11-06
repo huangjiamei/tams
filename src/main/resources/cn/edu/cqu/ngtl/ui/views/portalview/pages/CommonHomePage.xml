@@ -128,7 +128,7 @@
                                                             <list>
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="更多"
-                                                                      p:method="alert('更多');"
+                                                                      p:actionScript="alert('更多');"
                                                                       p:id="btn-moreinfo"/>
                                                             </list>
                                                         </property>

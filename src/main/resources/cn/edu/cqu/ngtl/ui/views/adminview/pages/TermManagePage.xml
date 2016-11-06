@@ -279,7 +279,8 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTerm">
+                                                                                        <bean parent="Uif-ActionImage"
+                                                                                              p:methodToCall="selectCurTerm">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -318,7 +319,8 @@
 
 
     <bean id="addNewTermDialog" parent="Uif-DialogGroup"
-          p:headerText="添加批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="添加批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:onDocumentReadyScript="jQuery('#addNewTermDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -419,7 +421,8 @@
 
 
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
-          p:headerText="修改批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="修改批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+    p:onDocumentReadyScript="jQuery('#confirmEditTermDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">

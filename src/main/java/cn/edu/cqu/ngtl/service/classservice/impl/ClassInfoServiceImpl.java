@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMProgramCourseDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
@@ -41,6 +42,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private CMProgramCourseDao programCourseDao;
 
+    @Autowired
+    private TAMSTaDao taDao;
+
     @Override
     public List<UTClassInformation> getAllClassesMappedByDepartment() {
 
@@ -74,10 +78,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
 
         //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
-        if(!userInfoService.isSysAdmin(uId))
+        if(userInfoService.isSysAdmin(uId))
             return this.getAllClassesMappedByDepartment();
-        else if (!userInfoService.isInstructor(uId)) {
+        else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+
+            return classInfoDao.selectBatchByIds(classIds);
+        }
+        else if (userInfoService.isStudent(uId)) {
+            List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
 
             return classInfoDao.selectBatchByIds(classIds);
         }

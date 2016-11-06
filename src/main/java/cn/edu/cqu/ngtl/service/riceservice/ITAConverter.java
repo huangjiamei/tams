@@ -43,4 +43,6 @@ public interface ITAConverter {
     List<MyTaViewObject> myTaCombinePayDay(List<TAMSTa> allTaFilteredByUid);
 
     List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid);
+
+    List<ClassTeacherViewObject> classToViewObject(List<UTClass> allClassesFilterByUidAndCondition);
 }

@@ -244,6 +244,47 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
+    public List<ClassTeacherViewObject> classToViewObject(List<UTClass> informationlist) {
+        if(informationlist == null || informationlist.size() == 0)
+            return null;
+        List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
+
+        for (UTClass information : informationlist) {
+            ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
+
+            //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
+            viewObject.setId(information.getId());
+            viewObject.setInstructorName("test");
+            viewObject.setStudentCounts(information.getMinPerWeek().toString());
+
+            viewObject.setClassNumber(information.getClassNumber());
+
+            UTCourse course = information.getCourseOffering() != null ? information.getCourseOffering().getCourse() : null;
+            information.getCourseOffering().getSession().getYear();
+            if(course != null) {
+                viewObject.setSessionYear(information.getCourseOffering().getSession() != null ?
+                        information.getCourseOffering().getSession().getYear() : null);
+
+                viewObject.setDepartmentName(course.getDepartment() != null ? course.getDepartment().getName() : null);
+                viewObject.setCourseName(course.getName());
+                viewObject.setCourseHour(course.getHour());
+                viewObject.setCourseCode(course.getCodeR());
+                viewObject.setCourseCredit(course.getCredit().toString());
+            }
+
+            CMProgramCourse programCourse = information.getProgramCourse();
+            if (programCourse != null) {
+                viewObject.setCourseClassification(programCourse.getClassification() != null ? programCourse.getClassification().getName() : null);
+                viewObject.setIsRequired(programCourse.getRequired() == 1 ? "必修" : "选修");
+                viewObject.setProgramName(programCourse.getProgram() != null ? programCourse.getProgram().getName() : null);
+            }
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
+    }
+
+    @Override
     public TAMSTaApplication submitInfoToTaApplication(ClassInfoForm form) {
         TAMSTaApplication application = new TAMSTaApplication();
 

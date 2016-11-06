@@ -64,7 +64,6 @@
                 <value>ueditor/ueditor.config.js</value>
                 <value>ueditor/ueditor.all.min.js</value>
                 <value>ueditor/lang/zh-cn/zh-cn.js</value>
-                <value>/themes/kboot/scripts/kboot.2.5.12.min.js</value>
 
                 <value>js/tams.js</value>
             </list>
@@ -146,6 +145,14 @@
                     <property name="items">
                         <list>
                             <ref bean="TaReviewForTeacher"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageWorkFlowManage" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="WorkFlowManagePage"/>
                         </list>
                     </property>
                 </bean>

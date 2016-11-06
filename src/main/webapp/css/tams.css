@@ -492,6 +492,13 @@ table.uif-tableCollectionLayout th {
 }
 /*修复表格中progress bar显示 end*/
 
-
-
+.out{
+    border-top:60px #dddddd solid;/*上边框宽度等于表格第一行行高*/
+    width:0px;/*让容器宽度为0*/
+    height:0px;/*让容器高度为0*/
+    border-left:120px #BDBABD solid;/*左边框宽度等于表格第一行第一格宽度*/
+    position:relative;/*让里面的两个子容器绝对定位*/
+}
+b{font-style:normal;display:block;position:absolute;top:-60px;left:-30px;width:35px;}
+em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width:55px;}
 

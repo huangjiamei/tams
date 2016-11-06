@@ -31,6 +31,99 @@ function initNavDialog() {
     })
 }
 
+
+
+var jsonObj =  {
+    header:["编辑","待负责人审核","待学院审核","待学校审核","招聘","工作"],
+
+    data:[
+        [1,0,0,1,0,0],
+        [1,1,0,1,0,0],
+        [1,0,0,1,0,0],
+        [1,0,0,1,0,0],
+        [1,0,0,1,0,0],
+        [1,1,0,1,0,0]
+    ]
+}
+
+function drawStatusTransTable(boxid){
+
+    var tbl = document.createElement("table");
+    var tbody = document.createElement("tbody");
+    tbl.className+="table table-striped table-bordered table-hover ";
+
+    var thead = document.createElement("tr");
+
+    var topleft = document.createElement("th");
+    topleft.style="width:80px; padding: 0;";
+    topleft.innerHTML = "<div class=\"out\"> <b>当前状态</b>  <em>新状态</em> </div>";
+
+    thead.appendChild(topleft);
+
+    for(var i=0;i<jsonObj.header.length;i++){
+
+        var header = document.createElement("th");
+        header.innerHTML = jsonObj.header[i];
+        thead.appendChild(header);
+
+    }
+    tbody.appendChild(thead);
+
+    for(var i=0;i<jsonObj.header.length;i++){
+
+        var row = document.createElement("tr");
+        var header = document.createElement("th");
+        header.innerHTML = jsonObj.header[i];
+        row.appendChild(header);
+
+        for(var j=0;j<jsonObj.header.length;j++){
+
+            var td = document.createElement("td");
+            var cb = document.createElement("input");
+            cb.type="checkbox";
+            if(jsonObj.data[i][j]){
+                cb.checked = true;
+            }
+            td.appendChild(cb);
+
+            row.appendChild(td);
+
+        }
+        tbody.appendChild(row);
+    }
+    tbl.appendChild(tbody);
+    var box = document.getElementById(boxid);
+    box.appendChild(tbl);
+}
+
+function save() {
+    var tmp_header=[];
+    var tmp_data=[];
+    var tbl = document.getElementById(status).getElementsByTagName('tbody')[0];
+    var rows = tbl.childNodes;
+    var head = rows[0].childNodes;
+    for(var i=1;i<head.length;i++)
+    {
+        tmp_header[i-1] = head[i].innerHTML;
+    }
+
+    for(var i=1;i<head.length;i++)
+    {
+        var row_data =[];
+        var row = rows[i].childNodes;
+        for(var j=1;j<head.length;j++)
+        {
+            row_data[j-1] = row[j].childNodes[0].checked?1:0;
+        }
+        tmp_data[i-1]=row_data;
+    }
+    jsonObj.header = tmp_header;
+    jsonObj.data = tmp_data;
+
+
+}
+
+
 /**
  * 要求传入id，数据list
  * @param chartId

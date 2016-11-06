@@ -34,7 +34,7 @@ import java.util.List;
 @Service
 public class TAConverterimpl implements ITAConverter {
 
-    static final SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy");
+    static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
     static final SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired

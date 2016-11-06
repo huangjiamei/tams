@@ -9,6 +9,8 @@ import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +44,13 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         }
 
         return tas.isEmpty()?null:tas;
+    }
+
+
+    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+    @Override
+    public List<Object> selectClassIdsByStudentId(String uId) {
+        Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + uId + "'");
+        return query.getResultList();
     }
 }

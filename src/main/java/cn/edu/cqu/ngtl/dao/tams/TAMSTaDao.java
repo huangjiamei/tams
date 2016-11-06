@@ -12,4 +12,6 @@ public interface TAMSTaDao {
     List<TAMSTa> selectAll();
 
     List<TAMSTa> selectByClassId(List<Object> classIds);
+
+    List<Object> selectClassIdsByStudentId(String uId);
 }

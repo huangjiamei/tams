@@ -241,7 +241,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="课程"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="oldClassification.name"/>
+                                              p:propertyName="classification.name"/>
                                     </list>
                                 </property>
                             </bean>
@@ -274,7 +274,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="课程"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="oldClassification.name"/>
+                                              p:propertyName="classification.name"/>
                                     </list>
                                 </property>
                             </bean>

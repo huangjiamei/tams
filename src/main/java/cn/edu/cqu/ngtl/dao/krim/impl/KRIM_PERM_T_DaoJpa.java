@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,4 +39,11 @@ public class KRIM_PERM_T_DaoJpa implements KRIM_PERM_T_Dao {
 		KradDataServiceLocator.getDataObjectService().delete(krim_perm_t);
 	}
 
+
+	@Override
+	public KRIM_PERM_T findPermissionByName(String name){
+		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()
+				.setPredicates(equal("name" , name));
+		return KRADServiceLocator.getDataObjectService().findUnique(KRIM_PERM_T.class,criteria.build());
+	}
 }

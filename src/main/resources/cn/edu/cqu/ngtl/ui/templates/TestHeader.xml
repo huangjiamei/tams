@@ -43,8 +43,49 @@
             <list>
                 <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
                 <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
+
+                <!--导航栏-->
                 <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
                       p:actionScript="showDialog('navDialog');"/>
+
+                <!--user info-->
+                <bean id="userInfo" parent="Uif-DropdownToggleMenu"
+                      p:iconClass="icon-user" p:toggleText="用户名">
+                    <property name="menuItems">
+                        <list>
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="userInfo">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-Image"
+                                              p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"
+                                              p:additionalCssClasses="userInfoPic" />
+                                        <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="userInfoMeg">
+                                            <property name="items">
+                                                <list>
+                                                    <!--<bean id="userDeptId" parent="Uif-MessageField" p:messageText="@{user.getDepartmentId()}"  p:style="display:none"/>-->
+                                                    <bean id="userDeptName" parent="Uif-MessageField" p:messageText="学院"/>
+                                                    <bean parent="Uif-MessageField" p:messageText="user tag"
+                                                          p:style="font-size:16px" />
+                                                </list>
+                                            </property>
+                                        </bean>
+
+                                    </list>
+                                </property>
+                            </bean>
+                            <bean parent="Uif-SecondaryActionButton-Small"
+                                  p:actionLabel="注销" p:methodToCall="logout"
+                                  p:additionalCssClasses="userInfoBtn" p:style="float:right">
+                            </bean>
+
+                        </list>
+                    </property>
+
+                </bean>
+
+
             </list>
         </property>
         <!--不知道这是什么但是一删就报错-->
@@ -378,8 +419,11 @@
                             <bean parent="Uif-MenuList" p:headerText="Negotiations">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
-                                              p:linkText="控制台(类别管理)"/>
+                                        <!--权限控制Start-->
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/portal/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
+                                              p:linkText="控制台(类别管理)"
+                                              p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewConsolePage')}"/>
+                                        <!--权限控制End-->
                                         <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
                                               p:linkText="角色管理"/>
                                         <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"

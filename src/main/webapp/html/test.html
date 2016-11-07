@@ -1,78 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Test</title>
-
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <style>
-        .parent {
-            width: 980px;
-            height: 250px;
-            margin: 0 auto;
-            text-align: center;
-            background-color: #999;
-        }
-
-        .children {
-            display: inline-block;
-            width: 100px;
-            height: 250px;
-        }
-
-        * + html .children {
-            display: inline;
-            zoom: 1;
-        }
-
-        * html .children {
-            display: inline;
-            zoom: 1;
-        }
-
-        .c {
-            /*width:100%;*/
-            background: black;
-            height: 500px;
-        }
-
-        .b {
-            position: relative;
-            /*width:100%;*/
-            /*left:10%;*/
-            background-color: blue;
-            height: 100px;
-        }
-
-        .bb {
-            /*width:30%;*/
-            background: red;
-            height: 50px;
-        }
-    </style>
-
-
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<title>Bootstrap 堆叠的或垂直的基于胶囊式标签的导航实例</title> 
+	<meta name="description" content="Bootstrap Stacked or vertical Pills Based Navigation Example">
+	<link href="../css/bootstrap.css" rel="stylesheet">
+	<script  type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
+	<script  type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script  type="text/javascript" src="js/test.js"></script> 
+ 
+		
+	 
+	 
 </head>
 <body>
-
-<div class="container" style="background: pink;">
-    <div class="row ">
-            <div class="bb col-md-3 col-sm-3" style="background: green;"></div>
-            <div class="bb col-md-3 col-sm-9">
-                <div class="box box-info" style="padding: 20px;width: 20px;height:20px;">
-                </div>
-            </div>
-            <div class="bb col-md-3 col-sm-9" style="background: blue;"></div>
-            <div class="bb col-md-3 col-sm-3" style="background: yellow;"></div>
-        <div class="bb col-md-3 col-sm-6" style="background: green;"></div>
-
-    </div>
-    <div class="row" style="background: grey;">
-                <div class="bb col-md-6" style="background: green;"></div>
-                <div class="bb col-md-6"></div>
-    </div>
-
+	
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<ul id="haha" class="nav nav-pills nav-stacked">
+				<li>
+					<a href="#academics" class="active">Home</a>  
+				</li>
+				<li>
+					<a href="#hmrs">Tutorials</a>
+				</li>
+ 					
+			</ul>
+		</div>
+		<div class="col-md-9">
+			<ul class="tab-content">
+				<div id="academics" class="active">1
+				</div>
+				<div id="hmrs" class="tab-pane">2
+				</div>
+				 
+			</ul>
+		</div>
+	</div>
 </div>
-
+	
+ 
+	 
+	 
+	
+	 
 
 </body>
 </html>

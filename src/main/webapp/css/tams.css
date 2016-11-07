@@ -92,7 +92,6 @@ body{
 .navigationDialog{
     width:97.5%;
     margin-top:0;
-
 }
 .navigationDialog .modal-content{
     margin-top: 0;
@@ -232,7 +231,56 @@ body{
 
 }
 /*导航栏 end*/
+/*user info*/
 
+.dropdown .dropdown-menu{
+    padding-top:0;
+}
+
+.dropdown .dropdown-menu li
+{
+    text-align: center;
+    list-style: none!important;
+}
+.userInfo{
+    padding-top:20px;
+    width:auto;
+    min-width:300px;
+    background-color: #3C8DBC;
+}
+
+.userInfo .userInfoPic{
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    margin: 0 auto 10px auto;
+    float:none!important;
+}
+
+
+
+.userInfo .userInfoMeg div{
+    float: none!important;
+}
+
+.userInfo .userInfoMeg{
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.8);
+    padding: 0 0 20px;
+}
+
+
+.userInfoBtn{
+    box-shadow: none;
+    float: right!important;
+    margin: 10px 20px;
+    border-radius:0;
+}
+
+
+
+
+/*user info end*/
 
 /* box */
 /* box-header */
@@ -444,6 +492,13 @@ table.uif-tableCollectionLayout th {
 }
 /*修复表格中progress bar显示 end*/
 
-
-
+.out{
+    border-top:60px #dddddd solid;/*上边框宽度等于表格第一行行高*/
+    width:0px;/*让容器宽度为0*/
+    height:0px;/*让容器高度为0*/
+    border-left:120px #BDBABD solid;/*左边框宽度等于表格第一行第一格宽度*/
+    position:relative;/*让里面的两个子容器绝对定位*/
+}
+b{font-style:normal;display:block;position:absolute;top:-60px;left:-30px;width:35px;}
+em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width:55px;}
 

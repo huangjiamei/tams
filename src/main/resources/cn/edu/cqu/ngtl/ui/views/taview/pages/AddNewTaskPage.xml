@@ -185,7 +185,21 @@
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl" p:size="10">
                                                                             <property name="datePicker">
-                                                                                <bean parent="Uif-DatePicker"/>
+                                                                                <bean parent="Uif-DatePicker">
+                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
+                                                                                    <property name="templateOptions">
+                                                                                        <map>
+                                                                                            <entry key="showOn" value="button"/>
+                                                                                            <entry key="buttonImage" value="@{#ThemeImages}cal.gif"/>
+                                                                                            <entry key="buttonImageOnly" value="true"/>
+                                                                                            <entry key="showAnim" value="slideDown"/>
+                                                                                            <entry key="showButtonPanel" value="true"/>
+                                                                                            <entry key="changeMonth" value="true"/>
+                                                                                            <entry key="changeYear" value="true"/>
+                                                                                            <entry key="dateFormat" value="yy-mm-dd"/>
+                                                                                        </map>
+                                                                                    </property>
+                                                                                </bean>
                                                                             </property>
                                                                         </bean>
                                                                     </property>
@@ -196,7 +210,22 @@
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl" p:size="10">
                                                                             <property name="datePicker">
-                                                                                <bean parent="Uif-DatePicker"/>
+                                                                                <bean parent="Uif-DatePicker">
+                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
+                                                                                    <property name="templateOptions">
+                                                                                        <map>
+                                                                                            <entry key="showOn" value="button"/>
+                                                                                            <entry key="buttonImage" value="@{#ThemeImages}cal.gif"/>
+                                                                                            <entry key="buttonImageOnly" value="true"/>
+                                                                                            <entry key="showAnim" value="slideDown"/>
+                                                                                            <entry key="showButtonPanel" value="true"/>
+                                                                                            <entry key="changeMonth" value="true"/>
+                                                                                            <entry key="changeYear" value="true"/>
+                                                                                            <entry key="dateFormat" value="yy-mm-dd"/>
+                                                                                        </map>
+                                                                                    </property>
+                                                                                </bean>
+
                                                                             </property>
                                                                         </bean>
                                                                     </property>

@@ -228,7 +228,8 @@
     </bean>
 
     <bean id="addCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加课程大类" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="添加课程大类" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:onDocumentReadyScript="jQuery('#addCourseCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -241,7 +242,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="课程"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="oldClassification.name"/>
+                                              p:propertyName="classification.name"/>
                                     </list>
                                 </property>
                             </bean>
@@ -261,7 +262,8 @@
 
 
     <bean id="editCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改课程类别">
+          p:headerText="修改课程类别"
+          p:onDocumentReadyScript="jQuery('#editCourseCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -274,7 +276,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="课程"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="oldClassification.name"/>
+                                              p:propertyName="classification.name"/>
                                     </list>
                                 </property>
                             </bean>

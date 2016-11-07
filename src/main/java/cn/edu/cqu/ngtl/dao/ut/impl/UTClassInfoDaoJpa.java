@@ -1,50 +1,1 @@
-package cn.edu.cqu.ngtl.dao.ut.impl;
-
-import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
-import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import org.kuali.rice.krad.service.KRADServiceLocator;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
-
-import javax.persistence.EntityManager;
-import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
-
-/**
- * Created by awake on 2016-10-19.
- */
-@Repository
-@Component("UTClassInfoDaoJpa")
-public class UTClassInfoDaoJpa implements UTClassInfoDao {
-
-    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-
-    @Override
-    public List<UTClassInformation> getAllCurrentClassInformation(){
-        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION t WHERE t.SESSION_ID='"+curSession.getId()+"'",UTClassInformation.class);
-        List<UTClassInformation> result = query.getResultList();
-        return result;
-    }
-
-    @Override
-    public UTClassInformation getOneById(Integer id) {
-        return KRADServiceLocator.getDataObjectService().find(UTClassInformation.class, id);
-    }
-
-    @Override
-    public List<UTClassInformation> selectBatchByIds(List<Object> classIds) {
-        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        List<UTClassInformation> informations = new ArrayList<>(classIds.size());
-
-        for(Object classId : classIds) {
-            Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION t WHERE t.SESSION_ID='" + curSession.getId() + "'" + " AND t.UNIQUEID='" + classId + "'",
-                    UTClassInformation.class);
-            informations.addAll(query.getResultList());
-        }
-
-        return informations;
-    }
-}
+package cn.edu.cqu.ngtl.dao.ut.impl;import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;import cn.edu.cqu.ngtl.dataobject.ut.UTClass;import cn.edu.cqu.ngtl.dataobject.ut.UTSession;import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;import org.kuali.rice.core.api.criteria.QueryByCriteria;import org.kuali.rice.core.api.criteria.QueryResults;import org.kuali.rice.krad.data.KradDataServiceLocator;import org.kuali.rice.krad.service.KRADServiceLocator;import org.springframework.stereotype.Component;import org.springframework.stereotype.Repository;import javax.persistence.EntityManager;import javax.persistence.Query;import java.util.ArrayList;import java.util.List;import java.util.Map;import static org.kuali.rice.core.api.criteria.PredicateFactory.and;import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;import static org.kuali.rice.core.api.criteria.PredicateFactory.like;/** * Created by awake on 2016-10-19. */@Repository@Component("UTClassInfoDaoJpa")public class UTClassInfoDaoJpa implements UTClassInfoDao {    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();    @Override    public List<UTClassInformation> getAllCurrentClassInformation(){        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();        Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION t WHERE t.SESSION_ID='"+curSession.getId()+"'",UTClassInformation.class);        List<UTClassInformation> result = query.getResultList();        return result;    }    @Override    public UTClassInformation getOneById(Integer id) {        return KRADServiceLocator.getDataObjectService().find(UTClassInformation.class, id);    }    @Override    public List<UTClassInformation> selectBatchByIds(List<Object> classIds) {        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();        List<UTClassInformation> informations = new ArrayList<>(classIds.size());        for(Object classId : classIds) {            Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INFORMATION t WHERE t.SESSION_ID='" + curSession.getId() + "'" + " AND t.UNIQUEID='" + classId + "'",                    UTClassInformation.class);            informations.addAll(query.getResultList());        }        return informations;    }    @Override    public List<UTClass> selectByConditions(Map<String, String> conditions) {        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();        for (Map.Entry<String, String> entry : conditions.entrySet()) {            if(entry.getValue() == null)                conditions.put(entry.getKey(), "*");//            else//                conditions.put(entry.getKey(), "*" + entry.getValue() + "*");        }        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()                .setPredicates(                        and(                                like("id" , conditions.get("ClassId")),                                equal("courseOffering.course.departmentId", conditions.get("DepartmentId"))//                                like("utInstructors.gender", conditions.get("InstructorName")),//                                like("courseOffering.session.year",conditions.get("Year")),//                                like("courseOffering.program", conditions.get("IsRequired")),//                                like("studentId", conditions.get("ProgramId")),//                                like("utStudent.grade", conditions.get("Classification")),//                                like("courseOffering.course.name", conditions.get("CourseName")),//                                like("courseOffering.course.codeR", conditions.get("CourseCode")),//                                like("courseOffering.course.hour", conditions.get("CourseHour")),//                                like("courseOffering.course.credit", conditions.get("CourseCredit"))                        ));        QueryResults<UTClass> qr = KradDataServiceLocator.getDataObjectService().findMatching(                UTClass.class, criteria.build());        List<UTClass> classes = qr.getResults();        return classes;    }}

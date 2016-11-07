@@ -14,8 +14,8 @@ import java.io.Serializable;
 public class TAMSWorkflowRoleFunction extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
-    @GeneratedValue(generator = "tamsworkflowstatus")
-    @SequenceGenerator(name = "tamsworkflowstatus", sequenceName = "TAMS_WORKFLOW_STATUS", allocationSize = 1)
+    @GeneratedValue(generator = "tamsworkflowrolefunction")
+    @SequenceGenerator(name = "tamsworkflowrolefunction", sequenceName = "TAMS_WORKFLOW_ROLE_FUNCTION_S", allocationSize = 1)
     private String id;
 
     @Column(name = "ROLE_ID")

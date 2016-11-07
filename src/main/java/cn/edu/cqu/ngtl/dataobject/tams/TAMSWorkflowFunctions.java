@@ -13,8 +13,8 @@ import java.io.Serializable;
 public class TAMSWorkflowFunctions extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
-    @GeneratedValue(generator = "tamsworkflowstatus")
-    @SequenceGenerator(name = "tamsworkflowstatus", sequenceName = "TAMS_WORKFLOW_STATUS", allocationSize = 1)
+    @GeneratedValue(generator = "tamsworkflowfunctions")
+    @SequenceGenerator(name = "tamsworkflowfunctions", sequenceName = "TAMS_WORKFLOW_FUNCTIONS_S", allocationSize = 1)
     private String id;
 
     @Column(name = "NAME")

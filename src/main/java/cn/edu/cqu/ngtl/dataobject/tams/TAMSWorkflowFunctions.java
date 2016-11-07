@@ -6,15 +6,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by liusijia on 2016/10/26.
+ * Created by wjy on 16-11-7.
  */
 @Entity
-@Table(name = "TAMS_TA_CATEGORY")
-public class TAMSTaCategory extends DataObjectBase implements Serializable {
+@Table(name = "TAMS_WORKFLOW_FUNCTIONS")
+public class TAMSWorkflowFunctions extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
-    @GeneratedValue(generator = "tamsTaCategory")
-    @SequenceGenerator(name = "tamsTaCategory", sequenceName = "TAMS_TA_CATEGORY_S", allocationSize = 1)
+    @GeneratedValue(generator = "tamsworkflowstatus")
+    @SequenceGenerator(name = "tamsworkflowstatus", sequenceName = "TAMS_WORKFLOW_STATUS", allocationSize = 1)
     private String id;
 
     @Column(name = "NAME")

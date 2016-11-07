@@ -1,13 +1,16 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import org.kuali.rice.krad.bo.DataObjectBase;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by liusijia on 2016/10/25.
  */
 @Entity
 @Table(name = "TAMS_WORKFLOW_STATUS")
-public class TAMSWorkflowStatus {
+public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsWorkflowStatus")

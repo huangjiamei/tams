@@ -146,13 +146,21 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageFundsManagement" p:title="批次管理">
+                <bean parent="Uif-Page" p:id="pageFundsManagement" p:title="经费管理">
                     <property name="items">
                         <list>
                             <ref bean="FundsManagementPage"/>
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageTaReward" p:title="助教酬劳管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaRewardPage"/>
+                        </list>
+                    </property>
+                </bean>
+
             </list>
         </property>
     </bean>

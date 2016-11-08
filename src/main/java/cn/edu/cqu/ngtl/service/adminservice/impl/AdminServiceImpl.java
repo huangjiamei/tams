@@ -2,12 +2,14 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSDeptFundingDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSIssueTypeDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
@@ -39,6 +41,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSDeptFundingDao deptFundingDao;
 
     @Override
     public List<CMCourseClassification> getAllClassification() {
@@ -202,5 +207,12 @@ public class AdminServiceImpl implements IAdminService{
             return false;
 
         return sessionDao.deleteOneByEntity(session);
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getAllFunding() {
+
+        return deptFundingDao.selectAll();
+
     }
 }

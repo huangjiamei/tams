@@ -232,10 +232,15 @@ function save() {
 
 
 /**
- * 要求传入id，数据list
+ * 要求传入chart容器id，表title，中转站id
+ * 指定隐藏input中转站的dataTransferid，从该中转站提取val作为data输入
+ * data格式为：[['name1',value1],['name2',value2]]
  * @param chartId
  */
-function getPieChart(chartId,title,data) {
+function getPieChart(chartId,title,dataTransferId) {
+    // var data=eval('[["高等数学", 1200],["概率论", 1000],["应用数学", 600],["离散数学", 900],["统计学", 800],["计算数学", 500],["运筹学与控制论", 500],["数学分析", 900]]');
+    var data =eval(jQuery('#'+dataTransferId).val());
+
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -250,7 +255,7 @@ function getPieChart(chartId,title,data) {
 
     jQuery('#' + chartId).highcharts({
         credits:{
-          enabled:false
+          enabled:false     // 去除highcharts的水印
         },
         title: {
             text: title
@@ -271,29 +276,38 @@ function getPieChart(chartId,title,data) {
         series: [{
             type: 'pie',
             name: ' ',
-            data: [
-                {
-                    name: '高等数学',
-                    y: 1200,
-                    sliced: true,
-                    selected: true
-                },
-                // ['高等数学',      1200],
-                ['概率论', 1000],
-                ['应用数学', 600],
-                ['离散数学', 900],
-                ['统计学', 800],
-                ['计算数学', 500],
-                ['运筹学与控制论', 500],
-                ['数学分析', 900]
-            ]
+            data: data
         }]
     });
 
+
+    // [
+    //     {
+    //         name: '高等数学',
+    //         y: 1200,
+    //         sliced: true,
+    //         selected: true
+    //     },
+    //     // ['高等数学',      1200],
+    //     ['概率论', 1000],
+    //     ['应用数学', 600],
+    //     ['离散数学', 900],
+    //     ['统计学', 800],
+    //     ['计算数学', 500],
+    //     ['运筹学与控制论', 500],
+    //     ['数学分析', 900]
+    // ]
 }
 
+/**
+ * barChart输入的data格式为(待定)
+ * @param chartId
+ * @param title
+ * @param dataTransferId
+ */
+function getBarChart(chartId,title,dataTransferId) {
+    var data =eval(jQuery('#'+dataTransferId).val());
 
-function getBarChart(chartId,title,data) {
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -308,7 +322,7 @@ function getBarChart(chartId,title,data) {
 
     jQuery('#' + chartId).highcharts({
         credits:{
-            enabled:false
+            enabled:false   // 去除highcharts的水印
         },
         chart: {
             type: 'column' // 竖柱图
@@ -317,6 +331,7 @@ function getBarChart(chartId,title,data) {
             text: title
         },
         xAxis: {
+            // objlist.name
             categories: [
                 '高等数学',
                 '概率论',
@@ -346,6 +361,7 @@ function getBarChart(chartId,title,data) {
         series: [{
             name: '经费',
             color: '#ff4d4d',
+            // objlist.value
             data: [1200, 1000, 600, 900, 800, 500, 500, 900],
             tooltip: {valueSuffix: '元'},
             pointPadding: 0.15,
@@ -359,7 +375,7 @@ function getBarChart(chartId,title,data) {
             pointPadding: 0.15,
             pointPlacement: 0.03
         }],
-        tooltip: {shared: true},
+        tooltip: {shared: true}
     });
 
 }

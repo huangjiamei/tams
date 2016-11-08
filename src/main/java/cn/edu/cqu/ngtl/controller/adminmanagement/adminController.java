@@ -899,6 +899,26 @@ public class adminController extends UifControllerBase {
         }
     }
 
+
+    /**
+     * 获取助教酬劳管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTaRewardPage&viewId=AdminView
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaRewardPage")
+    public ModelAndView getTaRewardPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        adminInfoForm.setAllTaCategories(
+                adminService.getAllTaCategories()
+        );
+
+        return this.getModelAndView(adminInfoForm, "pageTaReward");
+    }
+
+
     /**
      * 获取带charts的经费管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&viewId=AdminView

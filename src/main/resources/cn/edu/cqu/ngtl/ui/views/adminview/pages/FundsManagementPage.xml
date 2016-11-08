@@ -125,6 +125,19 @@
                                                             </list>
                                                         </property>
                                                     </bean>
+
+                                                    <!--隐藏charts data中转站 getChart的时候从这里获取data-->
+                                                    <bean  parent="Uif-HorizontalBoxSection"
+                                                          p:style="visibility: hidden!important">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean id="pieDataInput" parent="Uif-InputField"
+                                                                      p:propertyName="errMsg"/>
+                                                                <bean id="barDataInput" parent="Uif-InputField"
+                                                                      p:propertyName="errMsg"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
                                                     <bean parent="Uif-VerticalBoxSection"
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
@@ -133,7 +146,7 @@
                                                                 <!--饼状图实体，通过js加载内容-->
                                                                 <bean id="testPieChart" parent="Uif-VerticalBoxSection"
                                                                       p:additionalCssClasses="">
-                                                                    <property name="onDocumentReadyScript" value="getPieChart('testPieChart','学院经费分布','@{pieChartsNameValuePairs}');" />
+                                                                    <property name="onDocumentReadyScript" value="getPieChart('testPieChart','学院经费分布','pieDataInput_control');" />
                                                                 </bean>
                                                             </list>
                                                         </property>
@@ -193,7 +206,7 @@
                                                                 <!--柱状图实体，通过js加载内容-->
                                                                 <bean id="testBarChart" parent="Uif-VerticalBoxSection"
                                                                       p:additionalCssClasses="">
-                                                                    <property name="onDocumentReadyScript" value="getBarChart('testBarChart','学院经费分布2','');" />
+                                                                    <property name="onDocumentReadyScript" value="getBarChart('testBarChart','学院经费分布2','barDataInput_control');" />
                                                                 </bean>
                                                             </list>
                                                         </property>

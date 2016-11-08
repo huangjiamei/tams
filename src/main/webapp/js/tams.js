@@ -125,7 +125,7 @@ function save() {
 
 
 /**
- * 要求传入id，数据list
+ * 要求传入chart容器id，表title，中转站id
  * 指定隐藏input中转站的dataTransferid，从该中转站提取val作为data输入
  * data格式为：[['name1',value1],['name2',value2]]
  * @param chartId

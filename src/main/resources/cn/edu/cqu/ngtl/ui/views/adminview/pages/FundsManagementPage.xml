@@ -128,7 +128,7 @@
 
                                                     <!--隐藏charts data中转站 getChart的时候从这里获取data-->
                                                     <bean  parent="Uif-HorizontalBoxSection"
-                                                          p:style="">
+                                                          p:style="visibility: hidden!important">
                                                         <property name="items">
                                                             <list>
                                                                 <bean id="pieDataInput" parent="Uif-InputField"

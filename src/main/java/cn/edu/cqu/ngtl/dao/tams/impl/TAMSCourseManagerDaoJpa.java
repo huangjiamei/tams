@@ -7,6 +7,7 @@ import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -15,10 +16,9 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 /**
  * Created by awake on 2016-10-26.
  */
-
+@Repository
 @Component("TAMSCourseManagerDaoJpa")
 public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
-
 
     @Override
     public List<TAMSCourseManager> getAllCourseManager(){
@@ -26,6 +26,7 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
         return KRADServiceLocator.getDataObjectService().findAll(TAMSCourseManager.class).getResults();
 
     }
+
     @Override
     public TAMSCourseManager getCourseManagerByInstructorId(String instructorId){
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("utInstructor.id" , instructorId));
@@ -36,20 +37,14 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
         return  qr.getResults().get(0);
     }
 
-
     @Override
     public void saveCourseManager(TAMSCourseManager tamsCourseManager){
         KRADServiceLocator.getDataObjectService().save(tamsCourseManager);
     }
 
-
     @Override
     public void deleteCourseManager(TAMSCourseManager tamsCourseManager){
         KRADServiceLocator.getDataObjectService().delete(tamsCourseManager);
     }
-
-
-
-
 
 }

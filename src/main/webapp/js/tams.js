@@ -126,10 +126,13 @@ function save() {
 
 /**
  * 要求传入id，数据list
+ * 指定隐藏input中转站的dataTransferid，从该中转站提取val作为data输入
+ * data格式为：[['name1',value1],['name2',value2]]
  * @param chartId
  */
-function getPieChart(chartId,title,data) {
-    // alert(data);
+function getPieChart(chartId,title,dataTransferId) {
+    // var data=eval('[["高等数学", 1200],["概率论", 1000],["应用数学", 600],["离散数学", 900],["统计学", 800],["计算数学", 500],["运筹学与控制论", 500],["数学分析", 900]]');
+    var data =eval(jQuery('#'+dataTransferId).val());
 
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
@@ -166,32 +169,37 @@ function getPieChart(chartId,title,data) {
         series: [{
             type: 'pie',
             name: ' ',
-            data: [
-                {
-                    name: '高等数学',
-                    y: 1200,
-                    sliced: true,
-                    selected: true
-                },
-                // ['高等数学',      1200],
-                ['概率论', 1000],
-                ['应用数学', 600],
-                ['离散数学', 900],
-                ['统计学', 800],
-                ['计算数学', 500],
-                ['运筹学与控制论', 500],
-                ['数学分析', 900]
-            ]
+            data: data
         }]
     });
 
 
-
+    // [
+    //     {
+    //         name: '高等数学',
+    //         y: 1200,
+    //         sliced: true,
+    //         selected: true
+    //     },
+    //     // ['高等数学',      1200],
+    //     ['概率论', 1000],
+    //     ['应用数学', 600],
+    //     ['离散数学', 900],
+    //     ['统计学', 800],
+    //     ['计算数学', 500],
+    //     ['运筹学与控制论', 500],
+    //     ['数学分析', 900]
+    // ]
 }
 
-
-function getBarChart(chartId,title,data) {
-    // alert('bar'+data);
+/**
+ * barChart输入的data格式为(待定)
+ * @param chartId
+ * @param title
+ * @param dataTransferId
+ */
+function getBarChart(chartId,title,dataTransferId) {
+    var data =eval(jQuery('#'+dataTransferId).val());
 
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({

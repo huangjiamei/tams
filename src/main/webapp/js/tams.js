@@ -37,12 +37,118 @@ var jsonObj =  {
     header:["编辑","待负责人审核","待学院审核","待学校审核","招聘","工作"],
 
     data:[
-        [1,0,0,1,0,0],
-        [1,1,0,1,0,0],
-        [1,0,0,1,0,0],
-        [1,0,0,1,0,0],
-        [1,0,0,1,0,0],
-        [1,1,0,1,0,0]
+        [{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":true
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":true
+        }],[{
+            "checked":true,
+            "disabled":true
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        }]
+
+
+
     ]
 }
 
@@ -55,6 +161,7 @@ function drawStatusTransTable(boxid){
     var thead = document.createElement("tr");
 
     var topleft = document.createElement("th");
+    topleft.style.width = '130px';
     topleft.innerHTML = "<div class=\"out\"> <b>当前状态</b>  <em>新状态</em> </div>";
 
     thead.appendChild(topleft);
@@ -81,7 +188,8 @@ function drawStatusTransTable(boxid){
             var cb = document.createElement("input");
             cb.type="checkbox";
 
-            cb.checked = jsonObj.data[i][j]==1?true:false;
+            cb.checked = jsonObj.data[i][j].checked;
+            cb.disabled = jsonObj.data[i][j].disabled;
             td.appendChild(cb);
 
             row.appendChild(td);
@@ -111,7 +219,8 @@ function save() {
         var row = rows[i].childNodes;
         for(var j=1;j<head.length;j++)
         {
-            row_data[j-1] = row[j].childNodes[0].checked?1:0;
+            row_data[j-1].checked = row[j].childNodes[0].checked;
+            row_data[j-1].disabled = row[j].childNodes[0].disabled;
         }
         tmp_data[i-1]=row_data;
     }

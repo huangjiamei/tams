@@ -55,7 +55,6 @@ function drawStatusTransTable(boxid){
     var thead = document.createElement("tr");
 
     var topleft = document.createElement("th");
-    topleft.style="width:80px; padding: 0;";
     topleft.innerHTML = "<div class=\"out\"> <b>当前状态</b>  <em>新状态</em> </div>";
 
     thead.appendChild(topleft);
@@ -81,9 +80,8 @@ function drawStatusTransTable(boxid){
             var td = document.createElement("td");
             var cb = document.createElement("input");
             cb.type="checkbox";
-            if(jsonObj.data[i][j]){
-                cb.checked = true;
-            }
+
+            cb.checked = jsonObj.data[i][j]==1?true:false;
             td.appendChild(cb);
 
             row.appendChild(td);

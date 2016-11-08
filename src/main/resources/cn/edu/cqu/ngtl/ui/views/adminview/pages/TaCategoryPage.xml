@@ -226,7 +226,8 @@
     </bean>
 
     <bean id="addTaCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加助教类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="添加助教类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:onDocumentReadyScript="jQuery('#addTaCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -261,7 +262,8 @@
 
 
     <bean id="editTaCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改课程类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="修改课程类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:onDocumentReadyScript="jQuery('#editTaCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">

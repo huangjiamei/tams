@@ -1,6 +1,9 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import org.kuali.rice.krad.bo.DataObjectBase;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by liusijia on 2016/10/25.
@@ -8,7 +11,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "TAMS_WORKFLOW_STATUS_RELATION")
-public class TAMSWorkflowStatusR {
+public class TAMSWorkflowStatusR extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsWorkflowStatusR")
@@ -24,6 +27,9 @@ public class TAMSWorkflowStatusR {
     @Column(name = "STATUS_ID_2")
     private String statusId2;
 
+    @Column(name = "ROLE_FUNCTION_ID")
+    private String roleFunctionId;
+
     @ManyToOne
     @JoinColumn(name = "STATUS_ID_1",insertable = false, updatable = false)
     private TAMSWorkflowStatus status1;
@@ -31,6 +37,26 @@ public class TAMSWorkflowStatusR {
     @ManyToOne
     @JoinColumn(name = "STATUS_ID_2",insertable = false, updatable = false)
     private TAMSWorkflowStatus status2;
+
+    @ManyToOne
+    @JoinColumn(name = "ROLE_FUNCTION_ID",insertable = false,updatable = false)
+    private TAMSWorkflowRoleFunction roleFunction;
+
+    public String getRoleFunctionId() {
+        return roleFunctionId;
+    }
+
+    public void setRoleFunctionId(String roleFunctionId) {
+        this.roleFunctionId = roleFunctionId;
+    }
+
+    public TAMSWorkflowRoleFunction getRoleFunction() {
+        return roleFunction;
+    }
+
+    public void setRoleFunction(TAMSWorkflowRoleFunction roleFunction) {
+        this.roleFunction = roleFunction;
+    }
 
     public String getId() {
         return id;

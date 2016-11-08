@@ -1,141 +1,50 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Test</title>
-    <link rel="stylesheet" href="../css/bootstrap.min.css">
-    <link rel="stylesheet" href="../css/AdminLTE.min.css">
-
-    <style>
-    </style>
-    <script>
-        function insertHistory() {
-//            var aa="10 Feb. 20142131232213";
-//            var insertText = "<ul class=\"timeline\">\n" +
-//                    "            <!-- timeline time label -->\n" +
-//                    "            <li class=\"time-label\">\n" +
-//                    "                  <span class=\"bg-red\">\n" +
-//                    "                    "+aa+"\n" +
-//                    "                  </span>\n" +
-//                    "            </li>\n" +
-//                    "            <!-- /.timeline-label -->\n" +
-//                    "            <!-- timeline item -->\n" +
-//                    "            <li>\n" +
-//                    "              <i class=\"fa fa-envelope bg-blue\"></i>\n" +
-//                    "\t\t\t  <div class=\"timeline-item\">\n" +
-//                    "                <span class=\"time\"><i class=\"fa fa-clock-o\"></i> 12:05</span>\n" +
-//                    "\n" +
-//                    "                <h3 class=\"timeline-header\"><a href=\"#\">Support Team</a> sent you an email</h3>\n" +
-//                    "\n" +
-//                    "                <div class=\"timeline-body\">\n" +
-//                    "                  Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,\n" +
-//                    "                  weebly ning heekya handango imeem plugg dopplr jibjab, movity\n" +
-//                    "                  jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle\n" +
-//                    "                  quora plaxo ideeli hulu weebly balihoo...\n" +
-//                    "                </div>\n" +
-//                    "\t\t\n" +
-//                    "\t\t\t\t\n" +
-//                    "                <div class=\"timeline-footer\">\n" +
-//                    "                  <a class=\"btn btn-primary btn-xs\">Read more</a>\n" +
-//                    "                  <a class=\"btn btn-danger btn-xs\">Delete</a>\n" +
-//                    "                </div>\n" +
-//                    "              </div>\n" +
-//                    "            </li>\n" +
-//                    "\t\t\t\n" +
-//                    "\t\t\t\n" +
-//                    "            <!-- END timeline item -->\n" +
-//                    "            <!-- timeline item -->\n" +
-//                    "            <li>\n" +
-//                    "              <i class=\"fa fa-user bg-aqua\"></i>\n" +
-//                    "\n" +
-//                    "              <div class=\"timeline-item\">\n" +
-//                    "                <span class=\"time\"><i class=\"fa fa-clock-o\"></i> 5 mins ago</span>\n" +
-//                    "\n" +
-//                    "                <h3 class=\"timeline-header no-border\"><a href=\"#\">Sarah Young</a> accepted your friend request</h3>\n" +
-//                    "              </div>\n" +
-//                    "            </li>\n" +
-//                    "            <!-- END timeline item -->\n" +
-//                    "            <!-- timeline item -->\n" +
-//                    "            <li>\n" +
-//                    "              <i class=\"fa fa-comments bg-yellow\"></i>\n" +
-//                    "\n" +
-//                    "              <div class=\"timeline-item\">\n" +
-//                    "                <span class=\"time\"><i class=\"fa fa-clock-o\"></i> 27 mins ago</span>\n" +
-//                    "\n" +
-//                    "                <h3 class=\"timeline-header\"><a href=\"#\">Jay White</a> commented on your post</h3>\n" +
-//                    "\n" +
-//                    "                <div class=\"timeline-body\">\n" +
-//                    "                  Take me to your leader!\n" +
-//                    "                  Switzerland is small and neutral!\n" +
-//                    "                  We are more like Germany, ambitious and misunderstood!\n" +
-//                    "                </div>\n" +
-//                    "                <div class=\"timeline-footer\">\n" +
-//                    "                  <a class=\"btn btn-warning btn-flat btn-xs\">View comment</a>\n" +
-//                    "                </div>\n" +
-//                    "              </div>\n" +
-//                    "            </li>\n" +
-//                    "            <!-- END timeline item -->\n" +
-//                    "            <!-- timeline time label -->\n" +
-//                    "            <li class=\"time-label\">\n" +
-//                    "                  <span class=\"bg-green\">\n" +
-//                    "                    3 Jan. 2014\n" +
-//                    "                  </span>\n" +
-//                    "            </li>\n" +
-//                    "            <!-- /.timeline-label -->\n" +
-//                    "            <!-- timeline item -->\n" +
-//                    "            <li>\n" +
-//                    "              <i class=\"fa fa-camera bg-purple\"></i>\n" +
-//                    "\n" +
-//                    "              <div class=\"timeline-item\">\n" +
-//                    "                <span class=\"time\"><i class=\"fa fa-clock-o\"></i> 2 days ago</span>\n" +
-//                    "\n" +
-//                    "                <h3 class=\"timeline-header\"><a href=\"#\">Mina Lee</a> uploaded new photos</h3>\n" +
-//                    "\n" +
-//                    "                <div class=\"timeline-body\">\n" +
-//                    "                  <img src=\"http://placehold.it/150x100\" alt=\"...\" class=\"margin\">\n" +
-//                    "                  <img src=\"http://placehold.it/150x100\" alt=\"...\" class=\"margin\">\n" +
-//                    "                  <img src=\"http://placehold.it/150x100\" alt=\"...\" class=\"margin\">\n" +
-//                    "                  <img src=\"http://placehold.it/150x100\" alt=\"...\" class=\"margin\">\n" +
-//                    "                </div>\n" +
-//                    "              </div>\n" +
-//                    "            </li>\n" +
-//                    "            <!-- END timeline item -->\n" +
-//                    "            <!-- timeline item -->\n" +
-//                    "            <li>\n" +
-//                    "              <i class=\"fa fa-video-camera bg-maroon\"></i>\n" +
-//                    "\n" +
-//                    "              <div class=\"timeline-item\">\n" +
-//                    "                <span class=\"time\"><i class=\"fa fa-clock-o\"></i> 5 days ago</span>\n" +
-//                    "\n" +
-//                    "                <h3 class=\"timeline-header\"><a href=\"#\">Mr. Doe</a> shared a video</h3>\n" +
-//                    "\n" +
-//                    "                <div class=\"timeline-body\">\n" +
-//                    "                  <div class=\"embed-responsive embed-responsive-16by9\">\n" +
-//                    "                    <iframe class=\"embed-responsive-item\" src=\"https://www.youtube.com/embed/tMWkeBIohBs\" frameborder=\"0\" allowfullscreen=\"\"></iframe>\n" +
-//                    "                  </div>\n" +
-//                    "                </div>\n" +
-//                    "                <div class=\"timeline-footer\">\n" +
-//                    "                  <a href=\"#\" class=\"btn btn-xs bg-maroon\">See comments</a>\n" +
-//                    "                </div>\n" +
-//                    "              </div>\n" +
-//                    "            </li>\n" +
-//                    "            <!-- END timeline item -->\n" +
-//                    "            <li>\n" +
-//                    "              <i class=\"fa fa-clock-o bg-gray\"></i>\n" +
-//                    "            </li>\n" +
-//                    "          </ul>";
-            // 使用createElement创建元素
-//            document.getElementById("databox").innerHTML = document.getElementById("databox").innerHTML+dialog;
-        }
-    </script>
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<title>Bootstrap 堆叠的或垂直的基于胶囊式标签的导航实例</title> 
+	<meta name="description" content="Bootstrap Stacked or vertical Pills Based Navigation Example">
+	<link href="../css/bootstrap.css" rel="stylesheet">
+	<script  type="text/javascript" src="../js/jquery-2.2.3.min.js"></script>
+	<script  type="text/javascript" src="../js/bootstrap.min.js"></script>
+	<script  type="text/javascript" src="js/test.js"></script> 
+ 
+		
+	 
+	 
 </head>
 <body>
-
-<div id="databox" class="container" style="">
-    msg
+	
+<div class="container">
+	<div class="row">
+		<div class="col-md-3">
+			<ul id="haha" class="nav nav-pills nav-stacked">
+				<li>
+					<a href="#academics" class="active">Home</a>  
+				</li>
+				<li>
+					<a href="#hmrs">Tutorials</a>
+				</li>
+ 					
+			</ul>
+		</div>
+		<div class="col-md-9">
+			<ul class="tab-content">
+				<div id="academics" class="active">1
+				</div>
+				<div id="hmrs" class="tab-pane">2
+				</div>
+				 
+			</ul>
+		</div>
+	</div>
 </div>
-
-<div style="width: 100px; height: 100px; background: blue;" onclick="insertHistory()"></div>
-
+	
+ 
+	 
+	 
+	
+	 
 
 </body>
 </html>

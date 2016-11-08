@@ -16,7 +16,9 @@ import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -907,6 +909,17 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getFundsPage")
     public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        List<PieChartsNameValuePair> list = new ArrayList<>();
+        list.add(new PieChartsNameValuePair("高数", 10000));
+        list.add(new PieChartsNameValuePair("线代", 5000));
+        list.add(new PieChartsNameValuePair("离散", 4000));
+        list.add(new PieChartsNameValuePair("数值", 2000));
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        Gson gson = new Gson();
+
+        String json = gson.toJson(list);
+
+        infoForm.setPieChartsNameValuePairs(json);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

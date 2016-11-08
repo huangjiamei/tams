@@ -133,7 +133,7 @@
                                                                 <!--饼状图实体，通过js加载内容-->
                                                                 <bean id="testPieChart" parent="Uif-VerticalBoxSection"
                                                                       p:additionalCssClasses="">
-                                                                    <property name="onDocumentReadyScript" value="getPieChart('testPieChart','学院经费分布','');" />
+                                                                    <property name="onDocumentReadyScript" value="getPieChart('testPieChart','学院经费分布','@{pieChartsNameValuePairs}');" />
                                                                 </bean>
                                                             </list>
                                                         </property>

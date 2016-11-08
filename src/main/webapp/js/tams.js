@@ -129,6 +129,8 @@ function save() {
  * @param chartId
  */
 function getPieChart(chartId,title,data) {
+    // alert(data);
+
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -143,7 +145,7 @@ function getPieChart(chartId,title,data) {
 
     jQuery('#' + chartId).highcharts({
         credits:{
-          enabled:false
+          enabled:false     // 去除highcharts的水印
         },
         title: {
             text: title
@@ -183,10 +185,14 @@ function getPieChart(chartId,title,data) {
         }]
     });
 
+
+
 }
 
 
 function getBarChart(chartId,title,data) {
+    // alert('bar'+data);
+
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -201,7 +207,7 @@ function getBarChart(chartId,title,data) {
 
     jQuery('#' + chartId).highcharts({
         credits:{
-            enabled:false
+            enabled:false   // 去除highcharts的水印
         },
         chart: {
             type: 'column' // 竖柱图
@@ -210,6 +216,7 @@ function getBarChart(chartId,title,data) {
             text: title
         },
         xAxis: {
+            // objlist.name
             categories: [
                 '高等数学',
                 '概率论',
@@ -239,6 +246,7 @@ function getBarChart(chartId,title,data) {
         series: [{
             name: '经费',
             color: '#ff4d4d',
+            // objlist.value
             data: [1200, 1000, 600, 900, 800, 500, 500, 900],
             tooltip: {valueSuffix: '元'},
             pointPadding: 0.15,
@@ -252,7 +260,7 @@ function getBarChart(chartId,title,data) {
             pointPadding: 0.15,
             pointPlacement: 0.03
         }],
-        tooltip: {shared: true},
+        tooltip: {shared: true}
     });
 
 }

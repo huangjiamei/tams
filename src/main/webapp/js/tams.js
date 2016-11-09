@@ -33,124 +33,7 @@ function initNavDialog() {
 
 
 
-var jsonObj =  {
-    header:["编辑","待负责人审核","待学院审核","待学校审核","招聘","工作"],
-
-    data:[
-        [{
-            "checked":true,
-            "disabled":false
-        }, {
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":true
-        }],[{
-            "checked":true,
-            "disabled":false
-        }, {
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        }],[{
-            "checked":true,
-            "disabled":false
-        }, {
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        }],[{
-            "checked":true,
-            "disabled":false
-        }, {
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":true
-        }],[{
-            "checked":true,
-            "disabled":true
-        }, {
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        }],[{
-            "checked":true,
-            "disabled":false
-        }, {
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":true
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":false
-        },{
-            "checked":true,
-            "disabled":true
-        }]
-
-
-
-    ]
-}
+var jsonObj = {"header":["编辑","待负责人审核","待学院审核","待学校审核","工作"],"data":[[{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}]]}
 
 function drawStatusTransTable(boxid){
 
@@ -379,4 +262,31 @@ function getBarChart(chartId,title,dataTransferId) {
     });
 
 }
+/**
+ * @param searchbarId
+ * @param tabelId
+ */
+function refreshTableFilter(searchbox,tablebox) {
+    //var searchFields = jQuery("#searchfieldsId");
 
+   //  var searchFields = jQuery(searchbox).children();
+   //  alert(searchFields.size());
+   //  //if (searchFields.size==0) return;
+   //  var table = jQuery(jQuery(tablebox).find("table")[0]);
+   // // alert(table);
+   //
+   //  var thead = jQuery(table.find('thead')[0]);
+   //  var filter = jQuery("<thead></thead>");
+   //  // if(filter == null)
+   //  //     filter =
+   //  var tr = jQuery("<tr></tr>");
+   //  for (var i = 0;i < searchFields.size();i++)
+   //  {
+   //      var th = jQuery("<th></th>");
+   //      th.append(searchFields[i]);
+   //      tr.append(th);
+   //      //alert(i);
+   //  }
+   //  filter.append(tr);
+   //  thead.after(filter)
+}

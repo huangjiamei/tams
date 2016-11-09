@@ -178,29 +178,19 @@
                                                                 <bean parent="Uif-HorizontalBoxSection">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-HeaderTwo" p:headerText="[b]意见[/b]"/>
-                                                                            <bean parent="Uif-InputField" p:propertyName="evaluateDetail"
-                                                                                  p:style="width:70%;height=300px;">
+                                                                            <bean parent="Uif-InputField" p:propertyName="evaluateDetail" p:label="意见"
+                                                                                  p:additionalCssClasses="col-md-8" p:style="height=75px;">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="">
+                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3">
                                                                                 <property name="items"  >
                                                                                     <list>
-                                                                                        <!--<bean parent="Uif-InputField" p:label="专业"-->
-                                                                                              <!--p:propertyName="condProgramName"-->
-                                                                                              <!--p:refreshWhenChangedPropertyNames="condDepartmentName">-->
-                                                                                            <!--<property name="optionsFinder">-->
-                                                                                                <!--<bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />-->
-                                                                                            <!--</property>-->
-                                                                                            <!--<property name="control">-->
-                                                                                                <!--<bean parent="Uif-DropdownControl" />-->
-                                                                                            <!--</property>-->
-                                                                                        <!--</bean>-->
-
+                                                                                        <!-- 评价等级改成后台对应参数  -->
+                                                                                        <!--如果不用finder而是直接写选项的bean会导致离开页面时出现methodToCall=start这种莫名其妙的错-->
                                                                                         <bean parent="Uif-InputField" p:label="评价等级"
-                                                                                              p:propertyName="inputField97">
+                                                                                              p:propertyName="inputField1">
                                                                                             <property name="optionsFinder">
                                                                                                 <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder" />
                                                                                             </property>

@@ -74,9 +74,15 @@ public class TaController extends UifControllerBase {
     }
 
 
+    /**
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaReviewPage&viewId=TaView
+     * @param form
+     * @return
+     */
     @RequestMapping(params = {"pageId=pageTaList", "methodToCall=getTaReviewPage"})
     public ModelAndView getTaReviewPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
+
 
         return this.getModelAndView(taInfoForm, "pageReviewForTeacher");
     }

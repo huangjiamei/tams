@@ -57,7 +57,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
 
     /**
-     * 助教类别管理页面
+     * 助教类别/薪酬管理页面
      */
 
     private List<TAMSTaCategory> allTaCategories;

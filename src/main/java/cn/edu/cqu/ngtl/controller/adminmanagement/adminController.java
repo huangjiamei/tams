@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
@@ -918,6 +919,53 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(adminInfoForm, "pageTaReward");
     }
 
+    /**
+     * 修改助教酬劳
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=selectTaReward")
+    public ModelAndView selectTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+        adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
+        adminInfoForm.setTaIndex(index);
+        return this.showDialog("editTaRewardDialog" ,true,adminInfoForm);
+    }
+
+    /**
+     * 修改助教酬劳
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=saveTaReward")
+    public ModelAndView saveTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        TAMSTaCategory newTaReward  = adminInfoForm.getOldTaCategory();
+        if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
+            // TODO: 2016/11/8 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        }
+        return this.getTaRewardPage(form);
+    }
+
+    /**
+     * 删除助教酬劳
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=deleteTaReward")
+    public ModelAndView deleteTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+        new TAMSTaCategoryDaoJpa().deleteOneByEntity(adminInfoForm.getAllTaCategories().get(index));
+        return this.getModelAndView(form, "pageTaReward");
+    }
 
     /**
      * 获取带charts的经费管理页面

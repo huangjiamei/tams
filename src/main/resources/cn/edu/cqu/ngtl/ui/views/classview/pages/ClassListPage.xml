@@ -229,7 +229,9 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!--下拉框搜索-->
-
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
                                                                                         <!--学院-->
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:propertyName="condDepartmentName">
@@ -255,7 +257,15 @@
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:propertyName="condInstructorName" />
 
-
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
 
                                                                                         <bean id="searchButton" parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="查询" p:additionalCssClasses="icon-search hidden-fields search-button"

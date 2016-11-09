@@ -246,30 +246,59 @@ function getBarChart(chartId,title,data) {
 
 }
 /**
- * @param searchbarId
- * @param tabelId
+ * 该函数可统一地将表格外的过滤器移动到表格内，隐藏搜索按钮，
+ * 为所有过滤器添加按下搜索按钮事件（select添加onchange，input添加keydown）
+ *
+ * @param searchbox ----xml中放置所有过滤器的外层框，其中包括搜索按钮，过滤器顺序与表格中一致
+ * 若有的列不需要过滤器，则在该位置加入一个messageField或其他控件，
+ * 并添加hidden-field的样式类来占位
+ *
+ * @param tablebox  ----xml中表格bean的id
  */
 function refreshTableFilter(searchbox,tablebox) {
-    //var searchFields = jQuery("#searchfieldsId");
 
-   //  var searchFields = jQuery(searchbox).children();
-   //  alert(searchFields.size());
-   //  //if (searchFields.size==0) return;
-   //  var table = jQuery(jQuery(tablebox).find("table")[0]);
-   // // alert(table);
-   //
-   //  var thead = jQuery(table.find('thead')[0]);
-   //  var filter = jQuery("<thead></thead>");
-   //  // if(filter == null)
-   //  //     filter =
-   //  var tr = jQuery("<tr></tr>");
-   //  for (var i = 0;i < searchFields.size();i++)
-   //  {
-   //      var th = jQuery("<th></th>");
-   //      th.append(searchFields[i]);
-   //      tr.append(th);
-   //      //alert(i);
-   //  }
-   //  filter.append(tr);
-   //  thead.after(filter)
+    //得到所有过滤器
+    var searchFields = jQuery(searchbox).children("div");
+
+    //得到table元素
+    var table = jQuery(jQuery(tablebox).find("table")[0]);
+
+    //表头
+    var thead = jQuery(table.find('thead')[0]);
+    //过滤器所在的表头
+    var filter = jQuery("<thead class='search-filter'></thead>");
+
+    var tr = jQuery("<tr></tr>");
+    //得到searchbox中的搜索按钮，以便添加事件
+    var searchButton =jQuery(searchbox).children("button")[0];
+
+    //遍历过滤器，移入表格中
+    for (var i = 0;i < searchFields.size();i++)
+    {
+        var th = jQuery("<th></th>");
+        th.append(searchFields[i]);
+        tr.append(th);
+
+        //为输入框添加事件
+        if (jQuery(searchFields[i]).children()[0].tagName=='INPUT'){
+            jQuery(searchFields[i]).on(
+                {keydown: function(e){
+                    var key = e.which;
+                    if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
+                        e.preventDefault();
+                        jQuery(searchButton).click();
+                    }
+                }
+            });
+        }
+        //为下拉框添加事件
+        if (jQuery(searchFields[i]).children()[0].tagName=='SELECT'){
+            jQuery(searchFields[i]).on('change', function () {
+
+                jQuery(searchButton).click();
+            } );
+        }
+    }
+    filter.append(tr);
+    thead.after(filter)
 }

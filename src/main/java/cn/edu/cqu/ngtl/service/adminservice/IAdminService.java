@@ -48,5 +48,5 @@ public interface IAdminService {
 
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
-    List<TAMSDeptFunding> getAllFunding();
+    List<TAMSDeptFunding> getAllFundingBySession();
 }

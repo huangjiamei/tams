@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.riceservice;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
@@ -8,6 +9,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -45,4 +47,6 @@ public interface ITAConverter {
     List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid);
 
     List<ClassTeacherViewObject> classToViewObject(List<UTClass> allClassesFilterByUidAndCondition);
+
+    List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
 }

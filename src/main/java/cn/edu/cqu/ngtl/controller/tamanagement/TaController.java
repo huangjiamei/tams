@@ -74,11 +74,19 @@ public class TaController extends UifControllerBase {
     }
 
 
-    @RequestMapping(params = {"pageId=pageTaList", "methodToCall=getTaReviewPage"})
-    public ModelAndView getTaReviewPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    /**
+     * 获取助教考核表(教师给助教评分)
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaAppraisalPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=getTaAppraisalPage"}) /*"pageId=pageTaList",*/
+    public ModelAndView getTaAppraisalPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
 
-        return this.getModelAndView(taInfoForm, "pageReviewForTeacher");
+        // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
+
+        return this.getModelAndView(taInfoForm, "pageAppraisalForTeacher");
     }
 
     /**

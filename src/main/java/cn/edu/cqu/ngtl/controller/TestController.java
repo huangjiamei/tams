@@ -75,6 +75,8 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageAddNewTask");
     }
 
+    /* admin相关 */
+
     /**
      * 获取工作流程管理页面
      * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getWorkFlowManagePage&viewId=TestView

@@ -80,7 +80,1212 @@
                 </bean>
 
                 <!--body-->
-                <!--经费管理第一行-->
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                                <property name="items">
+                                    <list>
+                                        <!--具体显示的经费的tab表-->
+                                        <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="box box-info">
+                                            <property name="items">
+                                                <list>
+
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-table"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="经费管理"
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: right!important;">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--右上角btnlist-->
+                                                                            <bean parent="Uif-HorizontalBoxSection"
+                                                                                  p:style="float: right!important;">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <!--左上角btnlist-->
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="box-body" p:style="">
+                                                        <property name="items">
+                                                            <list>
+                                                    <bean parent="Uif-TabGroup">
+                                                        <property name="tabsWidget.position" value="TOP"/>
+                                                        <property name="items">
+                                                            <list>
+                                                                <!--第一页tab-->
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:headerText="批次经费">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--因为tab会自带一个'批次经费' 所以这里就不能再加-->
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="box-body" p:style="">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--下拉框搜索-->
+
+                                                                                                    <!--某批次至某批次-->
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="起始批次"
+                                                                                                                      p:propertyName="inputField1">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="终止批次"
+                                                                                                                      p:propertyName="inputField2"
+                                                                                                                        p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <!--文字搜索-->
+
+                                                                                                    <!--按钮-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <!--注意，要想修改table的样式不能直接加additionalCss，这样会给table外层的div加css-->
+                                                                                        <!--应该使用p:layoutManager.cssClasses="xxx"-->
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                            <property
+                                                                                                    name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject"/>
+                                                                                            <property
+                                                                                                    name="propertyName"
+                                                                                                    value="sessionFundings"/>
+                                                                                             <property
+                                                                                                    name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property
+                                                                                                    name="useServerPaging"
+                                                                                                    value="true"/>
+
+                                                                                            <property
+                                                                                                    name="renderAddLine"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="renderLineActions"
+                                                                                                    value="true"/>
+                                                                                            <property name="readOnly"
+                                                                                                      value="false"/>
+
+                                                                                            <property
+                                                                                                    name="disclosure.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批次"
+                                                                                                          p:propertyName="sessionName"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="预算经费"
+                                                                                                          p:propertyName="planFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="申报经费"
+                                                                                                          p:propertyName="applyFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批准经费"
+                                                                                                          p:propertyName="actualFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="追加经费"
+                                                                                                          p:propertyName="phdFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="奖励经费"
+                                                                                                          p:propertyName="bonus"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                            <property
+                                                                                                    name="lineActions">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-ActionImage"
+                                                                                                                      p:methodToCall="xxxx">
+                                                                                                                    <property
+                                                                                                                            name="actionImage">
+                                                                                                                        <bean parent="Uif-Image"
+                                                                                                                              p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <!--学校历史经费部分-->
+                                                                            <bean parent="Uif-HorizontalBoxSection"
+                                                                                  p:additionalCssClasses="box-header">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-ic"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="学校历史经费"
+                                                                                              p:additionalCssClasses="boxheaderTitle"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="box-body" p:style="">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--下拉框搜索-->
+                                                                                                    <!--某批次至某批次-->
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="起始批次"
+                                                                                                                      p:propertyName="inputField1">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="终止批次"
+                                                                                                                      p:propertyName="inputField2"
+                                                                                                                      p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <bean parent="Uif-InputField"
+                                                                                                          p:label="学院"
+                                                                                                          p:propertyName="inputField3"
+                                                                                                          p:style="margin-left:10px;">
+                                                                                                        <property
+                                                                                                                name="optionsFinder">
+                                                                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                  p:blankOption="false"/>
+                                                                                                        </property>
+                                                                                                        <property
+                                                                                                                name="control">
+                                                                                                            <bean parent="Uif-DropdownControl"/>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+
+                                                                                                    <!--文字搜索-->
+                                                                                                    <bean parent="Uif-InputField" p:label="预算经费"
+                                                                                                          p:propertyName="inputField3" />
+                                                                                                    <bean parent="Uif-InputField" p:label="申报经费"
+                                                                                                          p:propertyName="inputField4" />
+                                                                                                    <bean parent="Uif-InputField" p:label="批准经费"
+                                                                                                          p:propertyName="inputField3" />
+                                                                                                    <bean parent="Uif-InputField" p:label="博士津贴"
+                                                                                                          p:propertyName="inputField4" />
+                                                                                                    <bean parent="Uif-InputField" p:label="奖励经费"
+                                                                                                          p:propertyName="inputField3" />
+                                                                                                    <bean parent="Uif-InputField" p:label="总经费"
+                                                                                                          p:propertyName="inputField4" />
+
+                                                                                                    <!--按钮-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <!--注意，不能直接加additionalCss，这样会给table外层的div加css-->
+                                                                                        <!--应该使用p:layoutManager.cssClasses="xxx"-->
+                                                                                        <!--学院历史经费的表格-->
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                            <property name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                            <property name="propertyName"
+                                                                                                    value="collection"/>
+                                                                                            <property name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="useServerPaging"
+                                                                                                    value="true"/>
+
+                                                                                            <property
+                                                                                                    name="renderAddLine"
+                                                                                                    value="false"/>
+                                                                                            <property name="renderLineActions"
+                                                                                                    value="false"/>
+                                                                                            <property name="readOnly"
+                                                                                                      value="false"/>
+
+                                                                                            <property name="disclosure.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批次"
+                                                                                                          p:propertyName="field0"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="预算经费"
+                                                                                                          p:propertyName="field1"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="申报经费"
+                                                                                                          p:propertyName="field2"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批准经费"
+                                                                                                          p:propertyName="field3"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="追加经费"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="奖励经费"
+                                                                                                          p:propertyName="field5"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="总经费"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <!--第二页tab-->
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:headerText="学院经费">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--因为tab会自带一个'学院经费' 所以这里就不能再加-->
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="box-body" p:style="">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--下拉框搜索-->
+
+                                                                                                    <!--某批次至某批次-->
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="起始批次"
+                                                                                                                      p:propertyName="inputField1">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="终止批次"
+                                                                                                                      p:propertyName="inputField2"
+                                                                                                                      p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-InputField"
+                                                                                                          p:label="学院"
+                                                                                                          p:propertyName="inputField3">
+                                                                                                        <property
+                                                                                                                name="optionsFinder">
+                                                                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                  p:blankOption="true"/>
+                                                                                                        </property>
+                                                                                                        <property
+                                                                                                                name="control">
+                                                                                                            <bean parent="Uif-DropdownControl"/>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <!--文字搜索-->
+
+                                                                                                    <!--按钮-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                            <property
+                                                                                                    name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                            <property
+                                                                                                    name="propertyName"
+                                                                                                    value="collection"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property
+                                                                                                    name="useServerPaging"
+                                                                                                    value="true"/>
+
+                                                                                            <property
+                                                                                                    name="renderAddLine"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="renderLineActions"
+                                                                                                    value="true"/>
+                                                                                            <property name="readOnly"
+                                                                                                      value="false"/>
+
+                                                                                            <property
+                                                                                                    name="disclosure.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批次"
+                                                                                                          p:propertyName="field0"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="学院"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="预算经费"
+                                                                                                          p:propertyName="field1"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="申报经费"
+                                                                                                          p:propertyName="field2"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批准经费"
+                                                                                                          p:propertyName="field3"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="博士经费"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="奖励经费"
+                                                                                                          p:propertyName="field5"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="总经费"
+                                                                                                          p:propertyName="field5"
+                                                                                                          p:sortAs="numeric"/>
+
+                                                                                                </list>
+                                                                                            </property>
+                                                                                            <property
+                                                                                                    name="lineActions">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-ActionImage"
+                                                                                                                      p:methodToCall="xxxx">
+                                                                                                                    <property
+                                                                                                                            name="actionImage">
+                                                                                                                        <bean parent="Uif-Image"
+                                                                                                                              p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <!--学院历史经费部分-->
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:additionalCssClasses="box-header">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-Icon" p:iconClass="icon-ic"/>
+                                                                                                    <bean parent="Uif-MessageField" p:messageText="学院历史经费"
+                                                                                                          p:additionalCssClasses="boxheaderTitle"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="box-body" p:style="">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <!--下拉框搜索-->
+
+                                                                                                                <!--某批次至某批次-->
+                                                                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                                                                    <property name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-InputField"
+                                                                                                                                  p:label="起始批次"
+                                                                                                                                  p:propertyName="inputField1">
+                                                                                                                                <property
+                                                                                                                                        name="optionsFinder">
+                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                                          p:blankOption="false"/>
+                                                                                                                                </property>
+                                                                                                                                <property
+                                                                                                                                        name="control">
+                                                                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
+                                                                                                                            <bean parent="Uif-InputField"
+                                                                                                                                  p:label="终止批次"
+                                                                                                                                  p:propertyName="inputField2"
+                                                                                                                                  p:style="margin-left:10px;">
+                                                                                                                                <property
+                                                                                                                                        name="optionsFinder">
+                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                                          p:blankOption="false"/>
+                                                                                                                                </property>
+                                                                                                                                <property
+                                                                                                                                        name="control">
+                                                                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="学院"
+                                                                                                                      p:propertyName="inputField3"
+                                                                                                                      p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+
+
+                                                                                                                <!--文字搜索-->
+                                                                                                                <bean parent="Uif-InputField" p:label="预算经费"
+                                                                                                                      p:propertyName="inputField3" />
+                                                                                                                <bean parent="Uif-InputField" p:label="申报经费"
+                                                                                                                      p:propertyName="inputField4" />
+                                                                                                                <bean parent="Uif-InputField" p:label="批准经费"
+                                                                                                                      p:propertyName="inputField3" />
+                                                                                                                <bean parent="Uif-InputField" p:label="博士津贴"
+                                                                                                                      p:propertyName="inputField4" />
+                                                                                                                <bean parent="Uif-InputField" p:label="奖励经费"
+                                                                                                                      p:propertyName="inputField3" />
+                                                                                                                <bean parent="Uif-InputField" p:label="总经费"
+                                                                                                                      p:propertyName="inputField4" />
+
+                                                                                                                <!--按钮-->
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                                      p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                                      p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <!--注意，不能直接加additionalCss，这样会给table外层的div加css-->
+                                                                                                    <!--应该使用p:layoutManager.cssClasses="xxx"-->
+                                                                                                    <!--学院历史经费的表格-->
+                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                                        <property name="collectionObjectClass"
+                                                                                                                  value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                        <property name="propertyName"
+                                                                                                                  value="collection"/>
+                                                                                                        <property name="layoutManager.renderSequenceField"
+                                                                                                                  value="false"/>
+                                                                                                        <property name="layoutManager.richTable.render"
+                                                                                                                  value="false"/>
+
+                                                                                                        <property name="useServerPaging"
+                                                                                                                  value="true"/>
+
+                                                                                                        <property
+                                                                                                                name="renderAddLine"
+                                                                                                                value="false"/>
+                                                                                                        <property name="renderLineActions"
+                                                                                                                  value="false"/>
+                                                                                                        <property name="readOnly"
+                                                                                                                  value="false"/>
+
+                                                                                                        <property name="disclosure.render"
+                                                                                                                  value="false"/>
+
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="批次"
+                                                                                                                      p:propertyName="field0"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="学院"
+                                                                                                                      p:propertyName="field1"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="预算经费"
+                                                                                                                      p:propertyName="field1"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="申报经费"
+                                                                                                                      p:propertyName="field2"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="批准经费"
+                                                                                                                      p:propertyName="field3"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="博士津贴"
+                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="奖励经费"
+                                                                                                                      p:propertyName="field5"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="总经费"
+                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <!--第三页tab-->
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:headerText="课程经费">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--因为tab会自带一个'学院经费' 所以这里就不能再加-->
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="box-body" p:style="">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--下拉框搜索-->
+
+                                                                                                    <!--某批次至某批次-->
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="起始批次"
+                                                                                                                      p:propertyName="inputField1">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="终止批次"
+                                                                                                                      p:propertyName="inputField2"
+                                                                                                                      p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-InputField"
+                                                                                                          p:label="学院"
+                                                                                                          p:propertyName="inputField3">
+                                                                                                        <property
+                                                                                                                name="optionsFinder">
+                                                                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                  p:blankOption="true"/>
+                                                                                                        </property>
+                                                                                                        <property
+                                                                                                                name="control">
+                                                                                                            <bean parent="Uif-DropdownControl"/>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-InputField"
+                                                                                                          p:label="课程"
+                                                                                                          p:propertyName="inputField4">
+                                                                                                        <property
+                                                                                                                name="optionsFinder">
+                                                                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                  p:blankOption="true"/>
+                                                                                                        </property>
+                                                                                                        <property
+                                                                                                                name="control">
+                                                                                                            <bean parent="Uif-DropdownControl"/>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+
+                                                                                                    <!--文字搜索-->
+
+                                                                                                    <!--按钮-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                                              p:additionalCssClasses="table-striped table-bordered table-hover">
+                                                                                            <property
+                                                                                                    name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                            <property
+                                                                                                    name="propertyName"
+                                                                                                    value="collection"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property
+                                                                                                    name="useServerPaging"
+                                                                                                    value="true"/>
+
+                                                                                            <property
+                                                                                                    name="renderAddLine"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="renderLineActions"
+                                                                                                    value="true"/>
+                                                                                            <property name="readOnly"
+                                                                                                      value="false"/>
+
+                                                                                            <property
+                                                                                                    name="disclosure.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批次"
+                                                                                                          p:propertyName="field0"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="学院"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="课程"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="课程编号"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="教学班号"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="教师"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="预算经费"
+                                                                                                          p:propertyName="field1"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="申报经费"
+                                                                                                          p:propertyName="field2"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批准经费"
+                                                                                                          p:propertyName="field3"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="博士津贴"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="总经费"
+                                                                                                          p:propertyName="field5"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                            <property
+                                                                                                    name="lineActions">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-ActionImage"
+                                                                                                                      p:methodToCall="xxxx">
+                                                                                                                    <property
+                                                                                                                            name="actionImage">
+                                                                                                                        <bean parent="Uif-Image"
+                                                                                                                              p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <!--第四页tab-->
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:headerText="助教经费">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--因为tab会自带一个'学院经费' 所以这里就不能再加-->
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="box-body" p:style="">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--下拉框搜索-->
+
+                                                                                                    <!--某批次至某批次-->
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="起始批次"
+                                                                                                                      p:propertyName="inputField1">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="终止批次"
+                                                                                                                      p:propertyName="inputField2"
+                                                                                                                      p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+
+                                                                                                    <!--文字搜索-->
+                                                                                                    <bean parent="Uif-InputField" p:label="助教姓名"
+                                                                                                          p:propertyName="inputField3" />
+                                                                                                    <bean parent="Uif-InputField" p:label="学号"
+                                                                                                          p:propertyName="inputField4" />
+
+                                                                                                    <!--按钮-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                                              p:additionalCssClasses="table-striped table-bordered table-hover">
+                                                                                            <property
+                                                                                                    name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                            <property
+                                                                                                    name="propertyName"
+                                                                                                    value="collection"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property
+                                                                                                    name="useServerPaging"
+                                                                                                    value="true"/>
+
+                                                                                            <property
+                                                                                                    name="renderAddLine"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="renderLineActions"
+                                                                                                    value="true"/>
+                                                                                            <property name="readOnly"
+                                                                                                      value="false"/>
+
+                                                                                            <property
+                                                                                                    name="disclosure.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批次"
+                                                                                                          p:propertyName="field0"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="助教"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="助教类别"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="课程"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="课程编号"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="分配经费"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="奖励经费"
+                                                                                                          p:propertyName="field5"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                            <property
+                                                                                                    name="lineActions">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-ActionImage"
+                                                                                                                      p:methodToCall="xxxx">
+                                                                                                                    <property
+                                                                                                                            name="actionImage">
+                                                                                                                        <bean parent="Uif-Image"
+                                                                                                                              p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <!--第五页tab-->
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:headerText="经费明细">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="box-body" p:style="">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--下拉框搜索-->
+
+                                                                                                    <!--某批次至某批次-->
+                                                                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="起始批次"
+                                                                                                                      p:propertyName="inputField1">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:label="终止批次"
+                                                                                                                      p:propertyName="inputField2"
+                                                                                                                      p:style="margin-left:10px;">
+                                                                                                                    <property
+                                                                                                                            name="optionsFinder">
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                              p:blankOption="false"/>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+
+                                                                                                    <!--文字搜索-->
+                                                                                                    <bean parent="Uif-InputField" p:label="助教姓名"
+                                                                                                          p:propertyName="inputField3" />
+                                                                                                    <bean parent="Uif-InputField" p:label="学号"
+                                                                                                          p:propertyName="inputField4" />
+
+                                                                                                    <!--按钮-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="查询" p:additionalCssClasses="icon-search"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="重置" p:additionalCssClasses="icon-cancel-circle"
+                                                                                                          p:methodToCall="xxxx" p:style="margin:15px 5px;" />
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                            <property
+                                                                                                    name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                            <property
+                                                                                                    name="propertyName"
+                                                                                                    value="collection"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property
+                                                                                                    name="useServerPaging"
+                                                                                                    value="true"/>
+
+                                                                                            <property
+                                                                                                    name="renderAddLine"
+                                                                                                    value="false"/>
+                                                                                            <property
+                                                                                                    name="renderLineActions"
+                                                                                                    value="false"/>
+                                                                                            <property name="readOnly"
+                                                                                                      value="false"/>
+
+                                                                                            <property
+                                                                                                    name="disclosure.render"
+                                                                                                    value="false"/>
+
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="助教"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="学号"
+                                                                                                          p:propertyName="field0"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="银行"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="银行卡号"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="身份证号"
+                                                                                                          p:propertyName="field1"/>
+
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="课程"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="课程编号"
+                                                                                                          p:propertyName="field1"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批准津贴"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="奖励"
+                                                                                                          p:propertyName="field5"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="9月实发(移到detail？)"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="10月实发"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="实发总额"
+                                                                                                          p:propertyName="field4"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                                </list>
+                                                    </property>
+                                                    </bean>
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <!--经费图表-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
@@ -126,18 +1331,8 @@
                                                         </property>
                                                     </bean>
 
+                                                    <!--display:none!important-->
                                                     <!--隐藏charts data中转站 getChart的时候从这里获取data-->
-                                                    <bean  parent="Uif-HorizontalBoxSection"
-                                                          p:style="visibility: hidden!important">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean id="pieDataInput" parent="Uif-InputField"
-                                                                      p:propertyName="errMsg"/>
-                                                                <bean id="barDataInput" parent="Uif-InputField"
-                                                                      p:propertyName="errMsg"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
                                                     <bean parent="Uif-VerticalBoxSection"
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
@@ -146,7 +1341,8 @@
                                                                 <!--饼状图实体，通过js加载内容-->
                                                                 <bean id="testPieChart" parent="Uif-VerticalBoxSection"
                                                                       p:additionalCssClasses="">
-                                                                    <property name="onDocumentReadyScript" value="getPieChart('testPieChart','学院经费分布','pieDataInput_control');" />
+                                                                    <property name="onDocumentReadyScript"
+                                                                              value="getPieChart('testPieChart','学院经费分布','@{pieChartsNameValuePairs}');"/>
                                                                 </bean>
                                                             </list>
                                                         </property>
@@ -206,7 +1402,8 @@
                                                                 <!--柱状图实体，通过js加载内容-->
                                                                 <bean id="testBarChart" parent="Uif-VerticalBoxSection"
                                                                       p:additionalCssClasses="">
-                                                                    <property name="onDocumentReadyScript" value="getBarChart('testBarChart','学院经费分布2','barDataInput_control');" />
+                                                                    <property name="onDocumentReadyScript"
+                                                                              value="getBarChart('testBarChart','学院经费分布2','@{errMsg}');"/>
                                                                 </bean>
                                                             </list>
                                                         </property>

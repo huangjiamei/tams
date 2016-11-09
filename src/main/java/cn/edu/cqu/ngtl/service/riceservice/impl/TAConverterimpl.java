@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
@@ -12,6 +13,7 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -447,6 +449,25 @@ public class TAConverterimpl implements ITAConverter {
             viewObjects.add(viewObject);
         }
 
+        return viewObjects;
+    }
+
+    @Override
+    public List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
+        List<SessionFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
+
+        for(TAMSDeptFunding deptFunding : allFundingBySession) {
+            SessionFundingViewObject viewObject = new SessionFundingViewObject();
+            viewObject.setBonus(deptFunding.getBonus());
+            viewObject.setApplyFunding(deptFunding.getApplyFunding());
+            viewObject.setPhdFunding(deptFunding.getPhdFunding());
+            viewObject.setActualFunding(deptFunding.getActualFunding());
+            viewObject.setPlanFunding(deptFunding.getPlanFunding());
+            viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
+                    deptFunding.getSession().getTerm() + "季");
+
+            viewObjects.add(viewObject);
+        }
         return viewObjects;
     }
 }

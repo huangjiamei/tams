@@ -76,14 +76,13 @@
         <property name="items">
             <!--这是一个page列表，一个view可以包含多个page，但是每次通过pageId访问其中的一个-->
             <list merge="true">
-                <bean parent="Uif-Page" p:id="pageReviewForTeacher" p:title="">
+                <bean parent="Uif-Page" p:id="pageAppraisalForTeacher" p:title="">
                     <property name="items">
                         <list>
-                            <ref bean="TaReviewForTeacher"/>
+                            <ref bean="TaAppraisalForTeacher"/>
                         </list>
                     </property>
-                </bean>
-                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
+                </bean>                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
                     <property name="items">
                         <list>
                             <ref bean="TaListPage"/>

@@ -192,32 +192,24 @@
                                                                                             <property name="items">
                                                                                                 <list>
 
-                                                                                                    <bean   parent="ClassMap"/>
+                                                                                                    <bean parent="ClassMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean   parent="ClassMap"/>
-
-
+                                                                                                    <bean parent="ClassMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
-
-                                                                                                    <bean   parent="ClassMap"/>
-
+                                                                                                    <bean parent="ClassMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-
-
-
-
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -247,37 +239,31 @@
                                                                             <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean   parent="AdminMap"/>
+                                                                                                    <bean parent="AdminMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
-
-                                                                                                    <bean   parent="AdminMap"/>
-
+                                                                                                    <bean parent="AdminMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
-
-                                                                                                    <bean   parent="AdminMap"/>
-
+                                                                                                    <bean parent="AdminMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
-
-                                                                                                    <bean   parent="AdminMap"/>
-
+                                                                                                    <bean parent="AdminMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -306,28 +292,28 @@
                                                                             <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="taMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="taMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="taMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="taMap"/>
@@ -469,6 +455,8 @@
                                               p:linkText="添加任务(没对应form)"/>
                                         <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/mytest?methodToCall=getTaskDetailPage&amp;viewId=TestView"
                                               p:linkText="任务详情(在testCcontroller)"/>
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaAppraisalPage&amp;viewId=TaView"
+                                              p:linkText="助教考核(测试链接，后期删去)"/>
                                     </list>
                                 </property>
                             </bean>

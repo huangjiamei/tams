@@ -144,6 +144,21 @@
                     </property>
                 </bean>
 
+                <bean parent="Uif-Page" p:id="pageWorkFlowManage" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="WorkFlowManagePage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageFundsManagement" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="FundsManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
                 <bean parent="Uif-Page" p:id="pageReviewForTeacher" p:title="">
                     <property name="items">
                         <list>

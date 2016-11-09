@@ -79,21 +79,6 @@ public class TestController extends UifControllerBase {
 
 
 
-    /**
-     * 获取学校经费管理tab页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getFunsManagementPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getFunsManagementPage")
-    public ModelAndView getFunsManagementPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        testForm.setErrMsg("[{\"name\":\"高数\",\"y\":10000},{\"name\":\"线代\",\"y\":5000},{\"name\":\"离散\",\"y\":4000},{\"name\":\"数值\",\"y\":2000},{\"name\":\"C程\",\"y\":4000}]");
-
-
-        return this.getModelAndView(testForm, "pageFundsManagement");
-    }
-
 
     /**
      * 此方法只处理editor的content，所以不能直接使用

@@ -29,6 +29,16 @@ public class BaseForm extends UifFormBase  {
     private String inputField8;
     private String inputField9;
     private String inputField10;
+    private String inputField11;
+    private String inputField12;
+    private String inputField13;
+    private String inputField14;
+    private String inputField15;
+    private String inputField16;
+    private String inputField17;
+    private String inputField18;
+    private String inputField19;
+    private String inputField20;
 
     private String editorContent;
 
@@ -60,6 +70,86 @@ public class BaseForm extends UifFormBase  {
         getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "4", "6", "6"));
         getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "5", "5", "5"));
         getCollection().add(new TestObject(new Date(2016,10,15),"7", "3", "1", "9", "11"));
+    }
+
+    public String getInputField11() {
+        return inputField11;
+    }
+
+    public void setInputField11(String inputField11) {
+        this.inputField11 = inputField11;
+    }
+
+    public String getInputField12() {
+        return inputField12;
+    }
+
+    public void setInputField12(String inputField12) {
+        this.inputField12 = inputField12;
+    }
+
+    public String getInputField13() {
+        return inputField13;
+    }
+
+    public void setInputField13(String inputField13) {
+        this.inputField13 = inputField13;
+    }
+
+    public String getInputField14() {
+        return inputField14;
+    }
+
+    public void setInputField14(String inputField14) {
+        this.inputField14 = inputField14;
+    }
+
+    public String getInputField15() {
+        return inputField15;
+    }
+
+    public void setInputField15(String inputField15) {
+        this.inputField15 = inputField15;
+    }
+
+    public String getInputField16() {
+        return inputField16;
+    }
+
+    public void setInputField16(String inputField16) {
+        this.inputField16 = inputField16;
+    }
+
+    public String getInputField17() {
+        return inputField17;
+    }
+
+    public void setInputField17(String inputField17) {
+        this.inputField17 = inputField17;
+    }
+
+    public String getInputField18() {
+        return inputField18;
+    }
+
+    public void setInputField18(String inputField18) {
+        this.inputField18 = inputField18;
+    }
+
+    public String getInputField19() {
+        return inputField19;
+    }
+
+    public void setInputField19(String inputField19) {
+        this.inputField19 = inputField19;
+    }
+
+    public String getInputField20() {
+        return inputField20;
+    }
+
+    public void setInputField20(String inputField20) {
+        this.inputField20 = inputField20;
     }
 
     public String getInputField1() {

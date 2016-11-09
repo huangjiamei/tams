@@ -78,6 +78,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
 
         //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
+        if(uId.equalsIgnoreCase("admin")){
+            return this.getAllClassesMappedByDepartment();   //FIXME 测试代码。需要删除
+        }
         if(userInfoService.isSysAdmin(uId))
             return this.getAllClassesMappedByDepartment();
         else if (userInfoService.isInstructor(uId)) {

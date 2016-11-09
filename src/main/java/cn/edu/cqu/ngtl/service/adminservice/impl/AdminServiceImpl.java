@@ -210,9 +210,9 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public List<TAMSDeptFunding> getAllFunding() {
+    public List<TAMSDeptFunding> getAllFundingBySession() {
 
-        return deptFundingDao.selectAll();
+        return deptFundingDao.selectAllBySession();
 
     }
 }

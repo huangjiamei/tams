@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 
 import java.io.Serializable;
@@ -26,6 +27,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      */
 
     private String pieChartsNameValuePairs;
+
+    private List<SessionFundingViewObject> sessionFundings;
 
     /**
      * 批次管理页面
@@ -104,6 +107,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public List<SessionFundingViewObject> getSessionFundings() {
+        return sessionFundings;
+    }
+
+    public void setSessionFundings(List<SessionFundingViewObject> sessionFundings) {
+        this.sessionFundings = sessionFundings;
+    }
 
     public String getPieChartsNameValuePairs() {
         return pieChartsNameValuePairs;

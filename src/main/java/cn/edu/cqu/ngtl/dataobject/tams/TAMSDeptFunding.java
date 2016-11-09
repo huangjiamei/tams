@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -25,12 +26,68 @@ public class TAMSDeptFunding extends DataObjectBase implements Serializable {
     @Column(name = "ACTUAL_FUNDING")
     private String actualFunding;
 
+    @Column(name = "PHD_FUNDING")
+    private String phdFunding;
+
+    @Column(name = "APPLY_FUNDING")
+    private String applyFunding;
+
+    @Column(name = "BONUS")
+    private String bonus;
+
     @Column(name = "DEPARTMENT_ID")
     private String departmentId;
 
     @OneToOne
     @JoinColumn(name = "DEPARTMENT_ID",updatable=false, insertable=false)
     private UTDepartment department;
+
+    @Column(name = "SESSION_ID")
+    private String sessionId;
+
+    @OneToOne
+    @JoinColumn(name = "SESSION_ID",updatable=false, insertable=false)
+    private UTSession session;
+
+    public String getPhdFunding() {
+        return phdFunding;
+    }
+
+    public void setPhdFunding(String phdFunding) {
+        this.phdFunding = phdFunding;
+    }
+
+    public String getApplyFunding() {
+        return applyFunding;
+    }
+
+    public void setApplyFunding(String applyFunding) {
+        this.applyFunding = applyFunding;
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public UTSession getSession() {
+        return session;
+    }
+
+    public void setSession(UTSession session) {
+        this.session = session;
+    }
 
     public String getId() {
         return id;

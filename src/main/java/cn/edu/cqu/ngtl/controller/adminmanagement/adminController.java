@@ -987,8 +987,11 @@ public class adminController extends UifControllerBase {
 
         String json = gson.toJson(list);
 
-        //转义
-        json = json.replace('"','\'');
+        infoForm.setSessionFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getAllFundingBySession()
+                )
+        );
 
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");

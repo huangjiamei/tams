@@ -150,7 +150,8 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-HorizontalBoxSection">
+
+                                                                 <bean parent="Uif-HorizontalBoxSection">
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--文字搜索-->
@@ -199,7 +200,7 @@
                                                                             <bean parent="Uif-DataField" p:label="助教等级"
                                                                                   p:propertyName="description"/>
                                                                             <bean parent="Uif-DataField" p:label="时薪"
-                                                                                  p:propertyName="description"/>
+                                                                                  p:propertyName="hourlyWage"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -208,7 +209,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-ActionImage"
-                                                                                              p:methodToCall="selectCurTa">
+                                                                                              p:methodToCall="selectTaReward">
                                                                                             <property
                                                                                                     name="actionImage">
                                                                                                 <bean parent="Uif-Image"
@@ -216,6 +217,15 @@
                                                                                             </property>
                                                                                         </bean>
                                                                                     </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-ActionImage">
+                                                                                <property name="confirmationDialog">
+                                                                                    <ref bean="confirmDeleteTaRewardDialog" />
+                                                                                </property>
+                                                                                <property name="actionImage">
+                                                                                    <bean parent="Uif-Image"
+                                                                                          p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                 </property>
                                                                             </bean>
                                                                         </list>
@@ -250,22 +260,20 @@
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-MessageField" p:label="助教类别"
-                                              p:messageText="助教"/>
+                                        <bean parent="Uif-InputField" p:label="助教类别"
+                                              p:propertyName="oldTaCategory.name" p:readOnly="true"/>
                                         <bean parent="Uif-InputField" p:label="助教等级"
-                                              p:propertyName="description" p:width="auto">
+                                              p:propertyName="oldTaCategory.description" p:width="auto">
                                             <property name="control">
                                                 <bean parent="Uif-DropdownControl"
                                                       p:additionalCssClasses="form-control"/>
                                             </property>
                                             <property name="optionsFinder">
-                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"/>
+                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"/>
                                             </property>
                                         </bean>
-                                        <bean parent="Uif-InputField" p:label="助教等级"
-                                              p:propertyName="oldTaCategory.name"/>
                                         <bean parent="Uif-InputField" p:label="时薪"
-                                              p:propertyName="oldTaCategory.description"/>
+                                              p:propertyName="oldTaCategory.hourlyWage"/>
                                     </list>
                                 </property>
                             </bean>
@@ -279,8 +287,24 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveTaCategory" p:successCallback="dismissDialog('editTaCategoryDialog');"/>
+                      p:methodToCall="saveTaReward" p:successCallback="dismissDialog('editTaRewardDialog');"/>
             </list>
         </property>
     </bean>
+    <bean id="confirmDeleteTaRewardDialog" parent="Uif-DialogGroup"
+          p:headerText="删除课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="deleteTaReward"  p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

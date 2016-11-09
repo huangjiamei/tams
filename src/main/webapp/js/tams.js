@@ -37,12 +37,118 @@ var jsonObj =  {
     header:["编辑","待负责人审核","待学院审核","待学校审核","招聘","工作"],
 
     data:[
-        [1,0,0,1,0,0],
-        [1,1,0,1,0,0],
-        [1,0,0,1,0,0],
-        [1,0,0,1,0,0],
-        [1,0,0,1,0,0],
-        [1,1,0,1,0,0]
+        [{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":true
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":true
+        }],[{
+            "checked":true,
+            "disabled":true
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        }],[{
+            "checked":true,
+            "disabled":false
+        }, {
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":true
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":false
+        },{
+            "checked":true,
+            "disabled":true
+        }]
+
+
+
     ]
 }
 
@@ -55,7 +161,7 @@ function drawStatusTransTable(boxid){
     var thead = document.createElement("tr");
 
     var topleft = document.createElement("th");
-    topleft.style="width:80px; padding: 0;";
+    topleft.style.width = '130px';
     topleft.innerHTML = "<div class=\"out\"> <b>当前状态</b>  <em>新状态</em> </div>";
 
     thead.appendChild(topleft);
@@ -81,9 +187,9 @@ function drawStatusTransTable(boxid){
             var td = document.createElement("td");
             var cb = document.createElement("input");
             cb.type="checkbox";
-            if(jsonObj.data[i][j]){
-                cb.checked = true;
-            }
+
+            cb.checked = jsonObj.data[i][j].checked;
+            cb.disabled = jsonObj.data[i][j].disabled;
             td.appendChild(cb);
 
             row.appendChild(td);
@@ -113,7 +219,8 @@ function save() {
         var row = rows[i].childNodes;
         for(var j=1;j<head.length;j++)
         {
-            row_data[j-1] = row[j].childNodes[0].checked?1:0;
+            row_data[j-1].checked = row[j].childNodes[0].checked;
+            row_data[j-1].disabled = row[j].childNodes[0].disabled;
         }
         tmp_data[i-1]=row_data;
     }
@@ -127,12 +234,12 @@ function save() {
 /**
  * 要求传入chart容器id，表title，中转站id
  * 指定隐藏input中转站的dataTransferid，从该中转站提取val作为data输入
- * data格式为：[['name1',value1],['name2',value2]]
+ * data格式为：[['高数',1000],['线代',5000]]
+ * 或格式2：[{"name":"高数","y":10000},{"name":"线代","y":5000}]
  * @param chartId
  */
-function getPieChart(chartId,title,dataTransferId) {
-    // var data=eval('[["高等数学", 1200],["概率论", 1000],["应用数学", 600],["离散数学", 900],["统计学", 800],["计算数学", 500],["运筹学与控制论", 500],["数学分析", 900]]');
-    var data =eval(jQuery('#'+dataTransferId).val());
+function getPieChart(chartId,title,data) {
+    data = eval(data);
 
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
@@ -154,6 +261,7 @@ function getPieChart(chartId,title,dataTransferId) {
             text: title
         },
         tooltip: {
+            // 除了此项占比，还需要加一个此项具体数值
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
         plotOptions: {
@@ -172,24 +280,6 @@ function getPieChart(chartId,title,dataTransferId) {
             data: data
         }]
     });
-
-
-    // [
-    //     {
-    //         name: '高等数学',
-    //         y: 1200,
-    //         sliced: true,
-    //         selected: true
-    //     },
-    //     // ['高等数学',      1200],
-    //     ['概率论', 1000],
-    //     ['应用数学', 600],
-    //     ['离散数学', 900],
-    //     ['统计学', 800],
-    //     ['计算数学', 500],
-    //     ['运筹学与控制论', 500],
-    //     ['数学分析', 900]
-    // ]
 }
 
 /**
@@ -198,8 +288,8 @@ function getPieChart(chartId,title,dataTransferId) {
  * @param title
  * @param dataTransferId
  */
-function getBarChart(chartId,title,dataTransferId) {
-    var data =eval(jQuery('#'+dataTransferId).val());
+function getBarChart(chartId,title,data) {
+    data = eval(data);
 
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
@@ -240,30 +330,30 @@ function getBarChart(chartId,title,dataTransferId) {
                 allowDecimals: false, // 坐标轴刻度不为小数
                 title: {text: '经费'},
                 labels: {
-                    format: '{value} 元'
+                    format: '{y} 元'
                 }
             },
             {
                 title: {text: '助教优秀率'},
                 opposite: true,
                 labels: {
-                    format: '{value} %'
+                    format: '{y} %'
                 }
             }
         ],
         series: [{
             name: '经费',
             color: '#ff4d4d',
-            // objlist.value
+            // objlist.y
             data: [1200, 1000, 600, 900, 800, 500, 500, 900],
-            tooltip: {valueSuffix: '元'},
+            tooltip: {ySuffix: '元'},
             pointPadding: 0.15,
             pointPlacement: -0.03
         }, {
             name: '助教优秀率',
             color: '#66a3ff',
             data: [60, 90, 85, 70, 80, 85, 80, 75],
-            tooltip: {valueSuffix: '%'},
+            tooltip: {ySuffix: '%'},
             yAxis: 1, // 双y轴的关键
             pointPadding: 0.15,
             pointPlacement: 0.03

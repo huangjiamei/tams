@@ -23,6 +23,9 @@ public class TAMSTaCategory extends DataObjectBase implements Serializable {
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "HOURLY_WAGE")
+    private String hourlyWage;
+
     public String getId() {
         return id;
     }
@@ -45,5 +48,13 @@ public class TAMSTaCategory extends DataObjectBase implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getHourlyWage() {
+        return hourlyWage;
+    }
+
+    public void setHourlyWage(String hourlyWage) {
+        this.hourlyWage = hourlyWage;
     }
 }

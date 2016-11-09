@@ -1,17 +1,11 @@
 package cn.edu.cqu.ngtl.service.adminservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSDeptFundingDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSIssueTypeDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
+import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +38,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSDeptFundingDao deptFundingDao;
+
+    @Autowired
+    private TAMSWorkflowStatusRDao workflowStatusRDao;
 
     @Override
     public List<CMCourseClassification> getAllClassification() {
@@ -213,6 +210,13 @@ public class AdminServiceImpl implements IAdminService{
     public List<TAMSDeptFunding> getAllFundingBySession() {
 
         return deptFundingDao.selectAllBySession();
+
+    }
+
+    @Override
+    public List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId) {
+
+        return workflowStatusRDao.selectByRFId(roleFunctionId);
 
     }
 }

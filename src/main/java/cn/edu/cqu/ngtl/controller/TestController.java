@@ -77,17 +77,7 @@ public class TestController extends UifControllerBase {
 
     /* admin相关 */
 
-    /**
-     * 获取工作流程管理页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getWorkFlowManagePage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getWorkFlowManagePage")
-    public ModelAndView getWorkFlowManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageWorkFlowManage");
-    }
+
 
     /**
      * 获取学校经费管理tab页面

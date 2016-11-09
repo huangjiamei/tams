@@ -1342,7 +1342,7 @@
                                                                 <bean id="testPieChart" parent="Uif-VerticalBoxSection"
                                                                       p:additionalCssClasses="">
                                                                     <property name="onDocumentReadyScript"
-                                                                              value="getPieChart('testPieChart','学院经费分布','@{errMsg}');"/>
+                                                                              value="getPieChart('testPieChart','学院经费分布','@{pieChartsNameValuePairs}');"/>
                                                                 </bean>
                                                             </list>
                                                         </property>

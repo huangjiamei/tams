@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
@@ -16,7 +17,9 @@ import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -916,6 +919,53 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(adminInfoForm, "pageTaReward");
     }
 
+    /**
+     * 修改助教酬劳
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=selectTaReward")
+    public ModelAndView selectTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+        adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
+        adminInfoForm.setTaIndex(index);
+        return this.showDialog("editTaRewardDialog" ,true,adminInfoForm);
+    }
+
+    /**
+     * 修改助教酬劳
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=saveTaReward")
+    public ModelAndView saveTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        TAMSTaCategory newTaReward  = adminInfoForm.getOldTaCategory();
+        if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
+            // TODO: 2016/11/8 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        }
+        return this.getTaRewardPage(form);
+    }
+
+    /**
+     * 删除助教酬劳
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=deleteTaReward")
+    public ModelAndView deleteTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+        new TAMSTaCategoryDaoJpa().deleteOneByEntity(adminInfoForm.getAllTaCategories().get(index));
+        return this.getModelAndView(form, "pageTaReward");
+    }
 
     /**
      * 获取带charts的经费管理页面
@@ -927,9 +977,17 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getFundsPage")
     public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-        infoForm.setErrMsg("'[{\"name\":\"高数\",\"y\":10000},{\"name\":\"线代\",\"y\":5000},{\"name\":\"离散\",\"y\":4000},{\"name\":\"数值\",\"y\":2000},{\"name\":\"C程\",\"y\":4000}]'");
-//        infoForm.setErrMsg("error js 传参测试");
+        List<PieChartsNameValuePair> list = new ArrayList<>();
+        list.add(new PieChartsNameValuePair("高数", 10000));
+        list.add(new PieChartsNameValuePair("线代", 5000));
+        list.add(new PieChartsNameValuePair("离散", 4000));
+        list.add(new PieChartsNameValuePair("数值", 2000));
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        Gson gson = new Gson();
 
+        String json = gson.toJson(list);
+
+        infoForm.setPieChartsNameValuePairs(json);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

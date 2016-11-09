@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
@@ -46,4 +47,6 @@ public interface IAdminService {
     boolean changeSession(UTSession session);
 
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
+
+    List<TAMSDeptFunding> getAllFunding();
 }

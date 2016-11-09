@@ -22,6 +22,12 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private static final long serialVersionUID = -1974217788100313751L;
 
     /**
+     * 经费管理页面
+     */
+
+    private String pieChartsNameValuePairs;
+
+    /**
      * 批次管理页面
      */
 
@@ -51,7 +57,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
 
     /**
-     * 助教类别管理页面
+     * 助教类别/薪酬管理页面
      */
 
     private List<TAMSTaCategory> allTaCategories;
@@ -98,6 +104,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public String getPieChartsNameValuePairs() {
+        return pieChartsNameValuePairs;
+    }
+
+    public void setPieChartsNameValuePairs(String pieChartsNameValuePairs) {
+        this.pieChartsNameValuePairs = pieChartsNameValuePairs;
+    }
 
     public Integer getTermIndex() {
         return termIndex;

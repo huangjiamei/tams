@@ -168,7 +168,6 @@
                     <!--</property>-->
                 <!--</bean>-->
 
-
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>

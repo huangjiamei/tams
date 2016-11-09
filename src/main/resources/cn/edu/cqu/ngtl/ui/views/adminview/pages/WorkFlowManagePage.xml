@@ -160,7 +160,6 @@
                                                                     </property>
                                                                     <property name="tabsWidget.position" value="TOP"/>
                                                                 </bean>
-
                                                             </list>
                                                         </property>
                                                     </bean>

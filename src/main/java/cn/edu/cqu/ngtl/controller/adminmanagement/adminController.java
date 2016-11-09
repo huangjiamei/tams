@@ -927,7 +927,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getFundsPage")
     public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-//        infoForm.setErrMsg("[[\\'高等数学\\', 1200],[\\'概率论\\', 1000],[\\'应用数学\\', 600],[\\'离散数学\\', 900],[\\'统计学\\', 800],[\\'计算数学\\', 500],[\\'运筹学与控制论\\', 500],[\\'数学分析\\', 900]]");
+        infoForm.setErrMsg("'[{\"name\":\"高数\",\"y\":10000},{\"name\":\"线代\",\"y\":5000},{\"name\":\"离散\",\"y\":4000},{\"name\":\"数值\",\"y\":2000},{\"name\":\"C程\",\"y\":4000}]'");
 //        infoForm.setErrMsg("error js 传参测试");
 
 

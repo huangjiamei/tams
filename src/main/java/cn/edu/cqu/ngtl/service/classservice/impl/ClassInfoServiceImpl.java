@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
-import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -50,13 +49,13 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         /** Access DataBase */
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
-        for (UTClassInformation perInformation : classInformations) {
+//        for (UTClassInformation perInformation : classInformations) {
 
             /** Access DataBase */
             /** 等待最新的性能解决方案    **/
             //CMProgramCourse programCourse = programCourseDao.selectByCourseId(clazz.getCourseId());
 
-        }
+//        }
 
         return classInformations;
     }
@@ -102,14 +101,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         if(!userInfoService.isSysAdmin(uId)) {
             /** Access DataBase */
             List<UTClass> classInformations = classInfoDao.selectByConditions(conditions);
-            for (UTClass perInformation : classInformations) {
+/*            for (UTClass perInformation : classInformations) {
 
-                /** Access DataBase */
-                /** 等待最新的性能解决方案    **/
+                *//** Access DataBase *//*
+                *//** 等待最新的性能解决方案    **//*
                 CMProgramCourse programCourse = programCourseDao.selectByCourseId(perInformation.getCourseOffering().getCourseId());
 
                 perInformation.setProgramCourse(programCourse);
-            }
+            }*/
             return classInformations;
         }
         else if (!userInfoService.isInstructor(uId)) {

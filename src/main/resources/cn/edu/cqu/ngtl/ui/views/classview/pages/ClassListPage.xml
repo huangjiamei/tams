@@ -342,7 +342,7 @@
                                                                             <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"
                                                                                   p:sortAs="kuali_date"/>
                                                                             <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="耗费工时"
+                                                <!--                            <bean parent="Uif-DataField" p:label="耗费工时"
                                                                                   p:propertyName="workTime"/>
                                                                             <bean parent="Uif-DataField" p:label="津贴估算"
                                                                                   p:propertyName="allowance"/>
@@ -363,7 +363,7 @@
                                                                             <bean parent="Uif-DataField" p:label="教学班数"
                                                                                   p:propertyName="classCounts"/>
                                                                             <bean parent="Uif-DataField" p:label="上课教师数"
-                                                                                  p:propertyName="instructorCounts"/>
+                                                                                  p:propertyName="instructorCounts"/>-->
 
 
                                                                         </list>

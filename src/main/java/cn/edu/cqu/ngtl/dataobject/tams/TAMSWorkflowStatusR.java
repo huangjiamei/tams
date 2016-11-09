@@ -10,16 +10,13 @@ import java.io.Serializable;
  */
 
 @Entity
-@Table(name = "TAMS_WORKFLOW_STATUS_RELATION")
+@Table(name = "TAMS_WORKFLOW_STATUS_R")
 public class TAMSWorkflowStatusR extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsWorkflowStatusR")
     @SequenceGenerator(name="tamsWorlflowStatusR",sequenceName="TAMS_WORKFLOW_STATUS_RELATION_S",allocationSize=1)
     private String id;
-
-    @Column(name = "RELATIONSHIP")
-    private String relationship;
 
     @Column(name = "STATUS_ID_1")
     private String statusId1;
@@ -64,14 +61,6 @@ public class TAMSWorkflowStatusR extends DataObjectBase implements Serializable 
 
     public void setId(String id) {
         this.id = id;
-    }
-
-    public String getRelationship() {
-        return relationship;
-    }
-
-    public void setRelationship(String relationship) {
-        this.relationship = relationship;
     }
 
     public String getStatusId1() {

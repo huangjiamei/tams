@@ -1,18 +1,19 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
@@ -44,6 +45,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSWorkflowStatusDao workflowStatusDao;
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
@@ -469,5 +473,35 @@ public class TAConverterimpl implements ITAConverter {
             viewObjects.add(viewObject);
         }
         return viewObjects;
+    }
+
+    @Override
+    public RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelations) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+        if(allStatus == null)
+            return null;
+
+        List<String> headers = new ArrayList<>(allStatus.size());
+        for(TAMSWorkflowStatus status : allStatus) {
+            headers.add(status.getWorkflowStatus());
+        }
+
+        CheckBoxStatus[][] matrix = new CheckBoxStatus[allStatus.size()][allStatus.size()];
+
+        int length = allStatus.size();
+        for(int i = 0 ; i < length; i++)
+            for(int j = 0 ; j <length; j++)
+                matrix[i][j] = new CheckBoxStatus();
+
+        for(TAMSWorkflowStatusR workflowStatusR : workflowStatusRelations) {
+            int i = allStatus.indexOf(workflowStatusR.getStatus1());
+            int j = allStatus.indexOf(workflowStatusR.getStatus2());
+            matrix[i][j].setChecked(true);
+        }
+        RelationTable rt = new RelationTable();
+        rt.setHeader(headers);
+        rt.setData(matrix);
+
+        return rt;
     }
 }

@@ -28,6 +28,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private String pieChartsNameValuePairs;
 
+    private String workflowRelationTable;
+
     private List<SessionFundingViewObject> sessionFundings;
 
     /**
@@ -107,6 +109,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public String getWorkflowRelationTable() {
+        return workflowRelationTable;
+    }
+
+    public void setWorkflowRelationTable(String workflowRelationTable) {
+        this.workflowRelationTable = workflowRelationTable;
+    }
 
     public List<SessionFundingViewObject> getSessionFundings() {
         return sessionFundings;

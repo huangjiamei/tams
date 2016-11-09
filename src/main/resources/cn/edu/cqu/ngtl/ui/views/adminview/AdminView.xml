@@ -160,7 +160,13 @@
                         </list>
                     </property>
                 </bean>
-
+                <bean parent="Uif-Page" p:id="pageWorkFlowManage" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="WorkFlowManagePage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

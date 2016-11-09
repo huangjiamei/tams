@@ -18,6 +18,7 @@ import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -997,6 +998,26 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+    /**
+     * 获取工作流程管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getWorkFlowManagePage&viewId=AdminView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getWorkFlowManagePage")
+    public ModelAndView getWorkFlowManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        Gson gson = new Gson();
+
+        String roleFunctionId = "1";
+        RelationTable rt = taConverter.workflowStatusRtoJson(
+        adminService.getWorkflowStatusRelationByRoleFunctionId(roleFunctionId)
+        );
+
+        String json = gson.toJson(rt);
+
+        return this.getModelAndView(infoForm, "pageWorkFlowManage");
+    }
 
     @Override
     protected UifFormBase createInitialForm() {

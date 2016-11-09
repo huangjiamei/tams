@@ -1,10 +1,7 @@
 package cn.edu.cqu.ngtl.service.adminservice;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 
 import java.util.List;
@@ -49,4 +46,6 @@ public interface IAdminService {
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
     List<TAMSDeptFunding> getAllFundingBySession();
+
+    List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId);
 }

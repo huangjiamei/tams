@@ -67,14 +67,14 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
-            viewObject.setCourseHour(information.getHour());
+            //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
-            viewObject.setCourseCredit(information.getCredit().toString());
+            //viewObject.setCourseCredit(information.getCredit().toString());
 
             //if (programCourse != null) {
-            viewObject.setCourseClassification("test");
-            viewObject.setIsRequired("必修");
-            viewObject.setProgramName("CS");
+           // viewObject.setCourseClassification("test");
+           // viewObject.setIsRequired("必修");
+          //  viewObject.setProgramName("CS");
             //}
             viewObjects.add(viewObject);
         }

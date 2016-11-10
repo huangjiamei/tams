@@ -20,5 +20,5 @@ public interface IClassInfoService {
 
     List<UTClassInformation> getAllClassesFilterByUid(String uId);
 
-    List<UTClass> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions);
+    List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions);
 }

@@ -1,6 +1,5 @@
 package cn.edu.cqu.ngtl.dao.ut;
 
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 
 import java.util.List;
@@ -17,5 +16,5 @@ public interface UTClassInfoDao {
 
     List<UTClassInformation> selectBatchByIds(List<Object> classIds);
 
-    List<UTClass> selectByConditions(Map<String, String> conditions);
+    List<UTClassInformation> selectByConditions(Map<String, String> conditions);
 }

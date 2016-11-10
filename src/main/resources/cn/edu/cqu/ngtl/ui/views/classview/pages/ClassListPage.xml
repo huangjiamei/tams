@@ -1,12 +1,12 @@
-<beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
-       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
-       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
-       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:util="http://www.springframework.org/schema/util"
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:beans="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:jms="http://www.springframework.org/schema/jms"
+       xmlns:lang="http://www.springframework.org/schema/lang" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:oxm="http://www.springframework.org/schema/oxm" xmlns:task="http://www.springframework.org/schema/task"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns="http://www.springframework.org/schema/beans"
        xsi:schemaLocation="http://www.springframework.org/schema/aop
                            http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
                            http://www.springframework.org/schema/beans
@@ -225,12 +225,15 @@
                                                         <property name="items">
                                                             <list>
 
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <bean id="searchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                                 <property name="items">
                                                                                     <list>
-
                                                                                         <!--下拉框搜索-->
-                                                                                        <bean parent="Uif-InputField" p:label="学院"
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
+                                                                                        <!--学院-->
+                                                                                        <bean parent="Uif-InputField"
                                                                                               p:propertyName="condDepartmentName">
                                                                                             <property name="optionsFinder">
                                                                                                 <bean class="cn.edu.cqu.ngtl.optionfinder.classView.departmentFinder"
@@ -240,66 +243,34 @@
                                                                                                 <bean parent="Uif-DropdownControl" />
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-InputField" p:label="专业"
-                                                                                              p:propertyName="condProgramName"
-                                                                                              p:refreshWhenChangedPropertyNames="condDepartmentName">
-                                                                                            <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classView.programFinder"
-                                                                                                      p:blankOption="true"/>
-                                                                                            </property>
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl" />
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-InputField" p:label="授课年级"
-                                                                                              p:propertyName="condSessionYear">
-                                                                                            <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.SessionYearFinder"
-                                                                                                      p:blankOption="true"/>
-                                                                                            </property>
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl" />
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-InputField" p:label="选修/必修"
-                                                                                              p:propertyName="condIsRequired">
-                                                                                            <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classView.isRequiredFinder"
-                                                                                                      p:blankOption="true"/>
-                                                                                            </property>
-
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl" />
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-InputField" p:label="课程类型"
-                                                                                              p:propertyName="condCourseClassification">
-                                                                                            <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classView.courseClassificationFinder"
-                                                                                                      p:blankOption="true"/>
-                                                                                            </property>
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl" />
-                                                                                            </property>
-                                                                                        </bean>
                                                                                         <!--文字搜索-->
-                                                                                        <bean parent="Uif-InputField" p:label="课程名称"
+                                                                                        <!--课程名称-->
+                                                                                        <bean parent="Uif-InputField"
                                                                                               p:propertyName="condCourseName" />
-                                                                                        <bean parent="Uif-InputField" p:label="课程编号"
+                                                                                        <!--课程编号-->
+                                                                                        <bean parent="Uif-InputField"
                                                                                               p:propertyName="condCourseCode" />
-                                                                                        <bean parent="Uif-InputField" p:label="教学班"
+                                                                                        <!--教学班-->
+                                                                                        <bean parent="Uif-InputField"
                                                                                               p:propertyName="condClassNumber" />
-                                                                                        <bean parent="Uif-InputField" p:label="教师"
+                                                                                        <!--教师-->
+                                                                                        <bean parent="Uif-InputField"
                                                                                               p:propertyName="condInstructorName" />
-                                                                                        <bean parent="Uif-InputField" p:label="学时"
-                                                                                              p:propertyName="condCourseHour" />
-                                                                                        <bean parent="Uif-InputField" p:label="学分"
-                                                                                              p:propertyName="condCourseCredit" />
 
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
 
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:actionLabel="查询" p:additionalCssClasses="icon-search"
-                                                                                              p:methodToCall="searchClassByCondition" p:style="margin:15px" />
+                                                                                        <bean id="searchButton" parent="Uif-PrimaryActionButton"
+                                                                                              p:actionLabel="查询" p:additionalCssClasses="icon-search hidden-fields search-button"
+                                                                                              p:methodToCall="searchClassByCondition"
+                                                                                              p:refreshId="ClassListPage"/>
 
                                                                                     </list>
                                                                                 </property>
@@ -310,7 +281,8 @@
 
                                                                 <bean id="ClassListPageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="20">
+                                                                      p:layoutManager.numberOfColumns="20"
+                                                                      p:onDocumentReadyScript = 'refreshTableFilter(searchFields,ClassListPageTable)'>
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>
@@ -342,28 +314,10 @@
                                                                             <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"
                                                                                   p:sortAs="kuali_date"/>
                                                                             <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
-                                                <!--                            <bean parent="Uif-DataField" p:label="耗费工时"
+                                                                            <bean parent="Uif-DataField" p:label="耗费工时"
                                                                                   p:propertyName="workTime"/>
-                                                                            <bean parent="Uif-DataField" p:label="津贴估算"
-                                                                                  p:propertyName="allowance"/>
-                                                                            <bean parent="Uif-DataField" p:label="拟配备助教数"
-                                                                                  p:propertyName="protocalAssistantNumber"/>
+
                                                                             <bean parent="Uif-DataField" p:label="状态" p:propertyName="judgeStatus"/>
-                                                                            <bean parent="Uif-DataField" p:label="学时" p:propertyName="courseHour"/>
-                                                                            <bean parent="Uif-DataField" p:label="学分" p:propertyName="courseCredit"/>
-                                                                            <bean parent="Uif-DataField" p:label="选修/必修"
-                                                                                  p:propertyName="isRequired"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程类型"
-                                                                                  p:propertyName="courseClassification"/>
-                                                                            <bean parent="Uif-DataField" p:label="授课年级"
-                                                                                  p:propertyName="sessionYear"/>
-                                                                            <bean parent="Uif-DataField" p:label="专业" p:propertyName="programName"/>
-                                                                            <bean parent="Uif-DataField" p:label="学生人数"
-                                                                                  p:propertyName="studentCounts"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学班数"
-                                                                                  p:propertyName="classCounts"/>
-                                                                            <bean parent="Uif-DataField" p:label="上课教师数"
-                                                                                  p:propertyName="instructorCounts"/>-->
 
 
                                                                         </list>

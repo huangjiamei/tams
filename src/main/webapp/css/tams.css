@@ -502,3 +502,16 @@ table.uif-tableCollectionLayout th {
 b{font-style:normal;display:block;position:absolute;top:-60px;left:-30px;width:35px;}
 em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width:55px;}
 
+
+/*表格过滤器用来隐藏占位控件的类*/
+.hidden-fields{
+    display:none!important;
+}
+.search-fields  {
+    display:none!important;
+}
+
+/*过滤器所在thead的样式，待添加*/
+.search-filter{
+
+}

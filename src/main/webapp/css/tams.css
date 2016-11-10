@@ -434,12 +434,12 @@ body{
 }
 
 
-.table > thead > tr > th,
-.table > tbody > tr > th,
-.table > tfoot > tr > th,
-.table > thead > tr > td,
-.table > tbody > tr > td,
-.table > tfoot > tr > td{
+.uif-disclosure .table > thead > tr > th,
+.uif-disclosure .table > tbody > tr > th,
+.uif-disclosure .table > tfoot > tr > th,
+.uif-disclosure .table > thead > tr > td,
+.uif-disclosure .table > tbody > tr > td,
+.uif-disclosure .table > tfoot > tr > td{
     white-space:nowrap;
 }
 

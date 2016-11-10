@@ -58,6 +58,12 @@ public class adminController extends UifControllerBase {
     private ITAConverter taConverter;
 
 
+    @RequestMapping(params = "methodToCall=logout")
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirctURL);
+    }
+
     /**
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getConsolePage&viewId=AdminView
      *

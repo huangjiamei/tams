@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -47,6 +48,12 @@ public class ClassController extends UifControllerBase {
 
     @Autowired
     private ITAService taService;
+
+    @RequestMapping(params = "methodToCall=logout")
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirctURL);
+    }
 
     /**
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
@@ -154,24 +161,20 @@ public class ClassController extends UifControllerBase {
         Map<String, String> conditions = new HashMap<>();
 
         //put conditions
-        conditions.put("ClassId", infoForm.getCondClassNumber());
-
+        conditions.put("ClassNumber", infoForm.getCondClassNumber());
         conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("InstructorName", infoForm.getCondInstructorName());
-        conditions.put("Year", infoForm.getCondSessionYear());
-
-        conditions.put("IsRequired", infoForm.getCondIsRequired());
-
-        conditions.put("ProgramId", infoForm.getCondProgramName());
-        conditions.put("Classification", infoForm.getCondCourseClassification());
-
+//        conditions.put("Year", infoForm.getCondSessionYear());
+//        conditions.put("IsRequired", infoForm.getCondIsRequired());
+//        conditions.put("ProgramId", infoForm.getCondProgramName());
+//        conditions.put("Classification", infoForm.getCondCourseClassification());
         conditions.put("CourseName", infoForm.getCondCourseName());
         conditions.put("CourseCode", infoForm.getCondCourseCode());
-        conditions.put("CourseHour", infoForm.getCondCourseHour());
-        conditions.put("CourseCredit", infoForm.getCondCourseCredit());
+//        conditions.put("CourseHour", infoForm.getCondCourseHour());
+//        conditions.put("CourseCredit", infoForm.getCondCourseCredit());
 
         infoForm.setClassList(
-                taConverter.classToViewObject(
+                taConverter.classInfoToViewObject(
                         classInfoService.getAllClassesFilterByUidAndCondition(uId, conditions)
                 )
         );

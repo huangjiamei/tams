@@ -151,7 +151,7 @@
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.RoleFinder"
                                                                                           p:blankOption="true"/>
                                                                                 </property>
                                                                             </bean>
@@ -161,7 +161,7 @@
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"
                                                                                           p:blankOption="true"/>
                                                                                 </property>
 

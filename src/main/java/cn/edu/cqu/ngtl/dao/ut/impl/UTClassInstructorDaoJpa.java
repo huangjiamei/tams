@@ -38,4 +38,6 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         Query query = em.createNativeQuery("SELECT CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR t WHERE t.INSTRUCTOR_ID='" + uId + "'");
         return query.getResultList();
     }
+
+
 }

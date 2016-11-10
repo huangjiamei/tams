@@ -13,7 +13,8 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.kuali.rice.core.api.criteria.PredicateFactory.*;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.like;
 
 @Repository
 @Component("UTInstructorDaoJpa")
@@ -41,6 +42,15 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		QueryResults<UTInstructor> qr =  KradDataServiceLocator.getDataObjectService().findAll(UTInstructor.class);
 
 		return qr.getResults();
+
+	}
+
+	@Override
+	public  List<UTInstructor> getInstructorByName(String name){
+		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates((like("name" , "%"+ name + '%')));
+		QueryResults<UTInstructor> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+				UTInstructor.class, criteria.build());
+		return  qr.getResults();
 
 	}
 

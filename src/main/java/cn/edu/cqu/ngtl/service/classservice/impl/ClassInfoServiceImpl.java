@@ -96,24 +96,16 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public List<UTClass> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
-        //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
+    public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
         if(!userInfoService.isSysAdmin(uId)) {
             /** Access DataBase */
-            List<UTClass> classInformations = classInfoDao.selectByConditions(conditions);
-/*            for (UTClass perInformation : classInformations) {
-
-                *//** Access DataBase *//*
-                *//** 等待最新的性能解决方案    **//*
-                CMProgramCourse programCourse = programCourseDao.selectByCourseId(perInformation.getCourseOffering().getCourseId());
-
-                perInformation.setProgramCourse(programCourse);
-            }*/
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
         }
-        else if (!userInfoService.isInstructor(uId)) {
+        else if (userInfoService.isInstructor(uId)) {
+            //FIXME 按照教师ID去查课程信息
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
-            //return classInfoDao.selectBatchByIds(classIds);
+//            return classInfoDao.selectBatchByIds(classIds);
         }
         return null;
     }

@@ -207,9 +207,16 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public List<TAMSDeptFunding> getAllFundingBySession() {
+    public List<TAMSDeptFunding> getCurrFundingBySession() {
 
-        return deptFundingDao.selectAllBySession();
+        return deptFundingDao.selectCurrBySession();
+
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getPreviousFundingBySession() {
+
+        return deptFundingDao.selectPreBySession();
 
     }
 

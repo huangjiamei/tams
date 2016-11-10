@@ -467,8 +467,13 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setPhdFunding(deptFunding.getPhdFunding());
             viewObject.setActualFunding(deptFunding.getActualFunding());
             viewObject.setPlanFunding(deptFunding.getPlanFunding());
-            viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
-                    deptFunding.getSession().getTerm() + "季");
+            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
+                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
+                    Integer.valueOf(deptFunding.getPlanFunding());
+            viewObject.setTotal(total.toString());
+            if(deptFunding.getSession() != null)
+                viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
+                        deptFunding.getSession().getTerm() + "季");
 
             viewObjects.add(viewObject);
         }

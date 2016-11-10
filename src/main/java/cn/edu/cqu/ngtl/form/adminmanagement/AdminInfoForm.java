@@ -32,6 +32,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<SessionFundingViewObject> sessionFundings;
 
+    private List<SessionFundingViewObject> previousSessionFundings;
+
     /**
      * 批次管理页面
      */
@@ -109,6 +111,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public List<SessionFundingViewObject> getPreviousSessionFundings() {
+        return previousSessionFundings;
+    }
+
+    public void setPreviousSessionFundings(List<SessionFundingViewObject> previousSessionFundings) {
+        this.previousSessionFundings = previousSessionFundings;
+    }
 
     public String getWorkflowRelationTable() {
         return workflowRelationTable;

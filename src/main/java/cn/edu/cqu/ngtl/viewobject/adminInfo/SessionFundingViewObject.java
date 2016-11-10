@@ -17,6 +17,16 @@ public class SessionFundingViewObject {
 
     String bonus;
 
+    String total;
+
+    public String getTotal() {
+        return total;
+    }
+
+    public void setTotal(String total) {
+        this.total = total;
+    }
+
     public String getSessionName() {
         return sessionName;
     }

@@ -45,7 +45,9 @@ public interface IAdminService {
 
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
-    List<TAMSDeptFunding> getAllFundingBySession();
+    List<TAMSDeptFunding> getCurrFundingBySession();
+
+    List<TAMSDeptFunding> getPreviousFundingBySession();
 
     List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId);
 }

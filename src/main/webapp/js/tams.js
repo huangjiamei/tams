@@ -302,3 +302,15 @@ function refreshTableFilter(searchbox,tablebox) {
     filter.append(tr);
     thead.after(filter)
 }
+
+/**
+ * 为每个page生成edusec中的header样式
+ * 简易版方法
+ * @param id header-content中额外设置的一个标题容器对应的id
+ * @param icon 图标样式
+ * @param bigTitle 正标题
+ * @param smallTitle 副标题
+ */
+function initContentHeader(id,icon,bigTitle,smallTitle) {
+    jQuery('#'+id).html('<h2> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h2>');
+}

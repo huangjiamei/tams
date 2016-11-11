@@ -94,7 +94,6 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "UNIVERSITY_NAME")
     private String uniName;
 
-
     @Column(name = "STATUS")
     private String status;
 

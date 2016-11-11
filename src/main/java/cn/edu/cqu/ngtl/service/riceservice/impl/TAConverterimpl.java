@@ -70,7 +70,7 @@ public class TAConverterimpl implements ITAConverter {
             //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
             //viewObject.setCourseCredit(information.getCredit().toString());
-
+            viewObject.setStatus(information.getStatus());
             //if (programCourse != null) {
            // viewObject.setCourseClassification("test");
            // viewObject.setIsRequired("必修");

@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface TAMSDeptFundingDao {
 
-    List<TAMSDeptFunding> selectAllBySession();
+    List<TAMSDeptFunding> selectCurrBySession();
 
+    List<TAMSDeptFunding> selectPreBySession();
 }

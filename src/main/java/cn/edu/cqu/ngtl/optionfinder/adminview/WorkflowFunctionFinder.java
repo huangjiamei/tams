@@ -1,5 +1,7 @@
-package cn.edu.cqu.ngtl.optionfinder.classView;
+package cn.edu.cqu.ngtl.optionfinder.adminview;
 
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowFunctions;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.KeyValuesBase;
@@ -8,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tangjing on 16-11-5.
+ * Created by tangjing on 16-11-10.
  */
-public class isRequiredFinder extends KeyValuesBase {
+public class WorkflowFunctionFinder extends KeyValuesBase {
     /**
      * 开启blankOption后默认option为空，否则为option1
      */
@@ -22,8 +24,13 @@ public class isRequiredFinder extends KeyValuesBase {
         if(blankOption){
             keyValues.add(new ConcreteKeyValue("", ""));
         }
-        keyValues.add(new ConcreteKeyValue("1", "必修"));
-        keyValues.add(new ConcreteKeyValue("0", "选修"));
+
+        List<TAMSWorkflowFunctions> functions = new TAMSWorkflowFunctionsDaoJpa().selectAll();
+
+        for(TAMSWorkflowFunctions function : functions) {
+            keyValues.add(new ConcreteKeyValue(function.getId(), function.getName()));
+        }
+
         return keyValues;
     }
 

@@ -67,14 +67,14 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
-            viewObject.setCourseHour(information.getHour());
+            //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
-            viewObject.setCourseCredit(information.getCredit().toString());
+            //viewObject.setCourseCredit(information.getCredit().toString());
 
             //if (programCourse != null) {
-            viewObject.setCourseClassification("test");
-            viewObject.setIsRequired("必修");
-            viewObject.setProgramName("CS");
+           // viewObject.setCourseClassification("test");
+           // viewObject.setIsRequired("必修");
+          //  viewObject.setProgramName("CS");
             //}
             viewObjects.add(viewObject);
         }
@@ -467,8 +467,13 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setPhdFunding(deptFunding.getPhdFunding());
             viewObject.setActualFunding(deptFunding.getActualFunding());
             viewObject.setPlanFunding(deptFunding.getPlanFunding());
-            viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
-                    deptFunding.getSession().getTerm() + "季");
+            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
+                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
+                    Integer.valueOf(deptFunding.getPlanFunding());
+            viewObject.setTotal(total.toString());
+            if(deptFunding.getSession() != null)
+                viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
+                        deptFunding.getSession().getTerm() + "季");
 
             viewObjects.add(viewObject);
         }

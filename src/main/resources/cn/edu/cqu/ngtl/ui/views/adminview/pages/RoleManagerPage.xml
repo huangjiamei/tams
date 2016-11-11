@@ -40,7 +40,14 @@
 					<property name="items">
 						<list>
 							<!-- 左上角 -->
-							<bean parent="Uif-HeaderThree" p:headerText="管理员角色管理"/>
+							<bean id="headerTitle" parent="Uif-VerticalBoxSection"
+								  p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-list','管理','角色管理')">
+								<property name="items">
+									<list>
+										<bean parent="Uif-HeaderTwo" p:headerText="管理员角色管理"/>
+									</list>
+								</property>
+							</bean>
 
 							<!-- 右上角 当前路径 -->
 							<bean parent="Uif-HorizontalBoxSection"

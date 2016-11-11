@@ -58,6 +58,12 @@ public class adminController extends UifControllerBase {
     private ITAConverter taConverter;
 
 
+    @RequestMapping(params = "methodToCall=logout")
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirctURL);
+    }
+
     /**
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getConsolePage&viewId=AdminView
      *
@@ -990,7 +996,13 @@ public class adminController extends UifControllerBase {
 
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
-                        adminService.getAllFundingBySession()
+                        adminService.getCurrFundingBySession()
+                )
+        );
+
+        infoForm.setPreviousSessionFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getPreviousFundingBySession()
                 )
         );
 
@@ -1011,7 +1023,7 @@ public class adminController extends UifControllerBase {
 
         String roleFunctionId = "1";
         RelationTable rt = taConverter.workflowStatusRtoJson(
-        adminService.getWorkflowStatusRelationByRoleFunctionId(roleFunctionId)
+                adminService.getWorkflowStatusRelationByRoleFunctionId(roleFunctionId)
         );
 
         String json = gson.toJson(rt);

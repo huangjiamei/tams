@@ -236,7 +236,7 @@
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:propertyName="condDepartmentName">
                                                                                             <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classView.departmentFinder"
                                                                                                       p:blankOption="true"/>
                                                                                             </property>
                                                                                             <property name="control">

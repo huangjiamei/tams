@@ -34,6 +34,9 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<SessionFundingViewObject> previousSessionFundings;
 
+    private List<SessionFundingViewObject> academyCurrFundings;
+
+
     /**
      * 批次管理页面
      */
@@ -112,6 +115,9 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
 
+    public AdminInfoForm() {
+    }
+
     public List<SessionFundingViewObject> getPreviousSessionFundings() {
         return previousSessionFundings;
     }
@@ -120,6 +126,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.previousSessionFundings = previousSessionFundings;
     }
 
+    public List<SessionFundingViewObject> getAcademyCurrFundings() {
+        return academyCurrFundings;
+    }
+
+    public void setAcademyCurrFundings(List<SessionFundingViewObject> previousSessionFundings) {
+        this.academyCurrFundings = academyCurrFundings;
+    }
     public String getWorkflowRelationTable() {
         return workflowRelationTable;
     }
@@ -423,5 +436,4 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setCourseClassificationIndex(Integer courseClassificationIndex) {
         this.courseClassificationIndex = courseClassificationIndex;
     }
-
 }

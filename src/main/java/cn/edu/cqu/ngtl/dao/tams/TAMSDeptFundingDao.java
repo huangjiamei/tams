@@ -12,4 +12,6 @@ public interface TAMSDeptFundingDao {
     List<TAMSDeptFunding> selectCurrBySession();
 
     List<TAMSDeptFunding> selectPreBySession();
+
+    List<TAMSDeptFunding> selectAcademyCurrBySession();
 }

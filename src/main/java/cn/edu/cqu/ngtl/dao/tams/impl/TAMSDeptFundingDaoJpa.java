@@ -81,4 +81,29 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         return list;
     }
+    @Override
+    public List<TAMSDeptFunding> selectAcademyCurrBySession(){
+        List<TAMSDeptFunding> list = new ArrayList<>();
+
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        Query query = em.createNativeQuery("SELECT DEPARTMENT_ID,SUM(PLAN_FUNDING) AS PLAN_FUNDING,SUM(ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(PHD_FUNDING) AS PHD_FUNDING,SUM(APPLY_FUNDING) AS APPLY_FUNDING,SUM(BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='"+curSession.getId()+"' GROUP BY t.DEPARTMENT_ID");
+        List<Object> columns = query.getResultList();
+
+        for(Object column : columns) {
+            TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+
+            Object[] fundings = (Object[]) column;
+            deptFunding.setPlanFunding(String.valueOf(fundings[1]));
+            deptFunding.setActualFunding(String.valueOf(fundings[2]));
+            deptFunding.setPhdFunding(String.valueOf(fundings[3]));
+            deptFunding.setApplyFunding(String.valueOf(fundings[4]));
+            deptFunding.setBonus(String.valueOf(fundings[5]));
+
+            deptFunding.setSession(sessionDao.getUTSessionById(Integer.valueOf(fundings[0].toString())));
+
+            list.add(deptFunding);
+        }
+
+        return list;
+    }
 }

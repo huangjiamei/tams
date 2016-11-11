@@ -1005,7 +1005,11 @@ public class adminController extends UifControllerBase {
                         adminService.getPreviousFundingBySession()
                 )
         );
-
+        infoForm.setAcademyCurrFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getAcademyCurrFundingBySession()
+                )
+        );
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

@@ -483,6 +483,7 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelations) {
         List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+        //如果连header都没有返回完全的空
         if(allStatus == null)
             return null;
 
@@ -497,6 +498,14 @@ public class TAConverterimpl implements ITAConverter {
         for(int i = 0 ; i < length; i++)
             for(int j = 0 ; j <length; j++)
                 matrix[i][j] = new CheckBoxStatus();
+        //如果有header没数据则返回默认的全空
+        if(workflowStatusRelations == null || workflowStatusRelations.size() == 0) {
+            RelationTable rt = new RelationTable();
+            rt.setHeader(headers);
+            rt.setData(matrix);
+
+            return rt;
+        }
 
         for(TAMSWorkflowStatusR workflowStatusR : workflowStatusRelations) {
             int i = allStatus.indexOf(workflowStatusR.getStatus1());

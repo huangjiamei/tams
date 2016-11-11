@@ -1033,6 +1033,34 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }
 
+    /**
+     * 工作流查询
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=search")
+    public ModelAndView search(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+
+        RelationTable rt = taConverter.workflowStatusRtoJson(
+                adminService.getWorkflowStatusRelationByRoleFunctionId(
+                        adminService.getRoleFunctionIdByRoleIdAndFunctionId(
+                                infoForm.getRoleId(),
+                                infoForm.getFunctionId()
+                        )
+                )
+        );
+
+        Gson gson = new Gson();
+
+        String json = gson.toJson(rt);
+
+        infoForm.setWorkflowRelationTable(json);
+
+        return this.getModelAndView(infoForm, "pageWorkFlowManage");
+    }
+
     @Override
     protected UifFormBase createInitialForm() {
 

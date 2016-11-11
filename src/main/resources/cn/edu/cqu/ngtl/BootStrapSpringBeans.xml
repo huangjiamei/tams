@@ -102,7 +102,7 @@
 	<import resource="classpath:org/kuali/rice/krad/config/KRADSpringBeans-jpa-common.xml"/>
 	<alias alias="kradApplicationDataSource" name="riceDataSource"/>
 	<bean id="jpaPersistenceUnitName" class="java.lang.String">
-		<constructor-arg value="TamsApp"/>
+		<constructor-arg value="enrollAccountApp"/>
 	</bean>
 	<util:list id="jpaPackagesToScan">
 		<!-- 重要！这里是dataobjects的bao -->
@@ -112,7 +112,7 @@
 	<util:list id="managedClassNames"/>
 	<util:list id="additionalMetadataProviders"/>
 	<util:list id="springMetadataFileLocations"/>
-	<bean id="tamsModuleConfiguration" class="org.kuali.rice.krad.bo.ModuleConfiguration">
+	<bean id="enrollModuleConfiguration" class="org.kuali.rice.krad.bo.ModuleConfiguration">
 		<property name="namespaceCode" value="KR-SAP"/>
 		<property name="initializeDataDictionary" value="true"/>
 		<property name="dataDictionaryPackages">
@@ -134,7 +134,7 @@
 		</property>
 	</bean>
 	<bean id="sampleAppModuleService" class="org.kuali.rice.krad.service.impl.ModuleServiceBase">
-		<property name="moduleConfiguration" ref="tamsModuleConfiguration"/>
+		<property name="moduleConfiguration" ref="enrollModuleConfiguration"/>
 	</bean>
 	<bean class="org.kuali.rice.core.framework.resourceloader.RiceSpringResourceLoaderConfigurer">
 		<property name="localServiceName" value="SampleAppContext"/>

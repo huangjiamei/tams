@@ -448,7 +448,9 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                                 <!--第二页tab-->
                                                                 <bean parent="Uif-VerticalBoxSection"
                                                                       p:headerText="学院经费">
@@ -1439,8 +1441,5 @@
                 </bean>
             </list>
         </property>
-                </bean>
-    </list>
-    </property>
     </bean>
 </beans>

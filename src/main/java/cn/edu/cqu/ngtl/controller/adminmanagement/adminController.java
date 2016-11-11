@@ -1016,6 +1016,8 @@ public class adminController extends UifControllerBase {
 
         String json = gson.toJson(rt);
 
+        infoForm.setWorkflowRelationTable(json);
+
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }
 

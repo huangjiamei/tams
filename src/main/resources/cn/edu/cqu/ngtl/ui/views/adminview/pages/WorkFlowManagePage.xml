@@ -119,10 +119,11 @@
                                                                                               p:navigateToPageId="pageConsole"
                                                                                               p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
                                                                                         </bean>
+                                                                                        <!--这个保存按钮只是调用js将json数据放到中转站中-->
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="保存"
                                                                                               p:actionImagePlacement="LEFT"
-                                                                                              p:methodToCall="addExmKrimRole"
+                                                                                              p:actionScript="save()"
                                                                                               p:additionalCssClasses="icon-save bg-success tamsbtn">
                                                                                         </bean>
                                                                                     </list>
@@ -140,6 +141,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-GridGroup"
+                                                                      p:additionalCssClasses="col-md-11 col-lg-11"
                                                                       p:layoutManager.renderRowFirstCellHeader="false">
                                                                     <property name="layoutManager.numberOfColumns" value="4"/>
 
@@ -164,13 +166,17 @@
                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
                                                                                           p:blankOption="true"/>
                                                                                 </property>
-
                                                                             </bean>
-
-
                                                                         </list>
                                                                     </property>
                                                                 </bean>
+
+                                                                <bean id="searchButton" parent="Uif-PrimaryActionButton"
+                                                                      p:style="float:right;"
+                                                                      p:actionLabel="查看" p:additionalCssClasses="icon-search"
+                                                                      p:methodToCall=""
+                                                                      p:refreshId="workFlowTab"/>
+
                                                             </list>
                                                         </property>
 
@@ -179,13 +185,11 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-
-
-                                                                <bean parent="Uif-TabGroup">
+                                                                <bean id="workFlowTab" parent="Uif-TabGroup">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-VerticalBoxSection" id="status"  p:headerText="状态转换"
-                                                                                 p:onDocumentReadyScript="drawStatusTransTable('status')">
+                                                                                 p:onDocumentReadyScript="drawStatusTransTable('status','@{workflowRelationTable}')">
                                                                                 <property name="items">
                                                                                     <list>
 
@@ -195,6 +199,7 @@
                                                                             <bean parent="Uif-VerticalBoxSection" id="auth" p:headerText="权限">
                                                                                 <property name="items">
                                                                                     <list>
+
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -202,6 +207,27 @@
                                                                     </property>
                                                                     <property name="tabsWidget.position" value="TOP"/>
                                                                 </bean>
+
+                                                                <bean id="hidden-statusTrans" parent="Uif-InputField"
+                                                                      p:additionalCssClasses="hidden-fields" p:propertyName="workflowRelationTable">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextAreaControl"/>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean id="hidden-auth"  parent="Uif-InputField"
+                                                                      p:additionalCssClasses="hidden-fields" p:propertyName="inputField1">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextAreaControl"/>
+                                                                    </property>
+                                                                </bean>
+                                                                <!--该隐藏按钮最终提交-->
+                                                                <bean id="hidden-save"  parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="保存"
+                                                                      p:methodToCall=""
+                                                                      p:additionalCssClasses="hidden-fields">
+                                                                </bean>
+
                                                             </list>
                                                         </property>
                                                     </bean>

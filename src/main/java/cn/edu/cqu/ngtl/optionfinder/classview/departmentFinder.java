@@ -1,4 +1,4 @@
-package cn.edu.cqu.ngtl.optionfinder.classView;
+package cn.edu.cqu.ngtl.optionfinder.classview;
 
 import cn.edu.cqu.ngtl.dao.ut.impl.UTDepartmentDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;

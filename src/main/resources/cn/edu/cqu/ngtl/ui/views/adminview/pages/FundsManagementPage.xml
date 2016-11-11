@@ -1439,6 +1439,8 @@
                 </bean>
             </list>
         </property>
+                </bean>
+    </list>
+    </property>
     </bean>
-
 </beans>

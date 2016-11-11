@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.viewobject.adminInfo;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,6 +11,15 @@ public class RelationTable {
     private List<String> header;
 
     private CheckBoxStatus[][] data;
+
+    public RelationTable(String... args) {
+        for(String arg : args) {
+            if(arg.equals("default")) {
+                this.header = new ArrayList<String>();
+                this.data = null;
+            }
+        }
+    }
 
     public List<String> getHeader() {
         return header;

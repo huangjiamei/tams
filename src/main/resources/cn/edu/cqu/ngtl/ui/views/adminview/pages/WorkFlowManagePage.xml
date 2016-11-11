@@ -147,24 +147,22 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:propertyName="inputField1"
+                                                                            <bean parent="Uif-InputField" p:propertyName="roleId"
                                                                                   p:colSpan="1" p:label="角色"  p:fieldLabel.colSpan="1">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.RoleFinder"
-                                                                                          p:blankOption="true"/>
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.RoleFinder"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-InputField" p:propertyName="inputField1"
+                                                                            <bean parent="Uif-InputField" p:propertyName="functionId"
                                                                                   p:colSpan="1" p:label="功能"  p:fieldLabel.colSpan="1">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"
-                                                                                          p:blankOption="true"/>
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"/>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>
@@ -174,7 +172,7 @@
                                                                 <bean id="searchButton" parent="Uif-PrimaryActionButton"
                                                                       p:style="float:right;"
                                                                       p:actionLabel="查看" p:additionalCssClasses="icon-search"
-                                                                      p:methodToCall=""
+                                                                      p:methodToCall="search"
                                                                       p:refreshId="workFlowTab"/>
 
                                                             </list>
@@ -224,7 +222,7 @@
                                                                 <!--该隐藏按钮最终提交-->
                                                                 <bean id="hidden-save"  parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="保存"
-                                                                      p:methodToCall=""
+                                                                      p:methodToCall="save"
                                                                       p:additionalCssClasses="hidden-fields">
                                                                 </bean>
 

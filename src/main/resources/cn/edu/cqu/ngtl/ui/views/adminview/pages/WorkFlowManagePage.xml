@@ -153,8 +153,7 @@
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.RoleFinder"
-                                                                                          p:blankOption="true"/>
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.RoleFinder"/>
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:propertyName="functionId"
@@ -163,8 +162,7 @@
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"
-                                                                                          p:blankOption="true"/>
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"/>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>
@@ -224,7 +222,7 @@
                                                                 <!--该隐藏按钮最终提交-->
                                                                 <bean id="hidden-save"  parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="保存"
-                                                                      p:methodToCall=""
+                                                                      p:methodToCall="save"
                                                                       p:additionalCssClasses="hidden-fields">
                                                                 </bean>
 

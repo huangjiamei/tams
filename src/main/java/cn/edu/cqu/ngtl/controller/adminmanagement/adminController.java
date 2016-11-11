@@ -1021,10 +1021,7 @@ public class adminController extends UifControllerBase {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         Gson gson = new Gson();
 
-        String roleFunctionId = "1";
-        RelationTable rt = taConverter.workflowStatusRtoJson(
-                adminService.getWorkflowStatusRelationByRoleFunctionId(roleFunctionId)
-        );
+        RelationTable rt = new RelationTable("default");
 
         String json = gson.toJson(rt);
 
@@ -1057,6 +1054,32 @@ public class adminController extends UifControllerBase {
         String json = gson.toJson(rt);
 
         infoForm.setWorkflowRelationTable(json);
+
+        return this.getModelAndView(infoForm, "pageWorkFlowManage");
+    }
+
+    /**
+     * 工作流保存
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=save")
+    public ModelAndView save(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+
+        String json = infoForm.getWorkflowRelationTable();
+        Gson gson = new Gson();
+        RelationTable rt = gson.fromJson(json, RelationTable.class);
+
+        /*RelationTable rt = taConverter.workflowStatusRtoJson(
+                adminService.getWorkflowStatusRelationByRoleFunctionId(
+                        adminService.getRoleFunctionIdByRoleIdAndFunctionId(
+                                infoForm.getRoleId(),
+                                infoForm.getFunctionId()
+                        )
+                )
+        );*/
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }

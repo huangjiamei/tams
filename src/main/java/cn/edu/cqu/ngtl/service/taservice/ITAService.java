@@ -24,5 +24,5 @@ public interface ITAService {
 
     List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
 
-    boolean recoverBatchByIds(List<String> ids, String status);
+    boolean changeStatusBatchByIds(List<String> ids, String status);
 }

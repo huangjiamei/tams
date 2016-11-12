@@ -97,7 +97,7 @@ public class TAServiceimpl implements ITAService {
     }
 
     @Override
-    public boolean recoverBatchByIds(List<String> ids, String status) {
+    public boolean changeStatusBatchByIds(List<String> ids, String status) {
         List<TAMSTa> tas = taDao.selectBatchByIds(ids);
 
         for(TAMSTa ta : tas) {

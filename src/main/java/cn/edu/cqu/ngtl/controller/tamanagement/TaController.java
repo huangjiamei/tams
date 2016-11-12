@@ -80,7 +80,10 @@ public class TaController extends UifControllerBase {
                 checkedList.add(per);
         }
 
-        boolean result = this.changeStatus(checkedList, TA_STATUS.LIVING);
+        boolean result = taService.changeStatusBatchByIds(
+                taConverter.extractIdsFromTaInfo(checkedList),
+                TA_STATUS.LIVING
+        );
 
         if(result)
             return this.getTaListPage(form, request);
@@ -107,29 +110,15 @@ public class TaController extends UifControllerBase {
                 checkedList.add(per);
         }
 
-        boolean result = this.changeStatus(taList, TA_STATUS.PAUSED);
+        boolean result = taService.changeStatusBatchByIds(
+                taConverter.extractIdsFromTaInfo(checkedList),
+                TA_STATUS.PAUSED
+        );
 
         if(result)
             return this.getTaListPage(form, request);
         else
             return this.getTaListPage(form, request); //应该返回错误信息
-    }
-
-    /**
-     * 修改状态的通用函数
-     * @param status
-     * @return
-     */
-    public boolean changeStatus(List<TaInfoViewObject> checkedlist, String status) {
-
-        boolean result;
-
-        result = taService.recoverBatchByIds(
-                taConverter.extractIdsFromTaInfo(checkedlist),
-                status
-        );
-
-        return result;
     }
 
     /**

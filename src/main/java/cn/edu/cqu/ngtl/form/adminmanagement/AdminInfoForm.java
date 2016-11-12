@@ -23,14 +23,24 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private static final long serialVersionUID = -1974217788100313751L;
 
     /**
+     * 工作流管理页面相关
+     */
+
+    private String roleId;
+
+    private String functionId;
+
+    private String workflowRelationTable;
+
+    /**
      * 经费管理页面
      */
 
     private String pieChartsNameValuePairs;
 
-    private String workflowRelationTable;
-
     private List<SessionFundingViewObject> sessionFundings;
+
+    private List<SessionFundingViewObject> previousSessionFundings;
 
     /**
      * 批次管理页面
@@ -109,6 +119,30 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getFunctionId() {
+        return functionId;
+    }
+
+    public void setFunctionId(String functionId) {
+        this.functionId = functionId;
+    }
+
+    public List<SessionFundingViewObject> getPreviousSessionFundings() {
+        return previousSessionFundings;
+    }
+
+    public void setPreviousSessionFundings(List<SessionFundingViewObject> previousSessionFundings) {
+        this.previousSessionFundings = previousSessionFundings;
+    }
 
     public String getWorkflowRelationTable() {
         return workflowRelationTable;

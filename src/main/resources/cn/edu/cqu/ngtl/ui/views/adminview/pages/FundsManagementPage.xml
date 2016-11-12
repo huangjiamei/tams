@@ -383,18 +383,18 @@
                                                                                                         </property>
                                                                                                     </bean>
 
-                                                                                                    <!--注意，不能直接加additionalCss，这样会给table外层的div加css-->
-                                                                                                    <!--应该使用p:layoutManager.cssClasses="xxx"-->
-                                                                                                    <!--学院历史经费的表格-->
-                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection">
-                                                                                                        <property name="collectionObjectClass"
-                                                                                                                  value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                                                        <property name="propertyName"
-                                                                                                                  value="collection"/>
-                                                                                                        <property name="layoutManager.renderSequenceField"
-                                                                                                                  value="false"/>
-                                                                                                        <property name="layoutManager.richTable.render"
-                                                                                                                  value="false"/>
+                                                                                        <!--注意，不能直接加additionalCss，这样会给table外层的div加css-->
+                                                                                        <!--应该使用p:layoutManager.cssClasses="xxx"-->
+                                                                                        <!--学院历史经费的表格-->
+                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                            <property name="collectionObjectClass"
+                                                                                                    value="cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject"/>
+                                                                                            <property name="propertyName"
+                                                                                                    value="previousSessionFundings"/>
+                                                                                            <property name="layoutManager.renderSequenceField"
+                                                                                                    value="false"/>
+                                                                                            <property name="layoutManager.richTable.render"
+                                                                                                    value="false"/>
 
                                                                                                         <property name="useServerPaging"
                                                                                                                   value="true"/>
@@ -410,48 +410,47 @@
                                                                                                         <property name="disclosure.render"
                                                                                                                   value="false"/>
 
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="批次"
-                                                                                                                      p:propertyName="field0"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="预算经费"
-                                                                                                                      p:propertyName="field1"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="申报经费"
-                                                                                                                      p:propertyName="field2"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="批准经费"
-                                                                                                                      p:propertyName="field3"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="追加经费"
-                                                                                                                      p:propertyName="field4"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="奖励经费"
-                                                                                                                      p:propertyName="field5"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="总经费"
-                                                                                                                      p:propertyName="field4"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批次"
+                                                                                                          p:propertyName="sessionName"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="预算经费"
+                                                                                                          p:propertyName="planFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="申报经费"
+                                                                                                          p:propertyName="applyFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="批准经费"
+                                                                                                          p:propertyName="actualFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="追加经费"
+                                                                                                          p:propertyName="phdFunding"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="奖励经费"
+                                                                                                          p:propertyName="bonus"
+                                                                                                          p:sortAs="numeric"/>
+                                                                                                    <bean parent="Uif-DataField"
+                                                                                                          p:label="总经费"
+                                                                                                          p:propertyName="total"
+                                                                                                          p:sortAs="numeric"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        </list>
-                                                                            </property>
+                                                                                    </list>
+                                                                                </property>
                                                                             </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                                 <!--第二页tab-->
                                                                 <bean parent="Uif-VerticalBoxSection"
                                                                       p:headerText="学院经费">
@@ -1443,5 +1442,4 @@
             </list>
         </property>
     </bean>
-
 </beans>

@@ -1,7 +1,7 @@
-package cn.edu.cqu.ngtl.optionfinder.classView;
+package cn.edu.cqu.ngtl.optionfinder.adminview;
 
-import cn.edu.cqu.ngtl.dao.cm.impl.CMCourseClassificationDaoJpa;
-import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_T_DaoJpa;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.KeyValuesBase;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tangjing on 16-11-5.
+ * Created by tangjing on 16-11-10.
  */
-public class courseClassificationFinder extends KeyValuesBase {
+public class RoleFinder extends KeyValuesBase {
     /**
      * 开启blankOption后默认option为空，否则为option1
      */
@@ -25,10 +25,10 @@ public class courseClassificationFinder extends KeyValuesBase {
             keyValues.add(new ConcreteKeyValue("", ""));
         }
 
-        List<CMCourseClassification> classifications = new CMCourseClassificationDaoJpa().selectAll();
+        List<KRIM_ROLE_T> roles= new KRIM_ROLE_T_DaoJpa().getAllKrimRoleTs();
 
-        for(CMCourseClassification classification : classifications) {
-            keyValues.add(new ConcreteKeyValue(classification.getId().toString(), classification.getName()));
+        for(KRIM_ROLE_T role : roles) {
+            keyValues.add(new ConcreteKeyValue(role.getId(), role.getName()));
         }
 
         return keyValues;

@@ -7,6 +7,7 @@
 package cn.edu.cqu.ngtl.dataobject.ut;
 
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.tools.converter.UnitimeDayOfWeekConverter;
 import cn.edu.cqu.ngtl.tools.converter.UnitimeTimeSlotConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
@@ -68,6 +69,10 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@OrderBy("id")
 	private List<UTInstructor> utInstructors;
 
+
+    @OneToMany(mappedBy="utClass" )
+    private List<TAMSClassEvaluation> evaluations;
+
     @Transient
     private CMProgramCourse programCourse;
 
@@ -84,6 +89,10 @@ public class UTClass extends DataObjectBase implements Serializable {
 	/** 最小开课人数 */
 	@Column(name = "MIN_PER_WK")
 	private Integer minPerWeek;
+
+
+    @OrderBy(value="id")
+    private List<UTSubpart> subparts;
 
     public CMProgramCourse getProgramCourse() {
         return programCourse;
@@ -203,5 +212,21 @@ public class UTClass extends DataObjectBase implements Serializable {
 
     public void setClassNumber(String classNumber) {
         this.classNumber = classNumber;
+    }
+
+    public List<TAMSClassEvaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setEvaluations(List<TAMSClassEvaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
+
+    public List<UTSubpart> getSubparts() {
+        return subparts;
+    }
+
+    public void setSubparts(List<UTSubpart> subparts) {
+        this.subparts = subparts;
     }
 }

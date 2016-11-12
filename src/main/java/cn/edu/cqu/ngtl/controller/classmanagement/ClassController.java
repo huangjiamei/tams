@@ -119,7 +119,7 @@ public class ClassController extends UifControllerBase {
                                        HttpServletRequest request) {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String stuId = userSession.getLoggedInUserPrincipalId();
-        //TODO
+        //FIXME  不能写死
         stuId = "20131840";
 
         Integer classId = 290739;

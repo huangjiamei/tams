@@ -40,10 +40,11 @@ function initNavDialog() {
 
 
 
-var jsonObj = {"header":["编辑","待负责人审核","待学院审核","待学校审核","工作"],"data":[[{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}]]}
+//var jsonObj = {"header":["编辑","待负责人审核","待学院审核","待学校审核","工作"],"data":[[{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false},{"checked":false,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":true,"disabled":false}],[{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false},{"checked":false,"disabled":false}]]}
 
-function drawStatusTransTable(boxid){
+function drawStatusTransTable(boxid,tableJson){
 
+    var jsonObj = eval('('+tableJson+')');
     var tbl = document.createElement("table");
     var tbody = document.createElement("tbody");
     tbl.className+="table table-striped table-bordered table-hover ";
@@ -93,14 +94,16 @@ function drawStatusTransTable(boxid){
 }
 
 function save() {
-    var tmp_header=[];
-    var tmp_data=[];
-    var tbl = document.getElementById(status).getElementsByTagName('tbody')[0];
+    var tableTransObj = {
+        "header":[],
+        "data":[]
+    };
+    var tbl = document.getElementById('status').getElementsByTagName('tbody')[0];
     var rows = tbl.childNodes;
     var head = rows[0].childNodes;
     for(var i=1;i<head.length;i++)
     {
-        tmp_header[i-1] = head[i].innerHTML;
+        tableTransObj.header[i-1] = head[i].innerHTML;
     }
 
     for(var i=1;i<head.length;i++)
@@ -109,14 +112,17 @@ function save() {
         var row = rows[i].childNodes;
         for(var j=1;j<head.length;j++)
         {
+            row_data[j-1]={
+                "checked":null,
+                "disabled":null
+            }
             row_data[j-1].checked = row[j].childNodes[0].checked;
             row_data[j-1].disabled = row[j].childNodes[0].disabled;
         }
-        tmp_data[i-1]=row_data;
+        tableTransObj.data[i-1]=row_data;
     }
-    jsonObj.header = tmp_header;
-    jsonObj.data = tmp_data;
-
+    document.getElementById('hidden-statusTrans').getElementsByTagName('textarea')[0].innerHTML = JSON.stringify(tableTransObj);
+   jQuery("#hidden-save").click();
 
 }
 
@@ -129,7 +135,7 @@ function save() {
  * @param chartId
  */
 function getPieChart(chartId,title,data) {
-    data = eval(data);
+    data = JSON.parse(data);
 
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
@@ -252,6 +258,7 @@ function getBarChart(chartId,title,data) {
     });
 
 }
+
 /**
  * 该函数可统一地将表格外的过滤器移动到表格内，隐藏搜索按钮，
  * 为所有过滤器添加按下搜索按钮事件（select添加onchange，input添加keydown）
@@ -321,3 +328,4 @@ function refreshTableFilter(searchbox,tablebox) {
 function initContentHeader(id,icon,bigTitle,smallTitle) {
     jQuery('#'+id).html('<h2> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h2>');
 }
+

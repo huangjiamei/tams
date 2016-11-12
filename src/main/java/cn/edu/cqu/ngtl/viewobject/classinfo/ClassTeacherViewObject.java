@@ -22,6 +22,8 @@ public class ClassTeacherViewObject {
 
     private String instructorName;
 
+    private String status;
+
     /**
      * 暂时缺失的参数
      */
@@ -31,7 +33,7 @@ public class ClassTeacherViewObject {
 
     private String protocalAssistantNumber;
 
-    private String judgeStatus;
+
 
     private String studentCounts;
 
@@ -100,7 +102,7 @@ public class ClassTeacherViewObject {
         contents[15]=getDepartmentName();
         contents[16]=getCourseName();
         contents[17]=getCourseCode();
-
+        contents[18]=getStatus();
         return contents;
     }
 
@@ -184,12 +186,12 @@ public class ClassTeacherViewObject {
         this.protocalAssistantNumber = protocalAssistantNumber;
     }
 
-    public String getJudgeStatus() {
-        return judgeStatus;
+    public String getStatus() {
+        return status;
     }
 
-    public void setJudgeStatus(String judgeStatus) {
-        this.judgeStatus = judgeStatus;
+    public void setStatus(String judgeStatus) {
+        this.status = status;
     }
 
     public String getStudentCounts() {

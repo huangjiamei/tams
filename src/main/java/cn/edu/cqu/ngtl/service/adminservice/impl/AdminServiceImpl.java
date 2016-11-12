@@ -42,6 +42,9 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
 
+    @Autowired
+    private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
+
     @Override
     public List<CMCourseClassification> getAllClassification() {
         List<CMCourseClassification> courseClassifications = courseClassificationDao.selectAll();
@@ -207,16 +210,33 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public List<TAMSDeptFunding> getAllFundingBySession() {
+    public List<TAMSDeptFunding> getCurrFundingBySession() {
 
-        return deptFundingDao.selectAllBySession();
+        return deptFundingDao.selectCurrBySession();
+
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getPreviousFundingBySession() {
+
+        return deptFundingDao.selectPreBySession();
 
     }
 
     @Override
     public List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId) {
+        if(roleFunctionId == null)
+            return null;
 
         return workflowStatusRDao.selectByRFId(roleFunctionId);
 
+    }
+
+    @Override
+    public String getRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId) {
+        if(roleId == null || functionId == null)
+            return null;
+
+        return workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
     }
 }

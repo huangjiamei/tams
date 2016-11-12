@@ -57,7 +57,7 @@
                 <value>js/highcharts/highcharts.js</value>
                 <value>js/highcharts/modules/exporting.js</value>
                 <value>js/highcharts/modules/data.js</value>
-
+                <value>js/json2.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>

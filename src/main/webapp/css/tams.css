@@ -433,6 +433,16 @@ body{
 
 }
 
+
+.uif-disclosure .table > thead > tr > th,
+.uif-disclosure .table > tbody > tr > th,
+.uif-disclosure .table > tfoot > tr > th,
+.uif-disclosure .table > thead > tr > td,
+.uif-disclosure .table > tbody > tr > td,
+.uif-disclosure .table > tfoot > tr > td{
+    white-space:nowrap;
+}
+
 .table-condensed > thead > tr > th,
 .table-condensed > tbody > tr > th,
 .table-condensed > tfoot > tr > th,

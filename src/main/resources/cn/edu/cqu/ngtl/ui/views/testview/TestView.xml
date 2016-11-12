@@ -52,7 +52,7 @@
                 <value>ueditor/themes/iframe.css</value>
                 <value>ueditor/third-party/codemirror/codemirror.css</value>
                 <value>ueditor/themes/default/css/ueditor.min.css</value>
-                <value>js/json2.js</value>
+                <value>css/combo.select.css</value>
 
 
                 <value>css/tams.css</value>
@@ -66,11 +66,12 @@
                 <value>ueditor/ueditor.config.js</value>
                 <value>ueditor/ueditor.all.min.js</value>
                 <value>ueditor/lang/zh-cn/zh-cn.js</value>
-
+                <value>js/json2.js</value>
                 <value>js/highcharts/highcharts.js</value>
                 <value>js/highcharts/modules/exporting.js</value>
                 <value>js/highcharts/modules/data.js</value>
                 <value>js/tams.js</value>
+                <value>js/jquery.combo.select.js</value>
             </list>
         </property>
 

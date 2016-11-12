@@ -84,7 +84,8 @@ jQuery.fn.contextPopup = function(menuData) {
 
     // Cover rest of page with invisible div that when clicked will cancel the popup.
     var bg = jQuery('<div></div>')
-      .css({left:0, top:0, width:'100%', height:'100%', position:'absolute', zIndex:1000000})
+    //  fixme: height=100%可能会出现bg不够长不能覆盖整个页面的情况，临时解决方法是令height=10000%
+      .css({left:0, top:0, width:'100%', height:'10000%', position:'absolute', zIndex:1000000})
       .appendTo(document.body)
       .bind('contextmenu click', function() {
         // If click or right click anywhere else on page: remove clean up.

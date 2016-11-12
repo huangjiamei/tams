@@ -329,3 +329,20 @@ function initContentHeader(id,icon,bigTitle,smallTitle) {
     jQuery('#'+id).html('<h2> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h2>');
 }
 
+
+function initRightBtnMenu(targetid) {
+    jQuery('#'+targetid).contextPopup({
+        title: '',
+        items: [
+            {label:'添加',     icon:'icon-plus',             action:function() { alert('clicked 1') } },
+            // {label:'查看',     icon:'icon-search',              action:function() { alert('clicked 3') } },
+            null, // divider
+            {label:'选中',         icon:'icon-signup',         action:function() { alert('clicked 4') } },
+            null, // divider
+            {label:'查看',         icon:'icon-search',         action:function() { alert('clicked 4') } },
+            {label:'编辑', icon:'icon-pencil2',                action:function() { alert('clicked 2') } },
+            null, // divider
+            {label:'删除',       icon:'icon-remove2',           action:function() { alert('clicked 7') } },
+        ]
+    });
+}

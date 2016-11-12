@@ -48,8 +48,9 @@
             <list>
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
-                <value>css/tams.css</value>
                 <value>css/font-awesome.min.css</value>
+                <value>css/jquery.contextmenu.css</value>
+                <value>css/tams.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
@@ -57,6 +58,7 @@
                 <!--存放自定义js-->
                 <!--<value>scripts/exam_526.js</value>-->
                 <value>js/json2.js</value>
+                <value>js/jquery.contextmenu.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>

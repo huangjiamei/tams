@@ -54,6 +54,7 @@
         </property>
         <property name="additionalScriptFiles">
             <list>
+                <value>scripts/jquery.dataTables.min.js</value>
                 <value>js/highcharts/highcharts.js</value>
                 <value>js/highcharts/modules/exporting.js</value>
                 <value>js/highcharts/modules/data.js</value>

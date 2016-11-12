@@ -1,3 +1,42 @@
+/**
+ * 汉化datatable
+ */
+(function(){
+
+    var oLanguage={
+        "oAria": {
+            "sSortAscending": ": 升序排列",
+            "sSortDescending": ": 降序排列"
+        },
+        "oPaginate": {
+            "sFirst": "&laquo;",
+            "sLast": "&raquo;",
+            "sNext": "&rsaquo;",
+            "sPrevious": "&lsaquo;"
+        },
+        "sEmptyTable": "没有相关记录",
+        "sInfo": " _START_ - _END_/共_TOTAL_条数据",
+        "sInfoEmpty": "0-0/0 ",
+        "sInfoFiltered": "",
+        "sInfoPostFix": "",
+        "sDecimal": "",
+        "sInfoThousands": "",
+        "sLengthMenu": "每页显示_MENU_",
+        "sLoadingRecords": "正在载入...",
+        "sProcessing": "正在载入...",
+        "sSearch": "",
+        "sSearchPlaceholder": "",
+        "sUrl": "",
+        "sZeroRecords": "没有相关记录"
+    }
+
+    jQuery.fn.dataTable.defaults.oLanguage=oLanguage;
+    jQuery.extend( jQuery.fn.dataTable.defaults, {
+        "bSort": false,
+        "sPaginationType":"full_numbers",
+        //"sDom":"&lt;'top't&gt;&lt;'bottom'ilp&gt;" //自定义布局sdom，暂时没有生效
+    } );
+})();
 
 /**
  * 每次点击btn都会提交两次，
@@ -328,4 +367,6 @@ function refreshTableFilter(searchbox,tablebox) {
 function initContentHeader(id,icon,bigTitle,smallTitle) {
     jQuery('#'+id).html('<h2> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h2>');
 }
+
+
 

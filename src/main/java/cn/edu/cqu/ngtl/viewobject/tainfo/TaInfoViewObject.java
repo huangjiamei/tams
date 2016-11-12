@@ -5,6 +5,9 @@ package cn.edu.cqu.ngtl.viewobject.tainfo;
  */
 public class TaInfoViewObject {
 
+    //id用于和后台进行交互，不要把id用于前端显示
+    private String id;
+
     private boolean checkBox;
 
     private String courseName;
@@ -32,6 +35,24 @@ public class TaInfoViewObject {
     private String vitality;
 
     private String appraise;
+
+    private String status;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public boolean isCheckBox() {
         return checkBox;

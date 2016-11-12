@@ -100,13 +100,13 @@
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="恢复"
                                                                       p:actionImagePlacement="LEFT"
-                                                                      p:navigateToPageId="huifu"
+                                                                      p:methodToCall="recover"
                                                                       p:additionalCssClasses="bg-success tamsbtn">
                                                                 </bean>
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="暂停"
                                                                       p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="zanting"
+                                                                      p:methodToCall="pause"
                                                                       p:additionalCssClasses="bg-orange tamsbtn">
                                                                 </bean>
                                                                 <bean parent="Uif-HorizontalBoxSection"
@@ -169,6 +169,14 @@
                                                                                   p:propertyName="contactPhone"/>
                                                                             <bean parent="Uif-DataField" p:label="活跃度"
                                                                                   p:propertyName="vitality"/>
+                                                                            <bean parent="Uif-DataField" p:label="状态"
+                                                                                  p:propertyName="status"
+                                                                                  p:additionalCssClasses="bg-success tams-form-label"
+                                                                                  p:render="@{#line.status=='1'}"/>
+                                                                            <bean parent="Uif-DataField" p:label="状态"
+                                                                                  p:propertyName="status"
+                                                                                  p:additionalCssClasses="bg-orange tams-form-label"
+                                                                                  p:render="@{#line.status=='-1'}"/>
                                                                             <bean parent="Uif-DataField" p:label="评价"
                                                                                   p:propertyName="appraise"
                                                                                   p:onClickScript="alert('好评助教，需要换成js');"

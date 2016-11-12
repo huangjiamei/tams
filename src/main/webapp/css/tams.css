@@ -525,3 +525,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .search-filter{
 
 }
+
+.combo-select{
+    margin-bottom: 0px!important;
+}

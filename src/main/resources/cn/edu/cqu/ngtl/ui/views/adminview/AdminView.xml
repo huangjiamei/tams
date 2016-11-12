@@ -50,6 +50,7 @@
                 <value>css/AdminLTE.css</value>
                 <value>css/font-awesome.min.css</value>
                 <value>css/tams.css</value>
+                <value>css/combo.select.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
@@ -59,6 +60,7 @@
                 <value>js/highcharts/modules/data.js</value>
                 <value>js/json2.js</value>
                 <value>js/tams.js</value>
+                <value>js/jquery.combo.select.js</value>
             </list>
         </property>
 

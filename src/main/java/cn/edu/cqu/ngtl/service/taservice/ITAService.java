@@ -23,4 +23,6 @@ public interface ITAService {
     List<TAMSTa> getAllTaFilteredByUid(String uId);
 
     List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
+
+    boolean recoverBatchByIds(List<String> ids, String status);
 }

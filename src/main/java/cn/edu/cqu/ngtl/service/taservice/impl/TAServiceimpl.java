@@ -95,4 +95,18 @@ public class TAServiceimpl implements ITAService {
 
         return applicationDao.selectByClassId(classIds);
     }
+
+    @Override
+    public boolean recoverBatchByIds(List<String> ids, String status) {
+        List<TAMSTa> tas = taDao.selectBatchByIds(ids);
+
+        for(TAMSTa ta : tas) {
+            ta.setStatus(status);
+            //出现错误，跳出循环
+            if(!taDao.updateByEntity(ta))
+                return false;
+        }
+
+        return true;
+    }
 }

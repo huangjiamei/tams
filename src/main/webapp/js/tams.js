@@ -293,9 +293,11 @@ function refreshTableFilter(searchbox,tablebox) {
         th.append(searchFields[i]);
         tr.append(th);
 
+        var field = jQuery(searchFields[i]);
+        //alert(field.children()[0].tagName);
         //为输入框添加事件
-        if (jQuery(searchFields[i]).children()[0].tagName=='INPUT'){
-            jQuery(searchFields[i]).on(
+        if (field.children()[0].tagName=='INPUT'){
+            jQuery(field.children()[0]).on(
                 {keydown: function(e){
                     var key = e.which;
                     if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
@@ -306,9 +308,11 @@ function refreshTableFilter(searchbox,tablebox) {
             });
         }
         //为下拉框添加事件
-        if (jQuery(searchFields[i]).children()[0].tagName=='SELECT'){
-            jQuery(searchFields[i]).on('change', function () {
-
+        if (field.children()[0].tagName=='SELECT'){
+            jQuery(field.children()[0]).comboSelect();
+             // alert(field.tagName);
+            jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl ");
+            jQuery(field.children("select")[0]).on('change', function () {
                 jQuery(searchButton).click();
             } );
         }

@@ -312,7 +312,7 @@ function refreshTableFilter(searchbox,tablebox) {
             jQuery(field.children()[0]).comboSelect();
              // alert(field.tagName);
             jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl ");
-            jQuery(field.children("select")[0]).on('change', function () {
+            jQuery(field.find("select")[0]).on('change', function () {
                 jQuery(searchButton).click();
             } );
         }

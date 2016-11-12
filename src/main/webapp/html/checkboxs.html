@@ -1,0 +1,139 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<title>t</title> 
+	<meta name="description" content="Bootstrap Stacked or vertical Pills Based Navigation Example"/>
+	<link rel="stylesheet" href="../css/bootstrap.css">
+	<style type="text/css">
+        /**{padding:0;margin:0;}*/
+        /*caption{font-size:14px;font-weight:bold;}*/
+        /*table{ border-collapse:collapse;border:1px #525152 solid;width:50%;margin:0 auto;margin-top:100px;}*/
+        /*th,td{border:1px #525152 solid;text-align:center;font-size:12px;line-height:30px;}*/
+
+
+        /*模拟对角线*/
+        .out{
+            border-top:40px #dddddd solid;/*上边框宽度等于表格第一行行高*/
+            width:0px;/*让容器宽度为0*/
+            height:0px;/*让容器高度为0*/
+            border-left:80px #BDBABD solid;/*左边框宽度等于表格第一行第一格宽度*/
+            position:relative;/*让里面的两个子容器绝对定位*/
+        }
+        b{font-style:normal;display:block;position:absolute;top:-40px;left:-40px;width:35px;}
+        em{font-style:normal;display:block;position:absolute;top:-25px;left:-70px;width:55px;}
+
+
+    </style>
+
+	<script  type="text/javascript" src="js/jquery-2.2.3.min.js"></script> 
+	<script  type="text/javascript" src="js/bootstrap.js"></script> 
+	<script  type="text/javascript" src="js/test.js"></script> 
+	<script type="text/javascript">
+
+
+	var jsonObj =  {
+			header:["aa","bb","cc","dd"],
+
+			data:[
+				[1,0,0,1],
+				[1,1,0,1],
+				[1,0,0,1],
+				[1,1,0,1]
+			]
+		}
+		
+		function drawTable(){
+			
+
+			var tbl = document.createElement("table");
+			var tbody = document.createElement("tbody");
+			tbl.className+="table  table-striped table-bordered table-hover ";
+
+			var thead = document.createElement("tr");
+
+			var topleft = document.createElement("th");
+			topleft.style="width:80px; padding: 0;";
+			topleft.innerHTML = "<div class=\"out\"> <b>类别</b>  <em>姓名</em> </div>";
+			
+			thead.appendChild(topleft);
+
+			for(var i=0;i<jsonObj.header.length;i++){
+
+				var header = document.createElement("th");
+				header.innerHTML = jsonObj.header[i];
+				thead.appendChild(header);
+
+			}
+			tbody.appendChild(thead);
+
+			for(var i=0;i<jsonObj.header.length;i++){
+
+				var row = document.createElement("tr");
+				var header = document.createElement("th");
+				header.innerHTML = jsonObj.header[i];
+				row.appendChild(header);
+
+				for(var j=0;j<jsonObj.header.length;j++){
+
+					var td = document.createElement("td");
+					var cb = document.createElement("input");
+					cb.type="checkbox";
+					if(jsonObj.data[i][j]){
+						cb.checked = true;
+					}
+					td.appendChild(cb);
+					
+					row.appendChild(td);
+
+				}
+				tbody.appendChild(row);
+			}
+			tbl.appendChild(tbody);
+			var box = document.getElementById('mytable');
+			box.appendChild(tbl);
+		}
+
+		function save() {
+			 var tmp_header=[];
+			 var tmp_data=[];
+			 var tbl = document.getElementsByTagName('tbody')[0];
+			 var rows = tbl.childNodes;
+			 var head = rows[0].childNodes;
+			 for(var i=1;i<head.length;i++)
+			 {
+			 	tmp_header[i-1] = head[i].innerHTML;
+			 }
+
+			  for(var i=1;i<head.length;i++)
+			 {
+			 	var row_data =[];
+			 	var row = rows[i].childNodes;
+			 	for(var j=1;j<head.length;j++)
+				{
+					row_data[j-1] = row[j].childNodes[0].checked?1:0;
+				}
+				tmp_data[i-1]=row_data;
+			 }
+			 jsonObj.header = tmp_header;
+			 jsonObj.data = tmp_data;
+			 drawTable();
+			// for(var i=1;i<tbl.)
+
+		}
+
+	</script>
+		
+	 
+	 
+</head>
+<body>
+	
+<div id="mytable" class="table-responsive">
+
+	 
+</div>
+
+	<input type="button" value="drawTable" onclick="drawTable();"/>
+	<input type="button" value="save" onclick="save();"/>
+</body>

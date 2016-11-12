@@ -1,7 +1,7 @@
-package cn.edu.cqu.ngtl.optionfinder.classView;
+package cn.edu.cqu.ngtl.optionfinder.adminview;
 
-import cn.edu.cqu.ngtl.dao.ut.impl.UTDepartmentDaoJpa;
-import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowFunctions;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.KeyValuesBase;
@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by tangjing on 16-11-4.
+ * Created by tangjing on 16-11-10.
  */
-public class departmentFinder extends KeyValuesBase {
+public class WorkflowFunctionFinder extends KeyValuesBase {
     /**
      * 开启blankOption后默认option为空，否则为option1
      */
@@ -25,10 +25,10 @@ public class departmentFinder extends KeyValuesBase {
             keyValues.add(new ConcreteKeyValue("", ""));
         }
 
-        List<UTDepartment> departments= new UTDepartmentDaoJpa().getAllUTDepartments();
+        List<TAMSWorkflowFunctions> functions = new TAMSWorkflowFunctionsDaoJpa().selectAll();
 
-        for(UTDepartment department : departments) {
-            keyValues.add(new ConcreteKeyValue(department.getId().toString(), department.getName()));
+        for(TAMSWorkflowFunctions function : functions) {
+            keyValues.add(new ConcreteKeyValue(function.getId(), function.getName()));
         }
 
         return keyValues;

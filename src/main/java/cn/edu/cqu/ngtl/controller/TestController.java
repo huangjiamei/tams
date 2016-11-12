@@ -37,44 +37,18 @@ public class TestController extends UifControllerBase {
         return this.getModelAndView(testForm, "pageTest");
     }
 
-     /* *********** 任务相关 *********** */
     /**
-     * 获取任务列表页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskListPage&viewId=TestView
+     * 测试editor页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=pageEditor&viewId=TestView
      * @param form
      * @return
      */
-    @RequestMapping(params = "methodToCall=getTaskListPage")
-    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = "methodToCall=pageEditor")
+    public ModelAndView getEditorPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
 
-        return this.getModelAndView(testForm, "pageTaskList");
+        return this.getModelAndView(testForm, "pageEditor");
     }
-
-    /**
-     * 任务详情页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
-
-    /**
-     * 获取添加任务页面
-     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getAddTaskPage&viewId=TestView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getAddTaskPage")
-    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageAddNewTask");
-    }
-
 
     /**
      * 此方法只处理editor的content，所以不能直接使用
@@ -115,6 +89,47 @@ public class TestController extends UifControllerBase {
             // TODO: 2016/10/21 存入数据库
         }
         // TODO: 2016/10/21 给前端返回处理结果
+    }
+
+
+
+
+     /* *********** 任务相关 *********** */
+    /**
+     * 获取任务列表页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskListPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskListPage")
+    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+
+        return this.getModelAndView(testForm, "pageTaskList");
+    }
+
+    /**
+     * 任务详情页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getTaskDetailPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaskDetailPage")
+    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageTaskDetail");
+    }
+
+    /**
+     * 获取添加任务页面
+     * 127.0.0.1:8080/tams/portal/mytest?methodToCall=getAddTaskPage&viewId=TestView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getAddTaskPage")
+    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TestForm testForm = (TestForm) form;
+        return this.getModelAndView(testForm, "pageAddNewTask");
     }
 
     @Override

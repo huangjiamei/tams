@@ -1,13 +1,16 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import org.kuali.rice.krad.bo.DataObjectBase;
+
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by liusijia on 2016/10/26.
  */
 @Entity
 @Table(name = "TAMS_TA_CATEGORY")
-public class TAMSTaCategory {
+public class TAMSTaCategory extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator = "tamsTaCategory")
@@ -19,6 +22,9 @@ public class TAMSTaCategory {
 
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @Column(name = "HOURLY_WAGE")
+    private String hourlyWage;
 
     public String getId() {
         return id;
@@ -42,5 +48,13 @@ public class TAMSTaCategory {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getHourlyWage() {
+        return hourlyWage;
+    }
+
+    public void setHourlyWage(String hourlyWage) {
+        this.hourlyWage = hourlyWage;
     }
 }

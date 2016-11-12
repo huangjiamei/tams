@@ -6,6 +6,8 @@
 
 package cn.edu.cqu.ngtl.dataobject.ut;
 
+import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.tools.converter.UnitimeDayOfWeekConverter;
 import cn.edu.cqu.ngtl.tools.converter.UnitimeTimeSlotConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
@@ -45,12 +47,10 @@ public class UTClass extends DataObjectBase implements Serializable {
 	private Integer datePatternId;
 
 	@Column(name = "ASSIGNMENT_DAY")
-	/** 等一个Converter */
 	@Convert(converter = UnitimeDayOfWeekConverter.class)
 	private String dayOfWeek;
 
 	@Column(name = "ASSIGNMENT_TIME")
-	/** 等一个Converter */
 	@Convert(converter = UnitimeTimeSlotConverter.class)
 	private String timeSlot;
 
@@ -69,6 +69,13 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@OrderBy("id")
 	private List<UTInstructor> utInstructors;
 
+
+    @OneToMany(mappedBy="utClass" )
+    private List<TAMSClassEvaluation> evaluations;
+
+    @Transient
+    private CMProgramCourse programCourse;
+
 	/**
 	 * 注：此链接方法和上一个链接方法作用一致，此方法使用ClassInstructor中间类做辅助
 	 * 两者取其一即可
@@ -82,6 +89,18 @@ public class UTClass extends DataObjectBase implements Serializable {
 	/** 最小开课人数 */
 	@Column(name = "MIN_PER_WK")
 	private Integer minPerWeek;
+
+
+    @OrderBy(value="id")
+    private List<UTSubpart> subparts;
+
+    public CMProgramCourse getProgramCourse() {
+        return programCourse;
+    }
+
+    public void setProgramCourse(CMProgramCourse programCourse) {
+        this.programCourse = programCourse;
+    }
 
     public Integer getId() {
         return id;
@@ -193,5 +212,21 @@ public class UTClass extends DataObjectBase implements Serializable {
 
     public void setClassNumber(String classNumber) {
         this.classNumber = classNumber;
+    }
+
+    public List<TAMSClassEvaluation> getEvaluations() {
+        return evaluations;
+    }
+
+    public void setEvaluations(List<TAMSClassEvaluation> evaluations) {
+        this.evaluations = evaluations;
+    }
+
+    public List<UTSubpart> getSubparts() {
+        return subparts;
+    }
+
+    public void setSubparts(List<UTSubpart> subparts) {
+        this.subparts = subparts;
     }
 }

@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
+import cn.edu.cqu.ngtl.dao.cm.CMProgramCourseDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
@@ -37,6 +39,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     private UTClassInstructorDao classInstructorDao;
 
     @Autowired
+    private CMProgramCourseDao programCourseDao;
+
+    @Autowired
     private TAMSTaDao taDao;
 
     @Override
@@ -44,13 +49,13 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         /** Access DataBase */
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
-        for (UTClassInformation perInformation : classInformations) {
+//        for (UTClassInformation perInformation : classInformations) {
 
             /** Access DataBase */
             /** 等待最新的性能解决方案    **/
             //CMProgramCourse programCourse = programCourseDao.selectByCourseId(clazz.getCourseId());
 
-        }
+//        }
 
         return classInformations;
     }
@@ -70,8 +75,11 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
-        
+
         //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
+        if(uId.equalsIgnoreCase("admin")){
+            return this.getAllClassesMappedByDepartment();   //FIXME 测试代码。需要删除
+        }
         if(userInfoService.isSysAdmin(uId))
             return this.getAllClassesMappedByDepartment();
         else if (userInfoService.isInstructor(uId)) {
@@ -83,6 +91,21 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
 
             return classInfoDao.selectBatchByIds(classIds);
+        }
+        return null;
+    }
+
+    @Override
+    public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
+        if(!userInfoService.isSysAdmin(uId)) {
+            /** Access DataBase */
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            return classInformations;
+        }
+        else if (userInfoService.isInstructor(uId)) {
+            //FIXME 按照教师ID去查课程信息
+            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+//            return classInfoDao.selectBatchByIds(classIds);
         }
         return null;
     }

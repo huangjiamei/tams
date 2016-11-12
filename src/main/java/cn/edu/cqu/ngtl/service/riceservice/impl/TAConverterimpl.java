@@ -1,17 +1,20 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -34,7 +37,7 @@ import java.util.List;
 @Service
 public class TAConverterimpl implements ITAConverter {
 
-    static final SimpleDateFormat inputFormat = new SimpleDateFormat("MM/dd/yyyy");
+    static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
     static final SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     @Autowired
@@ -42,6 +45,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSWorkflowStatusDao workflowStatusDao;
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
@@ -61,14 +67,14 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
-            viewObject.setCourseHour(information.getHour());
+            //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
-            viewObject.setCourseCredit(information.getCredit().toString());
-
+            //viewObject.setCourseCredit(information.getCredit().toString());
+            viewObject.setStatus(information.getStatus());
             //if (programCourse != null) {
-            viewObject.setCourseClassification("test");
-            viewObject.setIsRequired("必修");
-            viewObject.setProgramName("CS");
+           // viewObject.setCourseClassification("test");
+           // viewObject.setIsRequired("必修");
+          //  viewObject.setProgramName("CS");
             //}
             viewObjects.add(viewObject);
         }
@@ -244,6 +250,47 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
+    public List<ClassTeacherViewObject> classToViewObject(List<UTClass> informationlist) {
+        if(informationlist == null || informationlist.size() == 0)
+            return null;
+        List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
+
+        for (UTClass information : informationlist) {
+            ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
+
+            //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
+            viewObject.setId(information.getId());
+            viewObject.setInstructorName("test");
+            viewObject.setStudentCounts(information.getMinPerWeek().toString());
+
+            viewObject.setClassNumber(information.getClassNumber());
+
+            UTCourse course = information.getCourseOffering() != null ? information.getCourseOffering().getCourse() : null;
+            information.getCourseOffering().getSession().getYear();
+            if(course != null) {
+                viewObject.setSessionYear(information.getCourseOffering().getSession() != null ?
+                        information.getCourseOffering().getSession().getYear() : null);
+
+                viewObject.setDepartmentName(course.getDepartment() != null ? course.getDepartment().getName() : null);
+                viewObject.setCourseName(course.getName());
+                viewObject.setCourseHour(course.getHour());
+                viewObject.setCourseCode(course.getCodeR());
+                viewObject.setCourseCredit(course.getCredit().toString());
+            }
+
+            CMProgramCourse programCourse = information.getProgramCourse();
+            if (programCourse != null) {
+                viewObject.setCourseClassification(programCourse.getClassification() != null ? programCourse.getClassification().getName() : null);
+                viewObject.setIsRequired(programCourse.getRequired() == 1 ? "必修" : "选修");
+                viewObject.setProgramName(programCourse.getProgram() != null ? programCourse.getProgram().getName() : null);
+            }
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
+    }
+
+    @Override
     public TAMSTaApplication submitInfoToTaApplication(ClassInfoForm form) {
         TAMSTaApplication application = new TAMSTaApplication();
 
@@ -407,5 +454,68 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return viewObjects;
+    }
+
+    @Override
+    public List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
+        List<SessionFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
+
+        for(TAMSDeptFunding deptFunding : allFundingBySession) {
+            SessionFundingViewObject viewObject = new SessionFundingViewObject();
+            viewObject.setBonus(deptFunding.getBonus());
+            viewObject.setApplyFunding(deptFunding.getApplyFunding());
+            viewObject.setPhdFunding(deptFunding.getPhdFunding());
+            viewObject.setActualFunding(deptFunding.getActualFunding());
+            viewObject.setPlanFunding(deptFunding.getPlanFunding());
+            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
+                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
+                    Integer.valueOf(deptFunding.getPlanFunding());
+            viewObject.setTotal(total.toString());
+            if(deptFunding.getSession() != null)
+                viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
+                        deptFunding.getSession().getTerm() + "季");
+
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    @Override
+    public RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelations) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+        //如果连header都没有返回完全的空
+        if(allStatus == null)
+            return null;
+
+        List<String> headers = new ArrayList<>(allStatus.size());
+        for(TAMSWorkflowStatus status : allStatus) {
+            headers.add(status.getWorkflowStatus());
+        }
+
+        CheckBoxStatus[][] matrix = new CheckBoxStatus[allStatus.size()][allStatus.size()];
+
+        int length = allStatus.size();
+        for(int i = 0 ; i < length; i++)
+            for(int j = 0 ; j <length; j++)
+                matrix[i][j] = new CheckBoxStatus();
+        //如果有header没数据则返回默认的全空
+        if(workflowStatusRelations == null || workflowStatusRelations.size() == 0) {
+            RelationTable rt = new RelationTable();
+            rt.setHeader(headers);
+            rt.setData(matrix);
+
+            return rt;
+        }
+
+        for(TAMSWorkflowStatusR workflowStatusR : workflowStatusRelations) {
+            int i = allStatus.indexOf(workflowStatusR.getStatus1());
+            int j = allStatus.indexOf(workflowStatusR.getStatus2());
+            matrix[i][j].setChecked(true);
+        }
+        RelationTable rt = new RelationTable();
+        rt.setHeader(headers);
+        rt.setData(matrix);
+
+        return rt;
     }
 }

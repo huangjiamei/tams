@@ -3,7 +3,9 @@ package cn.edu.cqu.ngtl.controller.tamanagement;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
@@ -28,6 +30,12 @@ public class TaController extends UifControllerBase {
 
     @Autowired
     private ITAService taService;
+
+    @RequestMapping(params = "methodToCall=logout")
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirctURL);
+    }
 
     /**
      * 获取助教列表页面(教师看到自己的助教，管理员看到所有人的助教)
@@ -74,11 +82,19 @@ public class TaController extends UifControllerBase {
     }
 
 
-    @RequestMapping(params = {"pageId=pageTaList", "methodToCall=getTaReviewPage"})
-    public ModelAndView getTaReviewPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    /**
+     * 获取助教考核表(教师给助教评分)
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaAppraisalPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=getTaAppraisalPage"}) /*"pageId=pageTaList",*/
+    public ModelAndView getTaAppraisalPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
 
-        return this.getModelAndView(taInfoForm, "pageReviewForTeacher");
+        // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
+
+        return this.getModelAndView(taInfoForm, "pageAppraisalForTeacher");
     }
 
     /**

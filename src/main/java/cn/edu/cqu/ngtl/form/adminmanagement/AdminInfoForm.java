@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 
 import java.io.Serializable;
@@ -20,6 +21,26 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
 
     private static final long serialVersionUID = -1974217788100313751L;
+
+    /**
+     * 工作流管理页面相关
+     */
+
+    private String roleId;
+
+    private String functionId;
+
+    private String workflowRelationTable;
+
+    /**
+     * 经费管理页面
+     */
+
+    private String pieChartsNameValuePairs;
+
+    private List<SessionFundingViewObject> sessionFundings;
+
+    private List<SessionFundingViewObject> previousSessionFundings;
 
     /**
      * 批次管理页面
@@ -105,7 +126,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
 
     /**
-     * 助教类别管理页面
+     * 助教类别/薪酬管理页面
      */
 
     private List<TAMSTaCategory> allTaCategories;
@@ -152,6 +173,54 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    public String getRoleId() {
+        return roleId;
+    }
+
+    public void setRoleId(String roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getFunctionId() {
+        return functionId;
+    }
+
+    public void setFunctionId(String functionId) {
+        this.functionId = functionId;
+    }
+
+    public List<SessionFundingViewObject> getPreviousSessionFundings() {
+        return previousSessionFundings;
+    }
+
+    public void setPreviousSessionFundings(List<SessionFundingViewObject> previousSessionFundings) {
+        this.previousSessionFundings = previousSessionFundings;
+    }
+
+    public String getWorkflowRelationTable() {
+        return workflowRelationTable;
+    }
+
+    public void setWorkflowRelationTable(String workflowRelationTable) {
+        this.workflowRelationTable = workflowRelationTable;
+    }
+
+    public List<SessionFundingViewObject> getSessionFundings() {
+        return sessionFundings;
+    }
+
+    public void setSessionFundings(List<SessionFundingViewObject> sessionFundings) {
+        this.sessionFundings = sessionFundings;
+    }
+
+    public String getPieChartsNameValuePairs() {
+        return pieChartsNameValuePairs;
+    }
+
+    public void setPieChartsNameValuePairs(String pieChartsNameValuePairs) {
+        this.pieChartsNameValuePairs = pieChartsNameValuePairs;
+    }
 
     public Integer getTermIndex() {
         return termIndex;

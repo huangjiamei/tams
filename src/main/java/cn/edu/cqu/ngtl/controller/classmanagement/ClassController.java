@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.form.TestForm;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
@@ -11,6 +10,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
+import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -27,7 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -46,6 +48,12 @@ public class ClassController extends UifControllerBase {
 
     @Autowired
     private ITAService taService;
+
+    @RequestMapping(params = "methodToCall=logout")
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
+        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirctURL);
+    }
 
     /**
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
@@ -111,7 +119,7 @@ public class ClassController extends UifControllerBase {
                                        HttpServletRequest request) {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String stuId = userSession.getLoggedInUserPrincipalId();
-        //TODO
+        //FIXME  不能写死
         stuId = "20131840";
 
         Integer classId = 290739;
@@ -137,19 +145,41 @@ public class ClassController extends UifControllerBase {
         return null;
     }
 
+    /**
+     * 根据条件查询班级列表
+     * @param form
+     * @return
+     */
 
-    // region # 暂时不可用的方法
+    @RequestMapping(params = "methodToCall=searchClassByCondition")
+    public ModelAndView searchClassByCondition(@ModelAttribute("KualiForm") UifFormBase form,
+                                               HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
 
-    @RequestMapping(params = "methodToCall=getTaskDetailPage")
-    public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageTaskDetail");
-    }
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        Map<String, String> conditions = new HashMap<>();
 
-    @RequestMapping(params = "methodToCall=getAddTaskPage")
-    public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TestForm testForm = (TestForm) form;
-        return this.getModelAndView(testForm, "pageAddNewTask");
+        //put conditions
+        conditions.put("ClassNumber", infoForm.getCondClassNumber());
+        conditions.put("DepartmentId", infoForm.getCondDepartmentName());
+        conditions.put("InstructorName", infoForm.getCondInstructorName());
+//        conditions.put("Year", infoForm.getCondSessionYear());
+//        conditions.put("IsRequired", infoForm.getCondIsRequired());
+//        conditions.put("ProgramId", infoForm.getCondProgramName());
+//        conditions.put("Classification", infoForm.getCondCourseClassification());
+        conditions.put("CourseName", infoForm.getCondCourseName());
+        conditions.put("CourseCode", infoForm.getCondCourseCode());
+//        conditions.put("CourseHour", infoForm.getCondCourseHour());
+//        conditions.put("CourseCredit", infoForm.getCondCourseCredit());
+
+        infoForm.setClassList(
+                taConverter.classInfoToViewObject(
+                        classInfoService.getAllClassesFilterByUidAndCondition(uId, conditions)
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageClassList");
     }
 
 

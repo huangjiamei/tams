@@ -1,15 +1,11 @@
 package cn.edu.cqu.ngtl.service.adminservice.impl;
 
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSIssueTypeDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
+import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +36,15 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSDeptFundingDao deptFundingDao;
+
+    @Autowired
+    private TAMSWorkflowStatusRDao workflowStatusRDao;
+
+    @Autowired
+    private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
 
     @Override
     public List<CMCourseClassification> getAllClassification() {
@@ -208,5 +213,36 @@ public class AdminServiceImpl implements IAdminService{
             return false;
 
         return sessionDao.deleteOneByEntity(session);
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getCurrFundingBySession() {
+
+        return deptFundingDao.selectCurrBySession();
+
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getPreviousFundingBySession() {
+
+        return deptFundingDao.selectPreBySession();
+
+    }
+
+    @Override
+    public List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId) {
+        if(roleFunctionId == null)
+            return null;
+
+        return workflowStatusRDao.selectByRFId(roleFunctionId);
+
+    }
+
+    @Override
+    public String getRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId) {
+        if(roleId == null || functionId == null)
+            return null;
+
+        return workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
     }
 }

@@ -48,8 +48,8 @@
             <list>
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
-                <value>css/tams.css</value>
                 <value>css/font-awesome.min.css</value>
+                <value>css/tams.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
@@ -57,7 +57,7 @@
                 <value>js/highcharts/highcharts.js</value>
                 <value>js/highcharts/modules/exporting.js</value>
                 <value>js/highcharts/modules/data.js</value>
-
+                <value>js/json2.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>
@@ -146,10 +146,24 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageFundsManagement" p:title="批次管理">
+                <bean parent="Uif-Page" p:id="pageFundsManagement" p:title="经费管理">
                     <property name="items">
                         <list>
                             <ref bean="FundsManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageTaReward" p:title="助教酬劳管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaRewardPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageWorkFlowManage" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="WorkFlowManagePage"/>
                         </list>
                     </property>
                 </bean>

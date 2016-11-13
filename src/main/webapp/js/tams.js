@@ -331,6 +331,7 @@ function initContentHeader(id,icon,bigTitle,smallTitle) {
 
 
 function initRightBtnMenu(targetid) {
+    // fixme 应该改成给tbody添加右键
     jQuery('#'+targetid).contextPopup({
         title: '',
         items: [

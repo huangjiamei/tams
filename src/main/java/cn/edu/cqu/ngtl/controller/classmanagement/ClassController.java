@@ -202,6 +202,10 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageRequestTa");
     }
 
+    /**
+     * 提交申请
+     *
+     * */
     @RequestMapping(params = "methodToCall=submitRequestTaPage")
     public ModelAndView submitRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
                                          HttpServletRequest request) {
@@ -209,37 +213,10 @@ public class ClassController extends UifControllerBase {
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
         List<ClassTeacherViewObject> classList=infoForm.getClassList();
-
+        //TODO 未完成
 
         return this.getModelAndView(infoForm, "pageRequestTa");
     }
-
-
-
-
-//     * pageId限定了只接受来自pageClassList的请求
-//     * 从classlist跳转到某个class对应的talss
-//     * @param form
-//     * @return
-//     */
-//    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getTaskListPage"})
-//    public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
-//        ClassInfoForm infoForm = (ClassInfoForm) form;
-//
-//        try {
-//            CollectionControllerServiceImpl.CollectionActionParameters params =
-//                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
-//            int index = params.getSelectedLineIndex();
-//
-////            TestObject object = infoForm.getClassList().get(index);
-//        } catch (Exception e) {
-//
-//        }
-//
-//        return this.getModelAndView(infoForm, "pageTaskList");
-//    }
-
-    // endregion
 
 
     /**

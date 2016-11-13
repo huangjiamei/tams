@@ -14,4 +14,8 @@ public interface TAMSTaDao {
     List<TAMSTa> selectByClassId(List<Object> classIds);
 
     List<Object> selectClassIdsByStudentId(String uId);
+
+    List<TAMSTa> selectBatchByIds(List<String> ids);
+
+    boolean updateByEntity(TAMSTa ta);
 }

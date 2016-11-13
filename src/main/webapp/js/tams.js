@@ -1,3 +1,42 @@
+/**
+ * 汉化datatable
+ */
+(function(){
+
+    var oLanguage={
+        "oAria": {
+            "sSortAscending": ": 升序排列",
+            "sSortDescending": ": 降序排列"
+        },
+        "oPaginate": {
+            "sFirst": "&laquo;",
+            "sLast": "&raquo;",
+            "sNext": "&rsaquo;",
+            "sPrevious": "&lsaquo;"
+        },
+        "sEmptyTable": "没有相关记录",
+        "sInfo": " _START_ - _END_/共_TOTAL_条数据",
+        "sInfoEmpty": "0-0/0 ",
+        "sInfoFiltered": "",
+        "sInfoPostFix": "",
+        "sDecimal": "",
+        "sInfoThousands": "",
+        "sLengthMenu": "每页显示_MENU_",
+        "sLoadingRecords": "正在载入...",
+        "sProcessing": "正在载入...",
+        "sSearch": "",
+        "sSearchPlaceholder": "",
+        "sUrl": "",
+        "sZeroRecords": "没有相关记录"
+    }
+
+    jQuery.fn.dataTable.defaults.oLanguage=oLanguage;
+    jQuery.extend( jQuery.fn.dataTable.defaults, {
+        "bSort": false,
+        "sPaginationType":"full_numbers",
+        //"sDom":"&lt;'top't&gt;&lt;'bottom'ilp&gt;" //自定义布局sdom，暂时没有生效
+    } );
+})();
 
 /**
  * 每次点击btn都会提交两次，
@@ -293,9 +332,11 @@ function refreshTableFilter(searchbox,tablebox) {
         th.append(searchFields[i]);
         tr.append(th);
 
+        var field = jQuery(searchFields[i]);
+        //alert(field.children()[0].tagName);
         //为输入框添加事件
-        if (jQuery(searchFields[i]).children()[0].tagName=='INPUT'){
-            jQuery(searchFields[i]).on(
+        if (field.children()[0].tagName=='INPUT'){
+            jQuery(field.children()[0]).on(
                 {keydown: function(e){
                     var key = e.which;
                     if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
@@ -306,9 +347,11 @@ function refreshTableFilter(searchbox,tablebox) {
             });
         }
         //为下拉框添加事件
-        if (jQuery(searchFields[i]).children()[0].tagName=='SELECT'){
-            jQuery(searchFields[i]).on('change', function () {
-
+        if (field.children()[0].tagName=='SELECT'){
+            jQuery(field.children()[0]).comboSelect();
+             // alert(field.tagName);
+            jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl ");
+            jQuery(field.find("select")[0]).on('change', function () {
                 jQuery(searchButton).click();
             } );
         }
@@ -347,3 +390,5 @@ function initRightBtnMenu(targetid) {
         ]
     });
 }
+
+

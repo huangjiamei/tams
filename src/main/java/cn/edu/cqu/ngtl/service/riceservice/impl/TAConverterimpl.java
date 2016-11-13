@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
@@ -475,6 +476,32 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
                         deptFunding.getSession().getTerm() + "季");
 
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    @Override
+    public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
+        List<DepartmentFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
+
+        for(TAMSDeptFunding deptFunding : allFundingBySession){
+            DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
+            viewObject.setBonus(deptFunding.getBonus());
+            viewObject.setApplyFunding(deptFunding.getApplyFunding());
+            viewObject.setPhdFunding(deptFunding.getPhdFunding());
+            viewObject.setActualFunding(deptFunding.getActualFunding());
+            viewObject.setPlanFunding(deptFunding.getPlanFunding());
+            viewObject.setDepartment(deptFunding.getDepartment().getName());
+            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
+                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
+                    Integer.valueOf(deptFunding.getPlanFunding());
+            viewObject.setTotal(total.toString());
+
+            if (deptFunding.getSession() != null ){
+                viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
+                        deptFunding.getSession().getTerm() + "季");
+            }
             viewObjects.add(viewObject);
         }
         return viewObjects;

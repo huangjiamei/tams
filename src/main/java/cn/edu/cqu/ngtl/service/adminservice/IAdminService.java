@@ -51,7 +51,9 @@ public interface IAdminService {
 
     List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId);
 
-    List<TAMSDeptFunding> getAcademyCurrFundingBySession();
-
     String getRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId);
+
+    List<TAMSDeptFunding> getDepartmentCurrFundingBySession();
+
+    List<TAMSDeptFunding> getDepartmentPreFundingBySession();
 }

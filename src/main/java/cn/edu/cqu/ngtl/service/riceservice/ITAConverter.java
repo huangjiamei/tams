@@ -56,4 +56,6 @@ public interface ITAConverter {
     RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelationByRoleFunctionId);
 
     List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
+
+    List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist);
 }

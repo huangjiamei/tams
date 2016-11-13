@@ -175,7 +175,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="row">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:propertyName="evaluateDetail" p:label="意见"

@@ -53,8 +53,13 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
-        if(informationlist == null || informationlist.size() == 0)
-            return null;
+        //没有数据的话返回一行空数据，否则表格消失
+        if(informationlist == null || informationlist.size() == 0) {
+            List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new ClassTeacherViewObject());
+            return nullObject;
+        }
+
         List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
 
         for (UTClassInformation information : informationlist) {
@@ -71,7 +76,7 @@ public class TAConverterimpl implements ITAConverter {
             //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
             //viewObject.setCourseCredit(information.getCredit().toString());
-
+            viewObject.setStatus(information.getStatus());
             //if (programCourse != null) {
            // viewObject.setCourseClassification("test");
            // viewObject.setIsRequired("必修");
@@ -390,6 +395,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
             }
 
+            viewObject.setId(ta.getId());
+            viewObject.setStatus(ta.getStatus());
+
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
@@ -544,5 +552,16 @@ public class TAConverterimpl implements ITAConverter {
         rt.setData(matrix);
 
         return rt;
+    }
+
+    @Override
+    public List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist) {
+        List<String> ids = new ArrayList<>();
+
+        for(TaInfoViewObject per : checkedlist) {
+            ids.add(per.getId());
+        }
+
+        return ids;
     }
 }

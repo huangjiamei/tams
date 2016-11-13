@@ -169,7 +169,7 @@
                                                         <property name="control">
                                                             <!-- 注意：下面这个input的id必定为{inputfieldid}_control-->
                                                             <bean parent="Uif-TextAreaControl"
-                                                                  p:style="height:0;visibility: hidden!important;"/>
+                                                                  p:style="height:0;display:none!important;"/>
                                                         </property>
                                                     </bean>
 

@@ -54,6 +54,28 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
     private UTSession curSession;
 
+    @Column(name = "STATUS")
+    private String status;
+
+    @Column(name = "PAY_DAY")
+    private String payDay;
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getPayDay() {
+        return payDay;
+    }
+
+    public void setPayDay(String payDay) {
+        this.payDay = payDay;
+    }
+
     public String getId() {
         return id;
     }

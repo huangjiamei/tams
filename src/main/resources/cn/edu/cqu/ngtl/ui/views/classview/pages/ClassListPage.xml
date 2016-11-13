@@ -314,11 +314,10 @@
                                                                             <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"
                                                                                   p:sortAs="kuali_date"/>
                                                                             <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
-                                                                         <!--   <bean parent="Uif-DataField" p:label="耗费工时"
+                                                                            <bean parent="Uif-DataField" p:label="耗费工时"
                                                                                   p:propertyName="workTime"/>
+                                                                            <bean parent="Uif-DataField" p:label="状态" p:propertyName="status"/>
 
-                                                                            <bean parent="Uif-DataField" p:label="状态" p:propertyName="judgeStatus"/>
--->
 
                                                                         </list>
                                                                     </property>

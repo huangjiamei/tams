@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
@@ -53,6 +54,8 @@ public interface ITAConverter {
     List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
 
     RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelationByRoleFunctionId);
+
+    List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
 
     List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist);
 }

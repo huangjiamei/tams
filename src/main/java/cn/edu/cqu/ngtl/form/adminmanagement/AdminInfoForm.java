@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 
@@ -41,6 +42,11 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<SessionFundingViewObject> sessionFundings;
 
     private List<SessionFundingViewObject> previousSessionFundings;
+
+    private List<DepartmentFundingViewObject> departmentCurrFundings;
+
+    private List<DepartmentFundingViewObject> departmentPreFundings;
+
 
     /**
      * 批次管理页面
@@ -142,6 +148,20 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setPreviousSessionFundings(List<SessionFundingViewObject> previousSessionFundings) {
         this.previousSessionFundings = previousSessionFundings;
+    }
+
+    public List<DepartmentFundingViewObject> getDepartmentCurrFundings() { return departmentCurrFundings;}
+
+    public void setDepartmentCurrFundings(List<DepartmentFundingViewObject> departmentCurrFundings) {
+        this.departmentCurrFundings = departmentCurrFundings;
+    }
+
+    public List<DepartmentFundingViewObject> getDepartmentPreFundings() {
+        return departmentPreFundings;
+    }
+
+    public void setDepartmentPreFundings(List<DepartmentFundingViewObject> departmentPreFundings) {
+        this.departmentPreFundings = departmentPreFundings;
     }
 
     public String getWorkflowRelationTable() {
@@ -447,5 +467,4 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setCourseClassificationIndex(Integer courseClassificationIndex) {
         this.courseClassificationIndex = courseClassificationIndex;
     }
-
 }

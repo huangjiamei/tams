@@ -21,8 +21,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /*
     班级管理隐藏搜索框
      */
+
     String condDepartmentName;
     String condCourseName;
+    String hintCourseName = "{[\"C++\",\"编译原理\",\"操作系统\"]}";
     String condCourseCode;
     String condClassNumber;
     String condInstructorName;
@@ -58,6 +60,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCondCourseCode(String condCourseCode) {
         this.condCourseCode = condCourseCode;
+    }
+
+    public String getHintCourseName() {
+        return hintCourseName;
+    }
+
+    public void setHintCourseName(String hintCourseName) {
+        this.hintCourseName = hintCourseName;
     }
 
     public void setCondClassNumber(String condClassNumber) {

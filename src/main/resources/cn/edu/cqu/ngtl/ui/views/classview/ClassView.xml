@@ -48,17 +48,21 @@
             <list>
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
-                <value>css/tams.css</value>
                 <value>css/combo.select.css</value>
+                <value>css/jquery-ui.min.css</value>
                 <value>css/font-awesome.min.css</value>
+                <value>css/jquery.contextmenu.css</value>
+                <value>css/tams.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <value>scripts/jquery.dataTables.min.js</value>
+                <value>js/jquery.dataTables.min.js</value>
                 <value>js/jquery.combo.select.js</value>
+                <value>js/jquery-ui.min.js</value>
                 <value>js/json2.js</value>
+                <value>js/jquery.contextmenu.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>

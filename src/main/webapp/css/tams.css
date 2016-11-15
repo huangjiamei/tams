@@ -369,9 +369,16 @@ body{
 
 }
 .breadcrumb {
-    padding-right:0px!important;
-    margin-right:0px!important;
+    padding-right: 0px!important;
+    margin: 0px!important;
+    padding-left: 0px!important;
 
+}
+@media (max-width:991px) {
+    .breadcrumb {
+        padding: 0px!important;
+        margin: 0px!important;
+    }
 }
 .breadcrumb > li + li:before {
     content: ">\00a0"!important;
@@ -526,6 +533,15 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 }
 
+.column-filter{
+    min-width: 60px!important;
+}
+
+
 .combo-select{
     margin-bottom: 0px!important;
+}
+/*修复下拉输入框移动端显示两个下拉列表的问题*/
+.combo-select select {
+    display: none !important;
 }

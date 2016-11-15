@@ -282,7 +282,7 @@
                                                                 <bean id="ClassListPageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="20"
-                                                                      p:onDocumentReadyScript = 'refreshTableFilter(searchFields,ClassListPageTable)'>
+                                                                      p:onDocumentReadyScript = "refreshTableFilter(searchFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable')">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>

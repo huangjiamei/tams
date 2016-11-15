@@ -541,3 +541,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .combo-select{
     margin-bottom: 0px!important;
 }
+/*修复下拉输入框移动端显示两个下拉列表的问题*/
+.combo-select select {
+    display: none !important;
+}

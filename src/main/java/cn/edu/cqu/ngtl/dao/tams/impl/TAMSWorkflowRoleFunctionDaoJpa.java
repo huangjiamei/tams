@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowRoleFunction;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +32,11 @@ public class TAMSWorkflowRoleFunctionDaoJpa implements TAMSWorkflowRoleFunctionD
         );
         TAMSWorkflowRoleFunction roleFunction = qr.getResults() != null && qr.getResults().size() != 0 ? qr.getResults().get(0) : null;
         return roleFunction != null ? roleFunction.getId() : null;
+    }
+
+    @Override
+    public boolean setRoleFunction(TAMSWorkflowRoleFunction dataTAMSWorkflowRoleFunction)
+    {
+        return (KRADServiceLocator.getDataObjectService().save(dataTAMSWorkflowRoleFunction) != null);
     }
 }

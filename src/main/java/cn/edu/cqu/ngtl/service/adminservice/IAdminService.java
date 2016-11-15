@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.service.adminservice;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 
 import java.util.List;
 
@@ -52,4 +53,8 @@ public interface IAdminService {
     List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId);
 
     String getRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId);
+
+    String setRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId);
+
+    void setWorkflowStatusRelationByRoleFunctionId(String rfId, RelationTable rt);
 }

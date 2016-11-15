@@ -131,7 +131,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="  "
-                                                                                  p:propertyName="check1">
+                                                                                  p:propertyName="checked">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

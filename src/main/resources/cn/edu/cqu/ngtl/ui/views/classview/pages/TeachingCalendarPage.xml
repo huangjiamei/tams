@@ -31,7 +31,7 @@
                            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <bean id="ClassListPage" parent="Uif-VerticalBoxSection"
+    <bean id="TeachingCalendarPage" parent="Uif-VerticalBoxSection"
           p:additionalCssClasses="container" >
         <property name="items">
             <list>
@@ -41,7 +41,7 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="课程"/>
+                            <bean parent="Uif-HeaderThree" p:headerText="教学日历"/>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -60,7 +60,10 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="2" p:value="课程"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
+                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                  p:location.methodToCall="getClassListPage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="教学日历"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -72,101 +75,6 @@
                         </list>
                     </property>
                 </bean>
-
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                    <property name="items">
-                        <list>
-
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6">
-                                <property name="items"  >
-                                    <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Message" p:messageText="d"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Image" p:additionalCssClasses="photo"
-                                                                      p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                </list>
-                                            </property>
-                                        </bean>
-
-
-                                    </list>
-                                </property>
-                            </bean>
-
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Message" p:messageText="Default Message"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Image" p:additionalCssClasses="photo"
-                                                                      p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
-
-
-                <!--隐藏输入中转站-->
-                <!--<bean id="SearchCondContainer" parent="Uif-HorizontalBoxSection"-->
-                      <!--p:style="display:none">-->
-                    <!--<property name="items">-->
-                        <!--<list>-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condDepartmentName" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condCourseName" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condCourseCode" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condClassNumber" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condInstructorName" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condWorkTime" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condAllowance" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condProtocalAssistantNumber" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condJudgeStatus" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condCourseHour" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condCourseCredit" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condIsRequired" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condCourseClassification" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condSessionYear" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condProgramName" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condStudentCounts" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condClassCounts" />-->
-                            <!--<bean parent="Uif-InputField" p:propertyName="condInstructorCounts" />-->
-                            <!--<bean id="ClassSearchButton" parent="Uif-PrimaryActionButton"-->
-                                  <!--p:actionLabel="搜索" p:methodToCall="" p:refreshId="ClassListPage" />-->
-                        <!--</list>-->
-                    <!--</property>-->
-                <!--</bean>-->
 
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
@@ -183,44 +91,32 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="课程"
+                                                                <bean parent="Uif-MessageField" p:messageText="教学日历"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
-                                                                      p:methodToCall="exportApplicantPhoto"
-                                                                      p:style="float:right!important;font-size:14px;margin-right: 10px;background=orange!important;"
-                                                                      p:additionalCssClasses="bg-orange"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
-                                                                      p:methodToCall="exportClassListExcel"
-                                                                      p:style="float:right!important;font-size:14px; margin-right: 10px;background=forestgreen!important;"
-                                                                      p:additionalCssClasses="bg-success"/>
                                                             </list>
                                                         </property>
                                                     </bean>
+
                                                     <bean parent="Uif-HorizontalBoxSection"
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: left!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加"
+                                                                                  p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="驳回"
+                                                                                  p:actionLabel="添加教学计划"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-plus bg-orange tamsbtn"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="审批"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-plus bg-primary tamsbtn"/>
+                                                                                  p:methodToCall="addxxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-primary tamsbtn">
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -228,10 +124,9 @@
                                                                 <bean parent="Uif-Message" p:messageText="1000000.0"
                                                                       p:additionalCssClasses="label label-primary"
                                                                       p:style="float:right!important;color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
-                                                                <bean parent="Uif-Message" p:messageText="津贴总额："
+                                                                <bean parent="Uif-Message" p:messageText="耗时小计："
                                                                       p:additionalCssClasses="boxheaderTitle"
                                                                       p:style="float:right!important;margin-top:5px;"/>
-
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -240,7 +135,6 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-
                                                                 <bean id="searchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                                 <property name="items">
                                                                                     <list>
@@ -295,16 +189,13 @@
 
 
 
-                                                                <bean id="ClassListPageTable"
-                                                                      parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="20"
-                                                                      p:onDocumentReadyScript = "refreshTableFilter(searchFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable')">
+                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
-                                                                    <property name="propertyName" value="classList"/>
+                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                    <property name="propertyName" value="collection"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
-                                                                    <property name="layoutManager.richTable.render" value="true"/>
+                                                                    <property name="layoutManager.richTable.render" value="false"/>
 
                                                                     <property name="useServerPaging" value="true" />
 
@@ -322,19 +213,13 @@
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="学院" p:propertyName="departmentName"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"
-                                                                                  p:sortAs="numeric"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号"
-                                                                                  p:propertyName="courseCode"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"
-                                                                                  p:sortAs="kuali_date"/>
-                                                                            <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="耗费工时"
-                                                                                  p:propertyName="workTime"/>
-                                                                            <bean parent="Uif-DataField" p:label="状态" p:propertyName="status"/>
-
-
+                                                                            <bean parent="Uif-DataField" p:label="编号" p:propertyName="field0"/>
+                                                                            <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教任务描述" p:propertyName="field2"/>
+                                                                            <bean parent="Uif-DataField" p:label="更新于" p:propertyName="field3"/>
+                                                                            <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="field0"/>
+                                                                            <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="field1"/>
+                                                                            <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="field2"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -342,19 +227,13 @@
                                                                             <bean parent="Uif-VerticalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
-                                                                                              p:actionLabel="查看"
-                                                                                              p:methodToCall="getClassInfoPage"/>
-
-                                                                                        <!--<bean parent="Uif-ActionImage"-->
-                                                                                        <!--p:methodToCall="getTaskListDetail"-->
-                                                                                        <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->
-                                                                                        <!--<property name="actionImage">-->
-                                                                                        <!--<bean parent="Uif-Image"-->
-                                                                                        <!--p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>-->
-                                                                                        <!--</property>-->
-                                                                                        <!--</bean>-->
+                                                                                        <bean parent="Uif-ActionImage"
+                                                                                              p:methodToCall="xxxx">
+                                                                                            <property name="actionImage">
+                                                                                                <bean parent="Uif-Image"
+                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
+                                                                                            </property>
+                                                                                        </bean>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

@@ -348,7 +348,7 @@ function refreshTableFilter(searchbox,tablebox) {
         }
         //为下拉框添加事件
         if (field.children()[0].tagName=='SELECT'){
-            jQuery(field.children()[0]).comboSelect();
+            jQuery(field.children()[0]).comboSelect({data:'abc'});
              // alert(field.tagName);
             jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl ");
             jQuery(field.find("select")[0]).on('change', function () {
@@ -374,6 +374,7 @@ function initContentHeader(id,icon,bigTitle,smallTitle) {
 
 
 function initRightBtnMenu(targetid) {
+
     // fixme 应该改成给tbody添加右键
     jQuery('#'+targetid).contextPopup({
         title: '',
@@ -389,6 +390,20 @@ function initRightBtnMenu(targetid) {
             {label:'删除',       icon:'icon-remove2',           action:function() { alert('clicked 7') } },
         ]
     });
+
+    // jQuery(document).click(function(e){
+    //     /**
+    //      * 由于rice的特性，table中每个元素的id都为xxx_line15的形式，可以通过id结合正则表达式来确定现在操作的到底是第几行
+    //      * 如果当前容器没找到id，那么就去子容器找。
+    //      *
+    //      * 非table的情况暂时未考虑
+    //      */
+    //     var id= jQuery(this.target).attr('id');
+    //     if (typeof(id) == "undefined")
+    //         id=jQuery(this.target.children).attr('id');
+    //     var index=id.match("line[0-9]+")[0].match('[0-9]+');
+    //     alert(id+', index='+index);
+    // });
 }
 
 

@@ -132,7 +132,7 @@ function drawStatusTransTable(boxid,tableJson){
     box.appendChild(tbl);
 }
 
-function save() {
+function save(id) {
     var tableTransObj = {
         "header":[],
         "data":[]
@@ -161,7 +161,7 @@ function save() {
         tableTransObj.data[i-1]=row_data;
     }
     document.getElementById('hidden-statusTrans').getElementsByTagName('textarea')[0].innerHTML = JSON.stringify(tableTransObj);
-   jQuery("#hidden-save").click();
+    jQuery("#hidden-save").click();
 
 }
 
@@ -342,15 +342,44 @@ function refreshTableFilter(searchbox,tablebox) {
                     if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
                         e.preventDefault();
                         jQuery(searchButton).click();
+
+                        // jQuery(this).data("hint",'@{hint'+this.attr("name")+'}');
+                        // alert(jQuery(this).data("hint"))
+                        // alert('@{}')
                     }
                 }
             });
+            jQuery(field.children()[0]).autocomplete({
+                source: [
+                    "ActionScript",
+                    "AppleScript",
+                    "Asp",
+                    "BASIC",
+                    "C",
+                    "C++",
+                    "Clojure",
+                    "COBOL",
+                    "ColdFusion",
+                    "Erlang",
+                    "Fortran",
+                    "Groovy",
+                    "Haskell",
+                    "Java",
+                    "JavaScript",
+                    "Lisp",
+                    "Perl",
+                    "PHP",
+                    "Python",
+                    "Ruby",
+                    "Scala",
+                    "Scheme"],
+            }).attr("class", "form-control input-sm uif-textControl column-filter");
         }
         //为下拉框添加事件
         if (field.children()[0].tagName=='SELECT'){
             jQuery(field.children()[0]).comboSelect();
              // alert(field.tagName);
-            jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl ");
+            jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl column-filter");
             jQuery(field.find("select")[0]).on('change', function () {
                 jQuery(searchButton).click();
             } );

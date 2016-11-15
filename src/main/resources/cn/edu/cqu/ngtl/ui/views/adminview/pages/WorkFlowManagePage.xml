@@ -123,7 +123,7 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="保存"
                                                                                               p:actionImagePlacement="LEFT"
-                                                                                              p:actionScript="save()"
+                                                                                              p:actionScript="save('@{workflowRelationTable}')"
                                                                                               p:additionalCssClasses="icon-save bg-success tamsbtn">
                                                                                         </bean>
                                                                                     </list>

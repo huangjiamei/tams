@@ -526,6 +526,11 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 }
 
+.column-filter{
+    min-width: 60px!important;
+}
+
+
 .combo-select{
     margin-bottom: 0px!important;
 }

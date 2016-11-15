@@ -1,0 +1,270 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+                           http://www.springframework.org/schema/jee
+                           http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+                           http://www.springframework.org/schema/jms
+                           http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+                           http://www.springframework.org/schema/lang
+                           http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/oxm
+                           http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+
+    <bean id="AddTeachCalendarPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+        <property name="items">
+            <list>
+                <!--header-->
+                <bean parent="Uif-HorizontalBoxSection"
+                      p:additionalCssClasses="content-header">
+                    <property name="items">
+                        <list>
+                            <!-- 左上角 -->
+                            <bean id="headerTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-calendar4','课程','教学日历')">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HeaderOne" p:headerText="教学日历"/>
+                                    </list>
+                                </property>
+                            </bean>
+
+                            <!-- 右上角 当前路径 -->
+                            <bean parent="Uif-HorizontalBoxSection"
+                                  p:additionalCssClasses="breadcrumb">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-Icon" p:iconClass="icon-home myIcon"
+                                              p:style="float:left!important;"/>
+                                        <bean parent="Uif-InputField">
+                                            <property name="control">
+                                                <bean parent="Uif-OptionListControl"
+                                                      p:additionalCssClasses="breadcrumb"
+                                                      p:style="background: transparent!important;">
+                                                    <property name="options">
+                                                        <list>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
+                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.methodToCall="getCommonHome"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
+                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                  p:location.methodToCall="getClassListPage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="教学日历"/>
+                                                        </list>
+                                                    </property>
+                                                </bean>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+                <!--body-->
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                    <property name="items"  >
+                        <list>
+                            <bean parent="Uif-VerticalBoxSection"
+                              p:additionalCssClasses="box box-info">
+                                <property name="items">
+                                     <list>
+                                        <!--box header:小图标小标题+右上角btn-->
+                                         <bean parent="Uif-HorizontalBoxSection"
+                                               p:additionalCssClasses="box-header">
+                                             <property name="items">
+                                                 <list>
+                                                     <bean parent="Uif-Icon" p:iconClass="icon-drawer2"/>
+                                                     <bean parent="Uif-MessageField" p:messageText="新建教学日历"
+                                                           p:additionalCssClasses="boxheaderTitle"/>
+                                                     <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
+
+                                                     <bean parent="Uif-HorizontalBoxSection"
+                                                           p:style="float: right!important;">
+                                                         <property name="items">
+                                                             <list>
+                                                                 <!--右上角btnlist-->
+                                                             </list>
+                                                         </property>
+                                                     </bean>
+                                                 </list>
+                                             </property>
+                                         </bean>
+
+                                        <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="box-body">
+                                            <property name="items">
+                                                <list>
+
+                                                    <bean parent="Uif-InputField" p:label="教学主题"
+                                                          p:additionalCssClasses="col-sm-12 col-md-12"
+                                                          p:propertyName="inputField8"
+                                                          p:required="true">
+                                                        <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
+                                                        <!--在inputField里用p:control.watermarkText没有效果-->
+                                                        <property name="control">
+                                                            <bean parent="Uif-TextControl" p:watermarkText="请输入计划的教学内容，如章节等"/>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-InputField" p:label="教学描述" p:propertyName="applyReason"
+                                                          p:additionalCssClasses="col-md-12"
+                                                          p:required="true"
+                                                          p:style="width:100%;margin-top:20px">
+                                                        <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
+                                                        <!--在inputField里用p:control.watermarkText没有效果-->
+                                                        <property name="control">
+                                                            <bean parent="Uif-TextAreaControl"
+                                                                  p:watermarkText="请输入计划的教学目的与要求，教学重点与难点、教学方法、教学设计环节等"
+                                                                  p:style="height:200px;"/>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-InputField" p:label="助教任务" p:propertyName="applyReason"
+                                                          p:additionalCssClasses="col-md-12"
+                                                          p:required="true"
+                                                          p:style="width:100%;margin-top:20px">
+                                                        <property name="control">
+                                                            <bean parent="Uif-TextAreaControl"
+                                                                  p:style="height:200px;"
+                                                                  p:watermarkText="请输入在本次计划中拟分配给助教的工作种类及次数，包括：批改(作业、实验报告、试卷、课程论文、读书报告等)、答疑、组织讨论课、习题课、指导实验、签到、设计提问、设计问卷"/>
+                                                        </property>
+                                                    </bean>
+
+                                                    <!--起始时间、结束时间、总耗时-->
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:style="margin-top:20px"
+                                                          p:additionalCssClasses="row col-md-12">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-InputField" p:label="起始时间"
+                                                                      p:additionalCssClasses="col-md-4"
+                                                                      p:propertyName="inputField6">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextControl" p:size="10">
+                                                                            <property name="datePicker">
+                                                                                <bean parent="Uif-DatePicker">
+                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
+                                                                                    <property name="templateOptions">
+                                                                                        <map>
+                                                                                            <entry key="showOn" value="button"/>
+                                                                                            <entry key="buttonImage" value="@{#ThemeImages}cal.gif"/>
+                                                                                            <entry key="buttonImageOnly" value="true"/>
+                                                                                            <entry key="showAnim" value="slideDown"/>
+                                                                                            <entry key="showButtonPanel" value="true"/>
+                                                                                            <entry key="changeMonth" value="true"/>
+                                                                                            <entry key="changeYear" value="true"/>
+                                                                                            <entry key="dateFormat" value="yy-mm-dd"/>
+                                                                                        </map>
+                                                                                    </property>
+                                                                                </bean>
+                                                                            </property>
+                                                                        </bean>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-InputField" p:label="完成时间"
+                                                                      p:additionalCssClasses="col-md-4"
+                                                                      p:propertyName="inputField7">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextControl" p:size="10">
+                                                                            <property name="datePicker">
+                                                                                <bean parent="Uif-DatePicker">
+                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
+                                                                                    <property name="templateOptions">
+                                                                                        <map>
+                                                                                            <entry key="showOn" value="button"/>
+                                                                                            <entry key="buttonImage" value="@{#ThemeImages}cal.gif"/>
+                                                                                            <entry key="buttonImageOnly" value="true"/>
+                                                                                            <entry key="showAnim" value="slideDown"/>
+                                                                                            <entry key="showButtonPanel" value="true"/>
+                                                                                            <entry key="changeMonth" value="true"/>
+                                                                                            <entry key="changeYear" value="true"/>
+                                                                                            <entry key="dateFormat" value="yy-mm-dd"/>
+                                                                                        </map>
+                                                                                    </property>
+                                                                                </bean>
+
+                                                                            </property>
+                                                                        </bean>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-InputField" p:label="总耗时"
+                                                                      p:additionalCssClasses="col-md-3"
+                                                                      p:propertyName="inputField8"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <!--FIXME 上传文件，会报ftl错误，暂时无解决方案-->
+                                                    <!--<bean parent="Uif-HorizontalBoxSection"-->
+                                                          <!--p:style="margin-top:20px"-->
+                                                          <!--p:additionalCssClasses="row">-->
+                                                        <!--<property name="items">-->
+                                                            <!--<list>-->
+                                                                <!--<bean parent="Uif-MultiFileUploadCollection">-->
+                                                                    <!--<property name="collection.propertyName" value="fileList"/>-->
+                                                                    <!--<property name="collection.collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/>-->
+                                                                <!--</bean>-->
+                                                            <!--</list>-->
+                                                        <!--</property>-->
+                                                    <!--</bean>-->
+
+
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:style="margin-top:20px"
+                                                          p:additionalCssClasses="row col-md-12">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="创建"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="copyxxx"
+                                                                      p:additionalCssClasses="icon-file2 bg-primary tamsbtn"/>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="创建并继续"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="copyxxx"
+                                                                      p:additionalCssClasses="icon-paste bg-primary tamsbtn"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                </list>
+                                            </property>
+                                        </bean>
+
+                                     </list>
+                                </property>
+                             </bean>
+                        </list>
+                    </property>
+                </bean>
+
+            </list>
+        </property>
+    </bean>
+
+
+</beans>

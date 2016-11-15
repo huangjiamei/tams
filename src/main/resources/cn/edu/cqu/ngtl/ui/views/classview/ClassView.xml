@@ -124,6 +124,15 @@
                     </property>
                 </bean>
 
+                <bean parent="Uif-Page" p:id="pageAddTeachCalendar" p:title="课程日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="AddTeachCalendarPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+
             </list>
         </property>
     </bean>

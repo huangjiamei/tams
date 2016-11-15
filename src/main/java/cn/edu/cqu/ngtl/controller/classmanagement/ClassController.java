@@ -158,6 +158,19 @@ public class ClassController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
 
+
+    /**
+     * 获取新建教学日历页面
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getAddTeachCalendarPage&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getAddTeachCalendarPage")
+    public ModelAndView getAddTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageAddTeachCalendar");
+    }
+
     /**
      * 根据条件查询班级列表
      * @param form

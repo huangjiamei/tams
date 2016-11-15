@@ -2,6 +2,8 @@ package cn.edu.cqu.ngtl.form;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.TestObject;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
+import org.kuali.rice.krad.file.FileMetaBlob;
 import org.kuali.rice.krad.web.form.UifFormBase;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class BaseForm extends UifFormBase  {
     private boolean check2;
 
     private List<TestObject> collection = new ArrayList<TestObject>();
+    private List<FileViewObject> fileList=new ArrayList<>();
 
     public BaseForm() {
         getCollection().add(new TestObject(new Date(2016,10,15), "14", "17", "18"));
@@ -70,6 +73,14 @@ public class BaseForm extends UifFormBase  {
         getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "4", "6", "6"));
         getCollection().add(new TestObject(new Date(2016,10,15),"5", "5", "5", "5", "5"));
         getCollection().add(new TestObject(new Date(2016,10,15),"7", "3", "1", "9", "11"));
+    }
+
+    public List<FileViewObject> getFileList() {
+        return fileList;
+    }
+
+    public void setFileList(List<FileViewObject> fileList) {
+        this.fileList = fileList;
     }
 
     public String getInputField11() {

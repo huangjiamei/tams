@@ -112,6 +112,7 @@ public class ClassController extends UifControllerBase {
     }
 
     /**
+     * 获取学生申请当助教页面(填表)
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getApplyTAPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getApplyTAPage")
@@ -157,7 +158,6 @@ public class ClassController extends UifControllerBase {
 
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
-
 
     /**
      * 获取新建教学日历页面

@@ -107,6 +107,24 @@
                                                                       p:headerText="全部">
                                                                     <property name="items">
                                                                         <list>
+                                                                            <bean parent="Uif-HorizontalBoxSection"
+                                                                                  p:style="float: right!important;clear:none!important;">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <!--左上角btnlist-->
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:actionLabel="复制(定位不对，稍候修复)"
+                                                                                              p:actionImagePlacement="LEFT"
+                                                                                              p:navigateToPageId="copyxxxx"
+                                                                                              p:additionalCssClasses="icon-copy bg-success tamsbtn">
+                                                                                        </bean>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:actionLabel="添加" p:methodToCall="addxxxx"
+                                                                                              p:additionalCssClasses="icon-plus bg-teal tamsbtn"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
                                                                             <bean parent="Uif-VerticalBoxSection"
                                                                                   p:additionalCssClasses="box-body" p:style="">
                                                                                 <property name="items">
@@ -171,8 +189,7 @@
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-ActionImage"
                                                                                                                       p:methodToCall="xxxx">
-                                                                                                                    <property
-                                                                                                                            name="actionImage">
+                                                                                                                    <property name="actionImage">
                                                                                                                         <bean parent="Uif-Image"
                                                                                                                               p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
                                                                                                                     </property>

@@ -369,9 +369,16 @@ body{
 
 }
 .breadcrumb {
-    padding-right:0px!important;
-    margin-right:0px!important;
+    padding-right: 0px!important;
+    margin: 0px!important;
+    padding-left: 0px!important;
 
+}
+@media (max-width:991px) {
+    .breadcrumb {
+        padding: 0px!important;
+        margin: 0px!important;
+    }
 }
 .breadcrumb > li + li:before {
     content: ">\00a0"!important;

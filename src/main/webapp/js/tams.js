@@ -446,7 +446,10 @@ function initRightBtnMenu(targetid) {
                 label:'添加',
                 icon:'icon-plus',
                 action:function(e) {
-                    var id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
                     var index=id.match("line[0-9]+")[0].match('[0-9]+');
                     alert("添加"+id+', index='+index);
 
@@ -458,7 +461,10 @@ function initRightBtnMenu(targetid) {
                 label:'选中',
                 icon:'icon-signup',
                 action:function(e) {
-                    var id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
                     var index=id.match("line[0-9]+")[0].match('[0-9]+');
                     alert("选中"+id+', index='+index);
                 }
@@ -468,7 +474,10 @@ function initRightBtnMenu(targetid) {
                 label:'查看',
                 icon:'icon-search',
                 action:function(e) {
-                    var id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
                     var index=id.match("line[0-9]+")[0].match('[0-9]+');
                     alert("查看"+id+', index='+index);
                 }
@@ -477,7 +486,10 @@ function initRightBtnMenu(targetid) {
                 label:'编辑',
                 icon:'icon-pencil2',
                 action:function(e) {
-                    var id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
                     var index=id.match("line[0-9]+")[0].match('[0-9]+');
                     alert("编辑"+id+', index='+index);
                 }
@@ -487,7 +499,10 @@ function initRightBtnMenu(targetid) {
                 label:'删除',
                 icon:'icon-remove2',
                 action:function(e) {
-                    var id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
                     var index=id.match("line[0-9]+")[0].match('[0-9]+');
                     alert("删除"+id+', index='+index);
                 }

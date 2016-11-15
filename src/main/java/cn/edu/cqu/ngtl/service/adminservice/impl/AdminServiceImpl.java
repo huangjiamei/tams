@@ -229,6 +229,18 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public List<TAMSDeptFunding> getDepartmentCurrFundingBySession(){
+
+        return deptFundingDao.selectDepartmentCurrBySession();
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getDepartmentPreFundingBySession(){
+
+        return deptFundingDao.selectDepartmentPreBySession();
+    }
+
+    @Override
     public List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId) {
         if(roleFunctionId == null)
             return null;

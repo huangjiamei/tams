@@ -12,4 +12,8 @@ public interface TAMSTaApplicationDao {
     boolean insertOne(TAMSTaApplication taApplication);
 
     List<TAMSTaApplication> selectByClassId(List<Object> classIds);
+
+    TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId);
+
+    boolean deleteByEntity(TAMSTaApplication readyToRemove);
 }

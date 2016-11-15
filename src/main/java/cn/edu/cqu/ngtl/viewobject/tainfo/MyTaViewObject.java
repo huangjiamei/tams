@@ -23,6 +23,16 @@ public class MyTaViewObject {
 
     private String payDay;
 
+    private String applicationClassId;
+
+    public String getApplicationClassId() {
+        return applicationClassId;
+    }
+
+    public void setApplicationClassId(String applicationClassId) {
+        this.applicationClassId = applicationClassId;
+    }
+
     public boolean isCheckBox() {
         return checkBox;
     }

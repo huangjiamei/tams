@@ -57,4 +57,8 @@ public interface IAdminService {
     String setRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId);
 
     void setWorkflowStatusRelationByRoleFunctionId(String rfId, RelationTable rt);
+
+    List<TAMSDeptFunding> getDepartmentCurrFundingBySession();
+
+    List<TAMSDeptFunding> getDepartmentPreFundingBySession();
 }

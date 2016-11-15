@@ -134,9 +134,10 @@
 
                                                     <bean parent="Uif-InputField" p:label="申请理由及特长" p:propertyName="applyReason"
                                                           p:additionalCssClasses="row"
-                                                    p:style="width:100%;height=500px;">
+                                                    p:style="width:100%;">
                                                         <property name="control">
-                                                            <bean parent="Uif-TextAreaControl"/>
+                                                            <bean parent="Uif-TextAreaControl"
+                                                                  p:style="height:200px;"/>
                                                         </property>
                                                     </bean>
                                                     <bean parent="Uif-InputField" p:label="学历" p:propertyName="eduBackground">

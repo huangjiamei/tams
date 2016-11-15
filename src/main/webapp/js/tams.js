@@ -298,6 +298,67 @@ function getBarChart(chartId,title,data) {
 
 }
 
+
+var filterHintCache = {
+
+    "condCourseName": [
+        "画法几何",
+        "空气污染控制工程",
+        "环境水资源学",
+        "建筑项目环境管理",
+        "建筑给排水工程（含高层）",
+        "有机化学II",
+        "建筑节能技术-可再生资源",
+        "环境认识实习",
+        "化工原理实验（Ⅱ）",
+        "水工程施工与项目管理",
+        "制冷压缩机",
+        "物理化学（Ⅰ-2）",
+        "化工制图",
+        "高聚物合成工艺学",
+        "医学图像处理实验",
+        "环境工程CAD",
+        "复合材料力学",
+        "健美操第一专项训练（6）",
+        "单片机原理及应用"],
+    "condCourseCode": [
+        "OE12002220",
+        "MSE13019220",
+        "EE15001025",
+        "LA19017740",
+        "PESS10456",
+        "ENVR21000240++",
+        "EnAd4033630",
+        "EnAd4033630",
+        "ColdFusion",
+        "EE11000",
+        "ME11027820",
+        "OE12005320",
+        "CEME21030640",
+        "ENVR21001230",
+        "BEE21023920",
+        "ENVR21031760",
+        "CHEM22036930",
+        "CHEN22037635",
+        "ME11025235",
+        "EP14004520",],
+    "condClassNumber": [
+        "140388-006",
+        "140388-007",
+        "229337-003",
+        "229184-001",
+        "220040-005",
+        "239118-001",
+        "189333-002",
+        "210044-002",
+        "239118-002"],
+    "condInstructorName": [
+        "test"],
+
+}
+
+
+
 /**
  * 该函数可统一地将表格外的过滤器移动到表格内，隐藏搜索按钮，
  * 为所有过滤器添加按下搜索按钮事件（select添加onchange，input添加keydown）
@@ -350,29 +411,7 @@ function refreshTableFilter(searchbox,tablebox) {
                 }
             });
             jQuery(field.children()[0]).autocomplete({
-                source: [
-                    "ActionScript",
-                    "AppleScript",
-                    "Asp",
-                    "BASIC",
-                    "C",
-                    "C++",
-                    "Clojure",
-                    "COBOL",
-                    "ColdFusion",
-                    "Erlang",
-                    "Fortran",
-                    "Groovy",
-                    "Haskell",
-                    "Java",
-                    "JavaScript",
-                    "Lisp",
-                    "Perl",
-                    "PHP",
-                    "Python",
-                    "Ruby",
-                    "Scala",
-                    "Scheme"],
+               source: eval("filterHintCache."+field.find("input")[0].name)
             }).attr("class", "form-control input-sm uif-textControl column-filter");
         }
         //为下拉框添加事件
@@ -387,6 +426,8 @@ function refreshTableFilter(searchbox,tablebox) {
     }
     filter.append(tr);
     thead.after(filter)
+
+    //alert(eval("v.name"))
 }
 
 /**

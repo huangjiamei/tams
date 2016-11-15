@@ -403,10 +403,6 @@ function refreshTableFilter(searchbox,tablebox) {
                     if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
                         e.preventDefault();
                         jQuery(searchButton).click();
-
-                        // jQuery(this).data("hint",'@{hint'+this.attr("name")+'}');
-                        // alert(jQuery(this).data("hint"))
-                        // alert('@{}')
                     }
                 }
             });
@@ -426,8 +422,6 @@ function refreshTableFilter(searchbox,tablebox) {
     }
     filter.append(tr);
     thead.after(filter)
-
-    //alert(eval("v.name"))
 }
 
 /**
@@ -500,17 +494,6 @@ function initRightBtnMenu(targetid) {
             },
         ]
     });
-        
-        
-        
-
-        
-        
-        
-        
-        
-
-
     // jQuery(document).click(function(e){
     //     /**
     //      * 由于rice的特性，table中每个元素的id都为xxx_line15的形式，可以通过id结合正则表达式来确定现在操作的到底是第几行

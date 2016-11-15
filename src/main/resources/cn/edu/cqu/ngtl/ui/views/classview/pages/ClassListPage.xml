@@ -200,21 +200,37 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="审批"
-                                                                      p:additionalCssClasses="boxheaderTitle bg-success"
-                                                                      p:style="background=green!important;"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="驳回"
-                                                                      p:additionalCssClasses="boxheaderTitle bg-orange"
-                                                                      p:style="background=yellow!important;"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="添加"
-                                                                      p:additionalCssClasses="boxheaderTitle"
-                                                                      p:style="background=blue!important;"/>
+
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: left!important;">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--左上角btnlist-->
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="添加"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="驳回"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-orange tamsbtn"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="审批"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-primary tamsbtn"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
 
                                                                 <bean parent="Uif-Message" p:messageText="1000000.0"
-                                                                      p:style="float:right!important;background=blue!important;color=white!important;"/>
+                                                                      p:additionalCssClasses="label label-primary"
+                                                                      p:style="float:right!important;color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
                                                                 <bean parent="Uif-Message" p:messageText="津贴总额："
                                                                       p:additionalCssClasses="boxheaderTitle"
-                                                                      p:style="float:right!important;"/>
+                                                                      p:style="float:right!important;margin-top:5px;"/>
 
                                                             </list>
                                                         </property>

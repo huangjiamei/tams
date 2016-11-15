@@ -120,7 +120,7 @@
                                                 <list>
 
                                                     <bean parent="Uif-InputField" p:label="教学主题"
-                                                          p:additionalCssClasses="col-sm-12 col-md-12"
+                                                          p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12"
                                                           p:propertyName="inputField8"
                                                           p:required="true">
                                                         <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->

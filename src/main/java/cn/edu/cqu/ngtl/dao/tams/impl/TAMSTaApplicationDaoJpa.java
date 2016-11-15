@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
@@ -40,7 +41,12 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         List<TAMSTaApplication> tas = new ArrayList<>();
 
         for(Object classId : classIds) {
-            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("applicationClassId", classId));
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                    and(
+                            equal("applicationClassId", classId),
+                            equal("sessinId", new UTSessionDaoJpa().getCurrentSession().getId())
+                    )
+            );
             QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                     TAMSTaApplication.class,
                     criteria.build()
@@ -49,5 +55,27 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         }
 
         return tas.isEmpty()?null:tas;
+    }
+
+    @Override
+    public TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("applicationClassId", classId),
+                        equal("applicationId", stuId),
+                        equal("sessinId", new UTSessionDaoJpa().getCurrentSession().getId())
+                )
+        );
+        QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTaApplication.class,
+                criteria.build()
+        );
+        return null;
+    }
+
+    @Override
+    public boolean deleteByEntity(TAMSTaApplication application) {
+        KradDataServiceLocator.getDataObjectService().delete(application);
+        return true;
     }
 }

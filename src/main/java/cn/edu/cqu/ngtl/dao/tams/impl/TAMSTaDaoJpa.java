@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
@@ -74,5 +75,28 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     @Override
     public boolean updateByEntity(TAMSTa ta) {
         return KRADServiceLocator.getDataObjectService().save(ta) != null;
+    }
+
+    @Override
+    public TAMSTa selectByStudentIdAndClassId(String stuId, String classId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("taClassId", classId),
+                        equal("taId",stuId)
+                )
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+
+        return qr.getResults().size() == 0 ? null : qr.getResults().get(0);
+    }
+
+    @Override
+    public boolean insertByEntity(TAMSTa newTa) {
+
+        return KRADServiceLocator.getDataObjectService().save(newTa) != null;
+
     }
 }

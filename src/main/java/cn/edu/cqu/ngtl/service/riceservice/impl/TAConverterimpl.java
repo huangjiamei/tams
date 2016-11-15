@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
+import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -454,6 +455,8 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaBachelorMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
             }
 
+            viewObject.setApplicationClassId(application.getApplicationClassId());
+
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
@@ -563,5 +566,16 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return ids;
+    }
+
+    @Override
+    public List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList) {
+        List<StuIdClassIdPair> pairs = new ArrayList<>(checkedList.size());
+
+        for(MyTaViewObject per : checkedList) {
+            pairs.add(new StuIdClassIdPair(per.getTaIdNumber(), per.getApplicationClassId()));
+        }
+
+        return pairs;
     }
 }

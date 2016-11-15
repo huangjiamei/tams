@@ -143,58 +143,55 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean id="searchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <!--下拉框搜索-->
-                                                                                        <!--占位-->
-                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                              p:messageText="占位" />
-                                                                                        <!--学院-->
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="condDepartmentName">
-                                                                                            <property name="optionsFinder">
-                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
-                                                                                                      p:blankOption="true"/>
-                                                                                            </property>
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl" />
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <!--文字搜索-->
-                                                                                        <!--课程名称-->
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="condCourseName" />
-                                                                                        <!--课程编号-->
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="condCourseCode" />
-                                                                                        <!--教学班-->
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="condClassNumber" />
-                                                                                        <!--教师-->
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="condInstructorName" />
-
-                                                                                        <!--占位-->
-                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                              p:messageText="占位" />
-                                                                                        <!--占位-->
-                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                              p:messageText="占位" />
-                                                                                        <!--占位-->
-                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                              p:messageText="占位" />
-
-                                                                                        <bean id="searchButton" parent="Uif-PrimaryActionButton"
-                                                                                              p:actionLabel="查询" p:additionalCssClasses="icon-search hidden-fields search-button"
-                                                                                              p:methodToCall="searchClassByCondition"
-                                                                                              p:refreshId="ClassListPage"/>
-
-                                                                                    </list>
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--下拉框搜索-->
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
+                                                                            <!--学院-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condDepartmentName">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl" />
                                                                                 </property>
                                                                             </bean>
+                                                                            <!--文字搜索-->
+                                                                            <!--课程名称-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condCourseName" />
+                                                                            <!--课程编号-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condCourseCode" />
+                                                                            <!--教学班-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condClassNumber" />
+                                                                            <!--教师-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condInstructorName" />
 
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
 
+                                                                            <bean id="searchButton" parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="查询" p:additionalCssClasses="icon-search hidden-fields search-button"
+                                                                                  p:methodToCall="searchClassByCondition"
+                                                                                  p:refreshId="ClassListPage"/>
 
+                                                                        </list>
+                                                                    </property>
+                                                                            </bean>
 
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"

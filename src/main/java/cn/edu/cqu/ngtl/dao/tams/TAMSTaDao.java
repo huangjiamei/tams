@@ -18,4 +18,8 @@ public interface TAMSTaDao {
     List<TAMSTa> selectBatchByIds(List<String> ids);
 
     boolean updateByEntity(TAMSTa ta);
+
+    TAMSTa selectByStudentIdAndClassId(String stuId, String classId);
+
+    boolean insertByEntity(TAMSTa newTa);
 }

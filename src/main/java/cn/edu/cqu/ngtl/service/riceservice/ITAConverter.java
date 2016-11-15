@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.riceservice;
 
+import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
@@ -58,4 +59,6 @@ public interface ITAConverter {
     List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
 
     List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist);
+
+    List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList);
 }

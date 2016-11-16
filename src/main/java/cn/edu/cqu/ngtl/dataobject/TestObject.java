@@ -20,7 +20,7 @@ public class TestObject implements Serializable {
     private String field7;
     private String field8;
 
-    private boolean check1;
+    private boolean checked;
 
     public TestObject() {
     }
@@ -43,12 +43,12 @@ public class TestObject implements Serializable {
     }
 
 
-    public boolean isCheck1() {
-        return check1;
+    public boolean isChecked() {
+        return checked;
     }
 
-    public void setCheck1(boolean check1) {
-        this.check1 = check1;
+    public void setChecked(boolean checked) {
+        this.checked = checked;
     }
 
     public Date getDate1() {

@@ -405,7 +405,7 @@ body{
 
 /**  修改uif   */
 
-/* 用途待补充 */
+/* 令form中的input输入框填满父容器 */
 .form-control{
     width: 100%;
 }
@@ -420,6 +420,33 @@ body{
 }
 .tams-form-label:hover{
     cursor: pointer;
+}
+
+/*用于区分教学活动页面中的分组标题和具体项目标题*/
+.tams-activity-group-title{
+    font-weight:bold;
+    font-size: 16px;
+    /*color:#d9534f;*/
+}
+
+/*.tams-activity-group-title span:before{*/
+    /*font-family: 'krad-icons';*/
+    /*content: "\e90b";*/
+/*}*/
+/*用于区分教学活动页面中的分组标题和具体项目标题*/
+.tams-activity-item-title{
+    /*color:#31b0d5;*/
+    color:#d9534f;
+    font-size: 16px;
+}
+/*控制item前面的图标样式*/
+.tams-activity-item-title span:before{
+    font-family: 'krad-icons';
+    content: "\e90b";
+}
+/*教学活动中的进展情况，如：共0人提交  |  2016-11-12    15：36  | 用灰色表示*/
+.tams-activity-state{
+    color:grey;
 }
 
 /* 修改表格中inputfiled的宽高 */

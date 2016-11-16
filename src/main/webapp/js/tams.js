@@ -403,10 +403,6 @@ function refreshTableFilter(searchbox,tablebox) {
                     if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
                         e.preventDefault();
                         jQuery(searchButton).click();
-
-                        // jQuery(this).data("hint",'@{hint'+this.attr("name")+'}');
-                        // alert(jQuery(this).data("hint"))
-                        // alert('@{}')
                     }
                 }
             });
@@ -426,8 +422,6 @@ function refreshTableFilter(searchbox,tablebox) {
     }
     filter.append(tr);
     thead.after(filter)
-
-    //alert(eval("v.name"))
 }
 
 /**
@@ -444,21 +438,90 @@ function initContentHeader(id,icon,bigTitle,smallTitle) {
 
 
 function initRightBtnMenu(targetid) {
-    // fixme 应该改成给tbody添加右键
-    jQuery('#'+targetid).contextPopup({
+    //alert(jQuery(".table tbody tr").size())
+    jQuery("#"+targetid+" tbody").contextPopup({
         title: '',
         items: [
-            {label:'添加',     icon:'icon-plus',             action:function() { alert('clicked 1') } },
+            {
+                label:'添加',
+                icon:'icon-plus',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("添加"+id+', index='+index);
+
+                }
+            },
             // {label:'查看',     icon:'icon-search',              action:function() { alert('clicked 3') } },
             null, // divider
-            {label:'选中',         icon:'icon-signup',         action:function() { alert('clicked 4') } },
+            {
+                label:'选中',
+                icon:'icon-signup',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("选中"+id+', index='+index);
+                }
+            },
             null, // divider
-            {label:'查看',         icon:'icon-search',         action:function() { alert('clicked 4') } },
-            {label:'编辑', icon:'icon-pencil2',                action:function() { alert('clicked 2') } },
+            {
+                label:'查看',
+                icon:'icon-search',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("查看"+id+', index='+index);
+                }
+            },
+            {
+                label:'编辑',
+                icon:'icon-pencil2',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("编辑"+id+', index='+index);
+                }
+            },
             null, // divider
-            {label:'删除',       icon:'icon-remove2',           action:function() { alert('clicked 7') } },
+            {
+                label:'删除',
+                icon:'icon-remove2',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("删除"+id+', index='+index);
+                }
+            },
         ]
     });
+    // jQuery(document).click(function(e){
+    //     /**
+    //      * 由于rice的特性，table中每个元素的id都为xxx_line15的形式，可以通过id结合正则表达式来确定现在操作的到底是第几行
+    //      * 如果当前容器没找到id，那么就去子容器找。
+    //      *
+    //      * 非table的情况暂时未考虑
+    //      */
+    //     var id= jQuery(this.target).attr('id');
+    //     if (typeof(id) == "undefined")
+    //         id=jQuery(this.target.childNodes[0]).attr('id');
+    //     var index=id.match("line[0-9]+")[0].match('[0-9]+');
+    //     alert(id+', index='+index);
+    // });
 }
 
 

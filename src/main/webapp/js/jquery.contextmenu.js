@@ -23,6 +23,7 @@
  * MIT License: https://github.com/joewalnes/jquery-simple-context-menu/blob/master/LICENSE.txt
  */
 jQuery.fn.contextPopup = function(menuData) {
+
 	// Define default settings
 	var settings = {
 		contextMenuClass: 'contextMenuPlugin',
@@ -66,6 +67,7 @@ jQuery.fn.contextPopup = function(menuData) {
 
   // On contextmenu event (right click)
   this.bind('contextmenu', function(e) {
+
     var menu = createMenu(e).show();
 
 

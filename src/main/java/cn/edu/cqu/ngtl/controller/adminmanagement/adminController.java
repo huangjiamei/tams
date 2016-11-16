@@ -8,9 +8,7 @@ import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
@@ -1081,14 +1079,9 @@ public class adminController extends UifControllerBase {
         Gson gson = new Gson();
         RelationTable rt = gson.fromJson(json, RelationTable.class);
 
-        /*RelationTable rt = taConverter.workflowStatusRtoJson(
-                adminService.getWorkflowStatusRelationByRoleFunctionId(
-                        adminService.getRoleFunctionIdByRoleIdAndFunctionId(
-                                infoForm.getRoleId(),
-                                infoForm.getFunctionId()
-                        )
-                )
-        );*/
+        String rfId = adminService.setRoleFunctionIdByRoleIdAndFunctionId(infoForm.getRoleId(), infoForm.getFunctionId());
+
+        adminService.setWorkflowStatusRelationByRoleFunctionId(rfId, rt);
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }

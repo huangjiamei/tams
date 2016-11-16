@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="TaRewardPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container-fluid">
+    <bean id="TaRewardPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
                 <bean parent="Uif-HorizontalBoxSection"

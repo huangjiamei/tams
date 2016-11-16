@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="AddTeachCalendarPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="AddTeachCalendarPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container-fluid">
         <property name="items">
             <list>
                 <!--header-->
@@ -85,7 +85,7 @@
                 </bean>
 
                 <!--body-->
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                     <property name="items"  >
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
@@ -120,7 +120,7 @@
                                                 <list>
 
                                                     <bean parent="Uif-InputField" p:label="教学主题"
-                                                          p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12"
+                                                          p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                           p:propertyName="inputField8"
                                                           p:required="true">
                                                         <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -131,7 +131,7 @@
                                                     </bean>
 
                                                     <bean parent="Uif-InputField" p:label="教学描述" p:propertyName="applyReason"
-                                                          p:additionalCssClasses="col-md-12"
+                                                          p:additionalCssClasses="col-md-12 col-lg-12"
                                                           p:required="true"
                                                           p:style="width:100%;margin-top:20px">
                                                         <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -144,7 +144,7 @@
                                                     </bean>
 
                                                     <bean parent="Uif-InputField" p:label="助教任务" p:propertyName="applyReason"
-                                                          p:additionalCssClasses="col-md-12"
+                                                          p:additionalCssClasses="col-md-12 col-lg-12"
                                                           p:required="true"
                                                           p:style="width:100%;margin-top:20px">
                                                         <property name="control">
@@ -157,11 +157,11 @@
                                                     <!--起始时间、结束时间、总耗时-->
                                                     <bean parent="Uif-HorizontalBoxSection"
                                                           p:style="margin-top:20px"
-                                                          p:additionalCssClasses="row col-md-12">
+                                                          p:additionalCssClasses="row col-md-12 col-lg-12">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-InputField" p:label="起始时间"
-                                                                      p:additionalCssClasses="col-md-4"
+                                                                      p:additionalCssClasses="col-md-4 col-lg-4"
                                                                       p:propertyName="inputField6">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl" p:size="10">
@@ -186,7 +186,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-InputField" p:label="完成时间"
-                                                                      p:additionalCssClasses="col-md-4"
+                                                                      p:additionalCssClasses="col-md-4 col-lg-4"
                                                                       p:propertyName="inputField7">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl" p:size="10">
@@ -212,7 +212,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-InputField" p:label="总耗时"
-                                                                      p:additionalCssClasses="col-md-3"
+                                                                      p:additionalCssClasses="col-md-3 col-lg-3"
                                                                       p:propertyName="inputField8"/>
                                                             </list>
                                                         </property>
@@ -234,7 +234,7 @@
 
                                                     <bean parent="Uif-HorizontalBoxSection"
                                                           p:style="margin-top:20px"
-                                                          p:additionalCssClasses="row col-md-12">
+                                                          p:additionalCssClasses="row col-md-12 col-lg-12">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-PrimaryActionButton"

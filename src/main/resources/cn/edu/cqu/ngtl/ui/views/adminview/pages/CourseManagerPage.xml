@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-<bean id="CourseManagerPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+<bean id="CourseManagerPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container-fluid">
     <property name="items">
         <list>
             <bean parent="Uif-HorizontalBoxSection"
@@ -84,7 +84,7 @@
             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                 <property name="items">
                     <list>
-                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                             <property name="items">
                                 <list>
                                     <bean parent="Uif-VerticalBoxSection"

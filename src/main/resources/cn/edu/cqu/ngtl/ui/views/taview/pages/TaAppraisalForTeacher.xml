@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaAppraisalForTeacher" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container-fluid" >
         <property name="items">
             <list>
                 <!--header-->
@@ -79,7 +79,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                 <property name="items"  >
                                     <list>
                                          <bean parent="Uif-VerticalBoxSection"
@@ -179,12 +179,12 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:propertyName="evaluateDetail" p:label="意见"
-                                                                                  p:additionalCssClasses="col-md-8" p:style="height=75px;">
+                                                                                  p:additionalCssClasses="col-lg-8 col-md-8" p:style="height=75px;">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3">
+                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-md-3">
                                                                                 <property name="items"  >
                                                                                     <list>
                                                                                         <!-- 评价等级改成后台对应参数  -->

@@ -23,7 +23,7 @@ public class TAMSActivity {
 
     @ManyToOne
     @JoinColumn(name = "TEACH_CALENDAR_ID", insertable = false, updatable = false)
-    private String teachCalendarId;
+    private TAMSTeachCalendar teachCalendarId;
 
     @Column(name = "CREATE_TIME")
     private String createTime;
@@ -32,12 +32,12 @@ public class TAMSActivity {
     private String lastUpdateTime;
 
     @ManyToOne
-    @Column(name = "STATUS", insertable = false, updatable = false)
-    private String status;
+    @JoinColumn(name = "STATUS", insertable = false, updatable = false)
+    private TAMSIssueStatus status;
 
     @ManyToOne
-    @Column(name = "ACTIVITY_TYPE", insertable = false, updatable =false)
-    private String activityType;
+    @JoinColumn(name = "ACTIVITY_TYPE", insertable = false, updatable =false)
+    private TAMSIssueType activityType;
 
     @Column(name = "OBJ_ID")
     private String objId;
@@ -62,13 +62,9 @@ public class TAMSActivity {
         this.description = description;
     }
 
-    public String getTeachCalendarId() {
-        return teachCalendarId;
-    }
+    public TAMSTeachCalendar getTeachCalendarId() { return teachCalendarId; }
 
-    public void setTeachCalendarId(String teachCalendarId) {
-        this.teachCalendarId = teachCalendarId;
-    }
+    public void setTeachCalendarId(TAMSTeachCalendar teachCalendarId) { this.teachCalendarId = teachCalendarId; }
 
     public String getCreateTime() {
         return createTime;
@@ -86,21 +82,13 @@ public class TAMSActivity {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public String getStatus() {
-        return status;
-    }
+    public TAMSIssueStatus getStatus() { return status; }
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
+    public void setStatus(TAMSIssueStatus status) { this.status = status; }
 
-    public String getActivityType() {
-        return activityType;
-    }
+    public TAMSIssueType getActivityType() { return activityType; }
 
-    public void setActivityType(String activityType) {
-        this.activityType = activityType;
-    }
+    public void setActivityType(TAMSIssueType activityType) { this.activityType = activityType; }
 
     public String getObjId() {
         return objId;

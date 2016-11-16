@@ -156,6 +156,26 @@ public class ClassController extends UifControllerBase {
                                        HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+
+        //// FIXME: 16-11-16 不能写死，应该在跳转页面的时候就把classId传过来
+        String classId = "290739";
+
+        infoForm.setAllCalendar(
+                taConverter.TeachCalendarToViewObject(
+                        classInfoService.getAllTaTeachCalendarFilterByUidAndClassId(
+                                uId,
+                                classId)
+                )
+        );
+
+        infoForm.setTotalElapsedTime(
+                taConverter.countCalendarTotalElapsedTime(
+                        infoForm.getAllCalendar()
+                )
+        );
+
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
 

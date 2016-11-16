@@ -128,7 +128,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-Message" p:messageText="1000000.0"
+                                                                <bean parent="Uif-Message" p:messageText="@{totalElapsedTime}"
                                                                       p:additionalCssClasses="label label-primary"
                                                                       p:style="float:right!important;color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
                                                                 <bean parent="Uif-Message" p:messageText="耗时小计："
@@ -195,8 +195,8 @@
 
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar"/>
+                                                                    <property name="propertyName" value="allCalendar"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -212,18 +212,18 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
+                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="编号" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="field1"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教任务描述" p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="更新于" p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="field1"/>
-                                                                            <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="field2"/>
+                                                                            <bean parent="Uif-DataField" p:label="编号" p:propertyName="code"/> <!-- id是否可以当做编号? -->
+                                                                            <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="description"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教任务描述" p:propertyName="taTask"/>
+                                                                            <bean parent="Uif-DataField" p:label="更新于" p:propertyName="endTime"/>
+                                                                            <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"/>
+                                                                            <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="endTime"/>
+                                                                            <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="elapsedTime"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

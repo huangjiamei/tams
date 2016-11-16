@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.classservice;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -21,4 +22,6 @@ public interface IClassInfoService {
     List<UTClassInformation> getAllClassesFilterByUid(String uId);
 
     List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions);
+
+    List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId);
 }

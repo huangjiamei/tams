@@ -18,10 +18,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -577,5 +574,49 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return pairs;
+    }
+
+    @Override
+    public List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars) {
+        if(calendars == null || calendars.size() == 0)
+            return null;
+
+        List<TeachCalendarViewObject> viewObjects = new ArrayList<>(calendars.size());
+
+        for(TAMSTeachCalendar calendar : calendars) {
+            TeachCalendarViewObject viewObject = new TeachCalendarViewObject();
+
+            /** 不确定是否应该用id作为编号 **/
+            viewObject.setCode(calendar.getId());
+            viewObject.setDescription(calendar.getDescription());
+            viewObject.setElapsedTime(calendar.getElapsedTime());
+            viewObject.setStartTime(calendar.getStartTime());
+            viewObject.setEndTime(calendar.getEndTime());
+            viewObject.setTaTask(calendar.getTaTask());
+
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
+    }
+
+    @Override
+    public String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar) {
+        Integer count = 0;
+        if(allCalendar == null || allCalendar.size() ==0)
+            return count.toString();
+        else
+            for(TeachCalendarViewObject calendar : allCalendar) {
+                try {
+                    count += Integer.valueOf(calendar.getElapsedTime());
+                }
+                catch (NumberFormatException e) {
+                    count += 0;
+                }
+                finally {
+                    // do nothing
+                }
+            }
+        return count.toString();
     }
 }

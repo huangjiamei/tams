@@ -16,4 +16,6 @@ public interface TAMSDeptFundingDao {
     List<TAMSDeptFunding> selectDepartmentCurrBySession();
 
     List<TAMSDeptFunding> selectDepartmentPreBySession();
+
+    List<TAMSDeptFunding> getDeptFundPreByCondition(TAMSDeptFunding tamsDeptFunding);
 }

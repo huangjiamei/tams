@@ -130,9 +130,56 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
             deptFunding.setDepartment(departmentDao.getUTDepartmentById(Integer.valueOf(fundings[5].toString())));
             deptFunding.setSession(sessionDao.getUTSessionById(Integer.valueOf(fundings[8].toString())));
 
-
             list.add(deptFunding);
         }
+        return list;
+    }
+
+    //批次经费：学校历史经费过滤器
+    @Override
+    public List<TAMSDeptFunding> getDeptFundPreByCondition(TAMSDeptFunding tamsDeptFunding){
+        List<TAMSDeptFunding> list = new ArrayList<>();
+
+        //获取历史学期的记录（除去当前学期）
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        Query query = em.createNativeQuery("SELECT u.YEAR, u.TERM, SUM(t.PLAN_FUNDING) AS PLAN_FUNDING,SUM(t.ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(t.PHD_FUNDING) AS PHD_FUNDING,SUM(t.APPLY_FUNDING) AS APPLY_FUNDING,SUM(t.BONUS) AS BONUS , t.SESSION_ID FROM UNITIME_SESSION u JOIN TAMS_DEPT_FUNDINGS t ON u.UNIQUEID=t.SESSION_ID AND t.SESSION_ID !='"+curSession.getId()+"'GROUP BY t.SESSION_ID");
+        List<Object> column = query.getResultList();
+
+        //前台数据
+        String planFunding = tamsDeptFunding.getPlanFunding();
+        String applyFunding = tamsDeptFunding.getApplyFunding();
+        String actualFunding = tamsDeptFunding.getActualFunding();
+        String phdFunding = tamsDeptFunding.getPhdFunding();
+        String bonus = tamsDeptFunding.getBonus();
+        Query qr = em.createNativeQuery("SELECT u.YEAR, u.TERM FROM UNITIME_SESSION u WHERE u.UNIQUEID='"+tamsDeptFunding.getId()+"'");
+        List<Object> qrr = qr.getResultList();
+
+        TAMSDeptFunding deptPreFunding = new TAMSDeptFunding();
+
+        for (Object qrrs : qrr) {
+            Object[] t = (Object[]) qrrs;
+            String year = t[0].toString();
+            String term = t[1].toString();
+
+
+            //遍历所获取的记录并与前台比较
+
+            for (Object columns : column) {
+                Object funding[] = (Object[]) columns;
+
+                if (funding[0] ==year || funding[1]==term || funding[2] == planFunding || funding[3] == actualFunding || funding[4] == phdFunding || funding[5] == applyFunding || funding[6] == bonus) {
+                    deptPreFunding.setSessionId(funding[7].toString());
+                    deptPreFunding.setPlanFunding(funding[2].toString());
+                    deptPreFunding.setActualFunding(funding[3].toString());
+                    deptPreFunding.setPhdFunding(funding[4].toString());
+                    deptPreFunding.setApplyFunding(funding[5].toString());
+                    deptPreFunding.setBonus(funding[6].toString());
+                }
+            }
+
+        }
+
+        list.add(deptPreFunding);
         return list;
     }
 }

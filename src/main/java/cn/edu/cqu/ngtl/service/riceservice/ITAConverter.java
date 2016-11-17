@@ -1,22 +1,18 @@
 package cn.edu.cqu.ngtl.service.riceservice;
 
+import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -54,5 +50,13 @@ public interface ITAConverter {
 
     RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelationByRoleFunctionId);
 
+    List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
+
     List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist);
+
+    List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList);
+
+    List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars);
+
+    String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar);
 }

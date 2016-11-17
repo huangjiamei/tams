@@ -440,8 +440,13 @@
 			}
 
 		},
-		
 
+
+		/**
+		 * 在这里做匹配
+		 * @param search
+		 * @private
+		 */
 		_filter: function(search){
 
 			var self = this,
@@ -503,6 +508,10 @@
 
 		},
 
+		/**
+		 * 让当前选中框变蓝
+		 * @private
+		 */
 		_highlight: function(){
 
 			/* 
@@ -533,7 +542,7 @@
 			var selected = this.$el.prop('selectedIndex')
 			
 			if(this.$el.val()){
-				
+				// FIXME: options??
 				text = this.$el.find('option').eq(selected).text()
 
 				this.$input.val(text)
@@ -559,7 +568,10 @@
 
 		},
 		_focus: function(event){
-			
+			// fixme: 移动端会出问题
+
+			// alert('focus');
+
 			/* Toggle focus class */
 
 			this.$container.toggleClass('combo-focus', !this.opened);
@@ -577,6 +589,11 @@
 			this.settings.focusInput && event && event.currentTarget && event.currentTarget.nodeName == 'INPUT' && event.currentTarget.select()
 		},
 
+
+		/**
+		 * 弹出与当前input完全匹配的option
+		 * @private
+		 */
 		_blur: function(){
 
 			/**
@@ -605,21 +622,16 @@
 		},
 
 		_change: function(){
-
-
 			this._updateInput();
-
 		},
 
 		_getAll: function(){
 
 			return this.$items.filter('.option-item')
-
 		},
 		_getVisible: function(){
 
 			return this.$items.filter('.option-item').filter(':visible')
-
 		},
 
 		_getHovered: function(){

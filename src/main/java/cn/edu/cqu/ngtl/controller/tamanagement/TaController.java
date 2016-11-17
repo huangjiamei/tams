@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -143,6 +144,30 @@ public class TaController extends UifControllerBase {
         ));
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
+    }
+
+    @RequestMapping(params = "methodToCall=employ")
+    public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        List<MyTaViewObject> applicationList = taInfoForm.getAllApplication();
+
+        //遍历所有list，找到选中的行
+        List<MyTaViewObject> checkedList = new ArrayList<>();
+        for(MyTaViewObject per : applicationList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        boolean result = taService.employBatchByStuIdsWithClassId(
+                taConverter.extractIdsFromApplication(checkedList)
+        );
+
+        if(result)
+            return this.getTaListPage(form, request);
+        else
+            return this.getTaListPage(form, request); //应该返回错误信息
     }
 
     /**

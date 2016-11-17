@@ -1,11 +1,12 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
-import cn.edu.cqu.ngtl.dao.cm.CMProgramCourseDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -39,7 +40,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     private UTClassInstructorDao classInstructorDao;
 
     @Autowired
-    private CMProgramCourseDao programCourseDao;
+    private TAMSTeachCalendarDao teachCalendarDao;
 
     @Autowired
     private TAMSTaDao taDao;
@@ -106,6 +107,19 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             //FIXME 按照教师ID去查课程信息
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 //            return classInfoDao.selectBatchByIds(classIds);
+        }
+        return null;
+    }
+
+    @Override
+    public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
+        if(userInfoService.isSysAdmin(uId)) {
+            /** Access DataBase */
+            List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
+            return teachCalendar;
+        }
+        else if (userInfoService.isInstructor(uId)) {
+            return teachCalendarDao.selectAllByClassId(classId);
         }
         return null;
     }

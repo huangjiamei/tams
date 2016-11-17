@@ -90,7 +90,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                 <property name="items">
                                     <list>
                                         <!--具体显示的经费的tab表-->
@@ -530,10 +530,10 @@
                                                                                         <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                                             <property
                                                                                                     name="collectionObjectClass"
-                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                    value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
                                                                                             <property
                                                                                                     name="propertyName"
-                                                                                                    value="collection"/>
+                                                                                                    value="departmentCurrFundings"/>
                                                                                             <property
                                                                                                     name="layoutManager.renderSequenceField"
                                                                                                     value="false"/>
@@ -562,33 +562,33 @@
                                                                                                 <list>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="批次"
-                                                                                                          p:propertyName="field0"/>
+                                                                                                          p:propertyName="sessionName"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="学院"
-                                                                                                          p:propertyName="field1"/>
+                                                                                                          p:propertyName="department"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="预算经费"
-                                                                                                          p:propertyName="field1"
+                                                                                                          p:propertyName="planFunding"
                                                                                                           p:sortAs="numeric"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="申报经费"
-                                                                                                          p:propertyName="field2"
+                                                                                                          p:propertyName="applyFunding"
                                                                                                           p:sortAs="numeric"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="批准经费"
-                                                                                                          p:propertyName="field3"
+                                                                                                          p:propertyName="actualFunding"
                                                                                                           p:sortAs="numeric"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="博士经费"
-                                                                                                          p:propertyName="field4"
+                                                                                                          p:propertyName="phdFunding"
                                                                                                           p:sortAs="numeric"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="奖励经费"
-                                                                                                          p:propertyName="field5"
+                                                                                                          p:propertyName="bonus"
                                                                                                           p:sortAs="numeric"/>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="总经费"
-                                                                                                          p:propertyName="field5"
+                                                                                                          p:propertyName="total"
                                                                                                           p:sortAs="numeric"/>
 
                                                                                                 </list>
@@ -721,9 +721,9 @@
                                                                                                     <!--学院历史经费的表格-->
                                                                                                     <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                                                         <property name="collectionObjectClass"
-                                                                                                                  value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                                  value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
                                                                                                         <property name="propertyName"
-                                                                                                                  value="collection"/>
+                                                                                                                  value="departmentPreFundings"/>
                                                                                                         <property name="layoutManager.renderSequenceField"
                                                                                                                   value="false"/>
                                                                                                         <property name="layoutManager.richTable.render"
@@ -747,33 +747,33 @@
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="批次"
-                                                                                                                      p:propertyName="field0"/>
+                                                                                                                      p:propertyName="sessionName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="学院"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="department"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="预算经费"
-                                                                                                                      p:propertyName="field1"
+                                                                                                                      p:propertyName="planFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="申报经费"
-                                                                                                                      p:propertyName="field2"
+                                                                                                                      p:propertyName="applyFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="批准经费"
-                                                                                                                      p:propertyName="field3"
+                                                                                                                      p:propertyName="actualFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="博士津贴"
-                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:propertyName="phdFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="奖励经费"
-                                                                                                                      p:propertyName="field5"
+                                                                                                                      p:propertyName="bonus"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="总经费"
-                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:propertyName="total"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                             </list>
                                                                                                         </property>
@@ -1310,7 +1310,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -1375,7 +1375,7 @@
                                 </property>
                             </bean>
 
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"

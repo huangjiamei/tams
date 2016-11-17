@@ -8,6 +8,8 @@ import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -42,6 +44,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
+
+    @Autowired
+    private TAMSWorkflowStatusDao workflowStatusDao;
 
     @Autowired
     private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
@@ -230,6 +235,18 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public List<TAMSDeptFunding> getDepartmentCurrFundingBySession(){
+
+        return deptFundingDao.selectDepartmentCurrBySession();
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getDepartmentPreFundingBySession(){
+
+        return deptFundingDao.selectDepartmentPreBySession();
+    }
+
+    @Override
     public List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId) {
         if(roleFunctionId == null)
             return null;
@@ -244,5 +261,43 @@ public class AdminServiceImpl implements IAdminService{
             return null;
 
         return workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+    }
+
+    @Override
+    public String setRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId){
+        //如果找得到RFId就找找不到就创建新的
+        String roleFunctionId = getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
+
+        if(roleFunctionId == null) {
+            TAMSWorkflowRoleFunction workflowRoleFunction = new TAMSWorkflowRoleFunction();
+            workflowRoleFunction.setRoleId(roleId);
+            workflowRoleFunction.setWorkflowFunctionId(functionId);
+
+            roleFunctionId = getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
+        }
+
+        return roleFunctionId;
+    }
+
+    @Override
+    public void setWorkflowStatusRelationByRoleFunctionId(String rfId, RelationTable rt){
+        //将原有的RFId的值删除，再加入新的值
+        workflowStatusRDao.deleteTAMSWorkflowStatusRByRFId(rfId);
+
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+        int length = allStatus.size();
+        CheckBoxStatus[][] matrix = rt.getData();
+        for(int i=0;i<length;i++){
+            for(int j=0;j<length;j++){
+                if(matrix[i][j].isChecked()) {
+                    TAMSWorkflowStatusR dataWorkflowStatusR = new TAMSWorkflowStatusR();
+                    dataWorkflowStatusR.setStatusId1(allStatus.get(i).getId());
+                    dataWorkflowStatusR.setStatusId2(allStatus.get(j).getId());
+                    dataWorkflowStatusR.setRoleFunctionId(rfId);
+
+                    workflowStatusRDao.saveTAMSWorkflowStatusR(dataWorkflowStatusR);
+                }
+            }
+        }
     }
 }

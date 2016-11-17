@@ -112,6 +112,7 @@ public class ClassController extends UifControllerBase {
     }
 
     /**
+     * 获取学生申请当助教页面(填表)
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getApplyTAPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getApplyTAPage")
@@ -143,6 +144,63 @@ public class ClassController extends UifControllerBase {
         taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
 
         return null;
+    }
+
+
+    /**
+     * 获取教学日历页面
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getTeachingCalendar&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getTeachingCalendar")
+    public ModelAndView getTeachingCalendar(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+
+        //// FIXME: 16-11-16 不能写死，应该在跳转页面的时候就把classId传过来
+        String classId = "290739";
+
+        infoForm.setAllCalendar(
+                taConverter.TeachCalendarToViewObject(
+                        classInfoService.getAllTaTeachCalendarFilterByUidAndClassId(
+                                uId,
+                                classId)
+                )
+        );
+
+        infoForm.setTotalElapsedTime(
+                taConverter.countCalendarTotalElapsedTime(
+                        infoForm.getAllCalendar()
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageTeachingCalendar");
+    }
+
+    /**
+     * 获取新建教学日历页面
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getAddTeachCalendarPage&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getAddTeachCalendarPage")
+    public ModelAndView getAddTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageAddTeachCalendar");
+    }
+
+    /**
+     * 获取教学活动页面
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getTeachActivities&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getTeachActivities")
+    public ModelAndView getTeachActivities(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageTeachActivities");
     }
 
     /**
@@ -184,6 +242,7 @@ public class ClassController extends UifControllerBase {
 
 
     /**
+     * 获取教师申请助教的页面
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getRequestTaPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getRequestTaPage")
@@ -203,8 +262,7 @@ public class ClassController extends UifControllerBase {
     }
 
     /**
-     * 提交申请
-     *
+     * 教师提交申请助教的请求
      * */
     @RequestMapping(params = "methodToCall=submitRequestTaPage")
     public ModelAndView submitRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,

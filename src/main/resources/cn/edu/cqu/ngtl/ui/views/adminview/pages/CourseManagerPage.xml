@@ -84,7 +84,7 @@
             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                 <property name="items">
                     <list>
-                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                             <property name="items">
                                 <list>
                                     <bean parent="Uif-VerticalBoxSection"

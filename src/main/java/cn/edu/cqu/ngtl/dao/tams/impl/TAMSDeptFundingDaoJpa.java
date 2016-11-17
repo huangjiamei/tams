@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
+import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -205,16 +206,66 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
             List<Object> column = qr.getResultList();
             for(Object columns : column ){
                 TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+
                 UTSession utSession = new UTSession();
+
                 Object[] fundings = (Object[]) columns;
+
                 utSession.setYear(fundings[0].toString());
                 utSession.setTerm(fundings[1].toString());
+
                 deptFunding.setSession(utSession);
+
                 deptFunding.setPlanFunding(fundings[2].toString());
                 deptFunding.setActualFunding(fundings[3].toString());
                 deptFunding.setPhdFunding(fundings[4].toString());
                 deptFunding.setApplyFunding(fundings[5].toString());
                 deptFunding.setBonus(fundings[6].toString());
+
+                list.add(deptFunding);
+            }
+        }
+        return list;
+    }
+
+    //学院历史经费过滤器
+    @Override
+    public List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions){
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<TAMSDeptFunding> list = new ArrayList<>();
+        int countNull = 0;
+        //加通配符
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        if(countNull!= 8) {
+            Query qr = em.createNativeQuery("SELECT us.YEAR, us.TERM, ud.NAME, t.PLAN_FUNDING, t.APPLY_FUNDING, t.ACTUAL_FUNDING, t.PHD_FUNDING, t.BONUS FROM UNITIME_SESSION us JOIN UNITIME_DEPARTMENT ud JOIN TAMS_DEPT_FUNDING t ON us.UNIQUEID = t.SESSION_ID AND ud.UNIQUEID = t.DEPARTMENT_ID AND t.SESSION_ID != '"+curSession.getId()+"' AND ((us.YEAR LIKE '" + conditions.get("") + "') OR (us.TERM LIKE '"+conditions.get("")+"') OR (ud.NAME LIKE '"+conditions.get("")+"') OR (t.PLAN_FUNDING LIKE '"+conditions.get("")+"') OR (t.APPLY_FUNDING LIKE '"+conditions.get("")+"') OR (t.ACTUAL_FUNDING LIKE '"+conditions.get("")+"') OR (t.PHD_FUNDING LIKE '"+conditions.get("")+"') OR (t.BONUS LIKE '"+conditions.get("")+"'))");
+            List<Object> column = qr.getResultList();
+            for(Object columns : column ){
+                TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+
+                UTSession utSession = new UTSession();
+                UTDepartment utDepartment = new UTDepartment();
+
+                Object[] fundings = (Object[]) columns;
+
+                utSession.setYear(fundings[0].toString());
+                utSession.setTerm(fundings[1].toString());
+                utDepartment.setName(fundings[2].toString());
+
+                deptFunding.setSession(utSession);
+                deptFunding.setDepartment(utDepartment);
+
+                deptFunding.setPlanFunding(fundings[3].toString());
+                deptFunding.setApplyFunding(fundings[4].toString());
+                deptFunding.setActualFunding(fundings[5].toString());
+                deptFunding.setPhdFunding(fundings[6].toString());
+                deptFunding.setBonus(fundings[7].toString());
+
                 list.add(deptFunding);
             }
         }

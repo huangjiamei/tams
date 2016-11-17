@@ -20,4 +20,6 @@ public interface TAMSDeptFundingDao {
     List<TAMSDeptFunding> selectDepartmentPreBySession();
 
     List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions);
+
+    List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions);
 }

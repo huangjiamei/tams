@@ -15,7 +15,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.lang.Object;
 /**
  * Created by tangjing on 16-11-6.
  */
@@ -136,6 +137,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
     }
 
     //批次经费：学校历史经费过滤器
+    /*
     @Override
     public List<TAMSDeptFunding> getDeptFundPreByCondition(TAMSDeptFunding tamsDeptFunding){
         List<TAMSDeptFunding> list = new ArrayList<>();
@@ -182,4 +184,41 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         list.add(deptPreFunding);
         return list;
     }
+    */
+
+    //批次经费：学校历史经费过滤器
+    @Override
+    public List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<TAMSDeptFunding> list = new ArrayList<>();
+        int countNull = 0;
+        //加通配符
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        if (countNull != 7) {
+            Query qr = em.createNativeQuery("SELECT u.YEAR, u.TERM, SUM(t.PLAN_FUNDING) AS PLAN_FUNDING, SUM(t.ACTUAL_FUNDING) AS ACTUAL_FUNDING, SUM(t.PHD_FUNDING) AS PHD_FUNDING, SUM(t.APPLY_FUNDING) AS APPLY_FUNDING, SUM(t.BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION u ON (t.SESSION_ID = u.UNIQUEID) AND (t.SESSION_ID != '" + curSession.getId() + "') AND ((u.YEAR LIKE '" + conditions.get("") + "') OR (u.TERM LIKE '" + conditions.get("") + "') OR (t.PLAN_FUNDING LIKE '" + conditions.get("") + "') OR (t.ACTUAL_FUNDING LIKE '" + conditions.get("") + "') OR (t.APPLY_FUNDING LIKE '" + conditions.get("") + "') OR (t.PHD_FUNDING LIKE '" + conditions.get("") + "') OR (t.BONUS LIKE '" + conditions.get("") + "')) ");
+            List<Object> column = qr.getResultList();
+            for(Object columns : column ){
+                TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+                UTSession utSession = new UTSession();
+                Object[] fundings = (Object[]) columns;
+                utSession.setYear(fundings[0].toString());
+                utSession.setTerm(fundings[1].toString());
+                deptFunding.setSession(utSession);
+                deptFunding.setPlanFunding(fundings[2].toString());
+                deptFunding.setActualFunding(fundings[3].toString());
+                deptFunding.setPhdFunding(fundings[4].toString());
+                deptFunding.setApplyFunding(fundings[5].toString());
+                deptFunding.setBonus(fundings[6].toString());
+                list.add(deptFunding);
+            }
+        }
+        return list;
+    }
+
 }

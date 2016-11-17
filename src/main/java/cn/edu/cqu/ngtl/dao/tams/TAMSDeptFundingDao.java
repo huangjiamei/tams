@@ -2,6 +2,8 @@ package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 
+import java.util.Map;
+
 import java.util.List;
 
 /**
@@ -17,5 +19,5 @@ public interface TAMSDeptFundingDao {
 
     List<TAMSDeptFunding> selectDepartmentPreBySession();
 
-    List<TAMSDeptFunding> getDeptFundPreByCondition(TAMSDeptFunding tamsDeptFunding);
+    List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions);
 }

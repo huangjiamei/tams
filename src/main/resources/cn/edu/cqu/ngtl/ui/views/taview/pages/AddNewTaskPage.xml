@@ -157,11 +157,7 @@
                                                                                   p:required="true"
                                                                                   p:additionalCssClasses="col-lg-12 col-md-12 col-sm-12 col-xs-12"
                                                                                   p:propertyName="inputField2">
-
-
                                                                             </bean>
-
-
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -255,8 +251,7 @@
                                                                 </bean>
 
                                                                 <!--单份耗时，总耗时，文件-->
-                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                      p:additionalCssClasses="col-lg-12 col-md-12 ">
+                                                                <bean parent="Uif-VerticalBoxSection">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="单份耗时"
@@ -279,7 +274,8 @@
                                                                 </bean>
 
                                                                 <!--btn list-->
-                                                                <bean parent="Uif-VerticalBoxSection">
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:additionalCssClasses="col-lg-12 col-md-12 ">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean id="editor-submit-btn" parent="Uif-PrimaryActionButton"

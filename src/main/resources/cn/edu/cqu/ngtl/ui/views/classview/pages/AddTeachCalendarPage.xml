@@ -121,7 +121,7 @@
 
                                                     <bean parent="Uif-InputField" p:label="教学主题"
                                                           p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12"
-                                                          p:propertyName="inputField8"
+                                                          p:propertyName="teachCalendar.theme"
                                                           p:required="true">
                                                         <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
                                                         <!--在inputField里用p:control.watermarkText没有效果-->
@@ -130,7 +130,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-InputField" p:label="教学描述" p:propertyName="applyReason"
+                                                    <bean parent="Uif-InputField" p:label="教学描述" p:propertyName="teachCalendar.description"
                                                           p:additionalCssClasses="col-md-12"
                                                           p:required="true"
                                                           p:style="width:100%;margin-top:20px">
@@ -143,7 +143,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-InputField" p:label="助教任务" p:propertyName="applyReason"
+                                                    <bean parent="Uif-InputField" p:label="助教任务" p:propertyName="teachCalendar.taTask"
                                                           p:additionalCssClasses="col-md-12"
                                                           p:required="true"
                                                           p:style="width:100%;margin-top:20px">
@@ -162,7 +162,7 @@
                                                             <list>
                                                                 <bean parent="Uif-InputField" p:label="起始时间"
                                                                       p:additionalCssClasses="col-md-4"
-                                                                      p:propertyName="inputField6">
+                                                                      p:propertyName="teachCalendar.startTime">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl" p:size="10">
                                                                             <property name="datePicker">
@@ -187,7 +187,7 @@
                                                                 </bean>
                                                                 <bean parent="Uif-InputField" p:label="完成时间"
                                                                       p:additionalCssClasses="col-md-4"
-                                                                      p:propertyName="inputField7">
+                                                                      p:propertyName="teachCalendar.endTime">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl" p:size="10">
                                                                             <property name="datePicker">
@@ -213,7 +213,7 @@
                                                                 </bean>
                                                                 <bean parent="Uif-InputField" p:label="总耗时"
                                                                       p:additionalCssClasses="col-md-3"
-                                                                      p:propertyName="inputField8"/>
+                                                                      p:propertyName="teachCalendar.elapsedTime"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -240,7 +240,7 @@
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="创建"
                                                                       p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="copyxxx"
+                                                                      p:methodToCall="submitTeachCalendarPage"
                                                                       p:additionalCssClasses="icon-file2 bg-primary tamsbtn"/>
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="创建并继续"

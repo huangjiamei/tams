@@ -15,6 +15,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -122,5 +123,26 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return teachCalendarDao.selectAllByClassId(classId);
         }
         return null;
+    }
+
+    @Override
+    public boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
+        //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+        if(!userInfoService.isSysAdmin(uId)) {
+            return true;
+        }
+        else if (!userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            List<String> classIdStrings = new ArrayList();
+            for(Object obj : classIds)
+                classIdStrings.add(obj.toString());
+            if(classIdStrings.contains(classId)) {
+                teachCalendar.setClassId(classId);
+                return teachCalendarDao.insertByEntity(teachCalendar);
+            }
+            else
+                return false;
+        }
+        return false;
     }
 }

@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -187,6 +188,48 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getAddTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageAddTeachCalendar");
+    }
+
+    /**
+     * tijiao新建教学日历页面
+     *
+     **/
+    @RequestMapping(params = "methodToCall=submitTeachCalendarPage")
+    public ModelAndView submitTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        UserSession session = GlobalVariables.getUserSession();
+        String uId = session.getPrincipalId();
+
+        //// FIXME: 16-11-17 不能写死，应该在跳转页面的时候就把classId传过来
+        String classId = "290739";
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            infoForm.getTeachCalendar().setStartTime(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    infoForm.getTeachCalendar().getStartTime()
+                            )
+                    )
+            );
+            infoForm.getTeachCalendar().setEndTime(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    infoForm.getTeachCalendar().getEndTime()
+                            )
+                    )
+            );
+        }
+        catch (Exception e) {
+
+        }
+
+        classInfoService.instructorAddTeachCalendar(uId, classId, infoForm.getTeachCalendar());
 
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
     }

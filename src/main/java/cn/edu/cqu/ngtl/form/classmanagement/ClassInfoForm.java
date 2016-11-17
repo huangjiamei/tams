@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.form.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 
@@ -20,6 +21,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<TeachCalendarViewObject> allCalendar;
 
     private String totalElapsedTime;
+
+    private TAMSTeachCalendar teachCalendar;
 
     /**
      * 班级管理隐藏搜索框
@@ -42,6 +45,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     /** 页面上的学历选项 */
     private String eduBackground;
+
+    public TAMSTeachCalendar getTeachCalendar() {
+        return teachCalendar;
+    }
+
+    public void setTeachCalendar(TAMSTeachCalendar teachCalendar) {
+        this.teachCalendar = teachCalendar;
+    }
 
     public List<TeachCalendarViewObject> getAllCalendar() {
         return allCalendar;
@@ -66,8 +77,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     public void setEduBackground(String eduBackground) {
         this.eduBackground = eduBackground;
     }
-
-    /**********/
 
     public void setCondDepartmentName(String condDepartmentName) {
         this.condDepartmentName = condDepartmentName;

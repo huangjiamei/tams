@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -31,5 +32,10 @@ public class TAMSTeachCalendarDaoJpa implements TAMSTeachCalendarDao {
                 criteria.build()
         );
         return qr.getResults().size() != 0 ? qr.getResults() : null;
+    }
+
+    @Override
+    public boolean insertByEntity(TAMSTeachCalendar teachCalendar) {
+        return KRADServiceLocator.getDataObjectService().save(teachCalendar).getId() != null;
     }
 }

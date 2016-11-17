@@ -109,17 +109,18 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="恢复"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="huifu"
+                                                                                  p:methodToCall="setTaToLiving"
                                                                                   p:additionalCssClasses="bg-success tamsbtn">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="暂停"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="zanting"
+                                                                                  p:methodToCall="setTaToPause"
                                                                                   p:additionalCssClasses="bg-orange tamsbtn">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="解聘" p:methodToCall="jiepin"
+                                                                                  p:actionLabel="解聘"
+                                                                                  p:methodToCall="setTaToDismiss"
                                                                                   p:additionalCssClasses="bg-teal tamsbtn"/>
                                                                         </list>
                                                                     </property>
@@ -169,6 +170,8 @@
                                                                                   p:propertyName="contactPhone"/>
                                                                             <bean parent="Uif-DataField" p:label="发薪时间（每月）"
                                                                                   p:propertyName="payDay"/>
+                                                                            <bean parent="Uif-DataField" p:label="状态"
+                                                                                  p:propertyName="status"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

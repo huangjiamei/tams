@@ -74,6 +74,7 @@ public class TaController extends UifControllerBase {
 
         List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
 
+
         //遍历所有list，找到选中的行
         List<TaInfoViewObject> checkedList = new ArrayList<>();
         for(TaInfoViewObject per : taList) {
@@ -139,6 +140,7 @@ public class TaController extends UifControllerBase {
                 taService.getAllTaFilteredByUid(uId)
         ));
 
+
         taInfoForm.setAllApplication(taConverter.applicationToViewObject(
                 taService.getAllApplicationFilterByUid(uId)
         ));
@@ -168,6 +170,97 @@ public class TaController extends UifControllerBase {
             return this.getTaListPage(form, request);
         else
             return this.getTaListPage(form, request); //应该返回错误信息
+    }
+
+    /**
+     * 恢复助教
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=setTaToLiving")
+    public ModelAndView setTaToLiving(@ModelAttribute("KualiForm") UifFormBase form,
+                                      HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
+
+        List<MyTaViewObject> isOkToChange = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.PAUSED))
+                isOkToChange.add(per);
+        }
+
+        if (isOkToChange.isEmpty()) {
+            return this.getTaManagementPage(form, request);
+        }
+
+        boolean result = taService.changeStatusBatchByTaIds(
+                taConverter.extractIdsFromMyTaInfo(isOkToChange),
+                TA_STATUS.LIVING
+        );
+
+        if (result)
+            return this.getTaManagementPage(form, request);
+        else {
+            // TODO: 2016/11/12 等待错误信息设计
+            return this.getTaManagementPage(form, request);
+        }
+    }
+    /**
+     * 暂停助教
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=setTaToPause")
+    public ModelAndView setTaToPause(@ModelAttribute("KualiForm") UifFormBase form,
+                                     HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
+
+        List<MyTaViewObject> isOkToChange = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.LIVING))
+                isOkToChange.add(per);
+        }
+
+        int n = isOkToChange.size();
+
+        if (isOkToChange.isEmpty()) {
+            return this.getTaManagementPage(form, request);
+        }
+
+        n = taConverter.extractIdsFromMyTaInfo(isOkToChange).size();
+
+        boolean result = taService.changeStatusBatchByTaIds(
+                taConverter.extractIdsFromMyTaInfo(isOkToChange),
+                TA_STATUS.PAUSED
+        );
+
+        if (result)
+            return this.getTaManagementPage(form, request);
+        else {
+            // TODO: 2016/11/12 等待错误信息设计
+            return this.getTaManagementPage(form, request);
+        }
+    }
+
+    /**
+     * 解聘助教
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=setTaToDismiss")
+    public ModelAndView setTaToDismiss(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        // TODO: 2016/11/12 等待需求 
+        return this.getTaManagementPage(form, request);
     }
 
     /**

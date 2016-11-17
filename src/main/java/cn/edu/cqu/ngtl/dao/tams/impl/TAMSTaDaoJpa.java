@@ -73,6 +73,23 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     }
 
     @Override
+    public List<TAMSTa> selectBatchByTaIds(List<String> ids) {
+        List<TAMSTa> tas = new ArrayList<>();
+
+        for (String id : ids) {
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("taId", id));
+            QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                    TAMSTa.class,
+                    criteria.build()
+            );
+            if(qr.getResults().size() != 0)
+                tas.add(qr.getResults().get(0));
+        }
+
+        return tas.isEmpty() ? null : tas;
+    }
+
+    @Override
     public boolean updateByEntity(TAMSTa ta) {
         return KRADServiceLocator.getDataObjectService().save(ta) != null;
     }

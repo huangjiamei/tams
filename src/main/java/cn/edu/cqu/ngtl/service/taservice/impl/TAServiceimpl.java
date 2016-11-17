@@ -104,6 +104,7 @@ public class TAServiceimpl implements ITAService {
 
     @Override
     public boolean changeStatusBatchByIds(List<String> ids, String status) {
+
         List<TAMSTa> tas = taDao.selectBatchByIds(ids);
 
         for(TAMSTa ta : tas) {
@@ -143,6 +144,19 @@ public class TAServiceimpl implements ITAService {
                     return false;
             }
             else //新建信息失败
+                return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean changeStatusBatchByTaIds(List<String> ids, String status) {
+        List<TAMSTa> tas = taDao.selectBatchByTaIds(ids);
+
+        for (TAMSTa ta : tas) {
+            ta.setStatus(status);
+            if(!taDao.updateByEntity(ta))
                 return false;
         }
 

@@ -119,15 +119,15 @@
                                             <property name="items">
                                                 <list>
                                                     <!--类型，主题，指派-->
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="">
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="row">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-InputField"
-                                                                      p:additionalCssClasses="form-group col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"
                                                                       p:label="类型" p:instructionalText=""
                                                                       p:required="true"
-                                                                      p:propertyName="inputField1" p:width="auto">
+                                                                      p:propertyName="inputField1" >
                                                                     <property name="control">
                                                                         <bean parent="Uif-DropdownControl"
                                                                               p:additionalCssClasses="form-control"/>
@@ -137,15 +137,10 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-InputField" p:label="主题"
-                                                                      p:required="true"
-                                                                      p:additionalCssClasses="col-lg-4 col-md-4"
-                                                                      p:propertyName="inputField2"/>
-
                                                                 <bean parent="Uif-InputField"
-                                                                      p:additionalCssClasses="form-group col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="form-group col-lg-6 col-md-6 col-sm-12 col-xs-12"
                                                                       p:label="指派" p:instructionalText=""
-                                                                      p:propertyName="inputField3" p:width="auto">
+                                                                      p:propertyName="inputField3" >
                                                                     <property name="control">
                                                                         <bean parent="Uif-DropdownControl"
                                                                               p:additionalCssClasses="form-control"/>
@@ -155,6 +150,16 @@
                                                                               p:blankOption="true"/>
                                                                     </property>
                                                                 </bean>
+
+                                                                <bean parent="Uif-InputField" p:label="主题"
+                                                                      p:required="true"
+                                                                      p:additionalCssClasses="col-lg-12 col-md-12 col-sm-12 col-xs-12"
+                                                                      p:propertyName="inputField2">
+
+
+                                                                </bean>
+
+
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -162,7 +167,7 @@
                                                     <!--editor-->
                                                     <!--p:propertyName="editorContent" 对应form中的editorContent-->
                                                     <bean id="editor" parent="Uif-InputField"
-                                                          p:additionalCssClasses="form-group col-lg-12 col-md-12"
+                                                          p:additionalCssClasses="form-group col-lg-12 col-md-12 "
                                                           p:propertyName="editorContent">
                                                         <property name="onDocumentReadyScript"
                                                                   value="UE.getEditor('editor');"/>
@@ -175,15 +180,15 @@
 
 
                                                     <!--起始时间~完成度-->
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="">
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="row">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-InputField" p:label="起始时间"
-                                                                      p:additionalCssClasses="col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
                                                                       p:propertyName="inputField6">
                                                                     <property name="control">
-                                                                        <bean parent="Uif-TextControl" p:size="10">
+                                                                        <bean parent="Uif-TextControl"  >
                                                                             <property name="datePicker">
                                                                                 <bean parent="Uif-DatePicker">
                                                                                     <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
@@ -205,10 +210,10 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-InputField" p:label="完成时间"
-                                                                      p:additionalCssClasses="col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
                                                                       p:propertyName="inputField7">
                                                                     <property name="control">
-                                                                        <bean parent="Uif-TextControl" p:size="10">
+                                                                        <bean parent="Uif-TextControl"  >
                                                                             <property name="datePicker">
                                                                                 <bean parent="Uif-DatePicker">
                                                                                     <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
@@ -232,9 +237,9 @@
                                                                 </bean>
 
                                                                 <bean parent="Uif-InputField"
-                                                                      p:additionalCssClasses="form-group col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12"
                                                                       p:label="完成度" p:instructionalText=""
-                                                                      p:propertyName="inputField1" p:width="auto">
+                                                                      p:propertyName="inputField1" >
                                                                     <property name="control">
                                                                         <bean parent="Uif-DropdownControl"
                                                                               p:additionalCssClasses="form-control"/>
@@ -249,16 +254,16 @@
                                                     </bean>
 
                                                     <!--单份耗时，总耗时，文件-->
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="">
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="row">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-InputField" p:label="单份耗时"
                                                                       p:required="true"
-                                                                      p:additionalCssClasses="col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="col-lg-6 col-md-6 col-sm-12 col-xs-12"
                                                                       p:propertyName="inputField8"/>
                                                                 <bean parent="Uif-InputField" p:label="总耗时"
-                                                                      p:additionalCssClasses="col-lg-4 col-md-4"
+                                                                      p:additionalCssClasses="col-lg-6 col-md-6 col-sm-12 col-xs-12"
                                                                       p:propertyName="inputField9"/>
 
                                                                 <!--<bean parent="Uif-InputField" p:label="文件"-->

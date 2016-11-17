@@ -406,9 +406,13 @@ function refreshTableFilter(searchbox,tablebox) {
                     }
                 }
             });
-            jQuery(field.children()[0]).autocomplete({
-               source: eval("filterHintCache."+field.find("input")[0].name)
-            }).attr("class", "form-control input-sm uif-textControl column-filter");
+            //普通的搜索框
+            if (!jQuery(field.children()[0]).hasClass("hasDatepicker")){
+                jQuery(field.children()[0]).autocomplete({
+                    source: eval("filterHintCache."+field.find("input")[0].name)
+                }).attr("class", "form-control input-sm uif-textControl column-filter");
+            }
+
         }
         //为下拉框添加事件
         if (field.children()[0].tagName=='SELECT'){

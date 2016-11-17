@@ -119,7 +119,7 @@
                                                                                   p:methodToCall="copyxxx"
                                                                                   p:additionalCssClasses="icon-copy bg-success tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加教学计划"
+                                                                                  p:actionLabel="添加教学日历"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="addxxxx"
                                                                                   p:additionalCssClasses="icon-plus bg-primary tamsbtn">

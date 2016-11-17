@@ -350,48 +350,23 @@
                 <bean parent="Uif-SimpleGroup">
                     <property name="items">
                         <list>
-                            <bean parent="Demo-Menu-Researcher-ProposalGroup"/>
-                            <bean parent="Demo-Menu-Researcher-AwardGroup"/>
-                            <bean parent="Demo-Menu-Researcher-NegotiationGroup"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
+                                  p:linkText="教学班列表"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getRequestTaPage&amp;viewId=ClassView"
+                                  p:linkText="教师申报助教(在这里？)"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getApplyTAPage&amp;viewId=ClassView"
+                                  p:linkText="申请成为助教(在这里？)"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getTeachingCalendar&amp;viewId=ClassView"
+                                  p:linkText="教学日历"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getAddTeachCalendarPage&amp;viewId=ClassView"
+                                  p:linkText="新建教学日历"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getTeachActivities&amp;viewId=ClassView"
+                                  p:linkText="教学活动"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getAddActivityPage&amp;viewId=ClassView"
+                                  p:linkText="新建教学活动"/>
                         </list>
                     </property>
                 </bean>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="Demo-Menu-Researcher-ProposalGroup" parent="Uif-MenuList" p:headerText="Proposals">
-        <property name="items">
-            <list>
-                <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
-                      p:linkText="教学班"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-                <bean parent="Uif-SimpleHeaderFour" p:headerText="Lists"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="Demo-Menu-Researcher-AwardGroup" parent="Uif-MenuList" p:headerText="Awards">
-        <property name="items">
-            <list>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="Demo-Menu-Researcher-NegotiationGroup" parent="Uif-MenuList" p:headerText="Negotiations">
-        <property name="items">
-            <list>
-                <bean parent="Uif-Link" p:href="http://www.kuali.org"
-                      p:linkText="Kuali Website"/>
             </list>
         </property>
     </bean>
@@ -428,6 +403,10 @@
                                               p:linkText="任务类别管理"/>
                                         <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
                                               p:linkText="经费管理"/>
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
+                                              p:linkText="工作流管理"/>
+                                        <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaRewardPage&amp;viewId=AdminView"
+                                              p:linkText="助教酬劳管理"/>
                                     </list>
                                 </property>
                             </bean>

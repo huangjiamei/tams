@@ -169,16 +169,19 @@
                                                         <property name="items">
                                                             <list>
                                                                 <!--搜索框-->
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <bean id="searchTerm" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                     <property name="items">
                                                                         <list>
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
                                                                             <!--文字搜索-->
-                                                                            <bean parent="Uif-InputField" p:label="批次名称"
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:propertyName="permissionNM"/>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:label="总预算金额"
+
                                                                                   p:propertyName="permissionNM"/>
-                                                                            <bean parent="Uif-InputField" p:label="开始时间"
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:propertyName="permissionNM">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
@@ -203,7 +206,7 @@
                                                                                     </bean>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-InputField" p:label="结束时间"
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:propertyName="permissionNM">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"
@@ -228,9 +231,14 @@
                                                                                     </bean>
                                                                                 </property>
                                                                             </bean>
+
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
+
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
-                                                                                  p:additionalCssClasses="icon-search"
+                                                                                  p:additionalCssClasses="icon-search hidden-fields search-button"
                                                                                   p:methodToCall="xxxx"
                                                                                   p:style="margin:15px"/>
                                                                         </list>
@@ -238,7 +246,8 @@
                                                                 </bean>
 
                                                                 <!--table-->
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                <bean id="TermManageTable"  parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:onDocumentReadyScript = "refreshTableFilter(searchTerm,TermManageTable);"
                                                                       p:layoutManager.numberOfColumns="4">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>

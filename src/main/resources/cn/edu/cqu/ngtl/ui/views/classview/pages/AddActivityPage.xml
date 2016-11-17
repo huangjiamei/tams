@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="AddTeachCalendarPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="AddActivityPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
                 <!--header-->
@@ -42,10 +42,10 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-calendar4','课程','教学日历')">
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-calendar4','课程','教学活动')">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-HeaderOne" p:headerText="教学日历"/>
+                                        <bean parent="Uif-HeaderOne" p:headerText="教学活动"/>
                                     </list>
                                 </property>
                             </bean>
@@ -70,10 +70,10 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
                                                                   p:location.viewId="ClassView" p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="3" p:value="教学日历"
+                                                            <bean parent="Uif-KeyValueLocation" p:key="3" p:value="教学活动"
                                                                   p:location.viewId="ClassView" p:location.controllerMapping="/class"
-                                                                  p:location.methodToCall="getTeachingCalendar"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="4" p:value="新建教学日历"/>
+                                                                  p:location.methodToCall="getTeachActivities"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="4" p:value="新建活动"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -162,14 +162,14 @@
                                                                 <!--起始时间、结束时间、总耗时-->
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="margin-top:20px"
-                                                                      p:additionalCssClasses="">
+                                                                      p:additionalCssClasses="row col-md-12 col-lg-12">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="起始时间"
-                                                                                  p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
+                                                                                  p:additionalCssClasses="col-md-4 col-lg-4"
                                                                                   p:propertyName="inputField6">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextControl"  >
+                                                                                    <bean parent="Uif-TextControl" p:size="10">
                                                                                         <property name="datePicker">
                                                                                             <bean parent="Uif-DatePicker">
                                                                                                 <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
@@ -191,10 +191,10 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:label="完成时间"
-                                                                                  p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
+                                                                                  p:additionalCssClasses="col-md-4 col-lg-4"
                                                                                   p:propertyName="inputField7">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextControl"  >
+                                                                                    <bean parent="Uif-TextControl" p:size="10">
                                                                                         <property name="datePicker">
                                                                                             <bean parent="Uif-DatePicker">
                                                                                                 <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
@@ -216,23 +216,9 @@
                                                                                     </bean>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:additionalCssClasses="form-group col-lg-4 col-md-4 col-sm-12 col-xs-12"
-                                                                                  p:label="完成度" p:instructionalText=""
-                                                                                  p:propertyName="inputField1" >
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-DropdownControl"
-                                                                                          p:additionalCssClasses="form-control"/>
-                                                                                </property>
-                                                                                <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                          p:blankOption="true"/>
-                                                                                </property>
-                                                                            </bean>
-
-                                                                            <!--<bean parent="Uif-InputField" p:label="总耗时"-->
-                                                                                  <!--p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"-->
-                                                                                  <!--p:propertyName="inputField8"/>-->
+                                                                            <bean parent="Uif-InputField" p:label="总耗时"
+                                                                                  p:additionalCssClasses="col-md-4 col-lg-4"
+                                                                                  p:propertyName="inputField8"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -253,7 +239,7 @@
 
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="margin-top:20px"
-                                                                      p:additionalCssClasses="">
+                                                                      p:additionalCssClasses="row col-md-12 col-lg-12">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
@@ -282,6 +268,7 @@
                         </list>
                     </property>
                 </bean>
+
             </list>
         </property>
     </bean>

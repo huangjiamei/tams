@@ -140,10 +140,13 @@
                         </list>
                     </property>
                 </bean>
-
-
-
-
+                <bean parent="Uif-Page" p:id="pageAddActivity" p:title="课程日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="AddActivityPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

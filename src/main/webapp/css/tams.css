@@ -577,3 +577,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .combo-select select {
     display: none !important;
 }
+
+.edui-default .edui-editor {
+    width:100%!important;
+}

@@ -11,4 +11,5 @@ public interface TAMSWorkflowRoleFunctionDao {
 
     boolean setRoleFunction(TAMSWorkflowRoleFunction dataTAMSWorkflowRoleFunction);
 
+    TAMSWorkflowRoleFunction insertByEntity(TAMSWorkflowRoleFunction workflowRoleFunction);
 }

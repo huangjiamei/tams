@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -193,7 +194,7 @@ public class ClassController extends UifControllerBase {
     }
 
     /**
-     * tijiao新建教学日历页面
+     * 提交新建教学日历页面
      *
      **/
     @RequestMapping(params = "methodToCall=submitTeachCalendarPage")
@@ -229,7 +230,9 @@ public class ClassController extends UifControllerBase {
 
         }
 
-        classInfoService.instructorAddTeachCalendar(uId, classId, infoForm.getTeachCalendar());
+        TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        classInfoService.instructorAddTeachCalendar(uId, classId, added);
 
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
     }

@@ -39,4 +39,9 @@ public class TAMSWorkflowRoleFunctionDaoJpa implements TAMSWorkflowRoleFunctionD
     {
         return (KRADServiceLocator.getDataObjectService().save(dataTAMSWorkflowRoleFunction) != null);
     }
+
+    @Override
+    public TAMSWorkflowRoleFunction insertByEntity(TAMSWorkflowRoleFunction workflowRoleFunction) {
+        return KradDataServiceLocator.getDataObjectService().save(workflowRoleFunction);
+    }
 }

@@ -260,14 +260,17 @@ public class AdminServiceImpl implements IAdminService{
     @Override
     public String setRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId){
         //如果找得到RFId就找找不到就创建新的
-        String roleFunctionId = getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
+        String roleFunctionId = this.getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
 
         if(roleFunctionId == null) {
             TAMSWorkflowRoleFunction workflowRoleFunction = new TAMSWorkflowRoleFunction();
             workflowRoleFunction.setRoleId(roleId);
             workflowRoleFunction.setWorkflowFunctionId(functionId);
 
-            roleFunctionId = getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
+            //新增roleFunctionPair
+            workflowRoleFunction = workflowRoleFunctionDao.insertByEntity(workflowRoleFunction);
+
+            roleFunctionId = workflowRoleFunction.getId();
         }
 
         return roleFunctionId;
@@ -279,6 +282,7 @@ public class AdminServiceImpl implements IAdminService{
         workflowStatusRDao.deleteTAMSWorkflowStatusRByRFId(rfId);
 
         List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+
         int length = allStatus.size();
         CheckBoxStatus[][] matrix = rt.getData();
         for(int i=0;i<length;i++){

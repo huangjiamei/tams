@@ -107,6 +107,9 @@ public class ClassController extends UifControllerBase {
 
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
+            //跳转前加上classId
+            infoForm.setCurrClassId(id.toString());
+
         } catch (Exception e) {
 
         }
@@ -161,8 +164,9 @@ public class ClassController extends UifControllerBase {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
-        //// FIXME: 16-11-16 不能写死，应该在跳转页面的时候就把classId传过来
-        String classId = "290739";
+        String classId = infoForm.getCurrClassId();
+        if(classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageTeachingCalendar");
 
         infoForm.setAllCalendar(
                 taConverter.TeachCalendarToViewObject(
@@ -183,7 +187,6 @@ public class ClassController extends UifControllerBase {
 
     /**
      * 获取新建教学日历页面
-     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getAddTeachCalendarPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getAddTeachCalendarPage")
     public ModelAndView getAddTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -205,8 +208,7 @@ public class ClassController extends UifControllerBase {
         UserSession session = GlobalVariables.getUserSession();
         String uId = session.getPrincipalId();
 
-        //// FIXME: 16-11-17 不能写死，应该在跳转页面的时候就把classId传过来
-        String classId = "290739";
+        String classId = infoForm.getCurrClassId();
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -232,9 +234,38 @@ public class ClassController extends UifControllerBase {
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
-        classInfoService.instructorAddTeachCalendar(uId, classId, added);
+        if(classInfoService.instructorAddTeachCalendar(uId, classId, added))
+            return this.getTeachingCalendar(infoForm, request);
+        else //// FIXME: 16-11-18 应当返回错误页面
+            return this.getTeachingCalendar(infoForm, request);
+    }
 
-        return this.getModelAndView(infoForm, "pageAddTeachCalendar");
+    /**
+     * 删除教学日历
+     */
+    @RequestMapping(params = "methodToCall=deleteTeachCalendar")
+    public ModelAndView deleteTeachCalendar(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        /** uid **/
+        UserSession session = GlobalVariables.getUserSession();
+        String uId = session.getPrincipalId();
+
+        /** classid **/
+        String classId = infoForm.getCurrClassId();
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        /** calendarid **/
+        String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
+
+        if(classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId))
+            return this.getTeachingCalendar(infoForm, request);
+        else //// FIXME: 16-11-18 应当返回错误页面
+            return this.getTeachingCalendar(infoForm, request);
     }
 
     /**

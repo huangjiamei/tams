@@ -26,4 +26,6 @@ public interface IClassInfoService {
     List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId);
 
     boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar);
+
+    boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId);
 }

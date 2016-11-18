@@ -16,6 +16,11 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private static final long serialVersionUID = 230347454225549981L;
 
     /**
+     * 课程详细操作需要用到的id
+     */
+    private String currClassId;
+
+    /**
      * 教学日历相关
      */
     private List<TeachCalendarViewObject> allCalendar;
@@ -45,6 +50,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     /** 页面上的学历选项 */
     private String eduBackground;
+
+    public String getCurrClassId() {
+        return currClassId;
+    }
+
+    public void setCurrClassId(String currClassId) {
+        this.currClassId = currClassId;
+    }
 
     public TAMSTeachCalendar getTeachCalendar() {
         return teachCalendar;

@@ -55,6 +55,7 @@
 
                 <value>css/combo.select.css</value>
                 <value>css/jquery.contextmenu.css</value>
+                <value>css/jquery.dataTables.min.css</value>
                 <value>css/tams.css</value>
             </list>
         </property>

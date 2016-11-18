@@ -84,7 +84,7 @@
             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                 <property name="items">
                     <list>
-                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                             <property name="items">
                                 <list>
                                     <bean parent="Uif-VerticalBoxSection"
@@ -111,30 +111,35 @@
                                                     <property name="items">
                                                         <list>
                                                             <!--搜索框-->
-                                                            <bean parent="Uif-HorizontalBoxSection">
+                                                            <bean id="searchCourseManager" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                 <property name="items">
                                                                     <list>
                                                                         <!--文字搜索-->
-                                                                        <bean parent="Uif-InputField" p:label="课程名称"
+                                                                        <bean parent="Uif-InputField"
                                                                               p:propertyName="searchCourseNm"/>
-                                                                        <bean parent="Uif-InputField" p:label="课程编号"
+                                                                        <bean parent="Uif-InputField"
                                                                               p:propertyName="searchCourseNmb"/>
-                                                                        <bean parent="Uif-InputField" p:label="负责人"
+                                                                        <bean parent="Uif-InputField"
                                                                               p:propertyName="searchCourseManager"/>
-                                                                        <bean parent="Uif-InputField" p:label="职工号"
+                                                                        <bean parent="Uif-InputField"
                                                                               p:propertyName="searchCourseInsCode"/>
+                                                                        <!--占位-->
+                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                              p:messageText="占位" />
 
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="查询"
-                                                                              p:additionalCssClasses="icon-search"
-                                                                              p:style="margin:15px"/>
+                                                                              p:additionalCssClasses="icon-search hidden-fields search-button"
+                                                                              p:style="margin:15px"
+                                                                              p:refreshId="CourseManagerPage"/>
                                                                         <!--p:methodToCall="searchBatchApplicant"-->
                                                                     </list>
                                                                 </property>
                                                             </bean>
 
                                                             <!--table-->
-                                                            <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                            <bean id="CourseManagerTable"  parent="Uif-Disclosure-TableCollectionSection"
+                                                                  p:onDocumentReadyScript = "refreshTableFilter(searchCourseManager,CourseManagerTable);"
                                                                   p:layoutManager.numberOfColumns="4">
                                                                 <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
                                                                 <property name="collectionObjectClass"

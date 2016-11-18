@@ -36,8 +36,6 @@
     <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
-
-
                 <!--页面header-->
                 <bean id="applyForTaFormPageHeader" parent="Uif-HorizontalBoxSection"
                       p:additionalCssClasses="content-header">
@@ -84,7 +82,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
                                 <property name="items"  >
                                     <list>
                                         <!--申请表-->

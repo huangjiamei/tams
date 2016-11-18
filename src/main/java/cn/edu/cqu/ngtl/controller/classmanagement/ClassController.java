@@ -247,11 +247,22 @@ public class ClassController extends UifControllerBase {
     }
 
     /**
+     * 获取新建教学活动的页面
+     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getAddActivityPage&viewId=ClassView
+     **/
+    @RequestMapping(params = "methodToCall=getAddActivityPage")
+    public ModelAndView getAddActivityPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                           HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        return this.getModelAndView(infoForm, "pageAddActivity");
+    }
+
+    /**
      * 根据条件查询班级列表
      * @param form
      * @return
      */
-
     @RequestMapping(params = "methodToCall=searchClassByCondition")
     public ModelAndView searchClassByCondition(@ModelAttribute("KualiForm") UifFormBase form,
                                                HttpServletRequest request) {

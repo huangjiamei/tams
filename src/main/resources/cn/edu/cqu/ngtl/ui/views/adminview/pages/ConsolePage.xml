@@ -219,7 +219,7 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="#"
+                                                    <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
                                                           p:style="float:none!important;"
                                                           p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
                                                 </list>

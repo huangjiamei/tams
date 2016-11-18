@@ -83,7 +83,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -217,7 +217,7 @@
 
                                                                             <!--具体历史记录-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:additionalCssClasses="col-md-12">
+                                                                                  p:additionalCssClasses="col-md-12 col-lg-12">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!--重点：要给ul加css 就要用p:layoutManager.cssClasses="timeline"-->

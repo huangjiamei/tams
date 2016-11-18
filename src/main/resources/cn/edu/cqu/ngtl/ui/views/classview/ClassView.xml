@@ -54,6 +54,7 @@
                 <value>ueditor/themes/default/css/ueditor.min.css</value>
 
                 <value>css/combo.select.css</value>
+                <value>css/jquery.contextmenu.css</value>
                 <value>css/tams.css</value>
             </list>
         </property>
@@ -66,12 +67,27 @@
                 <value>ueditor/lang/zh-cn/zh-cn.js</value>
                 <value>js/json2.js</value>
                 <value>js/jquery.combo.select.js</value>
+                <value>js/jquery.contextmenu.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>
 
         <property name="applicationHeader">
             <bean id="MyHeader" parent="TestHeader" />
+        </property>
+
+        <!--classview特有的侧边栏-->
+        <!--但是某几页不需要侧边栏的需要额外处理-->
+        <property name="navigation">
+            <bean parent="Uif-MenuNavigationGroup">
+                <property name="items">
+                    <list>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="课程信息" p:methodToCall="getClassInfoPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="教学活动" p:methodToCall="getTeachActivities"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="教学日历" p:methodToCall="getTeachingCalendar"/>
+                    </list>
+                </property>
+            </bean>
         </property>
 
         <property name="items">

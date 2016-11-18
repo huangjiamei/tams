@@ -119,6 +119,7 @@
                                                                                               p:additionalCssClasses="icon-copy bg-success tamsbtn">
                                                                                         </bean>
                                                                                         <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:actionScript="checkAll()"
                                                                                               p:actionLabel="添加" p:methodToCall="addxxxx"
                                                                                               p:additionalCssClasses="icon-plus bg-teal tamsbtn"/>
                                                                                     </list>
@@ -155,11 +156,21 @@
 
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
+                                                                                                    <bean parent="Uif-InputField" p:label=""
+                                                                                                          p:additionalCssClasses="tams-activity-group-title"
+                                                                                                          p:propertyName="checked">
                                                                                                         <property name="control">
                                                                                                             <bean parent="Uif-CheckboxControl"/>
                                                                                                         </property>
                                                                                                     </bean>
+                                                                                                    <bean parent="Uif-InputField" p:label=""
+                                                                                                          p:additionalCssClasses="tams-activity-item-title"
+                                                                                                          p:propertyName="checked">
+                                                                                                        <property name="control">
+                                                                                                            <bean parent="Uif-CheckboxControl"/>
+                                                                                                        </property>
+                                                                                                    </bean>
+
                                                                                                     <!--组title和项目title样式不同，根据render进行区分。实际应用时修改render中的条件即可-->
                                                                                                     <bean parent="Uif-DataField" p:label="(标题)"
                                                                                                           p:propertyName="field0"

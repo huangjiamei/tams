@@ -80,7 +80,7 @@ public class ClassController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getClassInfoPage"})
+    @RequestMapping(params = {"methodToCall=getClassInfoPage"})
     public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         try {

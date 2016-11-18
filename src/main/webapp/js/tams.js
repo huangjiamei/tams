@@ -583,4 +583,14 @@ function initRightBtnMenu(targetid) {
     // });
 }
 
-
+/**
+ * 全选测试，还不能使用(功能完成后删除此行)
+ */
+function checkAll() {
+    // jQuery(".tams-activity-group-title").each(function () {
+    //     jQuery(this.childNodes[0]).attr("checked", true);
+    // });
+    // jQuery(".tams-activity-item-title").each(function () {
+    //     jQuery(this).attr("checked", "checked");
+    // });
+}

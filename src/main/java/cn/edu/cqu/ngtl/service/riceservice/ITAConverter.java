@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.riceservice;
 
+import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
@@ -7,6 +8,11 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -50,4 +56,14 @@ public interface ITAConverter {
     List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass);
 
     RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelationByRoleFunctionId);
+
+    List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
+
+    List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist);
+
+    List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList);
+
+    List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars);
+
+    String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar);
 }

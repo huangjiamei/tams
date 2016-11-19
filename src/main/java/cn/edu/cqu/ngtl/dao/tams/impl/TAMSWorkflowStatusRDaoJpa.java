@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -27,6 +28,18 @@ public class TAMSWorkflowStatusRDaoJpa implements TAMSWorkflowStatusRDao {
                 criteria.build()
         );
         return qr.getResults().size() != 0 ? qr.getResults() : null;
+    }
+
+    @Override
+    public boolean saveTAMSWorkflowStatusR(TAMSWorkflowStatusR dataTAMSWorkflowStatusR) {
+        dataTAMSWorkflowStatusR = KRADServiceLocator.getDataObjectService().save(dataTAMSWorkflowStatusR);
+        return dataTAMSWorkflowStatusR.getId() != null;
+    }
+
+    @Override
+    public void deleteTAMSWorkflowStatusRByRFId(String RFId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("roleFunctionId", RFId));
+        KRADServiceLocator.getDataObjectService().deleteMatching( TAMSWorkflowStatusR.class, criteria.build());
     }
 
 }

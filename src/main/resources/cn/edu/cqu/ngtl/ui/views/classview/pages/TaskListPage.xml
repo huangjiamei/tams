@@ -79,7 +79,7 @@
                 <bean parent="Uif-VerticalBoxSection"  p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -131,7 +131,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="  "
-                                                                                  p:propertyName="check1">
+                                                                                  p:propertyName="checked">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

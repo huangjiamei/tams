@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
+import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -10,8 +11,14 @@ import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -49,8 +56,13 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
-        if(informationlist == null || informationlist.size() == 0)
-            return null;
+        //没有数据的话返回一行空数据，否则表格消失
+        if(informationlist == null || informationlist.size() == 0) {
+            List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new ClassTeacherViewObject());
+            return nullObject;
+        }
+
         List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
 
         for (UTClassInformation information : informationlist) {
@@ -386,6 +398,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
             }
 
+            viewObject.setId(ta.getId());
+            viewObject.setStatus(ta.getStatus());
+
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
@@ -441,6 +456,8 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaGender(applicant.getGender());
                 viewObject.setTaBachelorMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
             }
+
+            viewObject.setApplicationClassId(application.getApplicationClassId());
 
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
@@ -506,6 +523,32 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
+    public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
+        List<DepartmentFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
+
+        for(TAMSDeptFunding deptFunding : allFundingBySession){
+            DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
+            viewObject.setBonus(deptFunding.getBonus());
+            viewObject.setApplyFunding(deptFunding.getApplyFunding());
+            viewObject.setPhdFunding(deptFunding.getPhdFunding());
+            viewObject.setActualFunding(deptFunding.getActualFunding());
+            viewObject.setPlanFunding(deptFunding.getPlanFunding());
+            viewObject.setDepartment(deptFunding.getDepartment().getName());
+            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
+                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
+                    Integer.valueOf(deptFunding.getPlanFunding());
+            viewObject.setTotal(total.toString());
+
+            if (deptFunding.getSession() != null ){
+                viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
+                        deptFunding.getSession().getTerm() + "季");
+            }
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    @Override
     public RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelations) {
         List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
         //如果连header都没有返回完全的空
@@ -542,5 +585,71 @@ public class TAConverterimpl implements ITAConverter {
         rt.setData(matrix);
 
         return rt;
+    }
+
+    @Override
+    public List<String> extractIdsFromTaInfo(List<TaInfoViewObject> checkedlist) {
+        List<String> ids = new ArrayList<>();
+
+        for(TaInfoViewObject per : checkedlist) {
+            ids.add(per.getId());
+        }
+
+        return ids;
+    }
+
+    @Override
+    public List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList) {
+        List<StuIdClassIdPair> pairs = new ArrayList<>(checkedList.size());
+
+        for(MyTaViewObject per : checkedList) {
+            pairs.add(new StuIdClassIdPair(per.getTaIdNumber(), per.getApplicationClassId()));
+        }
+
+        return pairs;
+    }
+
+    @Override
+    public List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars) {
+        if(calendars == null || calendars.size() == 0)
+            return null;
+
+        List<TeachCalendarViewObject> viewObjects = new ArrayList<>(calendars.size());
+
+        for(TAMSTeachCalendar calendar : calendars) {
+            TeachCalendarViewObject viewObject = new TeachCalendarViewObject();
+
+            /** 不确定是否应该用id作为编号 **/
+            viewObject.setCode(calendar.getId());
+            viewObject.setDescription(calendar.getDescription());
+            viewObject.setElapsedTime(calendar.getElapsedTime());
+            viewObject.setStartTime(calendar.getStartTime());
+            viewObject.setEndTime(calendar.getEndTime());
+            viewObject.setTaTask(calendar.getTaTask());
+
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
+    }
+
+    @Override
+    public String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar) {
+        Integer count = 0;
+        if(allCalendar == null || allCalendar.size() ==0)
+            return count.toString();
+        else
+            for(TeachCalendarViewObject calendar : allCalendar) {
+                try {
+                    count += Integer.valueOf(calendar.getElapsedTime());
+                }
+                catch (NumberFormatException e) {
+                    count += 0;
+                }
+                finally {
+                    // do nothing
+                }
+            }
+        return count.toString();
     }
 }

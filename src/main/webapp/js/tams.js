@@ -1,3 +1,42 @@
+/**
+ * 汉化datatable
+ */
+(function(){
+
+    var oLanguage={
+        "oAria": {
+            "sSortAscending": ": 升序排列",
+            "sSortDescending": ": 降序排列"
+        },
+        "oPaginate": {
+            "sFirst": "&laquo;",
+            "sLast": "&raquo;",
+            "sNext": "&rsaquo;",
+            "sPrevious": "&lsaquo;"
+        },
+        "sEmptyTable": "没有相关记录",
+        "sInfo": " _START_ - _END_/共_TOTAL_条数据",
+        "sInfoEmpty": "0-0/0 ",
+        "sInfoFiltered": "",
+        "sInfoPostFix": "",
+        "sDecimal": "",
+        "sInfoThousands": "",
+        "sLengthMenu": "每页显示_MENU_",
+        "sLoadingRecords": "正在载入...",
+        "sProcessing": "正在载入...",
+        "sSearch": "",
+        "sSearchPlaceholder": "",
+        "sUrl": "",
+        "sZeroRecords": "没有相关记录"
+    }
+
+    jQuery.fn.dataTable.defaults.oLanguage=oLanguage;
+    jQuery.extend( jQuery.fn.dataTable.defaults, {
+        "bSort": false,
+        "sPaginationType":"full_numbers",
+        //"sDom":"&lt;'top't&gt;&lt;'bottom'ilp&gt;" //自定义布局sdom，暂时没有生效
+    } );
+})();
 
 /**
  * 每次点击btn都会提交两次，
@@ -93,7 +132,7 @@ function drawStatusTransTable(boxid,tableJson){
     box.appendChild(tbl);
 }
 
-function save() {
+function save(id) {
     var tableTransObj = {
         "header":[],
         "data":[]
@@ -122,7 +161,7 @@ function save() {
         tableTransObj.data[i-1]=row_data;
     }
     document.getElementById('hidden-statusTrans').getElementsByTagName('textarea')[0].innerHTML = JSON.stringify(tableTransObj);
-   jQuery("#hidden-save").click();
+    jQuery("#hidden-save").click();
 
 }
 
@@ -259,6 +298,122 @@ function getBarChart(chartId,title,data) {
 
 }
 
+
+var filterHintCache = {
+
+    "searchCourseNm": [
+        "画法几何",
+        "空气污染控制工程",
+        "环境水资源学",
+        "建筑项目环境管理",
+        "建筑给排水工程（含高层）",
+        "有机化学II",
+        "建筑节能技术-可再生资源",
+        "环境认识实习",
+        "化工原理实验（Ⅱ）",
+        "水工程施工与项目管理",
+        "制冷压缩机",
+        "物理化学（Ⅰ-2）",
+        "化工制图",
+        "高聚物合成工艺学",
+        "医学图像处理实验",
+        "环境工程CAD",
+        "复合材料力学",
+        "健美操第一专项训练（6）",
+        "单片机原理及应用"],
+    "searchCourseNmb": [
+        "OE12002220",
+        "MSE13019220",
+        "EE15001025",
+        "LA19017740",
+        "PESS10456",
+        "ENVR21000240++",
+        "EnAd4033630",
+        "EnAd4033630",
+        "ColdFusion",
+        "EE11000",
+        "ME11027820",
+        "OE12005320",
+        "CEME21030640",
+        "ENVR21001230",
+        "BEE21023920",
+        "ENVR21031760",
+        "CHEM22036930",
+        "CHEN22037635",
+        "ME11025235",
+        "EP14004520",],
+    "searchCourseManager": [
+        "140388-006",
+        "140388-007",
+        "229337-003",
+        "229184-001",
+        "220040-005",
+        "239118-001",
+        "189333-002",
+        "210044-002",
+        "239118-002"],
+    "searchCourseInsCode": [
+        "test"],
+
+
+    "condCourseName": [
+        "画法几何",
+        "空气污染控制工程",
+        "环境水资源学",
+        "建筑项目环境管理",
+        "建筑给排水工程（含高层）",
+        "有机化学II",
+        "建筑节能技术-可再生资源",
+        "环境认识实习",
+        "化工原理实验（Ⅱ）",
+        "水工程施工与项目管理",
+        "制冷压缩机",
+        "物理化学（Ⅰ-2）",
+        "化工制图",
+        "高聚物合成工艺学",
+        "医学图像处理实验",
+        "环境工程CAD",
+        "复合材料力学",
+        "健美操第一专项训练（6）",
+        "单片机原理及应用"],
+    "condCourseCode": [
+        "OE12002220",
+        "MSE13019220",
+        "EE15001025",
+        "LA19017740",
+        "PESS10456",
+        "ENVR21000240++",
+        "EnAd4033630",
+        "EnAd4033630",
+        "ColdFusion",
+        "EE11000",
+        "ME11027820",
+        "OE12005320",
+        "CEME21030640",
+        "ENVR21001230",
+        "BEE21023920",
+        "ENVR21031760",
+        "CHEM22036930",
+        "CHEN22037635",
+        "ME11025235",
+        "EP14004520",],
+    "condClassNumber": [
+        "140388-006",
+        "140388-007",
+        "229337-003",
+        "229184-001",
+        "220040-005",
+        "239118-001",
+        "189333-002",
+        "210044-002",
+        "239118-002"],
+    "condInstructorName": [
+        "test"],
+
+}
+
+
+
 /**
  * 该函数可统一地将表格外的过滤器移动到表格内，隐藏搜索按钮，
  * 为所有过滤器添加按下搜索按钮事件（select添加onchange，input添加keydown）
@@ -293,9 +448,11 @@ function refreshTableFilter(searchbox,tablebox) {
         th.append(searchFields[i]);
         tr.append(th);
 
+        var field = jQuery(searchFields[i]);
+        //alert(field.children()[0].tagName);
         //为输入框添加事件
-        if (jQuery(searchFields[i]).children()[0].tagName=='INPUT'){
-            jQuery(searchFields[i]).on(
+        if (field.children()[0].tagName=='INPUT'){
+            jQuery(field.children()[0]).on(
                 {keydown: function(e){
                     var key = e.which;
                     if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
@@ -304,11 +461,20 @@ function refreshTableFilter(searchbox,tablebox) {
                     }
                 }
             });
+            //普通的搜索框
+            if (!jQuery(field.children()[0]).hasClass("hasDatepicker")){
+                jQuery(field.children()[0]).autocomplete({
+                    source: eval("filterHintCache."+field.find("input")[0].name)
+                }).attr("class", "form-control input-sm uif-textControl column-filter");
+            }
+
         }
         //为下拉框添加事件
-        if (jQuery(searchFields[i]).children()[0].tagName=='SELECT'){
-            jQuery(searchFields[i]).on('change', function () {
-
+        if (field.children()[0].tagName=='SELECT'){
+            jQuery(field.children()[0]).comboSelect();
+             // alert(field.tagName);
+            jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl column-filter");
+            jQuery(field.find("select")[0]).on('change', function () {
                 jQuery(searchButton).click();
             } );
         }
@@ -329,3 +495,124 @@ function initContentHeader(id,icon,bigTitle,smallTitle) {
     jQuery('#'+id).html('<h2> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h2>');
 }
 
+
+function initRightBtnMenu(targetid) {
+    //alert(jQuery(".table tbody tr").size())
+    jQuery("#"+targetid+" tbody").contextPopup({
+        title: '',
+        items: [
+            {
+                label:'添加',
+                icon:'icon-plus',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("添加"+id+', index='+index);
+
+                }
+            },
+            // {label:'查看',     icon:'icon-search',              action:function() { alert('clicked 3') } },
+            null, // divider
+            {
+                label:'选中',
+                icon:'icon-signup',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("选中"+id+', index='+index);
+                }
+            },
+            null, // divider
+            {
+                label:'查看',
+                icon:'icon-search',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("查看"+id+', index='+index);
+                }
+            },
+            {
+                label:'编辑',
+                icon:'icon-pencil2',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("编辑"+id+', index='+index);
+                }
+            },
+            null, // divider
+            {
+                label:'删除',
+                icon:'icon-remove2',
+                action:function(e) {
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    alert("删除"+id+', index='+index);
+                }
+            },
+        ]
+    });
+    // jQuery(document).click(function(e){
+    //     /**
+    //      * 由于rice的特性，table中每个元素的id都为xxx_line15的形式，可以通过id结合正则表达式来确定现在操作的到底是第几行
+    //      * 如果当前容器没找到id，那么就去子容器找。
+    //      *
+    //      * 非table的情况暂时未考虑
+    //      */
+    //     var id= jQuery(this.target).attr('id');
+    //     if (typeof(id) == "undefined")
+    //         id=jQuery(this.target.childNodes[0]).attr('id');
+    //     var index=id.match("line[0-9]+")[0].match('[0-9]+');
+    //     alert(id+', index='+index);
+    // });
+}
+
+/**
+ * 全选测试，还不能使用(功能完成后删除此行)
+ */
+function checkAll() {
+    // jQuery(".tams-activity-group-title").each(function () {
+    //     jQuery(this.childNodes[0]).attr("checked", true);
+    // });
+    // jQuery(".tams-activity-item-title").each(function () {
+    //     jQuery(this).attr("checked", "checked");
+    // });
+}
+
+/**
+ * 添加测边栏自动伸缩功能
+ */
+function setupAutoSideBar() {
+    // 让导航栏下来一点，避免缩放按键被遮挡
+    var nav = jQuery('#Uif-Navigation');
+    nav.css("margin-top", 60);
+
+    window.onresize = function(){
+        winWidth = document.body.clientWidth;
+        if (winWidth>1000){
+            if (jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
+                jQuery('.sidebar-collapse').click();
+            }
+        }else{
+            if (!jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
+                jQuery('.sidebar-collapse').click();
+            }
+        }
+    }
+}

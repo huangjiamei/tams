@@ -14,6 +14,7 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
@@ -22,6 +23,8 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Repository
 @Component("TAMSTaDaoJpa")
 public class TAMSTaDaoJpa implements TAMSTaDao {
+
+    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Override
     public List<TAMSTa> selectAll() {
@@ -46,11 +49,54 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         return tas.isEmpty()?null:tas;
     }
 
-
-    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
     @Override
     public List<Object> selectClassIdsByStudentId(String uId) {
         Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + uId + "'");
         return query.getResultList();
+    }
+
+    @Override
+    public List<TAMSTa> selectBatchByIds(List<String> ids) {
+        List<TAMSTa> tas = new ArrayList<>();
+
+        for(String id : ids) {
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("id", id));
+            QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                    TAMSTa.class,
+                    criteria.build()
+            );
+            if(qr.getResults().size() != 0)
+                tas.add(qr.getResults().get(0));
+        }
+
+        return tas.isEmpty()?null:tas;
+    }
+
+    @Override
+    public boolean updateByEntity(TAMSTa ta) {
+        return KRADServiceLocator.getDataObjectService().save(ta) != null;
+    }
+
+    @Override
+    public TAMSTa selectByStudentIdAndClassId(String stuId, String classId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("taClassId", classId),
+                        equal("taId",stuId)
+                )
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+
+        return qr.getResults().size() == 0 ? null : qr.getResults().get(0);
+    }
+
+    @Override
+    public boolean insertByEntity(TAMSTa newTa) {
+
+        return KRADServiceLocator.getDataObjectService().save(newTa) != null;
+
     }
 }

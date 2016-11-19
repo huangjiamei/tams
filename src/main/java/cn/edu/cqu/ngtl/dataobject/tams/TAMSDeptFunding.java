@@ -128,4 +128,5 @@ public class TAMSDeptFunding extends DataObjectBase implements Serializable {
     public void setDepartment(UTDepartment department) {
         this.department = department;
     }
+
 }

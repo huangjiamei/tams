@@ -48,21 +48,47 @@
             <list>
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
-                <value>css/tams.css</value>
                 <value>css/font-awesome.min.css</value>
+                <value>ueditor/themes/iframe.css</value>
+                <value>ueditor/third-party/codemirror/codemirror.css</value>
+                <value>ueditor/themes/default/css/ueditor.min.css</value>
+
+                <value>css/combo.select.css</value>
+                <value>css/jquery.contextmenu.css</value>
+                <value>css/jquery.dataTables.min.css</value>
+                <value>css/tams.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <!--<value>scripts/exam_526.js</value>-->
+                <value>scripts/jquery.dataTables.min.js</value>
+                <value>ueditor/ueditor.config.js</value>
+                <value>ueditor/ueditor.all.min.js</value>
+                <value>ueditor/lang/zh-cn/zh-cn.js</value>
                 <value>js/json2.js</value>
+                <value>js/jquery.combo.select.js</value>
+                <value>js/jquery.contextmenu.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>
 
         <property name="applicationHeader">
             <bean id="MyHeader" parent="TestHeader" />
+        </property>
+
+        <!--classview特有的侧边栏-->
+        <!--但是某几页不需要侧边栏的需要额外处理-->
+        <property name="navigation">
+            <bean parent="Uif-MenuNavigationGroup">
+                <property name="items">
+                    <list>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="课程信息" p:methodToCall="getClassInfoPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="教学活动" p:methodToCall="getTeachActivities"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="教学日历" p:methodToCall="getTeachingCalendar"/>
+                    </list>
+                </property>
+            </bean>
         </property>
 
         <property name="items">
@@ -108,6 +134,36 @@
                     <property name="items">
                         <list>
                             <ref bean="RequestTaPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTeachingCalendar" p:title="课程日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="TeachingCalendarPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageAddTeachCalendar" p:title="课程日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="AddTeachCalendarPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageTeachActivities" p:title="课程日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="TeachingActivitiesPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageAddActivity" p:title="课程日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="AddActivityPage"/>
                         </list>
                     </property>
                 </bean>

@@ -89,7 +89,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
@@ -123,7 +123,7 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="保存"
                                                                                               p:actionImagePlacement="LEFT"
-                                                                                              p:actionScript="save()"
+                                                                                              p:actionScript="save('@{workflowRelationTable}')"
                                                                                               p:additionalCssClasses="icon-save bg-success tamsbtn">
                                                                                         </bean>
                                                                                     </list>

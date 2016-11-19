@@ -1,8 +1,11 @@
 package cn.edu.cqu.ngtl.controller.tamanagement;
 
+import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -16,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -58,6 +63,66 @@ public class TaController extends UifControllerBase {
     }
 
     /**
+     * 恢复助教状态
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=recover")
+    public ModelAndView recover(@ModelAttribute("KualiForm") UifFormBase form,
+                                HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
+
+        //遍历所有list，找到选中的行
+        List<TaInfoViewObject> checkedList = new ArrayList<>();
+        for(TaInfoViewObject per : taList) {
+            if(per.isCheckBox() && per.getStatus().equals(TA_STATUS.PAUSED))
+                checkedList.add(per);
+        }
+
+        boolean result = taService.changeStatusBatchByIds(
+                taConverter.extractIdsFromTaInfo(checkedList),
+                TA_STATUS.LIVING
+        );
+
+        if(result)
+            return this.getTaListPage(form, request);
+        else
+            return this.getTaListPage(form, request); //应该返回错误信息
+    }
+
+    /**
+     * 暂停助教状态
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=pause")
+    public ModelAndView pause(@ModelAttribute("KualiForm") UifFormBase form,
+                              HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
+
+        //遍历所有list，找到选中的行
+        List<TaInfoViewObject> checkedList = new ArrayList<>();
+        for(TaInfoViewObject per : taList) {
+            if(per.isCheckBox() && per.getStatus().equals(TA_STATUS.LIVING))
+                checkedList.add(per);
+        }
+
+        boolean result = taService.changeStatusBatchByIds(
+                taConverter.extractIdsFromTaInfo(checkedList),
+                TA_STATUS.PAUSED
+        );
+
+        if(result)
+            return this.getTaListPage(form, request);
+        else
+            return this.getTaListPage(form, request); //应该返回错误信息
+    }
+
+    /**
      * 获取助教管理页面(包含我的助教列表+申请助教列表)
      * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
      * @param form
@@ -81,6 +146,29 @@ public class TaController extends UifControllerBase {
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
+    @RequestMapping(params = "methodToCall=employ")
+    public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        List<MyTaViewObject> applicationList = taInfoForm.getAllApplication();
+
+        //遍历所有list，找到选中的行
+        List<MyTaViewObject> checkedList = new ArrayList<>();
+        for(MyTaViewObject per : applicationList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        boolean result = taService.employBatchByStuIdsWithClassId(
+                taConverter.extractIdsFromApplication(checkedList)
+        );
+
+        if(result)
+            return this.getTaListPage(form, request);
+        else
+            return this.getTaListPage(form, request); //应该返回错误信息
+    }
 
     /**
      * 获取助教考核表(教师给助教评分)

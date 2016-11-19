@@ -90,7 +90,7 @@
 				<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
 					<property name="items">
 						<list>
-							<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6">
+							<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
 								<property name="items"  >
 									<list>
 										<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
@@ -172,7 +172,7 @@
 								</property>
 							</bean>
 
-							<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6">
+							<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
 								<property name="items">
 									<list>
 										<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-success">

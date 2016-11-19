@@ -11,4 +11,8 @@ public interface TAMSWorkflowStatusRDao {
 
     List<TAMSWorkflowStatusR> selectByRFId(String RFId);
 
+    boolean saveTAMSWorkflowStatusR(TAMSWorkflowStatusR dataTAMSWorkflowStatusR);
+
+    void deleteTAMSWorkflowStatusRByRFId(String RFId);
+
 }

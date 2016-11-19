@@ -1,10 +1,8 @@
 package cn.edu.cqu.ngtl.form.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,26 +15,73 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = 230347454225549981L;
 
-
-    /*
-    班级管理隐藏搜索框
+    /**
+     * 课程详细操作需要用到的id
      */
-    String condDepartmentName;
-    String condCourseName;
-    String condCourseCode;
-    String condClassNumber;
-    String condInstructorName;
+    private String currClassId;
 
-    String condJudgeStatus;
-    String condCourseHour;
-    String condCourseCredit;
-    String condIsRequired;
-    String condCourseClassification;
-    String condSessionYear;
-    String condProgramName;
+    /**
+     * 教学日历相关
+     */
+    private List<TeachCalendarViewObject> allCalendar;
+
+    private String totalElapsedTime;
+
+    private TAMSTeachCalendar teachCalendar;
+
+    /**
+     * 班级管理隐藏搜索框
+     *
+     **/
+    private String condDepartmentName;
+    private String condCourseName;
+    private String hintCourseName = "{[\"C++\",\"编译原理\",\"操作系统\"]}";
+    private String condCourseCode;
+    private String condClassNumber;
+    private String condInstructorName;
+
+    private String condJudgeStatus;
+    private String condCourseHour;
+    private String condCourseCredit;
+    private String condIsRequired;
+    private String condCourseClassification;
+    private String condSessionYear;
+    private String condProgramName;
 
     /** 页面上的学历选项 */
-    String eduBackground;
+    private String eduBackground;
+
+    public String getCurrClassId() {
+        return currClassId;
+    }
+
+    public void setCurrClassId(String currClassId) {
+        this.currClassId = currClassId;
+    }
+
+    public TAMSTeachCalendar getTeachCalendar() {
+        return teachCalendar;
+    }
+
+    public void setTeachCalendar(TAMSTeachCalendar teachCalendar) {
+        this.teachCalendar = teachCalendar;
+    }
+
+    public List<TeachCalendarViewObject> getAllCalendar() {
+        return allCalendar;
+    }
+
+    public void setAllCalendar(List<TeachCalendarViewObject> allCalendar) {
+        this.allCalendar = allCalendar;
+    }
+
+    public String getTotalElapsedTime() {
+        return totalElapsedTime;
+    }
+
+    public void setTotalElapsedTime(String totalElapsedTime) {
+        this.totalElapsedTime = totalElapsedTime;
+    }
 
     public String getEduBackground() {
         return eduBackground;
@@ -45,8 +90,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     public void setEduBackground(String eduBackground) {
         this.eduBackground = eduBackground;
     }
-
-    /**********/
 
     public void setCondDepartmentName(String condDepartmentName) {
         this.condDepartmentName = condDepartmentName;
@@ -58,6 +101,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCondCourseCode(String condCourseCode) {
         this.condCourseCode = condCourseCode;
+    }
+
+    public String getHintCourseName() {
+        return hintCourseName;
+    }
+
+    public void setHintCourseName(String hintCourseName) {
+        this.hintCourseName = hintCourseName;
     }
 
     public void setCondClassNumber(String condClassNumber) {

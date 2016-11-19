@@ -31,7 +31,8 @@
                            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-	<bean id="UpdateRolePage" parent="Uif-VerticalBoxSection">
+	<bean id="UpdateRolePage"   parent="Uif-VerticalBoxSection"
+		  p:additionalCssClasses="container" >
 		<property name="items">
 			<list>
 				<bean id="UpdateRolePageHeader" parent="Uif-HorizontalBoxSection"

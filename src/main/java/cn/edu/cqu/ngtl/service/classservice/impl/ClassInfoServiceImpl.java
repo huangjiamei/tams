@@ -1,11 +1,12 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
-import cn.edu.cqu.ngtl.dao.cm.CMProgramCourseDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -14,8 +15,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
@@ -39,7 +39,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     private UTClassInstructorDao classInstructorDao;
 
     @Autowired
-    private CMProgramCourseDao programCourseDao;
+    private TAMSTeachCalendarDao teachCalendarDao;
 
     @Autowired
     private TAMSTaDao taDao;
@@ -108,5 +108,59 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 //            return classInfoDao.selectBatchByIds(classIds);
         }
         return null;
+    }
+
+    @Override
+    public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
+        if(userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+            List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
+            return teachCalendar;
+        }
+        else if (userInfoService.isInstructor(uId)) {
+            return teachCalendarDao.selectAllByClassId(classId);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
+        //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+        if(!userInfoService.isSysAdmin(uId)) {
+            return true;
+        }
+        else if (!userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            Set<String> classIdStrings = new HashSet<>();
+            for(Object obj : classIds)
+                classIdStrings.add(obj.toString());
+            if(classIdStrings.contains(classId)) {
+                teachCalendar.setClassId(classId);
+                return teachCalendarDao.insertByEntity(teachCalendar);
+            }
+            else
+                return false;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId) {
+        //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+        if(!userInfoService.isSysAdmin(uId)) {
+            return true;
+        }
+        else if (!userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            Set<String> classIdStrings = new HashSet<>();
+            for(Object obj : classIds)
+                classIdStrings.add(obj.toString());
+            if(classIdStrings.contains(classId)) {
+                TAMSTeachCalendar teachCalendar = teachCalendarDao.selectById(teachCalendarId);
+                return teachCalendarDao.deleteByEntity(teachCalendar);
+            }
+            else
+                return false;
+        }
+        return false;
     }
 }

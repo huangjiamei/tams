@@ -41,7 +41,14 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="申报课表"/>
+                            <bean id="headerTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-address-book','课程','申报助教')">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-HeaderOne" p:headerText="申报助教"/>
+                                    </list>
+                                </property>
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -66,7 +73,7 @@
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3"
-                                                                  p:value="助教课程申请"/>
+                                                                  p:value="申报助教"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -82,7 +89,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
                                 <property name="items"  >
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">

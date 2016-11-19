@@ -452,27 +452,27 @@ function refreshTableFilter(searchbox,tablebox) {
         //alert(field.children()[0].tagName);
         //为输入框添加事件
         if (field.children()[0].tagName=='INPUT'){
-            jQuery(field.children()[0]).on(
-                {keydown: function(e){
-                    var key = e.which;
-                    if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
-                        e.preventDefault();
-                        jQuery(searchButton).click();
-                    }
-                }
-            });
+
             //普通的搜索框
             if (!jQuery(field.children()[0]).hasClass("hasDatepicker")){
                 jQuery(field.children()[0]).autocomplete({
                     source: eval("filterHintCache."+field.find("input")[0].name)
                 }).attr("class", "form-control input-sm uif-textControl column-filter");
             }
+            jQuery(field.children()[0]).on(
+                {keydown: function(e){
+                    var key = e.which;
+                    if(key == 13){
+                        e.preventDefault();
+                        jQuery(searchButton).click();
+                    }
+                }
+                });
 
         }
         //为下拉框添加事件
         if (field.children()[0].tagName=='SELECT'){
             jQuery(field.children()[0]).comboSelect();
-             // alert(field.tagName);
             jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl column-filter");
             jQuery(field.find("select")[0]).on('change', function () {
                 jQuery(searchButton).click();

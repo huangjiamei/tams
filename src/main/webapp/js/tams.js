@@ -599,17 +599,25 @@ function checkAll() {
  * 添加测边栏自动伸缩功能
  */
 function setupAutoSideBar() {
-    // 让导航栏下来一点，避免缩放按键被遮挡
+
     var nav = jQuery('#Uif-Navigation');
-    nav.css("margin-top", 60);
+    winWidth = document.body.clientWidth;
+    if (winWidth>768)
+        // 让导航栏下来一点，避免缩放按键被遮挡
+        nav.css("margin-top", 50);
 
     window.onresize = function(){
+        var nav = jQuery('#Uif-Navigation');
         winWidth = document.body.clientWidth;
-        if (winWidth>1000){
+        if (winWidth>768){
+            // 让导航栏下来一点，避免缩放按键被遮挡
+            nav.css("margin-top", 50);
             if (jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
                 jQuery('.sidebar-collapse').click();
             }
         }else{
+            //移动端应该将margin还原
+            nav.css("margin-top", 0);
             if (!jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
                 jQuery('.sidebar-collapse').click();
             }

@@ -7,6 +7,8 @@ public class MyTaViewObject {
 
     private boolean checkBox;
 
+    private String status;
+
     private String taName;
 
     private String taIdNumber;
@@ -103,5 +105,12 @@ public class MyTaViewObject {
 
     public void setPayDay(String payDay) {
         this.payDay = payDay;
+    }
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 }

@@ -51,6 +51,30 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<ClassFundingViewObject> classFundings;
 
     /**
+     * 经费管理页面————批次经费，过滤器的输入框
+     */
+    private String sTimes;
+    private String sPreFunds;
+    private String sApplyFunds;
+    private String sApprovalFunds;
+    private String sAddingFunds;
+    private String sRewardFunds;
+    private String sTotalFunds;
+
+    /**
+     * 经费管理页面————学院经费，过滤器的输入框
+     */
+    private String dTimes;
+    private String deptId;
+    private String dPreFunds;
+    private String dApplyFunds;
+    private String dApprovalFunds;
+    private String dAddingFunds;
+    private String dRewardFunds;
+    private String dTotalFunds;
+
+
+    /**
      * 批次管理页面
      */
 
@@ -59,6 +83,60 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private TermManagerViewObject currentTerm;
 
     private Integer termIndex;
+
+    /**
+     * 批次查询条件
+     */
+
+    private String termName;
+
+    private String startTime;
+
+    private String endTime;
+
+    public List<TermManagerViewObject> getOldTerms() {
+        return oldTerms;
+    }
+
+    public void setOldTerms(List<TermManagerViewObject> oldTerms) {
+        this.oldTerms = oldTerms;
+    }
+
+    private List<TermManagerViewObject> oldTerms;
+
+    public String getTermName() {
+        return termName;
+    }
+
+    public void setTermName(String termName) {
+        this.termName = termName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public String getTotalMoney() {
+        return totalMoney;
+    }
+
+    public void setTotalMoney(String totalMoney) {
+        this.totalMoney = totalMoney;
+    }
+
+    private String totalMoney;
 
     /**
      * 任务类别管理页面
@@ -476,5 +554,125 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setCourseClassificationIndex(Integer courseClassificationIndex) {
         this.courseClassificationIndex = courseClassificationIndex;
+    }
+
+    public String getsTimes() {
+        return sTimes;
+    }
+
+    public void setsTimes(String sTimes) {
+        this.sTimes = sTimes;
+    }
+
+    public String getsPreFunds() {
+        return sPreFunds;
+    }
+
+    public void setsPreFunds(String sPreFunds) {
+        this.sPreFunds = sPreFunds;
+    }
+
+    public String getsApplyFunds() {
+        return sApplyFunds;
+    }
+
+    public void setsApplyFunds(String sApplyFunds) {
+        this.sApplyFunds = sApplyFunds;
+    }
+
+    public String getsApprovalFunds() {
+        return sApprovalFunds;
+    }
+
+    public void setsApprovalFunds(String sApprovalFunds) {
+        this.sApprovalFunds = sApprovalFunds;
+    }
+
+    public String getsAddingFunds() {
+        return sAddingFunds;
+    }
+
+    public void setsAddingFunds(String sAddingFunds) {
+        this.sAddingFunds = sAddingFunds;
+    }
+
+    public String getsRewardFunds() {
+        return sRewardFunds;
+    }
+
+    public void setsRewardFunds(String sRewardFunds) {
+        this.sRewardFunds = sRewardFunds;
+    }
+
+    public String getsTotalFunds() {
+        return sTotalFunds;
+    }
+
+    public void setsTotalFunds(String sTotalFunds) {
+        this.sTotalFunds = sTotalFunds;
+    }
+
+    public String getdTimes() {
+        return dTimes;
+    }
+
+    public void setdTimes(String dTimes) {
+        this.dTimes = dTimes;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
+    }
+
+    public String getdPreFunds() {
+        return dPreFunds;
+    }
+
+    public void setdPreFunds(String dPreFunds) {
+        this.dPreFunds = dPreFunds;
+    }
+
+    public String getdApplyFunds() {
+        return dApplyFunds;
+    }
+
+    public void setdApplyFunds(String dApplyFunds) {
+        this.dApplyFunds = dApplyFunds;
+    }
+
+    public String getdApprovalFunds() {
+        return dApprovalFunds;
+    }
+
+    public void setdApprovalFunds(String dApprovalFunds) {
+        this.dApprovalFunds = dApprovalFunds;
+    }
+
+    public String getdAddingFunds() {
+        return dAddingFunds;
+    }
+
+    public void setdAddingFunds(String dAddingFunds) {
+        this.dAddingFunds = dAddingFunds;
+    }
+
+    public String getdRewardFunds() {
+        return dRewardFunds;
+    }
+
+    public void setdRewardFunds(String dRewardFunds) {
+        this.dRewardFunds = dRewardFunds;
+    }
+
+    public String getdTotalFunds() {
+        return dTotalFunds;
+    }
+
+    public void setdTotalFunds(String dTotalFunds) {
+        this.dTotalFunds = dTotalFunds;
     }
 }

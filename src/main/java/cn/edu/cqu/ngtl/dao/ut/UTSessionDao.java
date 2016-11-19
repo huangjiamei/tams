@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.dao.ut;
 
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -24,4 +25,6 @@ public interface UTSessionDao {
     boolean updateOneByEntity(UTSession session);
 
     boolean deleteOneByEntity(UTSession session);
+
+    List<UTSession> selectByCondition(String termName, String startTime, String endTime) throws ParseException;
 }

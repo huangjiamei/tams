@@ -27,5 +27,7 @@ public interface ITAService {
 
     boolean changeStatusBatchByIds(List<String> ids, String status);
 
+    boolean changeStatusBatchByTaIds(List<String> ids, String status);
+
     boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs);
 }

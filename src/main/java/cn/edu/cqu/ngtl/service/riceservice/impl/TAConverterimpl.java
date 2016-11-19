@@ -429,6 +429,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
             }
 
+            viewObject.setStatus(ta.getStatus());
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
@@ -597,6 +598,18 @@ public class TAConverterimpl implements ITAConverter {
 
         return ids;
     }
+
+    @Override
+    public List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList) {
+        List<String> ids = new ArrayList<>();
+
+        for (MyTaViewObject per : checkedList) {
+            ids.add(per.getTaIdNumber());
+        }
+
+        return ids;
+    }
+
 
     @Override
     public List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList) {

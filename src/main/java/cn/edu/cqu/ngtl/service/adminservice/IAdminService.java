@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 
+import java.text.ParseException;
 import java.util.List;
 
 /**
@@ -35,6 +36,8 @@ public interface IAdminService {
     boolean addTaIssueType(TAMSIssueType issueType);
 
     List<UTSession> getAllSessions();
+
+    List<UTSession> getSelectedSessions(String termName, String startTime, String endTime) throws ParseException;
 
     boolean addSession(UTSession session);
 

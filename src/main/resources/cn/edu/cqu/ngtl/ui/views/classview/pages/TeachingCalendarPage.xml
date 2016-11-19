@@ -32,6 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TeachingCalendarPage" parent="Uif-VerticalBoxSection"
+          p:onDocumentReadyScript="setupAutoSideBar()"
           p:additionalCssClasses="container" >
         <property name="items">
             <list>
@@ -89,7 +90,7 @@
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                 <property name="items"  >
                                     <list>
-                                         <bean parent="Uif-VerticalBoxSection"
+                                        <bean id="calenderBox" parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info">
                                             <property name="items">
                                                 <list>
@@ -119,16 +120,16 @@
                                                                                   p:methodToCall="copyxxx"
                                                                                   p:additionalCssClasses="icon-copy bg-success tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加教学计划"
+                                                                                  p:actionLabel="添加教学日历"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="addxxxx"
+                                                                                  p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-primary tamsbtn">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-Message" p:messageText="@{totalElapsedTime}"
+                                                                <bean id="elapsedTime" parent="Uif-Message" p:messageText="@{totalElapsedTime}"
                                                                       p:additionalCssClasses="label label-primary"
                                                                       p:style="float:right!important;color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
                                                                 <bean parent="Uif-Message" p:messageText="耗时小计："
@@ -191,7 +192,7 @@
 
                                                                         </list>
                                                                     </property>
-                                                                            </bean>
+                                                                </bean>
 
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
@@ -232,7 +233,8 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-ActionImage"
-                                                                                              p:methodToCall="xxxx">
+                                                                                              p:methodToCall="deleteTeachCalendar"
+                                                                                              p:refreshId="calenderBox">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
@@ -264,17 +266,4 @@
         </property>
     </bean>
 
-
-    <bean id="applicantDeleteConfirmationDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="警告："/>
-        <property name="promptText" value="确认要删除考生信息？"/>
-        <property name="dialogCssClass" value="confirmDialog"/>
-        <property name="footer.items">
-            <list>
-                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"/>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
-
-            </list>
-        </property>
-    </bean>
 </beans>

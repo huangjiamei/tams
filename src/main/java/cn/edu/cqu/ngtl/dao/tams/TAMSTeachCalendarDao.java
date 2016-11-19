@@ -11,4 +11,9 @@ public interface TAMSTeachCalendarDao {
 
     List<TAMSTeachCalendar> selectAllByClassId(String classId);
 
+    boolean insertByEntity(TAMSTeachCalendar teachCalendar);
+
+    TAMSTeachCalendar selectById(String id);
+
+    boolean deleteByEntity(TAMSTeachCalendar teachCalendar);
 }

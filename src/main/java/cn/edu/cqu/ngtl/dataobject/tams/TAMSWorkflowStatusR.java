@@ -15,7 +15,7 @@ public class TAMSWorkflowStatusR extends DataObjectBase implements Serializable 
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsWorkflowStatusR")
-    @SequenceGenerator(name="tamsWorlflowStatusR",sequenceName="TAMS_WORKFLOW_STATUS_RELATION_S",allocationSize=1)
+    @SequenceGenerator(name="tamsWorkflowStatusR",sequenceName="TAMS_WORKFLOW_STATUS_R_S",allocationSize=1)
     private String id;
 
     @Column(name = "STATUS_ID_1")

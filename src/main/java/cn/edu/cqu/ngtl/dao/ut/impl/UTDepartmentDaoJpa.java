@@ -19,6 +19,7 @@ public class UTDepartmentDaoJpa implements UTDepartmentDao {
 
 	}
 
+
 	@Override
 	public List<UTDepartment> getAllUTDepartments() {
 

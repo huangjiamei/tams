@@ -13,6 +13,11 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -47,6 +52,8 @@ public interface ITAConverter {
     List<ClassTeacherViewObject> classToViewObject(List<UTClass> allClassesFilterByUidAndCondition);
 
     List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
+
+    List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass);
 
     RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelationByRoleFunctionId);
 

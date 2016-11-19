@@ -4,8 +4,19 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSDeptFundingDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dao.ut.impl.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
+import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
+import org.kuali.rice.krad.data.KradDataFactoryBean;
+import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -16,6 +27,8 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+
 /**
  * Created by tangjing on 16-11-6.
  */
@@ -23,13 +36,16 @@ import java.util.List;
 @Component("TAMSDeptFundingDaoJpa")
 public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
-    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+    EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Autowired
     private UTSessionDao sessionDao;
 
     @Autowired
     private UTDepartmentDao departmentDao;
+
+    @Autowired
+    private UTClassInfoDao classInfoDao;
 
     @Override
     public List<TAMSDeptFunding> selectCurrBySession() {
@@ -38,15 +54,15 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         //先添加当前学期的内容
         TAMSDeptFunding current = new TAMSDeptFunding();
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        Query query = em.createNativeQuery("SELECT SUM(PLAN_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='"+curSession.getId()+"'");
+        Query query = em.createNativeQuery("SELECT SUM(PLAN_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='" + curSession.getId() + "'");
         String planFunding = String.valueOf(query.getResultList() != null ? query.getResultList().get(0) : null);
-        query = em.createNativeQuery("SELECT SUM(ACTUAL_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='"+curSession.getId()+"'");
+        query = em.createNativeQuery("SELECT SUM(ACTUAL_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='" + curSession.getId() + "'");
         String actualFunding = String.valueOf(query.getResultList() != null ? query.getResultList().get(0) : null);
-        query = em.createNativeQuery("SELECT SUM(PHD_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='"+curSession.getId()+"'");
+        query = em.createNativeQuery("SELECT SUM(PHD_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='" + curSession.getId() + "'");
         String phdFunding = String.valueOf(query.getResultList() != null ? query.getResultList().get(0) : null);
-        query = em.createNativeQuery("SELECT SUM(APPLY_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='"+curSession.getId()+"'");
+        query = em.createNativeQuery("SELECT SUM(APPLY_FUNDING) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='" + curSession.getId() + "'");
         String applyFunding = String.valueOf(query.getResultList() != null ? query.getResultList().get(0) : null);
-        query = em.createNativeQuery("SELECT SUM(BONUS) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='"+curSession.getId()+"'");
+        query = em.createNativeQuery("SELECT SUM(BONUS) FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID='" + curSession.getId() + "'");
         String bonus = String.valueOf(query.getResultList() != null ? query.getResultList().get(0) : null);
 
         current.setPlanFunding(planFunding);
@@ -65,7 +81,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         List<TAMSDeptFunding> list = new ArrayList<>();
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        Query query = em.createNativeQuery("SELECT SESSION_ID,SUM(PLAN_FUNDING) AS PLAN_FUNDING,SUM(ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(PHD_FUNDING) AS PHD_FUNDING,SUM(APPLY_FUNDING) AS APPLY_FUNDING,SUM(BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID!='"+curSession.getId()+"' GROUP BY t.SESSION_ID");
+        Query query = em.createNativeQuery("SELECT  t.SESSION_ID,SUM(PLAN_FUNDING) AS PLAN_FUNDING,SUM(ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(PHD_FUNDING) AS PHD_FUNDING,SUM(APPLY_FUNDING) AS APPLY_FUNDING,SUM(BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t, UNITIME_SESSION s WHERE t.SESSION_ID = s.UNIQUEID AND t.SESSION_ID!='" + curSession.getId() +"' GROUP BY t.SESSION_ID,s.YEAR,s.TERM ORDER BY s.YEAR DESC, s.TERM DESC");
         List<Object> columns = query.getResultList();
 
         for(Object column : columns) {
@@ -85,6 +101,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         return list;
     }
+
     @Override
     public List<TAMSDeptFunding> selectDepartmentCurrBySession(){
         List<TAMSDeptFunding> list = new ArrayList<>();
@@ -135,4 +152,28 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         }
         return list;
     }
+
+    @Override
+    public List<TAMSClassFunding> selectAll() {
+
+        List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSClassFunding.class).getResults();
+
+        for(TAMSClassFunding per : list) {
+            per.setClassInformation(
+                    classInfoDao.getOneById(
+                            Integer.parseInt(
+                                    per.getClassId()
+                            )
+                    )
+            );
+            if(per.getClassInformation() !=null)
+                per.setSession(
+                        sessionDao.getUTSessionById(
+                                per.getClassInformation().getSessionId()
+                        )
+                );
+        }
+        return list;
+    }
+
 }

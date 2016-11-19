@@ -1078,6 +1078,13 @@ public class adminController extends UifControllerBase {
                         adminService.getDepartmentPreFundingBySession()
                 )
         );
+
+        infoForm.setClassFundings(
+                taConverter.classFundingToViewObject(
+                        adminService.getFundingByClass()
+                )
+        );
+
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

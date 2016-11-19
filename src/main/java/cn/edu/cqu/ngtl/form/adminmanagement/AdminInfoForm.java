@@ -48,7 +48,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<DepartmentFundingViewObject> departmentPreFundings;
 
-
     private List<ClassFundingViewObject> classFundings;
 
     /**
@@ -165,14 +164,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setDepartmentPreFundings(List<DepartmentFundingViewObject> departmentPreFundings) {
         this.departmentPreFundings = departmentPreFundings;
-    }
-
-    public String getWorkflowRelationTable() {
-        return workflowRelationTable;
-    }
-
-    public void setWorkflowRelationTable(String workflowRelationTable) {
-        this.workflowRelationTable = workflowRelationTable;
     }
 
     public List<SessionFundingViewObject> getSessionFundings() {

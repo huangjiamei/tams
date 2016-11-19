@@ -4,7 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
-import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
+import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -28,6 +28,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
@@ -50,6 +51,9 @@ public class ClassController extends UifControllerBase {
 
     @Autowired
     private ITAService taService;
+
+    @Autowired
+    private ExcelService excelService;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -376,7 +380,7 @@ public class ClassController extends UifControllerBase {
      */
     @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportClassListExcel"})
     public ModelAndView exportClassListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
-                                             HttpServletResponse response) throws Exception {
+                                             HttpServletResponse response){
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
 
@@ -389,11 +393,18 @@ public class ClassController extends UifControllerBase {
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + System.currentTimeMillis() + ".xls";
 
-        String filePath = new ExcelServiceImpl().printClasslistExcel(classList, "exportfolder", fileName, "2003");
-        String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
-                .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+        try {
+            String filePath = excelService.printClasslistExcel(classList, "exportfolder", fileName, "2003");
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+            return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+        }
+        catch (IOException e) {
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm, baseUrl + "/tams");
+        }
     }
 
 

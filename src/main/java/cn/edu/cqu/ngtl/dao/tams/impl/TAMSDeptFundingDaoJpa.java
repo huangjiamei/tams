@@ -65,7 +65,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         List<TAMSDeptFunding> list = new ArrayList<>();
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        Query query = em.createNativeQuery("SELECT SESSION_ID,SUM(PLAN_FUNDING) AS PLAN_FUNDING,SUM(ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(PHD_FUNDING) AS PHD_FUNDING,SUM(APPLY_FUNDING) AS APPLY_FUNDING,SUM(BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID!='"+curSession.getId()+"' GROUP BY t.SESSION_ID");
+        Query query = em.createNativeQuery("SELECT  t.SESSION_ID,SUM(PLAN_FUNDING) AS PLAN_FUNDING,SUM(ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(PHD_FUNDING) AS PHD_FUNDING,SUM(APPLY_FUNDING) AS APPLY_FUNDING,SUM(BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t, UNITIME_SESSION s WHERE t.SESSION_ID = s.UNIQUEID AND t.SESSION_ID!='" + curSession.getId() +"' GROUP BY t.SESSION_ID,s.YEAR,s.TERM ORDER BY s.YEAR DESC, s.TERM DESC");
         List<Object> columns = query.getResultList();
 
         for(Object column : columns) {
@@ -85,6 +85,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         return list;
     }
+
     @Override
     public List<TAMSDeptFunding> selectDepartmentCurrBySession(){
         List<TAMSDeptFunding> list = new ArrayList<>();

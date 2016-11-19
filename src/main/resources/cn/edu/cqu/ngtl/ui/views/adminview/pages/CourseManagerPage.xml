@@ -115,13 +115,13 @@
                                                                 <property name="items">
                                                                     <list>
                                                                         <!--文字搜索-->
-                                                                        <bean parent="Uif-InputField"
+                                                                        <bean parent="Uif-InputField" p:label="课程名称"
                                                                               p:propertyName="searchCourseNm"/>
-                                                                        <bean parent="Uif-InputField"
+                                                                        <bean parent="Uif-InputField" p:label="课程编号"
                                                                               p:propertyName="searchCourseNmb"/>
-                                                                        <bean parent="Uif-InputField"
+                                                                        <bean parent="Uif-InputField" p:label="负责人"
                                                                               p:propertyName="searchCourseManager"/>
-                                                                        <bean parent="Uif-InputField"
+                                                                        <bean parent="Uif-InputField" p:label="职工号"
                                                                               p:propertyName="searchCourseInsCode"/>
                                                                         <!--占位-->
                                                                         <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
@@ -129,10 +129,11 @@
 
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="查询"
-                                                                              p:additionalCssClasses="icon-search hidden-fields search-button"
+                                                                              p:additionalCssClasses="icon-search"
                                                                               p:style="margin:15px"
+                                                                              p:methodToCall="searchCourseManagerByCondition"
                                                                               p:refreshId="CourseManagerPage"/>
-                                                                        <!--p:methodToCall="searchBatchApplicant"-->
+
                                                                     </list>
                                                                 </property>
                                                             </bean>

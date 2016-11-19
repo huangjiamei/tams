@@ -13,8 +13,9 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
+import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
@@ -41,7 +42,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
+import java.util.HashMap;
 /**
  * Created by awake on 2016-10-21.
  */
@@ -57,6 +59,9 @@ public class adminController extends UifControllerBase {
 
     @Autowired
     private ITAConverter taConverter;
+
+    @Autowired
+    private IAdminConverter adminConverter;
 
 
     @RequestMapping(params = "methodToCall=logout")
@@ -415,7 +420,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getCourseManagerPage")
     public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-        infoForm.setCourseManagerViewObjects(new AdminConverterimpl().getCourseManagerToTableViewObject(
+        infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
                 new TAMSCourseManagerDaoJpa().getAllCourseManager()
         ));
         return this.getModelAndView(infoForm, "pageCourseManager");
@@ -466,6 +471,26 @@ public class adminController extends UifControllerBase {
         return null;
     }
 
+
+    /**
+     * 课程负责人过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchCourseManagerByCondition"})
+    public ModelAndView searchCourseManagerByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("CourseName", infoForm.getSearchCourseNm());
+        conditions.put("CourseNumber", infoForm.getSearchCourseNmb());
+        conditions.put("InstructorName", infoForm.getSearchCourseManager());
+        conditions.put("InstructorCode", infoForm.getSearchCourseInsCode());
+        //转换成页面所需要的数据对象并调用DAO
+        infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
+                adminService.getCourseManagerByCondition(conditions)
+                )
+        );
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
 
     /**
      * 删除课程负责人

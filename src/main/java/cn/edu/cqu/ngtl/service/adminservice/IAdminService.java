@@ -7,7 +7,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 
 import java.text.ParseException;
 import java.util.List;
-
+import java.util.Map;
 /**
  * Created by tangjing on 16-10-25.
  */
@@ -66,4 +66,6 @@ public interface IAdminService {
     List<TAMSDeptFunding> getDepartmentPreFundingBySession();
 
     List<TAMSClassFunding> getFundingByClass();
+
+    List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions);
 }

@@ -12,6 +12,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
+import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
@@ -29,6 +30,8 @@ import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
+import java.util.Map;
+import java.lang.Object;
 /**
  * Created by tangjing on 16-11-6.
  */
@@ -147,8 +150,142 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
             deptFunding.setDepartment(departmentDao.getUTDepartmentById(Integer.valueOf(fundings[5].toString())));
             deptFunding.setSession(sessionDao.getUTSessionById(Integer.valueOf(fundings[8].toString())));
 
-
             list.add(deptFunding);
+        }
+        return list;
+    }
+
+    //批次经费：学校历史经费过滤器
+    /*
+    @Override
+    public List<TAMSDeptFunding> getDeptFundPreByCondition(TAMSDeptFunding tamsDeptFunding){
+        List<TAMSDeptFunding> list = new ArrayList<>();
+
+        //获取历史学期的记录（除去当前学期）
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        Query query = em.createNativeQuery("SELECT u.YEAR, u.TERM, SUM(t.PLAN_FUNDING) AS PLAN_FUNDING,SUM(t.ACTUAL_FUNDING) AS ACTUAL_FUNDING,SUM(t.PHD_FUNDING) AS PHD_FUNDING,SUM(t.APPLY_FUNDING) AS APPLY_FUNDING,SUM(t.BONUS) AS BONUS , t.SESSION_ID FROM UNITIME_SESSION u JOIN TAMS_DEPT_FUNDINGS t ON u.UNIQUEID=t.SESSION_ID AND t.SESSION_ID !='"+curSession.getId()+"'GROUP BY t.SESSION_ID");
+        List<Object> column = query.getResultList();
+
+        //前台数据
+        String planFunding = tamsDeptFunding.getPlanFunding();
+        String applyFunding = tamsDeptFunding.getApplyFunding();
+        String actualFunding = tamsDeptFunding.getActualFunding();
+        String phdFunding = tamsDeptFunding.getPhdFunding();
+        String bonus = tamsDeptFunding.getBonus();
+        Query qr = em.createNativeQuery("SELECT u.YEAR, u.TERM FROM UNITIME_SESSION u WHERE u.UNIQUEID='"+tamsDeptFunding.getId()+"'");
+        List<Object> qrr = qr.getResultList();
+
+        TAMSDeptFunding deptPreFunding = new TAMSDeptFunding();
+
+        for (Object qrrs : qrr) {
+            Object[] t = (Object[]) qrrs;
+            String year = t[0].toString();
+            String term = t[1].toString();
+
+
+            //遍历所获取的记录并与前台比较
+
+            for (Object columns : column) {
+                Object funding[] = (Object[]) columns;
+
+                if (funding[0] ==year || funding[1]==term || funding[2] == planFunding || funding[3] == actualFunding || funding[4] == phdFunding || funding[5] == applyFunding || funding[6] == bonus) {
+                    deptPreFunding.setSessionId(funding[7].toString());
+                    deptPreFunding.setPlanFunding(funding[2].toString());
+                    deptPreFunding.setActualFunding(funding[3].toString());
+                    deptPreFunding.setPhdFunding(funding[4].toString());
+                    deptPreFunding.setApplyFunding(funding[5].toString());
+                    deptPreFunding.setBonus(funding[6].toString());
+                }
+            }
+
+        }
+
+        list.add(deptPreFunding);
+        return list;
+    }
+    */
+
+    //批次经费：学校历史经费过滤器
+    @Override
+    public List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<TAMSDeptFunding> list = new ArrayList<>();
+        int countNull = 0;
+        //加通配符
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        if (countNull != 7) {
+            Query qr = em.createNativeQuery("SELECT u.YEAR, u.TERM, SUM(t.PLAN_FUNDING) AS PLAN_FUNDING, SUM(t.ACTUAL_FUNDING) AS ACTUAL_FUNDING, SUM(t.PHD_FUNDING) AS PHD_FUNDING, SUM(t.APPLY_FUNDING) AS APPLY_FUNDING, SUM(t.BONUS) AS BONUS FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION u ON (t.SESSION_ID = u.UNIQUEID) AND (t.SESSION_ID != '" + curSession.getId() + "') AND ((u.YEAR LIKE '" + conditions.get("") + "') OR (u.TERM LIKE '" + conditions.get("") + "') OR (SUM(t.PLAN_FUNDING) LIKE '" + conditions.get("") + "') OR (SUM(t.ACTUAL_FUNDING) LIKE '" + conditions.get("") + "') OR (SUM(t.APPLY_FUNDING) LIKE '" + conditions.get("") + "') OR (SUM(t.PHD_FUNDING) LIKE '" + conditions.get("") + "') OR (SUM(t.BONUS) LIKE '" + conditions.get("") + "')) GROUP BY t.SESSION_ID");
+            List<Object> column = qr.getResultList();
+            for(Object columns : column ){
+                TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+
+                UTSession utSession = new UTSession();
+
+                Object[] fundings = (Object[]) columns;
+
+                utSession.setYear(fundings[0].toString());
+                utSession.setTerm(fundings[1].toString());
+
+                deptFunding.setSession(utSession);
+
+                deptFunding.setPlanFunding(fundings[2].toString());
+                deptFunding.setActualFunding(fundings[3].toString());
+                deptFunding.setPhdFunding(fundings[4].toString());
+                deptFunding.setApplyFunding(fundings[5].toString());
+                deptFunding.setBonus(fundings[6].toString());
+
+                list.add(deptFunding);
+            }
+        }
+        return list;
+    }
+
+    //学院历史经费过滤器
+    @Override
+    public List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions){
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<TAMSDeptFunding> list = new ArrayList<>();
+        int countNull = 0;
+        //加通配符
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        if(countNull!= 8) {
+            Query qr = em.createNativeQuery("SELECT us.YEAR, us.TERM, ud.NAME, t.PLAN_FUNDING, t.APPLY_FUNDING, t.ACTUAL_FUNDING, t.PHD_FUNDING, t.BONUS FROM UNITIME_SESSION us JOIN UNITIME_DEPARTMENT ud JOIN TAMS_DEPT_FUNDING t ON us.UNIQUEID = t.SESSION_ID AND ud.UNIQUEID = t.DEPARTMENT_ID AND t.SESSION_ID != '"+curSession.getId()+"' AND ((us.YEAR LIKE '" + conditions.get("") + "') OR (us.TERM LIKE '"+conditions.get("")+"') OR (ud.NAME LIKE '"+conditions.get("")+"') OR (t.PLAN_FUNDING LIKE '"+conditions.get("")+"') OR (t.APPLY_FUNDING LIKE '"+conditions.get("")+"') OR (t.ACTUAL_FUNDING LIKE '"+conditions.get("")+"') OR (t.PHD_FUNDING LIKE '"+conditions.get("")+"') OR (t.BONUS LIKE '"+conditions.get("")+"'))");
+            List<Object> column = qr.getResultList();
+            for(Object columns : column ){
+                TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+
+                UTSession utSession = new UTSession();
+                UTDepartment utDepartment = new UTDepartment();
+
+                Object[] fundings = (Object[]) columns;
+
+                utSession.setYear(fundings[0].toString());
+                utSession.setTerm(fundings[1].toString());
+                utDepartment.setName(fundings[2].toString());
+
+                deptFunding.setSession(utSession);
+                deptFunding.setDepartment(utDepartment);
+
+                deptFunding.setPlanFunding(fundings[3].toString());
+                deptFunding.setApplyFunding(fundings[4].toString());
+                deptFunding.setActualFunding(fundings[5].toString());
+                deptFunding.setPhdFunding(fundings[6].toString());
+                deptFunding.setBonus(fundings[7].toString());
+
+                list.add(deptFunding);
+            }
         }
         return list;
     }

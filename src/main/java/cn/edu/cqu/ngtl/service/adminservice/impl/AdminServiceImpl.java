@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.List;
-
+import java.util.Map;
 /**
  * Created by tangjing on 16-10-25.
  */
@@ -26,9 +26,6 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private CMCourseClassificationDao courseClassificationDao;
-
-    @Autowired
-    private TAMSCourseManagerDao tamsCourseManagerDao;
 
     @Autowired
     private TAMSTaCategoryDao tamsTaCategoryDao;
@@ -51,6 +48,16 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
+
+    //课程负责人过滤
+    @Autowired
+    private TAMSCourseManagerDao tamsCourseManagerDao;
+
+    @Override
+    public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions){
+        List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
+        return tamsCourseManagers;
+    }
 
     @Override
     public List<CMCourseClassification> getAllClassification() {

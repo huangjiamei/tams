@@ -61,4 +61,6 @@ public interface IAdminService {
     List<TAMSDeptFunding> getDepartmentCurrFundingBySession();
 
     List<TAMSDeptFunding> getDepartmentPreFundingBySession();
+
+    List<TAMSClassFunding> getFundingByClass();
 }

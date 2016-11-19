@@ -41,8 +41,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/class")
 public class ClassController extends UifControllerBase {
-
-
+    
     @Autowired
     private IClassInfoService classInfoService;
 

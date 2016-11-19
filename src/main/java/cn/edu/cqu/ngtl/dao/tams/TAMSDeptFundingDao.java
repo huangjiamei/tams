@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface TAMSDeptFundingDao {
     List<TAMSDeptFunding> selectDepartmentCurrBySession();
 
     List<TAMSDeptFunding> selectDepartmentPreBySession();
+
+    List<TAMSClassFunding> selectAll();
 }

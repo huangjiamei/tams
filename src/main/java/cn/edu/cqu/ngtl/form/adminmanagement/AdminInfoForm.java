@@ -11,6 +11,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 
 import java.io.Serializable;
 import java.util.List;
@@ -47,6 +48,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<DepartmentFundingViewObject> departmentPreFundings;
 
+
+    private List<ClassFundingViewObject> classFundings;
 
     /**
      * 批次管理页面
@@ -180,12 +183,28 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.sessionFundings = sessionFundings;
     }
 
+    public List<ClassFundingViewObject> getClassFundings() {
+        return classFundings;
+    }
+
+    public void setClassFundings(List<ClassFundingViewObject> classFundings) {
+        this.classFundings = classFundings;
+    }
+
     public String getPieChartsNameValuePairs() {
         return pieChartsNameValuePairs;
     }
 
     public void setPieChartsNameValuePairs(String pieChartsNameValuePairs) {
         this.pieChartsNameValuePairs = pieChartsNameValuePairs;
+    }
+
+    public String getWorkflowRelationTable() {
+        return workflowRelationTable;
+    }
+
+    public void setWorkflowRelationTable(String workflowRelationTable) {
+        this.workflowRelationTable = workflowRelationTable;
     }
 
     public Integer getTermIndex() {

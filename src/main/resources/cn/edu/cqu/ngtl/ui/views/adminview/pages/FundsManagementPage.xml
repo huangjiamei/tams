@@ -845,7 +845,7 @@
                                                                                                           p:propertyName="inputField3">
                                                                                                         <property
                                                                                                                 name="optionsFinder">
-                                                                                                            <bean class="cn.edu.cqu.ngtl.optionfinder."
+                                                                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
                                                                                                                   p:blankOption="true"/>
                                                                                                         </property>
                                                                                                         <property

@@ -12,10 +12,7 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
@@ -477,6 +474,34 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObjects.add(viewObject);
         }
+        return viewObjects;
+    }
+
+    @Override
+    public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
+        List<ClassFundingViewObject> viewObjects = new ArrayList<>(allFundingByClass.size());
+
+        for (TAMSClassFunding classFunding : allFundingByClass) {
+            ClassFundingViewObject viewObject = new ClassFundingViewObject();
+            if(classFunding.getSession() != null) {
+                viewObject.setSessionName(classFunding.getSession().getYear() + "年" +
+                        classFunding.getSession().getTerm() + "季");
+            }
+            viewObject.setCourseName(classFunding.getClassInformation().getCourseName());
+            viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
+            viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
+            viewObject.setClassNumber(classFunding.getClassId());
+            viewObject.setInstructorName("test");
+            viewObject.setApplyFunding(classFunding.getApplyFunding());
+            viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+            viewObject.setPhdFunding(classFunding.getPhdFunding());
+            Integer total = Integer.valueOf(classFunding.getAssignedFunding()) +
+                    Integer.valueOf(classFunding.getApplyFunding()) + Integer.valueOf(classFunding.getPhdFunding());
+            viewObject.setTotal(total.toString());
+
+            viewObjects.add(viewObject);
+        }
+
         return viewObjects;
     }
 

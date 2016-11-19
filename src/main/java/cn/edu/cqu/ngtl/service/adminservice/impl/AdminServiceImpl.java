@@ -39,6 +39,7 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSDeptFundingDao deptFundingDao;
 
+
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
 
@@ -238,5 +239,10 @@ public class AdminServiceImpl implements IAdminService{
             return null;
 
         return workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+    }
+
+    @Override
+    public List<TAMSClassFunding> getFundingByClass() {
+        return deptFundingDao.selectAll();
     }
 }

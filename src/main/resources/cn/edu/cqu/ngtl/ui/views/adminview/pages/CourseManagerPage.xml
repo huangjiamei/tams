@@ -40,7 +40,9 @@
                 <property name="items">
                     <list>
                         <!-- 左上角 -->
-                        <bean parent="Uif-HeaderThree" p:headerText="课程负责人管理"/>
+                        <bean id="courseMaHeaderTitle" parent="Uif-VerticalBoxSection"
+                              p:onDocumentReadyScript="initContentHeader('courseMaHeaderTitle','fa fa-user','管理台','课程负责人管理')">
+                        </bean>
 
                         <!-- 右上角 当前路径 -->
                         <bean parent="Uif-HorizontalBoxSection"

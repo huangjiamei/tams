@@ -44,11 +44,6 @@
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
                                   p:onDocumentReadyScript="initContentHeader('headerTitle','icon-calendar4','课程','教学日历')">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-HeaderOne" p:headerText="教学日历"/>
-                                    </list>
-                                </property>
                             </bean>
 
 
@@ -104,7 +99,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-drawer2"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-calendar2"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="新建教学日历"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->

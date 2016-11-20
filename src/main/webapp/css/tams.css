@@ -343,7 +343,7 @@ body{
 }
 
 .tamsbtn{
-    font-size:14px;
+    font-size:16px;
     margin-left: 5px;
     margin-right:5px;
     height:30px;
@@ -355,7 +355,7 @@ body{
 /* content */
 /* content-header*/
 .content-header {
-    padding: 0!important;
+    padding: 0 0 10px 0!important;
 }
 /* 面包线home图标*/
 .myIcon{
@@ -383,6 +383,22 @@ body{
 }
 .breadcrumb > li + li:before {
     content: ">\00a0"!important;
+}
+
+@media (max-width: 991px) {
+    .content-header > .breadcrumb {
+        position: relative;
+        margin-top: 5px;
+        top: 0;
+        right: 0;
+        float: none;
+        background: #d2d6de;
+        padding-left: 10px
+    }
+
+    .content-header > .breadcrumb li:before {
+        color: #97a0b3
+    }
 }
 
 .uif-disclosure{
@@ -606,3 +622,4 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     float:left!important;
     font-size:25px;
 }
+

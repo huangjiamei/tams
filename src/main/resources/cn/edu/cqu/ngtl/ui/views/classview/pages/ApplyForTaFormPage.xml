@@ -43,7 +43,9 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="助教申请表" />
+                            <bean id="applyForTaHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('applyForTaHeaderTitle','fa fa-check-circle','课程','助教申请')">
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean   parent="Uif-HorizontalBoxSection"
@@ -89,16 +91,18 @@
                                         <!--申请表-->
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info"
-                                              p:style="padding:20px">
+                                              p:style="padding:0 20px">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-HorizontalBoxSection"
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="助教申请相关信息" p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
                                                                       p:methodToCall="exportApplicantPhoto"
-                                                                      p:style="float:right!important;font-size:14px;margin-right: 10px;background=orange!important;"
+                                                                      p:style="float:right!important;font-size:18px;margin-right: 10px;background=orange!important;"
                                                                       p:additionalCssClasses="bg-orange tamsbtn"/>
                                                             </list>
                                                         </property>

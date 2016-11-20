@@ -17,21 +17,16 @@ public class TestGroupObject {
 
     public TestGroupObject(String groupName) {
         this.groupName = groupName;
-        getObjectList().add(new TestObject(new Date(2016,10,15), "学习掌握Chap1 极限 1.1小节", "17", "18"));
         getObjectList().add(new TestObject(new Date(2016,10,15),"答疑/讨论", "2016-11-12 14:13:48", "共0人提交  |  2016-11-12    15：36  |","17", "18"));
-        getObjectList().add(new TestObject(new Date(2016,10,15),"无分组", "9", "10", "11", "12"));
         getObjectList().add(new TestObject(new Date(2016,10,15),"答疑/讨论", "3", "4", "5", "6"));
-        getObjectList().add(new TestObject(new Date(2016,10,15), "答疑/讨论", "2016-11-12 14:13:48", "共0人提交  |  2016-11-12    15：36  |", "17", "18"));
-        getObjectList().add(new TestObject(new Date(2016,10,15), "无分组", "21",  "24"));
+        getObjectList().add(new TestObject(new Date(2016,10,15),"答疑/讨论", "2016-11-12 14:13:48", "共0人提交  |  2016-11-12    15：36  |", "17", "18"));
     }
 
     public TestGroupObject() {
-        getObjectList().add(new TestObject(new Date(2016,10,15), "学习掌握Chap1 极限 1.1小节", "17", "18"));
+
         getObjectList().add(new TestObject(new Date(2016,10,15),"答疑/讨论", "2016-11-12 14:13:48", "共0人提交  |  2016-11-12    15：36  |","17", "18"));
-        getObjectList().add(new TestObject(new Date(2016,10,15),"无分组", "9", "10", "11", "12"));
         getObjectList().add(new TestObject(new Date(2016,10,15),"答疑/讨论", "3", "4", "5", "6"));
         getObjectList().add(new TestObject(new Date(2016,10,15), "答疑/讨论", "2016-11-12 14:13:48", "共0人提交  |  2016-11-12    15：36  |", "17", "18"));
-        getObjectList().add(new TestObject(new Date(2016,10,15), "无分组", "21",  "24"));
     }
 
     public boolean isChecked() {

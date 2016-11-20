@@ -37,10 +37,10 @@ public class TestController extends UifControllerBase {
         TestForm testForm = (TestForm) form;
 
         List<TestGroupObject> groupObjectList = new ArrayList<>();
-        groupObjectList.add(new TestGroupObject("abc1"));
-        groupObjectList.add(new TestGroupObject("abc2"));
-        groupObjectList.add(new TestGroupObject("abc3"));
-        groupObjectList.add(new TestGroupObject("abc4"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.1小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.2小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.3小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.4小节"));
         testForm.setGroupObjectList(groupObjectList);
 
         return this.getModelAndView(testForm, "pageTest");

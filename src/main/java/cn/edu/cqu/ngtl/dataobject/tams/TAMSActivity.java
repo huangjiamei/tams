@@ -1,7 +1,5 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
-import com.sun.javafx.beans.IDProperty;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.*;

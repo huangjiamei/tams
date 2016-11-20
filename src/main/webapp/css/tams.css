@@ -623,3 +623,13 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     font-size:25px;
 }
 
+
+.sub-table {
+    overflow-x:hidden!important;
+}
+.sub-table table {
+    margin:0;
+}
+.sub-table table thead{
+    display:none!important;
+}

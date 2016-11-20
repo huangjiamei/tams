@@ -135,93 +135,79 @@
                                                                                         <!--应该使用p:layoutManager.cssClasses="xxx"-->
                                                                                         <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                                             <property name="collectionObjectClass"
-                                                                                                    value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                      value="cn.edu.cqu.ngtl.dataobject.TestGroupObject"/>
                                                                                             <property name="propertyName"
-                                                                                                    value="collection"/>
-                                                                                             <property name="layoutManager.renderSequenceField"
-                                                                                                    value="false"/>
-                                                                                            <property name="layoutManager.richTable.render"
-                                                                                                    value="false"/>
-
-                                                                                            <property name="useServerPaging"
-                                                                                                    value="true"/>
-
-                                                                                            <property name="renderAddLine"
-                                                                                                    value="false"/>
-                                                                                            <property name="renderLineActions"
-                                                                                                    value="true"/>
-                                                                                            <property name="readOnly" value="false"/>
-
-                                                                                            <property name="disclosure.render"
-                                                                                                    value="false"/>
-
+                                                                                                      value="groupObjectList"/>
+                                                                                            <property name="useServerPaging" value="true" />
+                                                                                            <property name="layoutManager.richTable.render" value="false"/>
+                                                                                            <property name="layoutManager.renderSequenceField" value="false"/>
+                                                                                            <property name="renderLineActions" value="false"/>
+                                                                                            <property name="renderAddLine" value="false"/>
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean parent="Uif-InputField" p:label=""
-                                                                                                          p:additionalCssClasses="tams-activity-group-title"
-                                                                                                          p:propertyName="checked">
+                                                                                                    <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
                                                                                                         <property name="control">
                                                                                                             <bean parent="Uif-CheckboxControl"/>
                                                                                                         </property>
                                                                                                     </bean>
-                                                                                                    <bean parent="Uif-InputField" p:label=""
-                                                                                                          p:additionalCssClasses="tams-activity-item-title"
-                                                                                                          p:propertyName="checked">
-                                                                                                        <property name="control">
-                                                                                                            <bean parent="Uif-CheckboxControl"/>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                    <!--组title和项目title样式不同，根据render进行区分。实际应用时修改render中的条件即可-->
-                                                                                                    <bean parent="Uif-DataField" p:label="(标题)"
-                                                                                                          p:propertyName="field0"
-                                                                                                          p:additionalCssClasses="tams-activity-group-title"
-                                                                                                          p:render="@{#line.field0!='答疑/讨论'}"/>
-                                                                                                    <bean parent="Uif-DataField" p:label="(标题)"
-                                                                                                          p:propertyName="field0"
-                                                                                                          p:additionalCssClasses="tams-activity-item-title"
-                                                                                                          p:render="@{#line.field0=='答疑/讨论'}"/>
-
-                                                                                                    <bean parent="Uif-DataField"
-                                                                                                          p:label="(创建时间？)"
-                                                                                                          p:propertyName="field1"/>
-                                                                                                    <bean parent="Uif-DataField"
-                                                                                                          p:label="(进展情况)"
-                                                                                                          p:additionalCssClasses="tams-activity-state"
-                                                                                                          p:propertyName="field2"/>
+                                                                                                    <bean parent="Uif-DataField" p:label="title" p:propertyName="groupName"
+                                                                                                          p:additionalCssClasses="tams-activity-group-title"/>
                                                                                                 </list>
                                                                                             </property>
-                                                                                            <property name="lineActions">
+                                                                                            <property name="subCollections">
                                                                                                 <list>
-                                                                                                    <!--当render=true时，actions才会出现-->
-                                                                                                    <!--所以当类别是组标题的时候就要让render=false-->
-                                                                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                                                                          p:render="@{#line.field0=='答疑/讨论'}">
+                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSubSection"
+                                                                                                          p:additionalCssClasses="sub-table">
+                                                                                                        <property name="collectionObjectClass"
+                                                                                                                  value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                        <property name="propertyName"
+                                                                                                                  value="objectList"/>
+                                                                                                        <property name="layoutManager.richTable.render" value="false"/>
+                                                                                                        <property name="renderAddLine" value="false"/>
+                                                                                                        <property name="layoutManager.renderSequenceField"
+                                                                                                                  value="false"/>
+
+                                                                                                        <property name="useServerPaging" value="false" />
+                                                                                                        <property name="renderLineActions" value="true"/>
+
+                                                                                                        <!--<property name="readOnly" value="true"/>-->
+
+                                                                                                        <property name="disclosure.render" value="false"/>
+
                                                                                                         <property name="items">
                                                                                                             <list>
-                                                                                                                <bean parent="Uif-ActionImage"
-                                                                                                                      p:methodToCall="xxxx">
-                                                                                                                    <property name="actionImage">
-                                                                                                                        <bean parent="Uif-Image"
-                                                                                                                              p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                                                                <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
+                                                                                                                    <property name="control">
+                                                                                                                        <bean parent="Uif-CheckboxControl"/>
                                                                                                                     </property>
                                                                                                                 </bean>
-                                                                                                                <!--<bean parent="Uif-ActionImage"-->
-                                                                                                                      <!--p:methodToCall="xxxx">-->
-                                                                                                                    <!--<property-->
-                                                                                                                            <!--name="actionImage">-->
-                                                                                                                        <!--<bean parent="Uif-Image"-->
-                                                                                                                              <!--p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>-->
-                                                                                                                    <!--</property>-->
-                                                                                                                <!--</bean>-->
-                                                                                                                <!--<bean parent="Uif-ActionImage"-->
-                                                                                                                      <!--p:methodToCall="xxxx">-->
-                                                                                                                    <!--<property-->
-                                                                                                                            <!--name="actionImage">-->
-                                                                                                                        <!--<bean parent="Uif-Image"-->
-                                                                                                                              <!--p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>-->
-                                                                                                                    <!--</property>-->
-                                                                                                                <!--</bean>-->
+                                                                                                                <!--组title和项目title样式不同，根据render进行区分。实际应用时修改render中的条件即可-->
+
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:propertyName="field0"
+                                                                                                                      p:additionalCssClasses="tams-activity-item-title"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:propertyName="field1"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:additionalCssClasses="tams-activity-state"
+                                                                                                                      p:propertyName="field2"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                        <property name="lineActions">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                                                                    <property name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-ActionImage">
+                                                                                                                                <property name="actionImage">
+                                                                                                                                    <bean parent="Uif-Image"
+                                                                                                                                          p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
+                                                                                                                                </property>
+                                                                                                                            </bean>
+
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>

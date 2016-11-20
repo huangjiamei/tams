@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
@@ -30,6 +31,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -279,7 +281,12 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getTeachActivities(@ModelAttribute("KualiForm") UifFormBase form,
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
-
+        List<TestGroupObject> groupObjectList = new ArrayList<>();
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.1小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.2小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.3小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.4小节"));
+        infoForm.setGroupObjectList(groupObjectList);
         return this.getModelAndView(infoForm, "pageTeachActivities");
     }
 

@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.form.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
@@ -50,6 +51,20 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     /** 页面上的学历选项 */
     private String eduBackground;
+
+    /**
+     * 多级列表嵌套
+     */
+    private List<TestGroupObject> groupObjectList = new ArrayList<>();
+
+
+    public List<TestGroupObject> getGroupObjectList() {
+        return groupObjectList;
+    }
+
+    public void setGroupObjectList(List<TestGroupObject> groupObjectList) {
+        this.groupObjectList = groupObjectList;
+    }
 
     public String getCurrClassId() {
         return currClassId;

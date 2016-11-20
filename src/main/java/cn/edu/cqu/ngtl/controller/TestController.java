@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller;
 
+import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.form.TestForm;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -34,6 +35,14 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTestPage")
     public ModelAndView getTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
+
+        List<TestGroupObject> groupObjectList = new ArrayList<>();
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.1小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.2小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.3小节"));
+        groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.4小节"));
+        testForm.setGroupObjectList(groupObjectList);
+
         return this.getModelAndView(testForm, "pageTest");
     }
 

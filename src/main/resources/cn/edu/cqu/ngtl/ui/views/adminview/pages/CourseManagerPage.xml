@@ -131,8 +131,9 @@
                                                                               p:actionLabel="查询"
                                                                               p:additionalCssClasses="icon-search hidden-fields search-button"
                                                                               p:style="margin:15px"
+                                                                              p:methodToCall="searchCourseManagerByCondition"
                                                                               p:refreshId="CourseManagerPage"/>
-                                                                        <!--p:methodToCall="searchBatchApplicant"-->
+
                                                                     </list>
                                                                 </property>
                                                             </bean>

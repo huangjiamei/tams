@@ -19,6 +19,11 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -424,6 +429,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
             }
 
+            viewObject.setStatus(ta.getStatus());
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
@@ -486,6 +492,34 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObjects.add(viewObject);
         }
+        return viewObjects;
+    }
+
+    @Override
+    public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
+        List<ClassFundingViewObject> viewObjects = new ArrayList<>(allFundingByClass.size());
+
+        for (TAMSClassFunding classFunding : allFundingByClass) {
+            ClassFundingViewObject viewObject = new ClassFundingViewObject();
+            if(classFunding.getSession() != null) {
+                viewObject.setSessionName(classFunding.getSession().getYear() + "年" +
+                        classFunding.getSession().getTerm() + "季");
+            }
+            viewObject.setCourseName(classFunding.getClassInformation().getCourseName());
+            viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
+            viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
+            viewObject.setClassNumber(classFunding.getClassId());
+            viewObject.setInstructorName("test");
+            viewObject.setApplyFunding(classFunding.getApplyFunding());
+            viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+            viewObject.setPhdFunding(classFunding.getPhdFunding());
+            Integer total = Integer.valueOf(classFunding.getAssignedFunding()) +
+                    Integer.valueOf(classFunding.getApplyFunding()) + Integer.valueOf(classFunding.getPhdFunding());
+            viewObject.setTotal(total.toString());
+
+            viewObjects.add(viewObject);
+        }
+
         return viewObjects;
     }
 
@@ -564,6 +598,18 @@ public class TAConverterimpl implements ITAConverter {
 
         return ids;
     }
+
+    @Override
+    public List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList) {
+        List<String> ids = new ArrayList<>();
+
+        for (MyTaViewObject per : checkedList) {
+            ids.add(per.getTaIdNumber());
+        }
+
+        return ids;
+    }
+
 
     @Override
     public List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList) {

@@ -1,9 +1,10 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
-import cn.edu.cqu.ngtl.service.common.impl.ExcelServiceImpl;
+import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
@@ -27,6 +28,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -38,8 +41,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/class")
 public class ClassController extends UifControllerBase {
-
-
+    
     @Autowired
     private IClassInfoService classInfoService;
 
@@ -48,6 +50,9 @@ public class ClassController extends UifControllerBase {
 
     @Autowired
     private ITAService taService;
+
+    @Autowired
+    private ExcelService excelService;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -80,7 +85,7 @@ public class ClassController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=getClassInfoPage"})
+    @RequestMapping(params = {"methodToCall=getClassInfoPage"})
     public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         try {
@@ -104,6 +109,9 @@ public class ClassController extends UifControllerBase {
             );
 
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
+
+            //跳转前加上classId
+            infoForm.setCurrClassId(id.toString());
 
         } catch (Exception e) {
 
@@ -159,8 +167,9 @@ public class ClassController extends UifControllerBase {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
-        //// FIXME: 16-11-16 不能写死，应该在跳转页面的时候就把classId传过来
-        String classId = "290739";
+        String classId = infoForm.getCurrClassId();
+        if(classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageTeachingCalendar");
 
         infoForm.setAllCalendar(
                 taConverter.TeachCalendarToViewObject(
@@ -181,7 +190,6 @@ public class ClassController extends UifControllerBase {
 
     /**
      * 获取新建教学日历页面
-     * http://127.0.0.1:8080/tams/portal/class?methodToCall=getAddTeachCalendarPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getAddTeachCalendarPage")
     public ModelAndView getAddTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -189,6 +197,78 @@ public class ClassController extends UifControllerBase {
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
+    }
+
+    /**
+     * 提交新建教学日历页面
+     *
+     **/
+    @RequestMapping(params = "methodToCall=submitTeachCalendarPage")
+    public ModelAndView submitTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        UserSession session = GlobalVariables.getUserSession();
+        String uId = session.getPrincipalId();
+
+        String classId = infoForm.getCurrClassId();
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            infoForm.getTeachCalendar().setStartTime(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    infoForm.getTeachCalendar().getStartTime()
+                            )
+                    )
+            );
+            infoForm.getTeachCalendar().setEndTime(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    infoForm.getTeachCalendar().getEndTime()
+                            )
+                    )
+            );
+        }
+        catch (Exception e) {
+
+        }
+
+        TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        if(classInfoService.instructorAddTeachCalendar(uId, classId, added))
+            return this.getTeachingCalendar(infoForm, request);
+        else //// FIXME: 16-11-18 应当返回错误页面
+            return this.getTeachingCalendar(infoForm, request);
+    }
+
+    /**
+     * 删除教学日历
+     */
+    @RequestMapping(params = "methodToCall=deleteTeachCalendar")
+    public ModelAndView deleteTeachCalendar(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        /** uid **/
+        UserSession session = GlobalVariables.getUserSession();
+        String uId = session.getPrincipalId();
+
+        /** classid **/
+        String classId = infoForm.getCurrClassId();
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        /** calendarid **/
+        String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
+
+        if(classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId))
+            return this.getTeachingCalendar(infoForm, request);
+        else //// FIXME: 16-11-18 应当返回错误页面
+            return this.getTeachingCalendar(infoForm, request);
     }
 
     /**
@@ -299,7 +379,7 @@ public class ClassController extends UifControllerBase {
      */
     @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportClassListExcel"})
     public ModelAndView exportClassListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
-                                             HttpServletResponse response) throws Exception {
+                                             HttpServletResponse response){
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
 
@@ -312,11 +392,18 @@ public class ClassController extends UifControllerBase {
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + System.currentTimeMillis() + ".xls";
 
-        String filePath = new ExcelServiceImpl().printClasslistExcel(classList, "exportfolder", fileName, "2003");
-        String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
-                .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+        try {
+            String filePath = excelService.printClasslistExcel(classList, "exportfolder", fileName, "2003");
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+            return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+        }
+        catch (IOException e) {
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm, baseUrl + "/tams");
+        }
     }
 
 

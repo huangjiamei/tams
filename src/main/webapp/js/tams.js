@@ -452,27 +452,27 @@ function refreshTableFilter(searchbox,tablebox) {
         //alert(field.children()[0].tagName);
         //为输入框添加事件
         if (field.children()[0].tagName=='INPUT'){
-            jQuery(field.children()[0]).on(
-                {keydown: function(e){
-                    var key = e.which;
-                    if(key == 13 && document.activeElement.id == jQuery(searchFields[i]).attr("id")){
-                        e.preventDefault();
-                        jQuery(searchButton).click();
-                    }
-                }
-            });
+
             //普通的搜索框
             if (!jQuery(field.children()[0]).hasClass("hasDatepicker")){
                 jQuery(field.children()[0]).autocomplete({
                     source: eval("filterHintCache."+field.find("input")[0].name)
                 }).attr("class", "form-control input-sm uif-textControl column-filter");
             }
+            jQuery(field.children()[0]).on(
+                {keydown: function(e){
+                    var key = e.which;
+                    if(key == 13){
+                        e.preventDefault();
+                        jQuery(searchButton).click();
+                    }
+                }
+                });
 
         }
         //为下拉框添加事件
         if (field.children()[0].tagName=='SELECT'){
             jQuery(field.children()[0]).comboSelect();
-             // alert(field.tagName);
             jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl column-filter");
             jQuery(field.find("select")[0]).on('change', function () {
                 jQuery(searchButton).click();
@@ -583,4 +583,55 @@ function initRightBtnMenu(targetid) {
     // });
 }
 
+/**
+ * 全选测试，还不能使用(功能完成后删除此行)
+ */
+function checkAll() {
+    // jQuery(".tams-activity-group-title").each(function () {
+    //     jQuery(this.childNodes[0]).attr("checked", true);
+    // });
+    // jQuery(".tams-activity-item-title").each(function () {
+    //     jQuery(this).attr("checked", "checked");
+    // });
+}
 
+/**
+ * 添加测边栏自动伸缩功能
+ */
+function setupAutoSideBar() {
+
+    var nav = jQuery('#Uif-Navigation');
+    winWidth = document.body.clientWidth;
+    if (winWidth>768)
+        // 让导航栏下来一点，避免缩放按键被遮挡
+        nav.css("margin-top", 50);
+
+    window.onresize = function(){
+        var nav = jQuery('#Uif-Navigation');
+        winWidth = document.body.clientWidth;
+        if (winWidth>768){
+            // 让导航栏下来一点，避免缩放按键被遮挡
+            nav.css("margin-top", 50);
+            if (jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
+                jQuery('.sidebar-collapse').click();
+            }
+        }else{
+            //移动端应该将margin还原
+            nav.css("margin-top", 0);
+            if (!jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
+                jQuery('.sidebar-collapse').click();
+            }
+        }
+    }
+}
+/**
+ * 部分页面去掉侧边栏
+ */
+function removeSideBar()
+{
+    var nav = jQuery('#Uif-Navigation');
+    if (typeof (nav)=="undefined")
+        return
+    nav.remove();
+    jQuery(".uif-hasLeftNav").css("margin-left",0).removeClass("uif-hasLeftNav");
+}

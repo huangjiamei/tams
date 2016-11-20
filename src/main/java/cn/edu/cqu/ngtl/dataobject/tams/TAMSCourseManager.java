@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
@@ -24,12 +25,17 @@ public class TAMSCourseManager extends DataObjectBase implements Serializable {
     @Column(name = "COURSE_ID")
     private Integer courseId;
 
+    @ManyToOne
+    @JoinColumn(name = "COURSE_ID",insertable = false, updatable = false)
+    private UTCourse course;
+
     @Column(name = "COURSE_MANAGER_ID")
     private String courseManagerId;
 
     @ManyToOne
     @JoinColumn(name = "COURSE_MANAGER_ID",insertable = false, updatable = false)
     private UTInstructor utInstructor;
+
 
     public String getId() {
         return id;
@@ -62,4 +68,8 @@ public class TAMSCourseManager extends DataObjectBase implements Serializable {
     public void setUtInstructor(UTInstructor utInstructor) {
         this.utInstructor = utInstructor;
     }
+
+    public UTCourse getCourse() { return course; }
+
+    public void setCourse(UTCourse course) { this.course = course; }
 }

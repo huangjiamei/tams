@@ -7,6 +7,8 @@ public class TA_STATUS {
 
     public static final String LIVING = "1";
 
-    public static final String PAUSED = "-1";
+    public static final String PAUSED = "0";
+
+    public static final String DISMISS = "-1";
 
 }

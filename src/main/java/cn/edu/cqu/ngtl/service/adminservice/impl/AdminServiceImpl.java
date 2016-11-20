@@ -14,8 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
 import java.util.List;
-
+import java.util.Map;
 /**
  * Created by tangjing on 16-10-25.
  */
@@ -25,9 +26,6 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private CMCourseClassificationDao courseClassificationDao;
-
-    @Autowired
-    private TAMSCourseManagerDao tamsCourseManagerDao;
 
     @Autowired
     private TAMSTaCategoryDao tamsTaCategoryDao;
@@ -41,6 +39,7 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSDeptFundingDao deptFundingDao;
 
+
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
 
@@ -49,6 +48,16 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
+
+    //课程负责人过滤
+    @Autowired
+    private TAMSCourseManagerDao tamsCourseManagerDao;
+
+    @Override
+    public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions){
+        List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
+        return tamsCourseManagers;
+    }
 
     @Override
     public List<CMCourseClassification> getAllClassification() {
@@ -164,6 +173,11 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public List<UTSession> getSelectedSessions(String termName, String startTime, String endTime) throws ParseException {
+        return sessionDao.selectByCondition(termName, startTime, endTime);
+    }
+
+    @Override
     public boolean addSession(UTSession session) {
         UTSession isExist = sessionDao.selectByYearAndTerm(session.getYear(), session.getTerm());
 
@@ -260,14 +274,17 @@ public class AdminServiceImpl implements IAdminService{
     @Override
     public String setRoleFunctionIdByRoleIdAndFunctionId(String roleId, String functionId){
         //如果找得到RFId就找找不到就创建新的
-        String roleFunctionId = getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
+        String roleFunctionId = this.getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
 
         if(roleFunctionId == null) {
             TAMSWorkflowRoleFunction workflowRoleFunction = new TAMSWorkflowRoleFunction();
             workflowRoleFunction.setRoleId(roleId);
             workflowRoleFunction.setWorkflowFunctionId(functionId);
 
-            roleFunctionId = getRoleFunctionIdByRoleIdAndFunctionId(roleId, functionId);
+            //新增roleFunctionPair
+            workflowRoleFunction = workflowRoleFunctionDao.insertByEntity(workflowRoleFunction);
+
+            roleFunctionId = workflowRoleFunction.getId();
         }
 
         return roleFunctionId;
@@ -279,6 +296,7 @@ public class AdminServiceImpl implements IAdminService{
         workflowStatusRDao.deleteTAMSWorkflowStatusRByRFId(rfId);
 
         List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+
         int length = allStatus.size();
         CheckBoxStatus[][] matrix = rt.getData();
         for(int i=0;i<length;i++){
@@ -293,5 +311,10 @@ public class AdminServiceImpl implements IAdminService{
                 }
             }
         }
+    }
+
+    @Override
+    public List<TAMSClassFunding> getFundingByClass() {
+        return deptFundingDao.selectAll();
     }
 }

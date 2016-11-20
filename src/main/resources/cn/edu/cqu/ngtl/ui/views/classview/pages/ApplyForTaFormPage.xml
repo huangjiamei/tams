@@ -33,7 +33,8 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <!--学生应聘助教-->
-    <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
+          p:onDocumentReadyScript="removeSideBar()">
         <property name="items">
             <list>
                 <!--页面header-->

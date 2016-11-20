@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 
 import javax.persistence.*;
 
@@ -16,6 +17,9 @@ public class TAMSTeachCalendar {
     @SequenceGenerator(name = "tamsTeachCalendar", sequenceName = "TAMS_TEACH_CALENDAR_S", allocationSize = 1)
     private String id;
 
+    @Column(name = "THEME")
+    private String theme;
+
     @Column(name = "DESCRIPTION")
     private String description;
 
@@ -23,9 +27,11 @@ public class TAMSTeachCalendar {
     private String taTask;
 
     @Column(name = "START_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String startTime;
 
     @Column(name = "END_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String endTime;
 
     @Column(name = "ELAPSED_TIME")
@@ -39,6 +45,14 @@ public class TAMSTeachCalendar {
 
     @Transient
     private UTClassInformation classInformation;
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
 
     public String getClassId() {
         return classId;

@@ -32,7 +32,8 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="AddTeachCalendarPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="AddTeachCalendarPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
+          p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--header-->
@@ -126,22 +127,23 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-InputField" p:label="教学主题"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                                                      p:propertyName="inputField8"
-                                                                      p:required="true">
-                                                                    <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
-                                                                    <!--在inputField里用p:control.watermarkText没有效果-->
-                                                                    <property name="control">
-                                                                        <bean parent="Uif-TextControl" p:watermarkText="请输入计划的教学内容，如章节等"/>
-                                                                    </property>
-                                                                </bean>
+                                        <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="box-body">
+                                            <property name="items">
+                                                <list>
 
-                                                                <bean parent="Uif-InputField" p:label="教学描述" p:propertyName="applyReason"
+                                                    <bean parent="Uif-InputField" p:label="教学主题"
+                                                          p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
+                                                          p:propertyName="teachCalendar.theme"
+                                                          p:required="true">
+                                                        <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
+                                                        <!--在inputField里用p:control.watermarkText没有效果-->
+                                                        <property name="control">
+                                                            <bean parent="Uif-TextControl" p:watermarkText="请输入计划的教学内容，如章节等"/>
+                                                        </property>
+                                                    </bean>
+
+                                                                <bean parent="Uif-InputField" p:label="教学描述" p:propertyName="teachCalendar.description"
                                                                       p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:required="true"
                                                                       p:style="margin-top:20px">
@@ -154,7 +156,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-InputField" p:label="助教任务" p:propertyName="applyReason"
+                                                                <bean parent="Uif-InputField" p:label="助教任务" p:propertyName="teachCalendar.taTask"
                                                                       p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:required="true"
                                                                       p:style="margin-top:20px">
@@ -172,7 +174,7 @@
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="起始时间"
                                                                                   p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
-                                                                                  p:propertyName="inputField6">
+                                                                                  p:propertyName="teachCalendar.startTime">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"  >
                                                                                         <property name="datePicker">
@@ -197,7 +199,7 @@
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:label="完成时间"
                                                                                   p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
-                                                                                  p:propertyName="inputField7">
+                                                                                  p:propertyName="teachCalendar.endTime">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextControl"  >
                                                                                         <property name="datePicker">
@@ -223,7 +225,7 @@
                                                                             </bean>
                                                                             <bean parent="Uif-InputField" p:label="总耗时"
                                                                                   p:additionalCssClasses="col-lg-4 col-md-4 col-sm-6 col-xs-12"
-                                                                                  p:propertyName="inputField8"/>
+                                                                                  p:propertyName="teachCalendar.elapsedTime"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -251,7 +253,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="创建"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:methodToCall="submitTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-file2 bg-primary tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="创建并继续"

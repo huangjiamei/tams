@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,7 +14,7 @@ import java.util.List;
 /**
  * Created by awake on 2016-10-26.
  */
-
+@Service
 public class AdminConverterimpl implements IAdminConverter {
     @Autowired
     private UTCourseDaoJpa utCourseDao;

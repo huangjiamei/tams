@@ -10,10 +10,12 @@ import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.service.riceservice.impl.AdminConverterimpl;
+import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
@@ -35,10 +37,13 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
-
+import java.util.Map;
+import java.util.HashMap;
 /**
  * Created by awake on 2016-10-21.
  */
@@ -54,6 +59,9 @@ public class adminController extends UifControllerBase {
 
     @Autowired
     private ITAConverter taConverter;
+
+    @Autowired
+    private IAdminConverter adminConverter;
 
 
     @RequestMapping(params = "methodToCall=logout")
@@ -412,7 +420,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getCourseManagerPage")
     public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-        infoForm.setCourseManagerViewObjects(new AdminConverterimpl().getCourseManagerToTableViewObject(
+        infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
                 new TAMSCourseManagerDaoJpa().getAllCourseManager()
         ));
         return this.getModelAndView(infoForm, "pageCourseManager");
@@ -463,6 +471,26 @@ public class adminController extends UifControllerBase {
         return null;
     }
 
+
+    /**
+     * 课程负责人过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchCourseManagerByCondition"})
+    public ModelAndView searchCourseManagerByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("CourseName", infoForm.getSearchCourseNm());
+        conditions.put("CourseNumber", infoForm.getSearchCourseNmb());
+        conditions.put("InstructorName", infoForm.getSearchCourseManager());
+        conditions.put("InstructorCode", infoForm.getSearchCourseInsCode());
+        //转换成页面所需要的数据对象并调用DAO
+        infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
+                adminService.getCourseManagerByCondition(conditions)
+                )
+        );
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
 
     /**
      * 删除课程负责人
@@ -796,10 +824,72 @@ public class adminController extends UifControllerBase {
                         adminService.getAllSessions()
                 )
         );
+        adminInfoForm.setOldTerms(adminInfoForm.getAllTerms());
 
         return this.getModelAndView(adminInfoForm, "pageTermManagement");
     }
 
+    /**
+     * 查询批次
+     * pageTermManage
+     * 三个条件不能缺省
+     * @param form
+     * @return
+     */
+
+    @RequestMapping(params = "methodToCall=searchTerm")
+    public ModelAndView searchTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+
+        String termName = adminInfoForm.getTermName();
+        String startTime = adminInfoForm.getStartTime();
+        String endTime = adminInfoForm.getEndTime();
+
+         if (adminInfoForm.getTotalMoney() != null) {
+            // FIXME: 2016/11/5 暂不使用这一参数，如需使用需修改
+            adminInfoForm.setErrMsg("这一参数不可用");
+
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+         }
+
+        // 参数全空，返回原来值
+        if (termName == null && startTime == null && endTime == null) {
+            adminInfoForm.setAllTerms(adminInfoForm.getOldTerms());
+
+            return this.getModelAndView(adminInfoForm, "pageTermManagement");
+        } else if (termName == null || startTime == null || endTime == null) {
+            // 有参数就不能缺省
+            // FIXME: 2016/11/5 错误提示可以修改，条件也许可以变成缺省，也可以增加条件
+            adminInfoForm.setErrMsg("缺少条件！");
+
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        } else {
+            SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+            Date begin = format.parse(startTime);
+            Date end = format.parse(endTime);
+            // 时间颠倒
+            if (begin.after(end)) {
+                adminInfoForm.setErrMsg("时间错误，请重新输入!");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
+
+            // 格式异常处理
+            List<UTSession> results = adminService.getSelectedSessions(termName, startTime, endTime);
+            if (results.size() != 0) {
+                String testError = results.get(0).getYear();
+                if (testError.charAt(0) == '1') {
+                    adminInfoForm.setErrMsg("批次名称格式错误，应为\"xxxx年x季\"，例如 2014年秋季");
+                    return this.showDialog("adminErrDialog", true, adminInfoForm);
+                }
+            }
+            adminInfoForm.setAllTerms(
+                    taConverter.termInfoToViewObject(
+                        results
+                    )
+            );
+            return this.getModelAndView(adminInfoForm, "pageTermManagement");
+        }
+    }
     /**
      * 编辑/添加项返回方法
      * pageTaskCategory
@@ -1013,6 +1103,13 @@ public class adminController extends UifControllerBase {
                         adminService.getDepartmentPreFundingBySession()
                 )
         );
+
+        infoForm.setClassFundings(
+                taConverter.classFundingToViewObject(
+                        adminService.getFundingByClass()
+                )
+        );
+
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

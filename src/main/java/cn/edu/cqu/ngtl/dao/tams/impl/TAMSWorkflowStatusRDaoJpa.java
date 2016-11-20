@@ -32,7 +32,8 @@ public class TAMSWorkflowStatusRDaoJpa implements TAMSWorkflowStatusRDao {
 
     @Override
     public boolean saveTAMSWorkflowStatusR(TAMSWorkflowStatusR dataTAMSWorkflowStatusR) {
-        return (KRADServiceLocator.getDataObjectService().save(dataTAMSWorkflowStatusR) != null);
+        dataTAMSWorkflowStatusR = KRADServiceLocator.getDataObjectService().save(dataTAMSWorkflowStatusR);
+        return dataTAMSWorkflowStatusR.getId() != null;
     }
 
     @Override

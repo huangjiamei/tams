@@ -624,3 +624,14 @@ function setupAutoSideBar() {
         }
     }
 }
+/**
+ * 部分页面去掉侧边栏
+ */
+function removeSideBar()
+{
+    var nav = jQuery('#Uif-Navigation');
+    if (typeof (nav)=="undefined")
+        return
+    nav.remove();
+    jQuery(".uif-hasLeftNav").css("margin-left",0).removeClass("uif-hasLeftNav");
+}

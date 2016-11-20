@@ -32,7 +32,8 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="ClassListPage" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container"
+          p:onDocumentReadyScript="removeSideBar()">
         <property name="items">
             <list>
                 <!--header-->

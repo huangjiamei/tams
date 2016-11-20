@@ -41,7 +41,9 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="助教"/>
+                            <bean id="toListHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('toListHeaderTitle','fa fa-users','助教管理','助教')">
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"

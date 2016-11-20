@@ -40,13 +40,8 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-list','管理','经费管理')">
-                                <!--<property name="items">
-                                    <list>
-                                        <bean parent="Uif-HeaderTwo" p:headerText="经费"/>
-                                    </list>
-                                </property>-->
+                            <bean id="fundsHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('fundsHeaderTitle','fa fa-money','管理台','经费管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

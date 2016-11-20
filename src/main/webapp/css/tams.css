@@ -611,11 +611,11 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 }
 
 /*菜单栏icon图片间距*/
-.muenHeaderIcon{
+.menuHeaderIcon{
     margin: 0 10px 0 15px;
 }
-.muenIcon{
-    margin-right: 8px;
+.menuIcon{
+    margin:0 10px;
 }
 .pageIcon{
     margin:12px 0 0 0 ;

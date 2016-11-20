@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.form;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import org.kuali.rice.krad.file.FileMetaBlob;

@@ -53,13 +53,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     /**
      * 经费管理页面————批次经费，过滤器的输入框
      */
-    private String sTimes;
-    private String sPreFunds;
-    private String sApplyFunds;
-    private String sApprovalFunds;
-    private String sAddingFunds;
-    private String sRewardFunds;
-    private String sTotalFunds;
+    private String sTimes;//批次
+    private String sPreFunds;//预算
+    private String sApplyFunds;//申报
+    private String sApprovalFunds;//批准
+    private String sAddingFunds;//追加
+    private String sRewardFunds;//奖励
+    private String sTrafficFunds;//交通补贴
+    private String sTotalFunds;//总经费
 
     /**
      * 经费管理页面————学院经费，过滤器的输入框
@@ -71,6 +72,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String dApprovalFunds;
     private String dAddingFunds;
     private String dRewardFunds;
+    private String dTrafficFunds;//交通补贴
     private String dTotalFunds;
 
 
@@ -604,6 +606,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.sRewardFunds = sRewardFunds;
     }
 
+    public String getsTrafficFunds() {
+        return sTrafficFunds;
+    }
+
+    public void setsTrafficFunds(String sTrafficFunds) {
+        this.sTrafficFunds = sTrafficFunds;
+    }
+
     public String getsTotalFunds() {
         return sTotalFunds;
     }
@@ -674,5 +684,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setdTotalFunds(String dTotalFunds) {
         this.dTotalFunds = dTotalFunds;
+    }
+
+    public String getdTrafficFunds() {
+        return dTrafficFunds;
+    }
+
+    public void setdTrafficFunds(String dTrafficFunds) {
+        this.dTrafficFunds = dTrafficFunds;
     }
 }

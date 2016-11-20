@@ -581,3 +581,28 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .edui-default .edui-editor {
     width:100%!important;
 }
+
+/*
+ 菜单栏菜单头颜色
+*/
+.navigationDialog .menuHeader a {
+    color: #0f608f!important;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 25px;
+    margin-top: 5px;
+    /*#3C8DBC  页眉颜色*/
+}
+
+/*菜单栏icon图片间距*/
+.muenHeaderIcon{
+    margin: 0 10px 0 15px;
+}
+.muenIcon{
+    margin-right: 8px;
+}
+.pageIcon{
+    margin:12px 0 0 0 ;
+    float:left!important;
+    font-size:25px;
+}

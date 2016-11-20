@@ -17,6 +17,8 @@ public class SessionFundingViewObject {
 
     String bonus;
 
+    String trafficFunding;
+
     String total;
 
     public String getTotal() {
@@ -73,5 +75,13 @@ public class SessionFundingViewObject {
 
     public void setBonus(String bonus) {
         this.bonus = bonus;
+    }
+
+    public String getTrafficFunding() {
+        return trafficFunding;
+    }
+
+    public void setTrafficFunding(String trafficFunding) {
+        this.trafficFunding = trafficFunding;
     }
 }

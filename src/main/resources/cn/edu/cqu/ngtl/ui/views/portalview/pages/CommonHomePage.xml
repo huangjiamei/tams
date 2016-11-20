@@ -41,8 +41,14 @@
                         <list>
 
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="公共主页" />
-
+                            <bean parent="Uif-HorizontalBoxSection">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-Icon" p:iconClass="icon-home5 pageIcon"/>
+                                        <bean parent="Uif-HeaderThree" p:headerText="公共主页"/>
+                                    </list>
+                                </property>
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean id="ClassInfoHeader" parent="Uif-HorizontalBoxSection"

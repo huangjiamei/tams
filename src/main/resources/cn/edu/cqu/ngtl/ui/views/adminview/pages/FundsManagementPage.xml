@@ -42,11 +42,11 @@
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
                                   p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-list','管理','经费管理')">
-                                <property name="items">
+                                <!--<property name="items">
                                     <list>
                                         <bean parent="Uif-HeaderTwo" p:headerText="经费"/>
                                     </list>
-                                </property>
+                                </property>-->
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -259,6 +259,10 @@
                                                                                                                       p:label="奖励经费"
                                                                                                                       p:propertyName="bonus"
                                                                                                                       p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="交通补贴"
+                                                                                                                      p:propertyName="trafficFunding"
+                                                                                                                      p:sortAs="numeric"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                         <property
@@ -321,13 +325,13 @@
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="sTimes">
                                                                                                                                 <property
+                                                                                                                                        name="control">
+                                                                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                                                                </property>
+                                                                                                                                <property
                                                                                                                                         name="optionsFinder">
                                                                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
                                                                                                                                           p:blankOption="false"/>
-                                                                                                                                </property>
-                                                                                                                                <property
-                                                                                                                                        name="control">
-                                                                                                                                    <bean parent="Uif-DropdownControl"/>
                                                                                                                                 </property>
                                                                                                                             </bean>
 
@@ -343,6 +347,8 @@
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="sRewardFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
+                                                                                                                                  p:propertyName="sTrafficFunds"/>
+                                                                                                                            <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="sTotalFunds"/>
 
                                                                                                                             <!--按钮-->
@@ -356,14 +362,14 @@
                                                                                                                                   p:additionalCssClasses="icon-cancel-circle"
                                                                                                                                   p:methodToCall="xxxx"
                                                                                                                                   p:style="margin:15px 5px;"/>
+
                                                                                                                         </list>
                                                                                                                     </property>
                                                                                                                 </bean>
-
                                                                                                                 <!--注意，不能直接加additionalCss，这样会给table外层的div加css-->
                                                                                                                 <!--应该使用p:layoutManager.cssClasses="xxx"-->
                                                                                                                 <!--学院历史经费的表格-->
-                                                                                                                <bean id="FundsManagementSchoolTable" parent="Uif-Disclosure-TableCollectionSection" p:onDocumentReadyScript = "refreshTableFilter(FundsSchoolSearchFields,FundsManagementSchoolTable);">
+                                                                                                                <bean id="FundsManagementSchoolTable" p:layoutManager.numberOfColumns="20" parent="Uif-Disclosure-TableCollectionSection" p:onDocumentReadyScript = "refreshTableFilter(FundsSchoolSearchFields,FundsManagementSchoolTable);">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
                                                                                                                             value="cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject"/>
@@ -420,6 +426,10 @@
                                                                                                                             <bean parent="Uif-DataField"
                                                                                                                                   p:label="奖励经费"
                                                                                                                                   p:propertyName="bonus"
+                                                                                                                                  p:sortAs="numeric"/>
+                                                                                                                            <bean parent="Uif-DataField"
+                                                                                                                                  p:label="交通补贴"
+                                                                                                                                  p:propertyName="trafficFunding"
                                                                                                                                   p:sortAs="numeric"/>
                                                                                                                             <bean parent="Uif-DataField"
                                                                                                                                   p:label="总经费"
@@ -511,6 +521,10 @@
                                                                                                                       p:propertyName="bonus"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
+                                                                                                                      p:label="交通补贴"
+                                                                                                                      p:propertyName="trafficFunding"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
                                                                                                                       p:label="总经费"
                                                                                                                       p:propertyName="total"
                                                                                                                       p:sortAs="numeric"/>
@@ -567,8 +581,7 @@
                                                                                                                             name="items">
                                                                                                                         <list>
                                                                                                                             <bean id="FundsManagerDeptSearchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
-                                                                                                                                <property
-                                                                                                                                        name="items">
+                                                                                                                                <property name="items">
                                                                                                                                     <list>
                                                                                                                                         <!--下拉框搜索-->
 
@@ -576,13 +589,13 @@
                                                                                                                                         <bean parent="Uif-InputField"
                                                                                                                                               p:propertyName="dTimes">
                                                                                                                                             <property
+                                                                                                                                                    name="control">
+                                                                                                                                                <bean parent="Uif-DropdownControl"/>
+                                                                                                                                            </property>
+                                                                                                                                            <property
                                                                                                                                                     name="optionsFinder">
                                                                                                                                                 <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
                                                                                                                                                       p:blankOption="false"/>
-                                                                                                                                            </property>
-                                                                                                                                            <property
-                                                                                                                                                    name="control">
-                                                                                                                                                <bean parent="Uif-DropdownControl"/>
                                                                                                                                             </property>
                                                                                                                                         </bean>
 
@@ -613,6 +626,8 @@
                                                                                                                                         <bean parent="Uif-InputField"
                                                                                                                                               p:propertyName="dRewardFunds"/>
                                                                                                                                         <bean parent="Uif-InputField"
+                                                                                                                                              p:propertyName="dTrafficFunds"/>
+                                                                                                                                        <bean parent="Uif-InputField"
                                                                                                                                               p:propertyName="dTotalFunds"/>
 
                                                                                                                                         <!--按钮-->
@@ -621,19 +636,20 @@
                                                                                                                                               p:additionalCssClasses="icon-search"
                                                                                                                                               p:methodToCall="xxxx"
                                                                                                                                               p:style="margin:15px 5px;"/>
-                                                                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                              p:actionLabel="重置"
-                                                                                                                                              p:additionalCssClasses="icon-cancel-circle"
-                                                                                                                                              p:methodToCall="xxxx"
-                                                                                                                                              p:style="margin:15px 5px;"/>
+
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>
+                                                                                                                            <!--  <bean parent="Uif-PrimaryActionButton"
+                                                                                                                                              p:actionLabel="重置"
+                                                                                                                                              p:additionalCssClasses="icon-cancel-circle"
+                                                                                                                                              p:methodToCall="xxxx"
+                                                                                                                                              p:style="margin:15px 5px;"/>-->
 
                                                                                                                             <!--注意，不能直接加additionalCss，这样会给table外层的div加css-->
                                                                                                                             <!--应该使用p:layoutManager.cssClasses="xxx"-->
                                                                                                                             <!--学院历史经费的表格-->
-                                                                                                                            <bean id="FundsManagerDeptTable" parent="Uif-Disclosure-TableCollectionSection" p:onDocumentReadyScript = "refreshTableFilter(FundsManagerDeptSearchFields,FundsManagerDeptTable);">
+                                                                                                                            <bean id="FundsManagerDeptTable" parent="Uif-Disclosure-TableCollectionSection" p:onDocumentReadyScript="refreshTableFilter(FundsManagerDeptSearchFields,FundsManagerDeptTable);">
                                                                                                                                 <property
                                                                                                                                         name="collectionObjectClass"
                                                                                                                                         value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
@@ -693,6 +709,10 @@
                                                                                                                                         <bean parent="Uif-DataField"
                                                                                                                                               p:label="奖励经费"
                                                                                                                                               p:propertyName="bonus"
+                                                                                                                                              p:sortAs="numeric"/>
+                                                                                                                                        <bean parent="Uif-DataField"
+                                                                                                                                              p:label="交通补贴"
+                                                                                                                                              p:propertyName="trafficFunding"
                                                                                                                                               p:sortAs="numeric"/>
                                                                                                                                         <bean parent="Uif-DataField"
                                                                                                                                               p:label="总经费"
@@ -879,6 +899,14 @@
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="博士津贴"
+                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="奖励津贴"
+                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="交通补贴"
                                                                                                                       p:propertyName="field4"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"

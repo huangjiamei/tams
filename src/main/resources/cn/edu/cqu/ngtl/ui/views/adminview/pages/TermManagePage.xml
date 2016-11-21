@@ -105,15 +105,10 @@
                                                                         <list>
                                                                             <!--右上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="excel"
+                                                                                  p:actionLabel="导出EXCEL"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
-                                                                                </property>
+                                                                                  p:additionalCssClasses="bg-teal box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -134,23 +129,15 @@
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="bg-grey tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
-                                                                                </property>
+                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="xxxx"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
-                                                                                </property>
+                                                                                  p:additionalCssClasses="icon-asterisk bg-teal tamsbtn">
+
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"

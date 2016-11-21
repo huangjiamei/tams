@@ -172,8 +172,8 @@
                                                                 </bean>
 
                                                                 <bean id="searchButton" parent="Uif-PrimaryActionButton"
-                                                                      p:style="float:right;"
-                                                                      p:actionLabel="查看" p:additionalCssClasses="icon-search"
+                                                                      p:style="float:right;margin:10px;"
+                                                                      p:actionLabel="查看" p:additionalCssClasses="icon-search bg-orange tamsbtn"
                                                                       p:methodToCall="search"
                                                                       p:refreshId="workFlowTab"/>
 

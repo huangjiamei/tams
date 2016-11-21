@@ -90,7 +90,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-heart"/>
-                                                                <bean parent="Uif-Message" p:messageText="d"/>
+                                                                <bean parent="Uif-Message" p:messageText="d" p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -105,8 +105,6 @@
                                                 </list>
                                             </property>
                                         </bean>
-
-
                                     </list>
                                 </property>
                             </bean>
@@ -121,7 +119,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-star"/>
-                                                                <bean parent="Uif-Message" p:messageText="Default Message"/>
+                                                                <bean parent="Uif-Message" p:messageText="Default Message" p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -160,14 +158,6 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="教学班列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
-                                                                      p:methodToCall="exportApplicantPhoto"
-                                                                      p:style="float:right!important;font-size:18px;margin-right: 10px;background=orange!important;"
-                                                                      p:additionalCssClasses="bg-orange"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
-                                                                      p:methodToCall="exportClassListExcel"
-                                                                      p:style="float:right!important;font-size:18px; margin-right: 10px;background=forestgreen!important;"
-                                                                      p:additionalCssClasses="bg-success"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -175,38 +165,50 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: left!important;">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--左上角btnlist-->
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="驳回"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-plus bg-orange tamsbtn"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="审批"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-plus bg-primary tamsbtn"/>
+                                                                            <bean parent="Uif-Message"
+                                                                                  p:messageText="津贴总额："
+                                                                                  p:additionalCssClasses="boxheaderTitle"/>
+                                                                            <bean parent="Uif-Message"
+                                                                                  p:messageText="1000000.0"
+                                                                                  p:additionalCssClasses="label label-primary"
+                                                                                  p:style="padding:5px;font-size: 15px;margin-top:-3px;"/>
+
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
-                                                                <bean parent="Uif-Message" p:messageText="1000000.0"
-                                                                      p:additionalCssClasses="label label-primary"
-                                                                      p:style="float:right!important;color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
-                                                                <bean parent="Uif-Message" p:messageText="津贴总额："
-                                                                      p:additionalCssClasses="boxheaderTitle"
-                                                                      p:style="float:right!important;margin:5px; 5px 0 0 "/>
-
+                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
+                                                                      p:methodToCall="exportApplicantPhoto"
+                                                                      p:additionalCssClasses="bg-orange box-btngroup"/>
+                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
+                                                                      p:methodToCall="exportClassListExcel"
+                                                                      p:additionalCssClasses="bg-success box-btngroup"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
+                                                        <property name="items">
+                                                            <list>
+                                                                <!--左上角btnlist-->
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="添加"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="copyxxx"
+                                                                      p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="驳回"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="copyxxx"
+                                                                      p:additionalCssClasses="icon-plus bg-orange tamsbtn"/>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="审批"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="copyxxx"
+                                                                      p:additionalCssClasses="icon-plus bg-primary tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>

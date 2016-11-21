@@ -124,12 +124,20 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean id="elapsedTime" parent="Uif-Message" p:messageText="@{totalElapsedTime}"
-                                                                      p:additionalCssClasses="label label-primary"
-                                                                      p:style="float:right!important;color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
-                                                                <bean parent="Uif-Message" p:messageText="耗时小计："
-                                                                      p:additionalCssClasses="boxheaderTitle"
-                                                                      p:style="float:right!important;margin-top:5px;"/>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: right!important;margin-right:5px;">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-Message"
+                                                                                  p:messageText="耗时小计："
+                                                                                  p:additionalCssClasses="boxheaderTitle"/>
+                                                                            <bean id="elapsedTime" parent="Uif-Message"
+                                                                                  p:messageText="@{totalElapsedTime}"
+                                                                                  p:additionalCssClasses="label label-primary"
+                                                                                  p:style="color:white;padding:5px;font-size: 15px;margin-top:4px;"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>

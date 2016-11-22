@@ -68,4 +68,6 @@ public interface ITAConverter {
     String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar);
 
     List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList);
+
+    List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities);
 }

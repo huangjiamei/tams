@@ -8,4 +8,6 @@ import java.util.List;
  */
 public interface TAMSActivityDao {
     List<TAMSActivity> selectAllByCalendarId(String CalendarId);
+
+    List<TAMSActivity> selectAllByClassId(String classId);
 }

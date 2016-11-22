@@ -135,9 +135,9 @@
                                                                                         <!--应该使用p:layoutManager.cssClasses="xxx"-->
                                                                                         <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                                             <property name="collectionObjectClass"
-                                                                                                      value="cn.edu.cqu.ngtl.dataobject.TestGroupObject"/>
+                                                                                                      value="cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject"/>
                                                                                             <property name="propertyName"
-                                                                                                      value="groupObjectList"/>
+                                                                                                      value="allActivities"/>
                                                                                             <property name="useServerPaging" value="true" />
                                                                                             <property name="layoutManager.richTable.render" value="false"/>
                                                                                             <property name="layoutManager.renderSequenceField" value="false"/>
@@ -145,12 +145,12 @@
                                                                                             <property name="renderAddLine" value="false"/>
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
+                                                                                                    <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                                         <property name="control">
                                                                                                             <bean parent="Uif-CheckboxControl"/>
                                                                                                         </property>
                                                                                                     </bean>
-                                                                                                    <bean parent="Uif-DataField" p:label="title" p:propertyName="groupName"
+                                                                                                    <bean parent="Uif-DataField" p:label="title" p:propertyName="description"
                                                                                                           p:additionalCssClasses="tams-activity-group-title"/>
                                                                                                 </list>
                                                                                             </property>
@@ -159,9 +159,9 @@
                                                                                                     <bean parent="Uif-Disclosure-TableCollectionSubSection"
                                                                                                           p:additionalCssClasses="sub-table">
                                                                                                         <property name="collectionObjectClass"
-                                                                                                                  value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                                  value="cn.edu.cqu.ngtl.viewobject.classinfo.ActivityViewObject"/>
                                                                                                         <property name="propertyName"
-                                                                                                                  value="objectList"/>
+                                                                                                                  value="activityViewObjects"/>
                                                                                                         <property name="layoutManager.richTable.render" value="false"/>
                                                                                                         <property name="renderAddLine" value="false"/>
                                                                                                         <property name="layoutManager.renderSequenceField"
@@ -176,7 +176,7 @@
 
                                                                                                         <property name="items">
                                                                                                             <list>
-                                                                                                                <bean parent="Uif-InputField" p:label="" p:propertyName="checked">
+                                                                                                                <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                                                     <property name="control">
                                                                                                                         <bean parent="Uif-CheckboxControl"/>
                                                                                                                     </property>
@@ -184,13 +184,13 @@
                                                                                                                 <!--组title和项目title样式不同，根据render进行区分。实际应用时修改render中的条件即可-->
 
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:propertyName="field0"
+                                                                                                                      p:propertyName="description"
                                                                                                                       p:additionalCssClasses="tams-activity-item-title"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="createTime"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:additionalCssClasses="tams-activity-state"
-                                                                                                                      p:propertyName="field2"/>
+                                                                                                                      p:propertyName="lastUpdateTime"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                         <property name="lineActions">

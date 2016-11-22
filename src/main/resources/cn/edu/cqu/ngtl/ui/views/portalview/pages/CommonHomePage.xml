@@ -129,13 +129,15 @@
                                                         </property>
                                                     </bean>
                                                     <bean parent="Uif-HorizontalBoxSection"
-                                                          p:style="float:right;">
+                                                          p:style="float:right!important;">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="更多"
+                                                                      p:actionImagePlacement="LEFT"
                                                                       p:actionScript="alert('更多');"
-                                                                      p:id="btn-moreinfo"/>
+                                                                      p:id="btn-moreinfo"
+                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>

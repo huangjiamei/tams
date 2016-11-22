@@ -14,14 +14,19 @@ public class TAMSActivity {
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsActivity")
+    @SequenceGenerator(name="tamsActivity",sequenceName="TAMS_ACTIVITY_S",allocationSize=1)
     private String id;
 
     @Column(name = "DESCRIPTION")
     private String description;
 
+    @Column(name = "TEACH_CALENDAR_ID")
+    private String teachCalendarId;
+
     @ManyToOne
     @JoinColumn(name = "TEACH_CALENDAR_ID", insertable = false, updatable = false)
-    private TAMSTeachCalendar teachCalendarId;
+    private TAMSTeachCalendar teachCalendar;
 
     @Column(name = "CREATE_TIME")
     private String createTime;
@@ -37,16 +42,12 @@ public class TAMSActivity {
     @JoinColumn(name = "ACTIVITY_TYPE", insertable = false, updatable =false)
     private TAMSIssueType activityType;
 
-    @Column(name = "OBJ_ID")
-    private String objId;
-
-    @Column(name = "VER_NBR")
-    private String verNbr;
-
     @Column(name = "ATTACHMENT")
-    private String attachment;
+    private boolean attachment;
 
-    public String getId() {return id;}
+    public String getId() {
+        return id;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -60,9 +61,21 @@ public class TAMSActivity {
         this.description = description;
     }
 
-    public TAMSTeachCalendar getTeachCalendarId() { return teachCalendarId; }
+    public String getTeachCalendarId() {
+        return teachCalendarId;
+    }
 
-    public void setTeachCalendarId(TAMSTeachCalendar teachCalendarId) { this.teachCalendarId = teachCalendarId; }
+    public void setTeachCalendarId(String teachCalendarId) {
+        this.teachCalendarId = teachCalendarId;
+    }
+
+    public TAMSTeachCalendar getTeachCalendar() {
+        return teachCalendar;
+    }
+
+    public void setTeachCalendar(TAMSTeachCalendar teachCalendar) {
+        this.teachCalendar = teachCalendar;
+    }
 
     public String getCreateTime() {
         return createTime;
@@ -80,35 +93,27 @@ public class TAMSActivity {
         this.lastUpdateTime = lastUpdateTime;
     }
 
-    public TAMSIssueStatus getStatus() { return status; }
-
-    public void setStatus(TAMSIssueStatus status) { this.status = status; }
-
-    public TAMSIssueType getActivityType() { return activityType; }
-
-    public void setActivityType(TAMSIssueType activityType) { this.activityType = activityType; }
-
-    public String getObjId() {
-        return objId;
+    public TAMSIssueStatus getStatus() {
+        return status;
     }
 
-    public void setObjId(String objId) {
-        this.objId = objId;
+    public void setStatus(TAMSIssueStatus status) {
+        this.status = status;
     }
 
-    public String getVerNbr() {
-        return verNbr;
+    public TAMSIssueType getActivityType() {
+        return activityType;
     }
 
-    public void setVerNbr(String verNbr) {
-        this.verNbr = verNbr;
+    public void setActivityType(TAMSIssueType activityType) {
+        this.activityType = activityType;
     }
 
-    public String getAttachment() {
+    public boolean isAttachment() {
         return attachment;
     }
 
-    public void setAttachment(String attachment) {
+    public void setAttachment(boolean attachment) {
         this.attachment = attachment;
     }
 }

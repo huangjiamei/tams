@@ -417,6 +417,7 @@ body{
 
 .uif-disclosure{
     overflow-x: scroll;
+    min-height: 420px;
 }
 .uif-disclosure>.uif-sectionHeader, .uif-disclosure .DTTT_container,
 .uif-disclosure .dataTables_processing{

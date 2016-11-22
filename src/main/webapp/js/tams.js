@@ -647,3 +647,14 @@ function tabGroupIcon(){
     jQuery("#tabGroupOne .uif-sectionHeader").html('<h4><i class="icon-book"></i><big>课程信息</big></h4>');
     jQuery("#tabGroupTwo .uif-sectionHeader").html('<h4><i class="icon-arrow-up"></i><big>反馈信息</big></h4>');
 }
+
+
+/**
+ *该方法生成动态变化的面包线
+ * @param breadcrumbId 面包线控件id
+ * @param value 要修改的值
+ * @param key   待修改option的key
+ */
+function setupDynamicBreadcrumb(breadcrumbId,value,key){
+    jQuery("#"+breadcrumbId+" li *"+"[data-key='"+key+"']").html(value)
+}

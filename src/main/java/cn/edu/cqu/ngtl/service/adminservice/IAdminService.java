@@ -68,4 +68,6 @@ public interface IAdminService {
     List<TAMSClassFunding> getFundingByClass();
 
     List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions);
+
+    List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions);
 }

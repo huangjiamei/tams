@@ -232,7 +232,9 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.previousSessionFundings = previousSessionFundings;
     }
 
-    public List<DepartmentFundingViewObject> getDepartmentCurrFundings() { return departmentCurrFundings;}
+    public List<DepartmentFundingViewObject> getDepartmentCurrFundings() {
+        return departmentCurrFundings;
+    }
 
     public void setDepartmentCurrFundings(List<DepartmentFundingViewObject> departmentCurrFundings) {
         this.departmentCurrFundings = departmentCurrFundings;
@@ -678,19 +680,19 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.dRewardFunds = dRewardFunds;
     }
 
-    public String getdTotalFunds() {
-        return dTotalFunds;
-    }
-
-    public void setdTotalFunds(String dTotalFunds) {
-        this.dTotalFunds = dTotalFunds;
-    }
-
     public String getdTrafficFunds() {
         return dTrafficFunds;
     }
 
     public void setdTrafficFunds(String dTrafficFunds) {
         this.dTrafficFunds = dTrafficFunds;
+    }
+
+    public String getdTotalFunds() {
+        return dTotalFunds;
+    }
+
+    public void setdTotalFunds(String dTotalFunds) {
+        this.dTotalFunds = dTotalFunds;
     }
 }

@@ -22,7 +22,7 @@ public interface TAMSDeptFundingDao {
 
     List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions);
 
-    List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions);
-
     List<TAMSClassFunding> selectAll();
+
+    List<TAMSDeptFunding> selectDeptFundPreByCondition(Map<String, String> conditions);
 }

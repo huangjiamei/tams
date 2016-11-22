@@ -162,6 +162,14 @@ public class ClassTeacherViewObject {
         this.instructorName = instructorName;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public String getWorkTime() {
         return workTime;
     }
@@ -184,14 +192,6 @@ public class ClassTeacherViewObject {
 
     public void setProtocalAssistantNumber(String protocalAssistantNumber) {
         this.protocalAssistantNumber = protocalAssistantNumber;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String judgeStatus) {
-        this.status = status;
     }
 
     public String getStudentCounts() {

@@ -589,8 +589,8 @@
                                                                                                                                             </property>
                                                                                                                                             <property
                                                                                                                                                     name="optionsFinder">
-                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                                      p:blankOption="false"/>
+                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder"
+                                                                                                                                                      p:blankOption="true"/>
                                                                                                                                             </property>
                                                                                                                                         </bean>
 
@@ -599,8 +599,8 @@
                                                                                                                                               p:style="margin-left:10px;">
                                                                                                                                             <property
                                                                                                                                                     name="optionsFinder">
-                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                                      p:blankOption="false"/>
+                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                                                                                                                      p:blankOption="true"/>
                                                                                                                                             </property>
                                                                                                                                             <property
                                                                                                                                                     name="control">
@@ -629,7 +629,7 @@
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="查询"
                                                                                                                                               p:additionalCssClasses="icon-search"
-                                                                                                                                              p:methodToCall="xxxx"
+                                                                                                                                              p:methodToCall="searchPreDeptFundingByCondition"
                                                                                                                                               p:style="margin:15px 5px;"/>
 
                                                                                                                                     </list>

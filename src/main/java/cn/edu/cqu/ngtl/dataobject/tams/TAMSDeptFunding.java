@@ -38,6 +38,9 @@ public class TAMSDeptFunding extends DataObjectBase implements Serializable {
     @Column(name = "DEPARTMENT_ID")
     private String departmentId;
 
+    @Column(name = "TRAVEL_SUBSIDY")
+    private String travelSubsidy;
+
     @OneToOne
     @JoinColumn(name = "DEPARTMENT_ID",updatable=false, insertable=false)
     private UTDepartment department;
@@ -48,6 +51,14 @@ public class TAMSDeptFunding extends DataObjectBase implements Serializable {
     @OneToOne
     @JoinColumn(name = "SESSION_ID",updatable=false, insertable=false)
     private UTSession session;
+
+    public String getTravelSubsidy() {
+        return travelSubsidy;
+    }
+
+    public void setTravelSubsidy(String travelSubsidy) {
+        this.travelSubsidy = travelSubsidy;
+    }
 
     public String getPhdFunding() {
         return phdFunding;

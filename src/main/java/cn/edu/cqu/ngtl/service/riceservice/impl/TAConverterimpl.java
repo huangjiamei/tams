@@ -70,7 +70,7 @@ public class TAConverterimpl implements ITAConverter {
 
             //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
             viewObject.setId(information.getId());
-            viewObject.setInstructorName("test");
+            viewObject.setInstructorName(information.getInstructorName());
 
             viewObject.setClassNumber(information.getClassNumber());
 
@@ -525,8 +525,11 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
-        List<DepartmentFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
-
+        List<DepartmentFundingViewObject> viewObjects = new ArrayList<>();
+        if(allFundingBySession == null || allFundingBySession.size() == 0) {
+            viewObjects.add(new DepartmentFundingViewObject());
+            return viewObjects;
+        }
         for(TAMSDeptFunding deptFunding : allFundingBySession){
             DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
             viewObject.setBonus(deptFunding.getBonus());
@@ -535,6 +538,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setActualFunding(deptFunding.getActualFunding());
             viewObject.setPlanFunding(deptFunding.getPlanFunding());
             viewObject.setDepartment(deptFunding.getDepartment().getName());
+            viewObject.setTrafficFunding(deptFunding.getTravelSubsidy());
             Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
                     Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
                     Integer.valueOf(deptFunding.getPlanFunding());

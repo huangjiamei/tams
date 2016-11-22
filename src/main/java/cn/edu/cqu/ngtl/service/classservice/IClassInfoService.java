@@ -28,4 +28,6 @@ public interface IClassInfoService {
     boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar);
 
     boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId);
+
+    List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId);
 }

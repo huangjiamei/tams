@@ -634,6 +634,7 @@ public class TAConverterimpl implements ITAConverter {
 
             /** 不确定是否应该用id作为编号 **/
             viewObject.setCode(calendar.getId());
+            viewObject.setTheme(calendar.getTheme());
             viewObject.setDescription(calendar.getDescription());
             viewObject.setElapsedTime(calendar.getElapsedTime());
             viewObject.setStartTime(calendar.getStartTime());
@@ -664,5 +665,28 @@ public class TAConverterimpl implements ITAConverter {
                 }
             }
         return count.toString();
+    }
+
+    @Override
+    public List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities) {
+        List<TeachCalendarViewObject> readyContainActivities = this.TeachCalendarToViewObject(calendarsContainActivities);
+        if(readyContainActivities == null || readyContainActivities.size() == 0)
+            return null;
+
+        for(int i = 0; i < readyContainActivities.size(); i ++) {
+            List<TAMSActivity> activities = calendarsContainActivities.get(i).getActivityList();
+            List<ActivityViewObject> activityViewObjects = new ArrayList<>(activities.size());
+            for(TAMSActivity per : activities) {
+                ActivityViewObject viewObject = new ActivityViewObject();
+                viewObject.setDescription(per.getDescription());
+                viewObject.setCreateTime(per.getCreateTime());
+                viewObject.setLastUpdateTime(per.getLastUpdateTime());
+
+                activityViewObjects.add(viewObject);
+            }
+            readyContainActivities.get(i).setActivityViewObjects(activityViewObjects);
+        }
+
+        return readyContainActivities;
     }
 }

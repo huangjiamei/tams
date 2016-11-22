@@ -70,7 +70,7 @@ public class TAConverterimpl implements ITAConverter {
 
             //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
             viewObject.setId(information.getId());
-            viewObject.setInstructorName("test");
+            viewObject.setInstructorName(information.getInstructorName());
 
             viewObject.setClassNumber(information.getClassNumber());
 

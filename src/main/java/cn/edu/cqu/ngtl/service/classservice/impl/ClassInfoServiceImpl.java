@@ -102,7 +102,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
-        if(!userInfoService.isSysAdmin(uId)) {
+        if(userInfoService.isSysAdmin(uId)) {
             /** Access DataBase */
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;

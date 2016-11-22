@@ -103,8 +103,7 @@
                                                             <bean parent="Uif-PrimaryActionButton"
                                                                   p:actionLabel="导出EXCEL"
                                                                   p:methodToCall=""
-                                                                  p:style="float:right!important;font-size:14px; margin-right: 10px;"
-                                                                  p:additionalCssClasses="bg-success"/>
+                                                                  p:additionalCssClasses="bg-orange box-btngroup"/>
                                                         </list>
                                                     </property>
                                                 </bean>

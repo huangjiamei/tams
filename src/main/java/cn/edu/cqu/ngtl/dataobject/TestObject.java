@@ -1,7 +1,9 @@
 package cn.edu.cqu.ngtl.dataobject;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by hp on 2016/10/12.
@@ -9,7 +11,7 @@ import java.util.Date;
 public class TestObject implements Serializable {
     private Date date1;
     private Date date2;
-
+    private List<TestObject> collection = new ArrayList<TestObject>();
     private String field0;
     private String field1;
     private String field2;
@@ -23,6 +25,7 @@ public class TestObject implements Serializable {
     private boolean checked;
 
     public TestObject() {
+
     }
 
     public TestObject(Date date1, String field0, String field3, String field4) {
@@ -42,6 +45,13 @@ public class TestObject implements Serializable {
         this.field4 = field4;
     }
 
+    public List<TestObject> getCollection() {
+        return collection;
+    }
+
+    public void setCollection(List<TestObject> collection) {
+        this.collection = collection;
+    }
 
     public boolean isChecked() {
         return checked;

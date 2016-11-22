@@ -255,17 +255,23 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         int countNull = 0;
         //加通配符
         for (Map.Entry<String, String> entry : conditions.entrySet()) {
-            if (entry.getValue() == null) {
-                conditions.put(entry.getKey(), "%");
+            if (!"dTimes".equals(entry.getKey()))
+            {
+                if (entry.getValue()==null)
+                    conditions.put(entry.getKey(),"%");
+                else
+                    conditions.put(entry.getKey(), entry.getValue() + "%");
                 countNull++;
-            } else if (!"dTimes".equals(entry.getKey()) ) {
-                conditions.put(entry.getKey(), entry.getValue() + "%");
+            } else if ("dTimes".equals(entry.getKey()) ) {
+                if (entry.getValue() == null) {
+                    conditions.put(entry.getKey(),"%");
+                }
             }
             else
                 continue;;
         }
         if (countNull != conditions.size()) {
-            Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND (s.UNIQUEID ='"+conditions.get("dTimes")+"' AND t.DEPARTMENT_ID LIKE '"+conditions.get("deptId")+"' AND (t.PLAN_FUNDING LIKE '"+conditions.get("dPreFunds")+"' OR t.PLAN_FUNDING IS NULL )AND (t.APPLY_FUNDING LIKE '"+conditions.get("dApplyFunds")+"' OR t.APPLY_FUNDING IS NULL ) AND (t.ACTUAL_FUNDING LIKE '"+conditions.get("dApprovalFunds")+"' OR t.ACTUAL_FUNDING IS NULL )AND (t.PHD_FUNDING LIKE '"+conditions.get("dAddingFunds")+"' OR t.PHD_FUNDING IS NULL ) AND (t.BONUS LIKE '"+conditions.get("dRewardFunds")+"' OR t.BONUS IS NULL ) AND (t.TRAVEL_SUBSIDY LIKE '"+conditions.get("dTrafficFunds")+"' OR t.TRAVEL_SUBSIDY IS NULL))  ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
+            Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND ((s.UNIQUEID LIKE '"+conditions.get("dTimes")+"' ) AND t.DEPARTMENT_ID LIKE '"+conditions.get("deptId")+"' AND (t.PLAN_FUNDING LIKE '"+conditions.get("dPreFunds")+"' OR t.PLAN_FUNDING IS NULL )AND (t.APPLY_FUNDING LIKE '"+conditions.get("dApplyFunds")+"' OR t.APPLY_FUNDING IS NULL ) AND (t.ACTUAL_FUNDING LIKE '"+conditions.get("dApprovalFunds")+"' OR t.ACTUAL_FUNDING IS NULL )AND (t.PHD_FUNDING LIKE '"+conditions.get("dAddingFunds")+"' OR t.PHD_FUNDING IS NULL ) AND (t.BONUS LIKE '"+conditions.get("dRewardFunds")+"' OR t.BONUS IS NULL ) AND (t.TRAVEL_SUBSIDY LIKE '"+conditions.get("dTrafficFunds")+"' OR t.TRAVEL_SUBSIDY IS NULL))  ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
             List<Object> columns = query.getResultList();
 
             for (Object column : columns) {

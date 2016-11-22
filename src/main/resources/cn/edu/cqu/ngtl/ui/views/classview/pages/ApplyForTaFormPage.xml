@@ -109,12 +109,12 @@
                                                     </bean>
                                                     <bean parent="Uif-GridGroup"
                                                           p:layoutManager.renderRowFirstCellHeader="false">
-                                                        <property name="layoutManager.numberOfColumns" value="4"/>
+                                                        <property name="layoutManager.numberOfColumns" value="6"/>
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:label="姓名" p:colSpan="3"
-                                                                      p:fieldLabel.colSpan="1" p:messageText="@{applyAssistantViewObject.username}"/>
+                                                                      p:label="姓名"
+                                                                      p:messageText="@{applyAssistantViewObject.username}"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:label="学号" p:messageText="@{applyAssistantViewObject.studentId}"/>
                                                                 <bean parent="Uif-MessageField"
@@ -135,37 +135,65 @@
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-InputField" p:label="申请理由及特长" p:propertyName="applyReason"
-                                                          p:additionalCssClasses="row"
-                                                    p:style="width:100%;">
-                                                        <property name="control">
-                                                            <bean parent="Uif-TextAreaControl"
-                                                                  p:style="height:200px;"/>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-InputField" p:label="学历" p:propertyName="eduBackground">
-                                                        <property name="control">
-                                                            <bean parent="Uif-HorizontalRadioControl" p:delimiter="  ">
-                                                                <property name="options">
-                                                                    <list>
-                                                                        <bean parent="Uif-KeyLabelPair" p:key="1" p:value="博士"/>
-                                                                        <bean parent="Uif-KeyLabelPair" p:key="2" p:value="硕士"/>
-                                                                        <bean parent="Uif-KeyLabelPair" p:key="3" p:value="其他"/>
-                                                                    </list>
-                                                                </property>
-                                                            </bean>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-md-6 col-lg-6">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
+                                                                <bean parent="Uif-InputField" p:label="申请理由及特长"
+                                                                      p:propertyName="applyReason"
+                                                                      p:additionalCssClasses="row"
+                                                                      p:style="width:100%;">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextAreaControl"
+                                                                              p:style="height:100px;"/>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-md-6 col-lg-6">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-InputField" p:label="学历"
+                                                                      p:propertyName="eduBackground">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-HorizontalRadioControl"
+                                                                              p:delimiter=" ">
+                                                                            <property name="options">
+                                                                                <list>
+                                                                                    <bean parent="Uif-KeyLabelPair"
+                                                                                          p:key="1" p:value="博士"/>
+                                                                                    <bean parent="Uif-KeyLabelPair"
+                                                                                          p:key="2" p:value="硕士"/>
+                                                                                    <bean parent="Uif-KeyLabelPair"
+                                                                                          p:key="3" p:value="其他"/>
+                                                                                </list>
+                                                                            </property>
+                                                                        </bean>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:style="padding:10px 0 10px 40%;">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="提交"
+                                                                      p:actionImagePlacement="LEFT"
                                                                       p:methodToCall="submitTaForm"
                                                                       p:successCallback="alert('提交成功，返回测试页面homepage，未来可换成dialog');"
-                                                                      p:id="submitTaFormBtn"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="取消"
+                                                                      p:id="submitTaFormBtn"
+                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="取消"
+                                                                      p:actionImagePlacement="LEFT"
                                                                       p:actionScript="alert('取消');"
-                                                                      p:id="ST-DemoButton2"/>
+                                                                      p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>

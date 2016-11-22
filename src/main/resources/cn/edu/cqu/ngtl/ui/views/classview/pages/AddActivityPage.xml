@@ -208,12 +208,12 @@
                                                                                   p:actionLabel="创建"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-file2 bg-primary tamsbtn"/>
+                                                                                  p:additionalCssClasses="icon-file2 bg-teal tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="创建并继续"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-paste bg-primary tamsbtn"/>
+                                                                                  p:additionalCssClasses="icon-paste bg-orange tamsbtn"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

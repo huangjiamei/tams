@@ -281,6 +281,21 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getTeachActivities(@ModelAttribute("KualiForm") UifFormBase form,
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+
+        String classId = infoForm.getCurrClassId();
+        if(classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageTeachingCalendar");
+
+        infoForm.setAllActivities(
+                taConverter.activitiesToViewObject(
+                        classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
+                                uId, classId)
+                )
+        );
+
         List<TestGroupObject> groupObjectList = new ArrayList<>();
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.1小节"));
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.2小节"));

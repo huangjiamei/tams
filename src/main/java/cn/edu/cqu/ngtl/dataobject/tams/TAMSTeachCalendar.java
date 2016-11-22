@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by tangjing on 16-11-15.
@@ -44,7 +45,18 @@ public class TAMSTeachCalendar {
     private String classId;
 
     @Transient
+    private List<TAMSActivity> activityList;
+
+    @Transient
     private UTClassInformation classInformation;
+
+    public List<TAMSActivity> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<TAMSActivity> activityList) {
+        this.activityList = activityList;
+    }
 
     public String getTheme() {
         return theme;

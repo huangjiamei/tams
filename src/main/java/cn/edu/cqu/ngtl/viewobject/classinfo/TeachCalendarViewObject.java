@@ -1,5 +1,7 @@
 package cn.edu.cqu.ngtl.viewobject.classinfo;
 
+import java.util.List;
+
 /**
  * Created by tangjing on 16-11-16.
  */
@@ -8,6 +10,8 @@ public class TeachCalendarViewObject {
     private Boolean checkBox;
 
     private String code;
+
+    private String theme;
 
     private String description;
 
@@ -18,6 +22,24 @@ public class TeachCalendarViewObject {
     private String endTime;
 
     private String elapsedTime;
+
+    private List<ActivityViewObject> activityViewObjects;
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public List<ActivityViewObject> getActivityViewObjects() {
+        return activityViewObjects;
+    }
+
+    public void setActivityViewObjects(List<ActivityViewObject> activityViewObjects) {
+        this.activityViewObjects = activityViewObjects;
+    }
 
     public Boolean getCheckBox() {
         return checkBox;

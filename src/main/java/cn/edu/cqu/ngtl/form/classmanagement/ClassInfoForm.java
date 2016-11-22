@@ -22,6 +22,11 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String currClassId;
 
     /**
+     * 教学活动相关
+     */
+    private List<TeachCalendarViewObject> allActivities;
+
+    /**
      * 教学日历相关
      */
     private List<TeachCalendarViewObject> allCalendar;
@@ -57,13 +62,20 @@ public class ClassInfoForm extends BaseForm implements Serializable {
      */
     private List<TestGroupObject> groupObjectList = new ArrayList<>();
 
-
     public List<TestGroupObject> getGroupObjectList() {
         return groupObjectList;
     }
 
     public void setGroupObjectList(List<TestGroupObject> groupObjectList) {
         this.groupObjectList = groupObjectList;
+    }
+
+    public List<TeachCalendarViewObject> getAllActivities() {
+        return allActivities;
+    }
+
+    public void setAllActivities(List<TeachCalendarViewObject> allActivities) {
+        this.allActivities = allActivities;
     }
 
     public String getCurrClassId() {

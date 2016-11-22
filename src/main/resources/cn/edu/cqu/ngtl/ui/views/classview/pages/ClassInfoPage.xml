@@ -33,7 +33,7 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <bean id="ClassInfoPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="setupAutoSideBar()">
+          p:onDocumentReadyScript="setupAutoSideBar();setupDynamicBreadcrumb('breadcrumb','@{detailInfoViewObject.courseName}',3)">
         <property name="items">
             <list>
                 <bean parent="Uif-HorizontalBoxSection"
@@ -44,7 +44,7 @@
                             <bean parent="Uif-HeaderThree" p:headerText="课程信息"/>
 
                             <!-- 右上角 当前路径 -->
-                            <bean parent="Uif-HorizontalBoxSection"
+                            <bean id="breadcrumb" parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
@@ -52,7 +52,7 @@
                                               p:style="float:left!important;"/>
                                         <bean parent="Uif-InputField">
                                             <property name="control">
-                                                <bean parent="Uif-OptionListControl"
+                                                <bean  parent="Uif-OptionListControl"
                                                       p:additionalCssClasses="breadcrumb"
                                                       p:style="background: transparent!important;">
                                                     <property name="options">
@@ -66,7 +66,7 @@
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3"
-                                                                  p:value="@{detailInfoViewObject.courseName},需要后期用js"/>
+                                                                  p:value=""/>
                                                         </list>
                                                     </property>
                                                 </bean>

@@ -120,7 +120,7 @@
     <bean id="navDialog" parent="Uif-DialogGroup"
           p:dialogCssClass="navigationDialog"
           p:onShowDialogScript="initNavDialog();"
-          p:style="z-index:9999;overflow-y:hidden;">
+          p:style="overflow-y:hidden;">
         <property name="layoutManager">
             <bean parent="Uif-VerticalBoxLayout" />
         </property>

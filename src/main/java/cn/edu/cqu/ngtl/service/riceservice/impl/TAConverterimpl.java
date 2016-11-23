@@ -70,7 +70,7 @@ public class TAConverterimpl implements ITAConverter {
 
             //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
             viewObject.setId(information.getId());
-            viewObject.setInstructorName("test");
+            viewObject.setInstructorName(information.getInstructorName());
 
             viewObject.setClassNumber(information.getClassNumber());
 
@@ -502,8 +502,11 @@ public class TAConverterimpl implements ITAConverter {
     //学院经费
     @Override
     public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
-        List<DepartmentFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
-
+        List<DepartmentFundingViewObject> viewObjects = new ArrayList<>();
+        if(allFundingBySession == null || allFundingBySession.size() == 0) {
+            viewObjects.add(new DepartmentFundingViewObject());
+            return viewObjects;
+        }
         for(TAMSDeptFunding deptFunding : allFundingBySession){
             DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
             viewObject.setBonus(deptFunding.getBonus());
@@ -512,6 +515,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setActualFunding(deptFunding.getActualFunding());
             viewObject.setPlanFunding(deptFunding.getPlanFunding());
             viewObject.setDepartment(deptFunding.getDepartment().getName());
+            viewObject.setTrafficFunding(deptFunding.getTravelSubsidy());
             Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
                     Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
                     Integer.valueOf(deptFunding.getPlanFunding());
@@ -637,6 +641,7 @@ public class TAConverterimpl implements ITAConverter {
 
             /** 不确定是否应该用id作为编号 **/
             viewObject.setCode(calendar.getId());
+            viewObject.setTheme(calendar.getTheme());
             viewObject.setDescription(calendar.getDescription());
             viewObject.setElapsedTime(calendar.getElapsedTime());
             viewObject.setStartTime(calendar.getStartTime());
@@ -667,5 +672,28 @@ public class TAConverterimpl implements ITAConverter {
                 }
             }
         return count.toString();
+    }
+
+    @Override
+    public List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities) {
+        List<TeachCalendarViewObject> readyContainActivities = this.TeachCalendarToViewObject(calendarsContainActivities);
+        if(readyContainActivities == null || readyContainActivities.size() == 0)
+            return null;
+
+        for(int i = 0; i < readyContainActivities.size(); i ++) {
+            List<TAMSActivity> activities = calendarsContainActivities.get(i).getActivityList();
+            List<ActivityViewObject> activityViewObjects = new ArrayList<>(activities.size());
+            for(TAMSActivity per : activities) {
+                ActivityViewObject viewObject = new ActivityViewObject();
+                viewObject.setDescription(per.getDescription());
+                viewObject.setCreateTime(per.getCreateTime());
+                viewObject.setLastUpdateTime(per.getLastUpdateTime());
+
+                activityViewObjects.add(viewObject);
+            }
+            readyContainActivities.get(i).setActivityViewObjects(activityViewObjects);
+        }
+
+        return readyContainActivities;
     }
 }

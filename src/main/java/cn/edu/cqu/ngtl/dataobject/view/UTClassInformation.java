@@ -97,6 +97,16 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "STATUS")
     private String status;
 
+    @Transient
+    private String instructorName;
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
 
     public void setClassNumber(String classNumber) {
         this.classNumber = classNumber;

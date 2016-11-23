@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.form;
 
+import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.dataobject.TestObject;
 import org.aspectj.weaver.ast.Test;
 
@@ -12,7 +13,14 @@ import java.util.List;
  */
 public class TestForm extends BaseForm {
 
-    public TestForm() {
+    private List<TestGroupObject> groupObjectList = new ArrayList<>();
 
+
+    public List<TestGroupObject> getGroupObjectList() {
+        return groupObjectList;
+    }
+
+    public void setGroupObjectList(List<TestGroupObject> groupObjectList) {
+        this.groupObjectList = groupObjectList;
     }
 }

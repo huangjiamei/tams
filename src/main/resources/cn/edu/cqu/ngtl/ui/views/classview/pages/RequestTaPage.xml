@@ -43,7 +43,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-address-book','课程','申报助教')">
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-address-book','课程','助教申报')">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-HeaderOne" p:headerText="申报助教"/>
@@ -66,7 +66,8 @@
                                                     <property name="options">
                                                         <list>
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.viewId="PortalView"
+                                                                  p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2"
                                                                   p:value="教学班列表"
@@ -91,12 +92,13 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
-                                <property name="items"  >
+                                <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
+                                                   <!-- <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-info"/>
@@ -104,24 +106,27 @@
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
+                                                    </bean>-->
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-TabGroup">
+                                                                <bean parent="Uif-TabGroup" p:onDocumentReadyScript="tabGroupIcon();">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection" p:headerText="课程信息">
+                                                                            <bean id="tabGroupOne"
+                                                                                  parent="Uif-VerticalBoxSection"
+                                                                                  p:headerText="课程信息">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-GridGroup"
-                                                                                              p:layoutManager.numberOfColumns="4"
+                                                                                              p:layoutManager.numberOfColumns="6"
                                                                                               p:style="margin-top:10px">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="课程"
-                                                                                                          p:colSpan="3"
+                                                                                                          p:colSpan="5"
                                                                                                           p:messageText="@{applyViewObject.courseName}"/>
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="教师"
@@ -162,117 +167,216 @@
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-Disclosure-TableCollectionSection" p:layoutManager.numberOfColumns="4">
-                                                                                            <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
-                                                                                            <property name="propertyName" value="classList"/>
-                                                                                            <property name="renderAddBlankLineButton" value="false"/>
-
-                                                                                            <property name="layoutManager.richTable.render"
-                                                                                                      value="false"/>
-
-                                                                                            <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
-                                                                                            <property name="layoutManager.renderSequenceField"
-                                                                                                      value="true"/>
-                                                                                            <property name="layoutManager.generateAutoSequence"
-                                                                                                      value="true"/>
-                                                                                            <property name="useServerPaging" value="true"/>
-
-                                                                                            <property name="renderAddLine" value="false"/>
-                                                                                            <property name="renderLineActions" value="false"/>
-                                                                                            <property name="disclosure.render" value="false"/>
-
-
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="box box-success">
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean parent="Uif-DataField" p:label="任务类型"
-                                                                                                          p:propertyName="departmentName"/>
-                                                                                                    <bean parent="Uif-DataField" p:label="次数" p:propertyName="courseHour"/>
-                                                                                                    <bean parent="Uif-DataField" p:label="耗时" p:propertyName="courseCredit"/>
-                                                                                                    <bean parent="Uif-DataField" p:label="预算" p:propertyName="courseCode">
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:additionalCssClasses="box-header">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-Icon"
+                                                                                                                      p:iconClass="icon-list"/>
+                                                                                                                <bean parent="Uif-MessageField"
+                                                                                                                      p:messageText="课程信息"
+                                                                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                                                          p:layoutManager.numberOfColumns="6">
+                                                                                                        <property
+                                                                                                                name="collectionObjectClass"
+                                                                                                                value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
+                                                                                                        <property
+                                                                                                                name="propertyName"
+                                                                                                                value="classList"/>
+                                                                                                        <property
+                                                                                                                name="renderAddBlankLineButton"
+                                                                                                                value="false"/>
+
+                                                                                                        <property
+                                                                                                                name="layoutManager.richTable.render"
+                                                                                                                value="false"/>
+
+                                                                                                        <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
+                                                                                                        <property
+                                                                                                                name="layoutManager.renderSequenceField"
+                                                                                                                value="true"/>
+                                                                                                        <property
+                                                                                                                name="layoutManager.generateAutoSequence"
+                                                                                                                value="true"/>
+                                                                                                        <property
+                                                                                                                name="useServerPaging"
+                                                                                                                value="true"/>
+
+                                                                                                        <property
+                                                                                                                name="renderAddLine"
+                                                                                                                value="false"/>
+                                                                                                        <property
+                                                                                                                name="renderLineActions"
+                                                                                                                value="false"/>
+                                                                                                        <property
+                                                                                                                name="disclosure.render"
+                                                                                                                value="false"/>
+
+
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="任务类型"
+                                                                                                                      p:propertyName="departmentName"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="次数"
+                                                                                                                      p:propertyName="courseHour"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="耗时"
+                                                                                                                      p:propertyName="courseCredit"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="预算"
+                                                                                                                      p:propertyName="courseCode">
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <bean parent="Uif-GridGroup"
+                                                                                                          p:layoutManager.numberOfColumns="4">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-MessageField"
+                                                                                                                      p:label="耗时总计"
+                                                                                                                      p:messageText="js或后台计算总耗时"/>
+                                                                                                                <bean parent="Uif-MessageField"
+                                                                                                                      p:label="预算总计"
+                                                                                                                      p:messageText="js或后台计算总预算"/>
+                                                                                                            </list>
+                                                                                                        </property>
                                                                                                     </bean>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
 
-                                                                                        <bean parent="Uif-GridGroup"
-                                                                                              p:layoutManager.numberOfColumns="4">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:label="耗时总计"
-                                                                                                          p:messageText="js或后台计算总耗时"/>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:label="预算总计"
-                                                                                                          p:messageText="js或后台计算总预算"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
 
                                                                                         <!--自定义成绩评定方式列表-->
                                                                                         <bean parent="Uif-VerticalBoxSection"
-                                                                                              p:additionalCssClasses="box-body">
+                                                                                              p:additionalCssClasses="box box-primary">
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <!--table-->
-                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection">
-                                                                                                        <property name="collectionObjectClass"
-                                                                                                                  value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
-                                                                                                        <property name="propertyName" value="classList"/>
-                                                                                                        <!--开启addline按钮-->
-                                                                                                        <!--<property name="renderAddBlankLineButton" value="true"/>-->
-
-                                                                                                        <property name="layoutManager.richTable.render"
-                                                                                                                  value="false"/>
-
-                                                                                                        <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
-                                                                                                        <property name="layoutManager.renderSequenceField"
-                                                                                                                  value="true"/>
-                                                                                                        <property name="layoutManager.generateAutoSequence"
-                                                                                                                  value="true"/>
-                                                                                                        <property name="useServerPaging" value="true"/>
-
-                                                                                                        <property name="renderAddLine" value="true"/>
-                                                                                                        <property name="renderLineActions" value="true"/>
-                                                                                                        <property name="disclosure.render" value="false"/>
-
-                                                                                                        <!-- 修改addlineAction，实现添加评定方式功能 -->
-                                                                                                        <property name="addLineActions">
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:additionalCssClasses="box-header">
+                                                                                                        <property
+                                                                                                                name="items">
                                                                                                             <list>
-                                                                                                                <!--<bean parent="Uif-AddLineAction"/>-->
-                                                                                                                <bean parent="Uif-SecondaryActionButton-Mini"
-                                                                                                                      p:methodToCall="addLine" p:actionLabel="添加评定方式"
-                                                                                                                      p:actionEvent="addLine" p:loadingMessageText="请稍候..." p:focusOnIdAfterSubmit="LINE_FIRST"
-                                                                                                                      p:performClientSideValidation="true" p:dirtyOnAction="true" p:id="@{#collectionGroup.id}_add"
-                                                                                                                      p:defaultEnterKeyAction="true"
-                                                                                                                      p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                                <bean parent="Uif-Icon"
+                                                                                                                      p:iconClass="icon-leaf"/>
+                                                                                                                <bean parent="Uif-MessageField"
+                                                                                                                      p:messageText="成绩评定列表"
+                                                                                                                      p:additionalCssClasses="boxheaderTitle"/>
                                                                                                             </list>
                                                                                                         </property>
+                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-VerticalBoxSection"
+                                                                                                          p:additionalCssClasses="box-body">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <!--table-->
+                                                                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                                                    <property
+                                                                                                                            name="collectionObjectClass"
+                                                                                                                            value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
+                                                                                                                    <property
+                                                                                                                            name="propertyName"
+                                                                                                                            value="classList"/>
+                                                                                                                    <!--开启addline按钮-->
+                                                                                                                    <!--<property name="renderAddBlankLineButton" value="true"/>-->
 
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-InputField" p:label="成绩评定方式"
-                                                                                                                      p:propertyName="departmentName">
-                                                                                                                    <property name="control">
-                                                                                                                        <bean parent="Uif-TextControl" p:watermarkText="评定方式如平时作业/期中考" />
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                                <bean parent="Uif-InputField" p:label="成绩占比(%)"
-                                                                                                                      p:propertyName="instructorName">
-                                                                                                                    <property name="control">
-                                                                                                                        <bean parent="Uif-TextControl" p:watermarkText="如10,20" />
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                        <property name="lineActions">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-HorizontalBoxSection">
-                                                                                                                    <property name="items">
+                                                                                                                    <property
+                                                                                                                            name="layoutManager.richTable.render"
+                                                                                                                            value="false"/>
+
+                                                                                                                    <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
+                                                                                                                    <property
+                                                                                                                            name="layoutManager.renderSequenceField"
+                                                                                                                            value="true"/>
+                                                                                                                    <property
+                                                                                                                            name="layoutManager.generateAutoSequence"
+                                                                                                                            value="true"/>
+                                                                                                                    <property
+                                                                                                                            name="useServerPaging"
+                                                                                                                            value="true"/>
+
+                                                                                                                    <property
+                                                                                                                            name="renderAddLine"
+                                                                                                                            value="true"/>
+                                                                                                                    <property
+                                                                                                                            name="renderLineActions"
+                                                                                                                            value="true"/>
+                                                                                                                    <property
+                                                                                                                            name="disclosure.render"
+                                                                                                                            value="false"/>
+
+                                                                                                                    <!-- 修改addlineAction，实现添加评定方式功能 -->
+                                                                                                                    <property
+                                                                                                                            name="addLineActions">
                                                                                                                         <list>
-                                                                                                                            <bean parent="Uif-ActionImage">
-                                                                                                                                <property name="actionImage">
-                                                                                                                                    <bean parent="Uif-Image"
-                                                                                                                                          p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
+                                                                                                                            <!--<bean parent="Uif-AddLineAction"/>-->
+                                                                                                                            <bean parent="Uif-SecondaryActionButton-Mini"
+                                                                                                                                  p:methodToCall="addLine"
+                                                                                                                                  p:actionLabel="添加评定方式"
+                                                                                                                                  p:actionEvent="addLine"
+                                                                                                                                  p:loadingMessageText="请稍候..."
+                                                                                                                                  p:focusOnIdAfterSubmit="LINE_FIRST"
+                                                                                                                                  p:performClientSideValidation="true"
+                                                                                                                                  p:dirtyOnAction="true"
+                                                                                                                                  p:id="@{#collectionGroup.id}_add"
+                                                                                                                                  p:defaultEnterKeyAction="true"
+                                                                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+
+                                                                                                                    <property
+                                                                                                                            name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-InputField"
+                                                                                                                                  p:label="成绩评定方式"
+                                                                                                                                  p:propertyName="departmentName">
+                                                                                                                                <property
+                                                                                                                                        name="control">
+                                                                                                                                    <bean parent="Uif-TextControl"
+                                                                                                                                          p:watermarkText="评定方式如平时作业/期中考"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
+                                                                                                                            <bean parent="Uif-InputField"
+                                                                                                                                  p:label="成绩占比(%)"
+                                                                                                                                  p:propertyName="instructorName">
+                                                                                                                                <property
+                                                                                                                                        name="control">
+                                                                                                                                    <bean parent="Uif-TextControl"
+                                                                                                                                          p:watermarkText="如10,20"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                    <property
+                                                                                                                            name="lineActions">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-HorizontalBoxSection">
+                                                                                                                                <property
+                                                                                                                                        name="items">
+                                                                                                                                    <list>
+                                                                                                                                        <bean parent="Uif-ActionImage">
+                                                                                                                                            <property
+                                                                                                                                                    name="actionImage">
+                                                                                                                                                <bean parent="Uif-Image"
+                                                                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
+                                                                                                                                            </property>
+                                                                                                                                        </bean>
+                                                                                                                                    </list>
                                                                                                                                 </property>
                                                                                                                             </bean>
                                                                                                                         </list>
@@ -281,16 +385,28 @@
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
+
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:style="float: left!important;">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="提交"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="submitRequestTaPage"
+                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-
-                                                                                        <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
-                                                                                              p:methodToCall="submitRequestTaPage"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection" p:headerText="反馈">
+                                                                            <bean id="tabGroupTwo"
+                                                                                  parent="Uif-VerticalBoxSection"
+                                                                                  p:headerText="反馈">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-VerticalBoxSection">
@@ -299,19 +415,27 @@
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:additionalCssClasses="callout callout-info"
                                                                                                           p:style="high:100px;width:100%;background:blue;">
-                                                                                                        <property name="items">
+                                                                                                        <property
+                                                                                                                name="items">
                                                                                                             <list>
-                                                                                                                <bean parent="Uif-HeaderFour" p:headerText="任务时间过长，请修改后重新提交"/>
-                                                                                                                <bean parent="Uif-HeaderFour" p:headerText="2016-08-20  10:25"
+                                                                                                                <bean parent="Uif-HeaderFour"
+                                                                                                                      p:headerText="任务时间过长，请修改后重新提交"/>
+                                                                                                                <bean parent="Uif-HeaderFour"
+                                                                                                                      p:headerText="2016-08-20  10:25"
                                                                                                                       p:style="float:right"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
-                                                                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="callout callout-info" p:style="high:100px;width:100%;background:red;margin-top:5px;">
-                                                                                                        <property name="items">
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:additionalCssClasses="callout callout-info"
+                                                                                                          p:style="high:100px;width:100%;background:red;margin-top:5px;">
+                                                                                                        <property
+                                                                                                                name="items">
                                                                                                             <list>
-                                                                                                                <bean parent="Uif-HeaderFour" p:headerText="审核通过,课程即将发布..."/>
-                                                                                                                <bean parent="Uif-HeaderFour" p:headerText="2016-08-20  15:30"
+                                                                                                                <bean parent="Uif-HeaderFour"
+                                                                                                                      p:headerText="审核通过,课程即将发布..."/>
+                                                                                                                <bean parent="Uif-HeaderFour"
+                                                                                                                      p:headerText="2016-08-20  15:30"
                                                                                                                       p:style="float:right"/>
                                                                                                             </list>
                                                                                                         </property>

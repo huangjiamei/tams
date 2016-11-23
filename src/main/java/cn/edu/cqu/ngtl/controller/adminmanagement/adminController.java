@@ -12,6 +12,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
+import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
@@ -22,8 +23,10 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
+import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
+import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
@@ -1153,6 +1156,40 @@ public class adminController extends UifControllerBase {
         int index = params.getSelectedLineIndex();
         new TAMSTaCategoryDaoJpa().deleteOneByEntity(adminInfoForm.getAllTaCategories().get(index));
         return this.getModelAndView(form, "pageTaReward");
+    }
+
+
+    /**
+     * 按条件选取学院历史经费
+     */
+    @RequestMapping(params = "methodToCall=searchPreDeptFundingByCondition")
+    public ModelAndView searchPreDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form,
+                                               HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        Map<String, String> conditions = new HashMap<>();
+
+        //put conditions
+        conditions.put("dTimes",infoForm.getdTimes());  //选择批次
+        conditions.put("deptId",infoForm.getDeptId());  //选择学院
+        //文字搜索
+        conditions.put("dPreFunds", infoForm.getdPreFunds());
+        conditions.put("dApplyFunds", infoForm.getdApplyFunds());
+        conditions.put("dApprovalFunds", infoForm.getdApprovalFunds());
+        conditions.put("dAddingFunds", infoForm.getdAddingFunds());
+        conditions.put("dRewardFunds", infoForm.getsRewardFunds());
+        conditions.put("dTotalFunds", infoForm.getdTotalFunds());
+        conditions.put("dTrafficFunds", infoForm.getdTrafficFunds());
+
+        infoForm.setDepartmentPreFundings(
+                taConverter.departmentFundingToViewObject(
+                        adminService.getDepartmentPreFundingByCondition(uId, conditions)
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
 

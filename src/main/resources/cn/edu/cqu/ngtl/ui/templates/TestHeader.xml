@@ -120,7 +120,7 @@
     <bean id="navDialog" parent="Uif-DialogGroup"
           p:dialogCssClass="navigationDialog"
           p:onShowDialogScript="initNavDialog();"
-          p:style="z-index:9999;overflow-y:hidden;">
+          p:style="overflow-y:hidden;">
         <property name="layoutManager">
             <bean parent="Uif-VerticalBoxLayout" />
         </property>
@@ -150,11 +150,11 @@
                                                             <list>
 
                                                                 <bean parent="Uif-Link" p:href="#nav-course"
-                                                                      p:linkText="课程管理" p:iconClass="icon-book muenHeaderIcon"/>
+                                                                      p:linkText="课程管理" p:iconClass="icon-book menuHeaderIcon"/>
                                                                 <bean parent="Uif-Link" p:href="#nav-admin"
-                                                                      p:linkText="管理台" p:iconClass="icon-cogs2 muenHeaderIcon"/>
+                                                                      p:linkText="管理台" p:iconClass="icon-cogs2 menuHeaderIcon"/>
                                                                 <bean parent="Uif-Link" p:href="#nav-ta"
-                                                                      p:linkText="助教管理" p:iconClass="icon-users muenHeaderIcon"/>
+                                                                      p:linkText="助教管理" p:iconClass="icon-users menuHeaderIcon"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -291,7 +291,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="课程管理" parent="Uif-Link" p:href="#" p:iconClass="icon-book muenIcon"/>
+                            <bean p:linkText="课程管理" parent="Uif-Link" p:href="#" p:iconClass="icon-book menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -300,19 +300,19 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
-                                  p:linkText="教学班列表" p:iconClass="icon-list muenIcon"/>
+                                  p:linkText="教学班列表" p:iconClass="icon-list menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getRequestTaPage&amp;viewId=ClassView"
-                                  p:linkText="教师申报助教(在这里？)" p:iconClass="icon-check muenIcon"/>
+                                  p:linkText="教师申报助教(在这里？)" p:iconClass="icon-check menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getApplyTAPage&amp;viewId=ClassView"
-                                  p:linkText="申请成为助教(在这里？)" p:iconClass="icon-ok muenIcon"/>
+                                  p:linkText="申请成为助教(在这里？)" p:iconClass="icon-ok menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getTeachingCalendar&amp;viewId=ClassView"
-                                  p:linkText="教学日历" p:iconClass="icon-calendar4 muenIcon"/>
+                                  p:linkText="教学日历" p:iconClass="icon-calendar4 menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getAddTeachCalendarPage&amp;viewId=ClassView"
-                                  p:linkText="新建教学日历" p:iconClass="icon-calendar muenIcon"/>
+                                  p:linkText="新建教学日历" p:iconClass="icon-calendar menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getTeachActivities&amp;viewId=ClassView"
-                                  p:linkText="教学活动" p:iconClass="icon-bullhorn muenIcon"/>
+                                  p:linkText="教学活动" p:iconClass="icon-bullhorn menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getAddActivityPage&amp;viewId=ClassView"
-                                  p:linkText="新建教学活动" p:iconClass="icon-tag muenIcon"/>
+                                  p:linkText="新建教学活动" p:iconClass="icon-tag menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -326,7 +326,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="管理台" parent="Uif-Link" p:href="#" p:iconClass="icon-laptop muenIcon"/>
+                            <bean p:linkText="管理台" parent="Uif-Link" p:href="#" p:iconClass="icon-laptop menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -338,30 +338,30 @@
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/portal/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
                                   p:linkText="控制台(类别管理)"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewConsolePage')}"
-                                  p:iconClass="icon--asterisk muenIcon"/>
+                                  p:iconClass="icon--asterisk menuIcon"/>
                             <!--权限控制End-->
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
-                                  p:linkText="角色管理" p:iconClass="icon-user muenIcon"/>
+                                  p:linkText="角色管理" p:iconClass="icon-user menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"
-                                  p:linkText="用户管理" p:iconClass="icon-users muenIcon"/>
+                                  p:linkText="用户管理" p:iconClass="icon-users menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getPermissionManagementPage&amp;viewId=AdminView"
-                                  p:linkText="权限管理" p:iconClass="icon-briefcase muenIcon"/>
+                                  p:linkText="权限管理" p:iconClass="icon-briefcase menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
-                                  p:linkText="课程负责人管理" p:iconClass="icon-user muenIcon"/>
+                                  p:linkText="课程负责人管理" p:iconClass="icon-user menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
-                                  p:linkText="批次管理" p:iconClass="icon-th-list muenIcon"/>
+                                  p:linkText="批次管理" p:iconClass="icon-th-list menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"
-                                  p:linkText="课程类别管理" p:iconClass="icon-th muenIcon"/>
+                                  p:linkText="课程类别管理" p:iconClass="icon-th menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
-                                  p:linkText="助教类别管理" p:iconClass="icon-tasks muenIcon"/>
+                                  p:linkText="助教类别管理" p:iconClass="icon-tasks menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
-                                  p:linkText="任务类别管理" p:iconClass="icon-file muenIcon"/>
+                                  p:linkText="任务类别管理" p:iconClass="icon-file menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
-                                  p:linkText="经费管理" p:iconClass="icon-money muenIcon"/>
+                                  p:linkText="经费管理" p:iconClass="icon-money menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
-                                  p:linkText="工作流管理" p:iconClass="icon-random muenIcon"/>
+                                  p:linkText="工作流管理" p:iconClass="icon-random menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaRewardPage&amp;viewId=AdminView"
-                                  p:linkText="助教酬劳管理" p:iconClass="icon-coin muenIcon"/>
+                                  p:linkText="助教酬劳管理" p:iconClass="icon-coin menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -375,7 +375,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="助教管理" parent="Uif-Link" p:href="#" p:iconClass="icon-users muenIcon"/>
+                            <bean p:linkText="助教管理" parent="Uif-Link" p:href="#" p:iconClass="icon-users menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -384,15 +384,15 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaListPage&amp;viewId=TaView"
-                                  p:linkText="助教列表" p:iconClass="icon-th muenIcon"/>
+                                  p:linkText="助教列表" p:iconClass="icon-th menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaManagementPage&amp;viewId=TaView"
-                                  p:linkText="助教管理" p:iconClass="icon-users muenIcon"/>
+                                  p:linkText="助教管理" p:iconClass="icon-users menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getAddTaskPage&amp;viewId=TaView"
-                                  p:linkText="添加任务(没对应form)" p:iconClass="icon-plus muenIcon"/>
+                                  p:linkText="添加任务(没对应form)" p:iconClass="icon-plus menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/mytest?methodToCall=getTaskDetailPage&amp;viewId=TestView"
-                                  p:linkText="任务详情(在testCcontroller)" p:iconClass="icon-file muenIcon"/>
+                                  p:linkText="任务详情(在testCcontroller)" p:iconClass="icon-file menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaAppraisalPage&amp;viewId=TaView"
-                                  p:linkText="助教考核(测试链接，后期删去)" p:iconClass="icon-check muenIcon"/>
+                                  p:linkText="助教考核(测试链接，后期删去)" p:iconClass="icon-check menuIcon"/>
                         </list>
                     </property>
                 </bean>

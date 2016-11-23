@@ -94,17 +94,28 @@ body{
     width:97.5%;
     margin-top:0;
 }
+
 .navigationDialog .modal-content{
     margin-top: 0;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
+
+
+
 #navDialog{
     background:rgba(0,0,0,0)!important;
     position: fixed;
     top:50px;
-
 }
+
+@media(max-width: 768px){
+    #navDialog{
+       z-index: 9999;
+    }
+}
+
+
 .modal-backdrop {
     opacity: 0 !important;
     filter: alpha(opacity=0) !important;
@@ -248,6 +259,7 @@ body{
     width:auto;
     min-width:300px;
     background-color: #3C8DBC;
+    z-index:10000
 }
 
 .userInfo .userInfoPic{
@@ -306,12 +318,13 @@ body{
 
 /*box-header的btn*/
 .box-btngroup{
-    float: right;
-    margin-right: 20px;
+    float: right!important;
+    margin-right: 10px;
+    font-size:20px;
 }
 .box-btngroup > button {
     float: left;
-    font-size: 14px;
+    font-size: 18px;
     margin-left: 10px;
     width: 80px;
     height: 30px;
@@ -343,9 +356,10 @@ body{
 }
 
 .tamsbtn{
-    font-size:14px;
+    font-size:15px;
     margin-left: 5px;
     margin-right:5px;
+    margin-top: -5px;
     height:30px;
     border-width:0;
     color: white!important;
@@ -355,7 +369,7 @@ body{
 /* content */
 /* content-header*/
 .content-header {
-    padding: 0!important;
+    padding: 0 0 10px 0!important;
 }
 /* 面包线home图标*/
 .myIcon{
@@ -385,8 +399,25 @@ body{
     content: ">\00a0"!important;
 }
 
+@media (max-width: 991px) {
+    .content-header > .breadcrumb {
+        position: relative;
+        margin-top: 5px;
+        top: 0;
+        right: 0;
+        float: none;
+        background: #d2d6de;
+        padding-left: 10px
+    }
+
+    .content-header > .breadcrumb li:before {
+        color: #97a0b3
+    }
+}
+
 .uif-disclosure{
     overflow-x: scroll;
+    min-height: 420px;
 }
 .uif-disclosure>.uif-sectionHeader, .uif-disclosure .DTTT_container,
 .uif-disclosure .dataTables_processing{
@@ -595,14 +626,26 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 }
 
 /*菜单栏icon图片间距*/
-.muenHeaderIcon{
+.menuHeaderIcon{
     margin: 0 10px 0 15px;
 }
-.muenIcon{
-    margin-right: 8px;
+.menuIcon{
+    margin:0 10px;
 }
 .pageIcon{
     margin:12px 0 0 0 ;
     float:left!important;
     font-size:25px;
 }
+
+
+.sub-table {
+    overflow-x:hidden!important;
+}
+.sub-table table {
+    margin:0;
+}
+.sub-table table thead{
+    display:none!important;
+}
+

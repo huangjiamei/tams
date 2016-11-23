@@ -39,8 +39,10 @@
 					  p:additionalCssClasses="content-header">
 					<property name="items">
 						<list>
-							<!-- 左上角 -->
-							<bean parent="Uif-HeaderThree" p:headerText="用户管理"/>
+                            <!-- 左上角 -->
+                            <bean id="userRoleMaHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('userRoleMaHeaderTitle','fa fa-users','管理台','用户管理')">
+                            </bean>
 
 							<!-- 右上角 当前路径 -->
 							<bean parent="Uif-HorizontalBoxSection"
@@ -127,12 +129,7 @@
 																				  p:actionLabel="返回"
 																				  p:actionImagePlacement="LEFT"
 																				  p:navigateToPageId="pageConsole"
-																				  p:additionalCssClasses="bg-grey tamsbtn">
-																				<property name="actionImage">
-																					<bean parent="Uif-Image"
-																						  p:width="18" p:height="18"
-																						  p:source="@{#ConfigProperties['application.url']}/images/message.png"/>
-																				</property>
+																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
 																			</bean>
 																		</list>
 																	</property>

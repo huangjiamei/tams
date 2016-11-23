@@ -40,7 +40,9 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="助教酬劳管理"/>
+                            <bean id="rewardHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('rewardHeaderTitle','fa fa-cny','管理台','助教酬劳管理')">
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -100,7 +102,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-list"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-coin"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="助教酬劳"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
@@ -109,15 +111,10 @@
                                                                         <list>
                                                                             <!--右上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="excel"
+                                                                                  p:actionLabel="导出EXCEL"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="xxxx"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn">
-                                                                                <property name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:width="18" p:height="18"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/print.png"/>
-                                                                                </property>
+                                                                                  p:additionalCssClasses="bg-teeal box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -165,9 +162,9 @@
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
-                                                                                  p:additionalCssClasses="icon-search"
+                                                                                  p:additionalCssClasses="icon-search bg-success tamsbtn"
                                                                                   p:methodToCall="xxxx"
-                                                                                  p:style="margin:15px"/>
+                                                                                  p:style="margin:20px"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

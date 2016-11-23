@@ -7,7 +7,9 @@ import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +40,10 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSDeptFundingDao deptFundingDao;
+
+    @Autowired
+    private IUserInfoService userInfoService;
+
 
 
     @Autowired
@@ -278,6 +284,15 @@ public class AdminServiceImpl implements IAdminService{
     public List<TAMSDeptFunding> getDepartmentPreFundingBySession(){
 
         return deptFundingDao.selectDepartmentPreBySession();
+    }
+
+    @Override
+    public List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions){
+        if (!userInfoService.isSysAdmin(uId)){
+            List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDeptFundPreByCondition(conditions);
+            return deptFundings;
+        }
+        return null;
     }
 
     @Override

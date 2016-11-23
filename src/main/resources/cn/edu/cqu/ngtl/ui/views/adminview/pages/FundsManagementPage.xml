@@ -40,13 +40,8 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-list','管理','经费管理')">
-                                <!--<property name="items">
-                                    <list>
-                                        <bean parent="Uif-HeaderTwo" p:headerText="经费"/>
-                                    </list>
-                                </property>-->
+                            <bean id="fundsHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('fundsHeaderTitle','fa fa-money','管理台','经费管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -596,8 +591,8 @@
                                                                                                                                             </property>
                                                                                                                                             <property
                                                                                                                                                     name="optionsFinder">
-                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                                      p:blankOption="false"/>
+                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder"
+                                                                                                                                                      p:blankOption="true"/>
                                                                                                                                             </property>
                                                                                                                                         </bean>
 
@@ -606,8 +601,8 @@
                                                                                                                                               p:style="margin-left:10px;">
                                                                                                                                             <property
                                                                                                                                                     name="optionsFinder">
-                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                                      p:blankOption="false"/>
+                                                                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                                                                                                                      p:blankOption="true"/>
                                                                                                                                             </property>
                                                                                                                                             <property
                                                                                                                                                     name="control">
@@ -636,7 +631,7 @@
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="查询"
                                                                                                                                               p:additionalCssClasses="icon-search"
-                                                                                                                                              p:methodToCall="xxxx"
+                                                                                                                                              p:methodToCall="searchPreDeptFundingByCondition"
                                                                                                                                               p:style="margin:15px 5px;"/>
 
                                                                                                                                     </list>

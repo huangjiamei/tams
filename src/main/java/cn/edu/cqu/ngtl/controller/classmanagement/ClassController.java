@@ -280,6 +280,20 @@ public class ClassController extends UifControllerBase {
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+
+        String classId = infoForm.getCurrClassId();
+        if(classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageTeachingCalendar");
+
+        infoForm.setAllActivities(
+                taConverter.activitiesToViewObject(
+                        classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
+                                uId, classId)
+                )
+        );
+
         return this.getModelAndView(infoForm, "pageTeachActivities");
     }
 

@@ -78,4 +78,6 @@ public interface IAdminService {
 
     //学校经费过滤
     List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions);
+
+    List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions);
 }

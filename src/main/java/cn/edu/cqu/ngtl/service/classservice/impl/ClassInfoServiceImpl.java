@@ -1,11 +1,13 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
+import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSActivity;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
@@ -43,6 +45,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private TAMSTaDao taDao;
+
+    @Autowired
+    private TAMSActivityDao activityDao;
 
     @Override
     public List<UTClassInformation> getAllClassesMappedByDepartment() {
@@ -97,7 +102,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
-        if(!userInfoService.isSysAdmin(uId)) {
+        if(userInfoService.isSysAdmin(uId)) {
             /** Access DataBase */
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
@@ -162,5 +167,26 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return false;
         }
         return false;
+    }
+
+    @Override
+    public List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId) {
+        if(userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+            List<TAMSTeachCalendar> calendars = teachCalendarDao.selectAllByClassId(classId);
+            for(TAMSTeachCalendar calendar : calendars) {
+                List<TAMSActivity> activities = activityDao.selectAllByCalendarId(calendar.getId());
+                calendar.setActivityList(activities);
+            }
+            return calendars;
+        }
+        else if (userInfoService.isInstructor(uId)) {
+            List<TAMSTeachCalendar> calendars = teachCalendarDao.selectAllByClassId(classId);
+            for(TAMSTeachCalendar calendar : calendars) {
+                List<TAMSActivity> activities = activityDao.selectAllByClassId(classId);
+                calendar.getActivityList().addAll(activities);
+            }
+            return calendars;
+        }
+        return null;
     }
 }

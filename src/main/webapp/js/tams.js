@@ -602,6 +602,7 @@ function setupAutoSideBar() {
 
     var nav = jQuery('#Uif-Navigation');
     winWidth = document.body.clientWidth;
+    nav.css("position", "fixed");
     if (winWidth>768)
         // 让导航栏下来一点，避免缩放按键被遮挡
         nav.css("margin-top", 50);
@@ -609,6 +610,7 @@ function setupAutoSideBar() {
     window.onresize = function(){
         var nav = jQuery('#Uif-Navigation');
         winWidth = document.body.clientWidth;
+
         if (winWidth>768){
             // 让导航栏下来一点，避免缩放按键被遮挡
             nav.css("margin-top", 50);
@@ -634,4 +636,25 @@ function removeSideBar()
         return
     nav.remove();
     jQuery(".uif-hasLeftNav").css("margin-left",0).removeClass("uif-hasLeftNav");
+}
+
+/*
+ Uif-TabGroup部分的切换列表加上icon图片
+ */
+function tabGroupIcon(){
+    jQuery("#RequestTaPage .nav-tabs").children("li:eq(0)").find("a").html('<h5><i class="icon-book"></i><big>课程</big></h5>');
+    jQuery("#RequestTaPage .nav-tabs").children("li:eq(1)").find("a").html('<h5><i class="icon-arrow-up"></i><big>反馈</big></h5>');
+    jQuery("#tabGroupOne .uif-sectionHeader").html('<h4><i class="icon-book"></i><big>课程信息</big></h4>');
+    jQuery("#tabGroupTwo .uif-sectionHeader").html('<h4><i class="icon-arrow-up"></i><big>反馈信息</big></h4>');
+}
+
+
+/**
+ *该方法生成动态变化的面包线
+ * @param breadcrumbId 面包线控件id
+ * @param value 要修改的值
+ * @param key   待修改option的key
+ */
+function setupDynamicBreadcrumb(breadcrumbId,value,key){
+    jQuery("#"+breadcrumbId+" li *"+"[data-key='"+key+"']").html(value)
 }

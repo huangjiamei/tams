@@ -102,6 +102,10 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
                 list.add(tamsCourseManager);
             }
         }
+        //若返回为空，则显示全部课程负责人
+        else{
+            return KRADServiceLocator.getDataObjectService().findAll(TAMSCourseManager.class).getResults();
+        }
         return list;
     }
         /*

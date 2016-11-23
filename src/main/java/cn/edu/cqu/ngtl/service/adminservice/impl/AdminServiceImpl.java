@@ -65,6 +65,16 @@ public class AdminServiceImpl implements IAdminService{
         return tamsCourseManagers;
     }
 
+    //历史批次经费过滤
+    @Autowired
+    private TAMSUniversityFundingDao tamsUniversityFundingDao;
+
+    @Override
+    public List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions){
+        List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectUniFundPreByCondition(conditions);
+        return tamsUniversityFundings;
+    }
+
     @Override
     public List<CMCourseClassification> getAllClassification() {
         List<CMCourseClassification> courseClassifications = courseClassificationDao.selectAll();
@@ -234,6 +244,7 @@ public class AdminServiceImpl implements IAdminService{
         return sessionDao.deleteOneByEntity(session);
     }
 
+    /*
     @Override
     public List<TAMSDeptFunding> getCurrFundingBySession() {
 
@@ -245,6 +256,21 @@ public class AdminServiceImpl implements IAdminService{
     public List<TAMSDeptFunding> getPreviousFundingBySession() {
 
         return deptFundingDao.selectPreBySession();
+
+    }
+    */
+    //获取学校经费
+    @Override
+    public List<TAMSUniversityFunding> getCurrFundingBySession() {
+
+        return tamsUniversityFundingDao.selectCurrBySession();
+
+    }
+
+    @Override
+    public List<TAMSUniversityFunding> getPreviousFundingBySession() {
+
+        return tamsUniversityFundingDao.selectPreBySession();
 
     }
 

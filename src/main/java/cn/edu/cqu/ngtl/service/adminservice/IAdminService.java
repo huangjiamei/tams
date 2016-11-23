@@ -49,9 +49,16 @@ public interface IAdminService {
 
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
+/*
     List<TAMSDeptFunding> getCurrFundingBySession();
 
     List<TAMSDeptFunding> getPreviousFundingBySession();
+    */
+
+    //获取学校经费
+    List<TAMSUniversityFunding> getCurrFundingBySession();
+
+    List<TAMSUniversityFunding> getPreviousFundingBySession();
 
     List<TAMSWorkflowStatusR> getWorkflowStatusRelationByRoleFunctionId(String roleFunctionId);
 
@@ -68,6 +75,9 @@ public interface IAdminService {
     List<TAMSClassFunding> getFundingByClass();
 
     List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions);
+
+    //学校经费过滤
+    List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions);
 
     List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions);
 }

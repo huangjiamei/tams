@@ -120,7 +120,7 @@
     <bean id="navDialog" parent="Uif-DialogGroup"
           p:dialogCssClass="navigationDialog"
           p:onShowDialogScript="initNavDialog();"
-          p:style="z-index:9999;overflow-y:hidden;">
+          p:style="overflow-y:hidden;">
         <property name="layoutManager">
             <bean parent="Uif-VerticalBoxLayout" />
         </property>
@@ -362,6 +362,8 @@
                                   p:linkText="工作流管理" p:iconClass="icon-random menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaRewardPage&amp;viewId=AdminView"
                                   p:linkText="助教酬劳管理" p:iconClass="icon-coin menuIcon"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
+                                  p:linkText="时间管理" p:iconClass="icon-time menuIcon"/>
                         </list>
                     </property>
                 </bean>

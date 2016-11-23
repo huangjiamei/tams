@@ -170,6 +170,14 @@
                         </list>
                     </property>
                 </bean>
+
+                <bean parent="Uif-Page" p:id="pageTimeSet" p:title="时间设置">
+                    <property name="items">
+                        <list>
+                            <ref bean="TimeSetPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

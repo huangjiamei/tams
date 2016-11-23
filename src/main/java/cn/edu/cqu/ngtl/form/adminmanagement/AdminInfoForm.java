@@ -208,6 +208,38 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
 
+    /**
+     *
+     * 时间设置页面的类型名称，时间输入框
+     */
+    private String timeType;
+    private String startTimeSet;
+    private String endTimeSet;
+
+    public String getStartTimeSet() {
+        return startTimeSet;
+    }
+
+    public void setStartTimeSet(String startTimeSet) {
+        this.startTimeSet = startTimeSet;
+    }
+
+    public String getEndTimeSet() {
+        return endTimeSet;
+    }
+
+    public void setEndTimeSet(String endTimeSet) {
+        this.endTimeSet = endTimeSet;
+    }
+
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(String timeType) {
+        this.timeType = timeType;
+    }
+
     public String getRoleId() {
         return roleId;
     }

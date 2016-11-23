@@ -51,7 +51,7 @@ public interface ITAConverter {
 
     List<ClassTeacherViewObject> classToViewObject(List<UTClass> allClassesFilterByUidAndCondition);
 
-    List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession);
+    List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSUniversityFunding> allFundingBySession);
 
     List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass);
 

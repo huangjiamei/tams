@@ -330,8 +330,8 @@
                                                                                                                                 </property>
                                                                                                                                 <property
                                                                                                                                         name="optionsFinder">
-                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                          p:blankOption="false"/>
+                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder"
+                                                                                                                                          p:blankOption="TRUE"/>
                                                                                                                                 </property>
                                                                                                                             </bean>
 
@@ -355,8 +355,10 @@
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="查询"
                                                                                                                                   p:additionalCssClasses="icon-search"
-                                                                                                                                  p:methodToCall="xxxx"
-                                                                                                                                  p:style="margin:15px 5px;"/>
+                                                                                                                                  p:methodToCall="searchUTFundingByCondition"
+                                                                                                                                  p:style="margin:15px 5px;"
+                                                                                                                                  p:refreshId="FundsManagementPage"
+                                                                                                                            />
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="重置"
                                                                                                                                   p:additionalCssClasses="icon-cancel-circle"

@@ -50,6 +50,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
     @Autowired
     private UTClassInfoDao classInfoDao;
 
+    /*
     @Override
     public List<TAMSDeptFunding> selectCurrBySession() {
         List<TAMSDeptFunding> list = new ArrayList<>();
@@ -78,7 +79,8 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         return list;
     }
-
+*/
+    /*
     @Override
     public List<TAMSDeptFunding> selectPreBySession() {
         List<TAMSDeptFunding> list = new ArrayList<>();
@@ -104,6 +106,8 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         return list;
     }
+
+*/
 
     @Override
     public List<TAMSDeptFunding> selectDepartmentCurrBySession(){
@@ -205,6 +209,8 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
     }
     */
 
+
+/*
     //批次经费：学校历史经费过滤器
     @Override
     public List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions) {
@@ -245,7 +251,9 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         }
         return list;
     }
+*/
 
+    /*
     //学院历史经费过滤器
     @Override
     public List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions){
@@ -289,6 +297,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         }
         return list;
     }
+    */
 
     @Override
     public List<TAMSClassFunding> selectAll() {

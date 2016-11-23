@@ -492,6 +492,99 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
+
+    /**
+     * 获取带charts的经费管理页面
+     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&viewId=AdminView
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getFundsPage")
+    public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        List<PieChartsNameValuePair> list = new ArrayList<>();
+        list.add(new PieChartsNameValuePair("高数", 10000));
+        list.add(new PieChartsNameValuePair("线代", 5000));
+        list.add(new PieChartsNameValuePair("离散", 4000));
+        list.add(new PieChartsNameValuePair("数值", 2000));
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        Gson gson = new Gson();
+
+        String json = gson.toJson(list);
+        /*
+        infoForm.setSessionFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getCurrFundingBySession()
+                )
+        );
+
+        infoForm.setPreviousSessionFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getPreviousFundingBySession()
+                )
+        );
+        */
+
+        infoForm.setSessionFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getCurrFundingBySession()
+                )
+        );
+
+        infoForm.setPreviousSessionFundings(
+                taConverter.sessionFundingToViewObject(
+                        adminService.getPreviousFundingBySession()
+                )
+        );
+
+        infoForm.setDepartmentCurrFundings(
+                taConverter.departmentFundingToViewObject(
+                        adminService.getDepartmentCurrFundingBySession()
+                )
+        );
+        infoForm.setDepartmentPreFundings(
+                taConverter.departmentFundingToViewObject(
+                        adminService.getDepartmentPreFundingBySession()
+                )
+        );
+
+        infoForm.setClassFundings(
+                taConverter.classFundingToViewObject(
+                        adminService.getFundingByClass()
+                )
+        );
+
+        infoForm.setPieChartsNameValuePairs(json);
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+
+    /**
+     * 学校（批次）历史经费过滤
+     */
+    @RequestMapping(params =  {"methodToCall=searchUTFundingByCondition"})
+    public ModelAndView searchUTFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm)  form;
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("Session", infoForm.getsTimes());
+        conditions.put("PlanFunding",infoForm.getsPreFunds());
+        conditions.put("ApplyFunding", infoForm.getsApplyFunds());
+        conditions.put("ApprovalFunding", infoForm.getsApprovalFunds());
+        conditions.put("AddFunding", infoForm.getsAddingFunds());
+        conditions.put("Bonus", infoForm.getsRewardFunds());
+        conditions.put("TravelFunding", infoForm.getdTrafficFunds());
+        //conditions.put("TotalFunding", infoForm.getsTotalFunds());
+        //转换成页面所需要的数据对象并调用DAO
+        infoForm.setPreviousSessionFundings(taConverter.sessionFundingToViewObject(
+                adminService.getUniFundPreByCondition(conditions)
+                )
+        );
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+
     /**
      * 删除课程负责人
      */
@@ -1062,57 +1155,6 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(form, "pageTaReward");
     }
 
-    /**
-     * 获取带charts的经费管理页面
-     * 127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&viewId=AdminView
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getFundsPage")
-    public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm infoForm = (AdminInfoForm) form;
-        List<PieChartsNameValuePair> list = new ArrayList<>();
-        list.add(new PieChartsNameValuePair("高数", 10000));
-        list.add(new PieChartsNameValuePair("线代", 5000));
-        list.add(new PieChartsNameValuePair("离散", 4000));
-        list.add(new PieChartsNameValuePair("数值", 2000));
-        list.add(new PieChartsNameValuePair("C程", 4000));
-        Gson gson = new Gson();
-
-        String json = gson.toJson(list);
-
-        infoForm.setSessionFundings(
-                taConverter.sessionFundingToViewObject(
-                        adminService.getCurrFundingBySession()
-                )
-        );
-
-        infoForm.setPreviousSessionFundings(
-                taConverter.sessionFundingToViewObject(
-                        adminService.getPreviousFundingBySession()
-                )
-        );
-        infoForm.setDepartmentCurrFundings(
-                taConverter.departmentFundingToViewObject(
-                        adminService.getDepartmentCurrFundingBySession()
-                )
-        );
-        infoForm.setDepartmentPreFundings(
-                taConverter.departmentFundingToViewObject(
-                        adminService.getDepartmentPreFundingBySession()
-                )
-        );
-
-        infoForm.setClassFundings(
-                taConverter.classFundingToViewObject(
-                        adminService.getFundingByClass()
-                )
-        );
-
-        infoForm.setPieChartsNameValuePairs(json);
-        return this.getModelAndView(infoForm, "pageFundsManagement");
-    }
 
     /**
      * 获取工作流程管理页面
@@ -1188,5 +1230,7 @@ public class adminController extends UifControllerBase {
 
         return new AdminInfoForm();
     }
+
+
 
 }

@@ -472,30 +472,6 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
-        List<SessionFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
-
-        for(TAMSDeptFunding deptFunding : allFundingBySession) {
-            SessionFundingViewObject viewObject = new SessionFundingViewObject();
-            viewObject.setBonus(deptFunding.getBonus());
-            viewObject.setApplyFunding(deptFunding.getApplyFunding());
-            viewObject.setPhdFunding(deptFunding.getPhdFunding());
-            viewObject.setActualFunding(deptFunding.getActualFunding());
-            viewObject.setPlanFunding(deptFunding.getPlanFunding());
-            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
-                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
-                    Integer.valueOf(deptFunding.getPlanFunding());
-            viewObject.setTotal(total.toString());
-            if(deptFunding.getSession() != null)
-                viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
-                        deptFunding.getSession().getTerm() + "季");
-
-            viewObjects.add(viewObject);
-        }
-        return viewObjects;
-    }
-
-    @Override
     public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
         List<ClassFundingViewObject> viewObjects = new ArrayList<>(allFundingByClass.size());
 
@@ -523,6 +499,7 @@ public class TAConverterimpl implements ITAConverter {
         return viewObjects;
     }
 
+    //学院经费
     @Override
     public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
         List<DepartmentFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
@@ -544,6 +521,32 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
                         deptFunding.getSession().getTerm() + "季");
             }
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    //学校经费
+    @Override
+    public List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSUniversityFunding> allFundingBySession) {
+        List<SessionFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
+
+        for(TAMSUniversityFunding universityFunding : allFundingBySession) {
+            SessionFundingViewObject viewObject = new SessionFundingViewObject();
+            viewObject.setBonus(universityFunding.getBonus());
+            viewObject.setApplyFunding(universityFunding.getApplyFunding());
+            viewObject.setPhdFunding(universityFunding.getPhdFunding());
+            viewObject.setActualFunding(universityFunding.getActualFunding());
+            viewObject.setPlanFunding(universityFunding.getPlanFunding());
+            viewObject.setTrafficFunding(universityFunding.getTravelSubsidy());
+            Integer total = Integer.valueOf(universityFunding.getTravelSubsidy()) + Integer.valueOf(universityFunding.getBonus()) + Integer.valueOf(universityFunding.getActualFunding()) +
+                    Integer.valueOf(universityFunding.getApplyFunding()) + Integer.valueOf(universityFunding.getPhdFunding()) +
+                    Integer.valueOf(universityFunding.getPlanFunding());
+            viewObject.setTotal(total.toString());
+            if(universityFunding.getUtSession() != null)
+                viewObject.setSessionName(universityFunding.getUtSession().getYear() + "年" +
+                        universityFunding.getUtSession().getTerm() + "季");
+
             viewObjects.add(viewObject);
         }
         return viewObjects;

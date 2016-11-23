@@ -12,17 +12,17 @@ import java.util.List;
  */
 public interface TAMSDeptFundingDao {
 
-    List<TAMSDeptFunding> selectCurrBySession();
+    //List<TAMSDeptFunding> selectCurrBySession();
 
-    List<TAMSDeptFunding> selectPreBySession();
+    //List<TAMSDeptFunding> selectPreBySession();
 
     List<TAMSDeptFunding> selectDepartmentCurrBySession();
 
     List<TAMSDeptFunding> selectDepartmentPreBySession();
 
-    List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions);
+    //List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions);
 
-    List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions);
+    //List<TAMSDeptFunding> getCollFundPreByCondition(Map<String, String> conditions);
 
     List<TAMSClassFunding> selectAll();
 }

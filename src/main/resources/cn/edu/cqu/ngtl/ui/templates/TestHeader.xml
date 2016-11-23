@@ -362,6 +362,8 @@
                                   p:linkText="工作流管理" p:iconClass="icon-random menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaRewardPage&amp;viewId=AdminView"
                                   p:linkText="助教酬劳管理" p:iconClass="icon-coin menuIcon"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
+                                  p:linkText="时间管理" p:iconClass="icon-time menuIcon"/>
                         </list>
                     </property>
                 </bean>

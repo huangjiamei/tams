@@ -147,6 +147,23 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTimeSetPage&viewId=AdminView
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return 用户管理页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getTimeSetPage")
+    public ModelAndView getTimeSetPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                               HttpServletRequest request, HttpServletResponse response) throws Exception {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        //infoForm.setURMutInstructors(new UTInstructorDaoJpa().getAllInstructors());
+
+        return this.getModelAndView(infoForm, "pageTimeSet");
+    }
 
     //TODO 新增和删除对话框的实例  START
     /**

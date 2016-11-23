@@ -327,14 +327,8 @@ public class ClassController extends UifControllerBase {
         conditions.put("ClassNumber", infoForm.getCondClassNumber());
         conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("InstructorName", infoForm.getCondInstructorName());
-//        conditions.put("Year", infoForm.getCondSessionYear());
-//        conditions.put("IsRequired", infoForm.getCondIsRequired());
-//        conditions.put("ProgramId", infoForm.getCondProgramName());
-//        conditions.put("Classification", infoForm.getCondCourseClassification());
         conditions.put("CourseName", infoForm.getCondCourseName());
         conditions.put("CourseCode", infoForm.getCondCourseCode());
-//        conditions.put("CourseHour", infoForm.getCondCourseHour());
-//        conditions.put("CourseCredit", infoForm.getCondCourseCredit());
 
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(

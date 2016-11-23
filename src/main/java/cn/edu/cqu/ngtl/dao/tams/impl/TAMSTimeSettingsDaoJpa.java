@@ -1,13 +1,29 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSTimeSettingsDao;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
  * Created by tangjing on 16-11-23.
  */
+@Repository
+@Component("TAMSTimeSettingsDaoJpa")
 public class TAMSTimeSettingsDaoJpa implements TAMSTimeSettingsDao {
+
+    @Autowired
+    private UTSessionDao sessionDao;
 
     @Override
     public boolean insetOneByEntity(TAMSTimeSettings timeSetting) {
@@ -36,21 +52,24 @@ public class TAMSTimeSettingsDaoJpa implements TAMSTimeSettingsDao {
             e.printStackTrace();
             return false;
         }
-/*        try{
-            Logger logger = Logger.getLogger(LoginFilter.class);
-            if(timeSetting.getId() == null) {
-                logger.info("未获取到ID，无法查询数据");
-                return false;
-            }
-            TAMSTimeSettings current = KradDataServiceLocator.getDataObjectService().find(
-                    TAMSTimeSettings.class, timeSetting.getId());
-            if(current == null) {
-                logger.info("未找到数据");
-                throw new NullPointerException();
-            }
-        }
-        catch (RuntimeException e) {
+    }
 
-        }*/
+    @Override
+    public TAMSTimeSettings selectByTypeId(String typeId) {
+        Integer currSessionId = sessionDao.getCurrentSession().getId();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("timeSettingTypeId" , typeId),
+                        equal("sessionId", currSessionId)
+                )
+        );
+        QueryResults<TAMSTimeSettings> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTimeSettings.class, criteria.build());
+        return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
+    }
+
+    @Override
+    public List<TAMSTimeSettings> selectAll() {
+        return KradDataServiceLocator.getDataObjectService().findAll(TAMSTimeSettings.class).getResults();
     }
 }

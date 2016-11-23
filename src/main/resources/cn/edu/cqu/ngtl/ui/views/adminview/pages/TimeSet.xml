@@ -108,15 +108,14 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-MessageField"
-                                                                                              p:messageText="类型名称：（类型的optionfinder）"/>
+                                                                                              p:messageText="类型名称"/>
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:propertyName="timeType"
-                                                                                              p:required="true">
-                                                                                             <!--添加类型的optionfinder  p:optionsFinderClass="com.yunteng.ngtl.exam.tool.TimeSetTypeOptionFinder"-->
-                                                                                            <!--<property
-                                                                                                    name="control">
+                                                                                              p:required="true"
+                                                                                              p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.adminview.TimeSettingTypeFinder">
+                                                                                            <property name="control">
                                                                                                 <bean parent="Uif-DropdownControl"/>
-                                                                                            </property>-->
+                                                                                            </property>
                                                                                         </bean>
                                                                                         <!--起始时间、结束时间、总耗时-->
                                                                                         <bean parent="Uif-MessageField"
@@ -191,7 +190,8 @@
                                                                                         </bean>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="保存(methodToCall和权限)"
-                                                                                              /><!-- p:methodToCall="saveSettingTime"
+                                                                                              p:methodToCall="addNewTimeSet"
+                                                                                              /><!-- p:methodToCall="addNewTimeSet"
                                                                                               p:render="@{!#form.updateFlag}"-->
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="更新(methodToCall和权限)"
@@ -215,14 +215,14 @@
                                                                             </bean>
 
                                                                             <!--表中数据更改 admincontroller中的getTimeSetPage更改-->
-                                                                            <!--<bean id="SettingTimeTable"
+                                                                            <bean id="SettingTimeTable"
                                                                                   parent="Uif-TableCollectionSection">
                                                                                 <property
                                                                                         name="collectionObjectClass"
-                                                                                        value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
+                                                                                        value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings"/>
                                                                                 <property
                                                                                         name="propertyName"
-                                                                                        value="exmTimeSettingsList"/>
+                                                                                        value="timeSettingsList"/>
                                                                                 <property
                                                                                         name="layoutManager.richTable.render"
                                                                                         value="false"/>
@@ -238,25 +238,21 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-InputField"
-                                                                                              p:propertyName="timeType"
+                                                                                              p:propertyName="timeSettingType.typeName"
                                                                                               p:readOnly="true"
                                                                                               p:label="类型"/>
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:readOnly="true"
-                                                                                              p:propertyName="startTimeStr"
+                                                                                              p:propertyName="startTime"
                                                                                               p:label="起始时间"/>
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:readOnly="true"
-                                                                                              p:propertyName="endTimeStr"
+                                                                                              p:propertyName="endTime"
                                                                                               p:label="结束时间"/>
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:readOnly="true"
-                                                                                              p:propertyName="editTimeStr"
+                                                                                              p:propertyName="editTime"
                                                                                               p:label="修改时间"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:readOnly="true"
-                                                                                              p:propertyName="timeinfoId"
-                                                                                              p:label="学期"/>
                                                                                     </list>
                                                                                 </property>
                                                                                 <property
@@ -280,7 +276,7 @@
                                                                                         </bean>
                                                                                     </list>
                                                                                 </property>
-                                                                            </bean>-->
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

@@ -27,7 +27,7 @@ public class TAMSTimeSettings {
 
     @Column(name = "EDIT_TIME")
     @Convert(converter = StringDateConverter.class)
-    private String editTIme;
+    private String editTime;
 
     @Column(name = "TIMESETTING_TYPE")
     private String timeSettingTypeId;
@@ -67,12 +67,12 @@ public class TAMSTimeSettings {
         this.endTime = endTime;
     }
 
-    public String getEditTIme() {
-        return editTIme;
+    public String getEditTime() {
+        return editTime;
     }
 
-    public void setEditTIme(String editTIme) {
-        this.editTIme = editTIme;
+    public void setEditTime(String editTime) {
+        this.editTime = editTime;
     }
 
     public String getTimeSettingTypeId() {

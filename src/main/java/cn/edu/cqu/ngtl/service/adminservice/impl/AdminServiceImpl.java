@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.adminservice.impl;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -7,16 +8,18 @@ import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 /**
@@ -25,6 +28,8 @@ import java.util.Map;
 @Service
 @Component("AdminServiceImpl")
 public class AdminServiceImpl implements IAdminService{
+
+    private static final Logger logger = Logger.getRootLogger();
 
     @Autowired
     private CMCourseClassificationDao courseClassificationDao;
@@ -44,7 +49,8 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private IUserInfoService userInfoService;
 
-
+    @Autowired
+    private TAMSTimeSettingsDao timeSettingsDao;
 
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
@@ -357,5 +363,51 @@ public class AdminServiceImpl implements IAdminService{
     @Override
     public List<TAMSClassFunding> getFundingByClass() {
         return deptFundingDao.selectAll();
+    }
+
+    @Override
+    public boolean addTimeSetting(User user, String typeId, String startTime, String endTime) {
+        //// FIXME: 16-11-23 测试需要，必须去掉一个!
+        if(!!userInfoService.hasPermission(user, "ViewConsolePage")) {
+            logger.warn("未授权用户请求：(新增时间段)addTimeSetting(User user, String typeId, String startTime, String endTime)\n");
+            logger.warn("未授权用户信息：" + user.toString() + "\n");
+            return false;
+        }
+        TAMSTimeSettings isExist = timeSettingsDao.selectByTypeId(typeId);
+        if(isExist != null) {
+            logger.warn("管理员请求新增时间段失败：" + user.toString() + "\n");
+            logger.warn("本学期对应类型的时间段已设置\n");
+            return false;
+        }
+        TAMSTimeSettings timeSetting = new TAMSTimeSettings();
+        timeSetting.setTimeSettingTypeId(typeId);
+        timeSetting.setSessionId(sessionDao.getCurrentSession().getId().toString());
+
+        SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            timeSetting.setStartTime(
+                    output.format(
+                            input.parse(startTime)
+                    )
+            );
+            timeSetting.setEndTime(
+                    output.format(
+                            input.parse(endTime)
+                    )
+            );
+        }
+        catch (ParseException e) {
+            logger.error("输入日期格式不正确！");
+            return false;
+        }
+        timeSetting.setEditTime(output.format(new Date()));
+
+        return timeSettingsDao.insetOneByEntity(timeSetting);
+    }
+
+    @Override
+    public List<TAMSTimeSettings> getallTimeSettings() {
+        return timeSettingsDao.selectAll();
     }
 }

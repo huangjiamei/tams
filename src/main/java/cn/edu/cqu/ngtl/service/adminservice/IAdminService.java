@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.adminservice;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
@@ -80,4 +81,8 @@ public interface IAdminService {
     List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions);
 
     List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions);
+
+    boolean addTimeSetting(User user, String typeId, String startTime, String endTime);
+
+    List<TAMSTimeSettings> getallTimeSettings();
 }

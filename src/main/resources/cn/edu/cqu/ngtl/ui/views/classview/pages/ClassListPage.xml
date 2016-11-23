@@ -155,6 +155,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
+
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="教学班列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
@@ -175,40 +176,43 @@
                                                                             <bean parent="Uif-Message"
                                                                                   p:messageText="1000000.0"
                                                                                   p:additionalCssClasses="label label-primary"
-                                                                                  p:style="padding:5px;font-size: 15px;margin-top:-3px;"/>
+                                                                                  p:style="padding:0 5px;font-size: 15px;"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: right!important;">
+                                                                    <property name="items">
+                                                                        <list>
+
+                                                                            <!--右上角btnlist-->
+                                                                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
+                                                                                  p:methodToCall="exportApplicantPhoto"
+                                                                                  p:additionalCssClasses="bg-orange tamsbtn"/>
+                                                                            <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
+                                                                                  p:methodToCall="exportClassListExcel"
+                                                                                  p:additionalCssClasses="bg-success tamsbtn"/>
+
+                                                                            <!--右上角btnlist-->
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="添加"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="驳回"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-orange tamsbtn"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="审批"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:additionalCssClasses="icon-plus bg-primary tamsbtn"/>
 
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出PDF"
-                                                                      p:methodToCall="exportApplicantPhoto"
-                                                                      p:additionalCssClasses="bg-orange box-btngroup"/>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="导出EXCEL"
-                                                                      p:methodToCall="exportClassListExcel"
-                                                                      p:additionalCssClasses="bg-success box-btngroup"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <!--左上角btnlist-->
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="添加"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="copyxxx"
-                                                                      p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="驳回"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="copyxxx"
-                                                                      p:additionalCssClasses="icon-plus bg-orange tamsbtn"/>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="审批"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="copyxxx"
-                                                                      p:additionalCssClasses="icon-plus bg-primary tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -321,17 +325,10 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel="查看"
-                                                                                              p:methodToCall="getClassInfoPage"/>
-
-                                                                                        <!--<bean parent="Uif-ActionImage"-->
-                                                                                        <!--p:methodToCall="getTaskListDetail"-->
-                                                                                        <!--p:successCallback="jQuery('#getTaskDetailBtn').click();">-->
-                                                                                        <!--<property name="actionImage">-->
-                                                                                        <!--<bean parent="Uif-Image"-->
-                                                                                        <!--p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>-->
-                                                                                        <!--</property>-->
-                                                                                        <!--</bean>-->
+                                                                                              p:actionLabel=""
+                                                                                              p:actionImagePlacement="LEFT"
+                                                                                              p:methodToCall="getClassInfoPage"
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

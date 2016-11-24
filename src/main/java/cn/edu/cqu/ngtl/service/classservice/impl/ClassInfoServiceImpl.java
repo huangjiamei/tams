@@ -78,9 +78,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         if(uId.equalsIgnoreCase("admin")){
             return this.getAllClassesMappedByDepartment();   //FIXME 测试代码。需要删除
         }
-        if(userInfoService.isSysAdmin(uId))
+        if(userInfoService.isSysAdmin(uId) && !!userInfoService.isInstructor(uId))
             return this.getAllClassesMappedByDepartment();
-        else if (userInfoService.isInstructor(uId)) {
+        else if (!userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
             return classInfoDao.selectBatchByIds(classIds);

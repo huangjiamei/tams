@@ -232,9 +232,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         return condProgramName;
     }
 
-
-    private List<ClassTeacherViewObject> collection = new ArrayList<>();
-
     private List<ClassTeacherViewObject> classList = new ArrayList<>();
 
     private ClassDetailInfoViewObject detailInfoViewObject;

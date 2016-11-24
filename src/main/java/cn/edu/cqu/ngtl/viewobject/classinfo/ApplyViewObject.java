@@ -25,7 +25,7 @@ public class ApplyViewObject {
 
     private String studyTime;
 
-    private String studyCode;
+    private String credit;
 
     private String studentNumber;
 
@@ -87,12 +87,12 @@ public class ApplyViewObject {
         this.grade = grade;
     }
 
-    public String getRequired() {
+    public String getIsRequired() {
         return isRequired;
     }
 
-    public void setRequired(String required) {
-        isRequired = required;
+    public void setIsRequired(String isRequired) {
+        this.isRequired = isRequired;
     }
 
     public String getClassNumber() {
@@ -111,12 +111,12 @@ public class ApplyViewObject {
         this.studyTime = studyTime;
     }
 
-    public String getStudyCode() {
-        return studyCode;
+    public String getCredit() {
+        return credit;
     }
 
-    public void setStudyCode(String studyCode) {
-        this.studyCode = studyCode;
+    public void setCredit(String credit) {
+        this.credit = credit;
     }
 
     public String getStudentNumber() {
@@ -134,5 +134,4 @@ public class ApplyViewObject {
     public void setAssisstantNumber(String assisstantNumber) {
         this.assisstantNumber = assisstantNumber;
     }
-
 }

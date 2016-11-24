@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
@@ -11,19 +12,10 @@ import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -114,14 +106,14 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setStudyTime(course.getHour());
 
-            viewObject.setStudyCode(course.getCredit() + "");
+            viewObject.setCredit(course.getCredit() + "");
 
             programCourse = courseInfoService.getProgramCourseByCourseId(course.getId());
         }
 
         if (programCourse != null) {
 
-            viewObject.setRequired((programCourse.getRequired() == 1) ? "必修" : "选修");
+            viewObject.setIsRequired((programCourse.getRequired() == 1) ? "必修" : "选修");
 
             if (programCourse.getClassification() != null)
                 viewObject.setCourseType(programCourse.getClassification().getName());
@@ -698,5 +690,42 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return readyContainActivities;
+    }
+
+    @Override
+    public ApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfo) {
+        ApplyViewObject viewObject = new ApplyViewObject();
+        if(instructor != null) {
+            viewObject.setTeacherName(instructor.getName());
+            viewObject.setTeacherType(instructor.getCode());
+        }
+        if(classInfo != null) {
+            UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() : null;
+            viewObject.setClassNumber(classInfo.getClassNumber());
+            viewObject.setStudentNumber(classInfo.getMinPerWeek().toString());
+            if(course != null) {
+                UTSession session = classInfo.getCourseOffering().getSession();
+                viewObject.setCourseName(course.getName());
+                viewObject.setCourseNumber(course.getCodeR());
+
+                CMProgramCourse programCourse = new CMProgramCourseDaoJpa().selectByCourseId(course.getId());
+                if(programCourse != null) {
+                    viewObject.setCourseType(programCourse.getClassification() != null ? programCourse.getClassification().getName() : null);
+                    viewObject.setIsRequired(programCourse.getRequired() == 1 ? "必修" : "选修");
+                    CMProgram program = programCourse.getProgram();
+                    if(program != null) {
+                        viewObject.setProgramName(program.getName());
+                        //viewObject.setCredit(program.getCredit().toString());
+                        if(session != null) {
+                            Integer year = (Integer.parseInt(programCourse.getSemester()) + 1) / 2;
+                            Integer grade = Integer.parseInt(session.getYear()) - year;
+                            viewObject.setGrade(grade.toString());
+                        }
+                    }
+
+                }
+            }
+        }
+        return viewObject;
     }
 }

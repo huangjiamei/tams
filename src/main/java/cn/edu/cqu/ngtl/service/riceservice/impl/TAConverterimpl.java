@@ -365,6 +365,7 @@ public class TAConverterimpl implements ITAConverter {
         return session;
     }
 
+    //全校所有助教界面
     @Override
     public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
 
@@ -414,6 +415,7 @@ public class TAConverterimpl implements ITAConverter {
         return viewObjects;
     }
 
+    //我的助教界面助教列表
     @Override
     public List<MyTaViewObject> myTaCombinePayDay(List<TAMSTa> allTaFilteredByUid) {
 
@@ -442,6 +444,7 @@ public class TAConverterimpl implements ITAConverter {
         return viewObjects;
     }
 
+    //我的助教界面申请人助教列表
     @Override
     public List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid) {
         if(allApplicationFilterByUid == null)

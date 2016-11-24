@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface TAMSTaApplicationDao {
 
+    //以实体的形式插入一条数据
     boolean insertOne(TAMSTaApplication taApplication);
 
     List<TAMSTaApplication> selectByClassId(List<Object> classIds);

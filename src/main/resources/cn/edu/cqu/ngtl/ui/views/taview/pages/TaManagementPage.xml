@@ -227,8 +227,10 @@
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="聘用" p:methodToCall="pinyong"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn"/>
+                                                                                  p:actionLabel="聘用" p:methodToCall="employ"
+                                                                                  p:additionalCssClasses="bg-teal tamsbtn"
+                                                                                  p:refreshId="TaManagementPage"/>
+
                                                                         </list>
                                                                     </property>
                                                                 </bean>

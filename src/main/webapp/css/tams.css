@@ -695,4 +695,13 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 }
 
 
+/*tab页去掉标题*/
+.uif-tabGroup .tab-content .tab-pane header{
+    display:none!important;
+}
+.uif-tabGroup .nav-tabs{
+    float:left;
+}
+
+
 

@@ -54,13 +54,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         /** Access DataBase */
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
-//        for (UTClassInformation perInformation : classInformations) {
-
-            /** Access DataBase */
-            /** 等待最新的性能解决方案    **/
-            //CMProgramCourse programCourse = programCourseDao.selectByCourseId(clazz.getCourseId());
-
-//        }
 
         return classInformations;
     }

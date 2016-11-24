@@ -5,12 +5,9 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 
 import java.io.Serializable;
@@ -207,6 +204,56 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> URMutInstructors;
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
+
+    /**
+     *
+     * 时间设置页面的类型名称，时间输入框
+     */
+    private String timeType;
+    private String startTimeSet;
+    private String endTimeSet;
+    private List<TAMSTimeSettings> timeSettingsList;
+
+    public List<TAMSTimeSettings> getTimeSettingsList() {
+        return timeSettingsList;
+    }
+
+    public void setTimeSettingsList(List<TAMSTimeSettings> timeSettingsList) {
+        this.timeSettingsList = timeSettingsList;
+    }
+    private String settingsTime;
+
+    public String getStartTimeSet() {
+        return startTimeSet;
+    }
+
+    public void setStartTimeSet(String startTimeSet) {
+        this.startTimeSet = startTimeSet;
+    }
+
+    public String getEndTimeSet() {
+        return endTimeSet;
+    }
+
+    public void setEndTimeSet(String endTimeSet) {
+        this.endTimeSet = endTimeSet;
+    }
+
+    public String getSettingsTime() {
+        return settingsTime;
+    }
+
+    public void setSettingsTime(String settingsTime) {
+        this.settingsTime = settingsTime;
+    }
+
+    public String getTimeType() {
+        return timeType;
+    }
+
+    public void setTimeType(String timeType) {
+        this.timeType = timeType;
+    }
 
     public String getRoleId() {
         return roleId;

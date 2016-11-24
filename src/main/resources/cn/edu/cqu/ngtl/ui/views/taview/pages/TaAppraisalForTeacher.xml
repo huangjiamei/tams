@@ -41,8 +41,6 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="助教考核"/>
-                            <!-- 左上角 -->
                             <bean id="toAppraHeaderTitle" parent="Uif-VerticalBoxSection"
                                   p:onDocumentReadyScript="initContentHeader('toAppraHeaderTitle','fa fa-plus-square','助教管理','助教考核')">
                             </bean>

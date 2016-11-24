@@ -49,8 +49,10 @@
                 <!--这里存放自定义css-->
                 <value>css/AdminLTE.css</value>
                 <value>css/font-awesome.min.css</value>
-                <value>css/tams.css</value>
+                <value>css/daterangepicker-bs3.css</value>
+                <value>css/fullcalendar.css.css</value>
                 <value>css/combo.select.css</value>
+                <value>css/tams.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
@@ -59,9 +61,11 @@
                 <value>js/highcharts/highcharts.js</value>
                 <value>js/highcharts/modules/exporting.js</value>
                 <value>js/highcharts/modules/data.js</value>
+                <value>js/jquery.combo.select.js</value>
+                <value>js/fullcalendar.js</value>
+                <value>js/daterangepicker.js</value>
                 <value>js/json2.js</value>
                 <value>js/tams.js</value>
-                <value>js/jquery.combo.select.js</value>
             </list>
         </property>
 
@@ -170,6 +174,14 @@
                         </list>
                     </property>
                 </bean>
+
+                <bean parent="Uif-Page" p:id="pageTimeSet" p:title="时间设置">
+                <property name="items">
+                    <list>
+                        <ref bean="TimeSetPage"/>
+                    </list>
+                </property>
+            </bean>
             </list>
         </property>
     </bean>

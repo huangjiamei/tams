@@ -8,15 +8,15 @@ import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
-import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
-import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
@@ -41,12 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 /**
  * Created by awake on 2016-10-21.
  */
@@ -147,6 +142,43 @@ public class adminController extends UifControllerBase {
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTimeSetPage&viewId=AdminView
+     * 设置时间页面
+     * @param form
+     * @return 用户管理页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getTimeSetPage")
+    public ModelAndView getTimeSetPage(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+
+        infoForm.setTimeSettingsList(
+                adminService.getallTimeSettings()
+        );
+
+        return this.getModelAndView(infoForm, "pageTimeSet");
+    }
+
+    /**
+     * 新增一个时间段
+     * @param form
+     * @return
+     */
+
+    @RequestMapping(params = "methodToCall=addNewTimeSet")
+    public ModelAndView addNewTimeSet(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        String typeId = infoForm.getTimeType();
+        String startTime = infoForm.getStartTimeSet();
+        String endTime = infoForm.getEndTimeSet();
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        if(user == null) //// TODO: 16-11-23 应当返回错误信息
+            return this.getModelAndView(infoForm, "pageTimeSet");
+        boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
+
+        return this.getTimeSetPage(infoForm);
+    }
 
     //TODO 新增和删除对话框的实例  START
     /**

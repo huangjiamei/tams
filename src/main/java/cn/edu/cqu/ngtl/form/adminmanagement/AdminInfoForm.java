@@ -213,23 +213,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      * 时间设置页面的类型名称，时间输入框
      */
     private String timeType;
-    private String startTimeSet;
-    private String endTimeSet;
+    private String settingsTime;
 
-    public String getStartTimeSet() {
-        return startTimeSet;
+    public String getSettingsTime() {
+        return settingsTime;
     }
 
-    public void setStartTimeSet(String startTimeSet) {
-        this.startTimeSet = startTimeSet;
-    }
-
-    public String getEndTimeSet() {
-        return endTimeSet;
-    }
-
-    public void setEndTimeSet(String endTimeSet) {
-        this.endTimeSet = endTimeSet;
+    public void setSettingsTime(String settingsTime) {
+        this.settingsTime = settingsTime;
     }
 
     public String getTimeType() {

@@ -2,7 +2,7 @@
 
 
 *{
-    font-family:"Microsoft YaHei UI";
+    font-family:"Microsoft YaHei UI",'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
 body{
@@ -662,5 +662,35 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .sub-table table thead{
     display:none!important;
 }
+
+/*时间控件*/
+.daterangepicker td.off{
+    display:table-cell;
+}
+.dateTimeImage{
+    border-bottom: 1px solid #ccc;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    background-color: #F1F1F1;
+    padding: 3px 4px 3px 3px;
+    margin-right: 0px;
+    border-top-left-radius: 2px;
+    border-bottom-left-radius: 2px;
+}
+
+.dateTimeInput
+{
+    width:250px;
+}
+
+.dateTimeInput input{
+    border-bottom-left-radius: 0px;
+    border-top-left-radius: 0px;
+}
+
+.daterangepicker .ranges .input-mini{
+    padding:0 2px;
+}
+
 
 

@@ -33,6 +33,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     private List<MyTaViewObject> allApplication;
 
+    private MyTaViewObject selectedTa=new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
+
     /**
      * 助教列表相关
      */
@@ -88,6 +90,17 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public List<MyTaViewObject> getAllApplication() {
         return allApplication;
+    }
+
+    public MyTaViewObject getSelectedTa() {
+//        if(selectedTa==null){
+//            selectedTa=new MyTaViewObject();
+//        }
+        return selectedTa;
+    }
+
+    public void setSelectedTa(MyTaViewObject selectedTa) {
+        this.selectedTa = selectedTa;
     }
 
     public void setAllApplication(List<MyTaViewObject> allApplication) {

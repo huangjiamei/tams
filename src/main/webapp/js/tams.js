@@ -595,11 +595,16 @@ function checkAll() {
     // });
 }
 
+function showElement(id) {
+    var element=jQuery('#'+id);
+    element.css('display','block');
+}
+
+
 /**
  * 添加测边栏自动伸缩功能
  */
 function setupAutoSideBar() {
-
     var nav = jQuery('#Uif-Navigation');
     winWidth = document.body.clientWidth;
     nav.css("position", "fixed");

@@ -33,12 +33,7 @@ public interface IUserInfoService {
 	//是否是系统管理员
 	boolean isSysAdmin(String principalId);
 
-	//是否是巡考人员
-	boolean isPatrolStaff(String principalId);
 
-	//是否是监考人员
-	boolean isInvigilator(String principalId);
-	
 	//是否是学生
 	boolean isStudent(String principalId);
 

@@ -9,6 +9,7 @@ import java.util.List;
  */
 public interface TAMSTaDao {
 
+    //查询全校所有助教
     List<TAMSTa> selectAll();
 
     List<TAMSTa> selectByClassId(List<Object> classIds);

@@ -33,6 +33,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     }
 
+    //根据class_id查询
     @Override
     public List<TAMSTa> selectByClassId(List<Object> classIds) {
         List<TAMSTa> tas = new ArrayList<>();

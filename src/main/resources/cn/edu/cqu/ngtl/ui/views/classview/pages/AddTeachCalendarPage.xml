@@ -128,7 +128,7 @@
                                                             <list>
 
                                                                 <bean parent="Uif-InputField" p:label="教学主题"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:propertyName="teachCalendar.theme"
                                                                       p:required="true">
                                                                     <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -138,82 +138,10 @@
                                                                               p:watermarkText="请输入计划的教学内容，如章节等"/>
                                                                     </property>
                                                                 </bean>
-                                                                <!--起始时间、结束时间、总耗时-->
-                                                                <bean parent="Uif-InputField" p:label="起始时间"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
-                                                                      p:propertyName="teachCalendar.startTime">
-                                                                    <property name="control">
-                                                                        <bean parent="Uif-TextControl">
-                                                                            <property name="datePicker">
-                                                                                <bean parent="Uif-DatePicker">
-                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
-                                                                                    <property
-                                                                                            name="templateOptions">
-                                                                                        <map>
-                                                                                            <entry key="showOn"
-                                                                                                   value="button"/>
-                                                                                            <entry key="buttonImage"
-                                                                                                   value="@{#ThemeImages}cal.gif"/>
-                                                                                            <entry key="buttonImageOnly"
-                                                                                                   value="true"/>
-                                                                                            <entry key="showAnim"
-                                                                                                   value="slideDown"/>
-                                                                                            <entry key="showButtonPanel"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeMonth"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeYear"
-                                                                                                   value="true"/>
-                                                                                            <entry key="dateFormat"
-                                                                                                   value="yy-mm-dd"/>
-                                                                                        </map>
-                                                                                    </property>
-                                                                                </bean>
-                                                                            </property>
-                                                                        </bean>
-                                                                    </property>
-                                                                </bean>
-                                                                <bean parent="Uif-InputField" p:label="完成时间"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
-                                                                      p:propertyName="teachCalendar.endTime" >
-                                                                    <property name="control">
-                                                                        <bean parent="Uif-TextControl">
-                                                                            <property name="datePicker">
-                                                                                <bean parent="Uif-DatePicker">
-                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
-                                                                                    <property
-                                                                                            name="templateOptions">
-                                                                                        <map>
-                                                                                            <entry key="showOn"
-                                                                                                   value="button"/>
-                                                                                            <entry key="buttonImage"
-                                                                                                   value="@{#ThemeImages}cal.gif"/>
-                                                                                            <entry key="buttonImageOnly"
-                                                                                                   value="true"/>
-                                                                                            <entry key="showAnim"
-                                                                                                   value="slideDown"/>
-                                                                                            <entry key="showButtonPanel"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeMonth"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeYear"
-                                                                                                   value="true"/>
-                                                                                            <entry key="dateFormat"
-                                                                                                   value="yy-mm-dd"/>
-                                                                                        </map>
-                                                                                    </property>
-                                                                                </bean>
-                                                                            </property>
-                                                                        </bean>
-                                                                    </property>
-                                                                </bean>
-                                                                <bean parent="Uif-InputField" p:label="总耗时"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
-                                                                      p:propertyName="teachCalendar.elapsedTime"/>
 
                                                                 <bean parent="Uif-InputField" p:label="教学描述"
                                                                       p:propertyName="teachCalendar.description"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:required="true"
                                                                       p:style="margin-top:20px">
                                                                     <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -227,13 +155,63 @@
 
                                                                 <bean parent="Uif-InputField" p:label="助教任务"
                                                                       p:propertyName="teachCalendar.taTask"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:required="true"
                                                                       p:style="margin-top:20px">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextAreaControl"
                                                                               p:style="height:200px;"
                                                                               p:watermarkText="请输入在本次计划中拟分配给助教的工作种类及次数，包括：批改(作业、实验报告、试卷、课程论文、读书报告等)、答疑、组织讨论课、习题课、指导实验、签到、设计提问、设计问卷"/>
+                                                                    </property>
+                                                                </bean>
+
+
+                                                                <bean id="timeSet"
+                                                                      parent="Uif-HorizontalBoxSection">
+                                                                    <property name="onDocumentReadyScript"
+                                                                              value="
+                                                                             jQuery('#newAddTdateTimeRange input').daterangepicker({timePicker: true,
+                                                                                                                     timePicker12Hour: false,
+                                                                                                                     timePickerIncrement: 1,
+                                                                                                                     format: 'YYYY-MM-DD HH:mm',
+                                                                                                                     separator: '~',
+                                                                                                                     minDate: moment().startOf('day'),
+                                                                                                                     locale:
+                                                                                                                     {
+                                                                                                                     applyLabel : '确定',
+                                                                                                                     cancelLabel : '取消',
+                                                                                                                     fromLabel : '起始时间：',
+                                                                                                                     toLabel : '结束时间：',
+                                                                                                                     daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                                                                                                                     monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
+                                                                                                                                    '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+                                                                                                                     firstDay:1
+                                                                                                                     }
+                                                                                                                     });
+                                                                            "/>
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-HorizontalBoxSection" p:style="margin-top:20px">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <!--起始时间、结束时间的范围、总耗时-->
+                                                                                        <bean parent="Uif-MessageField" p:messageText="时间范围："/>
+                                                                                        <bean id="newAddTdateTimeImage"
+                                                                                              parent="Uif-Image"
+                                                                                              p:source="../images/clock_time.png"
+                                                                                              p:additionalCssClasses="dateTimeImage"/>
+                                                                                        <bean id="newAddTdateTimeRange"
+                                                                                              parent="Uif-InputField"
+                                                                                              p:style="width:250px;"
+                                                                                              p:propertyName="addTeachCTime"
+                                                                                              p:additionalCssClasses="dateTimeInput"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="总耗时："/>
+                                                                                        <bean parent="Uif-InputField"
+                                                                                              p:propertyName="teachCalendar.elapsedTime"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
                                                                     </property>
                                                                 </bean>
 
@@ -253,8 +231,7 @@
 
                                                                 <!--btn list-->
                                                                 <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="margin-top:20px"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                      p:style="margin-top:20px；float:left!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"

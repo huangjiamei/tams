@@ -369,7 +369,7 @@ body{
 }
 
 .tamsbtn{
-    float:right!important;
+    /*float:right!important;*/
     font-size:15px;
     margin-left: 5px;
     margin-right:5px;

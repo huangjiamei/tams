@@ -35,6 +35,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private TAMSTeachCalendar teachCalendar;
 
+    private String addTeachCTime;//新建日历的时间控件
+
     /**
      * 班级管理隐藏搜索框
      *
@@ -299,5 +301,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setDetailInfoViewObject(ClassDetailInfoViewObject detailInfoViewObject) {
         this.detailInfoViewObject = detailInfoViewObject;
+    }
+
+    public String getAddTeachCTime() {
+        return addTeachCTime;
+    }
+
+    public void setAddTeachCTime(String addTeachCTime) {
+        this.addTeachCTime = addTeachCTime;
     }
 }

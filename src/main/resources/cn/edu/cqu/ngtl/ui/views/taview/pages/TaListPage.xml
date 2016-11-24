@@ -99,28 +99,30 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="恢复"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="recover"
-                                                                      p:additionalCssClasses="bg-success tamsbtn">
-                                                                </bean>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="暂停"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="pause"
-                                                                      p:additionalCssClasses="bg-orange tamsbtn">
-                                                                </bean>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="clear:none!important; float: right!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="恢复"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="recover"
+                                                                                  p:additionalCssClasses="icon-repeat bg-success tamsbtn">
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="暂停"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="pause"
+                                                                                  p:additionalCssClasses="icon-stop bg-orange tamsbtn">
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="遴选优秀助教" p:methodToCall="linxuan"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn"/>
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="icon-check bg-teal tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="撤销" p:methodToCall="chexiao"
-                                                                                  p:additionalCssClasses="bg-grey tamsbtn"/>
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="icon-check bg-grey tamsbtn"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

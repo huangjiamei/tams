@@ -5,7 +5,6 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
@@ -225,21 +224,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setTimeSettingsList(List<TAMSTimeSettings> timeSettingsList) {
         this.timeSettingsList = timeSettingsList;
     }
+    private String settingsTime;
 
-    public String getStartTimeSet() {
-        return startTimeSet;
+    public String getSettingsTime() {
+        return settingsTime;
     }
 
-    public void setStartTimeSet(String startTimeSet) {
-        this.startTimeSet = startTimeSet;
-    }
-
-    public String getEndTimeSet() {
-        return endTimeSet;
-    }
-
-    public void setEndTimeSet(String endTimeSet) {
-        this.endTimeSet = endTimeSet;
+    public void setSettingsTime(String settingsTime) {
+        this.settingsTime = settingsTime;
     }
 
     public String getTimeType() {

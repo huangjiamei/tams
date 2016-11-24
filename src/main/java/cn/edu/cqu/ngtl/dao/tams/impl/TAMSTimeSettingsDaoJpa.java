@@ -3,13 +3,17 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTimeSettingsDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
+import org.kuali.rice.core.api.criteria.OrderByField;
+import org.kuali.rice.core.api.criteria.OrderDirection;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
@@ -21,6 +25,8 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Repository
 @Component("TAMSTimeSettingsDaoJpa")
 public class TAMSTimeSettingsDaoJpa implements TAMSTimeSettingsDao {
+
+    private EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Autowired
     private UTSessionDao sessionDao;
@@ -70,6 +76,12 @@ public class TAMSTimeSettingsDaoJpa implements TAMSTimeSettingsDao {
 
     @Override
     public List<TAMSTimeSettings> selectAll() {
-        return KradDataServiceLocator.getDataObjectService().findAll(TAMSTimeSettings.class).getResults();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create();
+        OrderByField orderByField = OrderByField.Builder.create("timeSettingType.id", OrderDirection.DESCENDING).build();
+        criteria.setOrderByFields(orderByField);
+
+        QueryResults<TAMSTimeSettings> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTimeSettings.class, criteria.build());
+        return qr.getResults().isEmpty() ? null : qr.getResults();
     }
 }

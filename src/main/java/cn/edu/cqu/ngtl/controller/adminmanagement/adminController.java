@@ -170,8 +170,10 @@ public class adminController extends UifControllerBase {
     public ModelAndView addNewTimeSet(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         String typeId = infoForm.getTimeType();
-        String startTime = infoForm.getStartTimeSet();
-        String endTime = infoForm.getEndTimeSet();
+
+        String[] timeSets = infoForm.getSettingsTime().split("~");
+        String startTime = timeSets[0];
+        String endTime = timeSets[1];
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
         if(user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");

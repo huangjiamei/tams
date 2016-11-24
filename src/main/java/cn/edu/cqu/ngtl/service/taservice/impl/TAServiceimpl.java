@@ -72,6 +72,7 @@ public class TAServiceimpl implements ITAService {
 
     }
 
+    //添加申请人
     @Override
     public boolean submitApplicationAssistant(TAMSTaApplication application) {
 
@@ -81,6 +82,7 @@ public class TAServiceimpl implements ITAService {
         return false;
     }
 
+    //根据助教id获取助教列表，若为系统管理员，则查询全校所有助教列表；若不是，则返回教师的助教列表
     @Override
     public List<TAMSTa> getAllTaFilteredByUid(String uId) {
 
@@ -94,6 +96,7 @@ public class TAServiceimpl implements ITAService {
         }
     }
 
+    //根据助教id获取申请者列表
     @Override
     public List<TAMSTaApplication> getAllApplicationFilterByUid(String uId) {
 
@@ -101,6 +104,7 @@ public class TAServiceimpl implements ITAService {
 
         return applicationDao.selectByClassId(classIds);
     }
+
 
     @Override
     public boolean changeStatusBatchByIds(List<String> ids, String status) {
@@ -117,14 +121,16 @@ public class TAServiceimpl implements ITAService {
         return true;
     }
 
+    //聘用助教
     @Override
     public boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs) {
         for(StuIdClassIdPair per : stuIdClassIdPairs) {
             TAMSTa isExist = taDao.selectByStudentIdAndClassId(per.getStuId(),per.getClassId());
 
             if(isExist != null) {  //数据库中已存在数据
+                TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
+                applicationDao.deleteByEntity(readyToRemove);
                 continue;
-//                return false;
                 //TODO 应该警告并删除重复的申请信息
             }
             TAMSTa newTa = new TAMSTa();
@@ -140,15 +146,18 @@ public class TAServiceimpl implements ITAService {
                 if(applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
                 }
-                else //删除申请信息失败
+                else
+                    //删除申请信息失败
                     return false;
             }
-            else //新建信息失败
+            else
+                //新建信息失败
                 return false;
         }
 
         return true;
     }
+
 
     @Override
     public boolean changeStatusBatchByTaIds(List<String> ids, String status) {

@@ -16,7 +16,7 @@ public class ReceiveHeaderWebServiceImpl implements ReceiveHeaderWebService {
         ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
         try {
             JaxWsDynamicClientFactory dcf = JaxWsDynamicClientFactory.newInstance();
-            org.apache.cxf.endpoint.Client client = dcf.createClient("http://isse.cqu.edu.cn/exam/remoting/HeaderWebService?wsdl");
+            org.apache.cxf.endpoint.Client client = dcf.createClient("http://isse.cqu.edu.cn:80/exam/remoting/HeaderWebService?wsdl");
             client.getInInterceptors().add(new LoggingInInterceptor());
             client.getOutInterceptors().add(new LoggingOutInterceptor());
             Object[] objects = client.invoke("hasPermission",principalId,permName);

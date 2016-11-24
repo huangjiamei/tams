@@ -5,12 +5,9 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 
 import java.io.Serializable;

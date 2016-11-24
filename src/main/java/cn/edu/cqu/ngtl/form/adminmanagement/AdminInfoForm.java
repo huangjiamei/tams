@@ -223,6 +223,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     }
     private String settingsTime;
 
+    public String getStartTimeSet() {
+        return startTimeSet;
+    }
+
+    public void setStartTimeSet(String startTimeSet) {
+        this.startTimeSet = startTimeSet;
+    }
+
+    public String getEndTimeSet() {
+        return endTimeSet;
+    }
+
+    public void setEndTimeSet(String endTimeSet) {
+        this.endTimeSet = endTimeSet;
+    }
+
     public String getSettingsTime() {
         return settingsTime;
     }

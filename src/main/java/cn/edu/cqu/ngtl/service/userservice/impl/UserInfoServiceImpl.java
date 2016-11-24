@@ -90,9 +90,9 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	public boolean isInstructor(String principalId) {
 		// TODO Auto-generated method stub
 		List <String>roleIds = new ArrayList<String>();
-		roleIds.add("10043");
-		boolean isStudent= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
-		return isStudent;
+		roleIds.add("10041");
+		boolean isInstructor= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
+		return isInstructor;
 	}
 
 	@Override

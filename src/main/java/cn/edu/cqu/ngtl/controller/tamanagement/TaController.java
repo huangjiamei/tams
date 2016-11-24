@@ -124,6 +124,7 @@ public class TaController extends UifControllerBase {
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 
+    //我的助教（教师用户看到的）界面
     /**
      * 获取助教管理页面(包含我的助教列表+申请助教列表)
      * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
@@ -149,6 +150,11 @@ public class TaController extends UifControllerBase {
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
+
+    /**
+     * 聘请助教
+     */
+
     @RequestMapping(params = "methodToCall=employ")
     public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
@@ -172,6 +178,7 @@ public class TaController extends UifControllerBase {
         else
             return this.getTaListPage(form, request); //应该返回错误信息
     }
+
 
     /**
      * 恢复助教

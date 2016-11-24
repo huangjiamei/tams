@@ -29,13 +29,14 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
 
-        taApplication.setSessinId(curSession.getId());
+        taApplication.setSessionId(curSession.getId());
 
         KRADServiceLocator.getDataObjectService().save(taApplication);
 
         return true;
     }
 
+    //根据课程找出相应的助教
     @Override
     public List<TAMSTaApplication> selectByClassId(List<Object> classIds) {
         List<TAMSTaApplication> tas = new ArrayList<>();
@@ -44,7 +45,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
             QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                     and(
                             equal("applicationClassId", classId),
-                            equal("sessinId", new UTSessionDaoJpa().getCurrentSession().getId())
+                            equal("sessionId", new UTSessionDaoJpa().getCurrentSession().getId())
                     )
             );
             QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
@@ -63,14 +64,14 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
                 and(
                         equal("applicationClassId", classId),
                         equal("applicationId", stuId),
-                        equal("sessinId", new UTSessionDaoJpa().getCurrentSession().getId())
+                        equal("sessionId", new UTSessionDaoJpa().getCurrentSession().getId())
                 )
         );
         QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                 TAMSTaApplication.class,
                 criteria.build()
         );
-        return null;
+        return qr.getResults().get(0);
     }
 
     @Override

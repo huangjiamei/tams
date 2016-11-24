@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
@@ -7,7 +8,6 @@ import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
@@ -350,10 +350,16 @@ public class ClassController extends UifControllerBase {
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
-        infoForm.setApplyViewObject(new ApplyViewObject());
+        String uId = GlobalVariables.getUserSession().getPrincipalId();
+        Integer classId = 290739;
+
+        User instructor = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        infoForm.setApplyViewObject(
+                taConverter.instructorAndClassInfoToViewObject(instructor, classInfoService.getClassInfoById(classId))
+        );
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesMappedByDepartment()
+                        classInfoService.getAllClassesFilterByUid(uId)
                 )
         );
 

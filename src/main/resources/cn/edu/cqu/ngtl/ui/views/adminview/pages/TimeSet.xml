@@ -190,12 +190,11 @@
                                                                                         </bean>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="保存(methodToCall和权限)"
-                                                                                              p:methodToCall="addNewTimeSet"
-                                                                                              /><!-- p:methodToCall="addNewTimeSet"
-                                                                                              p:render="@{!#form.updateFlag}"-->
+                                                                                              p:methodToCall="addNewTimeSet"/>
+
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="更新(methodToCall和权限)"
-                                                                                              /><!--p:methodToCall="updateSettingTime"  p:render="@{#form.updateFlag}"-->
+                                                                                              p:methodToCall="updateSettingTime"  p:render="@{#form.updateFlag}"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -204,25 +203,25 @@
                                                                                   parent="Uif-HorizontalBoxSection">
                                                                                 <property name="onDocumentReadyScript"
                                                                                           value="
-                 jQuery('#newdateTimeRange input').daterangepicker({timePicker: true,
-                                                         timePicker12Hour: false,
-                                                         timePickerIncrement: 1,
-                                                         format: 'YYYY-MM-DD HH:mm',
-                                                         separator: '~',
-                                                         minDate: moment().startOf('day'),
-                                                         locale:
-                                                         {
-                                                         applyLabel : '确定',
-														 cancelLabel : '取消',
-									                     fromLabel : '起始时间：',
-									                     toLabel : '结束时间：',
-									                     daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
-									                     monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
-											                            '七月', '八月', '九月', '十月', '十一月', '十二月' ],
-                                                         firstDay:1
-                                                         }
-                                                         });
-                "/>
+                                                                                             jQuery('#newdateTimeRange input').daterangepicker({timePicker: true,
+                                                                                                                                     timePicker12Hour: false,
+                                                                                                                                     timePickerIncrement: 1,
+                                                                                                                                     format: 'YYYY-MM-DD HH:mm',
+                                                                                                                                     separator: '~',
+                                                                                                                                     minDate: moment().startOf('day'),
+                                                                                                                                     locale:
+                                                                                                                                     {
+                                                                                                                                     applyLabel : '确定',
+                                                                                                                                     cancelLabel : '取消',
+                                                                                                                                     fromLabel : '起始时间：',
+                                                                                                                                     toLabel : '结束时间：',
+                                                                                                                                     daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                                                                                                                                     monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
+                                                                                                                                                    '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+                                                                                                                                     firstDay:1
+                                                                                                                                     }
+                                                                                                                                     });
+                                                                                            "/>
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-HorizontalBoxSection">
@@ -360,10 +359,4 @@
                                     </list>
                                 </property>
                             </bean>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
-</beans>
+                    </beans>

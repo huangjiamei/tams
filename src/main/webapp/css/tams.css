@@ -704,4 +704,9 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 }
 
 
+/*左侧侧边栏鼠标悬停会被盖住的问题*/
+#Uif-Navigation{
+    z-index:1000;
+}
+
 

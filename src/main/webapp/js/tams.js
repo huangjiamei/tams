@@ -595,11 +595,26 @@ function checkAll() {
     // });
 }
 
+/**
+ * 让dialoay:none的元素显示出来
+ * 应用于taManagementPage的‘添加助教’功能
+ * @param id
+ */
 function showElement(id) {
     var element=jQuery('#'+id);
     element.css('display','block');
 }
 
+/**
+ * 经费管理页面，onChange时调用这个方法去点击隐藏的updateAction
+ * 实现保存草稿的目的
+ * (前台可以通过@{#index}获取index，但是不知道怎么传给后台，如果能够将index直接传给后台就不需要这个点击action来中转的方式)
+ * @param element
+ */
+function inputFieldOnChange(element) {
+    var updateAction=jQuery(element).parent().parent().find("input[data-ajaxreturntype='update-component']")[0];
+    updateAction.click();
+}
 
 /**
  * 添加测边栏自动伸缩功能

@@ -497,10 +497,9 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="学院"
                                                                                                                       p:propertyName="department"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="预算经费"
-                                                                                                                      p:propertyName="planFunding"
-                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-InputField" p:propertyName="planFunding"
+                                                                                                                      p:readOnly="false" p:label="预算经费"
+                                                                                                                      p:onChangeScript="inputFieldOnChange(this)"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="申报经费"
                                                                                                                       p:propertyName="applyFunding"
@@ -536,7 +535,7 @@
                                                                                                                             name="items">
                                                                                                                         <list>
                                                                                                                             <bean parent="Uif-ActionImage"
-                                                                                                                                  p:methodToCall="xxxx">
+                                                                                                                                  p:methodToCall="savaFundsDraft">
                                                                                                                                 <property
                                                                                                                                         name="actionImage">
                                                                                                                                     <bean parent="Uif-Image"
@@ -548,6 +547,13 @@
                                                                                                                 </bean>
                                                                                                             </list>
                                                                                                         </property>
+                                                                                                    </bean>
+
+                                                                                                    <bean id="btnTest" parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="返回"
+                                                                                                          p:actionImagePlacement="LEFT"
+                                                                                                          p:methodToCall="fundsDraftSave"
+                                                                                                          p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
                                                                                                     </bean>
 
                                                                                                     <bean parent="Uif-VerticalBoxSection"

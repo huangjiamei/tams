@@ -299,6 +299,8 @@ public class ClassController extends UifControllerBase {
                 )
         );
 
+//        infoForm.getAllActivities();
+
         return this.getModelAndView(infoForm, "pageTeachActivities");
     }
 

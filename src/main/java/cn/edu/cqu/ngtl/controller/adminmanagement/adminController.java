@@ -17,11 +17,9 @@ import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -1294,6 +1292,31 @@ public class adminController extends UifControllerBase {
         adminService.setWorkflowStatusRelationByRoleFunctionId(rfId, rt);
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
+    }
+
+    /**
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=savaFundsDraft")
+    public ModelAndView savaFundsDraft(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        // TODO: 2016/11/25 有3个表格要修改，不知道如何标记修改的具体修改的是哪个表。最坏情况就是写3个methodToCall
+
+        try{
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+            int index = params.getSelectedLineIndex();
+
+            DepartmentFundingViewObject curObj=infoForm.getDepartmentCurrFundings().get(index);
+            System.out.println(curObj.getPlanFunding());
+            // TODO: 2016/11/25 把这个对象存到数据库的draft中。
+
+        }catch (Exception e){
+        }
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
     @Override

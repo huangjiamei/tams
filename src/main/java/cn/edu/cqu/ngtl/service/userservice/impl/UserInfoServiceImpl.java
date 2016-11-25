@@ -23,7 +23,11 @@ import java.util.List;
 
 @Service
 public class UserInfoServiceImpl implements IUserInfoService {
-
+	/**
+	 * 是否二级单位管理员
+	 * @param principalId
+	 * @return
+	 */
 	@Override
 	public boolean isCollegeStaff(String principalId) {
 		// TODO Auto-generated method stub
@@ -33,6 +37,12 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	    return isCollegeStaff;
 	}
 
+
+	/**
+	 * 是否教务处管理员
+	 * @param principalId
+	 * @return
+	 */
 	@Override
 	public boolean isAcademicAffairsStaff(String principalId) {
 		// TODO Auto-generated method stub
@@ -42,6 +52,11 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	    return isAcademicAffairsStaff;
 	}
 
+	/**
+	 * 是否系统管理员
+	 * @param principalId
+	 * @return
+	 */
 	@Override
 	public boolean isSysAdmin(String principalId) {
 		// TODO Auto-generated method stub
@@ -51,24 +66,12 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	    return isSysAdmin;
 	}
 
-	@Override
-	public boolean isPatrolStaff(String principalId) {
-		// TODO Auto-generated method stub
-		List <String>roleIds = new ArrayList<String>();
-		roleIds.add("10027");
-		boolean isPatrolStaff= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
-	    return isPatrolStaff;
-	}
 
-	@Override
-	public boolean isInvigilator(String principalId) {
-		// TODO Auto-generated method stub
-		List <String>roleIds = new ArrayList<String>();
-		roleIds.add("10024");
-		boolean isInvigilator= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
-	    return isInvigilator;
-	}
-
+	/**
+	 * 是否是学生
+	 * @param principalId
+	 * @return
+	 */
 	@Override
 	public boolean isStudent(String principalId) {
 		// TODO Auto-generated method stub
@@ -78,13 +81,18 @@ public class UserInfoServiceImpl implements IUserInfoService {
 	    return isStudent;
 	}
 
+	/**
+	 * 是否是教师
+	 * @param principalId
+	 * @return
+	 */
 	@Override
 	public boolean isInstructor(String principalId) {
 		// TODO Auto-generated method stub
 		List <String>roleIds = new ArrayList<String>();
-		roleIds.add("10043");
-		boolean isStudent= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
-		return isStudent;
+		roleIds.add("10041");
+		boolean isInstructor= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
+		return isInstructor;
 	}
 
 	@Override

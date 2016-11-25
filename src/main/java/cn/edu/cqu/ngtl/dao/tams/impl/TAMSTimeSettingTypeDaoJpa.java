@@ -2,6 +2,10 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSTimeSettingTypeDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettingType;
+import org.kuali.rice.core.api.criteria.OrderByField;
+import org.kuali.rice.core.api.criteria.OrderDirection;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -17,8 +21,13 @@ public class TAMSTimeSettingTypeDaoJpa implements TAMSTimeSettingTypeDao {
 
     @Override
     public List<TAMSTimeSettingType> selectAll() {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create();
+        OrderByField orderByField = OrderByField.Builder.create("id", OrderDirection.DESCENDING).build();
+        criteria.setOrderByFields(orderByField);
 
-        return KradDataServiceLocator.getDataObjectService().findAll(TAMSTimeSettingType.class).getResults();
+        QueryResults<TAMSTimeSettingType> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTimeSettingType.class, criteria.build());
+        return qr.getResults().isEmpty() ? null : qr.getResults();
 
     }
 

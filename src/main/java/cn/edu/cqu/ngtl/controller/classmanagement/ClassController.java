@@ -1,13 +1,14 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
@@ -18,11 +19,13 @@ import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
+import org.kuali.rice.krad.web.service.FileControllerService;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,7 +44,9 @@ import java.util.Map;
 @Controller
 @RequestMapping("/class")
 public class ClassController extends UifControllerBase {
-    
+
+
+
     @Autowired
     private IClassInfoService classInfoService;
 
@@ -351,10 +356,16 @@ public class ClassController extends UifControllerBase {
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
-        infoForm.setApplyViewObject(new ApplyViewObject());
+        String uId = GlobalVariables.getUserSession().getPrincipalId();
+        Integer classId = 290739;
+
+        User instructor = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        infoForm.setApplyViewObject(
+                taConverter.instructorAndClassInfoToViewObject(instructor, classInfoService.getClassInfoById(classId))
+        );
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesMappedByDepartment()
+                        classInfoService.getAllClassesFilterByUid(uId)
                 )
         );
 
@@ -415,6 +426,15 @@ public class ClassController extends UifControllerBase {
         }
     }
 
+
+    /**
+     * 文件上传之后，点击文件名(href)就会调用此方法
+     */
+    @RequestMapping(method = RequestMethod.GET, params = "methodToCall=getFileFromLine")
+    public void getFileFromLine(UifFormBase form, HttpServletResponse response) {
+        // FIXME: 2016/11/24 getFileControllerService()应该返回common.impl中的TamsFileControllerServiceImpl，该impl中重写了下载文件的功能
+        getFileControllerService().getFileFromLine(form, response);
+    }
 
     @Override
     protected UifFormBase createInitialForm() {

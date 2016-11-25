@@ -49,8 +49,17 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @Column(name = "EDU_BACKGROUND")
     private String eduBackground;
 
+    public Integer getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Integer sessionId) {
+        this.sessionId = sessionId;
+    }
+
     @Column(name = "SESSION_ID")
-    private Integer sessinId;
+
+    private Integer sessionId;
 
     @ManyToOne
     @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
@@ -64,13 +73,7 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
         this.applicant = applicant;
     }
 
-    public Integer getSessinId() {
-        return sessinId;
-    }
 
-    public void setSessinId(Integer sessinId) {
-        this.sessinId = sessinId;
-    }
 
     public UTSession getCurSession() {
         return curSession;

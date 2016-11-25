@@ -70,4 +70,6 @@ public interface ITAConverter {
     List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList);
 
     List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities);
+
+    ApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
 }

@@ -102,7 +102,6 @@ body{
 }
 
 
-
 #navDialog{
     background:rgba(0,0,0,0)!important;
     position: fixed;
@@ -655,6 +654,8 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 .sub-table {
     overflow-x:hidden!important;
+    min-height: 0px;
+
 }
 .sub-table table {
     margin:0;
@@ -692,5 +693,19 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     padding:0 2px;
 }
 
+
+/*tab页去掉标题*/
+.uif-tabGroup .tab-content .tab-pane header{
+    display:none!important;
+}
+.uif-tabGroup .nav-tabs{
+    float:left;
+}
+
+
+/*左侧侧边栏鼠标悬停会被盖住的问题*/
+#Uif-Navigation{
+    z-index:1000;
+}
 
 

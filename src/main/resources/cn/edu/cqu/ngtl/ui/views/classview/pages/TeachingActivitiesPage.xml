@@ -120,7 +120,7 @@
                                                                                                           p:additionalCssClasses="icon-copy bg-success tamsbtn">
                                                                                                     </bean>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionScript="checkAll()"
+                                                                                                          p:actionScript=""
                                                                                                           p:actionLabel="添加" p:methodToCall="addxxxx"
                                                                                                           p:additionalCssClasses="icon-plus bg-teal tamsbtn"/>
                                                                                                 </list>
@@ -150,7 +150,7 @@
                                                                                                                         <bean parent="Uif-CheckboxControl"/>
                                                                                                                     </property>
                                                                                                                 </bean>
-                                                                                                                <bean parent="Uif-DataField" p:label="title" p:propertyName="description"
+                                                                                                                <bean parent="Uif-DataField" p:label="" p:propertyName="description"
                                                                                                                       p:additionalCssClasses="tams-activity-group-title"/>
                                                                                                             </list>
                                                                                                         </property>
@@ -222,10 +222,119 @@
                                                                             </bean>
                                                                             <!--第二页tab-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="学院经费">
+                                                                                  p:headerText="未开始">
                                                                                 <property name="items">
                                                                                     <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:style="float: right!important;clear:none!important;">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--左上角btnlist-->
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="复制(定位不对，稍候修复)"
+                                                                                                          p:actionImagePlacement="LEFT"
+                                                                                                          p:navigateToPageId="copyxxxx"
+                                                                                                          p:additionalCssClasses="icon-copy bg-success tamsbtn">
+                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionScript=""
+                                                                                                          p:actionLabel="添加" p:methodToCall="addxxxx"
+                                                                                                          p:additionalCssClasses="icon-plus bg-teal tamsbtn"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
 
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="box-body" p:style="">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--注意，要想修改table的样式不能直接加additionalCss，这样会给table外层的div加css-->
+                                                                                                    <!--应该使用p:layoutManager.cssClasses="xxx"-->
+                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                                        <property name="collectionObjectClass"
+                                                                                                                  value="cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject"/>
+                                                                                                        <property name="propertyName"
+                                                                                                                  value="allActivities"/>
+                                                                                                        <property name="useServerPaging" value="true" />
+                                                                                                        <property name="layoutManager.richTable.render" value="false"/>
+                                                                                                        <property name="layoutManager.renderSequenceField" value="false"/>
+                                                                                                        <property name="renderLineActions" value="false"/>
+                                                                                                        <property name="renderAddLine" value="false"/>
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
+                                                                                                                    <property name="control">
+                                                                                                                        <bean parent="Uif-CheckboxControl"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                                <bean parent="Uif-DataField" p:label="" p:propertyName="description"
+                                                                                                                      p:additionalCssClasses="tams-activity-group-title"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                        <property name="subCollections">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-Disclosure-TableCollectionSubSection"
+                                                                                                                      p:additionalCssClasses="sub-table">
+                                                                                                                    <property name="collectionObjectClass"
+                                                                                                                              value="cn.edu.cqu.ngtl.viewobject.classinfo.ActivityViewObject"/>
+                                                                                                                    <property name="propertyName"
+                                                                                                                              value="activityViewObjects"/>
+                                                                                                                    <property name="layoutManager.richTable.render" value="false"/>
+                                                                                                                    <property name="renderAddLine" value="false"/>
+                                                                                                                    <property name="layoutManager.renderSequenceField"
+                                                                                                                              value="false"/>
+
+                                                                                                                    <property name="useServerPaging" value="false" />
+                                                                                                                    <property name="renderLineActions" value="true"/>
+
+                                                                                                                    <!--<property name="readOnly" value="true"/>-->
+
+                                                                                                                    <property name="disclosure.render" value="false"/>
+
+                                                                                                                    <property name="render" value="@{#line.createTime=='2016-11-22 10:42:51.0'}"/>
+                                                                                                                    <property name="items">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
+                                                                                                                                <property name="control">
+                                                                                                                                    <bean parent="Uif-CheckboxControl"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
+                                                                                                                            <!--组title和项目title样式不同，根据render进行区分。实际应用时修改render中的条件即可-->
+
+                                                                                                                            <bean parent="Uif-DataField"
+                                                                                                                                  p:propertyName="description"
+                                                                                                                                  p:additionalCssClasses="tams-activity-item-title"/>
+                                                                                                                            <bean parent="Uif-DataField"
+                                                                                                                                  p:propertyName="createTime"/>
+                                                                                                                            <bean parent="Uif-DataField"
+                                                                                                                                  p:additionalCssClasses="tams-activity-state"
+                                                                                                                                  p:propertyName="lastUpdateTime"/>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                    <property name="lineActions">
+                                                                                                                        <list>
+                                                                                                                            <bean parent="Uif-HorizontalBoxSection">
+                                                                                                                                <property name="items">
+                                                                                                                                    <list>
+                                                                                                                                        <bean parent="Uif-ActionImage">
+                                                                                                                                            <property name="actionImage">
+                                                                                                                                                <bean parent="Uif-Image"
+                                                                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
+                                                                                                                                            </property>
+                                                                                                                                        </bean>
+
+                                                                                                                                    </list>
+                                                                                                                                </property>
+                                                                                                                            </bean>
+                                                                                                                        </list>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

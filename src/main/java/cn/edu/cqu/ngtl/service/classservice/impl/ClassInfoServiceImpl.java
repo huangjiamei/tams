@@ -123,10 +123,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
-        if(!userInfoService.isSysAdmin(uId)) {
+        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
             return true;
         }
-        else if (!userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+        else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
             for(Object obj : classIds)
@@ -144,10 +144,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
-        if(!userInfoService.isSysAdmin(uId)) {
+        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
             return true;
         }
-        else if (!userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+        else if (userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
             for(Object obj : classIds)
@@ -164,7 +164,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId) {
-        if(userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
             List<TAMSTeachCalendar> calendars = teachCalendarDao.selectAllByClassId(classId);
             for(TAMSTeachCalendar calendar : calendars) {
                 List<TAMSActivity> activities = activityDao.selectAllByCalendarId(calendar.getId());

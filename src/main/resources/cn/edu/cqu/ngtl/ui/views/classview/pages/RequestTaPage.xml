@@ -359,6 +359,9 @@
                                                                                                                                     <bean parent="Uif-TextControl"
                                                                                                                                           p:watermarkText="如10,20"/>
                                                                                                                                 </property>
+                                                                                                                                <property name="validCharactersConstraint">
+                                                                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                                                                </property>
                                                                                                                             </bean>
                                                                                                                         </list>
                                                                                                                     </property>

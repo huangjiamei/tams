@@ -363,6 +363,19 @@ public class TaController extends UifControllerBase {
         return this.getModelAndView(taInfoForm, "pageAddNewTask");
     }
 
+    /**
+     * 获取工作台页面(包含正在进行的活动、我担任助教的课程、我的课程三项)
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getWorkbenchPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getWorkbenchPage")
+    public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        return this.getModelAndView(taInfoForm, "pageWorkbench");
+    }
+
     @Override
     protected UifFormBase createInitialForm() {
 

@@ -1295,25 +1295,46 @@ public class adminController extends UifControllerBase {
     }
 
     /**
-     *
+     * 经费页面每一行编辑过后就调用此方法将数据存储到草稿中
+     * 经费页面存在多个tab(学校、学院、教学班)，通过curTabFlag来进行区分
+     * 存储数据之后，需要及时更新页面上的'金额总计'属性
      * @param form
-     * @return
+     * @return 更新成功时返回pageFundsManagement页面,失败时弹出errDialog。
      */
     @RequestMapping(params = "methodToCall=savaFundsDraft")
     public ModelAndView savaFundsDraft(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-        // TODO: 2016/11/25 有3个表格要修改，不知道如何标记修改的具体修改的是哪个表。最坏情况就是写3个methodToCall
 
         try{
             CollectionControllerServiceImpl.CollectionActionParameters params =
                     new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
             int index = params.getSelectedLineIndex();
 
-            DepartmentFundingViewObject curObj=infoForm.getDepartmentCurrFundings().get(index);
-            System.out.println(curObj.getPlanFunding());
-            // TODO: 2016/11/25 把这个对象存到数据库的draft中。
+            String curTabFlag=infoForm.getCurTabFlag();
+            switch (curTabFlag){
+                case AdminInfoForm.TAB_FLAG_SCHOOL:
+                    SessionFundingViewObject curSchoolFundObj=infoForm.getPreviousSessionFundings().get(index);
+                    // TODO: 2016/11/25 把这个对象存到数据库的draft中。
+
+                    // TODO: 2016/11/25 重新计算该tab的经费总计。
+                    break;
+                case AdminInfoForm.TAB_FLAG_DEPARTMENT:
+                    DepartmentFundingViewObject curDepartFundObj=infoForm.getDepartmentCurrFundings().get(index);
+                    System.out.println(curDepartFundObj.getPlanFunding());
+                    // TODO: 2016/11/25 把这个对象存到数据库的draft中。
+
+                    // TODO: 2016/11/25 重新计算该tab的经费总计。
+                    break;
+                case AdminInfoForm.TAB_FLAG_CLASS:
+
+                    break;
+                default:
+                    // TODO: 2016/11/25 return error
+                    break;
+            }
 
         }catch (Exception e){
+            // TODO: 2016/11/25 return error
         }
 
         return this.getModelAndView(infoForm, "pageFundsManagement");

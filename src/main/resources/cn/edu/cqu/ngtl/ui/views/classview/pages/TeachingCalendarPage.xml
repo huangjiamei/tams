@@ -222,7 +222,7 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-DataField" p:label="编号" p:propertyName="code"/> <!-- id是否可以当做编号? -->
-                                                                            <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="description"/>
+                                                                            <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
                                                                             <bean parent="Uif-DataField" p:label="助教任务描述" p:propertyName="taTask"/>
                                                                             <bean parent="Uif-DataField" p:label="更新于" p:propertyName="endTime"/>
                                                                             <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"/>

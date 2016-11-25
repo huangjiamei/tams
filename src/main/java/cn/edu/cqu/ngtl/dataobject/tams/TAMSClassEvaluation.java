@@ -13,7 +13,6 @@ import java.io.Serializable;
 @Table(name = "TAMS_CLASS_EVALUATION")
 public class TAMSClassEvaluation extends DataObjectBase implements Serializable {
 
-
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsevaluation")

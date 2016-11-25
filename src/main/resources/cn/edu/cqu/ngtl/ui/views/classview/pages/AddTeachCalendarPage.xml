@@ -165,6 +165,56 @@
                                                                     </property>
                                                                 </bean>
 
+
+                                                                <bean id="timeSet"
+                                                                      parent="Uif-HorizontalBoxSection">
+                                                                    <property name="onDocumentReadyScript"
+                                                                              value="
+                                                                             jQuery('#newAddTdateTimeRange input').daterangepicker({timePicker: true,
+                                                                                                                     timePicker12Hour: false,
+                                                                                                                     timePickerIncrement: 1,
+                                                                                                                     format: 'YYYY-MM-DD HH:mm',
+                                                                                                                     separator: '~',
+                                                                                                                     minDate: moment().startOf('day'),
+                                                                                                                     locale:
+                                                                                                                     {
+                                                                                                                     applyLabel : '确定',
+                                                                                                                     cancelLabel : '取消',
+                                                                                                                     fromLabel : '起始时间：',
+                                                                                                                     toLabel : '结束时间：',
+                                                                                                                     daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                                                                                                                     monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
+                                                                                                                                    '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+                                                                                                                     firstDay:1
+                                                                                                                     }
+                                                                                                                     });
+                                                                            "/>
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-HorizontalBoxSection" p:style="margin-top:20px">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <!--起始时间、结束时间的范围、总耗时-->
+                                                                                        <bean parent="Uif-MessageField" p:messageText="时间范围：" p:additionalCssClasses="messageStyle"/>
+                                                                                        <bean id="newAddTdateTimeImage"
+                                                                                              parent="Uif-Image"
+                                                                                              p:source="../images/clock_time.png"
+                                                                                              p:additionalCssClasses="dateTimeImage"/>
+                                                                                        <bean id="newAddTdateTimeRange"
+                                                                                              parent="Uif-InputField"
+                                                                                              p:style="width:250px;"
+                                                                                              p:propertyName="addTeachCTime"
+                                                                                              p:additionalCssClasses="dateTimeInput"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="总耗时：" p:additionalCssClasses="messageStyle"/>
+                                                                                        <bean parent="Uif-InputField"
+                                                                                              p:propertyName="teachCalendar.elapsedTime"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
                                                                 <!--FIXME 上传文件，会报ftl错误，暂时无解决方案-->
                                                                 <!--<bean parent="Uif-HorizontalBoxSection"-->
                                                                 <!--p:style="margin-top:20px"-->
@@ -181,8 +231,7 @@
 
                                                                 <!--btn list-->
                                                                 <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="margin-top:20px"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                      p:style="margin-top:20px；float:left!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"

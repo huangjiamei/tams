@@ -302,27 +302,4 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         return this.selectDepartmentPreBySession();
     }
 
-
-    @Override
-    public List<TAMSClassFunding> selectAll(){
-
-        List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSClassFunding.class).getResults();
-
-        for(TAMSClassFunding per : list) {
-            per.setClassInformation(
-                    classInfoDao.getOneById(
-                            Integer.parseInt(
-                                    per.getClassId()
-                            )
-                    )
-            );
-            if(per.getClassInformation() !=null)
-                per.setSession(
-                        sessionDao.getUTSessionById(
-                                per.getClassInformation().getSessionId()
-                        )
-                );
-        }
-        return list;
-    }
 }

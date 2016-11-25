@@ -17,13 +17,33 @@ public class TeachCalendarViewObject {
 
     private String taTask;
 
+    private String taTaskTimes;
+
     private String startTime;
 
     private String endTime;
 
     private String elapsedTime;
 
+    private String budget;
+
     private List<ActivityViewObject> activityViewObjects;
+
+    public String getBudget() {
+        return budget;
+    }
+
+    public void setBudget(String budget) {
+        this.budget = budget;
+    }
+
+    public String getTaTaskTimes() {
+        return taTaskTimes;
+    }
+
+    public void setTaTaskTimes(String taTaskTimes) {
+        this.taTaskTimes = taTaskTimes;
+    }
 
     public String getTheme() {
         return theme;

@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSDeptFundingDraftDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
@@ -22,8 +21,8 @@ import java.util.List;
  */
 
 @Repository
-@Component("TAMSDeptFundingDraftDao")
-public class TAMSDeptFundingDraftDaoImpl implements TAMSDeptFundingDraftDao {
+@Component("TAMSDeptFundingDraftDaoJpa")
+public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
 
     EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
@@ -32,9 +31,6 @@ public class TAMSDeptFundingDraftDaoImpl implements TAMSDeptFundingDraftDao {
 
     @Autowired
     private UTDepartmentDao departmentDao;
-
-    @Autowired
-    private UTClassInfoDao classInfoDao;
 
     @Override
     public List<TAMSDeptFunding> selectDepartmentCurrDraftBySession() {

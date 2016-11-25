@@ -217,20 +217,23 @@ public class ClassController extends UifControllerBase {
 
         String classId = infoForm.getCurrClassId();
 
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String arr[]=infoForm.getAddTeachCTime().split("\\~");
+        TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
-            infoForm.getTeachCalendar().setStartTime(
+            added.setStartTime(
                     outputFormat.format(
                             inputFormat.parse(
-                                    infoForm.getTeachCalendar().getStartTime()
+                                    arr[0]
                             )
                     )
             );
-            infoForm.getTeachCalendar().setEndTime(
+            added.setEndTime(
                     outputFormat.format(
                             inputFormat.parse(
-                                    infoForm.getTeachCalendar().getEndTime()
+                                arr[1]
                             )
                     )
             );
@@ -238,8 +241,6 @@ public class ClassController extends UifControllerBase {
         catch (Exception e) {
 
         }
-
-        TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
         if(classInfoService.instructorAddTeachCalendar(uId, classId, added))
             return this.getTeachingCalendar(infoForm, request);

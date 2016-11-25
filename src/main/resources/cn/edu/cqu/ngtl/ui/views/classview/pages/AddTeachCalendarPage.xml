@@ -128,7 +128,7 @@
                                                             <list>
 
                                                                 <bean parent="Uif-InputField" p:label="教学主题"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:propertyName="teachCalendar.theme"
                                                                       p:required="true">
                                                                     <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -138,82 +138,10 @@
                                                                               p:watermarkText="请输入计划的教学内容，如章节等"/>
                                                                     </property>
                                                                 </bean>
-                                                                <!--起始时间、结束时间、总耗时-->
-                                                                <bean parent="Uif-InputField" p:label="起始时间"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
-                                                                      p:propertyName="teachCalendar.startTime">
-                                                                    <property name="control">
-                                                                        <bean parent="Uif-TextControl">
-                                                                            <property name="datePicker">
-                                                                                <bean parent="Uif-DatePicker">
-                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
-                                                                                    <property
-                                                                                            name="templateOptions">
-                                                                                        <map>
-                                                                                            <entry key="showOn"
-                                                                                                   value="button"/>
-                                                                                            <entry key="buttonImage"
-                                                                                                   value="@{#ThemeImages}cal.gif"/>
-                                                                                            <entry key="buttonImageOnly"
-                                                                                                   value="true"/>
-                                                                                            <entry key="showAnim"
-                                                                                                   value="slideDown"/>
-                                                                                            <entry key="showButtonPanel"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeMonth"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeYear"
-                                                                                                   value="true"/>
-                                                                                            <entry key="dateFormat"
-                                                                                                   value="yy-mm-dd"/>
-                                                                                        </map>
-                                                                                    </property>
-                                                                                </bean>
-                                                                            </property>
-                                                                        </bean>
-                                                                    </property>
-                                                                </bean>
-                                                                <bean parent="Uif-InputField" p:label="完成时间"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
-                                                                      p:propertyName="teachCalendar.endTime" >
-                                                                    <property name="control">
-                                                                        <bean parent="Uif-TextControl">
-                                                                            <property name="datePicker">
-                                                                                <bean parent="Uif-DatePicker">
-                                                                                    <!--仅最后一行dateFormat调控日期样式，但是前面这一堆一个都不能删-->
-                                                                                    <property
-                                                                                            name="templateOptions">
-                                                                                        <map>
-                                                                                            <entry key="showOn"
-                                                                                                   value="button"/>
-                                                                                            <entry key="buttonImage"
-                                                                                                   value="@{#ThemeImages}cal.gif"/>
-                                                                                            <entry key="buttonImageOnly"
-                                                                                                   value="true"/>
-                                                                                            <entry key="showAnim"
-                                                                                                   value="slideDown"/>
-                                                                                            <entry key="showButtonPanel"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeMonth"
-                                                                                                   value="true"/>
-                                                                                            <entry key="changeYear"
-                                                                                                   value="true"/>
-                                                                                            <entry key="dateFormat"
-                                                                                                   value="yy-mm-dd"/>
-                                                                                        </map>
-                                                                                    </property>
-                                                                                </bean>
-                                                                            </property>
-                                                                        </bean>
-                                                                    </property>
-                                                                </bean>
-                                                                <bean parent="Uif-InputField" p:label="总耗时"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-8 col-md-6 col-lg-3"
-                                                                      p:propertyName="teachCalendar.elapsedTime"/>
 
                                                                 <bean parent="Uif-InputField" p:label="教学描述"
                                                                       p:propertyName="teachCalendar.description"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:required="true"
                                                                       p:style="margin-top:20px">
                                                                     <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -227,7 +155,7 @@
 
                                                                 <bean parent="Uif-InputField" p:label="助教任务"
                                                                       p:propertyName="teachCalendar.taTask"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-6 col-lg-6"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:required="true"
                                                                       p:style="margin-top:20px">
                                                                     <property name="control">
@@ -238,55 +166,72 @@
                                                                 </bean>
 
 
-                                                                <!--多文件上传器模板-->
-                                                                <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="margin-top:20px"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                <bean id="timeSet"
+                                                                      parent="Uif-HorizontalBoxSection">
+                                                                    <property name="onDocumentReadyScript"
+                                                                              value="
+                                                                             jQuery('#newAddTdateTimeRange input').daterangepicker({timePicker: true,
+                                                                                                                     timePicker12Hour: false,
+                                                                                                                     timePickerIncrement: 1,
+                                                                                                                     format: 'YYYY-MM-DD HH:mm',
+                                                                                                                     separator: '~',
+                                                                                                                     minDate: moment().startOf('day'),
+                                                                                                                     locale:
+                                                                                                                     {
+                                                                                                                     applyLabel : '确定',
+                                                                                                                     cancelLabel : '取消',
+                                                                                                                     fromLabel : '起始时间：',
+                                                                                                                     toLabel : '结束时间：',
+                                                                                                                     daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
+                                                                                                                     monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
+                                                                                                                                    '七月', '八月', '九月', '十月', '十一月', '十二月' ],
+                                                                                                                     firstDay:1
+                                                                                                                     }
+                                                                                                                     });
+                                                                            "/>
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-MultiFileUploadCollection"
-                                                                            p:addFilesButtonText="添加文件">
-                                                                                <property name="collection.propertyName" value="fileList"/>
-                                                                                <property name="collection.collectionObjectClass"
-                                                                                        value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/>
-                                                                                <!--FIXME: 重写这个methodToCall来实现自定义添加文件-->
-                                                                                <!--<property name="methodToCall" value="addFileUploadLine"/>-->
-                                                                                <property name="collection.items">
+                                                                            <bean parent="Uif-HorizontalBoxSection" p:style="margin-top:20px">
+                                                                                <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-LinkField" p:readOnly="true" p:label="文件" p:link.linkText="@{#line.name}"
-                                                                                              p:link.href="@{#line.url}&amp;selectedLineIndex=@{#index}" p:link.target="_blank"/>
-                                                                                        <bean parent="Uif-InputField" p:readOnly="true" p:label="大小" p:propertyName="sizeFormatted"/>
-                                                                                        <bean parent="Uif-InputField" p:readOnly="true" p:label="上传日期"
-                                                                                              p:propertyName="dateUploadedFormatted"/>
+                                                                                        <!--起始时间、结束时间的范围、总耗时-->
+                                                                                        <bean parent="Uif-MessageField" p:messageText="时间范围：" p:additionalCssClasses="messageStyle"/>
+                                                                                        <bean id="newAddTdateTimeImage"
+                                                                                              parent="Uif-Image"
+                                                                                              p:source="../images/clock_time.png"
+                                                                                              p:additionalCssClasses="dateTimeImage"/>
+                                                                                        <bean id="newAddTdateTimeRange"
+                                                                                              parent="Uif-InputField"
+                                                                                              p:style="width:250px;"
+                                                                                              p:propertyName="addTeachCTime"
+                                                                                              p:additionalCssClasses="dateTimeInput"/>
+                                                                                        <bean parent="Uif-MessageField" p:messageText="总耗时：" p:additionalCssClasses="messageStyle"/>
+                                                                                        <bean parent="Uif-InputField"
+                                                                                              p:propertyName="teachCalendar.elapsedTime"/>
                                                                                     </list>
                                                                                 </property>
-                                                                                <property name="collection.lineActions">
-                                                                                    <list>
-                                                                                        <!--FIXME: 重写这个methodToCall来实现自定义删除文件-->
-                                                                                        <bean parent="Uif-SecondaryActionButton" p:methodToCall="deleteFileUploadLine"
-                                                                                              p:title="Delete"
-                                                                                              p:onMouseOverScript="deleteLineMouseOver(this, 'uif-collectionDeleteHighlight');"
-                                                                                              p:onMouseOutScript="deleteLineMouseOut(this, 'uif-collectionDeleteHighlight');"
-                                                                                              p:onClickScript="writeCurrentPageToSession(this);" p:dirtyOnAction="true"
-                                                                                              p:loadingMessageText="正在删除...">
-                                                                                            <property name="cssClasses">
-                                                                                                <list merge="true">
-                                                                                                    <value>icon-trash</value>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-
                                                                             </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
 
+                                                                <!--FIXME 上传文件，会报ftl错误，暂时无解决方案-->
+                                                                <!--<bean parent="Uif-HorizontalBoxSection"-->
+                                                                <!--p:style="margin-top:20px"-->
+                                                                <!--p:additionalCssClasses="row">-->
+                                                                <!--<property name="items">-->
+                                                                <!--<list>-->
+                                                                <!--<bean parent="Uif-MultiFileUploadCollection">-->
+                                                                <!--<property name="collection.propertyName" value="fileList"/>-->
+                                                                <!--<property name="collection.collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/>-->
+                                                                <!--</bean>-->
+                                                                <!--</list>-->
+                                                                <!--</property>-->
+                                                                <!--</bean>-->
+
                                                                 <!--btn list-->
                                                                 <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="margin-top:20px"
-                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                      p:style="margin-top:20px；float:left!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"

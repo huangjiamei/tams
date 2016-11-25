@@ -1,6 +1,8 @@
 package cn.edu.cqu.ngtl.security;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl;
+import cn.edu.cqu.ngtl.service.common.HeaderService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import org.apache.commons.lang.StringUtils;
@@ -149,6 +151,12 @@ public class LoginFilter implements Filter {
         IUserInfoService userinfoservice = new UserInfoServiceImpl();
         User loginUser = userinfoservice.getUserByUserSession(userSession);
         userSession.addObject("user", loginUser);
+
+        /**
+         * 获取菜单的应有状态
+         */
+        HeaderService headerService = new HeaderServiceImpl();
+        headerService.getExamHeaderPermission(userSession.getPrincipalId());
 
         httpRequest.getSession().setAttribute(KRADConstants.USER_SESSION_KEY, userSession);
 

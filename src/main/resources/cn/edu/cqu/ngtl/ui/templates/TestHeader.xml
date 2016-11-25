@@ -415,30 +415,30 @@
                         <list>
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getSetTimeInfoPage&amp;viewId=PortalView"
                                   p:linkText="设置考次" p:iconClass="icon-list menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'ViewSetTimeInfoPagePermission')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(0)}"/>
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getRoleManagerPage&amp;viewId=PortalView"
                                   p:linkText="角色管理" p:iconClass="icon-check menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'ViewRoleManagerPagePermission')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(1)}"/>
 
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getUserRoleManagerPageAll&amp;viewId=PortalView"
                                   p:linkText="用户管理" p:iconClass="icon-ok menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'pageUserRoleManager')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(2)}"/>
 
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getSystemParameterPage&amp;viewId=PortalView"
                                   p:linkText="系统配置" p:iconClass="icon-calendar4 menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'pageSystemParameter')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(3)}"/>
 
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?viewId=PortalView&amp;methodToCall=getExmLogPage"
                                   p:linkText="查看日志" p:iconClass="icon-calendar menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'ViewExmLogPagePermission')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(4)}"/>
 
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getBaseInfoPage&amp;viewId=PortalView"
                                   p:linkText="数据同步" p:iconClass="icon-bullhorn menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'ViewBaseInfoPagePermission')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(5)}"/>
 
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/syncUserInfo?viewId=SyncUserInfoView&amp;methodToCall=start"
                                   p:linkText="同步用户信息" p:iconClass="icon-tag menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.webservice.impl.ReceiveHeaderWebServiceImpl().getResultFromHeaderWebService(#userSession.getPrincipalId(),'ViewSyncUserInfoPagePermission')}"/>
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(6)}"/>
                         </list>
                     </property>
                 </bean>
@@ -452,7 +452,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="报名申请" parent="Uif-Link" p:href="#" p:iconClass="icon-check menuIcon"/>
+                            <bean p:linkText="报名申请" parent="Uif-Link" p:href="#" p:iconClass="icon-check menuIcon" />
                         </list>
                     </property>
                 </bean>
@@ -461,9 +461,13 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getCetApplyPage&amp;viewId=PortalView"
-                                  p:linkText="四六级报名" p:iconClass="icon-star menuIcon"/>
+                                  p:linkText="四六级报名" p:iconClass="icon-star menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(7)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/invigilate?viewId=InvigilateView&amp;methodToCall=getInvigilatorApplicant"
-                                  p:linkText="申请监考" p:iconClass="icon-check menuIcon"/>
+                                  p:linkText="申请监考" p:iconClass="icon-check menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(8)}"/>
+
                         </list>
                     </property>
                 </bean>
@@ -486,15 +490,25 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getTimetablePage&amp;viewId=PortalView"
-                                  p:linkText="监考员老师编排" p:iconClass="icon-list menuIcon"/>
+                                  p:linkText="监考员老师编排" p:iconClass="icon-list menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(9)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/invigilate?viewId=InvigilateView&amp;methodToCall=getInvigilatePreset"
-                                  p:linkText="监考员老师名额设置" p:iconClass="icon-check menuIcon"/>
+                                  p:linkText="监考员老师名额设置" p:iconClass="icon-check menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(10)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/invigilate?viewId=InvigilateView&amp;methodToCall=getInvigilato"
-                                  p:linkText="监考员老师管理" p:iconClass="icon-ok menuIcon"/>
+                                  p:linkText="监考员老师管理" p:iconClass="icon-ok menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(11)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getSignCheckPage&amp;viewId=PortalView"
-                                  p:linkText="签到情况查看" p:iconClass="icon-calendar4 menuIcon"/>
+                                  p:linkText="签到情况查看" p:iconClass="icon-calendar4 menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(12)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/invigilate?viewId=InvigilateView&amp;methodToCall=getCollegeInvigilatorPage"
-                                  p:linkText="二级单位监考员一览表" p:iconClass="icon-calendar menuIcon"/>
+                                  p:linkText="二级单位监考员一览表" p:iconClass="icon-calendar menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(13)}"/>
+
                         </list>
                     </property>
                 </bean>
@@ -517,13 +531,21 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getExmStudentPage&amp;viewId=PortalView"
-                                  p:linkText="学籍信息管理" p:iconClass="icon-list menuIcon"/>
+                                  p:linkText="学籍信息管理" p:iconClass="icon-list menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(14)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getApplicantInfoPage&amp;viewId=PortalView"
-                                  p:linkText="考生信息管理" p:iconClass="icon-check menuIcon"/>
+                                  p:linkText="考生信息管理" p:iconClass="icon-check menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(15)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?methodToCall=getExamRoomPrintPage&amp;viewId=PortalView"
-                                  p:linkText="报表打印" p:iconClass="icon-ok menuIcon"/>
+                                  p:linkText="报表打印" p:iconClass="icon-ok menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(16)}"/>
+
                             <bean parent="Uif-Link" p:href="http://isse.cqu.edu.cn/exam/portal/?viewId=PortalView&amp;methodToCall=getMessagePage"
-                                  p:linkText="发送信息" p:iconClass="icon-calendar4 menuIcon"/>
+                                  p:linkText="发送信息" p:iconClass="icon-calendar4 menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.common.impl.HeaderServiceImpl().getExamHeader().get(17)}"/>
+
                         </list>
                     </property>
                 </bean>

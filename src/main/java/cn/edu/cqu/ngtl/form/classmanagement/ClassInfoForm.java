@@ -1,20 +1,17 @@
 package cn.edu.cqu.ngtl.form.classmanagement;
 
-import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by awake on 2016-10-21.
  */
 public class ClassInfoForm extends BaseForm implements Serializable {
-
-    private static final long serialVersionUID = 230347454225549981L;
 
     /**
      * 课程详细操作需要用到的id
@@ -35,6 +32,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private TAMSTeachCalendar teachCalendar;
 
+    private String addTeachCTime;//新建日历的时间控件
+
     /**
      * 班级管理隐藏搜索框
      *
@@ -54,28 +53,41 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String condSessionYear;
     private String condProgramName;
 
-    /** 页面上的学历选项 */
-    private String eduBackground;
+
+    private List<ClassTeacherViewObject> classList;
+
+    private ClassDetailInfoViewObject detailInfoViewObject;
 
     /**
-     * 多级列表嵌套
+     * 学生申请助教页面相关
      */
-    private List<TestGroupObject> groupObjectList = new ArrayList<>();
 
-    public List<TestGroupObject> getGroupObjectList() {
-        return groupObjectList;
+    private ApplyAssistantViewObject applyAssistantViewObject;
+
+    private String applyReason;
+
+    /**
+     * 老师提交申请页面相关
+     */
+
+    private ApplyViewObject applyViewObject;
+    private String totalBudget;
+    private List<TAMSClassEvaluation> classEvaluations;
+
+    public List<TAMSClassEvaluation> getClassEvaluations() {
+        return classEvaluations;
     }
 
-    public void setGroupObjectList(List<TestGroupObject> groupObjectList) {
-        this.groupObjectList = groupObjectList;
+    public void setClassEvaluations(List<TAMSClassEvaluation> classEvaluations) {
+        this.classEvaluations = classEvaluations;
     }
 
-    public List<TeachCalendarViewObject> getAllActivities() {
-        return allActivities;
+    public String getTotalBudget() {
+        return totalBudget;
     }
 
-    public void setAllActivities(List<TeachCalendarViewObject> allActivities) {
-        this.allActivities = allActivities;
+    public void setTotalBudget(String totalBudget) {
+        this.totalBudget = totalBudget;
     }
 
     public String getCurrClassId() {
@@ -86,12 +98,12 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.currClassId = currClassId;
     }
 
-    public TAMSTeachCalendar getTeachCalendar() {
-        return teachCalendar;
+    public List<TeachCalendarViewObject> getAllActivities() {
+        return allActivities;
     }
 
-    public void setTeachCalendar(TAMSTeachCalendar teachCalendar) {
-        this.teachCalendar = teachCalendar;
+    public void setAllActivities(List<TeachCalendarViewObject> allActivities) {
+        this.allActivities = allActivities;
     }
 
     public List<TeachCalendarViewObject> getAllCalendar() {
@@ -110,24 +122,28 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.totalElapsedTime = totalElapsedTime;
     }
 
-    public String getEduBackground() {
-        return eduBackground;
+    public TAMSTeachCalendar getTeachCalendar() {
+        return teachCalendar;
     }
 
-    public void setEduBackground(String eduBackground) {
-        this.eduBackground = eduBackground;
+    public void setTeachCalendar(TAMSTeachCalendar teachCalendar) {
+        this.teachCalendar = teachCalendar;
+    }
+
+    public String getCondDepartmentName() {
+        return condDepartmentName;
     }
 
     public void setCondDepartmentName(String condDepartmentName) {
         this.condDepartmentName = condDepartmentName;
     }
 
-    public void setCondCourseName(String condCourseName) {
-        this.condCourseName = condCourseName;
+    public String getCondCourseName() {
+        return condCourseName;
     }
 
-    public void setCondCourseCode(String condCourseCode) {
-        this.condCourseCode = condCourseCode;
+    public void setCondCourseName(String condCourseName) {
+        this.condCourseName = condCourseName;
     }
 
     public String getHintCourseName() {
@@ -138,125 +154,85 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.hintCourseName = hintCourseName;
     }
 
-    public void setCondClassNumber(String condClassNumber) {
-        this.condClassNumber = condClassNumber;
-    }
-
-    public void setCondInstructorName(String condInstructorName) {
-        this.condInstructorName = condInstructorName;
-    }
-
-
-
-    public void setCondJudgeStatus(String condJudgeStatus) {
-        this.condJudgeStatus = condJudgeStatus;
-    }
-
-    public void setCondCourseHour(String condCourseHour) {
-        this.condCourseHour = condCourseHour;
-    }
-
-    public void setCondCourseCredit(String condCourseCredit) {
-        this.condCourseCredit = condCourseCredit;
-    }
-
-    public void setCondIsRequired(String condIsRequired) {
-        this.condIsRequired = condIsRequired;
-    }
-
-    public void setCondCourseClassification(String condCourseClassification) {
-        this.condCourseClassification = condCourseClassification;
-    }
-
-    public void setCondSessionYear(String condSessionYear) {
-        this.condSessionYear = condSessionYear;
-    }
-
-    public void setCondProgramName(String condProgramName) {
-        this.condProgramName = condProgramName;
-    }
-
-
-
-    public static long getSerialVersionUID() {
-
-        return serialVersionUID;
-    }
-
-    public String getCondDepartmentName() {
-        return condDepartmentName;
-    }
-
-    public String getCondCourseName() {
-        return condCourseName;
-    }
-
     public String getCondCourseCode() {
         return condCourseCode;
+    }
+
+    public void setCondCourseCode(String condCourseCode) {
+        this.condCourseCode = condCourseCode;
     }
 
     public String getCondClassNumber() {
         return condClassNumber;
     }
 
+    public void setCondClassNumber(String condClassNumber) {
+        this.condClassNumber = condClassNumber;
+    }
+
     public String getCondInstructorName() {
         return condInstructorName;
     }
 
+    public void setCondInstructorName(String condInstructorName) {
+        this.condInstructorName = condInstructorName;
+    }
 
     public String getCondJudgeStatus() {
         return condJudgeStatus;
+    }
+
+    public void setCondJudgeStatus(String condJudgeStatus) {
+        this.condJudgeStatus = condJudgeStatus;
     }
 
     public String getCondCourseHour() {
         return condCourseHour;
     }
 
+    public void setCondCourseHour(String condCourseHour) {
+        this.condCourseHour = condCourseHour;
+    }
+
     public String getCondCourseCredit() {
         return condCourseCredit;
+    }
+
+    public void setCondCourseCredit(String condCourseCredit) {
+        this.condCourseCredit = condCourseCredit;
     }
 
     public String getCondIsRequired() {
         return condIsRequired;
     }
 
+    public void setCondIsRequired(String condIsRequired) {
+        this.condIsRequired = condIsRequired;
+    }
+
     public String getCondCourseClassification() {
         return condCourseClassification;
+    }
+
+    public void setCondCourseClassification(String condCourseClassification) {
+        this.condCourseClassification = condCourseClassification;
     }
 
     public String getCondSessionYear() {
         return condSessionYear;
     }
 
+    public void setCondSessionYear(String condSessionYear) {
+        this.condSessionYear = condSessionYear;
+    }
+
     public String getCondProgramName() {
         return condProgramName;
     }
 
-    private List<ClassTeacherViewObject> classList = new ArrayList<>();
-
-    private ClassDetailInfoViewObject detailInfoViewObject;
-
-    /**
-     * 学生申请助教页面相关
-     */
-
-    private ApplyAssistantViewObject applyAssistantViewObject;
-
-    private String applyReason;
-
-    /**
-     * 学生申请助教页面结束
-     */
-
-    /**
-     * 老师提交申请页面相关
-     */
-
-    private ApplyViewObject applyViewObject;
-
-    /**
-     * 结束
-     */
+    public void setCondProgramName(String condProgramName) {
+        this.condProgramName = condProgramName;
+    }
 
     public ApplyViewObject getApplyViewObject() {
         return applyViewObject;
@@ -296,5 +272,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setDetailInfoViewObject(ClassDetailInfoViewObject detailInfoViewObject) {
         this.detailInfoViewObject = detailInfoViewObject;
+    }
+
+    public String getAddTeachCTime() {
+        return addTeachCTime;
+    }
+
+    public void setAddTeachCTime(String addTeachCTime) {
+        this.addTeachCTime = addTeachCTime;
     }
 }

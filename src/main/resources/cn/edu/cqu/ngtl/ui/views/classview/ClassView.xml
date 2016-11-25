@@ -52,7 +52,8 @@
                 <value>ueditor/themes/iframe.css</value>
                 <value>ueditor/third-party/codemirror/codemirror.css</value>
                 <value>ueditor/themes/default/css/ueditor.min.css</value>
-
+                <value>css/daterangepicker-bs3.css</value>
+                <value>css/fullcalendar.css.css</value>
                 <value>css/combo.select.css</value>
                 <value>css/jquery.contextmenu.css</value>
                 <value>css/jquery.dataTables.min.css</value>
@@ -67,6 +68,8 @@
                 <value>ueditor/ueditor.all.min.js</value>
                 <value>ueditor/lang/zh-cn/zh-cn.js</value>
                 <value>js/json2.js</value>
+                <value>js/fullcalendar.js</value>
+                <value>js/daterangepicker.js</value>
                 <value>js/jquery.combo.select.js</value>
                 <value>js/jquery.contextmenu.js</value>
                 <value>js/tams.js</value>

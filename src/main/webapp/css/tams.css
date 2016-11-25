@@ -368,7 +368,7 @@ body{
 }
 
 .tamsbtn{
-    float:right!important;
+    /*float:right!important;*/
     font-size:15px;
     margin-left: 5px;
     margin-right:5px;
@@ -387,6 +387,7 @@ body{
 /* 面包线home图标*/
 .myIcon{
     float: left!important;
+    padding-left: 8px;
 }
 /* 面包线‘*/
 .breadcrumb *{
@@ -708,4 +709,8 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     z-index:1000;
 }
 
+/*MessageField和InputField中心线没有对齐*/
+.messageStyle{
+    margin-top:5px;
+}
 

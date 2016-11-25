@@ -179,7 +179,7 @@
                                                                                                                 <bean parent="Uif-Icon"
                                                                                                                       p:iconClass="icon-list"/>
                                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                                      p:messageText="课程信息"
+                                                                                                                      p:messageText="日历列表"
                                                                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                                                             </list>
                                                                                                         </property>
@@ -188,10 +188,10 @@
                                                                                                           p:layoutManager.numberOfColumns="6">
                                                                                                         <property
                                                                                                                 name="collectionObjectClass"
-                                                                                                                value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
+                                                                                                                value="cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject"/>
                                                                                                         <property
                                                                                                                 name="propertyName"
-                                                                                                                value="classList"/>
+                                                                                                                value="allCalendar"/>
                                                                                                         <property
                                                                                                                 name="renderAddBlankLineButton"
                                                                                                                 value="false"/>
@@ -227,16 +227,16 @@
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="任务类型"
-                                                                                                                      p:propertyName="departmentName"/>
+                                                                                                                      p:propertyName="theme"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="次数"
-                                                                                                                      p:propertyName="courseHour"/>
+                                                                                                                      p:propertyName="taTaskTimes"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="耗时"
-                                                                                                                      p:propertyName="courseCredit"/>
+                                                                                                                      p:propertyName="elapsedTime"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="预算"
-                                                                                                                      p:propertyName="courseCode">
+                                                                                                                      p:propertyName="budget">
                                                                                                                 </bean>
                                                                                                             </list>
                                                                                                         </property>
@@ -249,10 +249,10 @@
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-MessageField"
                                                                                                                       p:label="耗时总计"
-                                                                                                                      p:messageText="js或后台计算总耗时"/>
+                                                                                                                      p:messageText="@{totalElapsedTime}"/>
                                                                                                                 <bean parent="Uif-MessageField"
                                                                                                                       p:label="预算总计"
-                                                                                                                      p:messageText="js或后台计算总预算"/>
+                                                                                                                      p:messageText="@{totalBudget}"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
@@ -262,7 +262,7 @@
 
 
                                                                                         <!--自定义成绩评定方式列表-->
-                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                        <bean id="EvaluationTable" parent="Uif-VerticalBoxSection"
                                                                                               p:additionalCssClasses="box box-primary">
                                                                                             <property name="items">
                                                                                                 <list>
@@ -288,10 +288,10 @@
                                                                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
-                                                                                                                            value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
+                                                                                                                            value="cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation"/>
                                                                                                                     <property
                                                                                                                             name="propertyName"
-                                                                                                                            value="classList"/>
+                                                                                                                            value="classEvaluations"/>
                                                                                                                     <!--开启addline按钮-->
                                                                                                                     <!--<property name="renderAddBlankLineButton" value="true"/>-->
 
@@ -344,7 +344,7 @@
                                                                                                                         <list>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:label="成绩评定方式"
-                                                                                                                                  p:propertyName="departmentName">
+                                                                                                                                  p:propertyName="evaluationType">
                                                                                                                                 <property
                                                                                                                                         name="control">
                                                                                                                                     <bean parent="Uif-TextControl"
@@ -353,11 +353,14 @@
                                                                                                                             </bean>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:label="成绩占比(%)"
-                                                                                                                                  p:propertyName="instructorName">
+                                                                                                                                  p:propertyName="evaluationPercent">
                                                                                                                                 <property
                                                                                                                                         name="control">
                                                                                                                                     <bean parent="Uif-TextControl"
                                                                                                                                           p:watermarkText="如10,20"/>
+                                                                                                                                </property>
+                                                                                                                                <property name="validCharactersConstraint">
+                                                                                                                                    <bean parent="NumericPatternConstraint"/>
                                                                                                                                 </property>
                                                                                                                             </bean>
                                                                                                                         </list>
@@ -369,7 +372,9 @@
                                                                                                                                 <property
                                                                                                                                         name="items">
                                                                                                                                     <list>
-                                                                                                                                        <bean parent="Uif-ActionImage">
+                                                                                                                                        <bean parent="Uif-ActionImage"
+                                                                                                                                              p:methodToCall="deleteEvaluationLine"
+                                                                                                                                              p:refreshId="EvaluationTable">
                                                                                                                                             <property
                                                                                                                                                     name="actionImage">
                                                                                                                                                 <bean parent="Uif-Image"

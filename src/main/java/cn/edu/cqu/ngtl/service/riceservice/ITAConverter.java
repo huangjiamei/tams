@@ -63,9 +63,11 @@ public interface ITAConverter {
 
     List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList);
 
-    List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars);
+    List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars, boolean needCount); //needCount用于设定是否需要计算子活动的次数
 
     String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar);
+
+    String countCalendarTotalBudget(List<TeachCalendarViewObject> allCalendar);
 
     List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList);
 

@@ -1,12 +1,12 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
-import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
@@ -19,7 +19,6 @@ import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
-import org.kuali.rice.krad.web.service.FileControllerService;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -33,6 +32,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,8 +44,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/class")
 public class ClassController extends UifControllerBase {
-
-
 
     @Autowired
     private IClassInfoService classInfoService;
@@ -180,7 +178,8 @@ public class ClassController extends UifControllerBase {
                 taConverter.TeachCalendarToViewObject(
                         classInfoService.getAllTaTeachCalendarFilterByUidAndClassId(
                                 uId,
-                                classId)
+                                classId),
+                        false
                 )
         );
 
@@ -218,20 +217,23 @@ public class ClassController extends UifControllerBase {
 
         String classId = infoForm.getCurrClassId();
 
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String arr[]=infoForm.getAddTeachCTime().split("\\~");
+        TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
-            infoForm.getTeachCalendar().setStartTime(
+            added.setStartTime(
                     outputFormat.format(
                             inputFormat.parse(
-                                    infoForm.getTeachCalendar().getStartTime()
+                                    arr[0]
                             )
                     )
             );
-            infoForm.getTeachCalendar().setEndTime(
+            added.setEndTime(
                     outputFormat.format(
                             inputFormat.parse(
-                                    infoForm.getTeachCalendar().getEndTime()
+                                arr[1]
                             )
                     )
             );
@@ -239,8 +241,6 @@ public class ClassController extends UifControllerBase {
         catch (Exception e) {
 
         }
-
-        TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
         if(classInfoService.instructorAddTeachCalendar(uId, classId, added))
             return this.getTeachingCalendar(infoForm, request);
@@ -352,8 +352,7 @@ public class ClassController extends UifControllerBase {
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getRequestTaPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getRequestTaPage")
-    public ModelAndView getRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                       HttpServletRequest request) {
+    public ModelAndView getRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form) {
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
@@ -364,11 +363,42 @@ public class ClassController extends UifControllerBase {
         infoForm.setApplyViewObject(
                 taConverter.instructorAndClassInfoToViewObject(instructor, classInfoService.getClassInfoById(classId))
         );
-        infoForm.setClassList(
-                taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesFilterByUid(uId)
+        infoForm.setAllCalendar(
+                taConverter.TeachCalendarToViewObject(
+                        classInfoService.getAllTaTeachCalendarFilterByUidAndClassId(
+                                uId,
+                                classId.toString()),
+                        true
                 )
         );
+        infoForm.setTotalElapsedTime(
+                taConverter.countCalendarTotalElapsedTime(
+                        infoForm.getAllCalendar()
+                )
+        );
+        infoForm.setTotalBudget(
+                taConverter.countCalendarTotalBudget(
+                        infoForm.getAllCalendar()
+                )
+        );
+        infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
+
+        return this.getModelAndView(infoForm, "pageRequestTa");
+    }
+
+    /**
+     * 成绩评定删除辅助方法
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=deleteEvaluationLine")
+    public ModelAndView deleteEvaluationLine(@ModelAttribute("KualiForm") UifFormBase form) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        infoForm.getClassEvaluations().remove(index);
 
         return this.getModelAndView(infoForm, "pageRequestTa");
     }

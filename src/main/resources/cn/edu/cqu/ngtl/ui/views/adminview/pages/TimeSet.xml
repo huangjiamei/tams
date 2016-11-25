@@ -133,17 +133,19 @@
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="类型名称"/>
+                                                                                                          p:messageText="类型名称：" p:additionalCssClasses="messageStyle"/>
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:propertyName="timeType"
                                                                                                           p:required="true"
                                                                                                           p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.adminview.TimeSettingTypeFinder">
-                                                                                                        <property name="control">
+                                                                                                        <property
+                                                                                                                name="control">
                                                                                                             <bean parent="Uif-DropdownControl"/>
                                                                                                         </property>
                                                                                                     </bean>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="时间范围："/>
+                                                                                                          p:messageText="时间范围："
+                                                                                                          p:additionalCssClasses="messageStyle"/>
                                                                                                     <bean id="newdateTimeImage"
                                                                                                           parent="Uif-Image"
                                                                                                           p:source="../images/clock_time.png"
@@ -184,75 +186,68 @@
                                                                 <bean parent="Uif-MessageField"
                                                                       p:messageText="时间信息列表（没有连接该表数据库）"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-
                                                             </list>
                                                         </property>
                                                     </bean>
 
-                                                                            <!--表中数据更改 admincontroller中的getTimeSetPage更改-->
-                                                                            <bean id="SettingTimeTable"
-                                                                                  parent="Uif-TableCollectionSection">
-                                                                                <property
-                                                                                        name="collectionObjectClass"
-                                                                                        value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings"/>
-                                                                                <property
-                                                                                        name="propertyName"
-                                                                                        value="timeSettingsList"/>
-                                                                                <property
-                                                                                        name="layoutManager.richTable.render"
-                                                                                        value="false"/>
-                                                                                <property
-                                                                                        name="layoutManager.renderSequenceField"
-                                                                                        value="false"/>
-                                                                                <property
-                                                                                        name="renderAddLine"
-                                                                                        value="false"/>
-                                                                                <property
-                                                                                        name="useServerPaging"
-                                                                                        value="true"/>
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="timeSettingType.typeName"
-                                                                                              p:readOnly="true"
-                                                                                              p:label="类型"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:readOnly="true"
-                                                                                              p:propertyName="startTime"
-                                                                                              p:label="起始时间"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:readOnly="true"
-                                                                                              p:propertyName="endTime"
-                                                                                              p:label="结束时间"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:readOnly="true"
-                                                                                              p:propertyName="editTime"
-                                                                                              p:label="修改时间"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                                <property
-                                                                                        name="lineActions">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-ActionImage"
-                                                                                              p:methodToCall="">
-                                                                                            <property
-                                                                                                    name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-ActionImage"
-                                                                                              p:methodToCall="">
-                                                                                            <property
-                                                                                                    name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
+                                                    <!--表中数据更改 admincontroller中的getTimeSetPage更改-->
+                                                    <bean id="SettingTimeTable"
+                                                          parent="Uif-TableCollectionSection">
+                                                        <property
+                                                                name="collectionObjectClass"
+                                                                value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings"/>
+                                                        <property
+                                                                name="propertyName"
+                                                                value="timeSettingsList"/>
+                                                        <property
+                                                                name="layoutManager.richTable.render"
+                                                                value="false"/>
+                                                        <property
+                                                                name="layoutManager.renderSequenceField"
+                                                                value="false"/>
+                                                        <property
+                                                                name="renderAddLine"
+                                                                value="false"/>
+                                                        <property
+                                                                name="useServerPaging"
+                                                                value="true"/>
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-InputField"
+                                                                      p:propertyName="timeSettingType.typeName"
+                                                                      p:readOnly="true"
+                                                                      p:label="类型"/>
+                                                                <bean parent="Uif-InputField"
+                                                                      p:readOnly="true"
+                                                                      p:propertyName="startTime"
+                                                                      p:label="起始时间"/>
+                                                                <bean parent="Uif-InputField"
+                                                                      p:readOnly="true"
+                                                                      p:propertyName="endTime"
+                                                                      p:label="结束时间"/>
+                                                                <bean parent="Uif-InputField"
+                                                                      p:readOnly="true"
+                                                                      p:propertyName="editTime"
+                                                                      p:label="修改时间"/>
+                                                            </list>
+                                                        </property>
+                                                        <property
+                                                                name="lineActions">
+                                                            <list>
+                                                                <bean parent="Uif-ActionImage"
+                                                                      p:methodToCall="">
+                                                                    <property
+                                                                            name="actionImage">
+                                                                        <bean parent="Uif-Image"
+                                                                              p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-ActionImage"
+                                                                      p:methodToCall="">
+                                                                    <property
+                                                                            name="actionImage">
+                                                                        <bean parent="Uif-Image"
+                                                                              p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
                                                                     </property>
                                                                 </bean>
                                                             </list>
@@ -264,5 +259,11 @@
                                     </list>
                                 </property>
                             </bean>
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
 
 </beans>

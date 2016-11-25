@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import org.apache.log4j.Logger;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,11 @@ import java.util.Map;
 public class AdminServiceImpl implements IAdminService{
 
     private static final Logger logger = Logger.getRootLogger();
+
+    private static User user ;
+
+    @Autowired
+    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
 
     @Autowired
     private CMCourseClassificationDao courseClassificationDao;
@@ -282,7 +288,14 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public List<TAMSDeptFunding> getDepartmentCurrFundingBySession(){
-
+        if(this.user == null){
+            user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        }
+        /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
+         */
+        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
+            return tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
+        }
         return deptFundingDao.selectDepartmentCurrBySession();
     }
 

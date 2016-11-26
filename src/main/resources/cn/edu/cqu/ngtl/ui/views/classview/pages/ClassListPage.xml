@@ -210,10 +210,14 @@
                                                                 <bean id="searchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!--下拉框搜索-->
                                                                                         <!--占位-->
                                                                                         <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
                                                                                               p:messageText="占位" />
+
+                                                                                        <!--占位-->
+                                                                                        <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                              p:messageText="占位" />
+                                                                                        <!--下拉框搜索-->
                                                                                         <!--学院-->
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:propertyName="condDepartmentName">
@@ -279,6 +283,11 @@
                                                                     <!--<property name="readOnly" value="true"/>-->
 
                                                                     <property name="disclosure.render" value="false"/>
+                                                                    <property name="layoutManager.showToggleAllDetails" value="false"/>
+                                                                    <!--在这里后期更改rowDetails的图标-->
+                                                                    <property name="layoutManager.expandDetailsActionPrototype">
+                                                                        <bean parent="Uif-ExpandDetailsImageAction"/>
+                                                                    </property>
 
 
                                                                     <property name="items">
@@ -303,6 +312,51 @@
 
                                                                         </list>
                                                                     </property>
+
+                                                                    <!--rowDetails-->
+                                                                    <property name="layoutManager.rowDetailsGroup">
+                                                                        <bean parent="Uif-VerticalBoxGroup">
+                                                                            <property name="items">
+                                                                                <list>
+
+                                                                                    <!--无历史数据时显示，用render来切换-->
+                                                                                    <bean parent="Uif-MessageField"
+                                                                                          p:render="false" p:messageText="暂无历史数据"/>
+
+
+                                                                                    <!--如何改为纵向列表形式待调整-->
+                                                                                    <bean parent="Uif-GridGroup"
+                                                                                          p:layoutManager.renderRowFirstCellHeader="false">
+                                                                                    <property name="layoutManager.numberOfColumns"
+                                                                                              value="8"/>
+                                                                                        <property name="items">
+                                                                                            <list>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="课程名称" p:colSpan="1" p:rowSpan="2"
+                                                                                                      p:labelLeft="false"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseName}"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="课程编号" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseCode}"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="教师" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.instructorName}"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="课程编号" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseCode}"/>
+                                                                                            </list>
+                                                                                        </property>
+                                                                                    </bean>
+                                                                                </list>
+                                                                            </property>
+                                                                        </bean>
+                                                                    </property>
+
+
                                                                     <property name="lineActions">
                                                                         <list>
                                                                             <bean parent="Uif-VerticalBoxSection">

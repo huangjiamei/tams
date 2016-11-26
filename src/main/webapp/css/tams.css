@@ -512,9 +512,9 @@ body{
 
 
 /* 让collection table的action格子短一点，暂时无效*/
-.uif-collection-column-action{
-    width:10%!important;
-}
+/*.uif-collection-column-action{*/
+    /*width:10%!important;*/
+/*}*/
 
 
 .uif-disclosure .table > thead > tr > th,

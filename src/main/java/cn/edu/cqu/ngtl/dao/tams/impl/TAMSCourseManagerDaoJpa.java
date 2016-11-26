@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
-import com.sun.org.apache.bcel.internal.generic.Select;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
@@ -15,12 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.ArrayList;
-import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-import java.util.Map;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
  * Created by awake on 2016-10-26.
@@ -49,7 +49,7 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
                 TAMSCourseManager.class,
                 criteria.build()
         );
-        return  qr.getResults().get(0);
+        return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
     }
 
     @Override

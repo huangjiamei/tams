@@ -31,7 +31,7 @@ public class TAMSClassEvaluation extends DataObjectBase implements Serializable 
     private UTClass utClass;
 
     @Column(name = "CLASS_ID")
-    private Integer classId;
+    private String classId;
 
 
     public String getId() {
@@ -66,11 +66,11 @@ public class TAMSClassEvaluation extends DataObjectBase implements Serializable 
         this.utClass = utClass;
     }
 
-    public Integer getClassId() {
+    public String getClassId() {
         return classId;
     }
 
-    public void setClassId(Integer classId) {
+    public void setClassId(String classId) {
         this.classId = classId;
     }
 }

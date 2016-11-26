@@ -11,4 +11,5 @@ public interface TAMSWorkflowFunctionsDao {
 
     List<TAMSWorkflowFunctions> selectAll();
 
+    TAMSWorkflowFunctions selectOneByName(String Name);
 }

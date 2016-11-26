@@ -1,22 +1,20 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
-import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSActivity;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -24,6 +22,8 @@ import java.util.*;
  */
 @Service
 public class ClassInfoServiceImpl implements IClassInfoService {
+
+    private static final Logger logger = Logger.getRootLogger();
 
     @Autowired
     private UTClassInfoDao classInfoDao;
@@ -48,6 +48,21 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private TAMSActivityDao activityDao;
+
+    @Autowired
+    private TAMSClassTaApplicationDao classTaApplicationDao;
+
+    @Autowired
+    private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSClassEvaluationDao classEvaluationDao;
+
+    @Autowired
+    private TAMSClassApplyStatusDao classApplyStatusDao;
+
+    @Autowired
+    private TAMSWorkflowFunctionsDao workflowFunctionsDao;
 
     @Override
     public List<UTClassInformation> getAllClassesMappedByDepartment() {
@@ -181,5 +196,64 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return calendars;
         }
         return null;
+    }
+
+    @Override
+    public boolean instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations) {
+        TAMSClassTaApplication isExist = classTaApplicationDao.selectByInstructorIdAndClassId(instructorId, classId);
+        if(isExist != null) {
+            logger.warn("已存在数据！");
+        }
+        else {
+            TAMSClassTaApplication entity = new TAMSClassTaApplication();
+            //添加申请信息
+            //预处理数据
+            entity.setApplicantId(instructorId);
+            entity.setApplicationClassId(classId);
+            entity.setApplicationTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
+            entity.setTaNumber(Integer.parseInt(assistantNumber));
+            entity.setSessionId(sessionDao.getCurrentSession().getId());
+            entity = classTaApplicationDao.insertOneByEntity(entity);
+            if (entity.getId() == null)
+                return false;
+        }
+        try {
+
+            //添加课程考核信息
+            classEvaluationDao.deleteAllByClassId(classId);
+            boolean flag;
+            for (TAMSClassEvaluation classEvaluation : classEvaluations) {
+                classEvaluation.setClassId(classId);
+                flag = classEvaluationDao.insertOneByEntity(classEvaluation);
+                if (!flag) {
+                    classEvaluationDao.deleteAllByClassId(classId);
+                    return false;
+                }
+            }
+            //更改课程申请状态
+            //教师默认工作方法为“审核”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(instructorId);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return false;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("审核");
+            if (function == null) {
+                logger.error("未能找到'审核'的Function");
+                return false;
+            }
+            boolean result = classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
+            //执行到这里既是成功
+
+            return true;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 }

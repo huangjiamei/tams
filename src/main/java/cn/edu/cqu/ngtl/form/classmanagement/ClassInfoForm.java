@@ -70,7 +70,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
      * 老师提交申请页面相关
      */
 
-    private ApplyViewObject applyViewObject;
+    private ClassTaApplyViewObject applyViewObject;
     private String totalBudget;
     private List<TAMSClassEvaluation> classEvaluations;
 
@@ -234,11 +234,11 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.condProgramName = condProgramName;
     }
 
-    public ApplyViewObject getApplyViewObject() {
+    public ClassTaApplyViewObject getApplyViewObject() {
         return applyViewObject;
     }
 
-    public void setApplyViewObject(ApplyViewObject applyViewObject) {
+    public void setApplyViewObject(ClassTaApplyViewObject applyViewObject) {
         this.applyViewObject = applyViewObject;
     }
 

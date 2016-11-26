@@ -412,8 +412,11 @@ public class ClassController extends UifControllerBase {
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
 
-        List<ClassTeacherViewObject> classList=infoForm.getClassList();
-        //TODO 未完成
+        String assistantNumber = infoForm.getApplyViewObject().getAssistantNumber();
+        List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
+        String classId = "290739";
+        String instructorId = GlobalVariables.getUserSession().getPrincipalId();
+        boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
 
         return this.getModelAndView(infoForm, "pageRequestTa");
     }

@@ -161,9 +161,10 @@
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="学生人数"
                                                                                                           p:messageText="@{applyViewObject.studentNumber}"/>
-                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                    <bean parent="Uif-InputField"
                                                                                                           p:label="拟配备助教数"
-                                                                                                          p:messageText="1"/>
+                                                                                                          p:required="true"
+                                                                                                          p:propertyName="applyViewObject.assistantNumber"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -229,10 +230,10 @@
                                                                                                                       p:label="任务类型"
                                                                                                                       p:propertyName="theme"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="次数"
+                                                                                                                      p:label="子活动数"
                                                                                                                       p:propertyName="taTaskTimes"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="耗时"
+                                                                                                                      p:label="耗时(小时)"
                                                                                                                       p:propertyName="elapsedTime"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="预算"
@@ -248,7 +249,7 @@
                                                                                                                 name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                                      p:label="耗时总计"
+                                                                                                                      p:label="耗时总计(小时)"
                                                                                                                       p:messageText="@{totalElapsedTime}"/>
                                                                                                                 <bean parent="Uif-MessageField"
                                                                                                                       p:label="预算总计"

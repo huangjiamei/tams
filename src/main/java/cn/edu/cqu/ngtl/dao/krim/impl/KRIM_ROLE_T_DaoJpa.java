@@ -13,7 +13,7 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 public class KRIM_ROLE_T_DaoJpa implements KRIM_ROLE_T_Dao {
 
-	private static String  nameSpace = "KR_TAMS";
+	private static String  nameSpace = "KR_EXM";
 	@Override
 	public List<KRIM_ROLE_T> getAllKrimRoleTs() {
 		// TODO Auto-generated method stub

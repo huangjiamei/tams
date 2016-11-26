@@ -3,7 +3,7 @@ package cn.edu.cqu.ngtl.viewobject.classinfo;
 /**
  * Created by 金祖增 on 2016/10/20.
  */
-public class ApplyViewObject {
+public class ClassTaApplyViewObject {
 
     private String courseName;
 
@@ -29,7 +29,7 @@ public class ApplyViewObject {
 
     private String studentNumber;
 
-    private String assisstantNumber;        //拟配备助教数
+    private String assistantNumber;        //拟配备助教数
 
     public String getCourseName() {
         return courseName;
@@ -127,11 +127,11 @@ public class ApplyViewObject {
         this.studentNumber = studentNumber;
     }
 
-    public String getAssisstantNumber() {
-        return assisstantNumber;
+    public String getAssistantNumber() {
+        return assistantNumber;
     }
 
-    public void setAssisstantNumber(String assisstantNumber) {
-        this.assisstantNumber = assisstantNumber;
+    public void setAssistantNumber(String assistantNumber) {
+        this.assistantNumber = assistantNumber;
     }
 }

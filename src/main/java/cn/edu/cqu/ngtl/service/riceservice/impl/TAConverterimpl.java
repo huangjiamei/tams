@@ -23,6 +23,8 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -68,23 +70,14 @@ public class TAConverterimpl implements ITAConverter {
         for (UTClassInformation information : informationlist) {
             ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
-            //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
             viewObject.setId(information.getId());
             viewObject.setInstructorName(information.getInstructorName());
-
             viewObject.setClassNumber(information.getClassNumber());
-
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
-            //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
-            //viewObject.setCourseCredit(information.getCredit().toString());
             viewObject.setStatus(information.getStatus());
-            //if (programCourse != null) {
-           // viewObject.setCourseClassification("test");
-           // viewObject.setIsRequired("必修");
-          //  viewObject.setProgramName("CS");
-            //}
+
             viewObjects.add(viewObject);
         }
 
@@ -92,8 +85,8 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public ApplyViewObject classInfoToApplyObject(User user, UTClass clazz) {
-        ApplyViewObject viewObject = new ApplyViewObject();
+    public ClassTaApplyViewObject classInfoToApplyObject(User user, UTClass clazz) {
+        ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
 
         viewObject.setTeacherName(user.getName());
 
@@ -110,7 +103,7 @@ public class TAConverterimpl implements ITAConverter {
         if (course != null) {
             viewObject.setCourseName(course.getName());
 
-            viewObject.setCourseNumber(course.getCodeR().toString());
+            viewObject.setCourseNumber(course.getCodeR());
 
             viewObject.setStudyTime(course.getHour());
 
@@ -140,7 +133,7 @@ public class TAConverterimpl implements ITAConverter {
         //--------------------------目前没有值的加了默认---------------------------------------
         viewObject.setStudentNumber(100 + "");
 
-        viewObject.setAssisstantNumber(1 + "");
+        viewObject.setAssistantNumber(1 + "");
 
         return viewObject;
     }
@@ -651,7 +644,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaTask(calendar.getTaTask());
             if(needCount) {
                 List temp = activityDao.selectAllByCalendarId(calendar.getId());
-                viewObject.setTaTaskTimes(temp != null ? String.valueOf(temp.size()) : null);
+                viewObject.setTaTaskTimes(temp != null ? String.valueOf(temp.size()) : "0");
                 Integer hourlyWage;
                 String budget;
                 try {
@@ -696,12 +689,16 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public String countCalendarTotalBudget(List<TeachCalendarViewObject> allCalendar) {
         Integer count = 0;
+        NumberFormat nf = new DecimalFormat(",###.00元");
         if(allCalendar == null || allCalendar.size() ==0)
             return count.toString();
         else
             for(TeachCalendarViewObject calendar : allCalendar) {
                 try {
-                    count += Integer.valueOf(calendar.getBudget());
+                    Integer budget = Integer.valueOf(calendar.getBudget());
+                    count += budget;
+
+                    calendar.setBudget(nf.format(budget));
                 }
                 catch (NumberFormatException e) {
                     count += 0;
@@ -710,7 +707,7 @@ public class TAConverterimpl implements ITAConverter {
                     // do nothing
                 }
             }
-        return count.toString();
+        return nf.format(count);
     }
 
     @Override
@@ -737,8 +734,8 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public ApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfo) {
-        ApplyViewObject viewObject = new ApplyViewObject();
+    public ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfo) {
+        ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
         if(instructor != null) {
             viewObject.setTeacherName(instructor.getName());
             viewObject.setTeacherType(instructor.getCode());

@@ -404,7 +404,29 @@ public class AdminServiceImpl implements IAdminService{
         if(isExist != null) {
             logger.warn("管理员请求新增时间段失败：" + user.toString() + "\n");
             logger.warn("本学期对应类型的时间段已设置\n");
-            return false;
+            SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                isExist.setStartTime(
+                        output.format(
+                                input.parse(startTime)
+                        )
+                );
+                isExist.setEndTime(
+                        output.format(
+                                input.parse(endTime)
+                        )
+                );
+            }
+            catch (ParseException e) {
+                logger.error("输入日期格式不正确！");
+                return false;
+            }
+
+            isExist.setEditTime(output.format(new Date()));
+            return timeSettingsDao.updateOneByEntity(isExist);
+
+
         }
         TAMSTimeSettings timeSetting = new TAMSTimeSettings();
         timeSetting.setTimeSettingTypeId(typeId);
@@ -431,6 +453,12 @@ public class AdminServiceImpl implements IAdminService{
         timeSetting.setEditTime(output.format(new Date()));
 
         return timeSettingsDao.insetOneByEntity(timeSetting);
+    }
+
+
+    @Override
+    public boolean deleteOneTimeSetting(TAMSTimeSettings tamsTimeSettings){
+        return timeSettingsDao.deleteOneByEntity(tamsTimeSettings);
     }
 
     @Override

@@ -158,11 +158,11 @@
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="保存"
                                                                                                           p:methodToCall="addNewTimeSet"
-                                                                                                          p:refreshId="timeSet"/><!--
+                                                                                                        /><!--
                                                                                               p:render="@{!#form.updateFlag}"-->
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionLabel="更新(methodToCall和权限,还没页面)"
-                                                                                                          p:refreshId="timeSet"/><!--p:methodToCall="updateSettingTime"  p:render="@{#form.updateFlag}"-->
+                                                                                                    <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                                          <!--p:actionLabel="更新(methodToCall和权限,还没页面)"-->
+                                                                                                          <!--p:refreshId="timeSet"/>&lt;!&ndash;p:methodToCall="updateSettingTime"  p:render="@{#form.updateFlag}"&ndash;&gt;-->
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -184,7 +184,7 @@
                                                                 <bean parent="Uif-Icon"
                                                                       p:iconClass="icon-table"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:messageText="时间信息列表（没有连接该表数据库）"
+                                                                      p:messageText="时间信息列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>
@@ -235,7 +235,7 @@
                                                                 name="lineActions">
                                                             <list>
                                                                 <bean parent="Uif-ActionImage"
-                                                                      p:methodToCall="">
+                                                                      p:methodToCall="updateTimeSetting">
                                                                     <property
                                                                             name="actionImage">
                                                                         <bean parent="Uif-Image"
@@ -243,7 +243,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-ActionImage"
-                                                                      p:methodToCall="">
+                                                                      p:methodToCall="deleteTimeSetting">
                                                                     <property
                                                                             name="actionImage">
                                                                         <bean parent="Uif-Image"

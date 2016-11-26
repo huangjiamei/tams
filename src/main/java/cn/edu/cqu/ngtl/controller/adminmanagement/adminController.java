@@ -11,6 +11,7 @@ import cn.edu.cqu.ngtl.dataobject.krim.*;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
@@ -175,8 +176,40 @@ public class adminController extends UifControllerBase {
         if(user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");
         boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
+        infoForm.setTimeType(null);
+        infoForm.setSettingsTime(null);
 
+        return this.getTimeSetPage(form);
+    }
+
+
+    /**
+     * 删除一个时间段
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=deleteTimeSetting")
+    public ModelAndView deleteTimeSetting(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        TAMSTimeSettings selectedTimeSettings = infoForm.getTimeSettingsList().get(index);
+        boolean result = adminService.deleteOneTimeSetting(selectedTimeSettings);
         return this.getTimeSetPage(infoForm);
+    }
+
+
+    @RequestMapping(params = "methodToCall=updateTimeSetting")
+    public ModelAndView updateTimeSetting(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        TAMSTimeSettings selectedTimeSettings = infoForm.getTimeSettingsList().get(index);
+        infoForm.setTimeType(selectedTimeSettings.getTimeSettingType().getTypeName());
+        infoForm.setSettingsTime(infoForm.getStartTime()+"~"+infoForm.getEndTime());
+        return this.getModelAndView(infoForm, "pageTimeSet");
     }
 
     //TODO 新增和删除对话框的实例  START
@@ -1344,6 +1377,9 @@ public class adminController extends UifControllerBase {
 
         return new AdminInfoForm();
     }
+
+
+
 
 
 

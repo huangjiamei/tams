@@ -608,11 +608,16 @@ function showElement(id) {
 /**
  * 经费管理页面，onChange时调用这个方法去点击隐藏的updateAction
  * 实现保存草稿的目的
+ * 同时通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
+ * department：学院tab
+ * school：学校tab
+ * class：课程(教学班？)tab
  * (前台可以通过@{#index}获取index，但是不知道怎么传给后台，如果能够将index直接传给后台就不需要这个点击action来中转的方式)
  * @param element
  */
-function inputFieldOnChange(element) {
+function inputFieldOnChange(element,transferId,transferData) {
     var updateAction=jQuery(element).parent().parent().find("input[data-ajaxreturntype='update-component']")[0];
+    jQuery('#' + transferId).val(transferData); //
     updateAction.click();
 }
 

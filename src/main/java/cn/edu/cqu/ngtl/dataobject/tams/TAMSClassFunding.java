@@ -1,7 +1,5 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import org.kuali.rice.krad.bo.DataObjectBase;
@@ -46,6 +44,13 @@ public class TAMSClassFunding extends DataObjectBase implements Serializable {
 
     @Column(name = "TRAVEL_SUBSIDY")
     private String travelSubsidy;
+
+    @Column(name = "SESSION_ID")
+    private String sessionId;
+
+    @OneToOne
+    @JoinColumn(name = "SESSION_ID", updatable = false, insertable = false)
+    private UTSession utSession;
 
     public UTSession getSession() {
         return session;
@@ -117,5 +122,21 @@ public class TAMSClassFunding extends DataObjectBase implements Serializable {
 
     public void setTravelSubsidy(String travelSubsidy) {
         this.travelSubsidy = travelSubsidy;
+    }
+
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public UTSession getUtSession() {
+        return utSession;
+    }
+
+    public void setUtSession(UTSession utSession) {
+        this.utSession = utSession;
     }
 }

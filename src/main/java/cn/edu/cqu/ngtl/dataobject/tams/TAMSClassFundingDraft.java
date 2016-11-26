@@ -46,6 +46,14 @@ public class TAMSClassFundingDraft extends DataObjectBase implements Serializabl
     @Column(name = "TRAVEL_SUBSIDY")
     private String travelSubsidy;
 
+    @Column(name = "SESSION_ID")
+    private String sessionId;
+
+    @OneToOne
+    @JoinColumn(name = "SESSION_ID", updatable = false, insertable = false)
+    private UTSession utSession;
+
+
     public UTSession getSession() {
         return session;
     }
@@ -118,4 +126,19 @@ public class TAMSClassFundingDraft extends DataObjectBase implements Serializabl
         this.travelSubsidy = travelSubsidy;
     }
 
+    public String getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(String sessionId) {
+        this.sessionId = sessionId;
+    }
+
+    public UTSession getUtSession() {
+        return utSession;
+    }
+
+    public void setUtSession(UTSession utSession) {
+        this.utSession = utSession;
+    }
 }

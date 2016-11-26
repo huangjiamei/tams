@@ -475,8 +475,12 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
-        List<ClassFundingViewObject> viewObjects = new ArrayList<>(allFundingByClass.size());
+        List<ClassFundingViewObject> viewObjects = new ArrayList<>();
 
+        if(allFundingByClass == null||allFundingByClass.size() == 0){
+            viewObjects.add(new ClassFundingViewObject());
+            return viewObjects;
+        }
         for (TAMSClassFunding classFunding : allFundingByClass) {
             ClassFundingViewObject viewObject = new ClassFundingViewObject();
             viewObject.setCourseName(classFunding.getClassInformation().getCourseName());

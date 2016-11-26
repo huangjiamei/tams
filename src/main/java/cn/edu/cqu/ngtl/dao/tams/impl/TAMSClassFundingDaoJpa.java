@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassFundingDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -26,7 +27,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
 
 
     @Override
-    public List<TAMSClassFunding> selectAll() {
+    public List<TAMSClassFunding> selectAll(User user) {
         List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSClassFunding.class).getResults();
 
         for(TAMSClassFunding per : list) {

@@ -19,7 +19,6 @@ import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
-import org.apache.commons.lang.StringUtils;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;

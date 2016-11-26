@@ -391,7 +391,7 @@ public class AdminServiceImpl implements IAdminService{
         if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
             return tamsClassFundingDraftDao.selectAll();
         }
-            return tamsClassFundingDao.selectAll();
+            return tamsClassFundingDao.selectAll(user);
     }
 
     @Override

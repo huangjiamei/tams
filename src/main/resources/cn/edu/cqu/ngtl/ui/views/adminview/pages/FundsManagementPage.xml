@@ -905,10 +905,10 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="教师"
                                                                                                                       p:propertyName="instructorName"/>
-                                                                                                                <bean parent="Uif-InputField" p:propertyName="planFunding"
+                                                                                     <!--                           <bean parent="Uif-InputField" p:propertyName="planFunding"
                                                                                                                       p:readOnly="false" p:label="预算经费"
                                                                                                                       p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_CLASS')"/>
-                                                                                                                <bean parent="Uif-DataField"
+                                                                              -->                                  <bean parent="Uif-DataField"
                                                                                                                       p:label="申报经费"
                                                                                                                       p:propertyName="applyFunding"
                                                                                                                       p:sortAs="numeric"/>

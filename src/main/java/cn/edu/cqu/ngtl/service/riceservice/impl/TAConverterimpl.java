@@ -482,7 +482,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setCourseName(classFunding.getClassInformation().getCourseName());
             viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
             viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
-            viewObject.setClassNumber(classFunding.getClassId());
+            viewObject.setClassNumber(classFunding.getClassInformation().getClassNumber());
             viewObject.setInstructorName("test");
             viewObject.setApplyFunding(classFunding.getApplyFunding());
             viewObject.setAssignedFunding(classFunding.getAssignedFunding());
@@ -497,7 +497,6 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTotal(total.toString());
             viewObjects.add(viewObject);
         }
-
         return viewObjects;
     }
 
@@ -522,7 +521,6 @@ public class TAConverterimpl implements ITAConverter {
                     Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
                     Integer.valueOf(deptFunding.getPlanFunding());
             viewObject.setTotal(total.toString());
-
             if (deptFunding.getSession() != null ){
                 viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
                         deptFunding.getSession().getTerm() + "季");

@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 
 import java.util.List;
@@ -9,6 +10,6 @@ import java.util.List;
  */
 public interface TAMSClassFundingDao {
 
-    public List<TAMSClassFunding> selectAll();
+    public List<TAMSClassFunding> selectAll(User user);
 
 }

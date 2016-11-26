@@ -479,10 +479,6 @@ public class TAConverterimpl implements ITAConverter {
 
         for (TAMSClassFunding classFunding : allFundingByClass) {
             ClassFundingViewObject viewObject = new ClassFundingViewObject();
-            if(classFunding.getSession() != null) {
-                viewObject.setSessionName(classFunding.getSession().getYear() + "年" +
-                        classFunding.getSession().getTerm() + "季");
-            }
             viewObject.setCourseName(classFunding.getClassInformation().getCourseName());
             viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
             viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
@@ -491,10 +487,14 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setApplyFunding(classFunding.getApplyFunding());
             viewObject.setAssignedFunding(classFunding.getAssignedFunding());
             viewObject.setPhdFunding(classFunding.getPhdFunding());
+            viewObject.setBonus(classFunding.getBonus());
+            viewObject.setTravelSubsidy(classFunding.getTravelSubsidy());
             Integer total = Integer.valueOf(classFunding.getAssignedFunding()) +
-                    Integer.valueOf(classFunding.getApplyFunding()) + Integer.valueOf(classFunding.getPhdFunding());
+                    Integer.valueOf(classFunding.getApplyFunding())
+                    + Integer.valueOf(classFunding.getPhdFunding())
+                    + Integer.valueOf(classFunding.getBonus())
+                    + Integer.valueOf(classFunding.getTravelSubsidy());
             viewObject.setTotal(total.toString());
-
             viewObjects.add(viewObject);
         }
 

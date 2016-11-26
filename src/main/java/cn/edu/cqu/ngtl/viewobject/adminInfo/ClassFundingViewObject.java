@@ -4,7 +4,6 @@ package cn.edu.cqu.ngtl.viewobject.adminInfo;
  * Created by liusijia on 2016/11/16.
  */
 public class ClassFundingViewObject {
-    String sessionName;
 
     String department;
 
@@ -28,13 +27,8 @@ public class ClassFundingViewObject {
 
     String total;
 
-    public String getSessionName() {
-        return sessionName;
-    }
+    String travelSubsidy;
 
-    public void setSessionName(String sessionName) {
-        this.sessionName = sessionName;
-    }
 
     public String getDepartment() {
         return department;
@@ -122,5 +116,13 @@ public class ClassFundingViewObject {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getTravelSubsidy() {
+        return travelSubsidy;
+    }
+
+    public void setTravelSubsidy(String travelSubsidy) {
+        this.travelSubsidy = travelSubsidy;
     }
 }

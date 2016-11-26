@@ -56,14 +56,12 @@
                 <value>css/fullcalendar.css.css</value>
                 <value>css/combo.select.css</value>
                 <value>css/jquery.contextmenu.css</value>
-                <value>css/jquery.dataTables.min.css</value>
                 <value>css/tams.css</value>
             </list>
         </property>
         <property name="additionalScriptFiles">
             <list>
                 <!--存放自定义js-->
-                <value>js/jquery.dataTables.min.js</value>
                 <value>ueditor/ueditor.config.js</value>
                 <value>ueditor/ueditor.all.min.js</value>
                 <value>ueditor/lang/zh-cn/zh-cn.js</value>

@@ -17,10 +17,7 @@ import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.PieChartsNameValuePair;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -1294,6 +1291,52 @@ public class adminController extends UifControllerBase {
         adminService.setWorkflowStatusRelationByRoleFunctionId(rfId, rt);
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
+    }
+
+    /**
+     * 经费页面每一行编辑过后就调用此方法将数据存储到草稿中
+     * 经费页面存在多个tab(学校、学院、教学班)，通过curTabFlag来进行区分
+     * 存储数据之后，需要及时更新页面上的'金额总计'属性
+     * @param form
+     * @return 更新成功时返回pageFundsManagement页面,失败时弹出errDialog。
+     */
+    @RequestMapping(params = "methodToCall=savaFundsDraft")
+    public ModelAndView savaFundsDraft(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+
+        try{
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+            int index = params.getSelectedLineIndex();
+
+            String curTabFlag=infoForm.getCurTabFlag();
+            switch (curTabFlag){
+                case AdminInfoForm.TAB_FLAG_SCHOOL:
+                    SessionFundingViewObject curSchoolFundObj=infoForm.getPreviousSessionFundings().get(index);
+                    // TODO: 2016/11/25 把这个对象存到数据库的draft中。
+
+                    // TODO: 2016/11/25 重新计算该tab的经费总计。
+                    break;
+                case AdminInfoForm.TAB_FLAG_DEPARTMENT:
+                    DepartmentFundingViewObject curDepartFundObj=infoForm.getDepartmentCurrFundings().get(index);
+                    System.out.println(curDepartFundObj.getPlanFunding());
+                    // TODO: 2016/11/25 把这个对象存到数据库的draft中。
+
+                    // TODO: 2016/11/25 重新计算该tab的经费总计。
+                    break;
+                case AdminInfoForm.TAB_FLAG_CLASS:
+
+                    break;
+                default:
+                    // TODO: 2016/11/25 return error
+                    break;
+            }
+
+        }catch (Exception e){
+            // TODO: 2016/11/25 return error
+        }
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
     @Override

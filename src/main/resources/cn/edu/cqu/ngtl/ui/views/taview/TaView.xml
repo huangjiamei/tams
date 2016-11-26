@@ -105,6 +105,14 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageWorkbench" p:title="新建任务">
+                    <property name="items">
+                        <list>
+                            <ref bean="workbenchPage"/>
+                        </list>
+                    </property>
+                </bean>
+
             </list>
         </property>
     </bean>

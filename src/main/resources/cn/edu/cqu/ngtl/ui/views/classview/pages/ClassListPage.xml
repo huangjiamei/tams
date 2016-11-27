@@ -266,6 +266,7 @@
 
 
                                                                 <bean id="ClassListPageTable"
+                                                                      p:additionalCssClasses="table-minY"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:layoutManager.numberOfColumns="20"
                                                                       p:onDocumentReadyScript = "refreshTableFilter(searchFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable')">

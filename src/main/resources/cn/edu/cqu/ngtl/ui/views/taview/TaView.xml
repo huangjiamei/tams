@@ -84,7 +84,16 @@
                             <ref bean="TaAppraisalForTeacher"/>
                         </list>
                     </property>
-                </bean>                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
+                </bean>
+                <bean parent="Uif-Page" p:id="pageAppraisalForStu" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaAppraisalForStudent"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
                     <property name="items">
                         <list>
                             <ref bean="TaListPage"/>

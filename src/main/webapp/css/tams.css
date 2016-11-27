@@ -460,7 +460,7 @@ body{
     width: 1%!important;
 }
 
-/* 用于实现助教列表中的'优秀助教'或'还未评价'样式，配合bt-success等使用 */
+/* 用于实现助教列表中的'优秀助教'或'还未评价'样式，配合btn-success等使用 */
 .tams-form-label{
     text-align: center;
     color:white;
@@ -469,7 +469,7 @@ body{
     vertical-align: middle;
 }
 .tams-form-label:hover{
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 
 /*用于区分教学活动页面中的分组标题和具体项目标题*/

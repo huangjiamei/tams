@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -346,9 +347,41 @@ public class TaController extends UifControllerBase {
         TaInfoForm taInfoForm = (TaInfoForm) form;
 
         // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
+        List<IssueViewObject> testIssueList= new ArrayList<IssueViewObject>();
+        IssueViewObject issueViewObject=new IssueViewObject();
+        issueViewObject.setIssueType("type1");
+        issueViewObject.setLikeRate("80%");
+        testIssueList.add(issueViewObject);
+        taInfoForm.setAllIssues(testIssueList);
+
+        // TODO: 2016/11/27 新的原型要求这里填入教学日历？？所以viewObject和对应list都需要改
 
         return this.getModelAndView(taInfoForm, "pageAppraisalForTeacher");
     }
+
+    /**
+     * 获取助教考核表(学生给助教评分)
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaAppraisalForStu&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"methodToCall=getTaAppraisalForStu"}) /*"pageId=pageTaList",*/
+    public ModelAndView getTaAppraisalForStu(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
+        List<IssueViewObject> testIssueList= new ArrayList<IssueViewObject>();
+        IssueViewObject issueViewObject=new IssueViewObject();
+        issueViewObject.setIssueType("type1");
+        issueViewObject.setLikeRate("80%");
+        testIssueList.add(issueViewObject);
+        taInfoForm.setAllIssues(testIssueList);
+
+        // TODO: 2016/11/27 新的原型要求这里填入教学日历？？所以viewObject和对应list都需要改
+
+        return this.getModelAndView(taInfoForm, "pageAppraisalForStu");
+    }
+
 
     /**
      * 页面和form还未对应, 无法显示页面内容，页面的控件无法加载，但页面无错

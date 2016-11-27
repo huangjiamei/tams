@@ -130,6 +130,15 @@
                     </property>
                 </bean>
 
+                <bean parent="Uif-Page" p:id="pageApplyOStA" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="ApplyOutStandingTaPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+
             </list>
         </property>
     </bean>

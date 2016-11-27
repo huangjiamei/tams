@@ -308,7 +308,7 @@
                                         <bean parent="Uif-Disclosure-TableCollectionSection">
                                             <property name="collectionObjectClass"
                                                       value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
-                                            <property name="propertyName" value="allApplication"/>
+                                            <property name="propertyName" value="conditionTAList"/>
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
                                             <property name="layoutManager.richTable.render" value="false"/>
@@ -337,7 +337,7 @@
                                                                       p:ajaxSubmit="true"
                                                                       p:actionLabel="查看"
                                                                       p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="getTaInfo"
+                                                                      p:methodToCall="getSelectedTaInfo"
                                                                       p:successCallback="showElement('taDetailInfoGrid');"
                                                                       p:refreshId="taDetailInfoGrid"/>
                                                             </list>

@@ -287,13 +287,13 @@ public class TaController extends UifControllerBase {
 
         // TODO: 2016/11/24 下面为测试用代码，需要添加一个新的存储符合条件ta列表的属性 ，同时修改TaManagementPage.xml中约326行的propertyName
         // TODO: 2016/11/24 注意：需要在TaInfoForm中为新添加的属性赋初始值(List<xx> xxlist=new arraylist<>();) 否则页面加载时会出错
-        List<MyTaViewObject> list=taInfoForm.getAllApplication();
+        List<MyTaViewObject> list=taInfoForm.getConditionTAList();
         MyTaViewObject newobj=new MyTaViewObject();
         newobj.setTaName("Zsf");
         newobj.setTaIdNumber("20135040");
         list.add(newobj);
 
-        taInfoForm.setAllApplication(list);
+//        taInfoForm.setConditionTAList(list);
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
@@ -303,16 +303,16 @@ public class TaController extends UifControllerBase {
      * @param form
      * @return
      */
-    @RequestMapping(params = "methodToCall=getTaInfo")
-    public ModelAndView getTaInfo(@ModelAttribute("KualiForm") UifFormBase form,
-                                            HttpServletRequest request) {
+    @RequestMapping(params = "methodToCall=getSelectedTaInfo")
+    public ModelAndView getSelectedTaInfo(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
 
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
         int index = params.getSelectedLineIndex();
 
-        taInfoForm.setSelectedTa(taInfoForm.getAllApplication().get(index));
+        taInfoForm.setSelectedTa(taInfoForm.getConditionTAList().get(index));
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
@@ -380,6 +380,33 @@ public class TaController extends UifControllerBase {
         // TODO: 2016/11/27 新的原型要求这里填入教学日历？？所以viewObject和对应list都需要改
 
         return this.getModelAndView(taInfoForm, "pageAppraisalForStu");
+    }
+
+    /**
+     * 助教申请成为优秀助教
+     * OS=outstanding
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getApplyOSTaPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getApplyOSTaPage")
+    public ModelAndView getApplyOSTaPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        // TODO: 2016/11/27 原型中不要求教学日历，zsf认为在申请页面加入教学日历的信息方便助教了解自己的工作情况和编写申请理由，如果不需要请删除.xml中的TableCollectionSection
+
+
+        // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
+        List<IssueViewObject> testIssueList= new ArrayList<IssueViewObject>();
+        IssueViewObject issueViewObject=new IssueViewObject();
+        issueViewObject.setIssueType("type1");
+        issueViewObject.setLikeRate("80%");
+        testIssueList.add(issueViewObject);
+        taInfoForm.setAllIssues(testIssueList);
+
+        // TODO: 2016/11/27 新的原型要求这里填入教学日历？？所以viewObject和对应list都需要改
+
+        return this.getModelAndView(taInfoForm, "pageApplyOStA");
     }
 
 

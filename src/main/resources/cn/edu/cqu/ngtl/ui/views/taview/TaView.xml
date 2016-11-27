@@ -113,6 +113,14 @@
                     </property>
                 </bean>
 
+                <bean parent="Uif-Page" p:id="pageTransAllowance" p:title="新建任务">
+                    <property name="items">
+                        <list>
+                            <ref bean="transAllowancePage"/>
+                        </list>
+                    </property>
+                </bean>
+
             </list>
         </property>
     </bean>

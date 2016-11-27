@@ -376,6 +376,25 @@ public class TaController extends UifControllerBase {
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 
+    /**
+     * 工作台页面点击'申请交通补贴'，通过此方法跳转到对应某学生的交通补贴页面
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTransAllowancePage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTransAllowancePage")
+    public ModelAndView getTransAllowancePage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+
+        // TODO: 2016/11/27 (首先判断权限) 老师是不是不可进入此页面？
+
+        // TODO: 2016/11/27 根据user信息，找到相关的交通补贴历史记录，将记录并放置在某个list中，同时修改TransAllowancePage.xml对应位置的objClass和collection
+
+        return this.getModelAndView(taInfoForm, "pageTransAllowance");
+    }
+
+
+
     @Override
     protected UifFormBase createInitialForm() {
 

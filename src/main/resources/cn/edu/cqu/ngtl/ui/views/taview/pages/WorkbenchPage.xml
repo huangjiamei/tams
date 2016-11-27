@@ -206,7 +206,7 @@
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionLabel="申请交通补贴"
                                                                                               p:actionImagePlacement="LEFT"
-                                                                                              p:methodToCall="shenqingbutie"
+                                                                                              p:methodToCall="getTransAllowancePage"
                                                                                               p:additionalCssClasses="bg-success tamsbtn"/>
                                                                                     </list>
                                                                                 </property>

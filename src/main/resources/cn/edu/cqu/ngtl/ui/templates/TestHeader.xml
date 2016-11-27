@@ -385,6 +385,8 @@
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getWorkbenchPage&amp;viewId=TaView"
+                                  p:linkText="助教工作台" p:iconClass="icon-check menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaListPage&amp;viewId=TaView"
                                   p:linkText="助教列表" p:iconClass="icon-th menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaManagementPage&amp;viewId=TaView"

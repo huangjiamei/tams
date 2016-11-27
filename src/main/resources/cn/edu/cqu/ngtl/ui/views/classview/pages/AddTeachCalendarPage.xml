@@ -215,7 +215,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <!--FIXME 上传文件，会报ftl错误，暂时无解决方案-->
+                                                                <!--FIXME 上传文件-->
                                                                 <!--<bean parent="Uif-HorizontalBoxSection"-->
                                                                 <!--p:style="margin-top:20px"-->
                                                                 <!--p:additionalCssClasses="row">-->

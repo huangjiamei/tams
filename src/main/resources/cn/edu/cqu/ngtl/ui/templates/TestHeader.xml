@@ -357,7 +357,9 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="工作台" parent="Uif-Link" p:href="#" p:iconClass="icon-laptop menuIcon"/>
+                            <bean p:linkText="工作台" parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getWorkbenchPage&amp;viewId=TaView"
+                                  p:iconClass="icon-laptop menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -452,7 +454,12 @@
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/mytest?methodToCall=getTaskDetailPage&amp;viewId=TestView"
                                   p:linkText="任务详情(在testCcontroller)" p:iconClass="icon-file menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaAppraisalPage&amp;viewId=TaView"
-                                  p:linkText="助教考核(测试链接，后期删去)" p:iconClass="icon-check menuIcon"/>
+                                  p:linkText="助教考核-老师(测试链接，后期删去)" p:iconClass="icon-check menuIcon"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaAppraisalForStu&amp;viewId=TaView"
+                                  p:linkText="助教考核-学生(测试链接，后期删去)" p:iconClass="icon-check menuIcon"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getApplyOSTaPage&amp;viewId=TaView"
+                                  p:linkText="申请优秀助教(链接放哪里？)" p:iconClass="icon-check menuIcon"/>
+
                         </list>
                     </property>
                 </bean>

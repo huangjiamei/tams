@@ -1,10 +1,8 @@
 package cn.edu.cqu.ngtl.form;
 
 import cn.edu.cqu.ngtl.bo.User;
-import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.dataobject.TestObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
-import org.kuali.rice.krad.file.FileMetaBlob;
 import org.kuali.rice.krad.web.form.UifFormBase;
 
 import java.util.ArrayList;
@@ -19,6 +17,8 @@ import java.util.List;
  *
  */
 public class BaseForm extends UifFormBase  {
+
+
 
     // region # 开发用属性，后期删除
     /* 可方便新添加的page在各controller转换，后期删除*/

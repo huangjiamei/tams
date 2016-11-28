@@ -21,6 +21,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = -1974217788100313751L;
 
+
+
     /**
      * 工作流管理页面相关
      */
@@ -768,4 +770,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setdTotalFunds(String dTotalFunds) {
         this.dTotalFunds = dTotalFunds;
     }
+
+
 }

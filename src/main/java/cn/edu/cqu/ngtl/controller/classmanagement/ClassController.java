@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
@@ -17,7 +18,6 @@ import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
-import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,7 +43,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/class")
-public class ClassController extends UifControllerBase {
+public class ClassController extends BaseController {
 
     @Autowired
     private IClassInfoService classInfoService;
@@ -70,6 +70,7 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form,
                                          HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
@@ -91,6 +92,7 @@ public class ClassController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=getClassInfoPage"})
     public ModelAndView getClassInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
         try {
             /**
              * param in
@@ -137,6 +139,7 @@ public class ClassController extends UifControllerBase {
         Integer classId = 290739;
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
@@ -151,6 +154,7 @@ public class ClassController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
     public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
 
@@ -164,14 +168,15 @@ public class ClassController extends UifControllerBase {
      **/
     @RequestMapping(params = "methodToCall=getTeachingCalendar")
     public ModelAndView getTeachingCalendar(@ModelAttribute("KualiForm") UifFormBase form,
-                                       HttpServletRequest request) {
+                                            HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-        if(classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
             return this.getModelAndView(infoForm, "pageTeachingCalendar");
 
         infoForm.setAllCalendar(
@@ -197,27 +202,28 @@ public class ClassController extends UifControllerBase {
      **/
     @RequestMapping(params = "methodToCall=getAddTeachCalendarPage")
     public ModelAndView getAddTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                            HttpServletRequest request) {
+                                                HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
     }
 
     /**
      * 提交新建教学日历页面
-     *
      **/
     @RequestMapping(params = "methodToCall=submitTeachCalendarPage")
     public ModelAndView submitTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         UserSession session = GlobalVariables.getUserSession();
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
 
-        String arr[]=infoForm.getAddTeachCTime().split("\\~");
+        String arr[] = infoForm.getAddTeachCTime().split("\\~");
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -233,16 +239,15 @@ public class ClassController extends UifControllerBase {
             added.setEndTime(
                     outputFormat.format(
                             inputFormat.parse(
-                                arr[1]
+                                    arr[1]
                             )
                     )
             );
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
 
         }
 
-        if(classInfoService.instructorAddTeachCalendar(uId, classId, added))
+        if (classInfoService.instructorAddTeachCalendar(uId, classId, added))
             return this.getTeachingCalendar(infoForm, request);
         else //// FIXME: 16-11-18 应当返回错误页面
             return this.getTeachingCalendar(infoForm, request);
@@ -253,8 +258,9 @@ public class ClassController extends UifControllerBase {
      */
     @RequestMapping(params = "methodToCall=deleteTeachCalendar")
     public ModelAndView deleteTeachCalendar(@ModelAttribute("KualiForm") UifFormBase form,
-                                                HttpServletRequest request) {
+                                            HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         /** uid **/
         UserSession session = GlobalVariables.getUserSession();
@@ -270,7 +276,7 @@ public class ClassController extends UifControllerBase {
         /** calendarid **/
         String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
 
-        if(classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId))
+        if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId))
             return this.getTeachingCalendar(infoForm, request);
         else //// FIXME: 16-11-18 应当返回错误页面
             return this.getTeachingCalendar(infoForm, request);
@@ -282,14 +288,15 @@ public class ClassController extends UifControllerBase {
      **/
     @RequestMapping(params = "methodToCall=getTeachActivities")
     public ModelAndView getTeachActivities(@ModelAttribute("KualiForm") UifFormBase form,
-                                                HttpServletRequest request) {
+                                           HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-        if(classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
             return this.getModelAndView(infoForm, "pageTeachingCalendar");
 
         infoForm.setAllActivities(
@@ -312,12 +319,14 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getAddActivityPage(@ModelAttribute("KualiForm") UifFormBase form,
                                            HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         return this.getModelAndView(infoForm, "pageAddActivity");
     }
 
     /**
      * 根据条件查询班级列表
+     *
      * @param form
      * @return
      */
@@ -325,6 +334,7 @@ public class ClassController extends UifControllerBase {
     public ModelAndView searchClassByCondition(@ModelAttribute("KualiForm") UifFormBase form,
                                                HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
@@ -355,6 +365,7 @@ public class ClassController extends UifControllerBase {
     public ModelAndView getRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form) {
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         String uId = GlobalVariables.getUserSession().getPrincipalId();
         Integer classId = 290739;
@@ -388,12 +399,14 @@ public class ClassController extends UifControllerBase {
 
     /**
      * 成绩评定删除辅助方法
+     *
      * @param form
      * @return
      */
     @RequestMapping(params = "methodToCall=deleteEvaluationLine")
     public ModelAndView deleteEvaluationLine(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -405,12 +418,13 @@ public class ClassController extends UifControllerBase {
 
     /**
      * 教师提交申请助教的请求
-     * */
+     */
     @RequestMapping(params = "methodToCall=submitRequestTaPage")
     public ModelAndView submitRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                         HttpServletRequest request) {
+                                            HttpServletRequest request) {
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
         String assistantNumber = infoForm.getApplyViewObject().getAssistantNumber();
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
@@ -433,8 +447,9 @@ public class ClassController extends UifControllerBase {
      */
     @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportClassListExcel"})
     public ModelAndView exportClassListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
-                                             HttpServletResponse response){
+                                             HttpServletResponse response) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
 
 
         if (infoForm.getClassList() == null) {
@@ -452,8 +467,7 @@ public class ClassController extends UifControllerBase {
                     .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
             return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                     .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
             return this.performRedirect(infoForm, baseUrl + "/tams");

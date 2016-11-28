@@ -1,11 +1,11 @@
 package cn.edu.cqu.ngtl.controller.homemanagement;
 
+import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.form.commonhome.CommonHomePage;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
-import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Controller
 @RequestMapping("/home")
-public class HomeController extends UifControllerBase {
+public class HomeController extends BaseController {
 
     private final static String KRAD_PATH="portal";
     private final static String CONTROLLER_PATH="home";
@@ -30,6 +30,7 @@ public class HomeController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getCommonHome")
     public ModelAndView getCommonHome(@ModelAttribute("KualiForm") UifFormBase form) {
         CommonHomePage homeForm = (CommonHomePage) form;
+        super.baseStart(homeForm);
         return this.getModelAndView(homeForm, "pageCommonHome");
     }
 

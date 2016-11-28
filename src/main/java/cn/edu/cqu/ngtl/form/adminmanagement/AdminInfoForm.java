@@ -21,6 +21,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = -1974217788100313751L;
 
+
+
     /**
      * 工作流管理页面相关
      */
@@ -46,6 +48,18 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<DepartmentFundingViewObject> departmentPreFundings;
 
     private List<ClassFundingViewObject> classFundings;
+
+    /**
+     * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
+     * TAB_FLAG_SCHOOL：学校tab
+     * TAB_FLAG_DEPARTMENT：学院tab
+     * TAB_FLAG_CLASS：课程(教学班？)tab
+     */
+    private String curTabFlag;
+    public static final String TAB_FLAG_SCHOOL="TAB_FLAG_SCHOOL";
+    public static final String TAB_FLAG_DEPARTMENT="TAB_FLAG_DEPARTMENT";
+    public static final String TAB_FLAG_CLASS="TAB_FLAG_CLASS";
+
 
     /**
      * 经费管理页面————批次经费，过滤器的输入框
@@ -281,6 +295,20 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public List<DepartmentFundingViewObject> getDepartmentCurrFundings() {
         return departmentCurrFundings;
+    }
+
+    /**
+     * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
+     * TAB_FLAG_SCHOOL：学校tab
+     * TAB_FLAG_DEPARTMENT：学院tab
+     * TAB_FLAG_CLASS：课程(教学班？)tab
+     */
+    public String getCurTabFlag() {
+        return curTabFlag;
+    }
+
+    public void setCurTabFlag(String curTabFlag) {
+        this.curTabFlag = curTabFlag;
     }
 
     public void setDepartmentCurrFundings(List<DepartmentFundingViewObject> departmentCurrFundings) {
@@ -742,4 +770,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setdTotalFunds(String dTotalFunds) {
         this.dTotalFunds = dTotalFunds;
     }
+
+
 }

@@ -3,6 +3,8 @@ package cn.edu.cqu.ngtl.service.riceservice.impl;
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
@@ -23,6 +25,8 @@ import org.apache.log4j.pattern.LoggerPatternConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -49,6 +53,12 @@ public class TAConverterimpl implements ITAConverter {
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
 
+    @Autowired
+    private TAMSActivityDao activityDao;
+
+    @Autowired
+    private TAMSTaCategoryDao taCategoryDao;
+
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
@@ -64,23 +74,14 @@ public class TAConverterimpl implements ITAConverter {
         for (UTClassInformation information : informationlist) {
             ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
-            //if(clazz.getUtInstructors() != null && clazz.getUtInstructors().size() != 0)
             viewObject.setId(information.getId());
             viewObject.setInstructorName(information.getInstructorName());
-
             viewObject.setClassNumber(information.getClassNumber());
-
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
-            //viewObject.setCourseHour(information.getHour());
             viewObject.setCourseCode(information.getCourseCode());
-            //viewObject.setCourseCredit(information.getCredit().toString());
             viewObject.setStatus(information.getStatus());
-            //if (programCourse != null) {
-           // viewObject.setCourseClassification("test");
-           // viewObject.setIsRequired("必修");
-          //  viewObject.setProgramName("CS");
-            //}
+
             viewObjects.add(viewObject);
         }
 
@@ -88,8 +89,8 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public ApplyViewObject classInfoToApplyObject(User user, UTClass clazz) {
-        ApplyViewObject viewObject = new ApplyViewObject();
+    public ClassTaApplyViewObject classInfoToApplyObject(User user, UTClass clazz) {
+        ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
 
         viewObject.setTeacherName(user.getName());
 
@@ -106,7 +107,7 @@ public class TAConverterimpl implements ITAConverter {
         if (course != null) {
             viewObject.setCourseName(course.getName());
 
-            viewObject.setCourseNumber(course.getCodeR().toString());
+            viewObject.setCourseNumber(course.getCodeR());
 
             viewObject.setStudyTime(course.getHour());
 
@@ -136,7 +137,7 @@ public class TAConverterimpl implements ITAConverter {
         //--------------------------目前没有值的加了默认---------------------------------------
         viewObject.setStudentNumber(100 + "");
 
-        viewObject.setAssisstantNumber(1 + "");
+        viewObject.setAssistantNumber(1 + "");
 
         return viewObject;
     }
@@ -303,7 +304,6 @@ public class TAConverterimpl implements ITAConverter {
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
         application.setNote(form.getApplyReason());
-        application.setEduBackground(form.getEduBackground());
 
         return application;
     }
@@ -475,29 +475,32 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
-        List<ClassFundingViewObject> viewObjects = new ArrayList<>(allFundingByClass.size());
+        List<ClassFundingViewObject> viewObjects = new ArrayList<>();
 
+        if(allFundingByClass == null||allFundingByClass.size() == 0){
+            viewObjects.add(new ClassFundingViewObject());
+            return viewObjects;
+        }
         for (TAMSClassFunding classFunding : allFundingByClass) {
             ClassFundingViewObject viewObject = new ClassFundingViewObject();
-            if(classFunding.getSession() != null) {
-                viewObject.setSessionName(classFunding.getSession().getYear() + "年" +
-                        classFunding.getSession().getTerm() + "季");
-            }
             viewObject.setCourseName(classFunding.getClassInformation().getCourseName());
             viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
             viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
-            viewObject.setClassNumber(classFunding.getClassId());
+            viewObject.setClassNumber(classFunding.getClassInformation().getClassNumber());
             viewObject.setInstructorName("test");
             viewObject.setApplyFunding(classFunding.getApplyFunding());
             viewObject.setAssignedFunding(classFunding.getAssignedFunding());
             viewObject.setPhdFunding(classFunding.getPhdFunding());
+            viewObject.setBonus(classFunding.getBonus());
+            viewObject.setTravelSubsidy(classFunding.getTravelSubsidy());
             Integer total = Integer.valueOf(classFunding.getAssignedFunding()) +
-                    Integer.valueOf(classFunding.getApplyFunding()) + Integer.valueOf(classFunding.getPhdFunding());
+                    Integer.valueOf(classFunding.getApplyFunding())
+                    + Integer.valueOf(classFunding.getPhdFunding())
+                    + Integer.valueOf(classFunding.getBonus())
+                    + Integer.valueOf(classFunding.getTravelSubsidy());
             viewObject.setTotal(total.toString());
-
             viewObjects.add(viewObject);
         }
-
         return viewObjects;
     }
 
@@ -522,7 +525,6 @@ public class TAConverterimpl implements ITAConverter {
                     Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
                     Integer.valueOf(deptFunding.getPlanFunding());
             viewObject.setTotal(total.toString());
-
             if (deptFunding.getSession() != null ){
                 viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
                         deptFunding.getSession().getTerm() + "季");
@@ -632,7 +634,7 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars) {
+    public List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars, boolean needCount) {
         if(calendars == null || calendars.size() == 0)
             return null;
 
@@ -649,6 +651,23 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setStartTime(calendar.getStartTime());
             viewObject.setEndTime(calendar.getEndTime());
             viewObject.setTaTask(calendar.getTaTask());
+            if(needCount) {
+                List temp = activityDao.selectAllByCalendarId(calendar.getId());
+                viewObject.setTaTaskTimes(temp != null ? String.valueOf(temp.size()) : "0");
+                Integer hourlyWage;
+                String budget;
+                try {
+                    hourlyWage = Integer.parseInt(taCategoryDao.selectOneByName("硕士").getHourlyWage());
+                    budget = String.valueOf(Integer.parseInt(calendar.getElapsedTime()) * hourlyWage);
+                }
+                catch (NumberFormatException e) { //格式转换异常
+                    budget = "数据异常，请联系管理员";
+                }
+                catch (RuntimeException e) { //数据库访问异常
+                    budget = "数据异常，请联系管理员";
+                }
+                viewObject.setBudget(budget);
+            }
 
             viewObjects.add(viewObject);
         }
@@ -677,8 +696,32 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
+    public String countCalendarTotalBudget(List<TeachCalendarViewObject> allCalendar) {
+        Integer count = 0;
+        NumberFormat nf = new DecimalFormat(",###.00元");
+        if(allCalendar == null || allCalendar.size() ==0)
+            return count.toString();
+        else
+            for(TeachCalendarViewObject calendar : allCalendar) {
+                try {
+                    Integer budget = Integer.valueOf(calendar.getBudget());
+                    count += budget;
+
+                    calendar.setBudget(nf.format(budget));
+                }
+                catch (NumberFormatException e) {
+                    count += 0;
+                }
+                finally {
+                    // do nothing
+                }
+            }
+        return nf.format(count);
+    }
+
+    @Override
     public List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities) {
-        List<TeachCalendarViewObject> readyContainActivities = this.TeachCalendarToViewObject(calendarsContainActivities);
+        List<TeachCalendarViewObject> readyContainActivities = this.TeachCalendarToViewObject(calendarsContainActivities, false);
         if(readyContainActivities == null || readyContainActivities.size() == 0)
             return null;
 
@@ -700,8 +743,8 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public ApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfo) {
-        ApplyViewObject viewObject = new ApplyViewObject();
+    public ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfo) {
+        ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
         if(instructor != null) {
             viewObject.setTeacherName(instructor.getName());
             viewObject.setTeacherType(instructor.getCode());

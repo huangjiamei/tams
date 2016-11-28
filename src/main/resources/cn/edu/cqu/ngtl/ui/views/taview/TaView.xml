@@ -84,7 +84,16 @@
                             <ref bean="TaAppraisalForTeacher"/>
                         </list>
                     </property>
-                </bean>                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
+                </bean>
+                <bean parent="Uif-Page" p:id="pageAppraisalForStu" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaAppraisalForStudent"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTaList" p:title="">
                     <property name="items">
                         <list>
                             <ref bean="TaListPage"/>
@@ -105,6 +114,31 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageWorkbench" p:title="新建任务">
+                    <property name="items">
+                        <list>
+                            <ref bean="workbenchPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageTransAllowance" p:title="新建任务">
+                    <property name="items">
+                        <list>
+                            <ref bean="transAllowancePage"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-Page" p:id="pageApplyOStA" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="ApplyOutStandingTaPage"/>
+                        </list>
+                    </property>
+                </bean>
+
+
             </list>
         </property>
     </bean>

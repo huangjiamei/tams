@@ -15,7 +15,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTaApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
@@ -31,7 +31,7 @@ public interface ITAConverter {
 
     List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informations);
 
-    ApplyViewObject classInfoToApplyObject(User user, UTClass clazz);
+    ClassTaApplyViewObject classInfoToApplyObject(User user, UTClass clazz);
 
     ApplyAssistantViewObject applyAssistantToTableViewObject(UTStudent student, UTClass clazz);
 
@@ -63,13 +63,15 @@ public interface ITAConverter {
 
     List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList);
 
-    List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars);
+    List<TeachCalendarViewObject> TeachCalendarToViewObject(List<TAMSTeachCalendar> calendars, boolean needCount); //needCount用于设定是否需要计算子活动的次数
 
     String countCalendarTotalElapsedTime(List<TeachCalendarViewObject> allCalendar);
+
+    String countCalendarTotalBudget(List<TeachCalendarViewObject> allCalendar);
 
     List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList);
 
     List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities);
 
-    ApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
+    ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
 }

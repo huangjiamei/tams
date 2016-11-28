@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="toListHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('toListHeaderTitle','fa fa-users','助教管理','助教')">
+                                  p:onDocumentReadyScript="initContentHeader('toListHeaderTitle','fa fa-users','助教管理','助教列表')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -62,7 +62,7 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="2" p:value="助教"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="2" p:value="助教列表"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -92,15 +92,8 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="助教列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
                                                                 <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="clear:none!important; float: right!important;">
+                                                                      p:style="margin-top:20px；float:left!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
@@ -126,6 +119,7 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
+
                                                             </list>
                                                         </property>
                                                     </bean>

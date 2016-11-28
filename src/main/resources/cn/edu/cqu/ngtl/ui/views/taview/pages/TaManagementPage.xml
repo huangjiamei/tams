@@ -95,14 +95,6 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="我的助教"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
                                                                     <property name="items">
@@ -127,6 +119,7 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
+
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -135,8 +128,7 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="9">
+                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
                                                                     <property name="propertyName" value="allMyTa"/>
@@ -144,14 +136,11 @@
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
 
-                                                                    <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true" />
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="false"/>
-
                                                                     <property name="disclosure.render" value="false"/>
-
 
                                                                     <property name="items">
                                                                         <list>
@@ -177,15 +166,9 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
-
-
                                                             </list>
                                                         </property>
                                                     </bean>
-
-
-
                                                 </list>
                                             </property>
                                         </bean>
@@ -325,7 +308,7 @@
                                         <bean parent="Uif-Disclosure-TableCollectionSection">
                                             <property name="collectionObjectClass"
                                                       value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
-                                            <property name="propertyName" value="allApplication"/>
+                                            <property name="propertyName" value="conditionTAList"/>
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
                                             <property name="layoutManager.richTable.render" value="false"/>
@@ -354,7 +337,7 @@
                                                                       p:ajaxSubmit="true"
                                                                       p:actionLabel="查看"
                                                                       p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="getTaInfo"
+                                                                      p:methodToCall="getSelectedTaInfo"
                                                                       p:successCallback="showElement('taDetailInfoGrid');"
                                                                       p:refreshId="taDetailInfoGrid"/>
                                                             </list>

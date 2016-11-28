@@ -82,7 +82,12 @@ public interface IAdminService {
 
     List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions);
 
+    /**
+     * 时间阶段设置
+     */
     boolean addTimeSetting(User user, String typeId, String startTime, String endTime);
+
+    boolean deleteOneTimeSetting(TAMSTimeSettings tamsTimeSettings);
 
     List<TAMSTimeSettings> getallTimeSettings();
 }

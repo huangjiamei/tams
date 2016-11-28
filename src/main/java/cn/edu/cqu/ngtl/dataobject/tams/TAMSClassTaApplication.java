@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -30,24 +31,25 @@ public class TAMSClassTaApplication extends DataObjectBase implements Serializab
     private Integer taNumber;
 
     @Column(name = "APPLICATION_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String applicationTime;
 
     @Column(name = "NOTE")
     private String note;
 
     @Column(name = "SESSION_ID")
-    private Integer sessinId;
+    private Integer sessionId;
 
     @ManyToOne
     @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
     private UTSession curSession;
 
-    public Integer getSessinId() {
-        return sessinId;
+    public Integer getSessionId() {
+        return sessionId;
     }
 
-    public void setSessinId(Integer sessinId) {
-        this.sessinId = sessinId;
+    public void setSessionId(Integer sessionId) {
+        this.sessionId = sessionId;
     }
 
     public UTSession getCurSession() {

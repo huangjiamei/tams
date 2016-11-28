@@ -8,12 +8,13 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 /**
- * Created by liusijia on 2016/11/12.
+ * Created by awake on 2016/11/25.
  */
 
+
 @Entity
-@Table(name = "TAMS_CLASS_FUNDING")
-public class TAMSClassFunding extends DataObjectBase implements Serializable {
+@Table(name = "TAMS_CLASS_FUNDING_DRAFT")
+public class TAMSClassFundingDraft extends DataObjectBase implements Serializable {
 
     @Id
     @Column(name = "UNIQUEID")
@@ -51,6 +52,7 @@ public class TAMSClassFunding extends DataObjectBase implements Serializable {
     @OneToOne
     @JoinColumn(name = "SESSION_ID", updatable = false, insertable = false)
     private UTSession utSession;
+
 
     public UTSession getSession() {
         return session;

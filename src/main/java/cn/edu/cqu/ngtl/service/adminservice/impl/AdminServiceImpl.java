@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
 import org.apache.log4j.Logger;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
@@ -30,6 +31,15 @@ import java.util.Map;
 public class AdminServiceImpl implements IAdminService{
 
     private static final Logger logger = Logger.getRootLogger();
+
+    @Autowired
+    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
+    @Autowired
+    private TAMSClassFundingDao tamsClassFundingDao;
+
+    @Autowired
+    private TAMSClassFundingDraftDao  tamsClassFundingDraftDao;
 
     @Autowired
     private CMCourseClassificationDao courseClassificationDao;
@@ -283,6 +293,13 @@ public class AdminServiceImpl implements IAdminService{
     @Override
     public List<TAMSDeptFunding> getDepartmentCurrFundingBySession(){
 
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+
+        /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
+         */
+        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
+            return tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
+        }
         return deptFundingDao.selectDepartmentCurrBySession();
     }
 
@@ -360,9 +377,19 @@ public class AdminServiceImpl implements IAdminService{
         }
     }
 
+
     @Override
     public List<TAMSClassFunding> getFundingByClass() {
-        return deptFundingDao.selectAll();
+
+
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+
+        /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
+         */
+        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
+            return tamsClassFundingDraftDao.selectAll();
+        }
+            return tamsClassFundingDao.selectAll(user);
     }
 
     @Override
@@ -377,7 +404,29 @@ public class AdminServiceImpl implements IAdminService{
         if(isExist != null) {
             logger.warn("管理员请求新增时间段失败：" + user.toString() + "\n");
             logger.warn("本学期对应类型的时间段已设置\n");
-            return false;
+            SimpleDateFormat input = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat output = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            try {
+                isExist.setStartTime(
+                        output.format(
+                                input.parse(startTime)
+                        )
+                );
+                isExist.setEndTime(
+                        output.format(
+                                input.parse(endTime)
+                        )
+                );
+            }
+            catch (ParseException e) {
+                logger.error("输入日期格式不正确！");
+                return false;
+            }
+
+            isExist.setEditTime(output.format(new Date()));
+            return timeSettingsDao.updateOneByEntity(isExist);
+
+
         }
         TAMSTimeSettings timeSetting = new TAMSTimeSettings();
         timeSetting.setTimeSettingTypeId(typeId);
@@ -404,6 +453,12 @@ public class AdminServiceImpl implements IAdminService{
         timeSetting.setEditTime(output.format(new Date()));
 
         return timeSettingsDao.insetOneByEntity(timeSetting);
+    }
+
+
+    @Override
+    public boolean deleteOneTimeSetting(TAMSTimeSettings tamsTimeSettings){
+        return timeSettingsDao.deleteOneByEntity(tamsTimeSettings);
     }
 
     @Override

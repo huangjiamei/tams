@@ -176,13 +176,14 @@ public class TaController extends BaseController {
         for(MyTaViewObject needToAdd : checkedList){
             needToAdd.setCheckBox(false);
             taInfoForm.getAllMyTa().add(needToAdd);
+            taInfoForm.getAllApplication().remove(needToAdd);
         }
+
+
         if(result)
-            //return this.getModelAndView(taInfoForm,"pageTaManagement");
             return this.getModelAndView(taInfoForm, "pageTaManagement");
         else
             return this.getModelAndView(taInfoForm, "pageTaManagement"); //应该返回错误信息
-            //return this.getModelAndView(taInfoForm,"pageTaManagement");
     }
 
 

@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -85,7 +86,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<MyTaViewObject> allMyTa;
     private List<MyTaViewObject> allApplication;
 
-    private MyTaViewObject selectedTa=new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
+    private MyTaViewObject selectedTa = new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
 
     public void setClassEvaluations(List<TAMSClassEvaluation> classEvaluations) {

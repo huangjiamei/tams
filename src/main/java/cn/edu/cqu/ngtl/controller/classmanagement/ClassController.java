@@ -508,18 +508,19 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
-        infoForm.setAllMyTa(taConverter.myTaCombinePayDay(
-                taService.getAllTaFilteredByUid(uId)
+
+        String classId = infoForm.getCurrClassId();
+
+        infoForm.setAllMyTa(taConverter.myTaCombinePayDayClass(
+                classInfoService.getAllTaFilteredByClassid(classId)
         ));
 
 
-        infoForm.setAllApplication(taConverter.applicationToViewObject(
+        infoForm.setAllApplication(taConverter.applicationToViewObjectClass(
                 taService.getAllApplicationFilterByUid(uId)
         ));
-
         return this.getModelAndView(infoForm, "pageTaManagement");
     }
 

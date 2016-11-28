@@ -162,6 +162,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageTaManagement" p:title="助教管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
                 <bean parent="Uif-Page" p:id="pageAddActivity" p:title="课程日历">
                     <property name="items">
                         <list>

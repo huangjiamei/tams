@@ -160,7 +160,7 @@ public class TaController extends BaseController {
     public ModelAndView getTaDetailPage(@ModelAttribute("KualiForm") UifFormBase form,
                                       HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
-
+        super.baseStart(taInfoForm);
 
         return this.getModelAndView(taInfoForm, "pageTaDetail");
     }

@@ -173,12 +173,15 @@ public class TaController extends BaseController {
         boolean result = taService.employBatchByStuIdsWithClassId(
                 taConverter.extractIdsFromApplication(checkedList)
         );
-
+        for(MyTaViewObject needToAdd : checkedList){
+            needToAdd.setCheckBox(false);
+            taInfoForm.getAllMyTa().add(needToAdd);
+        }
         if(result)
             //return this.getModelAndView(taInfoForm,"pageTaManagement");
-            return this.getTaManagementPage(taInfoForm, request);
+            return this.getModelAndView(taInfoForm, "pageTaManagement");
         else
-            return this.getTaManagementPage(taInfoForm, request); //应该返回错误信息
+            return this.getModelAndView(taInfoForm, "pageTaManagement"); //应该返回错误信息
             //return this.getModelAndView(taInfoForm,"pageTaManagement");
     }
 

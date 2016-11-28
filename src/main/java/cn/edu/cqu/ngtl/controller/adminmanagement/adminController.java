@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.controller.adminmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
+import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
@@ -25,7 +26,6 @@ import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
-import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
@@ -45,7 +45,7 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/admin")
-public class adminController extends UifControllerBase {
+public class adminController extends BaseController {
 
     @Autowired
     private IAdminService adminService;
@@ -77,6 +77,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
         if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
             AdminInfoForm infoForm = (AdminInfoForm) form;
+            super.baseStart(infoForm);
             return this.getModelAndView(infoForm, "pageConsole");
         }
         StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
@@ -97,6 +98,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView getRoleManagerPage(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                            HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         infoForm.setRMPkrimRoleTs(new KRIM_ROLE_T_DaoJpa().getAllKrimRoleTs());
 
         return this.getModelAndView(infoForm, "pageRoleManager");
@@ -116,6 +118,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView getUserRoleManagerPage(@ModelAttribute("KualiForm") UifFormBase form,
                                                HttpServletRequest request, HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         infoForm.setURMutInstructors(new UTInstructorDaoJpa().getAllInstructors());
 
         return this.getModelAndView(infoForm, "pageUserRoleManager");
@@ -134,6 +137,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView getPermissionManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
                                                     HttpServletRequest request, HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         List<KRIM_PERM_T> krimPermTs = new ArrayList<KRIM_PERM_T>(new KRIM_PERM_T_DaoJpa().getAllPermissions());
         infoForm.setRMPkrimPermTs(krimPermTs);
 
@@ -150,7 +154,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTimeSetPage")
     public ModelAndView getTimeSetPage(@ModelAttribute("KualiForm") UifFormBase form){
         AdminInfoForm infoForm = (AdminInfoForm) form;
-
+        super.baseStart(infoForm);
         infoForm.setTimeSettingsList(
                 adminService.getallTimeSettings()
         );
@@ -167,6 +171,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=addNewTimeSet")
     public ModelAndView addNewTimeSet(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         String typeId = infoForm.getTimeType();
 
         String[] timeSets = infoForm.getSettingsTime().split("~");
@@ -176,12 +181,23 @@ public class adminController extends UifControllerBase {
         if(user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");
         boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
-        infoForm.setTimeType(null);
-        infoForm.setSettingsTime(null);
+        this.resetSettingTime(infoForm);
 
-        return this.getTimeSetPage(form);
+        return this.getModelAndView(infoForm, "pageTimeSet");
     }
 
+    /**
+     * 清空页面上已填的数值
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=resetSettingTime")
+    public ModelAndView resetSettingTime(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        infoForm.setTimeType(null);
+        infoForm.setSettingsTime(null);
+        return this.getTimeSetPage(infoForm);
+    }
 
     /**
      * 删除一个时间段
@@ -191,6 +207,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=deleteTimeSetting")
     public ModelAndView deleteTimeSetting(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -203,12 +220,13 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=updateTimeSetting")
     public ModelAndView updateTimeSetting(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         TAMSTimeSettings selectedTimeSettings = infoForm.getTimeSettingsList().get(index);
-        infoForm.setTimeType(selectedTimeSettings.getTimeSettingType().getTypeName());
-        infoForm.setSettingsTime(infoForm.getStartTime()+"~"+infoForm.getEndTime());
+        infoForm.setTimeType(selectedTimeSettings.getTimeSettingType().getId());
+        infoForm.setSettingsTime(selectedTimeSettings.getStartTime()+"~"+selectedTimeSettings.getEndTime());
         return this.getModelAndView(infoForm, "pageTimeSet");
     }
 
@@ -222,6 +240,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=addPermissionDialog")
     public ModelAndView addPermissionDialog(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         infoForm.setPermissionNM("");
         infoForm.setPermissionContent("");
         infoForm.setPermissionIndex(null);
@@ -238,6 +257,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=updateKrimPerm")
     public ModelAndView updateKrimPerm(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
@@ -260,6 +280,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=savePermission")
     public ModelAndView savePermission(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         KRIM_PERM_T krimPermTs = new KRIM_PERM_T();
         if(infoForm.getPermissionIndex()!=null){
             krimPermTs = infoForm.getRMPkrimPermTs().get(infoForm.getPermissionIndex());
@@ -302,6 +323,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView deletePermission(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                          HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
@@ -324,7 +346,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView updateExmKrimRole(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                           HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-
+        super.baseStart(infoForm);
         List<KRIM_ROLE_T> krimRoleTs = new ArrayList<KRIM_ROLE_T>(infoForm.getRMPkrimRoleTs());
 
         /** 确定点击的角色 **/
@@ -366,7 +388,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView addExmKrimRole(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                        HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-
+        super.baseStart(infoForm);
         infoForm.setRMPkrimRoleT(null);
         infoForm.setRMPkrimPermTs(new KRIM_PERM_T_DaoJpa().getAllPermissions());
 
@@ -388,6 +410,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView saveExmKrimRole(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                         HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         KRIM_ROLE_T_Dao krimRoleTDao = new KRIM_ROLE_T_DaoJpa();
         List<KRIM_ROLE_T> krimRoleTs = new ArrayList<KRIM_ROLE_T>(infoForm.getRMPkrimRoleTs());
         KRIM_ROLE_T krimRoleT = infoForm.getRMPkrimRoleT();
@@ -428,7 +451,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView selectURMInstructor(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                             HttpServletResponse response) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-
+        super.baseStart(infoForm);
         CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
 
@@ -469,6 +492,8 @@ public class adminController extends UifControllerBase {
     public ModelAndView saveURMPuser(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                      HttpServletResponse response) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         UTInstructor utInstructor = infoForm.getURMutInstructor();
         KRIM_PRNCPL_T krimPrncplT = new KRIM_PRNCPL_T_DaoJpa().getKrimEntityEntTypTByPrncplId(utInstructor.getId());
         List<KRIM_ROLE_T> krimRoleTs = infoForm.getURMPkrimRoleTs();
@@ -487,6 +512,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getCourseManagerPage")
     public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
         infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
                 new TAMSCourseManagerDaoJpa().getAllCourseManager()
         ));
@@ -500,6 +526,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=updateCourseManager"})
     public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -521,6 +549,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         CourseManagerViewObject selectedObject = infoForm.getSelectedCourseManagerObject();
         TAMSCourseManager tamsCourseManager = tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId());
         UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByCode(infoForm.getInstructorCode());
@@ -545,6 +575,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=searchCourseManagerByCondition"})
     public ModelAndView searchCourseManagerByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         Map<String, String> conditions = new HashMap<>();
         //put conditions
         conditions.put("CourseName", infoForm.getSearchCourseNm());
@@ -570,6 +602,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getFundsPage")
     public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         List<PieChartsNameValuePair> list = new ArrayList<>();
         list.add(new PieChartsNameValuePair("高数", 10000));
         list.add(new PieChartsNameValuePair("线代", 5000));
@@ -633,6 +667,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params =  {"methodToCall=searchUTFundingByCondition"})
     public ModelAndView searchUTFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm)  form;
+        super.baseStart(infoForm);
+
         Map<String, String> conditions = new HashMap<>();
         //put conditions
         conditions.put("Session", infoForm.getsTimes());
@@ -658,6 +694,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=deleteCourseManager"})
     public ModelAndView deleteCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -677,12 +715,12 @@ public class adminController extends UifControllerBase {
      */
     @RequestMapping(params = {"methodToCall=getCourseCategoryPage"})
     public ModelAndView getCourseCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-        adminInfoForm.setAllClassifications(
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        infoForm.setAllClassifications(
                 adminService.getAllClassification()
         );
-
-        return this.getModelAndView(adminInfoForm, "pageCourseCategory");
+        return this.getModelAndView(infoForm, "pageCourseCategory");
     }
 
     /**
@@ -695,6 +733,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageCourseCategory", "methodToCall=selectCurObj"})
     public ModelAndView selectCurObj(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         try {
             // if index is exit, then enter edit dialog
             CollectionControllerServiceImpl.CollectionActionParameters params =
@@ -723,6 +763,7 @@ public class adminController extends UifControllerBase {
                                              HttpServletRequest request,
                                              HttpServletResponse response) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         adminService.changeCourseClassificationNameById(adminInfoForm.getClassification().getId(),
                 adminInfoForm.getClassification().getName());
@@ -740,6 +781,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=addNewCategory"})
     public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         // 新添加的term，对应外部的dialog
         adminService.addCourseClassificationOnlyWithName(adminInfoForm.getClassification().getName());
 
@@ -756,6 +799,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=deleteTermCourseCategory"})
     public ModelAndView deleteTermCourseCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
 
@@ -781,6 +826,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaCategoryPage")
     public ModelAndView getTaCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         adminInfoForm.setAllTaCategories(
                 adminService.getAllTaCategories()
@@ -799,6 +845,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageTaCategory", "methodToCall=selectCurTa"})
     public ModelAndView selectCurTa(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         try {
             //存在index进入edit dialog
             CollectionControllerServiceImpl.CollectionActionParameters params =
@@ -828,6 +876,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=saveTaCategory"})
     public ModelAndView saveTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         if(adminInfoForm.getTaIndex()!=null){
             if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
@@ -854,6 +903,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=deleteTaCategory"})
     public ModelAndView deleteTaCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
@@ -879,6 +930,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaskCategoryPage")
     public ModelAndView getTaskCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());
 
@@ -895,6 +947,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageTaskCategory", "methodToCall=selectCurTask"})
     public ModelAndView selectCurTask(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         try {
             //存在index进入edit dialog
@@ -925,6 +978,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=saveTaskCategory"})
     public ModelAndView saveTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         if(adminInfoForm.getIssueIndex()!=null){
             // index不为空说明要调用update
@@ -953,6 +1007,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=deleteTaskCategory"})
     public ModelAndView deleteTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
@@ -978,6 +1034,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTermManagePage")
     public ModelAndView getTermManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         adminInfoForm.setAllTerms(
                 taConverter.termInfoToViewObject(
@@ -1000,6 +1057,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=searchTerm")
     public ModelAndView searchTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         String termName = adminInfoForm.getTermName();
         String startTime = adminInfoForm.getStartTime();
@@ -1060,6 +1118,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"pageId=pageTermManagement", "methodToCall=selectCurTerm"})
     public ModelAndView selectCurTerm(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         try {
             //存在index进入edit dialog
@@ -1105,6 +1164,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=saveTerm"})
     public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         if(adminInfoForm.getTermIndex()!=null){
             // index不为空说明要调用update
@@ -1135,6 +1195,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = {"methodToCall=deleteTermCategory"})
     public ModelAndView deleteTermCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
@@ -1166,6 +1228,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaRewardPage")
     public ModelAndView getTaRewardPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
         adminInfoForm.setAllTaCategories(
                 adminService.getAllTaCategories()
@@ -1198,6 +1261,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=saveTaReward")
     public ModelAndView saveTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         TAMSTaCategory newTaReward  = adminInfoForm.getOldTaCategory();
         if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
             // TODO: 2016/11/8 弹出错误提示，具体错误信息待补充
@@ -1215,6 +1280,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=deleteTaReward")
     public ModelAndView deleteTaReward(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
@@ -1230,6 +1297,7 @@ public class adminController extends UifControllerBase {
     public ModelAndView searchPreDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form,
                                                HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
@@ -1266,6 +1334,8 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getWorkFlowManagePage")
     public ModelAndView getWorkFlowManagePage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
         Gson gson = new Gson();
 
         RelationTable rt = new RelationTable("default");
@@ -1286,6 +1356,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=search")
     public ModelAndView search(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
 
         RelationTable rt = taConverter.workflowStatusRtoJson(
                 adminService.getWorkflowStatusRelationByRoleFunctionId(
@@ -1314,6 +1385,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=save")
     public ModelAndView save(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
 
         String json = infoForm.getWorkflowRelationTable();
         Gson gson = new Gson();
@@ -1336,6 +1408,7 @@ public class adminController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=savaFundsDraft")
     public ModelAndView savaFundsDraft(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
 
         try{
             CollectionControllerServiceImpl.CollectionActionParameters params =

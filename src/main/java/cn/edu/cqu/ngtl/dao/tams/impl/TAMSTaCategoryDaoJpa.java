@@ -20,6 +20,7 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Component("TAMSTaCategoryDaoJpa")
 public class TAMSTaCategoryDaoJpa implements TAMSTaCategoryDao {
 
+    //查看所有助教
     @Override
     public List<TAMSTaCategory> selectAll() {
 

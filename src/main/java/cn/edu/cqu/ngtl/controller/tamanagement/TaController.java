@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller.tamanagement;
 
+import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
@@ -11,7 +12,6 @@ import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
-import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/ta")
-public class TaController extends UifControllerBase {
+public class TaController extends BaseController {
 
     @Autowired
     private ITAConverter taConverter;
@@ -53,7 +53,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaListPage")
     public ModelAndView getTaListPage(@ModelAttribute("KualiForm") UifFormBase form,
                                       HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
@@ -72,7 +72,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=recover")
     public ModelAndView recover(@ModelAttribute("KualiForm") UifFormBase form,
                                 HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
 
@@ -103,7 +103,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=pause")
     public ModelAndView pause(@ModelAttribute("KualiForm") UifFormBase form,
                               HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
 
@@ -125,7 +125,7 @@ public class TaController extends UifControllerBase {
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 
-    //我的助教（教师用户看到的）界面
+    //我的助教（教师用户看到的）(管理助教)界面
     /**
      * 获取助教管理页面(包含我的助教列表+申请助教列表)
      * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
@@ -135,7 +135,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaManagementPage")
     public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
@@ -172,7 +172,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=employ")
     public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         List<MyTaViewObject> applicationList = taInfoForm.getAllApplication();
 
@@ -186,11 +186,17 @@ public class TaController extends UifControllerBase {
         boolean result = taService.employBatchByStuIdsWithClassId(
                 taConverter.extractIdsFromApplication(checkedList)
         );
+        for(MyTaViewObject needToAdd : checkedList){
+            needToAdd.setCheckBox(false);
+            taInfoForm.getAllMyTa().add(needToAdd);
+            taInfoForm.getAllApplication().remove(needToAdd);
+        }
+
 
         if(result)
-            return this.getTaListPage(form, request);
+            return this.getModelAndView(taInfoForm, "pageTaManagement");
         else
-            return this.getTaListPage(form, request); //应该返回错误信息
+            return this.getModelAndView(taInfoForm, "pageTaManagement"); //应该返回错误信息
     }
 
 
@@ -203,7 +209,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=setTaToLiving")
     public ModelAndView setTaToLiving(@ModelAttribute("KualiForm") UifFormBase form,
                                       HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
 
@@ -239,7 +245,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=setTaToPause")
     public ModelAndView setTaToPause(@ModelAttribute("KualiForm") UifFormBase form,
                                      HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
 
@@ -280,7 +286,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=setTaToDismiss")
     public ModelAndView setTaToDismiss(@ModelAttribute("KualiForm") UifFormBase form,
                                        HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         // TODO: 2016/11/12 等待需求 
         return this.getTaManagementPage(form, request);
     }
@@ -294,7 +300,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=searchTaByCondition")
     public ModelAndView searchTaByCondition(@ModelAttribute("KualiForm") UifFormBase form,
                                        HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         // TODO: 2016/11/24 要获取前端输入的姓名、学号，所以需要在form中添加对应属性并修改TaManagementPage.xml中375行左右参数名。(现在前端用的是inputField8/9)
 
 
@@ -319,7 +325,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getSelectedTaInfo")
     public ModelAndView getSelectedTaInfo(@ModelAttribute("KualiForm") UifFormBase form,
                                           HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
@@ -342,7 +348,7 @@ public class TaController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=addSelectedTaApplicant")
     public ModelAndView addSelectedTaApplicant(@ModelAttribute("KualiForm") UifFormBase form,
                                   HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         MyTaViewObject curTa=taInfoForm.getSelectedTa();
 
 
@@ -357,7 +363,7 @@ public class TaController extends UifControllerBase {
      */
     @RequestMapping(params = {"methodToCall=getTaAppraisalPage"}) /*"pageId=pageTaList",*/
     public ModelAndView getTaAppraisalPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
         List<IssueViewObject> testIssueList= new ArrayList<IssueViewObject>();
@@ -380,7 +386,7 @@ public class TaController extends UifControllerBase {
      */
     @RequestMapping(params = {"methodToCall=getTaAppraisalForStu"}) /*"pageId=pageTaList",*/
     public ModelAndView getTaAppraisalForStu(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         // TODO: 2016/11/9 在allIssues属性中填入原型中要求的任务类型如作业批改、签到等
         List<IssueViewObject> testIssueList= new ArrayList<IssueViewObject>();
@@ -404,7 +410,7 @@ public class TaController extends UifControllerBase {
      */
     @RequestMapping(params = "methodToCall=getApplyOSTaPage")
     public ModelAndView getApplyOSTaPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         // TODO: 2016/11/27 原型中不要求教学日历，zsf认为在申请页面加入教学日历的信息方便助教了解自己的工作情况和编写申请理由，如果不需要请删除.xml中的TableCollectionSection
 
@@ -432,7 +438,7 @@ public class TaController extends UifControllerBase {
      */
     @RequestMapping(params = "methodToCall=getAddTaskPage")
     public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         return this.getModelAndView(taInfoForm, "pageAddNewTask");
     }
 
@@ -444,7 +450,7 @@ public class TaController extends UifControllerBase {
      */
     @RequestMapping(params = "methodToCall=getWorkbenchPage")
     public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
@@ -457,7 +463,7 @@ public class TaController extends UifControllerBase {
      */
     @RequestMapping(params = "methodToCall=getTransAllowancePage")
     public ModelAndView getTransAllowancePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
         // TODO: 2016/11/27 (首先判断权限) 老师是不是不可进入此页面？
 

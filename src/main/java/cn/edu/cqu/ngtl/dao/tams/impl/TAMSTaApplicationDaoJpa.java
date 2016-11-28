@@ -36,7 +36,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return true;
     }
 
-    //根据课程找出相应的助教
+    //根据课程找出相应的申请助教
     @Override
     public List<TAMSTaApplication> selectByClassId(List<Object> classIds) {
         List<TAMSTaApplication> tas = new ArrayList<>();

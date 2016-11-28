@@ -5,7 +5,6 @@ import cn.edu.cqu.ngtl.form.TestForm;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,7 +23,7 @@ import java.util.regex.Pattern;
  */
 @Controller
 @RequestMapping("/mytest")
-public class TestController extends UifControllerBase {
+public class TestController extends BaseController {
 
     /**
      * 测试用page
@@ -35,7 +34,7 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTestPage")
     public ModelAndView getTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
-
+        super.baseStart(testForm);
         List<TestGroupObject> groupObjectList = new ArrayList<>();
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.1小节"));
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.2小节"));
@@ -55,6 +54,7 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=pageEditor")
     public ModelAndView getEditorPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
+        super.baseStart(testForm);
 
         return this.getModelAndView(testForm, "pageEditor");
     }
@@ -69,6 +69,7 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=submitEditorContent")
     public void submitEditorContent(@ModelAttribute("KualiForm") UifFormBase form ,HttpServletRequest request, HttpServletResponse response){
         TestForm testForm = (TestForm) form;
+        super.baseStart(testForm);
 
         String content=testForm.getEditorContent();
         System.out.println(content);
@@ -113,6 +114,7 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaskListPage")
     public ModelAndView getTaskListPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
+        super.baseStart(testForm);
 
         return this.getModelAndView(testForm, "pageTaskList");
     }
@@ -126,6 +128,8 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getTaskDetailPage")
     public ModelAndView getTaskDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
+        super.baseStart(testForm);
+
         return this.getModelAndView(testForm, "pageTaskDetail");
     }
 
@@ -138,6 +142,8 @@ public class TestController extends UifControllerBase {
     @RequestMapping(params = "methodToCall=getAddTaskPage")
     public ModelAndView getAddTaskPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TestForm testForm = (TestForm) form;
+        super.baseStart(testForm);
+
         return this.getModelAndView(testForm, "pageAddNewTask");
     }
 

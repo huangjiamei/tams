@@ -33,12 +33,13 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         return queryResults.getResults().isEmpty()? null : queryResults.getResults().get(0);
     }
 
-    //根据助教的id查询class_id
+    //根据教师的id查询批量class_id
     @Override
     public List<Object> selectClassIdsByInstructorId(String uId) {
         Query query = em.createNativeQuery("SELECT CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR t WHERE t.INSTRUCTOR_ID='" + uId + "'");
         return query.getResultList();
     }
+
 
 
 }

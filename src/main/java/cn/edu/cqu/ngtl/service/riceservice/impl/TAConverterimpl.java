@@ -18,6 +18,8 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import org.apache.log4j.Logger;
+import org.apache.log4j.pattern.LoggerPatternConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,8 @@ public class TAConverterimpl implements ITAConverter {
 
     static final SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd");
     static final SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    private static final Logger logger = Logger.getRootLogger();
 
     @Autowired
     private ICourseInfoService courseInfoService;
@@ -360,7 +364,10 @@ public class TAConverterimpl implements ITAConverter {
     //全校所有助教界面
     @Override
     public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
-
+        if(allTa == null || allTa.size() == 0) {
+            logger.error("数据为空！");
+            return null;
+        }
         List<TaInfoViewObject> viewObjects = new ArrayList<>(allTa.size());
 
         for(TAMSTa ta : allTa) {

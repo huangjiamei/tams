@@ -42,6 +42,7 @@ public class TaInfoForm extends BaseForm implements Serializable {
      */
 
     private List<TaInfoViewObject> allTaInfo;
+    private String taDeApplyReason;
 
     /**
      * 任务相关
@@ -203,5 +204,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTotalTimeConsume(String totalTimeConsume) {
         this.totalTimeConsume = totalTimeConsume;
+    }
+
+    public String getTaDeApplyReason() {
+        return taDeApplyReason;
+    }
+
+    public void setTaDeApplyReason(String taDeApplyReason) {
+        this.taDeApplyReason = taDeApplyReason;
     }
 }

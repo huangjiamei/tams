@@ -138,7 +138,13 @@
                     </property>
                 </bean>
 
-
+                <bean parent="Uif-Page" p:id="pageTaDetail" p:title="">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaDetailPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

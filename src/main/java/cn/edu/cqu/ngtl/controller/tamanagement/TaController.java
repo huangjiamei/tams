@@ -150,7 +150,20 @@ public class TaController extends UifControllerBase {
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
+    /**
+     * 获取助教详情页面
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaDetailPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaDetailPage")
+    public ModelAndView getTaDetailPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                      HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
 
+
+        return this.getModelAndView(taInfoForm, "pageTaDetail");
+    }
 
     /**
      * 聘请助教

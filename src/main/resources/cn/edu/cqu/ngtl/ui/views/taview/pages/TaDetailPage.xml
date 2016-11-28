@@ -33,7 +33,7 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <bean id="TaDetailPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="removeSideBar()">
+          p:onDocumentReadyScript="setupAutoSideBar();">
         <property name="items">
             <list>
                 <bean id="taDetailHeader" parent="Uif-HorizontalBoxSection"
@@ -46,7 +46,7 @@
                             </bean>
 
                             <!-- 右上角 当前路径 -->
-                            <bean parent="Uif-HorizontalBoxSection"
+                            <bean  parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
@@ -64,7 +64,7 @@
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教列表"
-                                                                  p:location.viewId="ClassView"
+                                                                  p:location.viewId="TaView"
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getTaListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教详情"/>

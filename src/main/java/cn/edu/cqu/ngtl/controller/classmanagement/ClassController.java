@@ -495,4 +495,32 @@ public class ClassController extends BaseController {
         return null;
     }
 
+    //我的助教（教师用户看到的）(管理助教)界面
+    /**
+     * 获取助教管理页面(包含我的助教列表+申请助教列表)
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaManagementPage")
+    public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        infoForm.setAllMyTa(taConverter.myTaCombinePayDay(
+                taService.getAllTaFilteredByUid(uId)
+        ));
+
+
+        infoForm.setAllApplication(taConverter.applicationToViewObject(
+                taService.getAllApplicationFilterByUid(uId)
+        ));
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+    }
+
 }

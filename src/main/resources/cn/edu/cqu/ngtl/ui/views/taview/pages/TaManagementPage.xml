@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaManagementPage" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container" p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--header-->
@@ -62,10 +62,10 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教(无链接)"
-                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
-                                                                  p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="管理助教"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
+                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                  p:location.methodToCall="getClassListPage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教管理"/>
                                                         </list>
                                                     </property>
                                                 </bean>

@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaListPage" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container" p:onDocumentReadyScript="removeSideBar()">
         <property name="items">
             <list>
                 <!--header-->
@@ -92,36 +92,36 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="助教列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-HorizontalBoxSection">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="恢复"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="recover"
-                                                                                  p:additionalCssClasses="icon-repeat bg-success box-btngroup">
-                                                                            </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="暂停"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="pause"
-                                                                                  p:additionalCssClasses="icon-stop bg-orange box-btngroup">
-                                                                            </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="遴选优秀助教" p:methodToCall="linxuan"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="撤销" p:methodToCall="chexiao"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-
                                                             </list>
                                                         </property>
                                                     </bean>
+                                                    <bean parent="Uif-HorizontalBoxSection">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="恢复"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="recover"
+                                                                      p:additionalCssClasses="icon-repeat bg-success box-btngroup">
+                                                                </bean>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="暂停"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:methodToCall="pause"
+                                                                      p:additionalCssClasses="icon-stop bg-orange box-btngroup">
+                                                                </bean>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="遴选优秀助教" p:methodToCall="linxuan"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="撤销" p:methodToCall="chexiao"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
 
                                                     <bean parent="Uif-VerticalBoxSection"
                                                           p:additionalCssClasses="box-body">

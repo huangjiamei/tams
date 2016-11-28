@@ -34,7 +34,7 @@
 
     <!--学生应聘助教-->
     <bean id="ApplyOutStandingTaPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="">
+          p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--页面header-->
@@ -65,7 +65,7 @@
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教"
-                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/ta"
+                                                                  p:location.viewId="TaView" p:location.controllerMapping="/ta"
                                                                   p:location.methodToCall="getTaListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="申请优秀助教"/>
                                                         </list>

@@ -672,14 +672,14 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     border-left: 1px solid #ccc;
     background-color: #F1F1F1;
     padding: 3px 4px 3px 3px;
-    margin-right: 0px;
+    margin-right: -3px;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
 .dateTimeInput
 {
-    width:250px;
+    /*width:250px;*/
 }
 
 .dateTimeInput input{

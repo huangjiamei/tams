@@ -34,7 +34,7 @@
 
     <!--学生应聘助教-->
     <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="removeSideBar()">
+          p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--页面header-->

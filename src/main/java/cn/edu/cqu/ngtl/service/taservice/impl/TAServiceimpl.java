@@ -203,4 +203,11 @@ public class TAServiceimpl implements ITAService {
     public List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId){
         return tamsTeachCalendarDao.selectAllByClassId(classId);
     }
+
+
+    @Override
+    public TAMSTa getTaByTaId(String taId,String classId){
+        return taDao.selectByStudentIdAndClassId(taId,classId);
+    }
+
 }

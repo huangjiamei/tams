@@ -211,7 +211,7 @@
                                                                                               p:render="@{#line.appraise=='14'}"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:methodToCall="getTaReviewPage"
+                                                                                              p:methodToCall="getTaDetailPage"
                                                                                               p:render="@{#line.appraise!='14'}"
                                                                                               p:navigateToPageId="pageTaDetail"
                                                                                               p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>

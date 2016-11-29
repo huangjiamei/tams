@@ -500,7 +500,7 @@ body{
 /* 修改表格中inputfiled的宽高 */
 .uif-inputField input[type="text"].form-control{
     height: 32px!important;
-    width: 100%!important;;
+    /*width: 100%!important;*/
 }
 
 /* 所有dialog往屏幕中间移动*/

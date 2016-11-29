@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
@@ -24,7 +25,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -223,7 +223,7 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
-        String arr[] = infoForm.getAddTeachCTime().split("\\~");
+        String arr[] = infoForm.getAddTeachCTime().split("~");
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
@@ -244,11 +244,21 @@ public class ClassController extends BaseController {
                     )
             );
         } catch (Exception e) {
-
+            //do nothing
         }
+        if(infoForm.getFileList() != null && infoForm.getFileList().size() != 0)
+            added.setHasAttachment(true);
 
-        if (classInfoService.instructorAddTeachCalendar(uId, classId, added))
+        //添加日历信息到数据库
+        added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
+        if (added.getId() != null) { //添加数据库成功
+            //添加附件
+            if(added.isHasAttachment()) {
+                new TamsFileControllerServiceImpl().saveCalendarAttachments(uId, classId, added.getId(), infoForm.getFileList());
+            }
+
             return this.getTeachingCalendar(infoForm, request);
+        }
         else //// FIXME: 16-11-18 应当返回错误页面
             return this.getTeachingCalendar(infoForm, request);
     }
@@ -474,14 +484,20 @@ public class ClassController extends BaseController {
         }
     }
 
+    /**
+     * 上传文件方法
+     */
+    @Override
+    public ModelAndView addFileUploadLine(UifFormBase form) {
+        return super.addFileUploadLine(form);
+    }
 
     /**
      * 文件上传之后，点击文件名(href)就会调用此方法
      */
-    @RequestMapping(method = RequestMethod.GET, params = "methodToCall=getFileFromLine")
+    @Override
     public void getFileFromLine(UifFormBase form, HttpServletResponse response) {
-        // FIXME: 2016/11/24 getFileControllerService()应该返回common.impl中的TamsFileControllerServiceImpl，该impl中重写了下载文件的功能
-        getFileControllerService().getFileFromLine(form, response);
+        new TamsFileControllerServiceImpl().getFileFromLine(form, response);
     }
 
     @Override

@@ -1,8 +1,36 @@
-<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
-                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:beans="http://www.springframework.org/schema/beans"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:jms="http://www.springframework.org/schema/jms" xmlns:lang="http://www.springframework.org/schema/lang"
+       xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:oxm="http://www.springframework.org/schema/oxm"
+       xmlns:task="http://www.springframework.org/schema/task" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="http://www.springframework.org/schema/aop
+                           http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                           http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                           http://www.springframework.org/schema/context
+                           http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                           http://www.springframework.org/schema/jdbc
+                           http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+                           http://www.springframework.org/schema/jee
+                           http://www.springframework.org/schema/jee/spring-jee-3.0.xsd
+                           http://www.springframework.org/schema/jms
+                           http://www.springframework.org/schema/jms/spring-jms-3.0.xsd
+                           http://www.springframework.org/schema/lang
+                           http://www.springframework.org/schema/lang/spring-lang-3.0.xsd
+                           http://www.springframework.org/schema/mvc
+                           http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+                           http://www.springframework.org/schema/oxm
+                           http://www.springframework.org/schema/oxm/spring-oxm-3.0.xsd
+                           http://www.springframework.org/schema/task
+                           http://www.springframework.org/schema/task/spring-task-3.0.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+                           http://www.springframework.org/schema/util
+                           http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaListPage" parent="Uif-VerticalBoxSection"
           p:additionalCssClasses="container" p:onDocumentReadyScript="removeSideBar()">
         <property name="items">
@@ -32,8 +60,7 @@
                                                     <property name="options">
                                                         <list>
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                  p:location.viewId="PortalView"
-                                                                  p:location.controllerMapping="/home"
+                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="2" p:value="助教列表"/>
                                                         </list>
@@ -65,36 +92,36 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="助教列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: right!important;">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="恢复"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="recover"
+                                                                                  p:additionalCssClasses="icon-repeat bg-success box-btngroup">
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="暂停"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="pause"
+                                                                                  p:additionalCssClasses="icon-stop bg-orange box-btngroup">
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="遴选优秀助教" p:methodToCall="linxuan"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="撤销" p:methodToCall="chexiao"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="恢复"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="recover"
-                                                                      p:additionalCssClasses="icon-repeat bg-success box-btngroup">
-                                                                </bean>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="暂停"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="pause"
-                                                                      p:additionalCssClasses="icon-stop bg-orange box-btngroup">
-                                                                </bean>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="遴选优秀助教" p:methodToCall="linxuan"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="撤销" p:methodToCall="chexiao"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-
 
                                                     <bean parent="Uif-VerticalBoxSection"
                                                           p:additionalCssClasses="box-body">
@@ -106,10 +133,9 @@
                                                                     <property name="propertyName" value="allTaInfo"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
-                                                                    <property name="layoutManager.richTable.render"
-                                                                              value="false"/>
+                                                                    <property name="layoutManager.richTable.render" value="false"/>
 
-                                                                    <property name="useServerPaging" value="true"/>
+                                                                    <property name="useServerPaging" value="true" />
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="true"/>
@@ -185,11 +211,10 @@
                                                                                               p:render="@{#line.appraise=='14'}"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel="前去评价(参考classlistpage，跳转到新页面)"
-                                                                                              p:methodToCall="getTaDetailPage"
+                                                                                              p:methodToCall="getTaReviewPage"
                                                                                               p:render="@{#line.appraise!='14'}"
                                                                                               p:navigateToPageId="pageTaDetail"
-                                                                                        />
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

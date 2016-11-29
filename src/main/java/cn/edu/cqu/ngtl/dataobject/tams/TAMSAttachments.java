@@ -1,7 +1,7 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
+import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
-import org.kuali.rice.krad.uif.UifConstants;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -44,6 +44,7 @@ public class TAMSAttachments extends DataObjectBase implements Serializable{
     private String authorId;
 
     @Column(name = "CREATE_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String createTime;
 
     @Column(name = "DESCRIPTION")

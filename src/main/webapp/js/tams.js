@@ -631,6 +631,12 @@ function setupAutoSideBar() {
     if (winWidth>768)
         // 让导航栏下来一点，避免缩放按键被遮挡
         nav.css("margin-top", 50);
+    else{
+        nav.css("margin-top", 0);
+        if (!jQuery('.sidebar-collapse').parent().hasClass('sidebar-collapsed')) {
+            jQuery('.sidebar-collapse').click();
+        }
+    }
 
     window.onresize = function(){
         var nav = jQuery('#Uif-Navigation');

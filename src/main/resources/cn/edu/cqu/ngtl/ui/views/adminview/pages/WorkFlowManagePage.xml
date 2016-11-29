@@ -114,7 +114,6 @@
                                                                                   p:style="float: right!important;">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!--左上角btnlist-->
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="返回"
                                                                                               p:actionImagePlacement="LEFT"

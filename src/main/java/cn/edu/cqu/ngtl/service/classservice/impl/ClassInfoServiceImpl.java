@@ -140,10 +140,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
+    public TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
         if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
-            return true;
+            return null;
         }
         else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
@@ -155,9 +155,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return teachCalendarDao.insertByEntity(teachCalendar);
             }
             else
-                return false;
+                return null;
         }
-        return false;
+        return null;
     }
 
     @Override

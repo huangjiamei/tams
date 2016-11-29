@@ -39,6 +39,15 @@
         </property>
         <property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />
 
+        <property name="applicationNavigation.navigationBarGroup.libraryCssClasses">
+            <list merge="true">
+                <!--在这里去掉collapse这个css类，避免右上角的内容被覆盖-->
+                <!--<value>collapse</value>-->
+                <value>navbar-collapse</value>
+                <value>navbar-ex1-collapse</value>
+            </list>
+        </property>
+
         <property name="applicationNavigation.items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>

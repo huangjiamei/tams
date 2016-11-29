@@ -502,12 +502,13 @@ public class ClassController extends BaseController {
 
     @Override
     protected UifFormBase createInitialForm() {
+        // 开发用的setService,不设置这个那么上传时会调用默认的fileService(有中文乱码等问题)
+//        setFileControllerService(new TamsFileControllerServiceImpl());
         return new ClassInfoForm();
     }
 
     @RequestMapping(params = "methodToCall=getTAInfoPage")
     public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        //TODO
         return null;
     }
 

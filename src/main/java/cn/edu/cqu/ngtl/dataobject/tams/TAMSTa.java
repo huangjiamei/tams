@@ -63,6 +63,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "APPLICATION_NOTE")
     private String applicationNote;
 
+
+    @Column(name = "EVALUTATION")
+    private String evalutation;
+
+    @Column(name = "EVALUATION_DETAIL")
+    private String evaluationDetail;
+
     public String getStatus() {
         return status;
     }
@@ -165,5 +172,21 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setApplicationNote(String applicationNote) {
         this.applicationNote = applicationNote;
+    }
+
+    public String getEvalutation() {
+        return evalutation;
+    }
+
+    public void setEvalutation(String evalutation) {
+        this.evalutation = evalutation;
+    }
+
+    public String getEvaluationDetail() {
+        return evaluationDetail;
+    }
+
+    public void setEvaluationDetail(String evaluationDetail) {
+        this.evaluationDetail = evaluationDetail;
     }
 }

@@ -18,6 +18,7 @@ import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.apache.log4j.Logger;
@@ -57,6 +58,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private TAMSTaCategoryDao taCategoryDao;
+
+    @Autowired
+    private TAMSActivityDao tamsActivityDao;
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
@@ -382,7 +386,7 @@ public class TAConverterimpl implements ITAConverter {
                 StringBuilder sb = new StringBuilder();
                 if(instructors != null)
                     for(UTInstructor instructor : instructors)
-                        sb.append(instructor.getName() + "，");
+                        sb.append(instructor.getName() + "  ");
                 viewObject.setInstructorName(sb.toString());
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
@@ -837,5 +841,35 @@ public class TAConverterimpl implements ITAConverter {
             }
         }
         return viewObject;
+    }
+
+
+    @Override
+    public List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars){
+        List<AppraisalDetailViewObject> result = new ArrayList<>();
+        if(teachCalendars!=null) {
+            for (TAMSTeachCalendar tamsTeachCalendar : teachCalendars) {
+                AppraisalDetailViewObject appraisalDetailViewObject = new AppraisalDetailViewObject();
+                appraisalDetailViewObject.setCalendarName(tamsTeachCalendar.getTheme());
+                List<TAMSActivity> tamsActivity = tamsActivityDao.selectAllByCalendarId(tamsTeachCalendar.getId());
+                appraisalDetailViewObject.setActivityNumber(tamsActivity==null?"0":String.valueOf(tamsActivity.size()));
+                /**
+                 * 缺失数据填入固定值
+                 */
+                appraisalDetailViewObject.setCompletion("80%");
+                appraisalDetailViewObject.setEngagement("99%");
+                appraisalDetailViewObject.setGrade("95");
+                result.add(appraisalDetailViewObject);
+            }
+        }else{
+            AppraisalDetailViewObject appraisalDetailViewObject = new AppraisalDetailViewObject();
+            appraisalDetailViewObject.setCalendarName("");
+            appraisalDetailViewObject.setActivityNumber("");
+            appraisalDetailViewObject.setCompletion("");
+            appraisalDetailViewObject.setEngagement("");
+            appraisalDetailViewObject.setGrade("");
+            result.add(appraisalDetailViewObject);
+        }
+        return result;
     }
 }

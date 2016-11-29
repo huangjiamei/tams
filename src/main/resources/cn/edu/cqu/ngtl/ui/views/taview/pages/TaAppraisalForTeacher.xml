@@ -108,8 +108,8 @@
                                                                 <!--任务类型、次数...评论-->
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject"/>
-                                                                    <property name="propertyName" value="allIssues"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject"/>
+                                                                    <property name="propertyName" value="appraisalDetail"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render"
@@ -126,17 +126,17 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="教学日历"
-                                                                                  p:propertyName="issueType"/>
+                                                                                  p:propertyName="calendarName"/>
                                                                             <bean parent="Uif-DataField" p:label="活动次数"
-                                                                                  p:propertyName="issueCount"/>
+                                                                                  p:propertyName="activityNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="完成情况"
-                                                                                  p:propertyName="likeRate"/>
+                                                                                  p:propertyName="completion"/>
                                                                             <bean parent="Uif-DataField" p:label="点赞比"
-                                                                                  p:propertyName="likeRate"/>
+                                                                                  p:propertyName="praisePercentage"/>
                                                                             <bean parent="Uif-DataField" p:label="学生参与度"
-                                                                                  p:propertyName="commentCount"/>
+                                                                                  p:propertyName="engagement"/>
                                                                             <bean parent="Uif-DataField" p:label="成绩"
-                                                                                  p:propertyName="commentCount"/>
+                                                                                  p:propertyName="Grade"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

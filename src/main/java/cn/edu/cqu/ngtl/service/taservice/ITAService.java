@@ -34,4 +34,6 @@ public interface ITAService {
 
     List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId);
 
+    TAMSTa getTaByTaId(String taId,String classId);
+
 }

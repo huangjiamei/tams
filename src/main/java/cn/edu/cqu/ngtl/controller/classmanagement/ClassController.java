@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;

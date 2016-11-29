@@ -35,8 +35,8 @@ public class TAMSTeachCalendarDaoJpa implements TAMSTeachCalendarDao {
     }
 
     @Override
-    public boolean insertByEntity(TAMSTeachCalendar teachCalendar) {
-        return KRADServiceLocator.getDataObjectService().save(teachCalendar).getId() != null;
+    public TAMSTeachCalendar insertByEntity(TAMSTeachCalendar teachCalendar) {
+        return KRADServiceLocator.getDataObjectService().save(teachCalendar);
     }
 
     @Override

@@ -174,7 +174,7 @@
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextAreaControl"
                                                                               p:watermarkText=""
-                                                                              p:style="height:300px;"/>
+                                                                              p:style="height:300px;resize: none;"/>
                                                                     </property>
                                                                 </bean>
 

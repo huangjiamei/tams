@@ -8,6 +8,10 @@ public class TaInfoViewObject {
     //id用于和后台进行交互，不要把id用于前端显示
     private String id;
 
+    private String classid;
+
+    private String taId;
+
     private boolean checkBox;
 
     private String courseName;
@@ -37,6 +41,8 @@ public class TaInfoViewObject {
     private String appraise;
 
     private String status;
+
+    private String applicationReason;
 
     public String getId() {
         return id;
@@ -164,5 +170,29 @@ public class TaInfoViewObject {
 
     public void setAppraise(String appraise) {
         this.appraise = appraise;
+    }
+
+    public String getClassid() {
+        return classid;
+    }
+
+    public void setClassid(String classid) {
+        this.classid = classid;
+    }
+
+    public String getTaId() {
+        return taId;
+    }
+
+    public void setTaId(String taId) {
+        this.taId = taId;
+    }
+
+    public String getApplicationReason() {
+        return applicationReason;
+    }
+
+    public void setApplicationReason(String applicationReason) {
+        this.applicationReason = applicationReason;
     }
 }

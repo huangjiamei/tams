@@ -162,9 +162,9 @@ public class TAServiceimpl implements ITAService {
             //预处理录入信息
             newTa.setSessionId(sessionDao.getCurrentSession().getId().toString());
             newTa.setStatus(TA_STATUS.LIVING);
-
+            TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
+            newTa.setApplicationNote(readyToRemove.getNote());
             if(taDao.insertByEntity(newTa)) {
-                TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
                 if(applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
                 }
@@ -176,7 +176,6 @@ public class TAServiceimpl implements ITAService {
                 //新建信息失败
                 return false;
         }
-
         return true;
     }
 

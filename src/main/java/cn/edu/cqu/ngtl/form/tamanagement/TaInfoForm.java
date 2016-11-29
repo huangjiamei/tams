@@ -43,6 +43,9 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     private List<TaInfoViewObject> allTaInfo;
     private String taDeApplyReason;
+    private String taIdForDetailpage;
+    private String classIdForDetailPage;
+    private TaInfoViewObject selectedTaInfo;
 
     /**
      * 任务相关
@@ -212,5 +215,29 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTaDeApplyReason(String taDeApplyReason) {
         this.taDeApplyReason = taDeApplyReason;
+    }
+
+    public String getTaIdForDetailpage() {
+        return taIdForDetailpage;
+    }
+
+    public void setTaIdForDetailpage(String taIdForDetailpage) {
+        this.taIdForDetailpage = taIdForDetailpage;
+    }
+
+    public String getClassIdForDetailPage() {
+        return classIdForDetailPage;
+    }
+
+    public void setClassIdForDetailPage(String classIdForDetailPage) {
+        this.classIdForDetailPage = classIdForDetailPage;
+    }
+
+    public TaInfoViewObject getSelectedTaInfo() {
+        return selectedTaInfo;
+    }
+
+    public void setSelectedTaInfo(TaInfoViewObject selectedTaInfo) {
+        this.selectedTaInfo = selectedTaInfo;
     }
 }

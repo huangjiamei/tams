@@ -60,6 +60,9 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "PAY_DAY")
     private String payDay;
 
+    @Column(name = "APPLICATION_NOTE")
+    private String applicationNote;
+
     public String getStatus() {
         return status;
     }
@@ -154,5 +157,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setCurSession(UTSession curSession) {
         this.curSession = curSession;
+    }
+
+    public String getApplicationNote() {
+        return applicationNote;
+    }
+
+    public void setApplicationNote(String applicationNote) {
+        this.applicationNote = applicationNote;
     }
 }

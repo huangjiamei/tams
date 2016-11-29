@@ -18,6 +18,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTaApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -78,4 +79,8 @@ public interface ITAConverter {
     ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
 
     List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> applicationToViewObjectClass(List<TAMSTaApplication> allApplicationFilterByUid);
+
+    List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars);
+
+
 }

@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.service.taservice;
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 
@@ -30,4 +31,7 @@ public interface ITAService {
     boolean changeStatusBatchByTaIds(List<String> ids, String status);
 
     boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs);
+
+    List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId);
+
 }

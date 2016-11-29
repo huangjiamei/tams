@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.form.tamanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
+import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
@@ -19,6 +20,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
     /**
      * 教师评价相关
      */
+
+    private List<AppraisalDetailViewObject> appraisalDetail;
 
     private List<IssueViewObject> allIssues;
 
@@ -239,5 +242,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setSelectedTaInfo(TaInfoViewObject selectedTaInfo) {
         this.selectedTaInfo = selectedTaInfo;
+    }
+
+    public List<AppraisalDetailViewObject> getAppraisalDetail() {
+        return appraisalDetail;
+    }
+
+    public void setAppraisalDetail(List<AppraisalDetailViewObject> appraisalDetail) {
+        this.appraisalDetail = appraisalDetail;
     }
 }

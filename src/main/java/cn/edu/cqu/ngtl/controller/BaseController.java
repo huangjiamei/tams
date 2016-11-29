@@ -18,13 +18,19 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/Base")
 public class BaseController extends UifControllerBase {
 
+    /**
+     * 所有controller通用的方法放在里面，比如header数据的初始化
+     * @param form
+     * @return
+     */
+
+
     public ModelAndView baseStart(BaseForm form) {
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
         form.setUser(user);
         String code = user.getCode();
         return super.start(form);
     }
-
 
     @Override
     protected UifFormBase createInitialForm() {

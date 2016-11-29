@@ -8,10 +8,12 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -20,6 +22,7 @@ import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
+import org.kuali.rice.krad.web.service.impl.FileControllerServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -217,6 +220,15 @@ public class ClassController extends BaseController {
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        // region # 测试文件上传功能
+        // FIXME: 2016/11/29 测试文件上传功能，用完删除
+        List<FileViewObject> fileList= infoForm.getFileList();
+
+
+        // endrgion
+
+
 
         UserSession session = GlobalVariables.getUserSession();
         String uId = session.getPrincipalId();
@@ -474,7 +486,6 @@ public class ClassController extends BaseController {
         }
     }
 
-
     /**
      * 文件上传之后，点击文件名(href)就会调用此方法
      */
@@ -486,12 +497,13 @@ public class ClassController extends BaseController {
 
     @Override
     protected UifFormBase createInitialForm() {
+        // 开发用的setService
+//        setFileControllerService(new TamsFileControllerServiceImpl());
         return new ClassInfoForm();
     }
 
     @RequestMapping(params = "methodToCall=getTAInfoPage")
     public ModelAndView getTAInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        //TODO
         return null;
     }
 

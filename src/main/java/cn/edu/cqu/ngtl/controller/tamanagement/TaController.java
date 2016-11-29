@@ -286,6 +286,8 @@ public class TaController extends BaseController {
     @RequestMapping(params = "methodToCall=setTaToDismiss")
     public ModelAndView setTaToDismiss(@ModelAttribute("KualiForm") UifFormBase form,
                                        HttpServletRequest request) {
+
+
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         // TODO: 2016/11/12 等待需求 
         return this.getTaManagementPage(form, request);

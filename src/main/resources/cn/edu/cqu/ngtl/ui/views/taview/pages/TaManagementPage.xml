@@ -292,8 +292,7 @@
 
     <bean id="addApplicantDialog" parent="Uif-DialogGroup"
           p:headerText="添加申请人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
-          p:onDocumentReadyScript="jQuery('#addApplicantDialog').modal({backdrop: 'static', keyboard: false});">
-        <!--jQuery('#addApplicantDialog').children().css('width','90%');-->
+          p:onDocumentReadyScript="jQuery('#addApplicantDialog').modal({backdrop: 'static', keyboard: false});jQuery('#addApplicantDialog').children().css('width','90%');">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人。" />
@@ -323,7 +322,7 @@
                         <list>
                             <!--左边，一个查询得到的申请人列表-->
                             <bean id="searchTaApplicantList" parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="col-md-5 col-lg-5">
+                                  p:additionalCssClasses="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表" />
@@ -373,7 +372,7 @@
                             </bean>
 
                             <!--右边，助教的信息-->
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-7 col-lg-7">
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-7 col-lg-7 col-sm-12 col-xs-12">
                                 <property name="items">
                                     <list>
                                         <!--ta的更多的信息-->

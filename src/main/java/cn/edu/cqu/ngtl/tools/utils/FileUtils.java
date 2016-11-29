@@ -44,9 +44,17 @@ public class FileUtils {
     public static void saveFile(String fileName, InputStream is) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         try {
-            byte[] blob = new byte[1024];
-            while(is.read(blob) > 0)
-                fos.write(blob);
+            int bytesWritten = 0;
+            int byteCount = 0;
+            int totalSize = is.available();
+            byte[] bytes = new byte[1024];
+            while ((byteCount = is.read(bytes)) != -1)
+            {
+                fos.write(bytes, 0, byteCount);
+                bytesWritten += byteCount;
+            }
+            if(bytesWritten != totalSize)
+                throw new EOFException("未知的EOF标志位或提前遇见EOF标志位");
             System.out.println("保存文件成功");
         }
         finally {

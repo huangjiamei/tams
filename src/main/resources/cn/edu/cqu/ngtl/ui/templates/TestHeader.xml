@@ -424,6 +424,8 @@
                                   p:linkText="教学活动" p:iconClass="icon-bullhorn menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getAddActivityPage&amp;viewId=ClassView"
                                   p:linkText="新建教学活动" p:iconClass="icon-tag menuIcon"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaManagementPage&amp;viewId=TaView"
+                                  p:linkText="助教管理" p:iconClass="icon-users menuIcon"/>
                         </list>
                     </property>
                 </bean>

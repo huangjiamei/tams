@@ -365,40 +365,77 @@
                                                                                     <!--如何改为纵向列表形式待调整-->
                                                                                     <bean parent="Uif-GridGroup"
                                                                                           p:layoutManager.renderRowFirstCellHeader="false">
-                                                                                        <property
-                                                                                                name="layoutManager.numberOfColumns"
-                                                                                                value="8"/>
+                                                                                    <property name="layoutManager.numberOfColumns"
+                                                                                              value="16"/>
                                                                                         <property name="items">
                                                                                             <list>
                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                      p:label="课程名称"
-                                                                                                      p:colSpan="1"
-                                                                                                      p:rowSpan="2"
+                                                                                                      p:label="批次" p:colSpan="1" p:rowSpan="1"
                                                                                                       p:labelLeft="false"
                                                                                                       p:fieldLabel.colSpan="1"
-                                                                                                      p:fieldLabel.rowSpan="1"
-                                                                                                      p:messageText="@{#line.courseName}"/>
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="2016秋"/>
                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                      p:label="课程编号"
-                                                                                                      p:colSpan="1"
-                                                                                                      p:rowSpan="1"
+                                                                                                      p:label="课程名称" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:labelLeft="false"
                                                                                                       p:fieldLabel.colSpan="1"
-                                                                                                      p:fieldLabel.rowSpan="1"
-                                                                                                      p:messageText="@{#line.courseCode}"/>
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseName}"/>
                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                      p:label="教师"
-                                                                                                      p:colSpan="1"
-                                                                                                      p:rowSpan="1"
+                                                                                                      p:label="课程编号" p:colSpan="1" p:rowSpan="1"
                                                                                                       p:fieldLabel.colSpan="1"
-                                                                                                      p:fieldLabel.rowSpan="1"
-                                                                                                      p:messageText="@{#line.instructorName}"/>
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseCode}"/>
                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                      p:label="课程编号"
-                                                                                                      p:colSpan="1"
-                                                                                                      p:rowSpan="1"
+                                                                                                      p:label="教师" p:colSpan="1" p:rowSpan="1"
                                                                                                       p:fieldLabel.colSpan="1"
-                                                                                                      p:fieldLabel.rowSpan="1"
-                                                                                                      p:messageText="@{#line.courseCode}"/>
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="@{#line.instructorName}"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="批准经费" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="2000"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="博士补贴" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="800"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="奖励经费" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="500"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="实发总计" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="3375"/>
+
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="课程介绍" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="学期总结" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="批改作业" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="习题课" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="辅导答疑" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="期中/期末测验" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="指导实验/批改报告" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
+                                                                                                <bean parent="Uif-MessageField"
+                                                                                                      p:label="课程论文" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:fieldLabel.colSpan="1"
+                                                                                                      p:fieldLabel.rowSpan="1" p:messageText="100"/>
                                                                                             </list>
                                                                                         </property>
                                                                                     </bean>

@@ -195,7 +195,11 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             List<TAMSTeachCalendar> calendars = teachCalendarDao.selectAllByClassId(classId);
             for(TAMSTeachCalendar calendar : calendars) {
                 List<TAMSActivity> activities = activityDao.selectAllByClassId(classId);
-                calendar.getActivityList().addAll(activities);
+                if(calendar.getActivityList()!=null) {
+                    calendar.getActivityList().addAll(activities);
+                }else{
+                    calendar.setActivityList(activities);
+                }
             }
             return calendars;
         }

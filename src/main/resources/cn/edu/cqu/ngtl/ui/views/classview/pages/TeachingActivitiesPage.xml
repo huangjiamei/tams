@@ -291,7 +291,7 @@
 
                                                                                                                     <property name="disclosure.render" value="false"/>
 
-                                                                                                                    <property name="render" value="@{#line.createTime=='2016-11-22 10:42:51.0'}"/>
+                                                                                                                    <!--<property name="render" value="@{#line.createTime =='2016-11-22 10:42:51.0'}"/>-->
                                                                                                                     <property name="items">
                                                                                                                         <list>
                                                                                                                             <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">

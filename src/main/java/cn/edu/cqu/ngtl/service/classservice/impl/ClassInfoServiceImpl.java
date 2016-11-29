@@ -25,6 +25,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     private static final Logger logger = Logger.getRootLogger();
 
+
+    @Autowired
+    private TAMSTaApplicationDao tamsTaApplicationDao;
+
     @Autowired
     private UTClassInfoDao classInfoDao;
 
@@ -256,4 +260,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         return false;
     }
+
+
+    public List<TAMSTa> getAllTaFilteredByClassid(String classId){
+
+        return taDao.selectByClassId(classId);
+
+    }
+
+
+    public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId){
+
+        return tamsTaApplicationDao.selectByClassId(classId);
+    }
+
 }

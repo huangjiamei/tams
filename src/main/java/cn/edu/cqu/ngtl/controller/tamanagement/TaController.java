@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.controller.tamanagement;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
+import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
@@ -31,6 +32,9 @@ import java.util.List;
 @Controller
 @RequestMapping("/ta")
 public class TaController extends BaseController {
+
+    @Autowired
+    private IClassInfoService classInfoService;
 
     @Autowired
     private ITAConverter taConverter;
@@ -125,7 +129,7 @@ public class TaController extends BaseController {
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 
-    //我的助教（教师用户看到的）界面
+    //我的助教（教师用户看到的）(管理助教)界面
     /**
      * 获取助教管理页面(包含我的助教列表+申请助教列表)
      * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
@@ -150,7 +154,20 @@ public class TaController extends BaseController {
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
+  /*  *//**
+     * 获取助教详情页面
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaDetailPage&viewId=TaView
+     * @param form
+     * @return
+     *//*
+    @RequestMapping(params = "methodToCall=getTaDetailPage")
+    public ModelAndView getTaDetailPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                      HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
 
+        return this.getModelAndView(taInfoForm, "pageTaDetail");
+    }*/
 
     /**
      * 聘请助教
@@ -173,11 +190,17 @@ public class TaController extends BaseController {
         boolean result = taService.employBatchByStuIdsWithClassId(
                 taConverter.extractIdsFromApplication(checkedList)
         );
+        for(MyTaViewObject needToAdd : checkedList){
+            needToAdd.setCheckBox(false);
+            taInfoForm.getAllMyTa().add(needToAdd);
+            taInfoForm.getAllApplication().remove(needToAdd);
+        }
+
 
         if(result)
-            return this.getTaListPage(form, request);
+            return this.getModelAndView(taInfoForm, "pageTaManagement");
         else
-            return this.getTaListPage(form, request); //应该返回错误信息
+            return this.getModelAndView(taInfoForm, "pageTaManagement"); //应该返回错误信息
     }
 
 
@@ -452,6 +475,33 @@ public class TaController extends BaseController {
 
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
     }
+
+    /**
+     * 进入助教详情
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getTaDetailPage")
+    public ModelAndView getTaDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        try {
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
+            int index = params.getSelectedLineIndex();
+            String classid = taInfoForm.getAllTaInfo().get(index).getClassid();
+            String taid = taInfoForm.getAllTaInfo().get(index).getTaId();
+            taInfoForm.setSelectedTaInfo(taInfoForm.getAllTaInfo().get(index));
+            taInfoForm.setClassIdForDetailPage(classid);
+            taInfoForm.setTaIdForDetailpage(taid);
+            taInfoForm.setTaDeApplyReason(taInfoForm.getAllTaInfo().get(index).getApplicationReason());
+        }catch (Exception e){
+
+        }
+        return this.getModelAndView(taInfoForm, "pageTaDetail");
+    }
+
+
+
 
 
 

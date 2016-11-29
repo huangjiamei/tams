@@ -181,12 +181,23 @@ public class adminController extends BaseController {
         if(user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");
         boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
-        infoForm.setTimeType(null);
-        infoForm.setSettingsTime(null);
+        this.resetSettingTime(infoForm);
 
-        return this.getTimeSetPage(form);
+        return this.getModelAndView(infoForm, "pageTimeSet");
     }
 
+    /**
+     * 清空页面上已填的数值
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=resetSettingTime")
+    public ModelAndView resetSettingTime(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        infoForm.setTimeType(null);
+        infoForm.setSettingsTime(null);
+        return this.getTimeSetPage(infoForm);
+    }
 
     /**
      * 删除一个时间段
@@ -214,8 +225,8 @@ public class adminController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         TAMSTimeSettings selectedTimeSettings = infoForm.getTimeSettingsList().get(index);
-        infoForm.setTimeType(selectedTimeSettings.getTimeSettingType().getTypeName());
-        infoForm.setSettingsTime(infoForm.getStartTime()+"~"+infoForm.getEndTime());
+        infoForm.setTimeType(selectedTimeSettings.getTimeSettingType().getId());
+        infoForm.setSettingsTime(selectedTimeSettings.getStartTime()+"~"+selectedTimeSettings.getEndTime());
         return this.getModelAndView(infoForm, "pageTimeSet");
     }
 

@@ -32,23 +32,21 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <!--学生应聘助教-->
-    <bean id="ApplyOutStandingTaPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="setupAutoSideBar()">
+    <bean id="TaDetailPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
+          p:onDocumentReadyScript="setupAutoSideBar();">
         <property name="items">
             <list>
-                <!--页面header-->
-                <bean id="applyForTaFormPageHeader" parent="Uif-HorizontalBoxSection"
+                <bean id="taDetailHeader" parent="Uif-HorizontalBoxSection"
                       p:additionalCssClasses="content-header">
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean id="applyForTaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('applyForTaHeaderTitle','fa fa-check-circle','助教','申请优秀助教')">
+                            <bean id="taDeListHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('taDeListHeaderTitle','fa fa-users','助教管理','助教详情')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
-                            <bean   parent="Uif-HorizontalBoxSection"
+                            <bean  parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
@@ -62,12 +60,14 @@
                                                     <property name="options">
                                                         <list>
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.viewId="PortalView"
+                                                                  p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教"
-                                                                  p:location.viewId="TaView" p:location.controllerMapping="/ta"
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教列表"
+                                                                  p:location.viewId="TaView"
+                                                                  p:location.controllerMapping="/ta"
                                                                   p:location.methodToCall="getTaListPage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="申请优秀助教"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教详情"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -79,14 +79,12 @@
                         </list>
                     </property>
                 </bean>
-
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
-                                <property name="items"  >
+                                <property name="items">
                                     <list>
-                                        <!--申请表-->
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info">
                                             <property name="items">
@@ -95,8 +93,9 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-table"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="优秀助教申请表" p:additionalCssClasses="boxheaderTitle"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="助教信息"
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -104,42 +103,64 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-VerticalBoxSection">
+                                                                <bean parent="Uif-GridGroup"
+                                                                      p:layoutManager.renderRowFirstCellHeader="false">
+                                                                    <property name="layoutManager.numberOfColumns"
+                                                                              value="4"/>
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="inputField1"
-                                                                                  p:style="width:100%;">
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;"/>
-                                                                                </property>
-                                                                            </bean>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="助教课程" p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
+                                                                                  p:messageText="@{selectedTaInfo.courseName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="主讲教师"
+                                                                                  p:messageText="@{selectedTaInfo.instructorName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="教学班号" p:messageText="@{selectedTaInfo.classNumber}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学分"
+                                                                                  p:messageText="5.0"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学生人数"
+                                                                                  p:messageText="100"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="任课校区" p:messageText="虎溪校区"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="助教姓名" p:messageText="@{selectedTaInfo.taName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学号（职工号）"
+                                                                                  p:messageText="@{selectedTaInfo.taIDNumber}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="学历" p:messageText="@{selectedTaInfo.taMasterMajorName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="所属学院" p:messageText="数统学院"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="专业"
+                                                                                  p:messageText="数学与应用数学"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="导师" p:messageText="@{selectedTaInfo.advisorName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="电话号码" p:messageText="13592739473"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="银行" p:messageText="中国银行"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="银行卡号" p:messageText="372586789276892768927"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
-                                                                <!-- <bean parent="Uif-HorizontalBoxSection">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                           <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="提交"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="submitTaForm"
-                                                                                  p:successCallback="alert('提交成功，返回测试页面homepage，未来可换成dialog');"
-                                                                                  p:id="submitTaFormBtn"
-                                                                                  p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="取消"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="alert('取消');"
-                                                                                  p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>
-                                                                        </list>
+                                                                <bean parent="Uif-InputField" p:label="申请理由及特长：" p:propertyName="taDeApplyReason"
+                                                                      p:required="true" p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextAreaControl"
+                                                                              p:style="height:300px;"/>
                                                                     </property>
-                                                                </bean>-->
+                                                                </bean>
+
                                                             </list>
                                                         </property>
                                                     </bean>
+
                                                 </list>
                                             </property>
                                         </bean>
@@ -152,4 +173,6 @@
             </list>
         </property>
     </bean>
+
+
 </beans>

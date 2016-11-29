@@ -158,7 +158,8 @@
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="保存"
                                                                                                           p:methodToCall="addNewTimeSet"
-                                                                                                        /><!--
+                                                                                                          p:refreshId="TimeSetPage"
+                                                                                                    /><!--
                                                                                               p:render="@{!#form.updateFlag}"-->
                                                                                                     <!--<bean parent="Uif-PrimaryActionButton"-->
                                                                                                           <!--p:actionLabel="更新(methodToCall和权限,还没页面)"-->
@@ -214,7 +215,8 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-InputField"
-                                                                      p:propertyName="timeSettingType.typeName"
+                                                                      p:propertyName="timeSettingTypeId"
+                                                                      p:readOnlyDisplayReplacement="@{new cn.edu.cqu.ngtl.tools.TimeSettingsTypeName().getTimeSettingsTypeName(#line.timeSettingTypeId)}"
                                                                       p:readOnly="true"
                                                                       p:label="类型"/>
                                                                 <bean parent="Uif-InputField"
@@ -235,7 +237,7 @@
                                                                 name="lineActions">
                                                             <list>
                                                                 <bean parent="Uif-ActionImage"
-                                                                      p:methodToCall="updateTimeSetting">
+                                                                      p:methodToCall="updateTimeSetting" p:refreshId="timeSet">
                                                                     <property
                                                                             name="actionImage">
                                                                         <bean parent="Uif-Image"
@@ -243,7 +245,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-ActionImage"
-                                                                      p:methodToCall="deleteTimeSetting">
+                                                                      p:methodToCall="deleteTimeSetting" >
                                                                     <property
                                                                             name="actionImage">
                                                                         <bean parent="Uif-Image"

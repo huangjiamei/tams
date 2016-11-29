@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaAppraisalForStudent" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container" p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--header-->
@@ -41,8 +41,8 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean id="toAppraHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('toAppraHeaderTitle','fa fa-plus-square','助教管理','助教考核')">
+                            <bean id="toStuAppraHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('toStuAppraHeaderTitle','fa fa-plus-square','助教管理','学生考核')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -62,10 +62,10 @@
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教(无链接)"
-                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
-                                                                  p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教考核"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教列表"
+                                                                  p:location.viewId="TaView" p:location.controllerMapping="/ta"
+                                                                  p:location.methodToCall="getTaListPage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="学生考核"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -103,42 +103,8 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-GridGroup"
-                                                                      p:layoutManager.numberOfColumns="4"
-                                                                      p:style="margin-top:10px">
-                                                                    <property name="headerText" value="考核信息"/>
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="课程名称" p:colSpan="3"
-                                                                                  p:fieldLabel.colSpan="1" p:messageText="名称"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="上课教师" p:messageText="教师"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="教学班号" p:messageText="123"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="课程类别" p:messageText="类型"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="任课校区" p:messageText="虎溪"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="授课年级/专业" p:messageText="2013"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="助教姓名" p:messageText="abc"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="学号" p:messageText="20141754"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="学历" p:messageText="硕士"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="所在学院" p:messageText="ab数统学院c"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="专业" p:messageText="abc"/>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-
                                                                 <!--任务类型、次数...评论-->
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                p:style="margin-top:20px;">
+                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject"/>
                                                                     <property name="propertyName" value="allIssues"/>
                                                                     <property name="layoutManager.renderSequenceField"
@@ -157,6 +123,7 @@
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="教学日历" p:propertyName="issueType"/>
                                                                             <bean parent="Uif-DataField" p:label="活动次数" p:propertyName="issueCount"/>
+                                                                            <bean parent="Uif-DataField" p:label="完成情况" p:propertyName="likeRate"/>
                                                                             <bean parent="Uif-DataField" p:label="点赞比" p:propertyName="likeRate"/>
                                                                             <bean parent="Uif-DataField" p:label="学生参与度" p:propertyName="commentCount"/>
                                                                             <bean parent="Uif-DataField" p:label="成绩" p:propertyName="commentCount"/>
@@ -164,7 +131,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:style="margin-top:30px;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-HorizontalBoxSection"
@@ -205,7 +172,7 @@
                                                                                         </bean>
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:label="2.你认为助教合格吗"
-                                                                                              p:propertyName="inputField2">
+                                                                                              p:propertyName="inputField2" p:style="margin-top:30px;">
                                                                                             <property name="control">
                                                                                                 <bean parent="Uif-HorizontalRadioControl">
                                                                                                     <property
@@ -226,7 +193,7 @@
                                                                                         </bean>
                                                                                         <bean parent="Uif-InputField"
                                                                                               p:label="3.你是否愿意推荐此助教为优秀助教"
-                                                                                              p:propertyName="inputField2">
+                                                                                              p:propertyName="inputField2" p:style="margin-top:30px;">
                                                                                             <property name="control">
                                                                                                 <bean parent="Uif-HorizontalRadioControl">
                                                                                                     <property
@@ -252,7 +219,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
-                                                                      p:actionScript="alert('You clicked a button');"/>
+                                                                      p:actionScript="alert('You clicked a button');" />
                                                             </list>
                                                         </property>
                                                     </bean>

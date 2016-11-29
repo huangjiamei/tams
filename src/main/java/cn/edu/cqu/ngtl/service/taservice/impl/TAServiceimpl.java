@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.taservice.impl;
 
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
@@ -14,6 +15,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -76,27 +78,47 @@ public class TAServiceimpl implements ITAService {
     @Override
     public boolean submitApplicationAssistant(TAMSTaApplication application) {
 
-        if(tamsTaApplicationDao.insertOne(application))
+        if (tamsTaApplicationDao.insertOne(application))
             return true;
 
         return false;
     }
 
-    //根据助教id获取助教列表，若为系统管理员，则查询全校所有助教列表；若不是，则返回教师的助教列表
+
+    //根据用户id显示助教列表，不同用户助教列表不同
     @Override
     public List<TAMSTa> getAllTaFilteredByUid(String uId) {
 
         //// FIXME: 16-11-1 测试所以加上了!,正式发行的时候务必去掉 非运算符 '!'
-        if(!userInfoService.isSysAdmin(uId))
+        //系统管理员，查看全校所有助教
+        //测试：01302022
+        if (userInfoService.isSysAdmin(uId))
             return taDao.selectAll();
-        else {
-            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
-            return taDao.selectByClassId(classIds);
+            //教务处管理员，查看全校所有助教
+            //测试:02015508
+            else if (userInfoService.isAcademicAffairsStaff(uId))
+                return taDao.selectAll();
+
+            //学院管理员(二级单位管理员)，查看本学院课程的助教
+            //测试：02015402光电学院
+        else if(userInfoService.isCollegeStaff(uId)){//先根据uId查询对应的学院id
+            User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+            return taDao.selectByDeptId(user.getDepartmentId().toString());
         }
+
+                //教师，查看自己课程的助教
+                //测试：01012657
+                else {
+                     //先根据教师id查到该教师所教授的批量课程id，然后再根据批量的课程id查出所有的助教
+                     List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+                     return taDao.selectByClassId(classIds);
+                }
+
     }
 
-    //根据助教id获取申请者列表
+
+    //根据教师id获取申请者列表
     @Override
     public List<TAMSTaApplication> getAllApplicationFilterByUid(String uId) {
 
@@ -140,9 +162,9 @@ public class TAServiceimpl implements ITAService {
             //预处理录入信息
             newTa.setSessionId(sessionDao.getCurrentSession().getId().toString());
             newTa.setStatus(TA_STATUS.LIVING);
-
+            TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
+            newTa.setApplicationNote(readyToRemove.getNote());
             if(taDao.insertByEntity(newTa)) {
-                TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
                 if(applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
                 }
@@ -154,7 +176,6 @@ public class TAServiceimpl implements ITAService {
                 //新建信息失败
                 return false;
         }
-
         return true;
     }
 

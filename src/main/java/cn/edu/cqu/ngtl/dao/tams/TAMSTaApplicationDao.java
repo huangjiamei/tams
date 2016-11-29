@@ -14,6 +14,8 @@ public interface TAMSTaApplicationDao {
 
     List<TAMSTaApplication> selectByClassId(List<Object> classIds);
 
+    List<TAMSTaApplication> selectByClassId(String classIds);
+
     TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId);
 
     boolean deleteByEntity(TAMSTaApplication readyToRemove);

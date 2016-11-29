@@ -25,4 +25,10 @@ public interface TAMSTaDao {
     TAMSTa selectByStudentIdAndClassId(String stuId, String classId);
 
     boolean insertByEntity(TAMSTa newTa);
+
+    List<TAMSTa> selectByClassId(String classId);
+
+    //根据学院id查该学院的所有助教
+    List<TAMSTa> selectByDeptId(String uId);
+
 }

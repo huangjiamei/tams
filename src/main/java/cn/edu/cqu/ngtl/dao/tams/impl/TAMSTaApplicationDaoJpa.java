@@ -36,7 +36,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return true;
     }
 
-    //根据课程找出相应的助教
+    //根据课程找出相应的申请助教
     @Override
     public List<TAMSTaApplication> selectByClassId(List<Object> classIds) {
         List<TAMSTaApplication> tas = new ArrayList<>();
@@ -78,5 +78,20 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
     public boolean deleteByEntity(TAMSTaApplication application) {
         KradDataServiceLocator.getDataObjectService().delete(application);
         return true;
+    }
+
+
+    @Override
+    public List<TAMSTaApplication> selectByClassId(String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("applicationClassId", classId)
+                )
+        );
+        QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTaApplication.class,
+                criteria.build()
+        );
+        return qr.getResults();
     }
 }

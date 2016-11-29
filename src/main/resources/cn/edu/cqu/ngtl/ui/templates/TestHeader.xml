@@ -447,19 +447,10 @@
                         <list>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaListPage&amp;viewId=TaView"
                                   p:linkText="助教列表" p:iconClass="icon-th menuIcon"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaManagementPage&amp;viewId=TaView"
-                                  p:linkText="助教管理" p:iconClass="icon-users menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getAddTaskPage&amp;viewId=TaView"
                                   p:linkText="添加任务(没对应form)" p:iconClass="icon-plus menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/mytest?methodToCall=getTaskDetailPage&amp;viewId=TestView"
                                   p:linkText="任务详情(在testCcontroller)" p:iconClass="icon-file menuIcon"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaAppraisalPage&amp;viewId=TaView"
-                                  p:linkText="助教考核-老师(测试链接，后期删去)" p:iconClass="icon-check menuIcon"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaAppraisalForStu&amp;viewId=TaView"
-                                  p:linkText="助教考核-学生(测试链接，后期删去)" p:iconClass="icon-check menuIcon"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getApplyOSTaPage&amp;viewId=TaView"
-                                  p:linkText="申请优秀助教(链接放哪里？)" p:iconClass="icon-check menuIcon"/>
-
                         </list>
                     </property>
                 </bean>

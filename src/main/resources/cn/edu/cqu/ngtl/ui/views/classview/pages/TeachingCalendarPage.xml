@@ -113,7 +113,7 @@
                                                                             <bean id="elapsedTime" parent="Uif-Message"
                                                                                   p:messageText="@{totalElapsedTime}"
                                                                                   p:additionalCssClasses="label label-primary"
-                                                                                  p:style="font-size: 12px;"/>
+                                                                                  p:style="font-size: 12px;margin-top:-2px;"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

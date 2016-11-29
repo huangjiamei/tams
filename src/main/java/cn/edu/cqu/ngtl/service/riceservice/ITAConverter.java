@@ -18,6 +18,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTaApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -47,6 +48,8 @@ public interface ITAConverter {
 
     List<MyTaViewObject> myTaCombinePayDay(List<TAMSTa> allTaFilteredByUid);
 
+    List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> myTaCombinePayDayClass(List<TAMSTa> allTaFilteredByUid);
+
     List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid);
 
     List<ClassTeacherViewObject> classToViewObject(List<UTClass> allClassesFilterByUidAndCondition);
@@ -74,4 +77,10 @@ public interface ITAConverter {
     List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities);
 
     ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
+
+    List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> applicationToViewObjectClass(List<TAMSTaApplication> allApplicationFilterByUid);
+
+    List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars);
+
+
 }

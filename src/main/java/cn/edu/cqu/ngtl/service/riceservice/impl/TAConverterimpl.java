@@ -18,10 +18,10 @@ import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.apache.log4j.Logger;
-import org.apache.log4j.pattern.LoggerPatternConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -58,6 +58,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private TAMSTaCategoryDao taCategoryDao;
+
+    @Autowired
+    private TAMSActivityDao tamsActivityDao;
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
@@ -372,6 +375,9 @@ public class TAConverterimpl implements ITAConverter {
 
         for(TAMSTa ta : allTa) {
             TaInfoViewObject viewObject = new TaInfoViewObject();
+            viewObject.setTaId(ta.getTaId());
+            viewObject.setClassid(ta.getTaClassId());
+            viewObject.setApplicationReason(ta.getApplicationNote());
             UTCourse course = null;
             List<UTInstructor> instructors = null;
             if(ta.getTaClass() != null) {
@@ -380,7 +386,7 @@ public class TAConverterimpl implements ITAConverter {
                 StringBuilder sb = new StringBuilder();
                 if(instructors != null)
                     for(UTInstructor instructor : instructors)
-                        sb.append(instructor.getName() + "，");
+                        sb.append(instructor.getName() + "  ");
                 viewObject.setInstructorName(sb.toString());
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
@@ -442,6 +448,64 @@ public class TAConverterimpl implements ITAConverter {
 
         return viewObjects;
     }
+
+    //FIXME 迁移后删掉
+    @Override
+    public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> myTaCombinePayDayClass(List<TAMSTa> allTaFilteredByUid) {
+
+        List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allTaFilteredByUid.size());
+
+        for(TAMSTa ta : allTaFilteredByUid) {
+            cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject viewObject = new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject();
+            UTStudent taStu = ta.getTa();
+            if(taStu != null) {
+                viewObject.setTaName(taStu.getName());
+                viewObject.setTaIdNumber(taStu.getId());
+                viewObject.setTaGender(taStu.getGender());
+                viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
+            }
+            viewObject.setStatus(ta.getStatus());
+            //暂时缺失的属性
+            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setAdvisorName("缺失");
+            viewObject.setPayDay("暂未设置");
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    //我的助教界面申请人助教列表
+    @Override
+    public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> applicationToViewObjectClass(List<TAMSTaApplication> allApplicationFilterByUid) {
+        if(allApplicationFilterByUid == null)
+            return null;
+        List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allApplicationFilterByUid.size());
+
+        for(TAMSTaApplication application : allApplicationFilterByUid) {
+            cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject viewObject = new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject();
+            UTStudent applicant = application.getApplicant();
+            if(applicant != null) {
+                viewObject.setTaName(applicant.getName());
+                viewObject.setTaIdNumber(applicant.getId());
+                viewObject.setTaGender(applicant.getGender());
+                viewObject.setTaBachelorMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
+            }
+
+            viewObject.setApplicationClassId(application.getApplicationClassId());
+
+            //暂时缺失的属性
+            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setAdvisorName("缺失");
+
+            viewObjects.add(viewObject);
+        }
+
+        return viewObjects;
+    }
+
+
 
     //我的助教界面申请人助教列表
     @Override
@@ -777,5 +841,35 @@ public class TAConverterimpl implements ITAConverter {
             }
         }
         return viewObject;
+    }
+
+
+    @Override
+    public List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars){
+        List<AppraisalDetailViewObject> result = new ArrayList<>();
+        if(teachCalendars!=null) {
+            for (TAMSTeachCalendar tamsTeachCalendar : teachCalendars) {
+                AppraisalDetailViewObject appraisalDetailViewObject = new AppraisalDetailViewObject();
+                appraisalDetailViewObject.setCalendarName(tamsTeachCalendar.getTheme());
+                List<TAMSActivity> tamsActivity = tamsActivityDao.selectAllByCalendarId(tamsTeachCalendar.getId());
+                appraisalDetailViewObject.setActivityNumber(tamsActivity==null?"0":String.valueOf(tamsActivity.size()));
+                /**
+                 * 缺失数据填入固定值
+                 */
+                appraisalDetailViewObject.setCompletion("80%");
+                appraisalDetailViewObject.setEngagement("99%");
+                appraisalDetailViewObject.setGrade("95");
+                result.add(appraisalDetailViewObject);
+            }
+        }else{
+            AppraisalDetailViewObject appraisalDetailViewObject = new AppraisalDetailViewObject();
+            appraisalDetailViewObject.setCalendarName("");
+            appraisalDetailViewObject.setActivityNumber("");
+            appraisalDetailViewObject.setCompletion("");
+            appraisalDetailViewObject.setEngagement("");
+            appraisalDetailViewObject.setGrade("");
+            result.add(appraisalDetailViewObject);
+        }
+        return result;
     }
 }

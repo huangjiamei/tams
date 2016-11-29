@@ -1,6 +1,8 @@
 package cn.edu.cqu.ngtl.service.classservice;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
@@ -26,11 +28,16 @@ public interface IClassInfoService {
 
     List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId);
 
-    boolean instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar);
+    TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar);
 
     boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId);
 
     List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId);
 
     boolean instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations);
+
+    List<TAMSTa> getAllTaFilteredByClassid(String classId);
+
+    List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId);
+
 }

@@ -33,7 +33,7 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <bean id="TaDetailPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="removeSideBar()">
+          p:onDocumentReadyScript="setupAutoSideBar();">
         <property name="items">
             <list>
                 <bean id="taDetailHeader" parent="Uif-HorizontalBoxSection"
@@ -46,7 +46,7 @@
                             </bean>
 
                             <!-- 右上角 当前路径 -->
-                            <bean parent="Uif-HorizontalBoxSection"
+                            <bean  parent="Uif-HorizontalBoxSection"
                                   p:additionalCssClasses="breadcrumb">
                                 <property name="items">
                                     <list>
@@ -64,8 +64,8 @@
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教列表"
-                                                                  p:location.viewId="ClassView"
-                                                                  p:location.controllerMapping="/class"
+                                                                  p:location.viewId="TaView"
+                                                                  p:location.controllerMapping="/ta"
                                                                   p:location.methodToCall="getTaListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教详情"/>
                                                         </list>
@@ -112,12 +112,12 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="助教课程" p:colSpan="3"
                                                                                   p:fieldLabel.colSpan="1"
-                                                                                  p:messageText="高等数学"/>
+                                                                                  p:messageText="@{selectedTaInfo.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="主讲教师"
-                                                                                  p:messageText=" 阴文革"/>
+                                                                                  p:messageText="@{selectedTaInfo.instructorName}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="教学班号" p:messageText="001"/>
+                                                                                  p:label="教学班号" p:messageText="@{selectedTaInfo.classNumber}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学分"
                                                                                   p:messageText="5.0"/>
@@ -127,19 +127,19 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="任课校区" p:messageText="虎溪校区"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="助教姓名" p:messageText="牛顿"/>
+                                                                                  p:label="助教姓名" p:messageText="@{selectedTaInfo.taName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学号（职工号）"
-                                                                                  p:messageText="20147584"/>
+                                                                                  p:messageText="@{selectedTaInfo.taIDNumber}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="学历" p:messageText="硕士"/>
+                                                                                  p:label="学历" p:messageText="@{selectedTaInfo.taMasterMajorName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="所属学院" p:messageText="数统学院"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="专业"
                                                                                   p:messageText="数学与应用数学"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="导师" p:messageText="高斯"/>
+                                                                                  p:label="导师" p:messageText="@{selectedTaInfo.advisorName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="电话号码" p:messageText="13592739473"/>
                                                                             <bean parent="Uif-MessageField"
@@ -149,11 +149,10 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-                                                                <bean parent="Uif-InputField" p:label="描述" p:propertyName="taDeApplyReason"
+                                                                <bean parent="Uif-InputField" p:label="申请理由及特长：" p:propertyName="taDeApplyReason"
                                                                       p:required="true" p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextAreaControl"
-                                                                              p:watermarkText="我申请助教是因为我够优秀、够努力，你不选我就是你的损失。"
                                                                               p:style="height:300px;"/>
                                                                     </property>
                                                                 </bean>

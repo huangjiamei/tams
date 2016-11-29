@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.form.tamanagement;
 
 import cn.edu.cqu.ngtl.form.BaseForm;
+import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
@@ -20,6 +21,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
      * 教师评价相关
      */
 
+    private List<AppraisalDetailViewObject> appraisalDetail;
+
     private List<IssueViewObject> allIssues;
 
     private String evaluateDetail;
@@ -35,14 +38,22 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private List<MyTaViewObject> allApplication;
 
     private MyTaViewObject selectedTa=new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
+
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
 
+    {
+        // 赋初始空值测试
+        conditionTAList.add(new MyTaViewObject());
+    }
     /**
      * 助教列表相关
      */
 
     private List<TaInfoViewObject> allTaInfo;
     private String taDeApplyReason;
+    private String taIdForDetailpage;
+    private String classIdForDetailPage;
+    private TaInfoViewObject selectedTaInfo;
 
     /**
      * 任务相关
@@ -96,9 +107,6 @@ public class TaInfoForm extends BaseForm implements Serializable {
     }
 
     public MyTaViewObject getSelectedTa() {
-//        if(selectedTa==null){
-//            selectedTa=new MyTaViewObject();
-//        }
         return selectedTa;
     }
 
@@ -212,5 +220,37 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTaDeApplyReason(String taDeApplyReason) {
         this.taDeApplyReason = taDeApplyReason;
+    }
+
+    public String getTaIdForDetailpage() {
+        return taIdForDetailpage;
+    }
+
+    public void setTaIdForDetailpage(String taIdForDetailpage) {
+        this.taIdForDetailpage = taIdForDetailpage;
+    }
+
+    public String getClassIdForDetailPage() {
+        return classIdForDetailPage;
+    }
+
+    public void setClassIdForDetailPage(String classIdForDetailPage) {
+        this.classIdForDetailPage = classIdForDetailPage;
+    }
+
+    public TaInfoViewObject getSelectedTaInfo() {
+        return selectedTaInfo;
+    }
+
+    public void setSelectedTaInfo(TaInfoViewObject selectedTaInfo) {
+        this.selectedTaInfo = selectedTaInfo;
+    }
+
+    public List<AppraisalDetailViewObject> getAppraisalDetail() {
+        return appraisalDetail;
+    }
+
+    public void setAppraisalDetail(List<AppraisalDetailViewObject> appraisalDetail) {
+        this.appraisalDetail = appraisalDetail;
     }
 }

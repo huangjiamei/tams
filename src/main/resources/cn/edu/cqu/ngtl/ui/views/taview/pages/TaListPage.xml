@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaListPage" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container" p:onDocumentReadyScript="removeSideBar()">
         <property name="items">
             <list>
                 <!--header-->
@@ -79,9 +79,9 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
-                                <property name="items"  >
+                                <property name="items">
                                     <list>
-                                         <bean parent="Uif-VerticalBoxSection"
+                                        <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info">
                                             <property name="items">
                                                 <list>
@@ -92,7 +92,8 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="助教列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:style="float: right!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
@@ -118,7 +119,6 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -144,22 +144,31 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
+                                                                            <bean parent="Uif-InputField" p:label=""
+                                                                                  p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号" p:propertyName="courseCode"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNumber"/>
-                                                                            <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程名称"
+                                                                                  p:propertyName="courseName"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程编号"
+                                                                                  p:propertyName="courseCode"/>
+                                                                            <bean parent="Uif-DataField" p:label="教学班"
+                                                                                  p:propertyName="classNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="教师"
+                                                                                  p:propertyName="instructorName"/>
 
-                                                                            <bean parent="Uif-DataField" p:label="助教姓名" p:propertyName="taName"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIDNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教姓名"
+                                                                                  p:propertyName="taName"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号"
+                                                                                  p:propertyName="taIDNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
                                                                                   p:propertyName="taGender"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="taBachelorMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="taMasterMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="本科专业"
+                                                                                  p:propertyName="taBachelorMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="研究生专业"
+                                                                                  p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
                                                                                   p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
@@ -202,11 +211,10 @@
                                                                                               p:render="@{#line.appraise=='14'}"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel="前去评价(参考classlistpage，跳转到新页面)"
                                                                                               p:methodToCall="getTaReviewPage"
                                                                                               p:render="@{#line.appraise!='14'}"
                                                                                               p:navigateToPageId="pageTaDetail"
-                                                                                        />
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

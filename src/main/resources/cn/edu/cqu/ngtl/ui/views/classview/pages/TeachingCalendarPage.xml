@@ -104,8 +104,21 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
+                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-Message"
+                                                                                  p:messageText="耗时小计："
+                                                                                  p:additionalCssClasses="boxheaderTitle"/>
+                                                                            <bean id="elapsedTime" parent="Uif-Message"
+                                                                                  p:messageText="@{totalElapsedTime}"
+                                                                                  p:additionalCssClasses="label label-primary"
+                                                                                  p:style="font-size: 12px;margin-top:-2px;"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                                 <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="float: left!important;">
+                                                                      p:style="float: right!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--左上角btnlist-->
@@ -120,21 +133,6 @@
                                                                                   p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-primary tamsbtn">
                                                                             </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-
-                                                                <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="float: right!important;margin-right:5px;">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-Message"
-                                                                                  p:messageText="耗时小计："
-                                                                                  p:additionalCssClasses="boxheaderTitle"/>
-                                                                            <bean id="elapsedTime" parent="Uif-Message"
-                                                                                  p:messageText="@{totalElapsedTime}"
-                                                                                  p:additionalCssClasses="label label-primary"
-                                                                                  p:style="padding:0 5px;font-size: 15px;"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

@@ -80,7 +80,6 @@
                     </property>
                 </bean>
 
-                <!--row 2-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
@@ -120,10 +119,10 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <!-- <bean parent="Uif-HorizontalBoxSection">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"
+                                                                           <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="submitTaForm"
@@ -134,10 +133,10 @@
                                                                                   p:actionLabel="取消"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:actionScript="alert('取消');"
-                                                                                  p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>-->
+                                                                                  p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>
                                                                         </list>
                                                                     </property>
-                                                                </bean>
+                                                                </bean>-->
                                                             </list>
                                                         </property>
                                                     </bean>

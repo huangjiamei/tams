@@ -15,12 +15,6 @@ body{
     float: none!important;
 }
 
-.container{
-    margin:0 auto;
-    padding:0px;
-    width:100%!important;
-}
-
 /*View的header样式*/
 .uif-viewHeader {
     padding: 0px;
@@ -317,13 +311,13 @@ body{
 
 /*box-header的btn*/
 .box-btngroup{
-    float: right!important;
+    /*float: right!important;*/
     margin-right: 10px;
-    font-size:14px;
+    font-size:12px;
 }
 .box-btngroup > button {
-    float: left;
-    font-size: 14px;
+    /*float: left;*/
+    font-size: 12px;
     margin-left: 10px;
 }
 /*box end*/
@@ -369,7 +363,7 @@ body{
 
 .tamsbtn{
     /*float:right!important;*/
-    font-size:15px;
+    font-size:12px;
     margin-left: 5px;
     margin-right:5px;
     height:30px;
@@ -709,8 +703,8 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 /*左侧侧边栏鼠标悬停会被盖住的问题*/
 #Uif-Navigation{
-    z-index:1000;
-}
+     z-index:1000;
+ }
 
 /*MessageField和InputField中心线没有对齐*/
 .messageStyle{
@@ -720,3 +714,27 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .headerPosition{
     margin: 50px 0px;
 }
+
+/*按钮的border-color有颜色，消掉*/
+.btn-primary{
+    background-color:#07c;
+    border-color:#f5f5f5;
+}
+/*侧边菜单栏hover时颜色为主题颜色*/
+#Uif-Navigation .nav.nav-list>li>a:hover,
+#Uif-Navigation .nav.nav-list>li>a:focus{
+    background: none repeat scroll 0 0 #3C8dbc!important;
+}
+
+/*侧边菜单栏位置贴着左边，所以没有侧边栏的container设为98%*/
+.container-fluid {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.container{
+    margin:0 auto;
+    padding:0px;
+    width:98%!important;
+}
+

@@ -75,6 +75,21 @@
             <bean id="MyHeader" parent="TestHeader" />
         </property>
 
+        <!--classview特有的侧边栏-->
+        <!--但是某几页不需要侧边栏的需要额外处理-->
+        <property name="navigation">
+            <bean parent="Uif-MenuNavigationGroup">
+                <property name="items">
+                    <list>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="助教详情" p:methodToCall="getTaDetailPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="助教考核-老师" p:methodToCall="getTaAppraisalPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="助教考核-学生" p:methodToCall="getTaAppraisalForStu"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="申请优秀助教" p:methodToCall="getApplyOSTaPage"/>
+                    </list>
+                </property>
+            </bean>
+        </property>
+
         <property name="items">
             <!--这是一个page列表，一个view可以包含多个page，但是每次通过pageId访问其中的一个-->
             <list merge="true">

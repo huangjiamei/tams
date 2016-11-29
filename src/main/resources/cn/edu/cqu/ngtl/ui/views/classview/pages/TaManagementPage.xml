@@ -293,40 +293,18 @@
     <bean id="addApplicantDialog" parent="Uif-DialogGroup"
           p:headerText="添加申请人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#addApplicantDialog').modal({backdrop: 'static', keyboard: false});">
-        <!--jQuery('#addApplicantDialog').children().css('width','90%');-->
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人。" />
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-InputField" p:label="姓名"
-                                  p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12 "
-                                  p:propertyName="inputField8"/>
-                            <bean parent="Uif-InputField" p:label="学号"
-                                  p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12"
-                                  p:propertyName="inputField9"/>
-                            <bean parent="Uif-PrimaryActionButton"
-                                  p:additionalCssClasses="col-lg-2 col-md-2 col-sm-12 col-xs-12"
-                                  p:methodToCall="searchTaByCondition"
-                                  p:preSubmitCall="return true;"
-                                  p:ajaxSubmit="true"
-                                  p:style="margin-top:18px;"
-                                  p:actionLabel="查询"
-                                  p:refreshId="taExtraBox"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean id="taExtraBox" parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                    <property name="items">
-                        <list>
                             <!--左边，一个查询得到的申请人列表-->
                             <bean id="searchTaApplicantList" parent="Uif-VerticalBoxSection"
+                                  p:style="display:none;"
                                   p:additionalCssClasses="col-md-5 col-lg-5">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表" />
                                         <bean parent="Uif-Disclosure-TableCollectionSection">
                                             <property name="collectionObjectClass"
                                                       value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
@@ -360,6 +338,7 @@
                                                                       p:actionLabel="查看"
                                                                       p:actionImagePlacement="LEFT"
                                                                       p:methodToCall="getSelectedTaInfo"
+                                                                      p:successCallback="showElement('taDetailInfoGrid');"
                                                                       p:refreshId="taDetailInfoGrid"/>
                                                             </list>
                                                         </property>
@@ -376,11 +355,25 @@
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-7 col-lg-7">
                                 <property name="items">
                                     <list>
+                                        <bean parent="Uif-InputField" p:label="姓名"
+                                              p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12 "
+                                              p:propertyName="inputField8"/>
+                                        <bean parent="Uif-InputField" p:label="学号"
+                                              p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12"
+                                              p:propertyName="inputField9"/>
+                                        <bean parent="Uif-PrimaryActionButton"
+                                              p:additionalCssClasses="col-lg-2 col-md-2 col-sm-12 col-xs-12"
+                                              p:methodToCall="searchTaByCondition"
+                                              p:preSubmitCall="return true;"
+                                              p:style="margin-top:18px;"
+                                              p:actionLabel="查询"
+                                              p:successCallback="showElement('searchTaApplicantList');jQuery('#addApplicantDialog').children().css('width','90%');"
+                                              p:refreshId="searchTaApplicantList"/>
                                         <!--ta的更多的信息-->
-                                        <bean parent="Uif-MessageField" p:messageText="学生详情：" />
                                         <bean id="taDetailInfoGrid" parent="Uif-GridGroup"
                                               p:additionalCssClasses="col-lg-12 col-md-12 col-sm-12 col-xs-12 "
-                                              p:layoutManager.renderRowFirstCellHeader="false">
+                                              p:layoutManager.renderRowFirstCellHeader="false"
+                                                p:style="display:none;">
                                             <property name="layoutManager.numberOfColumns"
                                                       value="4"/>
                                             <property name="items">

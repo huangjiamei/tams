@@ -79,4 +79,19 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         KradDataServiceLocator.getDataObjectService().delete(application);
         return true;
     }
+
+
+    @Override
+    public List<TAMSTaApplication> selectByClassId(String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("applicationClassId", classId)
+                )
+        );
+        QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTaApplication.class,
+                criteria.build()
+        );
+        return qr.getResults();
+    }
 }

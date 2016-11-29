@@ -484,15 +484,19 @@ public class TaController extends BaseController {
     @RequestMapping(params = "methodToCall=getTaDetailPage")
     public ModelAndView getTaDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
-        int index = params.getSelectedLineIndex();
-        String classid = taInfoForm.getAllTaInfo().get(index).getClassid();
-        String taid = taInfoForm.getAllTaInfo().get(index).getTaId();
-        taInfoForm.setSelectedTaInfo(taInfoForm.getAllTaInfo().get(index));
-        taInfoForm.setClassIdForDetailPage(classid);
-        taInfoForm.setTaIdForDetailpage(taid);
-        taInfoForm.setTaDeApplyReason(taInfoForm.getAllTaInfo().get(index).getApplicationReason());
+        try {
+            CollectionControllerServiceImpl.CollectionActionParameters params =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
+            int index = params.getSelectedLineIndex();
+            String classid = taInfoForm.getAllTaInfo().get(index).getClassid();
+            String taid = taInfoForm.getAllTaInfo().get(index).getTaId();
+            taInfoForm.setSelectedTaInfo(taInfoForm.getAllTaInfo().get(index));
+            taInfoForm.setClassIdForDetailPage(classid);
+            taInfoForm.setTaIdForDetailpage(taid);
+            taInfoForm.setTaDeApplyReason(taInfoForm.getAllTaInfo().get(index).getApplicationReason());
+        }catch (Exception e){
+
+        }
         return this.getModelAndView(taInfoForm, "pageTaDetail");
     }
 

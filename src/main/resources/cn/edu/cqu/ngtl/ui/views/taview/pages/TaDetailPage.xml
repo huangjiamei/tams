@@ -65,7 +65,7 @@
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教列表"
                                                                   p:location.viewId="TaView"
-                                                                  p:location.controllerMapping="/class"
+                                                                  p:location.controllerMapping="/ta"
                                                                   p:location.methodToCall="getTaListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教详情"/>
                                                         </list>

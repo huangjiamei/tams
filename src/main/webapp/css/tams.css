@@ -449,6 +449,20 @@ body{
 
 /**  修改uif   */
 
+/* 修改header的样式 */
+/*把navbar.less中对应的属性全都重写(覆盖)一遍*/
+.navbar-nav li {
+    float: left!important;  /*f:left保证右边数据不会垂直排列(避免原有小屏那种排列方式)。*/
+}
+
+.navbar-nav {
+    float: right!important;  /*小屏时源码中会f:left，需要固定住*/
+}
+
+.navbar-toggle{
+    display: none!important;    /*保证下拉按钮恒不可见(直接删掉那个按钮也行)*/
+}
+
 /* 令form中的input输入框填满父容器 */
 .form-control{
     width: 100%;
@@ -672,14 +686,14 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     border-left: 1px solid #ccc;
     background-color: #F1F1F1;
     padding: 3px 4px 3px 3px;
-    margin-right: 0px;
+    margin-right: -3px;
     border-top-left-radius: 2px;
     border-bottom-left-radius: 2px;
 }
 
 .dateTimeInput
 {
-    width:250px;
+    /*width:250px;*/
 }
 
 .dateTimeInput input{

@@ -34,7 +34,7 @@
 
     <!--学生应聘助教-->
     <bean id="ApplyForTaFormPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="removeSideBar()">
+          p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--页面header-->
@@ -150,10 +150,10 @@
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="申请理由及特长"
                                                                                   p:propertyName="applyReason"
-                                                                                  p:style="width:100%;">
+                                                                                  p:additionalCssClasses="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:100px;"/>
+                                                                                          p:style="height:100px;resize: none;"/>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>

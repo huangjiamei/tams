@@ -90,4 +90,12 @@ public interface IAdminService {
     boolean deleteOneTimeSetting(TAMSTimeSettings tamsTimeSettings);
 
     List<TAMSTimeSettings> getallTimeSettings();
+
+    /**
+     * 获取助教经费
+     */
+
+    List<>
+
+
 }

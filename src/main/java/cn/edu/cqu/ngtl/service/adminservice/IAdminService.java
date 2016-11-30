@@ -90,4 +90,6 @@ public interface IAdminService {
     boolean deleteOneTimeSetting(TAMSTimeSettings tamsTimeSettings);
 
     List<TAMSTimeSettings> getallTimeSettings();
+
+
 }

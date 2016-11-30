@@ -64,7 +64,7 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     private String applicationNote;
 
 
-    @Column(name = "EVALUTATION")
+    @Column(name = "EVALUATION")
     private String evalutation;
 
     @Column(name = "EVALUATION_DETAIL")

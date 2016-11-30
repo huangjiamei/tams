@@ -95,7 +95,7 @@ public interface IAdminService {
      * 获取助教经费
      */
 
-    List<>
+    List<TAMSTa> getTaFunding();
 
 
 }

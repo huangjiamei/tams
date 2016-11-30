@@ -210,6 +210,18 @@ public class ClassController extends BaseController {
     }
 
     /**
+     * 获取新建教学日历页面
+     **/
+    @RequestMapping(params = "methodToCall=getViewTeachingCalendarPage")
+    public ModelAndView getViewTeachingCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+    }
+
+    /**
      * 提交新建教学日历页面
      **/
     @RequestMapping(params = "methodToCall=submitTeachCalendarPage")

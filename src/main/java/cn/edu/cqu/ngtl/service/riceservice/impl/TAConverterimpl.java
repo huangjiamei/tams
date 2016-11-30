@@ -874,8 +874,5 @@ public class TAConverterimpl implements ITAConverter {
     }
 
 
-    @Override
-    public List<TaFundingViewObject> taFundingToViewObject(List<TAMSTa> tamsTas){
-        return null;
-    }
+
 }

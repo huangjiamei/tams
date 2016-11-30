@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -58,6 +59,10 @@ public class adminController extends BaseController {
 
     @Autowired
     private IAdminConverter adminConverter;
+
+
+    @Autowired
+    private ITAService taService;
 
 
     @RequestMapping(params = "methodToCall=logout")
@@ -600,10 +605,11 @@ public class adminController extends BaseController {
      * @return
      */
     @RequestMapping(params = "methodToCall=getFundsPage")
-    public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView getFundsPage(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
         List<PieChartsNameValuePair> list = new ArrayList<>();
         list.add(new PieChartsNameValuePair("高数", 10000));
         list.add(new PieChartsNameValuePair("线代", 5000));
@@ -658,13 +664,10 @@ public class adminController extends BaseController {
 
 
         infoForm.setTaFunding(
-                taConverter.taFundingToViewObject(
-                        adminService.getTaFunding()
+                adminConverter.taFundingToViewObject(
+                        taService.getAllTaFilteredByUid(uId)
                 )
         );
-
-
-
 
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");

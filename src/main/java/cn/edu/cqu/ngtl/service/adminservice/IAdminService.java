@@ -91,11 +91,5 @@ public interface IAdminService {
 
     List<TAMSTimeSettings> getallTimeSettings();
 
-    /**
-     * 获取助教经费
-     */
-
-    List<TAMSTa> getTaFunding();
-
 
 }

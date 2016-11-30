@@ -467,9 +467,5 @@ public class AdminServiceImpl implements IAdminService{
     }
 
 
-    @Override
-    public List<TAMSTa> getTaFunding(){
-        return  null;
-    }
 
 }

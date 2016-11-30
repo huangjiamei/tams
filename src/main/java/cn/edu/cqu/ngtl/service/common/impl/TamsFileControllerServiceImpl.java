@@ -1,6 +1,5 @@
 package cn.edu.cqu.ngtl.service.common.impl;
 
-import org.apache.commons.lang.StringUtils;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSAttachmentsDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.service.common.TamsFileControllerService;
@@ -20,15 +19,13 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -70,8 +67,9 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
                 String absoluteFilePath = calendarRootPath + File.separator + fileName;
                 //写入磁盘
                 FileUtils.saveFile(absoluteFilePath, blob.getBinaryStream());
-                attachment.setDiskDirectory(calendarRootPath);
-                attachment.setDiskFileName(absoluteFilePath);
+                /** 暂不保存磁盘路径到数据库 **/
+                //attachment.setDiskDirectory(calendarRootPath);
+                //attachment.setDiskFileName(absoluteFilePath);
                 //写入数据库信息
                 new TAMSAttachmentsDaoJpa().insertOneByEntity(attachment);
             }
@@ -79,6 +77,37 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         }
         catch (SQLException e) {
 
+        }
+        catch (IOException e) {
+
+        }
+        // catch了异常
+        return false;
+    }
+
+    @Override
+    public boolean deleteOneAttachment(String uId, String classId, TAMSAttachments attachment) {
+        String calendarRootPath;
+        try{
+            String _Module_Name = attachment.getContainerType(); //保存时候的_Module_Name
+            String _Container_Id = attachment.getContainerId();  //保存时候的_Container_Id
+            String _Attachment_Folder_Name = MD5Encryption.MD5Encode(uId + classId + _Container_Id, "utf-8", false);
+            //合成文件夹路径
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
+                    File.separator + _Module_Name + File.separator + _Attachment_Folder_Name;
+
+            String fileName = attachment.getFileName();
+            String absoluteFilePath = calendarRootPath + File.separator + fileName;
+
+            //从数据库删除
+            boolean result = new TAMSAttachmentsDaoJpa().deleteOneByEntity(attachment);
+
+            if(result) {
+                //从磁盘删除
+                return FileUtils.removeFile(absoluteFilePath);
+            }
+
+            return false;
         }
         catch (IOException e) {
 

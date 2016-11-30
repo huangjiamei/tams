@@ -286,8 +286,12 @@ public class ClassController extends BaseController {
         /** calendarid **/
         String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
 
-        if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId))
+        if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId)) {
+            //删除教学日历的附件信息
+
+
             return this.getTeachingCalendar(infoForm, request);
+        }
         else //// FIXME: 16-11-18 应当返回错误页面
             return this.getTeachingCalendar(infoForm, request);
     }

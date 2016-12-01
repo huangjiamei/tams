@@ -20,10 +20,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Date;
@@ -46,7 +43,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         String calendarRootPath;
         try{
             String _Module_Name = "CalendarFiles";
-            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(uId + classId + calendarId, "utf-8", false);
+            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId + calendarId, "utf-8", false);
             //创建文件夹
             calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
                     File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
@@ -91,7 +88,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         try{
             String _Module_Name = attachment.getContainerType(); //保存时候的_Module_Name
             String _Container_Id = attachment.getContainerId();  //保存时候的_Container_Id
-            String _Attachment_Folder_Name = MD5Encryption.MD5Encode(uId + classId + _Container_Id, "utf-8", false);
+            String _Attachment_Folder_Name = MD5Encryption.MD5Encode(classId + _Container_Id, "utf-8", false);
             //合成文件夹路径
             calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
                     File.separator + _Module_Name + File.separator + _Attachment_Folder_Name;
@@ -114,6 +111,43 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         }
         // catch了异常
         return false;
+    }
+
+
+    @Override
+    public List<TAMSAttachments> getAllCalendarAttachments(String calendarId) {
+        return new TAMSAttachmentsDaoJpa().selectCalendarFilesByCalendarId(calendarId);
+    }
+
+    @Override
+    public void downloadCalendarFile(String classId, String calendarId, String fileName, HttpServletResponse response) {
+        String calendarRootPath;
+        try {
+            String _Module_Name = "CalendarFiles";
+            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId + calendarId, "utf-8", false);
+            //合成文件夹路径
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
+                    File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
+
+            String absoluteFilePath = calendarRootPath + File.separator + fileName;
+            File file = new File(absoluteFilePath);
+
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/octet-stream;charset=utf-8");
+            if(!file.exists()) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+            InputStream is = new FileInputStream(file);
+            fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+
+            FileCopyUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+        }
+        catch (IOException e) {
+
+        }
     }
 
     @Override

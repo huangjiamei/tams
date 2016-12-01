@@ -139,30 +139,30 @@
                                                                         <list><!--messageText要修改相应的-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="教学主题"
-                                                                                  p:messageText="@{detailInfoViewObject.courseName}"/>
+                                                                                  p:messageText="@{currentCalendarInfo.theme}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="教学描述"
-                                                                                  p:messageText="@{detailInfoViewObject.courseId}"/>
+                                                                                  p:messageText="@{currentCalendarInfo.description}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="起始时间"
-                                                                                  p:messageText="@{detailInfoViewObject.courseClassification}"/>
+                                                                                  p:messageText="@{currentCalendarInfo.startTime}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="完成时间"
-                                                                                  p:messageText="@{detailInfoViewObject.classHour}"/>
+                                                                                  p:messageText="@{currentCalendarInfo.endTime}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="助教任务描述"
-                                                                                  p:messageText="@{detailInfoViewObject.credit}"/>
+                                                                                  p:messageText="@{currentCalendarInfo.taTask}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="总耗时"
-                                                                                  p:messageText="@{detailInfoViewObject.required}"/>
+                                                                                  p:messageText="@{currentCalendarInfo.elapsedTime}"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
 
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"><!--后期改格式-->
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/><!--改动collectionObjectClass和propertyName-->
-                                                                    <property name="propertyName" value="classList"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/><!--改动collectionObjectClass和propertyName-->
+                                                                    <property name="propertyName" value="calendarFiles"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -175,15 +175,16 @@
                                                                         <list>
                                                                             <bean parent="Uif-Icon" p:iconClass="icon-calendar2"/>
                                                                             <bean parent="Uif-DataField" p:label="文件名称（后期不要title）"
-                                                                                  p:propertyName="departmentName"/>
+                                                                                  p:propertyName="name"/>
                                                                             <bean parent="Uif-DataField" p:label="大小"
-                                                                                  p:propertyName="courseName"
-                                                                                  p:sortAs="numeric"/>
+                                                                                  p:propertyName="sizeFormatted"/>
                                                                             <bean parent="Uif-DataField" p:label="上传者姓名"
-                                                                                  p:propertyName="courseCode"/>
+                                                                                  p:propertyName="uploaderName"/>
                                                                             <bean parent="Uif-DataField" p:label="上传日期"
-                                                                                  p:propertyName="classNumber"
+                                                                                  p:propertyName="uploadDate"
                                                                                   p:sortAs="kuali_date"/>
+                                                                            <bean parent="Uif-DataField" p:label="下载次数"
+                                                                                  p:propertyName="downloadTimes"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -191,6 +192,12 @@
                                                                             <bean parent="Uif-VerticalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:actionLabel=""
+                                                                                              p:actionImagePlacement="LEFT"
+                                                                                              p:methodToCall="downloadCalendarFile"
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionLabel=""
@@ -247,7 +254,7 @@
                                                                         <list>
                                                                             <bean parent="Uif-Icon" p:iconClass="icon-comment"/>
                                                                             <bean parent="Uif-DataField"
-                                                                                  p:propertyName="description"
+                                                                                  p:propertyName="taTask"
                                                                                   p:label="活动类型（后期删去title）"
                                                                                   p:additionalCssClasses="tams-activity-item-title"/>
                                                                             <bean parent="Uif-DataField"
@@ -256,11 +263,11 @@
                                                                                   p:additionalCssClasses="tams-activity-item-title"/>
                                                                             <bean parent="Uif-DataField"
                                                                                   p:label="人数"
-                                                                                  p:propertyName="createTime"/>
+                                                                                  p:propertyName="code"/>
                                                                             <bean parent="Uif-DataField"
                                                                                   p:label="时间"
                                                                                   p:additionalCssClasses="tams-activity-state"
-                                                                                  p:propertyName="lastUpdateTime"/>
+                                                                                  p:propertyName="theme"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

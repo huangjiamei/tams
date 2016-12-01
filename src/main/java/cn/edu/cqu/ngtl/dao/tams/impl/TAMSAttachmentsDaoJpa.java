@@ -40,7 +40,7 @@ public class TAMSAttachmentsDaoJpa implements TAMSAttachmentsDao {
                 TAMSAttachments.class,
                 criteria.build()
         );
-        return null;
+        return qr.getResults();
     }
 
     @Override

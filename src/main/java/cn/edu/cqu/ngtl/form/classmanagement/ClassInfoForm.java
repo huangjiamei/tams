@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +35,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TAMSTeachCalendar teachCalendar;
 
     private String addTeachCTime;//新建日历的时间控件
+
+    private TeachCalendarViewObject currentCalendarInfo;
+
+    private List<FileViewObject> calendarFiles;
 
     /**
      * 班级管理隐藏搜索框
@@ -88,6 +93,22 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private MyTaViewObject selectedTa = new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
+
+    public List<FileViewObject> getCalendarFiles() {
+        return calendarFiles;
+    }
+
+    public void setCalendarFiles(List<FileViewObject> calendarFiles) {
+        this.calendarFiles = calendarFiles;
+    }
+
+    public TeachCalendarViewObject getCurrentCalendarInfo() {
+        return currentCalendarInfo;
+    }
+
+    public void setCurrentCalendarInfo(TeachCalendarViewObject currentCalendarInfo) {
+        this.currentCalendarInfo = currentCalendarInfo;
+    }
 
     public void setClassEvaluations(List<TAMSClassEvaluation> classEvaluations) {
         this.classEvaluations = classEvaluations;

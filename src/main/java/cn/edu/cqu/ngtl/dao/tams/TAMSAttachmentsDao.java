@@ -13,4 +13,8 @@ public interface TAMSAttachmentsDao {
     List<TAMSAttachments> selectCalendarFilesByCalendarId(String calendarId);
 
     boolean deleteOneByEntity(TAMSAttachments attachment);
+
+    TAMSAttachments selectById(String attachmentId);
+
+    boolean updateByEntity(TAMSAttachments attachments);
 }

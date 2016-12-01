@@ -58,6 +58,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
                 attachment.setCreateTime(file.getDateUploadedFormatted());
                 String fileName = file.getName();
                 attachment.setFileName(fileName);
+                attachment.setDownloadTimes("0");
                 Long size = file.getSize();
                 attachment.setFileSize(size.toString());
                 Blob blob = file.getBlob();
@@ -83,7 +84,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
     }
 
     @Override
-    public boolean deleteOneAttachment(String uId, String classId, TAMSAttachments attachment) {
+    public boolean deleteOneAttachment(String classId, TAMSAttachments attachment) {
         String calendarRootPath;
         try{
             String _Module_Name = attachment.getContainerType(); //保存时候的_Module_Name
@@ -120,7 +121,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
     }
 
     @Override
-    public void downloadCalendarFile(String classId, String calendarId, String fileName, HttpServletResponse response) {
+    public void downloadCalendarFile(String classId, String calendarId, String attachmentId, HttpServletResponse response) {
         String calendarRootPath;
         try {
             String _Module_Name = "CalendarFiles";
@@ -129,6 +130,18 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
             calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
                     File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
 
+            TAMSAttachments attachments = new TAMSAttachmentsDaoJpa().selectById(attachmentId);
+            Integer downloadTimes;
+            try {
+                downloadTimes = Integer.parseInt(attachments.getDownloadTimes());
+            }
+            catch (NumberFormatException e) {
+                downloadTimes = 0;
+            }
+            downloadTimes++;
+            attachments.setDownloadTimes(downloadTimes.toString());
+            new TAMSAttachmentsDaoJpa().updateByEntity(attachments);
+            String fileName = attachments.getFileName();
             String absoluteFilePath = calendarRootPath + File.separator + fileName;
             File file = new File(absoluteFilePath);
 

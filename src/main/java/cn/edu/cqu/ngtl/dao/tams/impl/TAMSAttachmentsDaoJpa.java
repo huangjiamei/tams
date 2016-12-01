@@ -54,4 +54,26 @@ public class TAMSAttachmentsDaoJpa implements TAMSAttachmentsDao {
             return false;
         }
     }
+
+    @Override
+    public TAMSAttachments selectById(String attachmentId) {
+        try {
+            return KradDataServiceLocator.getDataObjectService().find(TAMSAttachments.class, attachmentId);
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean updateByEntity(TAMSAttachments attachments) {
+        try {
+            return KradDataServiceLocator.getDataObjectService().save(attachments) != null;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

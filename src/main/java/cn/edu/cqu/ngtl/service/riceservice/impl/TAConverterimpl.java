@@ -899,6 +899,7 @@ public class TAConverterimpl implements ITAConverter {
         List<FileViewObject> viewObjects = new ArrayList<>(attachments.size());
         for(TAMSAttachments attachment : attachments) {
             FileViewObject viewObject = new FileViewObject();
+            viewObject.setId(attachment.getId());
             viewObject.setName(attachment.getFileName());
             try {
                 long size = Integer.parseInt(attachment.getFileSize());

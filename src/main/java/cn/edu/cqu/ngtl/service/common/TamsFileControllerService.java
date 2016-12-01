@@ -13,9 +13,9 @@ public interface TamsFileControllerService {
 
     boolean saveCalendarAttachments(String uId, String classId, String calendarId, List<FileViewObject> fileList);
 
-    boolean deleteOneAttachment(String uId, String classId, TAMSAttachments attachment);
+    boolean deleteOneAttachment(String classId, TAMSAttachments attachment);
 
     List<TAMSAttachments> getAllCalendarAttachments(String calendarId);
 
-    void downloadCalendarFile(String classId, String calendarId, String fileName, HttpServletResponse response);
+    void downloadCalendarFile(String classId, String calendarId, String attachmentId, HttpServletResponse response);
 }

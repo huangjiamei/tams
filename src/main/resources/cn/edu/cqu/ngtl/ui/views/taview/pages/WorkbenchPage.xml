@@ -144,7 +144,15 @@
                         </list>
                     </property>
                 </bean>
-
+<!--
+    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+        <property name="items">
+            <list>
+                <bean parent=”Uif-InputField” p:propertyName=”evaluateDetail”/>
+                </list>
+                </property>
+                </bean>
+-->
                 <!--table1：由我担任助教的课程-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
@@ -174,8 +182,8 @@
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:onDocumentReadyScript = "">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject"/>
+                                                                    <property name="propertyName" value="workbench"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="true"/>
@@ -187,14 +195,14 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-DataField" p:label="学院" p:propertyName="field1"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="field0"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号" p:propertyName="field1"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学班" p:propertyName="field2"/>
-                                                                            <bean parent="Uif-DataField" p:label="教师" p:propertyName="field4"/>
-                                                                            <bean parent="Uif-DataField" p:label="耗费工时" p:propertyName="field3"/>
-                                                                            <bean parent="Uif-DataField" p:label="专业" p:propertyName="field1"/>
-                                                                            <bean parent="Uif-DataField" p:label="状态" p:propertyName="field0"/>
+                                                                            <bean parent="Uif-DataField" p:label="学院" p:propertyName="dept"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程编号" p:propertyName="courseCode"/>
+                                                                            <bean parent="Uif-DataField" p:label="教学班" p:propertyName="classNbr"/>
+                                                                            <bean parent="Uif-DataField" p:label="教师" p:propertyName="teacher"/>
+                                                                            <bean parent="Uif-DataField" p:label="耗费工时" p:propertyName="hours"/>
+                                                                            <bean parent="Uif-DataField" p:label="专业" p:propertyName="major"/>
+                                                                            <bean parent="Uif-DataField" p:label="状态" p:propertyName="status"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

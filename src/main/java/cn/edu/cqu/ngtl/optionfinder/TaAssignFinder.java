@@ -37,7 +37,7 @@ public class TaAssignFinder extends KeyValuesBase {
 
         // test
         List<Object> classIds = new UTClassInstructorDaoJpa().selectClassIdsByInstructorId(uId);
-        List<TAMSTa> tas = new TAMSTaDaoJpa().selectByClassId(classIds);
+        List<TAMSTa> tas = new TAMSTaDaoJpa().selectByClassIds(classIds);
 
         UTStudentDaoJpa utStudentDaoJpa = new UTStudentDaoJpa();
 

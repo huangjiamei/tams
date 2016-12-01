@@ -20,6 +20,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.text.ParseException;
 import java.util.List;
@@ -74,4 +75,6 @@ public interface ITAConverter {
     List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities);
 
     ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
+
+    List<WorkBenchViewObject> taCombineWorkbench(List<WorkBenchViewObject> list);
 }

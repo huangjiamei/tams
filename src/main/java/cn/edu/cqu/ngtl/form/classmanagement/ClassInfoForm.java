@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.io.Serializable;
 import java.util.List;
@@ -33,6 +34,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TAMSTeachCalendar teachCalendar;
 
     private String addTeachCTime;//新建日历的时间控件
+
 
     /**
      * 班级管理隐藏搜索框

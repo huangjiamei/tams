@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
@@ -20,8 +21,10 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
 import org.apache.log4j.pattern.LoggerPatternConverter;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,9 +32,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -361,6 +362,7 @@ public class TAConverterimpl implements ITAConverter {
         return session;
     }
 
+
     //全校所有助教界面
     @Override
     public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
@@ -441,6 +443,28 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return viewObjects;
+    }
+
+    //工作台界面相关
+    @Override
+    public List<WorkBenchViewObject> taCombineWorkbench(List<WorkBenchViewObject> list){
+
+        //List<WorkBenchViewObject> viewObject = new ArrayList<>();
+        //WorkBenchViewObject workbenchviewobject = new WorkBenchViewObject();
+        for(int i=0; i<list.size(); i++){
+            for(int j=i+1; j<list.size(); j++){
+                //System.out.println(list.get(i).getClassNbr());
+                //System.out.println(list.get(j).getClassNbr());
+                if(list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
+                    list.get(i).setTeacher(list.get(i).getTeacher() + ',' + list.get(j).getTeacher());
+                    list.remove(j);
+                }
+                //viewObject.set(i,list.get(i));
+                //break;
+            }
+            //viewObject.set(i,list.get(i));
+        }
+        return list;
     }
 
     //我的助教界面申请人助教列表

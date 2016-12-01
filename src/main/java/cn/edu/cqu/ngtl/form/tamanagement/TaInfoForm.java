@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -43,6 +44,19 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     private List<TaInfoViewObject> allTaInfo;
     private String taDeApplyReason;
+
+    /**
+     * 工作台相关
+     */
+    private List<WorkBenchViewObject> workbench;
+
+    public List<WorkBenchViewObject> getWorkbench() {
+        return workbench;
+    }
+
+    public void setWorkbench(List<WorkBenchViewObject> workbench) {
+        this.workbench = workbench;
+    }
 
     /**
      * 任务相关

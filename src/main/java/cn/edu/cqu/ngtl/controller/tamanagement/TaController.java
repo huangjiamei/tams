@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.controller.tamanagement;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
@@ -10,6 +11,7 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.form.UifFormBase;
@@ -450,8 +452,16 @@ public class TaController extends BaseController {
      */
     @RequestMapping(params = "methodToCall=getWorkbenchPage")
     public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+        //我担任助教的课程
+        taInfoForm.setWorkbench(
+                taConverter.taCombineWorkbench(
+                        taService.getClassInfoByIds(
+                                taService.getClassIdsByUid()
+                        )
+                )
+        );
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 

@@ -144,6 +144,8 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
 
             FileCopyUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
+            is.close();
+            response.getOutputStream().close();
         }
         catch (IOException e) {
 

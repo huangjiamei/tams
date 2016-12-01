@@ -41,7 +41,9 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="教学日历"/>
+                            <bean id="viewTeachingCalendarHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('viewTeachingCalendarHeaderTitle','icon-calendar4','课程','教学日历')">
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean id="breadcrumb" parent="Uif-HorizontalBoxSection"
@@ -159,7 +161,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"><!--后期改格式-->
+                                                                <bean id="fileTable" parent="Uif-Disclosure-TableCollectionSection"><!--后期改格式-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/><!--改动collectionObjectClass和propertyName-->
                                                                     <property name="propertyName" value="calendarFiles"/>
@@ -197,12 +199,14 @@
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="downloadCalendarFile"
+                                                                                              p:refreshId="fileTable"
                                                                                               p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
-                                                                                              p:methodToCall=""
+                                                                                              p:methodToCall="removeCalendarFile"
+                                                                                              p:refreshId="fileTable"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-blue tamsbtn"/><!--添加methodToCall-->
                                                                                     </list>
                                                                                 </property>

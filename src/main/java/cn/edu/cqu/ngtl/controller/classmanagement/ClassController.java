@@ -250,7 +250,7 @@ public class ClassController extends BaseController {
     }
 
     /**
-     * 提交新建教学日历页面
+     * 下载教学日历的附件
      **/
     @RequestMapping(params = "methodToCall=downloadCalendarFile")
     public ModelAndView downloadCalendarFile(@ModelAttribute("KualiForm") UifFormBase form,
@@ -267,14 +267,42 @@ public class ClassController extends BaseController {
         int index = params.getSelectedLineIndex();
 
         try {
-            String fileName = infoForm.getCalendarFiles().get(index).getName();
+            String attachmentId = infoForm.getCalendarFiles().get(index).getId();
 
-            new TamsFileControllerServiceImpl().downloadCalendarFile(classId, calendarId, fileName, response);
+            new TamsFileControllerServiceImpl().downloadCalendarFile(classId, calendarId, attachmentId, response);
 
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
         catch (IndexOutOfBoundsException e) {
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
+    }
+
+    /**
+     * 删除教学日历中附件
+     */
+    @RequestMapping(params = "methodToCall=removeCalendarFile")
+    public ModelAndView removeCalendarFile(@ModelAttribute("KualiForm") UifFormBase form,
+                                           HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String classId = infoForm.getCurrClassId();
+        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            String attachmentId = infoForm.getCalendarFiles().get(index).getId();
+
+            classInfoService.removeCalendarFileById(classId, attachmentId);
+
+            return this.getViewTeachingCalendarPage(infoForm, request);
+        }
+        catch (IndexOutOfBoundsException e) {
+            return this.getViewTeachingCalendarPage(infoForm, request);
         }
     }
 
@@ -357,7 +385,8 @@ public class ClassController extends BaseController {
 
         if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId)) {
             //删除教学日历的附件信息
-
+            boolean result = classInfoService.removeAllCalendarFilesByClassIdAndCalendarId(
+                    classId, teachCalendarId);
 
             return this.getTeachingCalendar(infoForm, request);
         }

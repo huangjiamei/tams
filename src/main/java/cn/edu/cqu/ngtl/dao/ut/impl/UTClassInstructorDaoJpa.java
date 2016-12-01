@@ -41,5 +41,11 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
     }
 
 
+    @Override
+    public List<UTClassInstructor> getAllClassInstructor(){
+        return KRADServiceLocator.getDataObjectService().findAll(UTClassInstructor.class).getResults();
+    }
+
+
 
 }

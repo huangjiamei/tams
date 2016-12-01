@@ -12,4 +12,7 @@ public interface UTClassInstructorDao {
     UTClassInstructor selectOneByClassId(Integer classId);
 
     List<Object> selectClassIdsByInstructorId(String uId);
+
+    List<UTClassInstructor> getAllClassInstructor();
+
 }

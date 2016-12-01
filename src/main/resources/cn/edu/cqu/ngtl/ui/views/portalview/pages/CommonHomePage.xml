@@ -137,7 +137,7 @@
                                                                       p:actionImagePlacement="LEFT"
                                                                       p:actionScript="alert('更多');"
                                                                       p:id="btn-moreinfo"
-                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
+                                                                      p:additionalCssClasses="icon-arrow-right bg-success tamsbtn"/>
                                                             </list>
                                                         </property>
                                                     </bean>

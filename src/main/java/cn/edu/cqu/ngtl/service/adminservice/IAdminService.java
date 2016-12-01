@@ -50,6 +50,8 @@ public interface IAdminService {
 
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
+    boolean setCurrentSession (String termYear, String termTerm);
+
 /*
     List<TAMSDeptFunding> getCurrFundingBySession();
 
@@ -90,4 +92,6 @@ public interface IAdminService {
     boolean deleteOneTimeSetting(TAMSTimeSettings tamsTimeSettings);
 
     List<TAMSTimeSettings> getallTimeSettings();
+
+
 }

@@ -116,10 +116,10 @@
                                                                                                                          minDate: moment().startOf('day'),
                                                                                                                          locale:
                                                                                                                          {
-                                                                                                                         applyLabel : '确定',
-                                                                                                                         cancelLabel : '取消',
                                                                                                                          fromLabel : '起始时间：',
                                                                                                                          toLabel : '结束时间：',
+                                                                                                                         applyLabel : '确定',
+                                                                                                                         cancelLabel : '取消',
                                                                                                                          daysOfWeek : [ '日', '一', '二', '三', '四', '五', '六' ],
                                                                                                                          monthNames : [ '一月', '二月', '三月', '四月', '五月', '六月',
                                                                                                                                         '七月', '八月', '九月', '十月', '十一月', '十二月' ],
@@ -129,11 +129,12 @@
                                                                                 "/>
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-HorizontalBoxSection">
+                                                                                        <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="类型名称：" p:additionalCssClasses="messageStyle"/>
+                                                                                                          p:messageText="类型名称："
+                                                                                                          p:additionalCssClasses="messageStyle"/>
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:propertyName="timeType"
                                                                                                           p:required="true"
@@ -145,25 +146,25 @@
                                                                                                     </bean>
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:messageText="时间范围："
-                                                                                                          p:additionalCssClasses="messageStyle"/>
-                                                                                                    <bean id="newdateTimeImage"
-                                                                                                          parent="Uif-Image"
-                                                                                                          p:source="../images/clock_time.png"
-                                                                                                          p:additionalCssClasses="dateTimeImage"/>
-                                                                                                    <bean id="newdateTimeRange"
-                                                                                                          parent="Uif-InputField"
-                                                                                                          p:propertyName="settingsTime"
-                                                                                                          p:style="width:250px"
-                                                                                                          p:additionalCssClasses="dateTimeInput"/>
+                                                                                                          p:style="margin-left:10px;"/>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean id="newdateTimeImage"
+                                                                                                                      parent="Uif-Image"
+                                                                                                                      p:source="../images/clock_time.png"
+                                                                                                                      p:additionalCssClasses="dateTimeImage"/>
+                                                                                                                <bean id="newdateTimeRange"
+                                                                                                                      parent="Uif-InputField"
+                                                                                                                      p:propertyName="settingsTime"
+                                                                                                                      p:additionalCssClasses="dateTimeInput"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="保存"
                                                                                                           p:methodToCall="addNewTimeSet"
-                                                                                                          p:refreshId="TimeSetPage"
-                                                                                                    /><!--
-                                                                                              p:render="@{!#form.updateFlag}"-->
-                                                                                                    <!--<bean parent="Uif-PrimaryActionButton"-->
-                                                                                                          <!--p:actionLabel="更新(methodToCall和权限,还没页面)"-->
-                                                                                                          <!--p:refreshId="timeSet"/>&lt;!&ndash;p:methodToCall="updateSettingTime"  p:render="@{#form.updateFlag}"&ndash;&gt;-->
+                                                                                                          p:refreshId="TimeSetPage"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -237,7 +238,8 @@
                                                                 name="lineActions">
                                                             <list>
                                                                 <bean parent="Uif-ActionImage"
-                                                                      p:methodToCall="updateTimeSetting" p:refreshId="timeSet">
+                                                                      p:methodToCall="updateTimeSetting"
+                                                                      p:refreshId="timeSet">
                                                                     <property
                                                                             name="actionImage">
                                                                         <bean parent="Uif-Image"
@@ -245,7 +247,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-ActionImage"
-                                                                      p:methodToCall="deleteTimeSetting" >
+                                                                      p:methodToCall="deleteTimeSetting">
                                                                     <property
                                                                             name="actionImage">
                                                                         <bean parent="Uif-Image"

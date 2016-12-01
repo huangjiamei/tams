@@ -105,27 +105,6 @@
                                                                         <list>
                                                                             <!--右上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="导出EXCEL"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="bg-teal box-btngroup">
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="float: left!important;">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <!--左上角btnlist-->
-                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageConsole"
@@ -145,10 +124,15 @@
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="导出EXCEL"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="exportApplicantPhoto"
+                                                                                  p:additionalCssClasses="bg-teal box-btngroup">
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -282,6 +266,15 @@
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                        <bean parent="Uif-ActionImage">
+                                                                                            <property name="confirmationDialog">
+                                                                                                <ref bean="confirmSetCurrentTermDialog" />
+                                                                                            </property>
+                                                                                            <property name="actionImage">
+                                                                                                <bean parent="Uif-Image"
+                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/check.png" />
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean parent="Uif-ActionImage">
@@ -530,6 +523,22 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
                       p:methodToCall="deleteTermCategory"  p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="confirmSetCurrentTermDialog" parent="Uif-DialogGroup"
+          p:headerText="设置系统当前批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="是否将本批次设置为系统当前批次？" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="setCurrentSession"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

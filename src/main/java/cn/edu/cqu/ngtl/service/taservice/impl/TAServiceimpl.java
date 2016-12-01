@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
@@ -11,6 +12,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
@@ -68,6 +70,9 @@ public class TAServiceimpl implements ITAService {
 
 
     //根据classids查询classinfo的信息
+    @Autowired
+    private TAMSTeachCalendarDao tamsTeachCalendarDao;
+
     @Override
     public List<WorkBenchViewObject> getClassInfoByIds(List<Object> ids) {
         return taDao.selectAllCourseInfoByIds(ids);
@@ -189,9 +194,9 @@ public class TAServiceimpl implements ITAService {
             //预处理录入信息
             newTa.setSessionId(sessionDao.getCurrentSession().getId().toString());
             newTa.setStatus(TA_STATUS.LIVING);
-
+            TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
+            newTa.setApplicationNote(readyToRemove.getNote());
             if(taDao.insertByEntity(newTa)) {
-                TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
                 if(applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
                 }
@@ -203,7 +208,6 @@ public class TAServiceimpl implements ITAService {
                 //新建信息失败
                 return false;
         }
-
         return true;
     }
 
@@ -220,4 +224,17 @@ public class TAServiceimpl implements ITAService {
 
         return true;
     }
+
+
+    @Override
+    public List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId){
+        return tamsTeachCalendarDao.selectAllByClassId(classId);
+    }
+
+
+    @Override
+    public TAMSTa getTaByTaId(String taId,String classId){
+        return taDao.selectByStudentIdAndClassId(taId,classId);
+    }
+
 }

@@ -60,6 +60,31 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "PAY_DAY")
     private String payDay;
 
+    @Column(name = "APPLICATION_NOTE")
+    private String applicationNote;
+
+
+    @Column(name = "EVALUATION")
+    private String evalutation;
+
+    @Column(name = "EVALUATION_DETAIL")
+    private String evaluationDetail;
+
+
+    @Column(name = "ASSIGNED_FUNDING")
+    private String assignedFunding;
+
+    @Column(name = "PHD_FUNDING")
+    private String phdFunding;
+
+
+    @Column(name = "TRAVEL_SUBSIDY")
+    private String travelSubsidy;
+
+    @Column(name = "BONUS")
+    private String bonus;
+
+
     public String getStatus() {
         return status;
     }
@@ -154,5 +179,61 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setCurSession(UTSession curSession) {
         this.curSession = curSession;
+    }
+
+    public String getApplicationNote() {
+        return applicationNote;
+    }
+
+    public void setApplicationNote(String applicationNote) {
+        this.applicationNote = applicationNote;
+    }
+
+    public String getEvalutation() {
+        return evalutation;
+    }
+
+    public void setEvalutation(String evalutation) {
+        this.evalutation = evalutation;
+    }
+
+    public String getEvaluationDetail() {
+        return evaluationDetail;
+    }
+
+    public void setEvaluationDetail(String evaluationDetail) {
+        this.evaluationDetail = evaluationDetail;
+    }
+
+    public String getAssignedFunding() {
+        return assignedFunding;
+    }
+
+    public void setAssignedFunding(String assignedFunding) {
+        this.assignedFunding = assignedFunding;
+    }
+
+    public String getPhdFunding() {
+        return phdFunding;
+    }
+
+    public void setPhdFunding(String phdFunding) {
+        this.phdFunding = phdFunding;
+    }
+
+    public String getTravelSubsidy() {
+        return travelSubsidy;
+    }
+
+    public void setTravelSubsidy(String travelSubsidy) {
+        this.travelSubsidy = travelSubsidy;
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
     }
 }

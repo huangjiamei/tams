@@ -87,6 +87,10 @@
                         <bean parent="Uif-NavigationActionLink" p:actionLabel="课程信息" p:methodToCall="getClassInfoPage"/>
                         <bean parent="Uif-NavigationActionLink" p:actionLabel="教学活动" p:methodToCall="getTeachActivities"/>
                         <bean parent="Uif-NavigationActionLink" p:actionLabel="教学日历" p:methodToCall="getTeachingCalendar"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="助教管理" p:methodToCall="getTaManagementPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="教师申报助教" p:methodToCall="getRequestTaPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="学生申请助教" p:methodToCall="getApplyTAPage"/>
+                        <bean parent="Uif-NavigationActionLink" p:actionLabel="查看教学日历（链接后不要）" p:methodToCall="getViewTeachingCalendarPage"/>
                     </list>
                 </property>
             </bean>
@@ -161,10 +165,24 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageTaManagement" p:title="助教管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="TaManagementPage"/>
+                        </list>
+                    </property>
+                </bean>
                 <bean parent="Uif-Page" p:id="pageAddActivity" p:title="课程日历">
                     <property name="items">
                         <list>
                             <ref bean="AddActivityPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageViewTeachingCalendar" p:title="查看教学日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="ViewTeachingCalendarPage"/>
                         </list>
                     </property>
                 </bean>

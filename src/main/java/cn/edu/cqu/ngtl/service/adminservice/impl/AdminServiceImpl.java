@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Created by tangjing on 16-10-25.
  */
@@ -223,6 +224,7 @@ public class AdminServiceImpl implements IAdminService{
         return sessionDao.insertOneByEntity(session);
     }
 
+
     @Override
     public boolean changeIssueType(TAMSIssueType issueType) {
         TAMSIssueType isExist = issueTypeDao.selectOneByTypeName(issueType.getTypeName());
@@ -259,6 +261,27 @@ public class AdminServiceImpl implements IAdminService{
 
         return sessionDao.deleteOneByEntity(session);
     }
+
+
+    @Override
+    public boolean setCurrentSession (String termYear, String termTerm){
+
+        UTSession session = sessionDao.selectByYearAndTerm(termYear, termTerm);
+        if(session.getActive().equals("Y")){
+            return true;
+        }
+        else{
+            UTSession utSession = sessionDao.getCurrentSession();
+            utSession.setActive("N");
+            sessionDao.updateOneByEntity(utSession);
+            session.setActive("Y");
+            return sessionDao.updateOneByEntity(session);
+
+        }
+    }
+
+
+
 
     /*
     @Override
@@ -465,4 +488,7 @@ public class AdminServiceImpl implements IAdminService{
     public List<TAMSTimeSettings> getallTimeSettings() {
         return timeSettingsDao.selectAll();
     }
+
+
+
 }

@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
     <bean id="TaAppraisalForStudent" parent="Uif-VerticalBoxSection"
-          p:additionalCssClasses="container" >
+          p:additionalCssClasses="container" p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--header-->
@@ -63,7 +63,7 @@
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教列表"
-                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/ta"
+                                                                  p:location.viewId="TaView" p:location.controllerMapping="/ta"
                                                                   p:location.methodToCall="getTaListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="学生考核"/>
                                                         </list>
@@ -105,8 +105,8 @@
                                                             <list>
                                                                 <!--任务类型、次数...评论-->
                                                                 <bean parent="Uif-Disclosure-TableCollectionSection">
-                                                                    <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject"/>
-                                                                    <property name="propertyName" value="allIssues"/>
+                                                                    <property name="collectionObjectClass" value="cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject"/>
+                                                                    <property name="propertyName" value="appraisalDetail"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
@@ -121,12 +121,12 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-DataField" p:label="教学日历" p:propertyName="issueType"/>
-                                                                            <bean parent="Uif-DataField" p:label="活动次数" p:propertyName="issueCount"/>
-                                                                            <bean parent="Uif-DataField" p:label="完成情况" p:propertyName="likeRate"/>
-                                                                            <bean parent="Uif-DataField" p:label="点赞比" p:propertyName="likeRate"/>
-                                                                            <bean parent="Uif-DataField" p:label="学生参与度" p:propertyName="commentCount"/>
-                                                                            <bean parent="Uif-DataField" p:label="成绩" p:propertyName="commentCount"/>
+                                                                            <bean parent="Uif-DataField" p:label="教学日历" p:propertyName="calendarName"/>
+                                                                            <bean parent="Uif-DataField" p:label="活动次数" p:propertyName="activityNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="完成情况" p:propertyName="completion"/>
+                                                                            <bean parent="Uif-DataField" p:label="点赞比" p:propertyName="praisePercentage"/>
+                                                                            <bean parent="Uif-DataField" p:label="学生参与度" p:propertyName="engagement"/>
+                                                                            <bean parent="Uif-DataField" p:label="成绩" p:propertyName="Grade"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

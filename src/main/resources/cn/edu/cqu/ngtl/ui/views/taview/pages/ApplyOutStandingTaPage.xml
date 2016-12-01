@@ -34,7 +34,7 @@
 
     <!--学生应聘助教-->
     <bean id="ApplyOutStandingTaPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
-          p:onDocumentReadyScript="">
+          p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
                 <!--页面header-->
@@ -65,7 +65,7 @@
                                                                   p:location.viewId="PortalView" p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="助教"
-                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/ta"
+                                                                  p:location.viewId="TaView" p:location.controllerMapping="/ta"
                                                                   p:location.methodToCall="getTaListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="申请优秀助教"/>
                                                         </list>
@@ -80,7 +80,6 @@
                     </property>
                 </bean>
 
-                <!--row 2-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
@@ -113,17 +112,17 @@
                                                                                   p:style="width:100%;">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;"/>
+                                                                                          p:style="height:300px;resize: none;"/>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                <!-- <bean parent="Uif-HorizontalBoxSection">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"
+                                                                           <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="submitTaForm"
@@ -134,10 +133,10 @@
                                                                                   p:actionLabel="取消"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:actionScript="alert('取消');"
-                                                                                  p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>-->
+                                                                                  p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>
                                                                         </list>
                                                                     </property>
-                                                                </bean>
+                                                                </bean>-->
                                                             </list>
                                                         </property>
                                                     </bean>

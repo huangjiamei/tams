@@ -90,7 +90,6 @@
                         <bean parent="Uif-NavigationActionLink" p:actionLabel="助教管理" p:methodToCall="getTaManagementPage"/>
                         <bean parent="Uif-NavigationActionLink" p:actionLabel="教师申报助教" p:methodToCall="getRequestTaPage"/>
                         <bean parent="Uif-NavigationActionLink" p:actionLabel="学生申请助教" p:methodToCall="getApplyTAPage"/>
-                        <bean parent="Uif-NavigationActionLink" p:actionLabel="查看教学日历（链接后不要）" p:methodToCall="getViewTeachingCalendarPage"/>
                     </list>
                 </property>
             </bean>

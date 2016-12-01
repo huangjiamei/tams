@@ -242,7 +242,6 @@ body{
 
 .dropdown .dropdown-menu li
 {
-
     text-align: center;
     list-style: none!important;
 }
@@ -305,19 +304,19 @@ body{
 }
 .box-header > .boxheaderTitle,
 .box-header > [class*="icon-"]{
-    font-size: 14px;
+    font-size: 18px;
 }
 
 /*box-header的btn*/
 .box-btngroup{
     /*float: right!important;*/
-    margin-right: 10px;
+    margin-right: 5px;
     font-size:12px;
 }
 .box-btngroup > button {
     /*float: left;*/
     font-size: 12px;
-    margin-left: 10px;
+    margin-left: 5px;
 }
 /*box end*/
 
@@ -461,10 +460,6 @@ body{
 .navbar-toggle{
     display: none!important;    /*保证下拉按钮恒不可见(直接删掉那个按钮也行)*/
 }
-
-
-
-
 
 /* 令form中的input输入框填满父容器 */
 .form-control{
@@ -696,7 +691,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 .dateTimeInput
 {
-    /*width:250px;*/
+    width:250px;
 }
 
 .dateTimeInput input{
@@ -755,3 +750,16 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     width:98%!important;
 }
 
+.genderM{
+    color:#08c;
+}
+.genderF{
+    color: #ff624a;
+}
+
+.table > thead > tr > th >label {
+    color:#3c8dbc;
+}
+.uif-tableCollectionLayout th {
+    background: #f5f5f5;
+}

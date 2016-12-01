@@ -109,13 +109,15 @@
                                                                                   p:additionalCssClasses="icon-stop bg-orange box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="遴选优秀助教" p:methodToCall="linxuan"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="撤销" p:methodToCall="chexiao"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
+
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="评优" p:methodToCall="linxuan"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
+
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -164,7 +166,9 @@
                                                                             <bean parent="Uif-DataField" p:label="学号"
                                                                                   p:propertyName="taIDNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
-                                                                                  p:propertyName="taGender"/>
+                                                                                  p:propertyName="taGender"
+                                                                                  p:readOnlyDisplayReplacement="@{#line.taGender.equals('M')? '男':'女'}"
+                                                                                  p:additionalCssClasses="@{#line.taGender.equals('M')? 'fa fa-star genderM':'fa fa-heart genderF'}"/>
                                                                             <bean parent="Uif-DataField" p:label="本科专业"
                                                                                   p:propertyName="taBachelorMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="研究生专业"
@@ -214,7 +218,7 @@
                                                                                               p:methodToCall="getTaDetailPage"
                                                                                               p:render="@{#line.appraise!='14'}"
                                                                                               p:navigateToPageId="pageTaDetail"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-form-label"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

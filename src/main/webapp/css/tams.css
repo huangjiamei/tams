@@ -102,12 +102,6 @@ body{
     top:50px;
 }
 
-@media(max-width: 768px){
-    #navDialog{
-       z-index: 9999;
-    }
-}
-
 
 .modal-backdrop {
     opacity: 0 !important;
@@ -240,19 +234,24 @@ body{
 
 .dropdown .dropdown-menu{
     padding-top:0;
+    position: absolute!important;
+    background-color: #fff!important;
+    left:auto;
+    right:0px;
 }
 
 .dropdown .dropdown-menu li
 {
+
     text-align: center;
     list-style: none!important;
 }
 .userInfo{
-    padding-top:20px;
+    padding-top: 20px!important;
     width:auto;
     min-width:300px;
-    background-color: #3C8DBC;
-    z-index:10000
+    background-color: #3C8DBC!important;
+    z-index:10000!important;
 }
 
 .userInfo .userInfoPic{
@@ -462,6 +461,10 @@ body{
 .navbar-toggle{
     display: none!important;    /*保证下拉按钮恒不可见(直接删掉那个按钮也行)*/
 }
+
+
+
+
 
 /* 令form中的input输入框填满父容器 */
 .form-control{

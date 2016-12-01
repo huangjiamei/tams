@@ -1231,6 +1231,30 @@ public class adminController extends BaseController {
     }
 
 
+    @RequestMapping(params = {"methodToCall=setCurrentSession"})
+    public ModelAndView setCurrentSession(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        TermManagerViewObject termManagerViewObject = adminInfoForm.getAllTerms().get(index);
+
+        String termName = termManagerViewObject.getTermName();
+        String year = termName.substring(0, termName.indexOf("年"));
+        String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("季"));
+        if(adminService.setCurrentSession(year, term)){
+            return this.getTermManagePage(form);
+        }
+        else{
+            // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+            adminInfoForm.setErrMsg("设置失败(修改为错误提示)");
+            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        }
+    }
+
     /**
      * 获取助教酬劳管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTaRewardPage&viewId=AdminView

@@ -55,6 +55,8 @@ public class ClassController extends BaseController {
     @Autowired
     private ExcelService excelService;
 
+
+
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";

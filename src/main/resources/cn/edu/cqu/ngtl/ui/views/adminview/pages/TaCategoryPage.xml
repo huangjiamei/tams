@@ -159,8 +159,8 @@
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="助教类别"
                                                                                   p:propertyName="name"/>
-                                                                            <bean parent="Uif-DataField" p:label="描述"
-                                                                                  p:propertyName="description"/>
+                                                                            <bean parent="Uif-DataField" p:label="时薪"
+                                                                                  p:propertyName="hourlyWage"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
@@ -222,8 +222,8 @@
                                               p:messageText="助教"/>
                                         <bean parent="Uif-InputField" p:label="名称"
                                               p:propertyName="oldTaCategory.name"/>
-                                        <bean parent="Uif-InputField" p:label="描述"
-                                              p:propertyName="oldTaCategory.description"/>
+                                        <bean parent="Uif-InputField" p:label="时薪"
+                                              p:propertyName="oldTaCategory.hourlyWage"/>
                                     </list>
                                 </property>
                             </bean>
@@ -258,8 +258,8 @@
                                               p:messageText="助教" p:readOnlyDisplayReplacement="@{#line.field4}"/>
                                         <bean parent="Uif-InputField" p:label="名称"
                                               p:propertyName="oldTaCategory.name"/>
-                                        <bean parent="Uif-InputField" p:label="描述"
-                                              p:propertyName="oldTaCategory.description"/>
+                                        <bean parent="Uif-InputField" p:label="时薪"
+                                              p:propertyName="oldTaCategory.hourlyWage"/>
                                     </list>
                                 </property>
                             </bean>

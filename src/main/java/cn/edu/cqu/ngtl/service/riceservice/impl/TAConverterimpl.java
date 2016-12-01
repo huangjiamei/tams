@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTStudentDaoJpa;
@@ -33,9 +34,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -69,9 +68,20 @@ public class TAConverterimpl implements ITAConverter {
     @Autowired
     private IUserInfoService userInfoService;
 
+    @Autowired
+    private UTClassInstructorDao classInstructorDao;
+
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
+        List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
+        Map classInstructorMap = new HashMap();
+        for(UTClassInstructor utClassInstructor : utClassInstructors){
+            if(classInstructorMap.get(utClassInstructor.getClassId())!=null)
+                classInstructorMap.put(utClassInstructor.getClassId(),utClassInstructor.getUtInstructor().getName()+" "+classInstructorMap.get(utClassInstructor.getClassId()));
+            else
+                classInstructorMap.put(utClassInstructor.getClassId(),utClassInstructor.getUtInstructor().getName());
+        }
         //没有数据的话返回一行空数据，否则表格消失
         if(informationlist == null || informationlist.size() == 0) {
             List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
@@ -91,6 +101,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setCourseName(information.getCourseName());
             viewObject.setCourseCode(information.getCourseCode());
             viewObject.setStatus(information.getStatus());
+            viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
 
             viewObjects.add(viewObject);
         }

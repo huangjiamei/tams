@@ -70,6 +70,21 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "EVALUATION_DETAIL")
     private String evaluationDetail;
 
+
+    @Column(name = "ASSIGNED_FUNDING")
+    private String assignedFunding;
+
+    @Column(name = "PHD_FUNDING")
+    private String phdFunding;
+
+
+    @Column(name = "TRAVEL_SUBSIDY")
+    private String travelSubsidy;
+
+    @Column(name = "BONUS")
+    private String bonus;
+
+
     public String getStatus() {
         return status;
     }
@@ -188,5 +203,37 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setEvaluationDetail(String evaluationDetail) {
         this.evaluationDetail = evaluationDetail;
+    }
+
+    public String getAssignedFunding() {
+        return assignedFunding;
+    }
+
+    public void setAssignedFunding(String assignedFunding) {
+        this.assignedFunding = assignedFunding;
+    }
+
+    public String getPhdFunding() {
+        return phdFunding;
+    }
+
+    public void setPhdFunding(String phdFunding) {
+        this.phdFunding = phdFunding;
+    }
+
+    public String getTravelSubsidy() {
+        return travelSubsidy;
+    }
+
+    public void setTravelSubsidy(String travelSubsidy) {
+        this.travelSubsidy = travelSubsidy;
+    }
+
+    public String getBonus() {
+        return bonus;
+    }
+
+    public void setBonus(String bonus) {
+        this.bonus = bonus;
     }
 }

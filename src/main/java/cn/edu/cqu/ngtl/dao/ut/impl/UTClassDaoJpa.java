@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 public class UTClassDaoJpa implements UTClassDao {
 
     @Override
-    public UTClass selectByClassId(Integer id) {
-        return KradDataServiceLocator.getDataObjectService().find(UTClass.class, id);
+    public UTClass selectByClassId(String id) {
+        return KradDataServiceLocator.getDataObjectService().find(UTClass.class, Integer.parseInt(id));
     }
 }

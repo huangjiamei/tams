@@ -100,7 +100,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
             viewObject.setCourseCode(information.getCourseCode());
-            viewObject.setStatus(information.getStatus());
+            viewObject.setStatus(information.getStatusName());
             viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
 
             viewObjects.add(viewObject);
@@ -643,11 +643,13 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelations) {
-        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+    public RelationTable workflowStatusRtoJson(String functionId, List<TAMSWorkflowStatusR> workflowStatusRelations) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
         //如果连header都没有返回完全的空
-        if(allStatus == null)
-            return null;
+        if(allStatus == null) {
+            RelationTable rt = new RelationTable("default");
+            return rt;
+        }
 
         List<String> headers = new ArrayList<>(allStatus.size());
         for(TAMSWorkflowStatus status : allStatus) {

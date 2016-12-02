@@ -1396,6 +1396,7 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
 
         RelationTable rt = taConverter.workflowStatusRtoJson(
+                infoForm.getFunctionId(),
                 adminService.getWorkflowStatusRelationByRoleFunctionId(
                         adminService.getRoleFunctionIdByRoleIdAndFunctionId(
                                 infoForm.getRoleId(),
@@ -1430,7 +1431,7 @@ public class adminController extends BaseController {
 
         String rfId = adminService.setRoleFunctionIdByRoleIdAndFunctionId(infoForm.getRoleId(), infoForm.getFunctionId());
 
-        adminService.setWorkflowStatusRelationByRoleFunctionId(rfId, rt);
+        adminService.setWorkflowStatusRelationByRoleFunctionId(infoForm.getFunctionId(), rfId, rt);
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }

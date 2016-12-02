@@ -129,6 +129,18 @@ public class TaController extends BaseController {
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 
+    /**
+     * 助教评优
+     * @param form
+     * @return
+     */
+    /*@RequestMapping(params = "methodToCall=appraiseOutstanding")
+    public ModelAndView appraiseOutstanding(@ModelAttribute("KualiForm") UifFormBase form,
+                              HttpServletRequest request) {
+
+
+    }*/
+
     //我的助教（教师用户看到的）(管理助教)界面
     /**
      * 获取助教管理页面(包含我的助教列表+申请助教列表)

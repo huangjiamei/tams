@@ -8,7 +8,10 @@ import java.util.List;
  * Created by tangjing on 16-11-9.
  */
 public interface TAMSWorkflowStatusDao {
+
     List<TAMSWorkflowStatus> selectAll();
 
-    void unlock();
+    List<TAMSWorkflowStatus> selectByFunctionId(String functionId);
+
+    boolean isFirstStatus(String workflowStatusId);
 }

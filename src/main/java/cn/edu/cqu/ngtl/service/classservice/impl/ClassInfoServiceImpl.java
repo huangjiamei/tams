@@ -82,7 +82,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public UTClass getClassInfoById(Integer classId) {
+    public UTClass getClassInfoById(String classId) {
 
         UTClass clazz = classDao.selectByClassId(classId);
 
@@ -258,9 +258,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 logger.error("未能找到'审核'的Function");
                 return false;
             }
-            boolean result = classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
+            if(classApplyStatusDao.isInitializedStatus(function.getId(), classId))
+                return classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
             //执行到这里既是成功
-
+            //如果新提交的课程的状态并非初始状态，则返回true，表示已经通过了提交
             return true;
         }
         catch (RuntimeException e) {

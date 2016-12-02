@@ -109,12 +109,14 @@
                                                                                   p:additionalCssClasses="icon-stop bg-orange box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="撤销" p:methodToCall="chexiao"
+                                                                                  p:actionLabel="撤销"
+                                                                                  p:methodToCall="chexiao"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="评优" p:methodToCall="linxuan"
+                                                                                  p:actionLabel="评优"
+                                                                                  p:methodToCall="appraiseOutstanding"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
 

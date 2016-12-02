@@ -8,6 +8,6 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 public interface UTClassDao {
 
 
-    UTClass selectByClassId(Integer id);
+    UTClass selectByClassId(String id);
 
 }

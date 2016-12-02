@@ -64,7 +64,7 @@ public class TAServiceimpl implements ITAService {
     @Override
     public UTClass applicationTable(Integer classId) {
 
-        UTClass clazz = classDao.selectByClassId(classId);
+        UTClass clazz = classDao.selectByClassId(classId.toString());
 
         return clazz;
 
@@ -73,7 +73,7 @@ public class TAServiceimpl implements ITAService {
     @Override
     public UTClass applicationAssistantTable(Integer classId) {
 
-        UTClass clazz = classDao.selectByClassId(classId);
+        UTClass clazz = classDao.selectByClassId(classId.toString());
 
         return clazz;
 
@@ -135,6 +135,8 @@ public class TAServiceimpl implements ITAService {
 
     @Override
     public boolean changeStatusBatchByIds(List<String> ids, String status) {
+        if(ids == null || ids.size() == 0)
+            return true;
 
         List<TAMSTa> tas = taDao.selectBatchByIds(ids);
 

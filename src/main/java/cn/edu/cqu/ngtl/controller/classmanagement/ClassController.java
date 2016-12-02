@@ -105,9 +105,10 @@ public class ClassController extends BaseController {
             /**
              * param in end
              */
-            Integer id = classObject.getId();
+            String classId = classObject.getId().toString();
+            infoForm.setCurrClassId(classId);
 
-            UTClass utClass = classInfoService.getClassInfoById(classObject.getId());
+            UTClass utClass = classInfoService.getClassInfoById(classId);
 
             ClassDetailInfoViewObject detailInfoViewObject = taConverter.classInfoToViewObject(
                     utClass
@@ -115,11 +116,8 @@ public class ClassController extends BaseController {
 
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
-            //跳转前加上classId
-            infoForm.setCurrClassId(id.toString());
-
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
         return this.getModelAndView(infoForm, "pageClassInfo");
     }
@@ -133,13 +131,11 @@ public class ClassController extends BaseController {
                                        HttpServletRequest request) {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String stuId = userSession.getLoggedInUserPrincipalId();
-        //FIXME  不能写死
-        stuId = "20131840";
-
-        Integer classId = 290739;
 
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        String classId = infoForm.getCurrClassId();
 
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
@@ -480,7 +476,7 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         String uId = GlobalVariables.getUserSession().getPrincipalId();
-        Integer classId = 290739;
+        String classId = infoForm.getCurrClassId();
 
         User instructor = (User) GlobalVariables.getUserSession().retrieveObject("user");
         infoForm.setApplyViewObject(
@@ -540,7 +536,7 @@ public class ClassController extends BaseController {
 
         String assistantNumber = infoForm.getApplyViewObject().getAssistantNumber();
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
-        String classId = "290739";
+        String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
 

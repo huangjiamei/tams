@@ -9,8 +9,10 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
+import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import org.apache.log4j.Logger;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +27,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     private static final Logger logger = Logger.getRootLogger();
 
+    @Autowired
+    private TAMSAttachmentsDao attachmentsDao;
 
     @Autowired
     private TAMSTaApplicationDao tamsTaApplicationDao;
@@ -265,17 +269,38 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         return false;
     }
 
-
     public List<TAMSTa> getAllTaFilteredByClassid(String classId){
 
         return taDao.selectByClassId(classId);
 
     }
 
-
     public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId){
 
         return tamsTaApplicationDao.selectByClassId(classId);
     }
 
+    @Override
+    public boolean removeCalendarFileById(String classId, String attachmentId) {
+        if(attachmentId == null)
+            return false;
+        TAMSAttachments isExist = attachmentsDao.selectById(attachmentId);
+        if(isExist == null)
+            return false;
+        String uId = GlobalVariables.getUserSession().getPrincipalId();
+        if(uId.equals(isExist.getAuthorId()) || userInfoService.isInstructor(uId))
+            return new TamsFileControllerServiceImpl().deleteOneAttachment(classId, isExist);
+        else
+            return false;
+    }
+
+    @Override
+    public boolean removeAllCalendarFilesByClassIdAndCalendarId(String classId, String calendarId) {
+        List<TAMSAttachments> attachments = attachmentsDao.selectCalendarFilesByCalendarId(calendarId);
+        boolean flag;
+        for(TAMSAttachments attachment : attachments) {
+            flag = new TamsFileControllerServiceImpl().deleteOneAttachment(classId, attachment);
+        }
+        return true;
+    }
 }

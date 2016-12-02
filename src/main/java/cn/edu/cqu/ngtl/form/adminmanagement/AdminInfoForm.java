@@ -51,6 +51,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<TaFundingViewObject> taFunding;
 
+    private List<DetailFundingViewObject> detailFunding;
+
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
      * TAB_FLAG_SCHOOL：学校tab
@@ -779,5 +781,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setTaFunding(List<TaFundingViewObject> taFunding) {
         this.taFunding = taFunding;
+    }
+
+    public List<DetailFundingViewObject> getDetailFunding() {
+        return detailFunding;
+    }
+
+    public void setDetailFunding(List<DetailFundingViewObject> detailFunding) {
+        this.detailFunding = detailFunding;
     }
 }

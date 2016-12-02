@@ -1,6 +1,5 @@
 package cn.edu.cqu.ngtl.service.common.impl;
 
-import org.apache.commons.lang.StringUtils;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSAttachmentsDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.service.common.TamsFileControllerService;
@@ -20,15 +19,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.sql.Blob;
 import java.sql.SQLException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
@@ -49,7 +43,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         String calendarRootPath;
         try{
             String _Module_Name = "CalendarFiles";
-            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(uId + classId + calendarId, "utf-8", false);
+            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId + calendarId, "utf-8", false);
             //创建文件夹
             calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
                     File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
@@ -64,14 +58,16 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
                 attachment.setCreateTime(file.getDateUploadedFormatted());
                 String fileName = file.getName();
                 attachment.setFileName(fileName);
+                attachment.setDownloadTimes("0");
                 Long size = file.getSize();
                 attachment.setFileSize(size.toString());
                 Blob blob = file.getBlob();
                 String absoluteFilePath = calendarRootPath + File.separator + fileName;
                 //写入磁盘
                 FileUtils.saveFile(absoluteFilePath, blob.getBinaryStream());
-                attachment.setDiskDirectory(calendarRootPath);
-                attachment.setDiskFileName(absoluteFilePath);
+                /** 暂不保存磁盘路径到数据库 **/
+                //attachment.setDiskDirectory(calendarRootPath);
+                //attachment.setDiskFileName(absoluteFilePath);
                 //写入数据库信息
                 new TAMSAttachmentsDaoJpa().insertOneByEntity(attachment);
             }
@@ -85,6 +81,88 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         }
         // catch了异常
         return false;
+    }
+
+    @Override
+    public boolean deleteOneAttachment(String classId, TAMSAttachments attachment) {
+        String calendarRootPath;
+        try{
+            String _Module_Name = attachment.getContainerType(); //保存时候的_Module_Name
+            String _Container_Id = attachment.getContainerId();  //保存时候的_Container_Id
+            String _Attachment_Folder_Name = MD5Encryption.MD5Encode(classId + _Container_Id, "utf-8", false);
+            //合成文件夹路径
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
+                    File.separator + _Module_Name + File.separator + _Attachment_Folder_Name;
+
+            String fileName = attachment.getFileName();
+            String absoluteFilePath = calendarRootPath + File.separator + fileName;
+
+            //从数据库删除
+            boolean result = new TAMSAttachmentsDaoJpa().deleteOneByEntity(attachment);
+
+            if(result) {
+                //从磁盘删除
+                return FileUtils.removeFile(absoluteFilePath);
+            }
+
+            return false;
+        }
+        catch (IOException e) {
+
+        }
+        // catch了异常
+        return false;
+    }
+
+
+    @Override
+    public List<TAMSAttachments> getAllCalendarAttachments(String calendarId) {
+        return new TAMSAttachmentsDaoJpa().selectCalendarFilesByCalendarId(calendarId);
+    }
+
+    @Override
+    public void downloadCalendarFile(String classId, String calendarId, String attachmentId, HttpServletResponse response) {
+        String calendarRootPath;
+        try {
+            String _Module_Name = "CalendarFiles";
+            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId + calendarId, "utf-8", false);
+            //合成文件夹路径
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
+                    File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
+
+            TAMSAttachments attachments = new TAMSAttachmentsDaoJpa().selectById(attachmentId);
+            Integer downloadTimes;
+            try {
+                downloadTimes = Integer.parseInt(attachments.getDownloadTimes());
+            }
+            catch (NumberFormatException e) {
+                downloadTimes = 0;
+            }
+            downloadTimes++;
+            attachments.setDownloadTimes(downloadTimes.toString());
+            new TAMSAttachmentsDaoJpa().updateByEntity(attachments);
+            String fileName = attachments.getFileName();
+            String absoluteFilePath = calendarRootPath + File.separator + fileName;
+            File file = new File(absoluteFilePath);
+
+            response.setCharacterEncoding("UTF-8");
+            response.setContentType("application/octet-stream;charset=utf-8");
+            if(!file.exists()) {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+                return;
+            }
+            InputStream is = new FileInputStream(file);
+            fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
+            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+
+            FileCopyUtils.copy(is, response.getOutputStream());
+            response.flushBuffer();
+            is.close();
+            response.getOutputStream().close();
+        }
+        catch (IOException e) {
+
+        }
     }
 
     @Override

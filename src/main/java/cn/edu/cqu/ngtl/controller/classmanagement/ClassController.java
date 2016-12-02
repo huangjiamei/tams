@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
@@ -32,10 +33,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -56,6 +54,8 @@ public class ClassController extends BaseController {
 
     @Autowired
     private ExcelService excelService;
+
+
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -210,7 +210,7 @@ public class ClassController extends BaseController {
     }
 
     /**
-     * 获取新建教学日历页面
+     * 获取教学日历详情页面
      **/
     @RequestMapping(params = "methodToCall=getViewTeachingCalendarPage")
     public ModelAndView getViewTeachingCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -218,7 +218,92 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            infoForm.setCurrentCalendarInfo(
+                    infoForm.getAllCalendar().get(index)
+            );
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+            infoForm.setAllCalendar(null);  //节省内存
+
+            String classId = infoForm.getCurrClassId();
+            String uId = GlobalVariables.getUserSession().getPrincipalId();
+            infoForm.setAllActivities(
+                    taConverter.activitiesToViewObject(
+                            classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
+                                    uId, classId)
+                    )
+            );
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
+    }
+
+    /**
+     * 下载教学日历的附件
+     **/
+    @RequestMapping(params = "methodToCall=downloadCalendarFile")
+    public ModelAndView downloadCalendarFile(@ModelAttribute("KualiForm") UifFormBase form,
+                                                HttpServletResponse response) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String classId = infoForm.getCurrClassId();
+        String calendarId = infoForm.getCurrentCalendarInfo() != null ? infoForm.getCurrentCalendarInfo().getCode() : null;
+        if (classId == null || calendarId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            String attachmentId = infoForm.getCalendarFiles().get(index).getId();
+
+            new TamsFileControllerServiceImpl().downloadCalendarFile(classId, calendarId, attachmentId, response);
+
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
+    }
+
+    /**
+     * 删除教学日历中附件
+     */
+    @RequestMapping(params = "methodToCall=removeCalendarFile")
+    public ModelAndView removeCalendarFile(@ModelAttribute("KualiForm") UifFormBase form,
+                                           HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String classId = infoForm.getCurrClassId();
+        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            String attachmentId = infoForm.getCalendarFiles().get(index).getId();
+
+            classInfoService.removeCalendarFileById(classId, attachmentId);
+
+            return this.getViewTeachingCalendarPage(infoForm, request);
+        }
+        catch (IndexOutOfBoundsException e) {
+            return this.getViewTeachingCalendarPage(infoForm, request);
+        }
     }
 
     /**
@@ -298,8 +383,13 @@ public class ClassController extends BaseController {
         /** calendarid **/
         String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
 
-        if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId))
+        if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId)) {
+            //删除教学日历的附件信息
+            boolean result = classInfoService.removeAllCalendarFilesByClassIdAndCalendarId(
+                    classId, teachCalendarId);
+
             return this.getTeachingCalendar(infoForm, request);
+        }
         else //// FIXME: 16-11-18 应当返回错误页面
             return this.getTeachingCalendar(infoForm, request);
     }

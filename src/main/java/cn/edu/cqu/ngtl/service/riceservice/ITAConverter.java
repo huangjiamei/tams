@@ -18,6 +18,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTaApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
@@ -85,6 +86,7 @@ public interface ITAConverter {
 
     List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars);
 
+    List<FileViewObject> attachmentsToFileViewObject(List<TAMSAttachments> attachments);
     List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);

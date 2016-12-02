@@ -7,7 +7,10 @@ import java.io.*;
  */
 public class FileUtils {
 
-    //1.创建文件夹 递归方式
+    /**
+     * 创建文件夹 递归方式
+     * @param folderName
+     */
     public static void createFolder(String folderName) {
 
         File myFolderPath = new File(folderName);
@@ -28,7 +31,12 @@ public class FileUtils {
         }
     }
 
-    //2.写入文件 byte[]
+    /**
+     * 写入文件 byte[]
+     * @param fileName
+     * @param blob
+     * @throws IOException
+     */
     public static void saveFile(String fileName, byte[] blob) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         try {
@@ -40,7 +48,12 @@ public class FileUtils {
         }
     }
 
-    //3.写入文件 FileInputStream
+    /**
+     * 写入文件 FileInputStream
+     * @param fileName
+     * @param is
+     * @throws IOException
+     */
     public static void saveFile(String fileName, InputStream is) throws IOException {
         FileOutputStream fos = new FileOutputStream(fileName);
         try {
@@ -60,6 +73,34 @@ public class FileUtils {
         finally {
             fos.close();
             is.close();
+        }
+    }
+
+    /**
+     * 删除文件
+     *
+     * @param strFilePath
+     * @return
+     */
+    public static boolean removeFile(String strFilePath) throws IOException{
+        boolean result = false;
+        if (strFilePath == null || "".equals(strFilePath)) {
+            return result;
+        }
+        try {
+            File file = new File(strFilePath);
+            if (file.isFile() && file.exists()) {
+                result = file.delete();
+                if (result == Boolean.TRUE) {
+                    System.out.println("[REMOVE_FILE: " + strFilePath + " 删除成功!]");
+                } else {
+                    System.out.println("[REMOVE_FILE: " + strFilePath + " 删除失败]");
+                }
+            }
+            return result;
+        }
+        finally {
+            // do nothing ,just throw Exception
         }
     }
 }

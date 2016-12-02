@@ -168,21 +168,6 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="教学班列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Message"
-                                                                      p:messageText="津贴总额："
-                                                                      p:additionalCssClasses="boxheaderTitle"/>
-                                                                <bean parent="Uif-Message"
-                                                                      p:messageText="1000000.0"
-                                                                      p:additionalCssClasses="label label-primary"
-                                                                      p:style="font-size:12px;"/>
-
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
                                                                     <property name="items">
@@ -206,14 +191,13 @@
 
                                                                             <!--右上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="导出PDF"
+                                                                                  p:actionLabel="PDF"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="bg-orange box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-th bg-orange box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="导出EXCEL"
+                                                                                  p:actionLabel="EXCEL"
                                                                                   p:methodToCall="exportClassListExcel"
-                                                                                  p:additionalCssClasses="bg-primary box-btngroup"/>
-
+                                                                                  p:additionalCssClasses="icon-th-list bg-primary box-btngroup"/>
 
                                                                         </list>
                                                                     </property>
@@ -342,10 +326,11 @@
                                                                             <bean parent="Uif-DataField" p:label="教师"
                                                                                   p:propertyName="instructorName"/>
                                                                             <bean parent="Uif-DataField" p:label="耗费工时"
-                                                                                  p:propertyName="workTime"/>
+                                                                                  p:propertyName="workTime"
+                                                                                  p:additionalCssClasses="#line.workTime.equals(' ')?' ':'bg-btn-blue tams-form-label'"/>
                                                                             <bean parent="Uif-DataField" p:label="状态"
-                                                                                  p:propertyName="status"/>
-
+                                                                                  p:propertyName="status"
+                                                                                  p:additionalCssClasses="bg-success tams-form-label"/>
 
                                                                         </list>
                                                                     </property>
@@ -455,7 +440,7 @@
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getClassInfoPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-form-label"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

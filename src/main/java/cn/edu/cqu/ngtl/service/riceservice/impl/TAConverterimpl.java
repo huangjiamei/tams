@@ -6,7 +6,10 @@ import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTStudentDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
@@ -16,9 +19,11 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
@@ -64,9 +69,23 @@ public class TAConverterimpl implements ITAConverter {
     @Autowired
     private TAMSActivityDao tamsActivityDao;
 
+    @Autowired
+    private IUserInfoService userInfoService;
+
+    @Autowired
+    private UTClassInstructorDao classInstructorDao;
+
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
+        List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
+        Map classInstructorMap = new HashMap();
+        for(UTClassInstructor utClassInstructor : utClassInstructors){
+            if(classInstructorMap.get(utClassInstructor.getClassId())!=null)
+                classInstructorMap.put(utClassInstructor.getClassId(),utClassInstructor.getUtInstructor().getName()+" "+classInstructorMap.get(utClassInstructor.getClassId()));
+            else
+                classInstructorMap.put(utClassInstructor.getClassId(),utClassInstructor.getUtInstructor().getName());
+        }
         //没有数据的话返回一行空数据，否则表格消失
         if(informationlist == null || informationlist.size() == 0) {
             List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
@@ -86,6 +105,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setCourseName(information.getCourseName());
             viewObject.setCourseCode(information.getCourseCode());
             viewObject.setStatus(information.getStatus());
+            viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
 
             viewObjects.add(viewObject);
         }
@@ -414,7 +434,8 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
-            viewObject.setAppraise("缺失");
+            viewObject.setTeacherAppraise("合格");
+            viewObject.setStuAppraise("优秀");
             viewObject.setVitality("缺失");
 
             viewObjects.add(viewObject);
@@ -935,6 +956,39 @@ public class TAConverterimpl implements ITAConverter {
         return result;
     }
 
+    @Override
+    public List<FileViewObject> attachmentsToFileViewObject(List<TAMSAttachments> attachments) {
+        if(attachments == null || attachments.size() == 0)
+            return null;
 
+        List<FileViewObject> viewObjects = new ArrayList<>(attachments.size());
+        for(TAMSAttachments attachment : attachments) {
+            FileViewObject viewObject = new FileViewObject();
+            viewObject.setId(attachment.getId());
+            viewObject.setName(attachment.getFileName());
+            try {
+                long size = Integer.parseInt(attachment.getFileSize());
+                viewObject.setSize(size);
+            }
+            catch (NumberFormatException e) {
 
+            }
+            String authorId = attachment.getAuthorId();
+            String name;
+            if(userInfoService.isInstructor(authorId)) {
+                name = new UTInstructorDaoJpa().getInstructorByIdWithoutCache(authorId).getName();
+            }
+            else if(userInfoService.isStudent(authorId)) {
+                name = new UTStudentDaoJpa().getUTStudentById(authorId).getName();
+            }
+            else
+                name = "缺失";
+            viewObject.setUploaderName(name);
+            viewObject.setUploadDate(attachment.getCreateTime());
+            viewObject.setDownloadTimes(attachment.getDownloadTimes() != null ? attachment.getDownloadTimes() : "0");
+
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
 }

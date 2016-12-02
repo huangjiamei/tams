@@ -73,7 +73,6 @@
                                               p:additionalCssClasses="userInfoMeg">
                                             <property name="items">
                                                 <list>
-                                                    <!--<bean id="userDeptId" parent="Uif-MessageField" p:messageText="@{user.getDepartmentId()}"  p:style="display:none"/>-->
                                                     <bean id="userDeptName" parent="Uif-MessageField" p:messageText="@{user.getDepartment()}"/>
                                                     <bean parent="Uif-MessageField" p:messageText="@{user.getTag()}"
                                                           p:style="font-size:16px" />
@@ -315,7 +314,7 @@
                                                                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-sm-6 col-xs-12">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="TestMap3"/>
@@ -357,6 +356,15 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
+                    <property name="items">
+                        <list>
+                            <bean id="aaa" p:linkText="课程" parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
+                                  p:iconClass="icon-book menuIcon"/>
+                       </list>
+                    </property>
+                </bean>
 
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
@@ -393,23 +401,6 @@
     <bean id="ClassMap" parent="Uif-VerticalBoxSection" >
         <property name="items">
             <list>
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
-                    <property name="items">
-                        <list>
-                            <bean id="aaa" p:linkText="课程" parent="Uif-Link" p:href="#" p:iconClass="icon-book menuIcon"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-VerticalBoxSection">
-                    <property name="items">
-                        <list>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
-                                  p:linkText="教学班列表" p:iconClass="icon-list menuIcon"/>
-                        </list>
-                    </property>
-                </bean>
-
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
@@ -505,8 +496,6 @@
                                   p:linkText="经费管理" p:iconClass="icon-money menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
                                   p:linkText="工作流管理" p:iconClass="icon-random menuIcon"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaRewardPage&amp;viewId=AdminView"
-                                  p:linkText="助教酬劳管理" p:iconClass="icon-coin menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
                                   p:linkText="时间管理" p:iconClass="icon-time menuIcon"/>
                         </list>

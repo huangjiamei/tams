@@ -233,6 +233,13 @@
                                                                             <bean parent="Uif-VerticalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:actionLabel=""
+                                                                                              p:actionImagePlacement="LEFT"
+                                                                                              p:methodToCall="getViewTeachingCalendarPage"
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"
+                                                                                        />
                                                                                         <bean parent="Uif-ActionImage"
                                                                                               p:methodToCall="deleteTeachCalendar"
                                                                                               p:refreshId="calenderBox">

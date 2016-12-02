@@ -147,10 +147,6 @@
 
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:messageText="时间："/>
-                                                                                                    <bean id="newdateTimeImage"
-                                                                                                          parent="Uif-Image"
-                                                                                                          p:source="../images/clock_time.png"
-                                                                                                          p:additionalCssClasses="dateTimeImage"/>
                                                                                                     <bean id="newdateTimeRange"
                                                                                                           parent="Uif-InputField"
                                                                                                           p:propertyName="settingsTime"

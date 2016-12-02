@@ -120,8 +120,9 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-GridGroup"
-                                                                                              p:layoutManager.numberOfColumns="4"
-                                                                                              p:style="margin-top:10px">
+                                                                                              p:layoutManager.renderRowFirstCellHeader="false">
+                                                                                            <property name="layoutManager.numberOfColumns"
+                                                                                                      value="4"/>
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="Uif-MessageField"
@@ -164,7 +165,13 @@
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="拟配备助教数"
                                                                                                           p:required="true"
-                                                                                                          p:propertyName="applyViewObject.assistantNumber"/>
+                                                                                                          p:style="width:80%"
+                                                                                                          p:propertyName="applyViewObject.assistantNumber">
+                                                                                                        <property name="validCharactersConstraint">
+                                                                                                            <bean parent="NumericPatternConstraint"/>
+                                                                                                        </property>
+                                                                                                    </bean>
+
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -185,46 +192,19 @@
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
-                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                          p:layoutManager.numberOfColumns="6">
-                                                                                                        <property
-                                                                                                                name="collectionObjectClass"
+                                                                                                    <bean parent="Uif-Disclosure-TableCollectionSection"  p:layoutManager.numberOfColumns="4">
+                                                                                                        <property name="collectionObjectClass"
                                                                                                                 value="cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject"/>
-                                                                                                        <property
-                                                                                                                name="propertyName"
-                                                                                                                value="allCalendar"/>
-                                                                                                        <property
-                                                                                                                name="renderAddBlankLineButton"
-                                                                                                                value="false"/>
+                                                                                                        <property name="propertyName" value="allCalendar"/>
+                                                                                                        <property name="layoutManager.renderSequenceField" value="false"/>
+                                                                                                        <property name="layoutManager.generateAutoSequence" value="true"/>
+                                                                                                        <property name="layoutManager.richTable.render" value="false"/>
+                                                                                                        <property name="useServerPaging" value="true" />
+                                                                                                        <property name="renderAddLine" value="false"/>
+                                                                                                        <property name="renderLineActions" value="false"/>
+                                                                                                        <property name="disclosure.render" value="false"/>
 
-                                                                                                        <property
-                                                                                                                name="layoutManager.richTable.render"
-                                                                                                                value="false"/>
-
-                                                                                                        <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
-                                                                                                        <property
-                                                                                                                name="layoutManager.renderSequenceField"
-                                                                                                                value="true"/>
-                                                                                                        <property
-                                                                                                                name="layoutManager.generateAutoSequence"
-                                                                                                                value="true"/>
-                                                                                                        <property
-                                                                                                                name="useServerPaging"
-                                                                                                                value="true"/>
-
-                                                                                                        <property
-                                                                                                                name="renderAddLine"
-                                                                                                                value="false"/>
-                                                                                                        <property
-                                                                                                                name="renderLineActions"
-                                                                                                                value="false"/>
-                                                                                                        <property
-                                                                                                                name="disclosure.render"
-                                                                                                                value="false"/>
-
-
-                                                                                                        <property
-                                                                                                                name="items">
+                                                                                                        <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="任务类型"
@@ -245,8 +225,7 @@
 
                                                                                                     <bean parent="Uif-GridGroup"
                                                                                                           p:layoutManager.numberOfColumns="4">
-                                                                                                        <property
-                                                                                                                name="items">
+                                                                                                        <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-MessageField"
                                                                                                                       p:label="耗时总计(小时)"
@@ -286,44 +265,22 @@
                                                                                                                 name="items">
                                                                                                             <list>
                                                                                                                 <!--table-->
-                                                                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
+                                                                                                                      p:layoutManager.numberOfColumns="8">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
                                                                                                                             value="cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation"/>
-                                                                                                                    <property
-                                                                                                                            name="propertyName"
-                                                                                                                            value="classEvaluations"/>
-                                                                                                                    <!--开启addline按钮-->
-                                                                                                                    <!--<property name="renderAddBlankLineButton" value="true"/>-->
-
-                                                                                                                    <property
-                                                                                                                            name="layoutManager.richTable.render"
-                                                                                                                            value="false"/>
-
-                                                                                                                    <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
-                                                                                                                    <property
-                                                                                                                            name="layoutManager.renderSequenceField"
-                                                                                                                            value="true"/>
-                                                                                                                    <property
-                                                                                                                            name="layoutManager.generateAutoSequence"
-                                                                                                                            value="true"/>
-                                                                                                                    <property
-                                                                                                                            name="useServerPaging"
-                                                                                                                            value="true"/>
-
-                                                                                                                    <property
-                                                                                                                            name="renderAddLine"
-                                                                                                                            value="true"/>
-                                                                                                                    <property
-                                                                                                                            name="renderLineActions"
-                                                                                                                            value="true"/>
-                                                                                                                    <property
-                                                                                                                            name="disclosure.render"
-                                                                                                                            value="false"/>
+                                                                                                                    <property name="propertyName" value="classEvaluations"/>
+                                                                                                                    <property name="layoutManager.renderSequenceField" value="false"/>
+                                                                                                                    <property name="layoutManager.richTable.render" value="false"/>
+                                                                                                                    <property name="layoutManager.generateAutoSequence" value="true"/>
+                                                                                                                    <property name="useServerPaging" value="true" />
+                                                                                                                    <property name="renderAddLine" value="true"/>
+                                                                                                                    <property name="renderLineActions" value="true"/>
+                                                                                                                    <property name="disclosure.render" value="false"/>
 
                                                                                                                     <!-- 修改addlineAction，实现添加评定方式功能 -->
-                                                                                                                    <property
-                                                                                                                            name="addLineActions">
+                                                                                                                    <property name="addLineActions">
                                                                                                                         <list>
                                                                                                                             <!--<bean parent="Uif-AddLineAction"/>-->
                                                                                                                             <bean parent="Uif-SecondaryActionButton-Mini"

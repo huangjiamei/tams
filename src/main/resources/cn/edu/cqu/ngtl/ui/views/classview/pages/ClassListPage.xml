@@ -191,13 +191,13 @@
 
                                                                             <!--右上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="PDF"
-                                                                                  p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="icon-th bg-orange box-btngroup"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="EXCEL"
                                                                                   p:methodToCall="exportClassListExcel"
                                                                                   p:additionalCssClasses="icon-th-list bg-primary box-btngroup"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="PDF"
+                                                                                  p:methodToCall="exportApplicantPhoto"
+                                                                                  p:additionalCssClasses="icon-th bg-orange box-btngroup"/>
 
                                                                         </list>
                                                                     </property>

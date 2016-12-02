@@ -80,16 +80,15 @@ public class AdminConverterimpl implements IAdminConverter {
             }
 
             //暂时缺失的属性
-            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding());
-            taFundingViewObject.setBonus(ta.getBonus());
-            taFundingViewObject.setPhdFunding(ta.getPhdFunding());
-            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy());
+            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding()==null?"0":ta.getAssignedFunding());
+            taFundingViewObject.setBonus(ta.getBonus()==null?"0":ta.getBonus());
+            taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getBonus());
+            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getBonus());
             taFundingViewObject.setTaType("博士");
-            Integer total =   (Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding()));
+            Integer total =  (Integer.parseInt(ta.getAssignedFunding())+
+                    Integer.parseInt(ta.getBonus())+
+                    Integer.parseInt(ta.getPhdFunding())+
+                    Integer.parseInt(ta.getTravelSubsidy()));
             taFundingViewObject.setTotal(total.toString());
             taFundingViewObjects.add(taFundingViewObject);
         }

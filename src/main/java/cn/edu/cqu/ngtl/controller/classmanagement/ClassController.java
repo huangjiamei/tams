@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
@@ -10,10 +11,12 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
+import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -33,7 +36,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -48,6 +54,9 @@ public class ClassController extends BaseController {
 
     @Autowired
     private ITAConverter taConverter;
+
+    @Autowired
+    private IClassConverter classConverter;
 
     @Autowired
     private ITAService taService;
@@ -641,6 +650,237 @@ public class ClassController extends BaseController {
                 taService.getAllApplicationFilterByUid(uId)
         ));
         return this.getModelAndView(infoForm, "pageTaManagement");
+    }
+
+
+    /**
+     * 聘请助教
+     */
+
+    @RequestMapping(params = "methodToCall=employ")
+    public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
+                               HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<MyTaViewObject> applicationList = infoForm.getAllApplication();
+
+        //遍历所有list，找到选中的行
+        List<MyTaViewObject> checkedList = new ArrayList<>();
+        for(MyTaViewObject per : applicationList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        boolean result = taService.employBatchByStuIdsWithClassId(
+                classConverter.extractIdsFromApplication(checkedList)
+        );
+        for(MyTaViewObject needToAdd : checkedList){
+            needToAdd.setCheckBox(false);
+            infoForm.getAllMyTa().add(needToAdd);
+            infoForm.getAllApplication().remove(needToAdd);
+        }
+        if(result)
+            return this.getModelAndView(infoForm, "pageTaManagement");
+        else
+            return this.getModelAndView(infoForm, "pageTaManagement"); //应该返回错误信息
+    }
+
+
+    /**
+     * 恢复助教
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=setTaToLiving")
+    public ModelAndView setTaToLiving(@ModelAttribute("KualiForm") UifFormBase form,
+                                      HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<MyTaViewObject> objects = infoForm.getAllMyTa();
+
+        List<MyTaViewObject> isOkToChange = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.PAUSED))
+                isOkToChange.add(per);
+        }
+
+        if (isOkToChange.isEmpty()) {
+            return this.getTaManagementPage(form, request);
+        }
+
+        boolean result = taService.changeStatusBatchByTaIds(
+                classConverter.extractIdsFromMyTaInfo(isOkToChange),
+                TA_STATUS.LIVING
+        );
+
+        if (result)
+            return this.getTaManagementPage(form, request);
+        else {
+            // TODO: 2016/11/12 等待错误信息设计
+            return this.getTaManagementPage(form, request);
+        }
+    }
+
+
+    /**
+     * 暂停助教
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=setTaToPause")
+    public ModelAndView setTaToPause(@ModelAttribute("KualiForm") UifFormBase form,
+                                     HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<MyTaViewObject> objects = infoForm.getAllMyTa();
+
+        List<MyTaViewObject> isOkToChange = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.LIVING))
+                isOkToChange.add(per);
+        }
+
+        int n = isOkToChange.size();
+
+        if (isOkToChange.isEmpty()) {
+            return this.getTaManagementPage(form, request);
+        }
+
+        n = classConverter.extractIdsFromMyTaInfo(isOkToChange).size();
+
+        boolean result = taService.changeStatusBatchByTaIds(
+                classConverter.extractIdsFromMyTaInfo(isOkToChange),
+                TA_STATUS.PAUSED
+        );
+
+        if (result)
+            return this.getTaManagementPage(form, request);
+        else {
+            // TODO: 2016/11/12 等待错误信息设计
+            return this.getTaManagementPage(form, request);
+        }
+    }
+
+    /**
+     * 解聘助教
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=setTaToDismiss")
+    public ModelAndView setTaToDismiss(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        // TODO: 2016/11/12 等待需求
+        return this.getTaManagementPage(form, request);
+    }
+
+
+
+    /**
+     * 测试用方法：
+     * 助教管理页面，输入姓名或学号，查询助教
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=searchTaByCondition")
+    public ModelAndView searchTaByCondition(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        // TODO: 2016/11/24 要获取前端输入的姓名、学号，所以需要在form中添加对应属性并修改TaManagementPage.xml中375行左右参数名。(现在前端用的是inputField8/9)
+
+
+        // TODO: 2016/11/24 下面为测试用代码，需要添加一个新的存储符合条件ta列表的属性 ，同时修改TaManagementPage.xml中约326行的propertyName
+        // TODO: 2016/11/24 注意：需要在TaInfoForm中为新添加的属性赋初始值(List<xx> xxlist=new arraylist<>();) 否则页面加载时会出错
+        /*
+        List<MyTaViewObject> list= taInfoForm.getConditionTAList();
+        MyTaViewObject newobj=new MyTaViewObject();
+        newobj.setTaName("Zsf");
+        newobj.setTaIdNumber("20135040");
+        list.add(newobj);
+        */
+//        taInfoForm.setConditionTAList(list);
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("StudentName", infoForm.getStudentName());
+        conditions.put("StudentId", infoForm.getStudentNumber());
+        infoForm.setConditionTAList(
+                classConverter.studentInfoToMyTaViewObject(
+                        taService.getConditionTaByNameAndId(conditions)
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+    }
+
+    /**
+     * 助教管理页面，输入姓名或学号查询得到助教列表后，点击助教列表中某一行查看该助教的具体信息
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getSelectedTaInfo")
+    public ModelAndView getSelectedTaInfo(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        infoForm.setSelectedTa(infoForm.getConditionTAList().get(index));
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+    }
+
+    /**
+     * 在dialog中'确定'对应的后台方法
+     * 首先需要判断当前是否有选中有效目标
+     * 如果没选中，则弹出errDialog
+     * 已选中则将目标ta加入到候选人列表(allApplication),并刷新整个页面
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=addSelectedTaApplicant")
+    public ModelAndView addSelectedTaApplicant(@ModelAttribute("KualiForm") UifFormBase form,
+                                               HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        String classid = infoForm.getCurrClassId();
+
+        MyTaViewObject curTa=infoForm.getSelectedTa();
+        curTa.setApplicationClassId(classid);
+        List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
+        needToBeAddToApplication.add(curTa);
+
+        boolean result = taService.submitApplicationAssistant(
+                classConverter.TaViewObjectToTaApplication(curTa, classid)
+        );
+
+        if(result){
+            //避免延迟刷新
+            if(infoForm.getAllApplication()==null)
+                infoForm.setAllApplication(needToBeAddToApplication);
+            else
+                infoForm.getAllApplication().addAll(needToBeAddToApplication);
+
+            infoForm.getConditionTAList().remove(curTa);
+            return this.getModelAndView(infoForm, "pageTaManagement");
+        }
+        else
+            return this.getModelAndView(infoForm, "pageTaManagement");
     }
 
 }

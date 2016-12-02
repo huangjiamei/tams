@@ -16,6 +16,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
@@ -26,7 +27,10 @@ import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
+import org.apache.log4j.pattern.LoggerPatternConverter;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -382,6 +386,7 @@ public class TAConverterimpl implements ITAConverter {
         return session;
     }
 
+
     //全校所有助教界面
     @Override
     public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
@@ -468,6 +473,28 @@ public class TAConverterimpl implements ITAConverter {
         return viewObjects;
     }
 
+    //工作台界面相关
+    @Override
+    public List<WorkBenchViewObject> taCombineWorkbench(List<WorkBenchViewObject> list){
+
+        //List<WorkBenchViewObject> viewObject = new ArrayList<>();
+        //WorkBenchViewObject workbenchviewobject = new WorkBenchViewObject();
+        for(int i=0; i<list.size(); i++){
+            for(int j=i+1; j<list.size(); j++){
+                //System.out.println(list.get(i).getClassNbr());
+                //System.out.println(list.get(j).getClassNbr());
+                if(list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
+                    list.get(i).setTeacher(list.get(i).getTeacher() + ',' + list.get(j).getTeacher());
+                    list.remove(j);
+                }
+                //viewObject.set(i,list.get(i));
+                //break;
+            }
+            //viewObject.set(i,list.get(i));
+        }
+        return list;
+    }
+
     //FIXME 迁移后删掉
     @Override
     public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> myTaCombinePayDayClass(List<TAMSTa> allTaFilteredByUid) {
@@ -525,7 +552,6 @@ public class TAConverterimpl implements ITAConverter {
     }
 
 
-
     //我的助教界面申请人助教列表
     @Override
     public List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid) {
@@ -554,6 +580,44 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return viewObjects;
+    }
+
+    //添加申请人对话框，显示查询出符合条件的候选人列表
+    @Override
+    public List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList) {
+        if(studentList == null || studentList.size() == 0) {
+            logger.error("数据为空！");
+            return null;
+        }
+        List<MyTaViewObject> viewObjects = new ArrayList<>();
+        for(UTStudent listone : studentList){
+            MyTaViewObject viewObject = new MyTaViewObject();
+            viewObject.setTaName(listone.getName());
+            viewObject.setTaIdNumber(listone.getId());
+            viewObject.setTaGender(listone.getGender());
+            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            //点击查看详细信息会用到的
+            CMProgram program = listone.getProgram();
+            if(program == null)
+                viewObject.setTaBachelorMajorName("缺失");
+            else
+                viewObject.setTaBachelorMajorName(listone.getProgram().getName().toString());
+            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setAdvisorName("缺失");
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
+    @Override
+    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid){
+        TAMSTaApplication tamsTaApplication = new TAMSTaApplication();
+        tamsTaApplication.setApplicationClassId(classid);
+        tamsTaApplication.setApplicationId(application.getTaIdNumber());
+        //tamsTaApplication.setApplicationStatus("1");
+        //tamsTaApplication.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
+        return tamsTaApplication;
     }
 
     @Override

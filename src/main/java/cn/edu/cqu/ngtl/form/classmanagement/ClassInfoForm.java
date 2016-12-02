@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 
 import java.io.Serializable;
@@ -39,6 +40,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TeachCalendarViewObject currentCalendarInfo;
 
     private List<FileViewObject> calendarFiles;
+
 
     /**
      * 班级管理隐藏搜索框

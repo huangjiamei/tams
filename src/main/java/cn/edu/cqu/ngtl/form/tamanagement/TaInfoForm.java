@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,6 +46,26 @@ public class TaInfoForm extends BaseForm implements Serializable {
         // 赋初始空值测试
         conditionTAList.add(new MyTaViewObject());
     }
+
+    //添加申请人时的输入
+    private String StudentName;
+    private String StudentNumber;
+
+    public String getStudentName() {return StudentName;}
+
+    public void setStudentName(String studentName) {
+        StudentName = studentName;
+    }
+
+    public String getStudentNumber() {
+        return StudentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        StudentNumber = studentNumber;
+    }
+
+
     /**
      * 助教列表相关
      */
@@ -54,6 +75,20 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String taIdForDetailpage;
     private String classIdForDetailPage;
     private TaInfoViewObject selectedTaInfo;
+
+
+    /**
+     * 工作台相关
+     */
+    private List<WorkBenchViewObject> workbench;
+
+    public List<WorkBenchViewObject> getWorkbench() {
+        return workbench;
+    }
+
+    public void setWorkbench(List<WorkBenchViewObject> workbench) {
+        this.workbench = workbench;
+    }
 
     /**
      * 任务相关

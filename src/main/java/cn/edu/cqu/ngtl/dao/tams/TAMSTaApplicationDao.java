@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 
 import java.util.List;
@@ -12,9 +13,11 @@ public interface TAMSTaApplicationDao {
     //以实体的形式插入一条数据
     boolean insertOne(TAMSTaApplication taApplication);
 
-    List<TAMSTaApplication> selectByClassId(List<Object> classIds);
+    List<TAMSTaApplication> selectByClassIds(List<Object> classIds);
 
-    List<TAMSTaApplication> selectByClassId(String classIds);
+    List<TAMSTaApplication> selectByClassId(String classId);
+
+    //ßßList<TAMSTaApplication> selectByClassIds(String classIds);
 
     TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId);
 

@@ -301,10 +301,10 @@
                         <list>
                             <bean parent="Uif-InputField" p:label="姓名"
                                   p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12 "
-                                  p:propertyName="inputField8"/>
+                                  p:propertyName="StudentName"/>
                             <bean parent="Uif-InputField" p:label="学号"
                                   p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12"
-                                  p:propertyName="inputField9"/>
+                                  p:propertyName="StudentNumber"/>
                             <bean parent="Uif-PrimaryActionButton"
                                   p:additionalCssClasses="col-lg-2 col-md-2 col-sm-12 col-xs-12"
                                   p:methodToCall="searchTaByCondition"

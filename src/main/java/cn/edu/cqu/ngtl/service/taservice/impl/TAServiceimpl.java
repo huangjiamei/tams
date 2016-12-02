@@ -5,25 +5,25 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import java.util.Map;
 
 import javax.persistence.EntityManager;
 import java.util.ArrayList;
@@ -61,6 +61,14 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private UTSessionDao sessionDao;
 
+    @Autowired
+    private UTStudentDao studentDao;
+
+    //根据姓名和学号查找候选人
+    public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
+        List<UTStudent> studentInfo = studentDao.selectStudentByNameAndId(conditions);
+        return studentInfo;
+    }
 
     //根据studentid查询担任助教的classids
     public List<Object> getClassIdsByUid(){
@@ -102,8 +110,8 @@ public class TAServiceimpl implements ITAService {
 
         if (tamsTaApplicationDao.insertOne(application))
             return true;
-
-        return false;
+        else
+            return false;
     }
 
 

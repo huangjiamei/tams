@@ -531,7 +531,6 @@ public class TAConverterimpl implements ITAConverter {
     }
 
 
-
     //我的助教界面申请人助教列表
     @Override
     public List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid) {
@@ -560,6 +559,44 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return viewObjects;
+    }
+
+    //添加申请人对话框，显示查询出符合条件的候选人列表
+    @Override
+    public List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList) {
+        if(studentList == null || studentList.size() == 0) {
+            logger.error("数据为空！");
+            return null;
+        }
+        List<MyTaViewObject> viewObjects = new ArrayList<>();
+        for(UTStudent listone : studentList){
+            MyTaViewObject viewObject = new MyTaViewObject();
+            viewObject.setTaName(listone.getName());
+            viewObject.setTaIdNumber(listone.getId());
+            viewObject.setTaGender(listone.getGender());
+            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            //点击查看详细信息会用到的
+            CMProgram program = listone.getProgram();
+            if(program == null)
+                viewObject.setTaBachelorMajorName("缺失");
+            else
+                viewObject.setTaBachelorMajorName(listone.getProgram().getName().toString());
+            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setAdvisorName("缺失");
+            viewObjects.add(viewObject);
+        }
+        return viewObjects;
+    }
+
+    //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
+    @Override
+    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid){
+        TAMSTaApplication tamsTaApplication = new TAMSTaApplication();
+        tamsTaApplication.setApplicationClassId(classid);
+        tamsTaApplication.setApplicationId(application.getTaIdNumber());
+        //tamsTaApplication.setApplicationStatus("1");
+        //tamsTaApplication.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
+        return tamsTaApplication;
     }
 
     @Override

@@ -26,7 +26,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Map;
+import java.util.HashMap;
 /**
  * Created by tangjing on 16-10-19.
  * 助教信息查看的相关view及function
@@ -300,13 +301,23 @@ public class TaController extends BaseController {
 
         // TODO: 2016/11/24 下面为测试用代码，需要添加一个新的存储符合条件ta列表的属性 ，同时修改TaManagementPage.xml中约326行的propertyName
         // TODO: 2016/11/24 注意：需要在TaInfoForm中为新添加的属性赋初始值(List<xx> xxlist=new arraylist<>();) 否则页面加载时会出错
-        List<MyTaViewObject> list=taInfoForm.getConditionTAList();
+        /*
+        List<MyTaViewObject> list= taInfoForm.getConditionTAList();
         MyTaViewObject newobj=new MyTaViewObject();
         newobj.setTaName("Zsf");
         newobj.setTaIdNumber("20135040");
         list.add(newobj);
-
+        */
 //        taInfoForm.setConditionTAList(list);
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("StudentName", taInfoForm.getStudentName());
+        conditions.put("StudentId", taInfoForm.getStudentNumber());
+        taInfoForm.setConditionTAList(
+                taConverter.studentInfoToMyTaViewObject(
+                        taService.getConditionTaByNameAndId(conditions)
+                )
+        );
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
@@ -342,11 +353,25 @@ public class TaController extends BaseController {
     @RequestMapping(params = "methodToCall=addSelectedTaApplicant")
     public ModelAndView addSelectedTaApplicant(@ModelAttribute("KualiForm") UifFormBase form,
                                   HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+
         MyTaViewObject curTa=taInfoForm.getSelectedTa();
 
+        String classid = "301369";
 
-        return this.getTaManagementPage(form, request);
+        boolean result = taService.submitApplicationAssistant(
+                taConverter.TaViewObjectToTaApplication(curTa, classid)
+        );
+
+        if(result){
+            //避免延迟刷新
+            taInfoForm.getAllApplication().add(curTa);
+            taInfoForm.getConditionTAList().remove(curTa);
+            return this.getTaManagementPage(form, request);
+        }
+        else
+            return this.getTaManagementPage(form, request);
     }
 
     /**

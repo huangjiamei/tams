@@ -85,5 +85,7 @@ public interface ITAConverter {
 
     List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars);
 
+    List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
 
+    TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
 }

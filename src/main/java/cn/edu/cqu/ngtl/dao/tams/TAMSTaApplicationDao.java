@@ -17,7 +17,7 @@ public interface TAMSTaApplicationDao {
 
     List<TAMSTaApplication> selectByClassId(String classId);
 
-    List<TAMSTaApplication> selectByClassId(String classIds);
+    //ßßList<TAMSTaApplication> selectByClassIds(String classIds);
 
     TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId);
 

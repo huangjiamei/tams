@@ -31,6 +31,9 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
 
         taApplication.setSessionId(curSession.getId());
 
+        //添加到相应的申请的classid的课程上
+        //taApplication.setApplicationClassId(classid);
+
         KRADServiceLocator.getDataObjectService().save(taApplication);
 
         return true;
@@ -99,7 +102,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return true;
     }
 
-
+/*
     @Override
     public List<TAMSTaApplication> selectByClassId(String classId){
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
@@ -113,4 +116,5 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         );
         return qr.getResults();
     }
+    */
 }

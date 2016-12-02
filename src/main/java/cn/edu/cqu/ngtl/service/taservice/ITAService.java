@@ -5,16 +5,22 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
+import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-19.
  */
 public interface ITAService {
+
+    //根据姓名和学号查找候选人
+    List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions);
 
     //根据studentid查询担任助教的classids
     List<Object> getClassIdsByUid();

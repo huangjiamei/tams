@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.service.riceservice;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 
 import java.util.List;
@@ -15,5 +16,7 @@ public interface IAdminConverter {
     List<CourseManagerViewObject> getCourseManagerToTableViewObject(List<TAMSCourseManager> tamsCourseManagerList);
 
     List<TaFundingViewObject> taFundingToViewObject(List<TAMSTa> tamsTas);
+
+    List<DetailFundingViewObject> detailFundingToViewObject(List<TAMSTa> tamsTas);
 
 }

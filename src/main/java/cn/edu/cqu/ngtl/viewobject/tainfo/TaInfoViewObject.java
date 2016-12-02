@@ -38,7 +38,9 @@ public class TaInfoViewObject {
 
     private String vitality;
 
-    private String appraise;
+    private String teacherAppraise;
+
+    private String stuAppraise;
 
     private String status;
 
@@ -164,14 +166,6 @@ public class TaInfoViewObject {
         this.vitality = vitality;
     }
 
-    public String getAppraise() {
-        return appraise;
-    }
-
-    public void setAppraise(String appraise) {
-        this.appraise = appraise;
-    }
-
     public String getClassid() {
         return classid;
     }
@@ -194,5 +188,21 @@ public class TaInfoViewObject {
 
     public void setApplicationReason(String applicationReason) {
         this.applicationReason = applicationReason;
+    }
+
+    public String getTeacherAppraise() {
+        return teacherAppraise;
+    }
+
+    public void setTeacherAppraise(String teacherAppraise) {
+        this.teacherAppraise = teacherAppraise;
+    }
+
+    public String getStuAppraise() {
+        return stuAppraise;
+    }
+
+    public void setStuAppraise(String stuAppraise) {
+        this.stuAppraise = stuAppraise;
     }
 }

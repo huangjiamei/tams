@@ -669,6 +669,14 @@ public class adminController extends BaseController {
                 )
         );
 
+
+        infoForm.setDetailFunding(
+                adminConverter.detailFundingToViewObject(
+                taService.getAllTaFilteredByUid(uId)
+                )
+        );
+
+
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

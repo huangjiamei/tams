@@ -429,7 +429,8 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
-            viewObject.setAppraise("缺失");
+            viewObject.setTeacherAppraise("合格");
+            viewObject.setStuAppraise("优秀");
             viewObject.setVitality("缺失");
 
             viewObjects.add(viewObject);

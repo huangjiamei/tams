@@ -188,20 +188,20 @@
                                                                                   p:additionalCssClasses="bg-orange tams-form-label"
                                                                                   p:render="@{#line.status=='-1'}"/>
                                                                             <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="appraise"
+                                                                                  p:propertyName="teacherAppraise"
                                                                                   p:onClickScript="alert('好评助教，需要换成js');"
                                                                                   p:additionalCssClasses="bg-success tams-form-label"
-                                                                                  p:render="@{#line.appraise=='14'}"/>
+                                                                                  p:render="@{#line.teacherAppraise=='14'}"/>
                                                                             <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="appraise"
+                                                                                  p:propertyName="teacherAppraise"
                                                                                   p:onClickScript="alert('未评价助教，需要换成js');"
                                                                                   p:additionalCssClasses="bg-orange tams-form-label"
-                                                                                  p:render="@{#line.appraise=='20'}"/>
+                                                                                  p:render="@{#line.teacherAppraise=='20'}"/>
                                                                             <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="appraise"
+                                                                                  p:propertyName="teacherAppraise"
                                                                                   p:onClickScript="alert('差评助教，需要换成js');"
                                                                                   p:additionalCssClasses="bg-grey tams-form-label"
-                                                                                  p:render="@{#line.appraise!='20' and #line.appraise!='14'}"/>
+                                                                                  p:render="@{#line.teacherAppraise!='20' and #line.appraise!='14'}"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

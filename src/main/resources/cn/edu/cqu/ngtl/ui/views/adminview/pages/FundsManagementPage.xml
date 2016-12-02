@@ -1349,16 +1349,16 @@
                                                                                                     <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                                                         <property
                                                                                                                 name="collectionObjectClass"
-                                                                                                                value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
+                                                                                                                value="cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject"/>
                                                                                                         <property
                                                                                                                 name="propertyName"
-                                                                                                                value="collection"/>
+                                                                                                                value="detailFunding"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.renderSequenceField"
                                                                                                                 value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.richTable.render"
-                                                                                                                value="false"/>
+                                                                                                                value="true"/>
 
                                                                                                         <property
                                                                                                                 name="useServerPaging"
@@ -1383,46 +1383,109 @@
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="助教"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="taName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="学号"
-                                                                                                                      p:propertyName="field0"/>
+                                                                                                                      p:propertyName="stuId"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="银行"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="bankName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="银行卡号"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="bankId"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="身份证号"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="identity"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="courseName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程编号"
-                                                                                                                      p:propertyName="field1"/>
+                                                                                                                      p:propertyName="classNbr"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="批准津贴"
-                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:propertyName="assignedFunding"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="博士津贴"
+                                                                                                                      p:propertyName="phdFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="奖励"
-                                                                                                                      p:propertyName="field5"
+                                                                                                                      p:propertyName="bonus"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="交通补贴"
+                                                                                                                      p:propertyName="travelSubsidy"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="9月实发(移到detail？)"
-                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:propertyName="monthlySalary1"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="10月实发"
-                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:propertyName="monthlySalary2"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="实发总额"
-                                                                                                                      p:propertyName="field4"
+                                                                                                                      p:propertyName="total"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                             </list>
+                                                                                                        </property>
+
+                                                                                                        <!--rowDetails-->
+                                                                                                        <property name="layoutManager.rowDetailsGroup">
+                                                                                                            <bean parent="Uif-VerticalBoxGroup">
+                                                                                                                <property name="items">
+                                                                                                                    <list>
+
+                                                                                                                        <!--无历史数据时显示，用render来切换-->
+                                                                                                                        <bean parent="Uif-MessageField"
+                                                                                                                              p:render="false" p:messageText="暂无历史数据"/>
+
+
+                                                                                                                        <!--如何改为纵向列表形式待调整-->
+                                                                                                                        <bean parent="Uif-GridGroup" p:render="true"
+                                                                                                                              p:layoutManager.renderRowFirstCellHeader="false">
+                                                                                                                            <property name="layoutManager.numberOfColumns"
+                                                                                                                                      value="7"/>
+                                                                                                                            <property name="items">
+                                                                                                                                <list>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="9月实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:labelLeft="false"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.monthlySalary1}"/>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="10月实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.monthlySalary2}"/>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="11月实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.monthlySalary3}"/>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="12月实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.monthlySalary4}"/>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="1月实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.monthlySalary5}"/>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="2月实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.monthlySalary6}"/>
+                                                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                                                          p:label="总计实发" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:fieldLabel.colSpan="1"
+                                                                                                                                          p:fieldLabel.rowSpan="1" p:messageText="@{#line.total}"/>
+                                                                                                                                </list>
+                                                                                                                            </property>
+                                                                                                                        </bean>
+                                                                                                                    </list>
+                                                                                                                </property>
+                                                                                                            </bean>
                                                                                                         </property>
                                                                                                     </bean>
                                                                                                 </list>

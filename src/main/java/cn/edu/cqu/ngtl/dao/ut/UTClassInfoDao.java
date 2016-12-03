@@ -17,4 +17,6 @@ public interface UTClassInfoDao {
     List<UTClassInformation> selectBatchByIds(List<Object> classIds);
 
     List<UTClassInformation> selectByConditions(Map<String, String> conditions);
+
+    //List<UTClassInformation> selectAllCourseInfoByIds(List<Object> ids);
 }

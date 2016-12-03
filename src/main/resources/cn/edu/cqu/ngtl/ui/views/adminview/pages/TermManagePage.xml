@@ -125,10 +125,10 @@
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="导出EXCEL"
+                                                                                  p:actionLabel="EXCEL"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="bg-teal box-btngroup">
+                                                                                  p:additionalCssClasses="icon-table bg-orange box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -221,7 +221,7 @@
                                                                 <!--table-->
                                                                 <bean id="TermManageTable"  parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:onDocumentReadyScript = "refreshTableFilter(searchTerm,TermManageTable);"
-                                                                      p:layoutManager.numberOfColumns="4">
+                                                                      p:layoutManager.numberOfColumns="6">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>
                                                                     <property name="propertyName" value="allTerms"/>
@@ -230,9 +230,9 @@
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
-                                                                              value="true"/>
+                                                                              value="false"/>
                                                                     <property name="layoutManager.generateAutoSequence"
-                                                                              value="true"/>
+                                                                              value="false"/>
                                                                     <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true"/>
 

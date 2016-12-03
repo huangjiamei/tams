@@ -80,13 +80,15 @@ public class adminController extends BaseController {
     /**权限控制Start**/
     @RequestMapping(params = "methodToCall=getConsolePage")
     public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
-            AdminInfoForm infoForm = (AdminInfoForm) form;
-            super.baseStart(infoForm);
-            return this.getModelAndView(infoForm, "pageConsole");
-        }
-        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
-        return this.performRedirect(form, redirectUrl.toString());
+//        if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+//            return this.getModelAndView(infoForm, "pageConsole");
+//        }
+//        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
+//        return this.performRedirect(form, redirectUrl.toString());
+
+        return this.getModelAndView(infoForm, "pageConsole");
     }
     /**权限控制End**/
 
@@ -668,6 +670,14 @@ public class adminController extends BaseController {
                         taService.getAllTaFilteredByUid(uId)
                 )
         );
+
+
+        infoForm.setDetailFunding(
+                adminConverter.detailFundingToViewObject(
+                taService.getAllTaFilteredByUid(uId)
+                )
+        );
+
 
         infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");

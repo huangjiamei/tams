@@ -31,7 +31,7 @@
                            http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
-    <bean id="TaManagementPage" parent="Uif-VerticalBoxSection"
+    <bean id="TaManagementPages" parent="Uif-VerticalBoxSection"
           p:additionalCssClasses="container" p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
@@ -301,10 +301,10 @@
                         <list>
                             <bean parent="Uif-InputField" p:label="姓名"
                                   p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12 "
-                                  p:propertyName="inputField8"/>
+                                  p:propertyName="StudentName"/>
                             <bean parent="Uif-InputField" p:label="学号"
                                   p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12"
-                                  p:propertyName="inputField9"/>
+                                  p:propertyName="StudentNumber"/>
                             <bean parent="Uif-PrimaryActionButton"
                                   p:additionalCssClasses="col-lg-2 col-md-2 col-sm-12 col-xs-12"
                                   p:methodToCall="searchTaByCondition"

@@ -1,6 +1,10 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.util.List;
 
@@ -12,7 +16,7 @@ public interface TAMSTaDao {
     //查询全校所有助教
     List<TAMSTa> selectAll();
 
-    List<TAMSTa> selectByClassId(List<Object> classIds);
+    List<TAMSTa> selectByClassIds(List<Object> classIds);
 
     List<Object> selectClassIdsByStudentId(String uId);
 
@@ -30,5 +34,8 @@ public interface TAMSTaDao {
 
     //根据学院id查该学院的所有助教
     List<TAMSTa> selectByDeptId(String uId);
+
+    //
+    List<WorkBenchViewObject> selectAllCourseInfoByIds(List<Object> ids);
 
 }

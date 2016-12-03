@@ -4,30 +4,35 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
-import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-19.
  */
 @Service
 public class TAServiceimpl implements ITAService {
+
+    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Autowired
     private UTClassInfoDao classInfoDao;
@@ -54,11 +59,31 @@ public class TAServiceimpl implements ITAService {
     private UTSessionDao sessionDao;
 
     @Autowired
+    private UTStudentDao studentDao;
+
+    @Autowired
+    private TAMSTaTravelSubsidyDao tamsTaTravelSubsidyDao;
+
+    //根据姓名和学号查找候选人
+    public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
+        List<UTStudent> studentInfo = studentDao.selectStudentByNameAndId(conditions);
+        return studentInfo;
+    }
+
+    //根据studentid查询担任助教的classids
+    public List<Object> getClassIdsByUid(){
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        return taDao.selectClassIdsByStudentId(user.getTag());
+    }
+
+
+    //根据classids查询classinfo的信息
+    @Autowired
     private TAMSTeachCalendarDao tamsTeachCalendarDao;
 
     @Override
-    public UTClassInformation getClassInfoById(Integer id) {
-        return classInfoDao.getOneById(id);
+    public List<WorkBenchViewObject> getClassInfoByIds(List<Object> ids) {
+        return taDao.selectAllCourseInfoByIds(ids);
     }
 
     @Override
@@ -85,12 +110,12 @@ public class TAServiceimpl implements ITAService {
 
         if (tamsTaApplicationDao.insertOne(application))
             return true;
-
-        return false;
+        else
+            return false;
     }
 
 
-    //根据用户id显示助教列表，不同用户助教列表不同
+    //根据用户id显示助教列表，不同用户助教列表不同（包括tamanagement和talist界面）
     @Override
     public List<TAMSTa> getAllTaFilteredByUid(String uId) {
 
@@ -117,21 +142,31 @@ public class TAServiceimpl implements ITAService {
                 else {
                      //先根据教师id查到该教师所教授的批量课程id，然后再根据批量的课程id查出所有的助教
                      List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
-                     return taDao.selectByClassId(classIds);
+                     return taDao.selectByClassIds(classIds);
                 }
 
     }
 
 
-    //根据教师id获取申请者列表
+
+    //根据uid查看申请者列表
     @Override
     public List<TAMSTaApplication> getAllApplicationFilterByUid(String uId) {
 
         List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
-        return applicationDao.selectByClassId(classIds);
+        return applicationDao.selectByClassIds(classIds);
     }
 
+
+/*
+
+    //根据classId查看申请者列表
+    @Override
+    public List<TAMSTaApplication> getAllApplicationFilterByUid(String classId) {
+        return tamsTaApplicationDao.selectByClassId(classId);
+    }
+*/
 
     @Override
     public boolean changeStatusBatchByIds(List<String> ids, String status) {
@@ -211,5 +246,18 @@ public class TAServiceimpl implements ITAService {
     public TAMSTa getTaByTaId(String taId,String classId){
         return taDao.selectByStudentIdAndClassId(taId,classId);
     }
+
+    @Override
+    public List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId){
+        return  tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+    }
+
+    @Override
+    public boolean saveTravelSubsidy(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+
+        return tamsTaTravelSubsidyDao.insertOneByEntity(tamsTaTravelSubsidy);
+
+    }
+
 
 }

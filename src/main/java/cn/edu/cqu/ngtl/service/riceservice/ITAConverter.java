@@ -22,6 +22,7 @@ import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.text.ParseException;
 import java.util.List;
@@ -79,9 +80,14 @@ public interface ITAConverter {
 
     ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
 
+    List<WorkBenchViewObject> taCombineWorkbench(List<WorkBenchViewObject> list);
+
     List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> applicationToViewObjectClass(List<TAMSTaApplication> allApplicationFilterByUid);
 
     List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars);
 
     List<FileViewObject> attachmentsToFileViewObject(List<TAMSAttachments> attachments);
+    List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
+
+    TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
 }

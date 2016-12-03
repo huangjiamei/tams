@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -79,28 +80,71 @@ public class AdminConverterimpl implements IAdminConverter {
             }
 
             //暂时缺失的属性
-            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding());
-            taFundingViewObject.setBonus(ta.getBonus());
-            taFundingViewObject.setPhdFunding(ta.getPhdFunding());
-            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy());
+            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding()==null?"0":ta.getAssignedFunding());
+            taFundingViewObject.setBonus(ta.getBonus()==null?"0":ta.getBonus());
+            taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getBonus());
+            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getBonus());
             taFundingViewObject.setTaType("博士");
-            Integer total =   (Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding()));
+            Integer total =  (Integer.parseInt(ta.getAssignedFunding())+
+                    Integer.parseInt(ta.getBonus())+
+                    Integer.parseInt(ta.getPhdFunding())+
+                    Integer.parseInt(ta.getTravelSubsidy()));
             taFundingViewObject.setTotal(total.toString());
             taFundingViewObjects.add(taFundingViewObject);
         }
-
         return taFundingViewObjects;
-
-
     }
 
 
+    @Override
+    public List<DetailFundingViewObject> detailFundingToViewObject(List<TAMSTa> tamsTas){
+        if(tamsTas == null || tamsTas.size() == 0) {
+            logger.error("数据为空！");
+            return null;
+        }
+        List<DetailFundingViewObject> detailFundingViewObjects = new ArrayList<>(tamsTas.size());
+        for(TAMSTa ta : tamsTas) {
+            DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
+            UTCourse course = null;
+            if(ta.getTaClass() != null) {
+                detailFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
+                if (ta.getTaClass().getCourseOffering() != null) {
+                    course = ta.getTaClass().getCourseOffering().getCourse();
+                    if(course != null) {
+                        detailFundingViewObject.setCourseName(course.getName());
+                    }
+                }
+            }
+            UTStudent taStu = ta.getTa();
+            if(taStu != null) {
+                detailFundingViewObject.setTaName(taStu.getName());
+            }
+            //暂时缺失的属性
+            detailFundingViewObject.setBankId("8888888888888888888");
+            detailFundingViewObject.setBankName("宇宙第一银行");
+            detailFundingViewObject.setIdentity("51300000000000023X");
+            detailFundingViewObject.setAssignedFunding(ta.getAssignedFunding());
+            detailFundingViewObject.setBonus(ta.getBonus());
+            detailFundingViewObject.setPhdFunding(ta.getPhdFunding());
+            detailFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy());
+            detailFundingViewObject.setMonthlySalary1("100");
+            detailFundingViewObject.setMonthlySalary2("200");
+            detailFundingViewObject.setMonthlySalary3("300");
+            detailFundingViewObject.setMonthlySalary4("400");
+            detailFundingViewObject.setMonthlySalary5("500");
+            detailFundingViewObject.setMonthlySalary6("600");
 
 
+            Integer total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1())+
+                    Integer.parseInt(detailFundingViewObject.getMonthlySalary2())+
+                    Integer.parseInt(detailFundingViewObject.getMonthlySalary3())+
+                    Integer.parseInt(detailFundingViewObject.getMonthlySalary4())+
+                    Integer.parseInt(detailFundingViewObject.getMonthlySalary5())+
+                    Integer.parseInt(detailFundingViewObject.getMonthlySalary6()));
+            detailFundingViewObject.setTotal(total.toString());
+            detailFundingViewObjects.add(detailFundingViewObject);
+        }
 
-
+    return  detailFundingViewObjects;
+    }
 }

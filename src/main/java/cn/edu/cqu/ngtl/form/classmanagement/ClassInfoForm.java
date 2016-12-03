@@ -40,6 +40,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private List<FileViewObject> calendarFiles;
 
+
     /**
      * 班级管理隐藏搜索框
      *
@@ -93,6 +94,40 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private MyTaViewObject selectedTa = new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
+    private String StudentName;
+    private String StudentNumber;
+
+    public MyTaViewObject getSelectedTa() {
+        return selectedTa;
+    }
+
+    public void setSelectedTa(MyTaViewObject selectedTa) {
+        this.selectedTa = selectedTa;
+    }
+
+    public List<MyTaViewObject> getConditionTAList() {
+        return conditionTAList;
+    }
+
+    public void setConditionTAList(List<MyTaViewObject> conditionTAList) {
+        this.conditionTAList = conditionTAList;
+    }
+
+    public String getStudentName() {
+        return StudentName;
+    }
+
+    public void setStudentName(String studentName) {
+        StudentName = studentName;
+    }
+
+    public String getStudentNumber() {
+        return StudentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        StudentNumber = studentNumber;
+    }
 
     public List<FileViewObject> getCalendarFiles() {
         return calendarFiles;

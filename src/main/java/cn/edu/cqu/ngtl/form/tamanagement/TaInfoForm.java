@@ -1,10 +1,12 @@
 package cn.edu.cqu.ngtl.form.tamanagement;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -45,6 +47,26 @@ public class TaInfoForm extends BaseForm implements Serializable {
         // 赋初始空值测试
         conditionTAList.add(new MyTaViewObject());
     }
+
+    //添加申请人时的输入
+    private String StudentName;
+    private String StudentNumber;
+
+    public String getStudentName() {return StudentName;}
+
+    public void setStudentName(String studentName) {
+        StudentName = studentName;
+    }
+
+    public String getStudentNumber() {
+        return StudentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        StudentNumber = studentNumber;
+    }
+
+
     /**
      * 助教列表相关
      */
@@ -54,6 +76,20 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String taIdForDetailpage;
     private String classIdForDetailPage;
     private TaInfoViewObject selectedTaInfo;
+
+
+    /**
+     * 工作台相关
+     */
+    private List<WorkBenchViewObject> workbench;
+    private List<TAMSTaTravelSubsidy> travelSubsidies;
+    private String taUniqueId;
+    private String travelTime;
+    private String travelNote;
+    private String curClassId;
+
+
+
 
     /**
      * 任务相关
@@ -252,5 +288,53 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setAppraisalDetail(List<AppraisalDetailViewObject> appraisalDetail) {
         this.appraisalDetail = appraisalDetail;
+    }
+
+    public List<WorkBenchViewObject> getWorkbench() {
+        return workbench;
+    }
+
+    public void setWorkbench(List<WorkBenchViewObject> workbench) {
+        this.workbench = workbench;
+    }
+
+    public List<TAMSTaTravelSubsidy> getTravelSubsidies() {
+        return travelSubsidies;
+    }
+
+    public void setTravelSubsidies(List<TAMSTaTravelSubsidy> travelSubsidies) {
+        this.travelSubsidies = travelSubsidies;
+    }
+
+    public String getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(String travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public String getTravelNote() {
+        return travelNote;
+    }
+
+    public void setTravelNote(String travelNote) {
+        this.travelNote = travelNote;
+    }
+
+    public String getTaUniqueId() {
+        return taUniqueId;
+    }
+
+    public void setTaUniqueId(String taUniqueId) {
+        this.taUniqueId = taUniqueId;
+    }
+
+    public String getCurClassId() {
+        return curClassId;
+    }
+
+    public void setCurClassId(String curClassId) {
+        this.curClassId = curClassId;
     }
 }

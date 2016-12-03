@@ -31,6 +31,9 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
 
         taApplication.setSessionId(curSession.getId());
 
+        //添加到相应的申请的classid的课程上
+        //taApplication.setApplicationClassId(classid);
+
         KRADServiceLocator.getDataObjectService().save(taApplication);
 
         return true;
@@ -38,7 +41,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
 
     //根据课程找出相应的申请助教
     @Override
-    public List<TAMSTaApplication> selectByClassId(List<Object> classIds) {
+    public List<TAMSTaApplication> selectByClassIds(List<Object> classIds) {
         List<TAMSTaApplication> tas = new ArrayList<>();
 
         for(Object classId : classIds) {
@@ -55,6 +58,25 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
             tas.addAll(qr.getResults());
         }
 
+        return tas.isEmpty()?null:tas;
+    }
+
+    //只需根据classid查询所有助教
+    @Override
+    public List<TAMSTaApplication> selectByClassId(String classId){
+        List<TAMSTaApplication> tas = new ArrayList<>();
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("taClassId", classId),
+                        equal("sessionId",curSession.getId())
+                )
+        );
+        QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTaApplication.class,
+                criteria.build()
+        );
+        tas.addAll(qr.getResults());
         return tas.isEmpty()?null:tas;
     }
 
@@ -80,7 +102,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return true;
     }
 
-
+/*
     @Override
     public List<TAMSTaApplication> selectByClassId(String classId){
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
@@ -94,4 +116,5 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         );
         return qr.getResults();
     }
+    */
 }

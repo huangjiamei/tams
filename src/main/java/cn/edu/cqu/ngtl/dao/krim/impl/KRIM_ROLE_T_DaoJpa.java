@@ -13,12 +13,17 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 public class KRIM_ROLE_T_DaoJpa implements KRIM_ROLE_T_Dao {
 
-	private static String  nameSpace = "KR_EXM";
+	private static final String nameSpace = "KR_EXM";
+	private static final String YES = "Y";
 	@Override
 	public List<KRIM_ROLE_T> getAllKrimRoleTs() {
 		// TODO Auto-generated method stub
-		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()
-				.setPredicates(and(equal("namespaceCode" , nameSpace)));
+		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+				and(
+						equal("namespaceCode" , nameSpace),
+						equal("active", YES)
+				)
+		);
 		QueryResults<KRIM_ROLE_T> qr = KradDataServiceLocator.getDataObjectService().findMatching(
 				KRIM_ROLE_T.class, criteria.build());
 		return qr.getResults().isEmpty()?null:qr.getResults();

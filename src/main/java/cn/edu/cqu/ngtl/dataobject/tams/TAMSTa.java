@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.dataobject.tams;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
@@ -42,9 +43,11 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     private UTStudent ta;
 
     @Column(name = "TA_START_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String startTime;
 
     @Column(name = "TA_END_TIME")
+    @Convert(converter = StringDateConverter.class)
     private String endTime;
 
     @Column(name = "SESSION_ID")
@@ -65,7 +68,7 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
 
     @Column(name = "EVALUATION")
-    private String evalutation;
+    private String evaluation;
 
     @Column(name = "EVALUATION_DETAIL")
     private String evaluationDetail;
@@ -84,6 +87,28 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "BONUS")
     private String bonus;
 
+    @Column(name = "OUTSTANDING_TA")
+    private String outStandingTaWorkflowStatusId;
+
+    @ManyToOne
+    @JoinColumn(name = "OUTSTANDING_TA", insertable = false, updatable = false)
+    private TAMSWorkflowStatus outStandingTaWorkflowStatus;
+
+    public String getOutStandingTaWorkflowStatusId() {
+        return outStandingTaWorkflowStatusId;
+    }
+
+    public void setOutStandingTaWorkflowStatusId(String outStandingTaWorkflowStatusId) {
+        this.outStandingTaWorkflowStatusId = outStandingTaWorkflowStatusId;
+    }
+
+    public TAMSWorkflowStatus getOutStandingTaWorkflowStatus() {
+        return outStandingTaWorkflowStatus;
+    }
+
+    public void setOutStandingTaWorkflowStatus(TAMSWorkflowStatus outStandingTaWorkflowStatus) {
+        this.outStandingTaWorkflowStatus = outStandingTaWorkflowStatus;
+    }
 
     public String getStatus() {
         return status;
@@ -189,12 +214,12 @@ public class TAMSTa extends DataObjectBase implements Serializable {
         this.applicationNote = applicationNote;
     }
 
-    public String getEvalutation() {
-        return evalutation;
+    public String getEvaluation() {
+        return evaluation;
     }
 
-    public void setEvalutation(String evalutation) {
-        this.evalutation = evalutation;
+    public void setEvaluation(String evaluation) {
+        this.evaluation = evaluation;
     }
 
     public String getEvaluationDetail() {

@@ -59,6 +59,7 @@ public class AdminConverterimpl implements IAdminConverter {
         List<TaFundingViewObject> taFundingViewObjects = new ArrayList<>(tamsTas.size());
         for(TAMSTa ta : tamsTas) {
             TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
+
             UTCourse course = null;
             if(ta.getTaClass() != null) {
                 taFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
@@ -66,12 +67,14 @@ public class AdminConverterimpl implements IAdminConverter {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
                         taFundingViewObject.setCourseName(course.getName());
+                        taFundingViewObject.setCourseCode(course.getCodeR());
                     }
                 }
             }
             UTStudent taStu = ta.getTa();
             if(taStu != null) {
                 taFundingViewObject.setTaName(taStu.getName());
+                taFundingViewObject.setDepartmentName(taStu.getDepartment().getName());
             }
 
             if (ta.getCurSession() != null ){
@@ -112,6 +115,7 @@ public class AdminConverterimpl implements IAdminConverter {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
                         detailFundingViewObject.setCourseName(course.getName());
+                        detailFundingViewObject.setCourseCode(course.getCodeR());
                     }
                 }
             }

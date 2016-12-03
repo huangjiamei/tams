@@ -11,11 +11,15 @@ public class TaFundingViewObject {
 
     private String taName;
 
+    private String departmentName;
+
     private String taType;
 
     private String courseName;
 
     private String classNbr;
+
+    private String courseCode;
 
     private String assignedFunding;
 
@@ -113,5 +117,21 @@ public class TaFundingViewObject {
 
     public void setStuId(String stuId) {
         this.stuId = stuId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 }

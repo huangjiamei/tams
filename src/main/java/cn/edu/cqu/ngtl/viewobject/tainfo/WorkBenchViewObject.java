@@ -1,9 +1,5 @@
 package cn.edu.cqu.ngtl.viewobject.tainfo;
 
-import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import java.util.List;
-
 /**
  * Created by damei on 16/11/29.
  */
@@ -36,6 +32,10 @@ public class WorkBenchViewObject {
     private String hours;
     private String major;
     private String status;
+
+    private String classId;
+    private String taId;
+
 
     public String getDept() {
         return dept;
@@ -93,5 +93,21 @@ public class WorkBenchViewObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
+    public String getTaId() {
+        return taId;
+    }
+
+    public void setTaId(String taId) {
+        this.taId = taId;
     }
 }

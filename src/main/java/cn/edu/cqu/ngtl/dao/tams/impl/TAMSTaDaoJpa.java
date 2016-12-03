@@ -3,10 +3,7 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
@@ -14,18 +11,14 @@ import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.validation.ObjectError;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.swing.text.html.HTMLDocument;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-import static org.kuali.rice.core.api.criteria.PredicateFactory.in;
 
 /**
  * Created by tangjing on 16-11-1.
@@ -201,6 +194,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 workbenchviewobject.setHours(informations[5].toString());
                 workbenchviewobject.setMajor(informations[6].toString());
                 workbenchviewobject.setStatus(informations[7].toString());
+                workbenchviewobject.setClassId(informations[8].toString());
                 list.add(workbenchviewobject);
             }
         }

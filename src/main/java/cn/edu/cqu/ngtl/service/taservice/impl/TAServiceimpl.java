@@ -4,30 +4,27 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
-import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
-import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.Map;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -63,6 +60,9 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private UTStudentDao studentDao;
+
+    @Autowired
+    private TAMSTaTravelSubsidyDao tamsTaTravelSubsidyDao;
 
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
@@ -244,5 +244,18 @@ public class TAServiceimpl implements ITAService {
     public TAMSTa getTaByTaId(String taId,String classId){
         return taDao.selectByStudentIdAndClassId(taId,classId);
     }
+
+    @Override
+    public List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId){
+        return  tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+    }
+
+    @Override
+    public boolean saveTravelSubsidy(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+
+        return tamsTaTravelSubsidyDao.insertOneByEntity(tamsTaTravelSubsidy);
+
+    }
+
 
 }

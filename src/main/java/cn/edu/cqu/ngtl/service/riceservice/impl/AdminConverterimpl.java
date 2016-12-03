@@ -78,7 +78,7 @@ public class AdminConverterimpl implements IAdminConverter {
                 taFundingViewObject.setSessionName(ta.getCurSession().getYear() + "年" +
                         ta.getCurSession().getTerm() + "季");
             }
-
+            taFundingViewObject.setStuId(ta.getTaId());
             //暂时缺失的属性
             taFundingViewObject.setAssignedFunding(ta.getAssignedFunding()==null?"0":ta.getAssignedFunding());
             taFundingViewObject.setBonus(ta.getBonus()==null?"0":ta.getBonus());

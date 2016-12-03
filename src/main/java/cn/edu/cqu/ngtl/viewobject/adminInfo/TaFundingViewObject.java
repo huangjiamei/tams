@@ -7,6 +7,8 @@ public class TaFundingViewObject {
 
     private String sessionName;
 
+    private String stuId;
+
     private String taName;
 
     private String taType;
@@ -103,5 +105,13 @@ public class TaFundingViewObject {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
     }
 }

@@ -282,13 +282,15 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-InputField" p:label="姓名"
+                            <bean id="nameTaM" parent="Uif-InputField" p:label="姓名"
                                   p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12 "
-                                  p:propertyName="StudentName"/>
-                            <bean parent="Uif-InputField" p:label="学号"
+                                  p:propertyName="StudentName"
+                                  p:onDocumentReadyScript="clickButton('nameTaM')"/>
+                            <bean id="studentNumTaM" parent="Uif-InputField" p:label="学号"
                                   p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12"
-                                  p:propertyName="StudentNumber"/>
-                            <bean parent="Uif-PrimaryActionButton"
+                                  p:propertyName="StudentNumber"
+                                  p:onDocumentReadyScript="clickButton('studentNumTaM')"/>
+                            <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
                                   p:additionalCssClasses="col-lg-2 col-md-2 col-sm-12 col-xs-12"
                                   p:methodToCall="searchTaByCondition"
                                   p:preSubmitCall="return true;"
@@ -305,7 +307,7 @@
                         <list>
                             <!--左边，一个查询得到的申请人列表-->
                             <bean id="searchTaApplicantList" parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="col-md-5 col-lg-5 col-sm-12 col-xs-12">
+                                  p:additionalCssClasses="col-md-5 col-lg-5 col-sm-12 col-xs-12" p:onDocumentReadyScript="searchTaApplicantListALengthMenu();">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表" />

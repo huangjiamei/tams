@@ -41,8 +41,8 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean id="toManagerHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('toManagerHeaderTitle','fa fa-hand-rock-o','助教管理','管理助教')">
+                            <bean id="toManagerHeaderTitleH" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('toManagerHeaderTitleH','fa fa-hand-rock-o','助教管理','管理助教')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -222,7 +222,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加申请人" p:actionScript="showDialog('addApplicantDialog');"
+                                                                                  p:actionLabel="添加申请人" p:actionScript="showDialog('addApplicantDialogHidden');"
                                                                                   p:additionalCssClasses="icon-plus bg-red tamsbtn"/>
                                                                         </list>
                                                                     </property>
@@ -290,9 +290,9 @@
         </property>
     </bean>
 
-    <bean id="addApplicantDialog" parent="Uif-DialogGroup"
+    <bean id="addApplicantDialogHidden" parent="Uif-DialogGroup"
           p:headerText="添加申请人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
-          p:onDocumentReadyScript="jQuery('#addApplicantDialog').modal({backdrop: 'static', keyboard: false});jQuery('#addApplicantDialog').children().css('width','90%');">
+          p:onDocumentReadyScript="jQuery('#addApplicantDialogHidden').modal({backdrop: 'static', keyboard: false});jQuery('#addApplicantDialogHidden').children().css('width','90%');">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人。" />
@@ -321,7 +321,7 @@
                     <property name="items">
                         <list>
                             <!--左边，一个查询得到的申请人列表-->
-                            <bean id="searchTaApplicantList" parent="Uif-VerticalBoxSection"
+                            <bean id="searchTaApplicantLists" parent="Uif-VerticalBoxSection"
                                   p:additionalCssClasses="col-md-5 col-lg-5 col-sm-12 col-xs-12">
                                 <property name="items">
                                     <list>

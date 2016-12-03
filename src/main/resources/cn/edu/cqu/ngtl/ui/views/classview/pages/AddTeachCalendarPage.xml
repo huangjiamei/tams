@@ -196,10 +196,6 @@
                                                                                     <list>
                                                                                         <!--起始时间、结束时间的范围、总耗时-->
                                                                                         <bean parent="Uif-MessageField" p:messageText="时间范围：" p:additionalCssClasses="messageStyle"/>
-                                                                                        <bean id="newAddTdateTimeImage"
-                                                                                              parent="Uif-Image"
-                                                                                              p:source="../images/clock_time.png"
-                                                                                              p:additionalCssClasses="dateTimeImage"/>
                                                                                         <bean id="newAddTdateTimeRange"
                                                                                               parent="Uif-InputField"
                                                                                               p:style="width:250px;"

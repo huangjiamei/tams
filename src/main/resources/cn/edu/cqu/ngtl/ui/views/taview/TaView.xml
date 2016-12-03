@@ -118,7 +118,7 @@
                 <bean parent="Uif-Page" p:id="pageTaManagement" p:title="">
                     <property name="items">
                         <list>
-                            <ref bean="TaManagementPageOld"/>
+                            <ref bean="TaManagementPages"/>
                         </list>
                     </property>
                 </bean>

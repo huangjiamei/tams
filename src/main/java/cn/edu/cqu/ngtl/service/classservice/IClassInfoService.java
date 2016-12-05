@@ -15,7 +15,7 @@ public interface IClassInfoService {
 
     List<UTClassInformation> getAllClassesMappedByDepartment();
 
-    UTClass getClassInfoById(Integer classId);
+    UTClass getClassInfoById(String classId);
 
     UTStudent getStudentInfoById(String stuId);
 

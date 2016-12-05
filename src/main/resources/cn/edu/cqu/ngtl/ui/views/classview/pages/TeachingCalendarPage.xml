@@ -96,27 +96,16 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-calendar"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="教学日历"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-HorizontalBoxSection">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-Message"
-                                                                                  p:messageText="耗时小计："
-                                                                                  p:additionalCssClasses="boxheaderTitle"/>
-                                                                            <bean id="elapsedTime" parent="Uif-Message"
-                                                                                  p:messageText="@{totalElapsedTime}"
-                                                                                  p:additionalCssClasses="label label-primary"
-                                                                                  p:style="font-size: 12px;margin-top:-2px;"/>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                <bean parent="Uif-Message"
+                                                                      p:messageText="|"
+                                                                      p:additionalCssClasses="genderM"/>
+                                                                <bean parent="Uif-Message"
+                                                                      p:messageText="耗时小计："
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                                <bean id="elapsedTime" parent="Uif-Message"
+                                                                      p:messageText="@{totalElapsedTime}"
+                                                                      p:additionalCssClasses="label label-primary"
+                                                                      p:style="font-size: 12px;"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
                                                                     <property name="items">
@@ -230,7 +219,7 @@
                                                                     </property>
                                                                     <property name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection">
+                                                                            <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
@@ -242,12 +231,8 @@
                                                                                         />
                                                                                         <bean parent="Uif-ActionImage"
                                                                                               p:methodToCall="deleteTeachCalendar"
-                                                                                              p:refreshId="calenderBox">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
+                                                                                              p:refreshId="calenderBox"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tamsbtn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

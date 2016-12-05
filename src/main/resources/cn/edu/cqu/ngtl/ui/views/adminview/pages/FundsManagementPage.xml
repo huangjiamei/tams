@@ -1191,11 +1191,14 @@
                                                                                                                 name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="批次"
-                                                                                                                      p:propertyName="sessionName"/>
-                                                                                                                <bean parent="Uif-DataField"
                                                                                                                       p:label="助教"
                                                                                                                       p:propertyName="taName"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="学号"
+                                                                                                                      p:propertyName="stuId"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="学院"
+                                                                                                                      p:propertyName="departmentName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="助教类别"
                                                                                                                       p:propertyName="taType"/>
@@ -1204,7 +1207,7 @@
                                                                                                                       p:propertyName="courseName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程编号"
-                                                                                                                      p:propertyName="classNbr"/>
+                                                                                                                      p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="分配经费"
                                                                                                                       p:propertyName="assignedFunding"
@@ -1401,7 +1404,7 @@
                                                                                                                       p:propertyName="courseName"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程编号"
-                                                                                                                      p:propertyName="classNbr"/>
+                                                                                                                      p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="批准津贴"
                                                                                                                       p:propertyName="assignedFunding"

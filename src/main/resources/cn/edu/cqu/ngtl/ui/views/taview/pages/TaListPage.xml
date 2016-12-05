@@ -109,12 +109,15 @@
                                                                                   p:additionalCssClasses="icon-stop bg-orange box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="撤销" p:methodToCall="chexiao"
+                                                                                  p:actionLabel="撤销"
+                                                                                  p:methodToCall="chexiao"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="评优" p:methodToCall="linxuan"
+                                                                                  p:actionLabel="评优"
+                                                                                  p:actionScript="showDialog('confirmOutstandingDialog');"
+                                                                                  p:methodToCall="appraiseOutstanding"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
 
@@ -152,73 +155,48 @@
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
+
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"/>
                                                                             <bean parent="Uif-DataField" p:label="课程编号"
                                                                                   p:propertyName="courseCode"/>
                                                                             <bean parent="Uif-DataField" p:label="教学班"
-                                                                                  p:propertyName="classNumber"/>
+                                                                                  p:propertyName="classNumber"
+                                                                                  p:additionalCssClasses="font-teal"/>
                                                                             <bean parent="Uif-DataField" p:label="教师"
                                                                                   p:propertyName="instructorName"/>
-
-                                                                            <bean parent="Uif-DataField" p:label="助教姓名"
-                                                                                  p:propertyName="taName"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号"
+                                                                            <bean parent="Uif-DataField" p:label="助教"
+                                                                                  p:propertyName="taName" p:additionalCssClasses="font-teal"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教学号"
                                                                                   p:propertyName="taIDNumber"/>
-                                                                            <bean parent="Uif-DataField" p:label="性别"
-                                                                                  p:propertyName="taGender"
-                                                                                  p:readOnlyDisplayReplacement="@{#line.taGender.equals('M')? '男':'女'}"
-                                                                                  p:additionalCssClasses="@{#line.taGender.equals('M')? 'fa fa-star genderM':'fa fa-heart genderF'}"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业"
-                                                                                  p:propertyName="taBachelorMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业"
+                                                                            <bean parent="Uif-DataField" p:label="助教学历"
                                                                                   p:propertyName="taMasterMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="导师"
-                                                                                  p:propertyName="advisorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="联系电话"
-                                                                                  p:propertyName="contactPhone"/>
-                                                                            <bean parent="Uif-DataField" p:label="活跃度"
-                                                                                  p:propertyName="vitality"/>
-                                                                            <bean parent="Uif-DataField" p:label="状态"
+                                                                            <bean parent="Uif-DataField" p:label="教师考核"
+                                                                                  p:propertyName="teacherAppraise"
+                                                                                  p:additionalCssClasses="bg-success tams-form-label"/>
+                                                                            <bean parent="Uif-DataField" p:label="学生考核"
+                                                                                  p:propertyName="stuAppraise"
+                                                                                  p:additionalCssClasses="bg-orange tams-form-label"/>
+
+                                                                            <bean parent="Uif-DataField" p:label="成绩"
+                                                                                  p:propertyName="score"/>
+
+                                                                            <bean parent="Uif-DataField" p:label="评优"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="bg-success tams-form-label"
-                                                                                  p:render="@{#line.status=='1'}"/>
-                                                                            <bean parent="Uif-DataField" p:label="状态"
-                                                                                  p:propertyName="status"
-                                                                                  p:additionalCssClasses="bg-orange tams-form-label"
-                                                                                  p:render="@{#line.status=='-1'}"/>
-                                                                            <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="teacherAppraise"
-                                                                                  p:onClickScript="alert('好评助教，需要换成js');"
-                                                                                  p:additionalCssClasses="bg-success tams-form-label"
-                                                                                  p:render="@{#line.teacherAppraise=='14'}"/>
-                                                                            <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="teacherAppraise"
-                                                                                  p:onClickScript="alert('未评价助教，需要换成js');"
-                                                                                  p:additionalCssClasses="bg-orange tams-form-label"
-                                                                                  p:render="@{#line.teacherAppraise=='20'}"/>
-                                                                            <bean parent="Uif-DataField" p:label="评价"
-                                                                                  p:propertyName="teacherAppraise"
-                                                                                  p:onClickScript="alert('差评助教，需要换成js');"
-                                                                                  p:additionalCssClasses="bg-grey tams-form-label"
-                                                                                  p:render="@{#line.teacherAppraise!='20' and #line.appraise!='14'}"/>
+                                                                                  p:additionalCssClasses="@{#line.status=='1'?'bg-grey tams-form-label':(#line.status=='-1'?'bg-success tams-form-label':'bg-red tams-form-label')}">
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection">
+                                                                            <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel="查看(参考classlistpage，跳转到新页面)"
-                                                                                              p:render="@{#line.appraise=='14'}"/>
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="getTaDetailPage"
-                                                                                              p:render="@{#line.appraise!='14'}"
                                                                                               p:navigateToPageId="pageTaDetail"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-form-label"/>
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-form-label"/><!--此处要将line.status-->
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -240,4 +218,21 @@
             </list>
         </property>
     </bean>
+
+    <bean id="confirmOutstandingDialog" parent="Uif-DialogGroup"
+          p:headerText="选优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="是否将此助教评为优秀？" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall=""  p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

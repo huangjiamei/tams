@@ -82,13 +82,15 @@ public class adminController extends BaseController {
     /**权限控制Start**/
     @RequestMapping(params = "methodToCall=getConsolePage")
     public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
-            AdminInfoForm infoForm = (AdminInfoForm) form;
-            super.baseStart(infoForm);
-            return this.getModelAndView(infoForm, "pageConsole");
-        }
-        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
-        return this.performRedirect(form, redirectUrl.toString());
+//        if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+//            return this.getModelAndView(infoForm, "pageConsole");
+//        }
+//        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
+//        return this.performRedirect(form, redirectUrl.toString());
+
+        return this.getModelAndView(infoForm, "pageConsole");
     }
     /**权限控制End**/
 
@@ -1455,6 +1457,7 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
 
         RelationTable rt = taConverter.workflowStatusRtoJson(
+                infoForm.getFunctionId(),
                 adminService.getWorkflowStatusRelationByRoleFunctionId(
                         adminService.getRoleFunctionIdByRoleIdAndFunctionId(
                                 infoForm.getRoleId(),
@@ -1489,7 +1492,7 @@ public class adminController extends BaseController {
 
         String rfId = adminService.setRoleFunctionIdByRoleIdAndFunctionId(infoForm.getRoleId(), infoForm.getFunctionId());
 
-        adminService.setWorkflowStatusRelationByRoleFunctionId(rfId, rt);
+        adminService.setWorkflowStatusRelationByRoleFunctionId(infoForm.getFunctionId(), rfId, rt);
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }

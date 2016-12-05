@@ -716,3 +716,28 @@ jQuery(function($){
     $.datepicker.setDefaults($.datepicker.regional['zh-CN']);
 });
 
+/*
+添加联系人时，回车查询
+ */
+function clickButton(id){
+    jQuery("#"+id).on(
+        {keydown: function(e){
+            var key = e.which;
+            if(key == 13){
+                e.preventDefault();
+                jQuery("#searchTaManager").click();
+            }
+        }
+        });
+}
+
+/*
+table默认每页显示5条记录
+ */
+function searchTaApplicantListALengthMenu(){
+    jQuery("#searchTaApplicantList table").dataTable( {
+        "iDisplayLength":3,//默认每页显示几条数据
+        "bJQueryUI": false, //可以添加 jqury的ui theme  需要添加css
+        "aLengthMenu": [[3,10,25, 50, -1, 0], ["每页3条","每页10条", "每页25条", "每页50条", "显示所有数据", "不显示数据"]]  //设置每页显示记录的下拉菜单
+    });
+}

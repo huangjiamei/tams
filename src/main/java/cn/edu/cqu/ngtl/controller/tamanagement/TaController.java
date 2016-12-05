@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.controller.tamanagement;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
@@ -10,6 +11,7 @@ import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -25,9 +27,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 /**
  * Created by tangjing on 16-10-19.
  * 助教信息查看的相关view及function
@@ -131,6 +133,18 @@ public class TaController extends BaseController {
         else
             return this.getTaListPage(form, request); //应该返回错误信息
     }
+
+    /**
+     * 助教评优
+     * @param form
+     * @return
+     */
+    /*@RequestMapping(params = "methodToCall=appraiseOutstanding")
+    public ModelAndView appraiseOutstanding(@ModelAttribute("KualiForm") UifFormBase form,
+                              HttpServletRequest request) {
+
+
+    }*/
 
     //我的助教（教师用户看到的）(管理助教)界面
     /**
@@ -488,12 +502,42 @@ public class TaController extends BaseController {
     public ModelAndView getTransAllowancePage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
 
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        WorkBenchViewObject selectedWorkBenchViewObject = taInfoForm.getWorkbench().get(index);
+        String classId = selectedWorkBenchViewObject.getClassId();
+        String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+        List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,classId);
+        taInfoForm.setCurClassId(classId);
+        taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
+        taInfoForm.setTaUniqueId(tamsTaTravelSubsidies.get(0).getTamsTaId());
         // TODO: 2016/11/27 (首先判断权限) 老师是不是不可进入此页面？
 
         // TODO: 2016/11/27 根据user信息，找到相关的交通补贴历史记录，将记录并放置在某个list中，同时修改TransAllowancePage.xml对应位置的objClass和collection
 
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
     }
+
+
+
+    @RequestMapping(params = "methodToCall=submitTravelRecord")
+    public ModelAndView submitTravelRecord(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        String travelTime = taInfoForm.getTravelTime();
+        String travelNote = taInfoForm.getTravelNote();
+        TAMSTaTravelSubsidy tamsTaTravelSubsidy = new TAMSTaTravelSubsidy();
+        tamsTaTravelSubsidy.setTravelTime(travelTime);
+        tamsTaTravelSubsidy.setDescription(travelNote);
+        tamsTaTravelSubsidy.setTamsTaId(taInfoForm.getTaUniqueId());
+        taService.saveTravelSubsidy(tamsTaTravelSubsidy);
+        String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+        List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,taInfoForm.getCurClassId());
+        taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
+        return this.getModelAndView(taInfoForm, "pageTransAllowance");
+    }
+
 
     /**
      * 进入助教详情

@@ -149,7 +149,7 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-                                                                <bean parent="Uif-InputField" p:label="申请理由及特长：" p:propertyName="taDeApplyReason"
+                                                                <bean parent="Uif-InputField" p:label="申请理由及特长" p:propertyName="taDeApplyReason"
                                                                       p:required="true" p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextAreaControl"

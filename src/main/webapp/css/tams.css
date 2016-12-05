@@ -475,7 +475,7 @@ body{
     text-align: center;
     color:white;
     border-radius: 5px;
-    padding:5px;
+    padding:3px;
     vertical-align: middle;
 }
 .tams-form-label:hover{
@@ -518,6 +518,9 @@ body{
 /* 所有dialog往屏幕中间移动*/
 .modal-content{
     margin-top: 25%;
+}
+#addApplicantDialog>div>div{
+    margin-top: 5%;
 }
 
 
@@ -719,7 +722,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
  }
 
 /*MessageField和InputField中心线没有对齐*/
-.messageStyle{
+.uif-message{
     margin-top:5px;
 }
 
@@ -750,6 +753,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     width:98%!important;
 }
 
+/*男女字体颜色标识符*/
 .genderM{
     color:#08c;
 }
@@ -757,9 +761,23 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     color: #ff624a;
 }
 
+/*table的背景色设置*/
 .table > thead > tr > th >label {
     color:#3c8dbc;
 }
 .uif-tableCollectionLayout th {
     background: #f5f5f5;
 }
+.table > tbody > tr > th{
+    background: #f5f5f5;
+}
+/*table内某些列的字体颜色*/
+.font-teal{
+    color:blue;
+}
+
+/*table内字体位置*/
+.uif-tableCollectionLayout>tbody > tr > td{
+    vertical-align:middle;
+}
+

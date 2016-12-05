@@ -37,7 +37,7 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
     @Override
     public boolean toNextStatus(String[] roleIds, String functionId, String classId) {
         Set<Integer> whichColumn = new HashSet<>();
-        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
         for(String roleId : roleIds) {
             String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
 
@@ -74,5 +74,23 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
 
         KradDataServiceLocator.getDataObjectService().save(current);
         return true;
+    }
+
+    @Override
+    public boolean isInitializedStatus(String functionId, String classId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("classId", classId)
+        );
+        QueryResults<TAMSClassApplyStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassApplyStatus.class,
+                criteria.build()
+        );
+        if(qr.getResults() == null || qr.getResults().size() == 0)
+            return false;
+
+        TAMSClassApplyStatus current = qr.getResults().get(0);
+
+        boolean result = workflowStatusDao.isFirstStatus(current.getWorkflowStatusId());
+        return result;
     }
 }

@@ -21,6 +21,8 @@ public class DetailFundingViewObject implements Serializable {
 
     private String classNbr;
 
+    private String courseCode;
+
     private String assignedFunding;
 
     private String phdFunding;
@@ -186,5 +188,13 @@ public class DetailFundingViewObject implements Serializable {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 }

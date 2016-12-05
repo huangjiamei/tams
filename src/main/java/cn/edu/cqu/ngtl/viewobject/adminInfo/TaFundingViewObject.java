@@ -7,34 +7,19 @@ public class TaFundingViewObject {
 
     private String sessionName;
 
-    public String getTaDept() {
-        return taDept;
-    }
-
-    public void setTaDept(String taDept) {
-        this.taDept = taDept;
-    }
-
-    private String taDept;
-
-
-    private String taNumber;
-
-    public String getTaNumber() {
-        return taNumber;
-    }
-
-    public void setTaNumber(String taNumber) {
-        this.taNumber = taNumber;
-    }
+    private String stuId;
 
     private String taName;
+
+    private String departmentName;
 
     private String taType;
 
     private String courseName;
 
     private String classNbr;
+
+    private String courseCode;
 
     private String assignedFunding;
 
@@ -126,5 +111,29 @@ public class TaFundingViewObject {
 
     public void setTotal(String total) {
         this.total = total;
+    }
+
+    public String getStuId() {
+        return stuId;
+    }
+
+    public void setStuId(String stuId) {
+        this.stuId = stuId;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
+    }
+
+    public String getCourseCode() {
+        return courseCode;
+    }
+
+    public void setCourseCode(String courseCode) {
+        this.courseCode = courseCode;
     }
 }

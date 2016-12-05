@@ -396,11 +396,11 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
-    public void setWorkflowStatusRelationByRoleFunctionId(String rfId, RelationTable rt){
+    public void setWorkflowStatusRelationByRoleFunctionId(String functionId, String rfId, RelationTable rt){
         //将原有的RFId的值删除，再加入新的值
         workflowStatusRDao.deleteTAMSWorkflowStatusRByRFId(rfId);
 
-        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
 
         int length = allStatus.size();
         CheckBoxStatus[][] matrix = rt.getData();

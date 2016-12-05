@@ -46,6 +46,8 @@ public class TaInfoViewObject {
 
     private String applicationReason;
 
+    private String score;
+
     public String getId() {
         return id;
     }
@@ -204,5 +206,13 @@ public class TaInfoViewObject {
 
     public void setStuAppraise(String stuAppraise) {
         this.stuAppraise = stuAppraise;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
     }
 }

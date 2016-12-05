@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.form.tamanagement;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
@@ -81,14 +82,14 @@ public class TaInfoForm extends BaseForm implements Serializable {
      * 工作台相关
      */
     private List<WorkBenchViewObject> workbench;
+    private List<TAMSTaTravelSubsidy> travelSubsidies;
+    private String taUniqueId;
+    private String travelTime;
+    private String travelNote;
+    private String curClassId;
 
-    public List<WorkBenchViewObject> getWorkbench() {
-        return workbench;
-    }
 
-    public void setWorkbench(List<WorkBenchViewObject> workbench) {
-        this.workbench = workbench;
-    }
+
 
     /**
      * 任务相关
@@ -287,5 +288,53 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setAppraisalDetail(List<AppraisalDetailViewObject> appraisalDetail) {
         this.appraisalDetail = appraisalDetail;
+    }
+
+    public List<WorkBenchViewObject> getWorkbench() {
+        return workbench;
+    }
+
+    public void setWorkbench(List<WorkBenchViewObject> workbench) {
+        this.workbench = workbench;
+    }
+
+    public List<TAMSTaTravelSubsidy> getTravelSubsidies() {
+        return travelSubsidies;
+    }
+
+    public void setTravelSubsidies(List<TAMSTaTravelSubsidy> travelSubsidies) {
+        this.travelSubsidies = travelSubsidies;
+    }
+
+    public String getTravelTime() {
+        return travelTime;
+    }
+
+    public void setTravelTime(String travelTime) {
+        this.travelTime = travelTime;
+    }
+
+    public String getTravelNote() {
+        return travelNote;
+    }
+
+    public void setTravelNote(String travelNote) {
+        this.travelNote = travelNote;
+    }
+
+    public String getTaUniqueId() {
+        return taUniqueId;
+    }
+
+    public void setTaUniqueId(String taUniqueId) {
+        this.taUniqueId = taUniqueId;
+    }
+
+    public String getCurClassId() {
+        return curClassId;
+    }
+
+    public void setCurClassId(String curClassId) {
+        this.curClassId = curClassId;
     }
 }

@@ -61,6 +61,7 @@ public class AdminConverterimpl implements IAdminConverter {
         List<TaFundingViewObject> taFundingViewObjects = new ArrayList<>(tamsTas.size());
         for(TAMSTa ta : tamsTas) {
             TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
+
             UTCourse course = null;
             if(ta.getTaClass() != null) {
                 taFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
@@ -68,30 +69,31 @@ public class AdminConverterimpl implements IAdminConverter {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
                         taFundingViewObject.setCourseName(course.getName());
+                        taFundingViewObject.setCourseCode(course.getCodeR());
                     }
                 }
             }
             UTStudent taStu = ta.getTa();
             if(taStu != null) {
                 taFundingViewObject.setTaName(taStu.getName());
+                taFundingViewObject.setDepartmentName(taStu.getDepartment().getName());
             }
 
             if (ta.getCurSession() != null ){
                 taFundingViewObject.setSessionName(ta.getCurSession().getYear() + "年" +
                         ta.getCurSession().getTerm() + "季");
             }
-
+            taFundingViewObject.setStuId(ta.getTaId());
             //暂时缺失的属性
-            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding());
-            taFundingViewObject.setBonus(ta.getBonus());
-            taFundingViewObject.setPhdFunding(ta.getPhdFunding());
-            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy());
+            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding()==null?"0":ta.getAssignedFunding());
+            taFundingViewObject.setBonus(ta.getBonus()==null?"0":ta.getBonus());
+            taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getBonus());
+            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getBonus());
             taFundingViewObject.setTaType("博士");
-            Integer total =   (Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getAssignedFunding()));
+            Integer total =  (Integer.parseInt(ta.getAssignedFunding())+
+                    Integer.parseInt(ta.getBonus())+
+                    Integer.parseInt(ta.getPhdFunding())+
+                    Integer.parseInt(ta.getTravelSubsidy()));
             taFundingViewObject.setTotal(total.toString());
             taFundingViewObjects.add(taFundingViewObject);
         }
@@ -115,6 +117,7 @@ public class AdminConverterimpl implements IAdminConverter {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
                         detailFundingViewObject.setCourseName(course.getName());
+                        detailFundingViewObject.setCourseCode(course.getCodeR());
                     }
                 }
             }

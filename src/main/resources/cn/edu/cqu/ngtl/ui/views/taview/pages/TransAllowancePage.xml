@@ -134,7 +134,7 @@
                                                             <list>
                                                                 <bean parent="Uif-InputField" p:label="起始时间(这一整条好长啊，需要修改原型，或者放到dialog中去)"
                                                                       p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                                                      p:propertyName="inputField3">
+                                                                      p:propertyName="travelTime">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextControl">
                                                                             <property name="datePicker">
@@ -168,7 +168,7 @@
                                                                 </bean>
 
                                                                 <bean parent="Uif-InputField" p:label="说明"
-                                                                      p:propertyName="inputField1"
+                                                                      p:propertyName="travelNote"
                                                                       p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
                                                                       p:style="margin-top:10px">
                                                                     <!-- 注意，要添加提示文本就必须加一个property：controll然后写watermarktext-->
@@ -187,12 +187,12 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="pageConsole"
+                                                                                  p:navigateToPageId="pageWorkbench"
                                                                                   p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加往返记录"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="submitTeachCalendarPage"
+                                                                                  p:methodToCall="submitTravelRecord"
                                                                                   p:refreshId="transHistoryBox"
                                                                                   p:additionalCssClasses="icon-file2 bg-teal tamsbtn"/>
                                                                         </list>
@@ -252,8 +252,8 @@
                                                                 <!--table-->
                                                                 <bean  parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.TestObject"/>
-                                                                    <property name="propertyName" value="collection"/>
+                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy"/>
+                                                                    <property name="propertyName" value="travelSubsidies"/>
                                                                     <property name="layoutManager.richTable.render" value="false"/>
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
@@ -268,9 +268,9 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="往返日期(要弄成两个吗？)"
-                                                                                  p:propertyName="date1"/>
+                                                                                  p:propertyName="travelTime"/>
                                                                             <bean parent="Uif-DataField" p:label="往返说明"
-                                                                                  p:propertyName="field0"/>
+                                                                                  p:propertyName="description"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

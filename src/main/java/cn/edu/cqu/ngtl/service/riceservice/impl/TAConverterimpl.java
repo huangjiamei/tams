@@ -16,7 +16,6 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
-import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
@@ -29,8 +28,6 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
-import org.apache.log4j.pattern.LoggerPatternConverter;
-import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -104,7 +101,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
             viewObject.setCourseCode(information.getCourseCode());
-            viewObject.setStatus(information.getStatus());
+            viewObject.setStatus(information.getStatusName());
             viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
 
             viewObjects.add(viewObject);
@@ -429,6 +426,7 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setId(ta.getId());
             viewObject.setStatus(ta.getStatus());
+            viewObject.setStatus(ta.getOutStandingTaWorkflowStatus() != null ? ta.getOutStandingTaWorkflowStatus().getWorkflowStatus() : "缺失");
 
             //暂时缺失的属性
             viewObject.setTaMasterMajorName("缺失");
@@ -708,11 +706,13 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public RelationTable workflowStatusRtoJson(List<TAMSWorkflowStatusR> workflowStatusRelations) {
-        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectAll();
+    public RelationTable workflowStatusRtoJson(String functionId, List<TAMSWorkflowStatusR> workflowStatusRelations) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
         //如果连header都没有返回完全的空
-        if(allStatus == null)
-            return null;
+        if(allStatus == null) {
+            RelationTable rt = new RelationTable("default");
+            return rt;
+        }
 
         List<String> headers = new ArrayList<>(allStatus.size());
         for(TAMSWorkflowStatus status : allStatus) {

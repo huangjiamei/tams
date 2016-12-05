@@ -133,8 +133,7 @@
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="类型名称："
-                                                                                                          p:additionalCssClasses="messageStyle"/>
+                                                                                                          p:messageText="类型名称："/>
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:propertyName="timeType"
                                                                                                           p:required="true"
@@ -147,12 +146,7 @@
                                                                                                     </bean>
 
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="时间："
-                                                                                                          p:additionalCssClasses="messageStyle"/>
-                                                                                                    <bean id="newdateTimeImage"
-                                                                                                          parent="Uif-Image"
-                                                                                                          p:source="../images/clock_time.png"
-                                                                                                          p:additionalCssClasses="dateTimeImage"/>
+                                                                                                          p:messageText="时间："/>
                                                                                                     <bean id="newdateTimeRange"
                                                                                                           parent="Uif-InputField"
                                                                                                           p:propertyName="settingsTime"

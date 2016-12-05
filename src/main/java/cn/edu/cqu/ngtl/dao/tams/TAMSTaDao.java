@@ -4,9 +4,11 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-11-1.
@@ -37,5 +39,7 @@ public interface TAMSTaDao {
 
     //
     List<WorkBenchViewObject> selectAllCourseInfoByIds(List<Object> ids);
+
+    List<TaFundingViewObject> selectTaFundByCondition(Map<String, String> conditions);
 
 }

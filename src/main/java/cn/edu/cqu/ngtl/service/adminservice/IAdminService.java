@@ -4,7 +4,9 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 
 import java.text.ParseException;
 import java.util.List;
@@ -93,5 +95,7 @@ public interface IAdminService {
 
     List<TAMSTimeSettings> getallTimeSettings();
 
+    List<ClassFundingViewObject> getClassFundByCondition(Map<String, String> conditions);
 
+    List<TaFundingViewObject> getTaFundByCondition(Map<String, String> conditions);
 }

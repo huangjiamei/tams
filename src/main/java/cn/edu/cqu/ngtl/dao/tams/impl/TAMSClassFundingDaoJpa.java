@@ -6,8 +6,14 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
+import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.adminservice.impl.AdminServiceImpl;
+import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
+import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
@@ -16,12 +22,14 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-
+import java.util.Map;
 /**
  * Created by awake on 2016/11/25.
  */
@@ -41,9 +49,56 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
     private IUserInfoService iUserInfoService;
 
     @Autowired
+    private IAdminService adminService;
+
+    @Autowired
+    private ITAConverter taConverter;
+
+    @Autowired
     private UTClassInstructorDao classInstructorDao;
 
+    //根据条件查询课程经费
+    @Override
+    public List<ClassFundingViewObject> selectClassFundByCondition(Map<String, String> conditions) {
+        //加通配符
+        int countNull = 0;
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        UTSession curSession = sessionDao.getCurrentSession();
+        List<ClassFundingViewObject> list = new ArrayList<>();
+        if(countNull != 10){
+            Query qr = em.createNativeQuery("SELECT f.APPLY_FUNDING, f.ASSIGNED_FUNDING, f.PHD_FUNDING, f.BONUS, f.TRAVEL_SUBSIDY, d.NAME, co.NAME, co.CODE, cl.CLASS_NBR, i.NAME FROM TAMS_CLASS_FUNDING f JOIN UNITIME_CLASS cl ON cl.UNIQUEID = f.CLASS_ID AND f.SESSION_ID = '"+curSession.getId()+"' AND f.APPLY_FUNDING LIKE '"+conditions.get("applyFunding")+"' AND f.ASSIGNED_FUNDING LIKE '"+conditions.get("actualFunding")+"' AND f.PHD_FUNDING LIKE '"+conditions.get("phdFunding")+"' AND f.BONUS LIKE '"+conditions.get("bonus")+"' AND f.TRAVEL_SUBSIDY LIKE '"+conditions.get("travelFunding")+"' AND f.CLASS_ID IN (SELECT cl.UNIQUEID FROM UNITIME_CLASS cl JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID  AND co.NAME LIKE '"+conditions.get("className")+"' AND co.CODE LIKE '"+conditions.get("classCode")+"' AND cl.CLASS_NBR LIKE '"+conditions.get("classNbr")+"' AND co.DEPARTMENT_ID IN (SELECT d.UNIQUEID FROM UNITIME_DEPARTMENT d WHERE d.NAME LIKE '"+conditions.get("department")+"' ) ) JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID JOIN UNITIME_CLASS_INSTRUCTOR ci ON cl.UNIQUEID = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.NAME LIKE '"+conditions.get("teacher")+"' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID");
+            List<Object> columns = qr.getResultList();
+            for(Object column : columns){
+                Object[] informations = (Object[]) column;
+                ClassFundingViewObject classFundingViewObject = new ClassFundingViewObject();
+                classFundingViewObject.setApplyFunding(informations[0].toString());
+                classFundingViewObject.setAssignedFunding(informations[1].toString());
+                classFundingViewObject.setPhdFunding(informations[2].toString());
+                classFundingViewObject.setBonus(informations[3].toString());
+                classFundingViewObject.setTravelSubsidy(informations[4].toString());
+                classFundingViewObject.setDepartment(informations[5].toString());
+                classFundingViewObject.setCourseName(informations[6].toString());
+                classFundingViewObject.setCourseCode(informations[7].toString());
+                classFundingViewObject.setClassNumber(informations[8].toString());
+                classFundingViewObject.setInstructorName(informations[9].toString());
+                list.add(classFundingViewObject);
+            }
+            return list;
+        }
+        //若输入为空，则返回全部课程经费
+        else{
+            return taConverter.classFundingToViewObject(
+                    adminService.getFundingByClass()
+            );
+        }
 
+    }
 
     @Override
     public List<TAMSClassFunding> selectAll(User user) {
@@ -108,4 +163,5 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
         }*/
         return null;
     }
+
 }

@@ -90,6 +90,204 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String dTrafficFunds;//交通补贴
     private String dTotalFunds;
 
+    /**
+     * 经费管理页面————课程经费，过滤器的输入框
+     */
+    private String cDept;
+    private String cName;
+    private String cCode;
+    private String cNbr;
+    private String cTeacher;
+    private String cApplyFunds;
+    private String cActualFunds;
+    private String cPhdFunds;
+    private String cBonus;
+    private String cTrafficFunds;
+    private String cTotalFunds;
+
+    /**
+     * 经费管理页面————助教经费，过滤器的输入框
+     * @return
+     */
+    private String tDept;
+    private String tNumber;
+    private String tName;
+    private String tType;
+    private String tCourseName;
+    private String tCourseCode;
+    private String tAssignedFunds;
+    private String tPhdFunds;
+    private String tTrafficFunds;
+    private String tBonus;
+
+    public String gettDept() {
+        return tDept;
+    }
+
+    public void settDept(String tDept) {
+        this.tDept = tDept;
+    }
+
+    public String gettNumber() {
+        return tNumber;
+    }
+
+    public void settNumber(String tNumber) {
+        this.tNumber = tNumber;
+    }
+
+    public String gettName() {
+        return tName;
+    }
+
+    public void settName(String tName) {
+        this.tName = tName;
+    }
+
+    public String gettType() {
+        return tType;
+    }
+
+    public void settType(String tType) {
+        this.tType = tType;
+    }
+
+
+    public String gettCourseName() {
+        return tCourseName;
+    }
+
+    public void settCourseName(String tCourseName) {
+        this.tCourseName = tCourseName;
+    }
+
+    public String gettCourseCode() {
+        return tCourseCode;
+    }
+
+    public void settCourseCode(String tCourseCode) {
+        this.tCourseCode = tCourseCode;
+    }
+
+    public String gettAssignedFunds() {
+        return tAssignedFunds;
+    }
+
+    public void settAssignedFunds(String tAssignedFunds) {
+        this.tAssignedFunds = tAssignedFunds;
+    }
+
+    public String gettPhdFunds() {
+        return tPhdFunds;
+    }
+
+    public void settPhdFunds(String tPhdFunds) {
+        this.tPhdFunds = tPhdFunds;
+    }
+
+    public String gettTrafficFunds() {
+        return tTrafficFunds;
+    }
+
+    public void settTrafficFunds(String tTrafficFunds) {
+        this.tTrafficFunds = tTrafficFunds;
+    }
+
+    public String gettBonus() {
+        return tBonus;
+    }
+
+    public void settBonus(String tBonus) {
+        this.tBonus = tBonus;
+    }
+
+    public String getcDept() {
+        return cDept;
+    }
+
+    public void setcDept(String cDept) {
+        this.cDept = cDept;
+    }
+
+    public String getcName() {
+        return cName;
+    }
+
+    public void setcName(String cName) {
+        this.cName = cName;
+    }
+
+    public String getcCode() {
+        return cCode;
+    }
+
+    public void setcCode(String cCode) {
+        this.cCode = cCode;
+    }
+
+    public String getcNbr() {
+        return cNbr;
+    }
+
+    public void setcNbr(String cNbr) {
+        this.cNbr = cNbr;
+    }
+
+    public String getcTeacher() {
+        return cTeacher;
+    }
+
+    public void setcTeacher(String cTeacher) {
+        this.cTeacher = cTeacher;
+    }
+
+    public String getcApplyFunds() {
+        return cApplyFunds;
+    }
+
+    public void setcApplyFunds(String cApplyFunds) {
+        this.cApplyFunds = cApplyFunds;
+    }
+
+    public String getcActualFunds() {
+        return cActualFunds;
+    }
+
+    public void setcActualFunds(String cActualFunds) {
+        this.cActualFunds = cActualFunds;
+    }
+
+    public String getcPhdFunds() {
+        return cPhdFunds;
+    }
+
+    public void setcPhdFunds(String cPhdFunds) {
+        this.cPhdFunds = cPhdFunds;
+    }
+
+    public String getcBonus() {
+        return cBonus;
+    }
+
+    public void setcBonus(String cBonus) {
+        this.cBonus = cBonus;
+    }
+
+    public String getcTrafficFunds() {
+        return cTrafficFunds;
+    }
+
+    public void setcTrafficFunds(String cTrafficFunds) {
+        this.cTrafficFunds = cTrafficFunds;
+    }
+
+    public String getcTotalFunds() {
+        return cTotalFunds;
+    }
+
+    public void setcTotalFunds(String cTotalFunds) {
+        this.cTotalFunds = cTotalFunds;
+    }
 
     /**
      * 批次管理页面

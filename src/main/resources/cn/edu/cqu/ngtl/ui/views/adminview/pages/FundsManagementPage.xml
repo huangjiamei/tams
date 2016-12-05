@@ -786,8 +786,8 @@
                                                                                                                                   p:propertyName="inputField1">
                                                                                                                                 <property
                                                                                                                                         name="optionsFinder">
-                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                          p:blankOption="false"/>
+                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder"
+                                                                                                                                          p:blankOption="TRUE"/>
                                                                                                                                 </property>
                                                                                                                                 <property
                                                                                                                                         name="control">
@@ -800,8 +800,8 @@
                                                                                                                                   p:style="margin-left:10px;">
                                                                                                                                 <property
                                                                                                                                         name="optionsFinder">
-                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
-                                                                                                                                          p:blankOption="false"/>
+                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder"
+                                                                                                                                          p:blankOption="TRUE"/>
                                                                                                                                 </property>
                                                                                                                                 <property
                                                                                                                                         name="control">
@@ -816,7 +816,7 @@
                                                                                                                       p:propertyName="inputField3">
                                                                                                                     <property
                                                                                                                             name="optionsFinder">
-                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.TestFinder"
+                                                                                                                        <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
                                                                                                                               p:blankOption="true"/>
                                                                                                                     </property>
                                                                                                                     <property

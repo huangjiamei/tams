@@ -22,7 +22,9 @@ import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import org.apache.commons.collections.map.HashedMap;
 import org.kuali.rice.core.api.config.property.ConfigContext;
+import org.kuali.rice.core.api.mo.common.active.InactivatableFromTo;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -708,6 +710,55 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+    /**
+     * 课程经费过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchClassFundingByCondition"})
+    public ModelAndView searchClassFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        //put conditions
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("department", infoForm.getcDept());
+        conditions.put("className", infoForm.getcName());
+        conditions.put("classCode", infoForm.getcCode());
+        conditions.put("classNbr", infoForm.getcNbr());
+        conditions.put("teacher", infoForm.getcTeacher());
+        conditions.put("applyFunding", infoForm.getcApplyFunds());
+        conditions.put("actualFunding", infoForm.getcActualFunds());
+        conditions.put("phdFunding", infoForm.getcPhdFunds());
+        conditions.put("bonus", infoForm.getcBonus());
+        conditions.put("travelFunding", infoForm.getcTrafficFunds());
+        infoForm.setClassFundings(
+                adminConverter.combineClassFunding(
+                        adminService.getClassFundByCondition(conditions)
+                )
+        );
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+    /**
+     * 助教经费过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchTaFundingByCondition"})
+    public ModelAndView searchTaFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        //put conditions
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("dept", infoForm.gettDept());
+        conditions.put("Number", infoForm.gettNumber());
+        conditions.put("Name", infoForm.gettName());
+        conditions.put("Type", infoForm.gettType());
+        conditions.put("CourseName", infoForm.gettCourseName());
+        conditions.put("CourseCode", infoForm.gettCourseCode());
+        conditions.put("AssignedFunding", infoForm.gettAssignedFunds());
+        conditions.put("PhdFunding", infoForm.gettPhdFunds());
+        conditions.put("TravelFunding", infoForm.gettTrafficFunds());
+        conditions.put("Bonus", infoForm.gettBonus());
+        infoForm.setTaFunding(adminService.getTaFundByCondition(conditions));
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
 
     /**
      * 删除课程负责人

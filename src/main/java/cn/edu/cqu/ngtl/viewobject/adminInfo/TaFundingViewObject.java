@@ -7,6 +7,27 @@ public class TaFundingViewObject {
 
     private String sessionName;
 
+    public String getTaDept() {
+        return taDept;
+    }
+
+    public void setTaDept(String taDept) {
+        this.taDept = taDept;
+    }
+
+    private String taDept;
+
+
+    private String taNumber;
+
+    public String getTaNumber() {
+        return taNumber;
+    }
+
+    public void setTaNumber(String taNumber) {
+        this.taNumber = taNumber;
+    }
+
     private String taName;
 
     private String taType;
@@ -25,6 +46,7 @@ public class TaFundingViewObject {
 
     private String total;
 
+
     public String getSessionName() {
         return sessionName;
     }
@@ -32,6 +54,7 @@ public class TaFundingViewObject {
     public void setSessionName(String sessionName) {
         this.sessionName = sessionName;
     }
+
 
     public String getTaName() {
         return taName;

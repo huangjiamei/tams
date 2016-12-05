@@ -11,7 +11,9 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import org.apache.log4j.Logger;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +92,22 @@ public class AdminServiceImpl implements IAdminService{
     public List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions){
         List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectUniFundPreByCondition(conditions);
         return tamsUniversityFundings;
+    }
+
+    //课程经费过滤
+    @Override
+    public List<ClassFundingViewObject> getClassFundByCondition(Map<String, String> conditions) {
+        List<ClassFundingViewObject> classFundingViewObjects = tamsClassFundingDao.selectClassFundByCondition(conditions);
+        return classFundingViewObjects;
+    }
+
+    @Autowired
+    private TAMSTaDao tamsTaDao;
+    //助教经费过滤
+    @Override
+    public List<TaFundingViewObject> getTaFundByCondition(Map<String, String> conditions) {
+        List<TaFundingViewObject> taFundingViewObjects = tamsTaDao.selectTaFundByCondition(conditions);
+        return taFundingViewObjects;
     }
 
     @Override

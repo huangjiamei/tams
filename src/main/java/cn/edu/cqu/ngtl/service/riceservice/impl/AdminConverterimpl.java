@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
@@ -13,6 +14,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -148,4 +150,27 @@ public class AdminConverterimpl implements IAdminConverter {
 
     return  detailFundingViewObjects;
     }
+
+    //转换课程经费
+    public List<ClassFundingViewObject> combineClassFunding(List<ClassFundingViewObject> list){
+        for(int i=0; i<list.size(); i++){
+            Integer total = Integer.valueOf(list.get(i).getApplyFunding() + list.get(i).getAssignedFunding() + list.get(i).getPhdFunding() + list.get(i).getBonus() + list.get(i).getTravelSubsidy());
+            list.get(i).setTotal(total.toString());
+            for(int j=0; j<list.size(); j++){
+                if(list.get(i).getClassNumber().toString().equals(list.get(j).getClassNumber().toString())){
+                    list.get(i).setInstructorName(list.get(i).getInstructorName()+','+list.get(j).getInstructorName());
+                    list.remove(j);
+                }
+            }
+        }
+        /*
+        for(ClassFundingViewObject listone : list){
+            Integer total = Integer.valueOf(listone.getApplyFunding() + listone.getAssignedFunding() + listone.getPhdFunding() + listone.getBonus() + listone.getTravelSubsidy());
+            listone.setTotal(total.toString());
+            list.add(listone);
+        }
+        */
+        return list;
+    }
+
 }

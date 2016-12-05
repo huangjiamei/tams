@@ -659,6 +659,7 @@ public class TAConverterimpl implements ITAConverter {
         }
         for(TAMSDeptFunding deptFunding : allFundingBySession){
             DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
+            viewObject.setDepartmentId(deptFunding.getDepartmentId());
             viewObject.setBonus(deptFunding.getBonus());
             viewObject.setApplyFunding(deptFunding.getApplyFunding());
             viewObject.setPhdFunding(deptFunding.getPhdFunding());

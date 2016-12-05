@@ -430,6 +430,11 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String endTimeSet;
     private List<TAMSTimeSettings> timeSettingsList;
 
+   /*
+   工作流类别
+    */
+   private String workFlowSearchBtn;//查询输入框
+
     public List<TAMSTimeSettings> getTimeSettingsList() {
         return timeSettingsList;
     }
@@ -987,5 +992,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setDetailFunding(List<DetailFundingViewObject> detailFunding) {
         this.detailFunding = detailFunding;
+    }
+
+    public String getWorkFlowSearchBtn() {
+        return workFlowSearchBtn;
+    }
+
+    public void setWorkFlowSearchBtn(String workFlowSearchBtn) {
+        this.workFlowSearchBtn = workFlowSearchBtn;
     }
 }

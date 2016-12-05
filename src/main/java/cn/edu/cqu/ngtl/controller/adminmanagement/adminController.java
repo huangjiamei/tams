@@ -172,6 +172,22 @@ public class adminController extends BaseController {
     }
 
     /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getWorkFlowCategoryPage&viewId=AdminView
+     * @param form
+     * @return 工作流类型管理页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getWorkFlowCategoryPage")
+    public ModelAndView getWorkFlowCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
+        adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());//改为合适的table列表内容
+
+        return this.getModelAndView(adminInfoForm, "pageWorkFlowCategory");
+    }
+
+    /**
      * 新增一个时间段
      * @param form
      * @return

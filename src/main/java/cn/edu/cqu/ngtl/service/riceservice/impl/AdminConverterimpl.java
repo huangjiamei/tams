@@ -64,7 +64,6 @@ public class AdminConverterimpl implements IAdminConverter {
 
             UTCourse course = null;
             if(ta.getTaClass() != null) {
-                taFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {

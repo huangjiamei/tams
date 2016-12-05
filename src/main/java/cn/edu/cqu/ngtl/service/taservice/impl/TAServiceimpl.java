@@ -2,27 +2,22 @@ package cn.edu.cqu.ngtl.service.taservice.impl;
 
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
-import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.apache.log4j.Logger;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +27,7 @@ import java.util.Map;
 @Service
 public class TAServiceimpl implements ITAService {
 
-    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+    private static final Logger logger = Logger.getRootLogger();
 
     @Autowired
     private UTClassInfoDao classInfoDao;
@@ -63,6 +58,9 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private TAMSTaTravelSubsidyDao tamsTaTravelSubsidyDao;
+
+    @Autowired
+    private TAMSWorkflowFunctionsDao workflowFunctionsDao;
 
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
@@ -259,5 +257,34 @@ public class TAServiceimpl implements ITAService {
 
     }
 
-
+    @Override
+    public boolean appraiseOutstanding(List<String> taIds, String uId) {
+        try {
+            //更改课程申请状态
+            //默认工作方法为“评优”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uId);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return false;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
+            if (function == null) {
+                logger.error("未能找到'评优'的Function");
+                return false;
+            }
+            for(String id : taIds)
+                if(taDao.changeStatusAvailableForUser(roleIds, function.getId(), id)) {
+                    boolean result = taDao.toNextStatus(roleIds, function.getId(), id);
+                }
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

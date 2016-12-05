@@ -90,10 +90,6 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@Column(name = "MIN_PER_WK")
 	private Integer minPerWeek;
 
-
-    @OrderBy(value="id")
-    private List<UTSubpart> subparts;
-
     public CMProgramCourse getProgramCourse() {
         return programCourse;
     }
@@ -220,13 +216,5 @@ public class UTClass extends DataObjectBase implements Serializable {
 
     public void setEvaluations(List<TAMSClassEvaluation> evaluations) {
         this.evaluations = evaluations;
-    }
-
-    public List<UTSubpart> getSubparts() {
-        return subparts;
-    }
-
-    public void setSubparts(List<UTSubpart> subparts) {
-        this.subparts = subparts;
     }
 }

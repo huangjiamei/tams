@@ -139,12 +139,28 @@ public class TaController extends BaseController {
      * @param form
      * @return
      */
-    /*@RequestMapping(params = "methodToCall=appraiseOutstanding")
+    @RequestMapping(params = "methodToCall=appraiseOutstanding")
     public ModelAndView appraiseOutstanding(@ModelAttribute("KualiForm") UifFormBase form,
                               HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
 
+        List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
 
-    }*/
+        //遍历所有list，找到选中的行
+        List<TaInfoViewObject> checkedList = new ArrayList<>();
+        for(TaInfoViewObject per : taList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        String uid = GlobalVariables.getUserSession().getPrincipalId();
+        boolean result = taService.appraiseOutstanding(
+                taConverter.extractIdsFromTaInfo(checkedList),
+                uid
+        );
+        return null;
+    }
 
     //我的助教（教师用户看到的）(管理助教)界面
     /**

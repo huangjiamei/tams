@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
@@ -42,4 +43,17 @@ public class TAMSWorkflowStatusRDaoJpa implements TAMSWorkflowStatusRDao {
         KRADServiceLocator.getDataObjectService().deleteMatching( TAMSWorkflowStatusR.class, criteria.build());
     }
 
+    @Override
+    public List<TAMSWorkflowStatusR> selectByRFIdAndStatus1(String rfId, String statusId1) {
+        if(rfId == null || statusId1 == null)
+            return null;
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("roleFunctionId", rfId),
+                        equal("statusId1", statusId1)
+                )
+        );
+        QueryResults<TAMSWorkflowStatusR> qr = KRADServiceLocator.getDataObjectService().findMatching(TAMSWorkflowStatusR.class, criteria.build());
+        return qr.getResults().size() != 0 ? qr.getResults() : null;
+    }
 }

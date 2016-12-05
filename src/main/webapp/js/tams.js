@@ -736,8 +736,18 @@ table默认每页显示5条记录
  */
 function searchTaApplicantListALengthMenu(){
     jQuery("#searchTaApplicantList table").dataTable( {
-        "iDisplayLength":3,//默认每页显示几条数据
-        "bJQueryUI": false, //可以添加 jqury的ui theme  需要添加css
-        "aLengthMenu": [[3,10,25, 50, -1, 0], ["每页3条","每页10条", "每页25条", "每页50条", "显示所有数据", "不显示数据"]]  //设置每页显示记录的下拉菜单
+        "iDisplayLength":5,//默认每页显示几条数据
+        //"bJQueryUI": false, //可以添加 jqury的ui theme  需要添加css
+        "sSearch": "",
+        "sSearchPlaceholder": "",
+        "sPaginationType": "full_numbers",
+        "aLengthMenu": [[5,10,20, -1], ["每页5条","每页10条", "每页20条", "显示所有数据"]]  //设置每页显示记录的下拉菜单
     });
+}
+
+
+//清除datatable的页脚页数缓存
+function deleteCookie(){
+    localStorage.clear();
+
 }

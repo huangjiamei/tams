@@ -1,10 +1,14 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowRoleFunctionDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusRDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -17,9 +21,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
@@ -32,9 +34,30 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 public class TAMSTaDaoJpa implements TAMSTaDao {
 
     @Autowired
-    private ITAService itaService;
+    private TAMSWorkflowStatusRDao workflowStatusRDao;
+
+    @Autowired
+    private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
+
+    @Autowired
+    private TAMSWorkflowStatusDao workflowStatusDao;
 
     EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+
+    @Override
+    public TAMSTa selectById(String id) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("id", id)
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+        if(qr.getResults() != null || qr.getResults().size() != 0)
+            return qr.getResults().get(0);
+        else
+            return null;
+    }
 
     //系统管理员和教务处管理员用户查询全校所有助教
     @Override
@@ -108,9 +131,9 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     //根据student_id查询class_id
     @Override
-    public List<Object> selectClassIdsByStudentId(String uId) {
+    public List<Object> selectClassIdsByStudentId(String stuId) {
         List<Object> list = new ArrayList<>();
-        Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + uId + "'");
+        Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + stuId + "'");
         list = query.getResultList();
         return list;
     }
@@ -260,7 +283,6 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             }
             return list;
         }
-
         //若输入为空，则返回所有助教经费
         else{
             Query qr = em.createNativeQuery(" SELECT d.NAME, s.UNIQUEID, s.NAME, co.NAME, co.CODE, t.TA_TYPE, t.ASSIGNED_FUNDING, t.PHD_FUNDING, t.TRAVEL_SUBSIDY, t.BONUS from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '"+curSession.getId()+"'  JOIN UNITIME_DEPARTMENT d ON s.DEPARTMENT_ID = d.UNIQUEID  JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID ");
@@ -279,7 +301,88 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 taFundingViewObject.setTravelSubsidy(tafunding[8].toString());
                 taFundingViewObject.setBonus(tafunding[9].toString());
                 list.add(taFundingViewObject);
-        }
+            }
             return list;
+        }
     }
-}}
+
+    @Override
+    public boolean changeStatusAvailableForUser(String[] roleIds, String functionId, String taId) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
+
+        TAMSTa current = this.selectById(taId);
+        if(current == null)
+            return false;
+
+        Integer currentIndex = allStatus.indexOf(current.getOutStandingTaWorkflowStatus());
+        Set<Integer> status2IndexCanBe_NotSort = new HashSet<>();
+        for(String roleId : roleIds) {
+            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getOutStandingTaWorkflowStatusId());
+            if(statusRs != null)
+                for(TAMSWorkflowStatusR statusR : statusRs) {
+                    int index = allStatus.indexOf(statusR.getStatus2());
+                    status2IndexCanBe_NotSort.add(index);
+                }
+        }
+        //这个变量表示此用户角色可以转变的状态
+        List<Integer> status2IndexCanBe = new ArrayList<>(status2IndexCanBe_NotSort);
+        Collections.sort(status2IndexCanBe);
+        Integer nextIndex = currentIndex + 1;
+        Integer previousIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+
+        if(status2IndexCanBe == null || status2IndexCanBe.size() == 0)
+            return false;
+        //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
+        int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
+        if(nextIndex < leftEdge || previousIndex > rightEdge)
+            return false;
+        else {
+            return true;
+        }
+    }
+
+    @Override
+    public boolean toNextStatus(String[] roleIds, String functionId, String taId) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
+
+        TAMSTa current = this.selectById(taId);
+        if(current == null)
+            return false;
+
+        Integer currentIndex = allStatus.indexOf(current.getOutStandingTaWorkflowStatus());
+        Set<Integer> status2IndexCanBe_NotSort = new HashSet<>();
+        for(String roleId : roleIds) {
+            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getOutStandingTaWorkflowStatusId());
+            if(statusRs != null)
+                for(TAMSWorkflowStatusR statusR : statusRs) {
+                    int index = allStatus.indexOf(statusR.getStatus2());
+                    status2IndexCanBe_NotSort.add(index);
+                }
+        }
+        //这个变量表示此用户角色可以转变的状态
+        List<Integer> status2IndexCanBe = new ArrayList<>(status2IndexCanBe_NotSort);
+        Collections.sort(status2IndexCanBe);
+        Integer nextIndex = currentIndex + 1;
+
+        if(status2IndexCanBe == null || status2IndexCanBe.size() == 0)
+            return false;
+        //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
+        int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
+        if(nextIndex < leftEdge || nextIndex > rightEdge)
+            return false;
+        else {
+            while (nextIndex <= rightEdge) {
+                if(status2IndexCanBe.contains(nextIndex)) {
+                    current.setOutStandingTaWorkflowStatusId(allStatus.get(nextIndex).getId());
+                    KradDataServiceLocator.getDataObjectService().save(current);
+                    return true;
+                }
+                nextIndex++;
+            }
+            //应该来说不会跳到这里才对,这里表示已经跳出了管辖范围右边界
+            return false;
+        }
+    }
+}

@@ -60,10 +60,12 @@
                                                     <property name="options">
                                                         <list>
                                                             <bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
-                                                                  p:location.viewId="PortalView" p:location.controllerMapping="/home"
+                                                                  p:location.viewId="PortalView"
+                                                                  p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2" p:value="课程"
-                                                                  p:location.viewId="ClassView" p:location.controllerMapping="/class"
+                                                                  p:location.viewId="ClassView"
+                                                                  p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="3" p:value="助教管理"/>
                                                         </list>
@@ -82,9 +84,9 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
-                                <property name="items"  >
+                                <property name="items">
                                     <list>
-                                         <bean parent="Uif-VerticalBoxSection"
+                                        <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info">
                                             <property name="items">
                                                 <list>
@@ -134,9 +136,10 @@
                                                                     <property name="propertyName" value="allMyTa"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
-                                                                    <property name="layoutManager.richTable.render" value="false"/>
+                                                                    <property name="layoutManager.richTable.render"
+                                                                              value="false"/>
 
-                                                                    <property name="useServerPaging" value="true" />
+                                                                    <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="false"/>
@@ -144,22 +147,28 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
+                                                                            <bean parent="Uif-InputField" p:label=""
+                                                                                  p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIdNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="姓名"
+                                                                                  p:propertyName="taName"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号"
+                                                                                  p:propertyName="taIdNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
                                                                                   p:propertyName="taGender"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="taBachelorMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="taMasterMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="本科专业"
+                                                                                  p:propertyName="taBachelorMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="研究生专业"
+                                                                                  p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
                                                                                   p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
                                                                                   p:propertyName="contactPhone"/>
-                                                                            <bean parent="Uif-DataField" p:label="发薪时间（每月）"
+                                                                            <bean parent="Uif-DataField"
+                                                                                  p:label="发薪时间（每月）"
                                                                                   p:propertyName="payDay"/>
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"/>
@@ -183,7 +192,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
-                                <property name="items"  >
+                                <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-warning">
@@ -202,10 +211,13 @@
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="聘用" p:methodToCall="employ"
+                                                                                  p:actionLabel="聘用"
+                                                                                  p:methodToCall="employ"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加申请人" p:actionScript="showDialog('addApplicantDialog');"
+                                                                                  p:actionLabel="添加申请人"
+
+                                                                                  p:actionScript="showDialog('addApplicantDialog');"
                                                                                   p:additionalCssClasses="icon-plus bg-red box-btngroup"/>
                                                                         </list>
                                                                     </property>
@@ -223,12 +235,14 @@
                                                                       p:layoutManager.numberOfColumns="8">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
-                                                                    <property name="propertyName" value="allApplication"/>
+                                                                    <property name="propertyName"
+                                                                              value="allApplication"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
-                                                                    <property name="layoutManager.richTable.render" value="false"/>
+                                                                    <property name="layoutManager.richTable.render"
+                                                                              value="false"/>
 
-                                                                    <property name="useServerPaging" value="true" />
+                                                                    <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="false"/>
@@ -238,17 +252,22 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
+                                                                            <bean parent="Uif-InputField" p:label=""
+                                                                                  p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
-                                                                            <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIdNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="姓名"
+                                                                                  p:propertyName="taName"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号"
+                                                                                  p:propertyName="taIdNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
                                                                                   p:propertyName="taGender"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业" p:propertyName="taBachelorMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业" p:propertyName="taMasterMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="本科专业"
+                                                                                  p:propertyName="taBachelorMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="研究生专业"
+                                                                                  p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
                                                                                   p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
@@ -278,56 +297,101 @@
           p:onDocumentReadyScript="jQuery('#addApplicantDialog').modal({backdrop: 'static', keyboard: false});jQuery('#addApplicantDialog').children().css('width','90%');">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人。" />
+
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <bean id="nameTaM" parent="Uif-InputField" p:label="姓名"
-                                  p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12 "
-                                  p:propertyName="StudentName"
-                                  p:onDocumentReadyScript="clickButton('nameTaM')"/>
-                            <bean id="studentNumTaM" parent="Uif-InputField" p:label="学号"
-                                  p:additionalCssClasses="col-lg-5 col-md-5 col-sm-12 col-xs-12"
-                                  p:propertyName="StudentNumber"
-                                  p:onDocumentReadyScript="clickButton('studentNumTaM')"/>
-                            <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
-                                  p:additionalCssClasses="col-lg-2 col-md-2 col-sm-12 col-xs-12"
-                                  p:methodToCall="searchTaByCondition"
-                                  p:preSubmitCall="return true;"
-                                  p:ajaxSubmit="true"
-                                  p:style="margin-top:18px;"
-                                  p:actionLabel="查询"
-                                  p:refreshId="taExtraBox"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean id="taExtraBox" parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                    <property name="items">
-                        <list>
-                            <!--左边，一个查询得到的申请人列表-->
-                            <bean id="searchTaApplicantList" parent="Uif-VerticalBoxSection"
-                                  p:additionalCssClasses="col-md-5 col-lg-5 col-sm-12 col-xs-12" p:onDocumentReadyScript="searchTaApplicantListALengthMenu();">
+                            <!--左边，助教的信息-->
+                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-lg-6">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表" />
-                                        <bean parent="Uif-Disclosure-TableCollectionSection">
+                                        <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人：" p:additionalCssClasses="col-md-12 col-lg-12"/>
+
+                                        <bean id="nameTaM" parent="Uif-InputField" p:label="姓名"
+                                              p:propertyName="StudentName"
+                                              p:additionalCssClasses="col-md-6 col-lg-6"
+                                              p:onDocumentReadyScript="clickButton('nameTaM')"/>
+                                        <bean id="studentNumTaM" parent="Uif-InputField" p:label="学号"
+                                              p:propertyName="StudentNumber"
+                                              p:additionalCssClasses="col-md-6 col-lg-6"
+                                              p:onDocumentReadyScript="clickButton('studentNumTaM')"/>
+
+                                        <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
+                                              p:methodToCall="searchTaByCondition"
+                                              p:additionalCssClasses="col-md-3 col-lg-3"
+                                              p:preSubmitCall="return true;"
+                                              p:ajaxSubmit="true"
+                                              p:onClickScript="deleteCookie();"
+                                              p:style="margin-top:18px;"
+                                              p:actionLabel="查询"
+                                              p:refreshId="searchTaApplicantList"/>
+
+                                        <!--ta的更多的信息-->
+                                        <bean parent="Uif-MessageField" p:messageText="学生详情："/>
+                                        <bean id="taDetailInfoGrid" parent="Uif-GridGroup"
+                                              p:layoutManager.renderRowFirstCellHeader="false">
+                                            <property name="layoutManager.numberOfColumns"
+                                                      value="4"/>
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="姓名"
+                                                          p:messageText="@{selectedTa.taName}"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="学号"
+                                                          p:messageText="@{selectedTa.taIdNumber}"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="性别"
+                                                          p:messageText="@{selectedTa.taGender}"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="本科专业"
+                                                          p:messageText="@{selectedTa.taBachelorMajorName}"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="研究生专业"
+                                                          p:messageText="@{selectedTa.taMasterMajorName}"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="导师"
+                                                          p:messageText="@{selectedTa.advisorName}"/>
+                                                    <bean parent="Uif-MessageField"
+                                                          p:label="联系电话"
+                                                          p:messageText="@{selectedTa.contactPhone}"/>
+                                                </list>
+                                            </property>
+                                        </bean>
+
+                                    </list>
+                                </property>
+                            </bean>
+
+                            <!--右边，一个查询得到的申请人列表-->
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="col-md-6 col-lg-6">
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表："/>
+
+                                        <bean id="searchTaApplicantList"
+                                              p:additionalCssClasses="table-minY"
+                                              parent="Uif-Disclosure-TableCollectionSection"
+                                              p:layoutManager.numberOfColumns="10"
+                                              p:onDocumentReadyScript="searchTaApplicantListALengthMenu();">
                                             <property name="collectionObjectClass"
                                                       value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
                                             <property name="propertyName" value="conditionTAList"/>
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
-                                            <property name="layoutManager.richTable.render" value="false"/>
-                                            <property name="useServerPaging" value="true" />
+                                            <property name="layoutManager.richTable.render"
+                                                      value="false"/>
+
+                                            <property name="useServerPaging" value="true"/>
 
                                             <property name="renderAddLine" value="false"/>
                                             <property name="renderLineActions" value="true"/>
-                                            <property name="disclosure.render" value="false"/>
-
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
-                                                    <bean parent="Uif-DataField" p:label="学号" p:propertyName="taIdNumber"/>
+                                                    <bean parent="Uif-DataField" p:label="学号"
+                                                          p:propertyName="taIdNumber"/>
                                                     <bean parent="Uif-DataField" p:label="性别"
                                                           p:propertyName="taGender"/>
                                                     <bean parent="Uif-DataField" p:label="联系电话"
@@ -336,54 +400,13 @@
                                             </property>
                                             <property name="lineActions">
                                                 <list>
-                                                    <bean parent="Uif-VerticalBoxSection">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:ajaxSubmit="true"
-                                                                      p:actionLabel="查看"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:methodToCall="getSelectedTaInfo"
-                                                                      p:refreshId="taDetailInfoGrid"
-                                                                      p:render="@{#line.taName!=null}"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                </list>
-                                            </property>
-
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
-
-                            <!--右边，助教的信息-->
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-7 col-lg-7 col-sm-12 col-xs-12">
-                                <property name="items">
-                                    <list>
-                                        <!--ta的更多的信息-->
-                                        <bean parent="Uif-MessageField" p:messageText="学生详情：" />
-                                        <bean id="taDetailInfoGrid" parent="Uif-GridGroup"
-                                              p:additionalCssClasses="col-lg-12 col-md-12 col-sm-12 col-xs-12 "
-                                              p:layoutManager.renderRowFirstCellHeader="false">
-                                            <property name="layoutManager.numberOfColumns"
-                                                      value="4"/>
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="姓名"  p:messageText="@{selectedTa.taName}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="学号" p:messageText="@{selectedTa.taIdNumber}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="性别" p:messageText="@{selectedTa.taGender}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="本科专业" p:messageText="@{selectedTa.taBachelorMajorName}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="研究生专业" p:messageText="@{selectedTa.taMasterMajorName}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="导师" p:messageText="@{selectedTa.advisorName}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="联系电话" p:messageText="@{selectedTa.contactPhone}"/>
+                                                    <bean parent="Uif-PrimaryActionButton"
+                                                          p:ajaxSubmit="true"
+                                                          p:actionLabel="查看"
+                                                          p:actionImagePlacement="LEFT"
+                                                          p:methodToCall="getSelectedTaInfo"
+                                                          p:refreshId="taDetailInfoGrid"
+                                                          p:render="@{#line.taName!=null}"/>
                                                 </list>
                                             </property>
                                         </bean>
@@ -398,9 +421,9 @@
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="addSelectedTaApplicant"  p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="addSelectedTaApplicant" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

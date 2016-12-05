@@ -1,9 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
@@ -15,12 +12,14 @@ import java.util.Map;
  */
 public interface TAMSTaDao {
 
+    TAMSTa selectById(String id);
+
     //查询全校所有助教
     List<TAMSTa> selectAll();
 
     List<TAMSTa> selectByClassIds(List<Object> classIds);
 
-    List<Object> selectClassIdsByStudentId(String uId);
+    List<Object> selectClassIdsByStudentId(String stuId);
 
     List<TAMSTa> selectBatchByIds(List<String> ids);
 
@@ -42,4 +41,8 @@ public interface TAMSTaDao {
 
     List<TaFundingViewObject> selectTaFundByCondition(Map<String, String> conditions);
 
+    //助教评优的辅助方法，用于判断助教当前状态是否可以被当前用户所操作
+    boolean changeStatusAvailableForUser(String[] roleIds, String functionId, String taId);
+
+    boolean toNextStatus(String[] roleIds, String functionId, String taId);
 }

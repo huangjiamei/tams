@@ -40,7 +40,9 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="类别管理"/>
+                            <bean id="consoleHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('consoleHeaderTitle','fa fa-reorder','管理台','类别管理')">
+                            </bean>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -60,14 +62,7 @@
                                                                   p:location.viewId="PortalView"
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="类别管理"/>
-                                                            <!--<bean parent="Uif-KeyValueLocation" p:key="2"-->
-                                                                  <!--p:value="教学班列表"-->
-                                                                  <!--p:location.viewId="ClassView"-->
-                                                                  <!--p:location.controllerMapping="/class"-->
-                                                                  <!--p:location.methodToCall="getClassListPage"/>-->
-                                                            <!--<bean parent="Uif-KeyLabelPair" p:key="3"-->
-                                                                  <!--p:value="@{detailInfoViewObject.courseName},需要后期用js"/>-->
+                                                            <bean parent="Uif-KeyLabelPair" p:key="2" p:value="类别管理"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -85,113 +80,148 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
-                            <!--第一个方块-->
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"
-                            p:style="clear:none!important;">
+                            <bean parent="Uif-VerticalBoxSection"
+                                  p:additionalCssClasses="box box-info">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="small-box bg-aqua">
+                                        <bean parent="Uif-VerticalBoxSection"
+                                              p:additionalCssClasses="box-body">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="inner">
+                                                    <!--第一个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:style="clear:none!important;">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-HeaderThree" p:headerText="5"
-                                                                      p:additionalCssClasses="headerCss"/>
-                                                                <bean parent="Uif-Message" p:messageText="课程类别管理"
-                                                                      p:additionalCssClasses="zzz"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="icon">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="fa fa-wpforms"/>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-aqua">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HeaderThree"
+                                                                                              p:headerText="5"
+                                                                                              p:additionalCssClasses="headerCss"/>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="课程类别管理"
+                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-wpforms"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
-                                                          p:style="float:none!important;"
-                                                          p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
+                                                    <!--第2个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:style="clear:none!important;">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-green">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HeaderThree"
+                                                                                              p:headerText="6"
+                                                                                              p:additionalCssClasses="headerCss"/>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="助教类别管理"
+                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-users"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
 
-                            <!--第2个方块-->
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"
-                                  p:style="clear:none!important;">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="small-box bg-green">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="inner">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-HeaderThree" p:headerText="6"
-                                                                      p:additionalCssClasses="headerCss"/>
-                                                                <bean parent="Uif-Message" p:messageText="助教类别管理"
-                                                                      p:additionalCssClasses="zzz"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="icon">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="fa fa-users"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-
-                                                    <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
-                                                          p:style="float:none!important;"
-                                                          p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
-
-                            <!--第3个方块-->
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"
-                                  p:style="clear:none!important;">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="small-box bg-yellow">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="inner">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-HeaderThree" p:headerText="12"
-                                                                      p:additionalCssClasses="headerCss"/>
-                                                                <bean parent="Uif-Message" p:messageText="任务类别管理"
-                                                                      p:additionalCssClasses="zzz"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="icon">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="fa fa-align-left"/>
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>
 
-                                                    <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
-                                                          p:style="float:none!important;"
-                                                          p:linkText="详情" p:additionalCssClasses="small-box-footer"/>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
+                                                    <!--第3个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:style="clear:none!important;">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-yellow">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HeaderThree"
+                                                                                              p:headerText="12"
+                                                                                              p:additionalCssClasses="headerCss"/>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="任务类别管理"
+                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-align-left"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
 
                             <!--&lt;!&ndash;第4个方块&ndash;&gt;-->
                             <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-3 col-xs-6"-->
@@ -337,6 +367,12 @@
                                     <!--</list>-->
                                 <!--</property>-->
                             <!--</bean>-->
+                                                </list>
+                                            </property>
+                                        </bean>
+                                    </list>
+                                </property>
+                            </bean>
                         </list>
                     </property>
                 </bean>

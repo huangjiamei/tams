@@ -146,7 +146,7 @@
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="3000000"
                                                                                                           p:additionalCssClasses="label label-primary"
-                                                                                                          p:style="font-size:15px;"/>
+                                                                                                          p:style="font-size:15px;">
                                                                                                     </bean>
                                                                                                 </list>
                                                                                             </property>
@@ -439,8 +439,8 @@
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="发布学院经费"
                                                                                                           p:actionImagePlacement="LEFT"
-                                                                                                          p:methodToCall="Release"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn">
+                                                                                                          p:methodToCall="ReleaseDeptFunding"
+                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>

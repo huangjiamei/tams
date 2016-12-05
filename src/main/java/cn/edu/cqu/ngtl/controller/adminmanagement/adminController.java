@@ -701,7 +701,7 @@ public class adminController extends BaseController {
 
 
 
-    @RequestMapping(params = "methodToCall=Release")
+    @RequestMapping(params = "methodToCall=ReleaseDeptFunding")
     public ModelAndView Release(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm)  form;
         super.baseStart(infoForm);

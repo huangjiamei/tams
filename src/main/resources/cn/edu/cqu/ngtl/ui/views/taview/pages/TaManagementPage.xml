@@ -312,12 +312,12 @@
                                   p:ajaxSubmit="true"
                                   p:style="margin-top:18px;"
                                   p:actionLabel="查询"
-                                  p:refreshId="taExtraBox"/>
+                                  p:refreshId="taExtraBoxTa"/>
                         </list>
                     </property>
                 </bean>
 
-                <bean id="taExtraBox" parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <bean id="taExtraBoxTa" parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
                             <!--左边，一个查询得到的申请人列表-->

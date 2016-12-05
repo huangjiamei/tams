@@ -128,7 +128,17 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-InputField" p:propertyName="workFlowSearchBtn"/>
+                                                                <bean parent="Uif-MessageField"
+                                                                      p:messageText="类别名称："/>
+                                                                <bean parent="Uif-InputField"
+                                                                      p:propertyName="workFlowSearchBtn"
+                                                                      p:required="true"
+                                                                      p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.adminview.TimeSettingTypeFinder"><!--改动-->
+                                                                    <property
+                                                                            name="control">
+                                                                        <bean parent="Uif-DropdownControl"/>
+                                                                    </property>
+                                                                </bean>
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="查询"
                                                                       p:actionImagePlacement="LEFT"

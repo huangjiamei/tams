@@ -4,17 +4,13 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
-import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
-import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
-import org.kuali.rice.krad.util.KRADUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -250,8 +246,8 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             for(Object column : columns) {
                 Object[] tafunding = (Object[]) column;
                 TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
-                taFundingViewObject.setTaDept(tafunding[0].toString());
-                taFundingViewObject.setTaNumber(tafunding[1].toString());
+                taFundingViewObject.setDepartmentName(tafunding[0].toString());
+                taFundingViewObject.setStuId(tafunding[1].toString());
                 taFundingViewObject.setTaName(tafunding[2].toString());
                 taFundingViewObject.setCourseName(tafunding[3].toString());
                 taFundingViewObject.setClassNbr(tafunding[4].toString());
@@ -272,8 +268,8 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             for(Object column : columns) {
                 Object[] tafunding = (Object[]) column;
                 TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
-                taFundingViewObject.setTaDept(tafunding[0].toString());
-                taFundingViewObject.setTaNumber(tafunding[1].toString());
+                taFundingViewObject.setDepartmentName(tafunding[0].toString());
+                taFundingViewObject.setStuId(tafunding[1].toString());
                 taFundingViewObject.setTaName(tafunding[2].toString());
                 taFundingViewObject.setCourseName(tafunding[3].toString());
                 taFundingViewObject.setClassNbr(tafunding[4].toString());

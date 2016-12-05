@@ -250,7 +250,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 taFundingViewObject.setStuId(tafunding[1].toString());
                 taFundingViewObject.setTaName(tafunding[2].toString());
                 taFundingViewObject.setCourseName(tafunding[3].toString());
-                taFundingViewObject.setClassNbr(tafunding[4].toString());
+                taFundingViewObject.setCourseCode(tafunding[4].toString());
                 taFundingViewObject.setTaType(tafunding[5].toString());
                 taFundingViewObject.setAssignedFunding(tafunding[6].toString());
                 taFundingViewObject.setPhdFunding(tafunding[7].toString());
@@ -272,7 +272,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 taFundingViewObject.setStuId(tafunding[1].toString());
                 taFundingViewObject.setTaName(tafunding[2].toString());
                 taFundingViewObject.setCourseName(tafunding[3].toString());
-                taFundingViewObject.setClassNbr(tafunding[4].toString());
+                taFundingViewObject.setCourseCode(tafunding[4].toString());
                 taFundingViewObject.setTaType(tafunding[5].toString());
                 taFundingViewObject.setAssignedFunding(tafunding[6].toString());
                 taFundingViewObject.setPhdFunding(tafunding[7].toString());

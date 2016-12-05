@@ -17,8 +17,6 @@ public class TaFundingViewObject {
 
     private String courseName;
 
-    private String classNbr;
-
     private String courseCode;
 
     private String assignedFunding;
@@ -63,14 +61,6 @@ public class TaFundingViewObject {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getClassNbr() {
-        return classNbr;
-    }
-
-    public void setClassNbr(String classNbr) {
-        this.classNbr = classNbr;
     }
 
     public String getAssignedFunding() {

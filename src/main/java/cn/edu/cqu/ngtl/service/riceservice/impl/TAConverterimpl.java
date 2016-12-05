@@ -814,6 +814,7 @@ public class TAConverterimpl implements ITAConverter {
                     budget = "数据异常，请联系管理员";
                 }
                 catch (RuntimeException e) { //数据库访问异常
+                    e.printStackTrace();
                     budget = "数据异常，请联系管理员";
                 }
                 viewObject.setBudget(budget);

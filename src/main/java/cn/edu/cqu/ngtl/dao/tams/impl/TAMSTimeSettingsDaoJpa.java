@@ -44,6 +44,7 @@ public class TAMSTimeSettingsDaoJpa implements TAMSTimeSettingsDao {
             return true;
         }
         catch (RuntimeException e) {
+            e.printStackTrace();
             return false;
         }
     }

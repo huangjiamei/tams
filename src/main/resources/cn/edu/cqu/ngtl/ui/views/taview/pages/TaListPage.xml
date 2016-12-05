@@ -117,7 +117,6 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="评优"
                                                                                   p:actionScript="showDialog('confirmOutstandingDialog');"
-                                                                                  p:methodToCall="appraiseOutstanding"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
 
@@ -230,7 +229,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall=""  p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="appraiseOutstanding"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

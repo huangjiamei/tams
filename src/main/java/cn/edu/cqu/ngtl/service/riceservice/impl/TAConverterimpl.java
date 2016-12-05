@@ -723,8 +723,11 @@ public class TAConverterimpl implements ITAConverter {
 
         int length = allStatus.size();
         for(int i = 0 ; i < length; i++)
-            for(int j = 0 ; j <length; j++)
+            for(int j = 0 ; j <length; j++) {
                 matrix[i][j] = new CheckBoxStatus();
+                if(i == j)
+                    matrix[i][j].setDisabled(true);
+            }
         //如果有header没数据则返回默认的全空
         if(workflowStatusRelations == null || workflowStatusRelations.size() == 0) {
             RelationTable rt = new RelationTable();

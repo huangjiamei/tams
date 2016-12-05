@@ -64,8 +64,6 @@ public class ClassController extends BaseController {
     @Autowired
     private ExcelService excelService;
 
-
-
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
@@ -89,6 +87,72 @@ public class ClassController extends BaseController {
                 )
         );
         return this.getModelAndView(infoForm, "pageClassList");
+    }
+
+    /**
+     * 审批的方法
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=approve")
+    public ModelAndView approve(@ModelAttribute("KualiForm") UifFormBase form,
+                                         HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<ClassTeacherViewObject> classList = infoForm.getClassList();
+        //遍历所有list，找到选中的行
+        List<ClassTeacherViewObject> checkedList = new ArrayList<>();
+        for(ClassTeacherViewObject per : classList) {
+            if(per.isChecked())
+                checkedList.add(per);
+        }
+
+        String uid = GlobalVariables.getUserSession().getPrincipalId();
+
+        boolean result = classInfoService.approveToNextStatus(
+                classConverter.extractIdsFromClassList(checkedList),
+                uid
+        );
+
+        if(result)
+            return this.getClassListPage(infoForm, request);
+        else  //应当返回错误信息
+            return this.getClassListPage(infoForm, request);
+    }
+
+    /**
+     * 驳回的方法
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=reject")
+    public ModelAndView reject(@ModelAttribute("KualiForm") UifFormBase form,
+                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<ClassTeacherViewObject> classList = infoForm.getClassList();
+        //遍历所有list，找到选中的行
+        List<ClassTeacherViewObject> checkedList = new ArrayList<>();
+        for(ClassTeacherViewObject per : classList) {
+            if(per.isChecked())
+                checkedList.add(per);
+        }
+
+        String uid = GlobalVariables.getUserSession().getPrincipalId();
+
+        boolean result = classInfoService.rejectToPreviousStatus(
+                classConverter.extractIdsFromClassList(checkedList),
+                uid
+        );
+
+        if(result)
+            return this.getClassListPage(infoForm, request);
+        else  //应当返回错误信息
+            return this.getClassListPage(infoForm, request);
     }
 
     /**

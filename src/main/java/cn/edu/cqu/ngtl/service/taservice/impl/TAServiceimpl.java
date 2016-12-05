@@ -260,6 +260,8 @@ public class TAServiceimpl implements ITAService {
     @Override
     public boolean appraiseOutstanding(List<String> taIds, String uId) {
         try {
+            if(taIds == null || taIds.size() == 0 || uId == null)
+                return false;
             //更改课程申请状态
             //默认工作方法为“评优”
             List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uId);

@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
@@ -72,7 +73,6 @@ public class ClassConverterImpl implements IClassConverter {
         return viewObjects;
     }
 
-
     //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
     @Override
     public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid){
@@ -82,5 +82,16 @@ public class ClassConverterImpl implements IClassConverter {
         //tamsTaApplication.setApplicationStatus("1");
         //tamsTaApplication.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
         return tamsTaApplication;
+    }
+
+    @Override
+    public List<String> extractIdsFromClassList(List<ClassTeacherViewObject> checkedList) {
+        List<String> ids = new ArrayList<>();
+
+        for(ClassTeacherViewObject per : checkedList) {
+            ids.add(per.getId().toString());
+        }
+
+        return ids;
     }
 }

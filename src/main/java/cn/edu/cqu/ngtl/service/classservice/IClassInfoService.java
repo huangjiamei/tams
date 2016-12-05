@@ -40,4 +40,8 @@ public interface IClassInfoService {
     boolean removeCalendarFileById(String classId, String attachmentId);
 
     boolean removeAllCalendarFilesByClassIdAndCalendarId(String classId, String calendarId);
+
+    boolean approveToNextStatus(List<String> classIds, String uid);
+
+    boolean rejectToPreviousStatus(List<String> classIds, String uid);
 }

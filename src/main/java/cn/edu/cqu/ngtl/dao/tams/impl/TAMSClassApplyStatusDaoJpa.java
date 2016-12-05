@@ -69,7 +69,7 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
             return false;
         //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
         int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
-        if(nextIndex < leftEdge || nextIndex > rightEdge)
+        if(nextIndex > rightEdge)
             return false;
         else {
             while (nextIndex <= rightEdge) {
@@ -79,6 +79,57 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
                     return true;
                 }
                 nextIndex++;
+            }
+            //应该来说不会跳到这里才对,这里表示已经跳出了管辖范围右边界
+            return false;
+        }
+    }
+
+    @Override
+    public boolean toPreviousStatus(String[] roleIds, String functionId, String classId) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
+
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("classId", classId)
+        );
+        QueryResults<TAMSClassApplyStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassApplyStatus.class,
+                criteria.build()
+        );
+        if(qr.getResults() == null || qr.getResults().size() == 0)
+            return false;
+
+        TAMSClassApplyStatus current = qr.getResults().get(0);
+
+        Integer currentIndex = allStatus.indexOf(current.getWorkflowStatus());
+        Set<Integer> status2IndexCanBe_NotSort = new HashSet<>();
+        for(String roleId : roleIds) {
+            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getWorkflowStatusId());
+            if(statusRs != null)
+                for(TAMSWorkflowStatusR statusR : statusRs) {
+                    int index = allStatus.indexOf(statusR.getStatus2());
+                    status2IndexCanBe_NotSort.add(index);
+                }
+        }
+        //这个变量表示此用户角色可以转变的状态
+        List<Integer> status2IndexCanBe = new ArrayList<>(status2IndexCanBe_NotSort);
+        Collections.sort(status2IndexCanBe);
+        Integer previousIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+        if(status2IndexCanBe == null || status2IndexCanBe.size() == 0)
+            return false;
+        //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
+        int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
+        if(previousIndex < leftEdge)
+            return false;
+        else {
+            while (previousIndex >= leftEdge) {
+                if(status2IndexCanBe.contains(previousIndex)) {
+                    current.setWorkflowStatusId(allStatus.get(previousIndex).getId());
+                    KradDataServiceLocator.getDataObjectService().save(current);
+                    return true;
+                }
+                previousIndex--;
             }
             //应该来说不会跳到这里才对,这里表示已经跳出了管辖范围右边界
             return false;

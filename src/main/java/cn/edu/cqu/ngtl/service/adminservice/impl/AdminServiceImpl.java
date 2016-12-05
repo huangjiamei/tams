@@ -10,10 +10,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CheckBoxStatus;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import org.apache.log4j.Logger;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -506,6 +503,41 @@ public class AdminServiceImpl implements IAdminService{
     public List<TAMSTimeSettings> getallTimeSettings() {
         return timeSettingsDao.selectAll();
     }
+
+
+    @Override
+    public boolean releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects){
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(DepartmentFundingViewObject per : departmentFundingViewObjects){
+            TAMSDeptFunding exist = deptFundingDao.selectDeptFundsByDeptIdAndSession(per.getDepartmentId(),curSession.getId());
+            TAMSDeptFundingDraft existDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(per.getDepartmentId(),curSession.getId());
+            //将管理员设置的数额保存到正式部门经费表
+            if(exist==null) {
+                TAMSDeptFunding tamsDeptFunding = new TAMSDeptFunding();
+                tamsDeptFunding.setSessionId(curSession.getId());
+                tamsDeptFunding.setDepartmentId(per.getDepartmentId());
+                tamsDeptFunding.setActualFunding(per.getActualFunding());
+                tamsDeptFunding.setBonus(per.getBonus());
+                tamsDeptFunding.setApplyFunding(per.getApplyFunding());
+                tamsDeptFunding.setPhdFunding(per.getPhdFunding());
+                tamsDeptFunding.setPlanFunding(per.getPlanFunding());
+                tamsDeptFunding.setTravelSubsidy(per.getTrafficFunding());
+                deptFundingDao.saveOneByEntity(tamsDeptFunding);
+            }else{
+                if(!per.getActualFunding().equals(exist.getActualFunding())||!per.getPlanFunding().equals(exist.getPlanFunding())){
+                    exist.setActualFunding(per.getActualFunding()); //保存批准经费
+                    exist.setPlanFunding(per.getPlanFunding());//保存计划经费
+                    deptFundingDao.saveOneByEntity(exist);
+                }
+            }
+            //保存草稿表
+            existDraft.setActualFunding(per.getActualFunding());//保存批准经费
+            existDraft.setPlanFunding(per.getPlanFunding());//保存计划经费
+            tamsDeptFundingDraftDao.saveOneByEntity(existDraft);
+        }
+        return true;
+    }
+
 
 
 

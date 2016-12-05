@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFundingDraft;
 
 import java.util.List;
 
@@ -11,6 +12,9 @@ public interface TAMSDeptFundingDraftDao {
 
     List<TAMSDeptFunding> selectDepartmentCurrDraftBySession();
 
+    TAMSDeptFundingDraft selectDeptDraftFundsByDeptIdAndSession(Integer deptId, Integer sessionId);
+
+    boolean saveOneByEntity(TAMSDeptFundingDraft tamsDeptDraftFunding);
 
 
 

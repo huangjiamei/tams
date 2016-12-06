@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.service.riceservice;
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 
 import java.util.List;
@@ -20,6 +21,5 @@ public interface IClassConverter {
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
 
-
-
+    List<String> extractIdsFromClassList(List<ClassTeacherViewObject> checkedList);
 }

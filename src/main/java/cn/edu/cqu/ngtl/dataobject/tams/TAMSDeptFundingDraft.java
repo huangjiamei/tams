@@ -36,7 +36,7 @@ public class TAMSDeptFundingDraft extends DataObjectBase implements Serializable
     private String bonus;
 
     @Column(name = "DEPARTMENT_ID")
-    private String departmentId;
+    private Integer departmentId;
 
     @Column(name = "TRAVEL_SUBSIDY")
     private String travelSubsidy;
@@ -46,7 +46,7 @@ public class TAMSDeptFundingDraft extends DataObjectBase implements Serializable
     private UTDepartment department;
 
     @Column(name = "SESSION_ID")
-    private String sessionId;
+    private Integer sessionId;
 
     @OneToOne
     @JoinColumn(name = "SESSION_ID",updatable=false, insertable=false)
@@ -84,11 +84,11 @@ public class TAMSDeptFundingDraft extends DataObjectBase implements Serializable
         this.bonus = bonus;
     }
 
-    public String getSessionId() {
+    public Integer getSessionId() {
         return sessionId;
     }
 
-    public void setSessionId(String sessionId) {
+    public void setSessionId(Integer sessionId) {
         this.sessionId = sessionId;
     }
 
@@ -124,11 +124,11 @@ public class TAMSDeptFundingDraft extends DataObjectBase implements Serializable
         this.actualFunding = actualFunding;
     }
 
-    public String getDepartmentId() {
+    public Integer getDepartmentId() {
         return departmentId;
     }
 
-    public void setDepartmentId(String departmentId) {
+    public void setDepartmentId(Integer departmentId) {
         this.departmentId = departmentId;
     }
 

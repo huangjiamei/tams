@@ -23,6 +23,8 @@ public class DepartmentFundingViewObject {
 
     String total;
 
+    Integer departmentId;
+
     public String getSessionName() {
         return sessionName;
     }
@@ -93,5 +95,13 @@ public class DepartmentFundingViewObject {
 
     public void setTrafficFunding(String trafficFunding) {
         this.trafficFunding = trafficFunding;
+    }
+
+    public Integer getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(Integer departmentId) {
+        this.departmentId = departmentId;
     }
 }

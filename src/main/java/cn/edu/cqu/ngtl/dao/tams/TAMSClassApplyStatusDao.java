@@ -8,4 +8,6 @@ public interface TAMSClassApplyStatusDao {
     boolean toNextStatus(String[] roleIds, String functionId, String classId);
 
     boolean isInitializedStatus(String functionId, String classId);
+
+    boolean toPreviousStatus(String[] roleIds, String functionId, String classId);
 }

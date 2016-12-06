@@ -137,8 +137,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      * @return
      */
     private String tDept;
-    private String tNumber;
     private String tName;
+    private String tNumber;
     private String tType;
     private String tCourseName;
     private String tCourseCode;
@@ -146,6 +146,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String tPhdFunds;
     private String tTrafficFunds;
     private String tBonus;
+    private String tTotalFunds;
 
     public String gettDept() {
         return tDept;
@@ -314,6 +315,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setcTotalFunds(String cTotalFunds) {
         this.cTotalFunds = cTotalFunds;
+    }
+
+    public String gettTotalFunds() {
+        return tTotalFunds;
+    }
+
+    public void settTotalFunds(String tTotalFunds) {
+        this.tTotalFunds = tTotalFunds;
     }
 
     /**

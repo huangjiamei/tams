@@ -304,4 +304,66 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         return true;
     }
+
+    @Override
+    public boolean approveToNextStatus(List<String> classIds, String uid) {
+        try {
+            //更改课程申请状态
+            //默认工作方法为“审批”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uid);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return false;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("审核");
+            if (function == null) {
+                logger.error("未能找到'审核'的Function");
+                return false;
+            }
+            for(String classId : classIds)
+                if(!classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
+                    boolean result = classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
+                }
+            return true;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean rejectToPreviousStatus(List<String> classIds, String uid) {
+        try {
+            //更改课程申请状态
+            //默认工作方法为“审批”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uid);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return false;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("审核");
+            if (function == null) {
+                logger.error("未能找到'审核'的Function");
+                return false;
+            }
+            for(String classId : classIds)
+                if(!classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
+                    boolean result = classApplyStatusDao.toPreviousStatus(roleIds, function.getId(), classId);
+                }
+            return true;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

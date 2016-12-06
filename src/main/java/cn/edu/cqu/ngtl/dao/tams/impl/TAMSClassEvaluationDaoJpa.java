@@ -34,6 +34,7 @@ public class TAMSClassEvaluationDaoJpa implements TAMSClassEvaluationDao {
             return id != null;
         }
         catch (RuntimeException e) {
+            e.printStackTrace();
             return false;
         }
     }

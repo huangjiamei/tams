@@ -25,7 +25,6 @@ import com.google.gson.Gson;
 import org.apache.commons.collections.map.HashedMap;
 import org.jacorb.imr.Admin;
 import org.kuali.rice.core.api.config.property.ConfigContext;
-import org.kuali.rice.core.api.mo.common.active.InactivatableFromTo;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
@@ -720,9 +719,24 @@ public class adminController extends BaseController {
     }
 
 
-    /**
-     * 学校（批次）历史经费过滤
-     */
+
+    @RequestMapping(params = "methodToCall=ReleaseDeptFunding")
+    public ModelAndView Release(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm)  form;
+        super.baseStart(infoForm);
+        List<DepartmentFundingViewObject> draftDepartmentFunding =infoForm.getDepartmentCurrFundings();
+        adminService.releaseDeptFunding(draftDepartmentFunding);
+
+       return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+
+
+
+
+        /**
+         * 学校（批次）历史经费过滤
+         */
     @RequestMapping(params =  {"methodToCall=searchUTFundingByCondition"})
     public ModelAndView searchUTFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm)  form;

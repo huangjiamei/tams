@@ -11,10 +11,8 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +24,6 @@ import java.util.List;
 public class AdminConverterimpl implements IAdminConverter {
 
     private static final Logger logger = Logger.getRootLogger();
-
-    @Autowired
-    private UTCourseDaoJpa utCourseDao;
 
     @Override
     public List<CourseManagerViewObject> getCourseManagerToTableViewObject(List<TAMSCourseManager> tamsCourseManagerList) {
@@ -49,9 +44,6 @@ public class AdminConverterimpl implements IAdminConverter {
         return  courseManagerViewObjectList;
     }
 
-
-
-
     @Override
     public List<TaFundingViewObject> taFundingToViewObject(List<TAMSTa> tamsTas){
         if(tamsTas == null || tamsTas.size() == 0) {
@@ -62,10 +54,9 @@ public class AdminConverterimpl implements IAdminConverter {
         for(TAMSTa ta : tamsTas) {
             TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
 
-            UTCourse course = null;
             if(ta.getTaClass() != null) {
                 if (ta.getTaClass().getCourseOffering() != null) {
-                    course = ta.getTaClass().getCourseOffering().getCourse();
+                    UTCourse course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
                         taFundingViewObject.setCourseName(course.getName());
                         taFundingViewObject.setCourseCode(course.getCodeR());
@@ -98,7 +89,6 @@ public class AdminConverterimpl implements IAdminConverter {
         }
         return taFundingViewObjects;
     }
-
 
     @Override
     public List<DetailFundingViewObject> detailFundingToViewObject(List<TAMSTa> tamsTas){

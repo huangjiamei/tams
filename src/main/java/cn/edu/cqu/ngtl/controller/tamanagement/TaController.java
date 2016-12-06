@@ -159,7 +159,10 @@ public class TaController extends BaseController {
                 taConverter.extractIdsFromTaInfo(checkedList),
                 uid
         );
-        return null;
+        if(result)
+            return this.getTaListPage(form, request);
+        else
+            return this.getTaListPage(form, request); //应该返回错误信息
     }
 
     //我的助教（教师用户看到的）(管理助教)界面
@@ -190,8 +193,10 @@ public class TaController extends BaseController {
 
     /**
      * 聘请助教
+     * @param form
+     * @param request
+     * @return
      */
-
     @RequestMapping(params = "methodToCall=employ")
     public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
@@ -259,6 +264,7 @@ public class TaController extends BaseController {
             return this.getTaManagementPage(form, request);
         }
     }
+
     /**
      * 暂停助教
      * 属于TaManagementPage

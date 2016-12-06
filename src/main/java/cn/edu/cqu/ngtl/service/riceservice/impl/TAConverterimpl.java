@@ -659,6 +659,7 @@ public class TAConverterimpl implements ITAConverter {
         }
         for(TAMSDeptFunding deptFunding : allFundingBySession){
             DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
+            viewObject.setDepartmentId(deptFunding.getDepartmentId());
             viewObject.setBonus(deptFunding.getBonus());
             viewObject.setApplyFunding(deptFunding.getApplyFunding());
             viewObject.setPhdFunding(deptFunding.getPhdFunding());
@@ -814,6 +815,7 @@ public class TAConverterimpl implements ITAConverter {
                     budget = "数据异常，请联系管理员";
                 }
                 catch (RuntimeException e) { //数据库访问异常
+                    e.printStackTrace();
                     budget = "数据异常，请联系管理员";
                 }
                 viewObject.setBudget(budget);

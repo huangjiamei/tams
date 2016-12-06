@@ -21,4 +21,9 @@ public interface TAMSDeptFundingDao {
     //List<TAMSDeptFunding> getDeptFundPreByCondition(Map<String, String> conditions);
 
     List<TAMSDeptFunding> selectDeptFundPreByCondition(Map<String, String> conditions);
+
+
+    TAMSDeptFunding selectDeptFundsByDeptIdAndSession(Integer deptId,Integer sessionId);
+
+    boolean saveOneByEntity(TAMSDeptFunding tamsDeptFunding);
 }

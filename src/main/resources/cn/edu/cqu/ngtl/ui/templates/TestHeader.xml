@@ -50,8 +50,17 @@
 
         <property name="applicationNavigation.items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="当前学期："  p:additionalCssClasses="headerMessage"/>
-                <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
+                <bean parent="Uif-DropdownToggleMenu" p:toggleText="2016-2017第一学期">
+                    <property name="menuItems">
+                        <list>
+                            <bean parent="Uif-MenuAction" p:actionLabel="明天修改" p:methodToCall="xxxx" p:style="background-color:#3C8DBC "/>
+
+                            <bean parent="Uif-MenuAction" p:actionLabel="2015-2016第二学期" p:actionScript="alert('Menu Script');" p:style="background-color:#3C8DBC "/>
+
+                            <bean parent="Uif-MenuAction" p:actionLabel="2015-2016第一学期" p:style="background-color:#3C8DBC "/>
+                        </list>
+                    </property>
+                </bean>
 
                 <!--导航栏-->
                 <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
@@ -466,6 +475,8 @@
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowCategoryPage&amp;viewId=AdminView"
                                   p:linkText="工作流任务类别管理" p:iconClass="icon-file menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowCategoryPage')}"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSystemParameterPage&amp;viewId=AdminView"
+                                  p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"/>
                         </list>
                     </property>
                 </bean>

@@ -189,6 +189,20 @@ public class adminController extends BaseController {
         return this.getModelAndView(adminInfoForm, "pageWorkFlowCategory");
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getSystemParameterPage&viewId=AdminView
+     * @param form
+     * @return 同步信息页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getSystemParameterPage")
+    public ModelAndView getSystemParameterPage(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
+        return this.getModelAndView(adminInfoForm, "pageSystemParameter");
+    }
+
 
     /**
      * 工作流类型过滤

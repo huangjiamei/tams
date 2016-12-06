@@ -317,10 +317,14 @@ public class adminController extends BaseController {
         krimPermTs.setActive(permissionStatus);
         //TODO 权限属性分类
         krimPermTs.setTemplateId("56");
-
-        if(new KRIM_PERM_T_DaoJpa().findPermissionByName(permissionNM)!=null){
-            infoForm.setErrMsg("已存在相同权限内容的权限");
-            return this.showDialog("adminErrDialog",true,infoForm);
+        KRIM_PERM_T exist = new KRIM_PERM_T_DaoJpa().findPermissionByName(permissionNM);
+        if( exist != null){
+            if(exist.getDescription().equals(permissionContent)) {               //名字描述都相同返回错误信息
+                infoForm.setErrMsg("已存在相同权限内容的权限");
+                return this.showDialog("adminErrDialog", true, infoForm);
+            }
+            exist.setDescription(permissionContent);
+            new KRIM_PERM_T_DaoJpa().addPermissions(exist);
         }
         new KRIM_PERM_T_DaoJpa().addPermissions(krimPermTs);
         if(infoForm.getPermissionIndex()==null) {

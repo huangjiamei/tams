@@ -124,20 +124,17 @@
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:messageText="批次经费"
                                                                                                           p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
 
-                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                              p:additionalCssClasses="box-header">
-                                                                                            <property name="items">
-                                                                                                <list>
+                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                          p:messageText="|"
+                                                                                                          p:additionalCssClasses="font-teal"/>
+
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="已设置/总预算经费："
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="1000000/2500000"
-                                                                                                          p:additionalCssClasses="label label-primary"
+                                                                                                          p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
@@ -145,13 +142,11 @@
                                                                                                           p:style="margin-left:20px;font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="3000000"
-                                                                                                          p:additionalCssClasses="label label-primary"
-                                                                                                          p:style="font-size:15px;">
-                                                                                                    </bean>
+                                                                                                          p:additionalCssClasses="label label-success"
+                                                                                                          p:style="font-size:15px;"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-
 
                                                                                         <bean parent="Uif-VerticalBoxSection"
                                                                                               p:additionalCssClasses="box-body"
@@ -413,20 +408,17 @@
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:messageText="学院经费"
                                                                                                           p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
 
-                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                              p:additionalCssClasses="box-header">
-                                                                                            <property name="items">
-                                                                                                <list>
+                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                          p:messageText="|"
+                                                                                                          p:additionalCssClasses="font-teal"/>
+
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="已设置/总预算经费："
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="1000000/2500000"
-                                                                                                          p:additionalCssClasses="label label-primary"
+                                                                                                          p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
@@ -434,17 +426,17 @@
                                                                                                           p:style="margin-left:20px;font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="3000000"
-                                                                                                          p:additionalCssClasses="label label-primary"
+                                                                                                          p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="发布学院经费"
                                                                                                           p:actionImagePlacement="LEFT"
+                                                                                                          p:style="float:right!important;"
                                                                                                           p:methodToCall="ReleaseDeptFunding"
                                                                                                           p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-
 
                                                                                         <bean parent="Uif-VerticalBoxSection"
                                                                                               p:additionalCssClasses="box-body"

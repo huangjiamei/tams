@@ -470,6 +470,24 @@ public class AdminInfoForm extends BaseForm implements Serializable {
    工作流类别
     */
    private String workFlowSearchBtn;//查询输入框
+   private String workFlowCaStatus;//工作流状态
+    private String workFlowCaRe;//工作流顺序
+
+    public String getWorkFlowCaStatus() {
+        return workFlowCaStatus;
+    }
+
+    public void setWorkFlowCaStatus(String workFlowCaStatus) {
+        this.workFlowCaStatus = workFlowCaStatus;
+    }
+
+    public String getWorkFlowCaRe() {
+        return workFlowCaRe;
+    }
+
+    public void setWorkFlowCaRe(String workFlowCaRe) {
+        this.workFlowCaRe = workFlowCaRe;
+    }
 
     public List<TAMSTimeSettings> getTimeSettingsList() {
         return timeSettingsList;

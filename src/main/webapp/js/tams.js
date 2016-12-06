@@ -57,7 +57,9 @@ function doEditorPreSubmit(editorID,transferID) {
 }
 
 
+
 function initNavDialog() {
+    jQuery(".modal-content").show();
     jQuery(".navigationDialog .nav>ul>:first-child>a").tab('show');
     //去掉dialog本身的header
     jQuery(".navigationDialog>.modal-content>.modal-header").remove();
@@ -69,12 +71,16 @@ function initNavDialog() {
         jQuery(this).tab('show');
     });
 
-
     jQuery(".navigationDialog .close").click(function(a) {
         a.stopPropagation();
         jQuery(".navigationDialog .nav .active").removeClass("active");
         jQuery(".navigationDialog .tab-content .active").removeClass("active");
-    })
+    });
+
+    //点击姓名时隐藏菜单栏
+    jQuery(".dropdown-toggle").click(function(a) {
+        jQuery(".modal-content").hide();
+    });
 }
 
 
@@ -736,12 +742,11 @@ table默认每页显示5条记录
  */
 function searchTaApplicantListALengthMenu(){
     jQuery("#searchTaApplicantList table").dataTable( {
+        "bRetrieve": true,
+        "bPaginate":true,
+        //"bJQueryUI":true,
         "iDisplayLength":5,//默认每页显示几条数据
-        //"bJQueryUI": false, //可以添加 jqury的ui theme  需要添加css
-        "sSearch": "",
-        "sSearchPlaceholder": "",
-        "sPaginationType": "full_numbers",
-        "aLengthMenu": [[5,10,20, -1], ["每页5条","每页10条", "每页20条", "显示所有数据"]]  //设置每页显示记录的下拉菜单
+        "aLengthMenu": [[5,10,20, 50], ["5","10", "20", "50"]]  //设置每页显示记录的下拉菜单
     });
 }
 
@@ -749,5 +754,13 @@ function searchTaApplicantListALengthMenu(){
 //清除datatable的页脚页数缓存
 function deleteCookie(){
     localStorage.clear();
+}
 
+function showD(){
+    showDialog('navDialog');
+    if(jQuery("#navDialog").css("display")=="none"){
+        jQuery("#navDialog").show();
+    }else{
+        jQuery("#navDialog").hide();
+    }
 }

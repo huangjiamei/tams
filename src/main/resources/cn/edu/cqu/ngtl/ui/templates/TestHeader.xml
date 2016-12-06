@@ -352,7 +352,8 @@
                         <list>
                             <bean p:linkText="工作台" parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getWorkbenchPage&amp;viewId=TaView"
-                                  p:iconClass="icon-laptop menuIcon"/>
+                                  p:iconClass="icon-laptop menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkBenchPage')}"/>
                         </list>
                     </property>
                 </bean>
@@ -361,7 +362,8 @@
                         <list>
                             <bean id="aaa" p:linkText="课程" parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/class?methodToCall=getClassListPage&amp;viewId=ClassView"
-                                  p:iconClass="icon-book menuIcon"/>
+                                  p:iconClass="icon-book menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewClassListPage')}"/>
                        </list>
                     </property>
                 </bean>
@@ -370,7 +372,8 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaListPage&amp;viewId=TaView"
-                                  p:linkText="助教" p:iconClass="icon-th menuIcon"/>
+                                  p:linkText="助教" p:iconClass="icon-th menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaListPage')}"/>
                         </list>
                     </property>
                 </bean>
@@ -414,7 +417,8 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="管理台" parent="Uif-Link" p:href="#" p:iconClass="icon-laptop menuIcon"/>
+                            <bean p:linkText="管理台" parent="Uif-Link" p:href="#" p:iconClass="icon-laptop menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaListPage')}"/>
                         </list>
                     </property>
                 </bean>
@@ -425,20 +429,26 @@
                             <!--权限控制Start-->
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
                                   p:linkText="类别管理"
-                                  p:iconClass="icon-asterisk menuIcon"/>
+                                  p:iconClass="icon-asterisk menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewConsolePage')}"/>
                             <!--p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewConsolePage')}"-->
 
                             <!--权限控制End-->
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
-                                  p:linkText="角色管理" p:iconClass="icon-user menuIcon"/>
+                                  p:linkText="角色管理" p:iconClass="icon-user menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewRoleManagerPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"
-                                  p:linkText="用户管理" p:iconClass="icon-users menuIcon"/>
+                                  p:linkText="用户管理" p:iconClass="icon-users menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewUserRoleManagerPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getPermissionManagementPage&amp;viewId=AdminView"
-                                  p:linkText="权限管理" p:iconClass="icon-briefcase menuIcon"/>
+                                  p:linkText="权限管理" p:iconClass="icon-briefcase menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewPermissionManagementPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
-                                  p:linkText="课程负责人管理" p:iconClass="icon-user menuIcon"/>
+                                  p:linkText="课程负责人管理" p:iconClass="icon-user menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewCourseManagerPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
-                                  p:linkText="批次管理" p:iconClass="icon-th-list menuIcon"/>
+                                  p:linkText="批次管理" p:iconClass="icon-th-list menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTermManagerPage')}"/>
                             <!--<bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"-->
                                   <!--p:linkText="课程类别管理" p:iconClass="icon-th menuIcon"/>-->
                             <!--<bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"-->
@@ -446,13 +456,16 @@
                             <!--<bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"-->
                                   <!--p:linkText="任务类别管理" p:iconClass="icon-file menuIcon"/>-->
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
-                                  p:linkText="经费管理" p:iconClass="icon-money menuIcon"/>
+                                  p:linkText="经费管理" p:iconClass="icon-money menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewFundsManagementPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
                                   p:linkText="工作流管理" p:iconClass="icon-random menuIcon"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
-                                  p:linkText="时间管理" p:iconClass="icon-time menuIcon"/>
+                                  p:linkText="时间管理" p:iconClass="icon-time menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowManagePage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowCategoryPage&amp;viewId=AdminView"
-                            p:linkText="工作流任务类别管理" p:iconClass="icon-file menuIcon"/>
+                                  p:linkText="工作流任务类别管理" p:iconClass="icon-file menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowCategoryPage')}"/>
                         </list>
                     </property>
                 </bean>

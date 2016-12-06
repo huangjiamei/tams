@@ -156,9 +156,9 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:propertyName="description"
-                                                                                  p:readOnly="true" p:label="权限名称" />
                                                                             <bean parent="Uif-InputField" p:propertyName="name"
+                                                                                  p:readOnly="true" p:label="权限名称" />
+                                                                            <bean parent="Uif-InputField" p:propertyName="description"
                                                                                   p:readOnly="true" p:label="权限内容" />
                                                                             <bean parent="Uif-InputField" p:propertyName="active"
                                                                                   p:label="权限状态" p:readOnly="true">

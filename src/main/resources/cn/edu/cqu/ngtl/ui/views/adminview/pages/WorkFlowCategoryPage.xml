@@ -98,7 +98,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="任务类别"
+                                                                <bean parent="Uif-MessageField" p:messageText="工作流类型"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
@@ -131,9 +131,9 @@
                                                                 <bean parent="Uif-MessageField"
                                                                       p:messageText="类别名称："/>
                                                                 <bean parent="Uif-InputField"
-                                                                      p:propertyName="workFlowSearchBtn"
+                                                                      p:propertyName="getWorkFlowStatus"
                                                                       p:required="true"
-                                                                      p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.adminview.TimeSettingTypeFinder"><!--改动-->
+                                                                      p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"><!--改动-->
                                                                     <property
                                                                             name="control">
                                                                         <bean parent="Uif-DropdownControl"/>
@@ -142,7 +142,7 @@
                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="查询"
                                                                       p:actionImagePlacement="LEFT"
-                                                                      p:navigateToPageId="pageConsole"
+                                                                      p:methodToCall="searchWorkFlowCategory"
                                                                       p:additionalCssClasses="icon-search bg-teal tamsbtn">
                                                                 </bean>
                                                             </list>
@@ -158,8 +158,8 @@
                                                                       p:layoutManager.numberOfColumns="1">
                                                                     <property name="headerText" value="Table Layout"/>
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType"/><!--改动collectionObjectClass-->
-                                                                    <property name="propertyName" value="allIssueTypes"/><!--改动propertyName,contraoller中的getWorkFlowCategoryPage-->
+                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus"/><!--改动collectionObjectClass-->
+                                                                    <property name="propertyName" value="tamsWorkflowStatuses"/><!--改动propertyName,contraoller中的getWorkFlowCategoryPage-->
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="false"/>
 
@@ -177,8 +177,10 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-DataField" p:label="任务类别"
-                                                                                  p:propertyName="typeName"/>
+                                                                            <bean parent="Uif-DataField" p:label="工作流状态"
+                                                                                  p:propertyName="workflowStatus"/>
+                                                                            <bean parent="Uif-DataField" p:label="工作流顺序"
+                                                                                  p:propertyName="order"/>
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

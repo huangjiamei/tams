@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
@@ -32,6 +33,32 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String functionId;
 
     private String workflowRelationTable;
+
+    /**
+     * 工作流类型页面相关
+     */
+    private List<TAMSWorkflowStatus> tamsWorkflowStatuses;
+
+    /**
+     * 工作流类型过滤器输入框
+     */
+    private String getWorkFlowStatus;
+
+    public List<TAMSWorkflowStatus> getTamsWorkflowStatuses() {
+        return tamsWorkflowStatuses;
+    }
+
+    public void setTamsWorkflowStatuses(List<TAMSWorkflowStatus> tamsWorkflowStatuses) {
+        this.tamsWorkflowStatuses = tamsWorkflowStatuses;
+    }
+
+    public String getGetWorkFlowStatus() {
+        return getWorkFlowStatus;
+    }
+
+    public void setGetWorkFlowStatus(String getWorkFlowStatus) {
+        this.getWorkFlowStatus = getWorkFlowStatus;
+    }
 
     /**
      * 经费管理页面

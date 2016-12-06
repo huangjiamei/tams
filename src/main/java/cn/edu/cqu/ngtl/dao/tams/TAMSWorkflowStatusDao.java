@@ -14,4 +14,6 @@ public interface TAMSWorkflowStatusDao {
     List<TAMSWorkflowStatus> selectByFunctionId(String functionId);
 
     boolean isFirstStatus(String workflowStatusId);
+
+    List<TAMSWorkflowStatus> selectWorkFlowByCondition(String workflowfunction);
 }

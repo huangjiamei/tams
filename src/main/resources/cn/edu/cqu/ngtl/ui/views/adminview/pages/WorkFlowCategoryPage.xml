@@ -114,8 +114,10 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加类别"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="selectCurTask"
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn">
+                                                                                <property name="confirmationDialog">
+                                                                                    <ref bean="addWorkFlowCaDialog" />
+                                                                                </property>
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -188,7 +190,10 @@
                                                                             <bean parent="Uif-HorizontalBoxSection"><!--两个action的methodToCall改动-->
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurTask">
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="xxxx">
+                                                                                            <property name="confirmationDialog">
+                                                                                                <ref bean="addWorkFlowCaDialog" />
+                                                                                            </property>
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -196,7 +201,7 @@
                                                                                         </bean>
                                                                                         <bean parent="Uif-ActionImage">
                                                                                             <property name="confirmationDialog">
-                                                                                                <ref bean="deleteWorkFlowDialog" />
+                                                                                                <ref bean="deleteWorkFlowCaDialog" />
                                                                                             </property>
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
@@ -226,9 +231,8 @@
         </property>
     </bean>
 
-    <bean id="addWorkFlowDialog" parent="Uif-DialogGroup"
-          p:headerText="添加批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
-          p:onDocumentReadyScript="jQuery('#addWorkFlowDialog').modal({backdrop: 'static', keyboard: false});"><!--整个propertyName、methodToCall改动-->
+    <bean id="addWorkFlowCaDialog" parent="Uif-DialogGroup"
+          p:headerText="类别管理"><!--整个propertyName、methodToCall改动-->
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
@@ -238,10 +242,10 @@
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-MessageField" p:label="类别"
-                                              p:messageText="任务"/>
-                                        <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="issueType.typeName"/>
+                                        <bean parent="Uif-InputField" p:label="工作流状态"
+                                              p:propertyName="workFlowCaStatus"/>
+                                        <bean parent="Uif-InputField" p:label="工作流顺序"
+                                              p:propertyName="workFlowCaRe"/>
                                     </list>
                                 </property>
                             </bean>
@@ -254,58 +258,24 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveTaskCategory" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
 
 
-    <bean id="editWorkFlowDialog" parent="Uif-DialogGroup"
-          p:headerText="修改类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
-          p:onDocumentReadyScript="jQuery('#editWorkFlowDialog').modal({backdrop: 'static', keyboard: false});">
-        <property name="items">
-            <list>
-                <bean parent="Uif-VerticalBoxSection">
-                    <property name="items">
-                        <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重修改批次，如需修改请联系系统维护人员！"/>
-                            <bean parent="Uif-GridGroup">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-MessageField" p:label="类别"
-                                              p:messageText="任务"/>
-                                        <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="issueType.typeName"/>
-                                    </list>
-                                </property>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-        <property name="footer.items">
-            <list>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
-                <!--dismiss必须，refreshid非必需-->
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveTaskCategory" p:successCallback="dismissDialog('editWorkFlowDialog');"/>
-            </list>
-        </property>
-    </bean>
-
-    <bean id="deleteWorkFlowDialog" parent="Uif-DialogGroup"
+    <bean id="deleteWorkFlowCaDialog" parent="Uif-DialogGroup"
           p:headerText="删除类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除批次，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除工作流类别，如需删除请联系系统维护人员！" />
             </list>
         </property>
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="deleteTaskCategory" p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

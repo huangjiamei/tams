@@ -54,8 +54,8 @@
                 <bean parent="Uif-MessageField"  p:messageText="2016-2017第一学期" p:additionalCssClasses="headerMessage"/>
 
                 <!--导航栏-->
-                <bean parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
-                      p:actionScript="showDialog('navDialog');"/>
+                <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
+                      p:actionScript="showD();"/>
 
                 <!--user info-->
                 <bean id="userInfo" parent="Uif-DropdownToggleMenu"

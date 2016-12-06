@@ -100,6 +100,7 @@ body{
     background:rgba(0,0,0,0)!important;
     position: fixed;
     top:50px;
+    display: none;
 }
 
 
@@ -133,7 +134,8 @@ body{
     text-transform: none;
     border-bottom: 1px solid rgba(0, 0, 0, .1)!important;
     list-style: none !important;
-    background-color: transparent !important
+    background-color: transparent !important;
+    width:100%;
 }
 
 .navigationDialog .nav {
@@ -440,7 +442,7 @@ body{
 
 /* edit、delete等action之前用于确认的dialog的样式 */
 /*.actionDialog{*/
-    /*margin-top: 35%;*/
+/*margin-top: 35%;*/
 /*}*/
 
 
@@ -490,8 +492,8 @@ body{
 }
 
 /*.tams-activity-group-title span:before{*/
-    /*font-family: 'krad-icons';*/
-    /*content: "\e90b";*/
+/*font-family: 'krad-icons';*/
+/*content: "\e90b";*/
 /*}*/
 /*用于区分教学活动页面中的分组标题和具体项目标题*/
 .tams-activity-item-title{
@@ -522,11 +524,14 @@ body{
 #addApplicantDialog>div>div{
     margin-top: 5%;
 }
+#AddTransAllowanceDialog>div>div{
+    margin-top: 15%;
+}
 
 
 /* 让collection table的action格子短一点，暂时无效*/
 /*.uif-collection-column-action{*/
-    /*width:10%!important;*/
+/*width:10%!important;*/
 /*}*/
 
 
@@ -648,6 +653,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     font-size: 20px;
     line-height: 25px;
     margin-top: 5px;
+    width:100%;
     /*#3C8DBC  页眉颜色*/
 }
 
@@ -718,8 +724,8 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 /*左侧侧边栏鼠标悬停会被盖住的问题*/
 #Uif-Navigation{
-     z-index:1000;
- }
+    z-index:1000;
+}
 
 /*MessageField和InputField中心线没有对齐*/
 .uif-message{

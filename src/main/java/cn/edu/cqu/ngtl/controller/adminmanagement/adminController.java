@@ -22,6 +22,8 @@ import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import org.apache.commons.collections.map.HashedMap;
+import org.jacorb.imr.Admin;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -180,9 +182,26 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
-        adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());//改为合适的table列表内容
+        adminInfoForm.setTamsWorkflowStatuses(
+                adminService.getWorkFlowCategory()
+        );
 
         return this.getModelAndView(adminInfoForm, "pageWorkFlowCategory");
+    }
+
+
+    /**
+     * 工作流类型过滤
+     */
+    @RequestMapping(params = "methodToCall=searchWorkFlowCategory")
+    public ModelAndView searchWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        String workFlowFunction = infoForm.getGetWorkFlowStatus();
+        infoForm.setTamsWorkflowStatuses(
+                adminService.getWorkFlowCategoryByCondition(workFlowFunction)
+        );
+        return this.getModelAndView(infoForm, "PageWorkFlowCategory");
     }
 
     /**
@@ -1529,6 +1548,7 @@ public class adminController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }
+
 
     /**
      * 经费页面每一行编辑过后就调用此方法将数据存储到草稿中

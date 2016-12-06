@@ -113,6 +113,20 @@ public class AdminServiceImpl implements IAdminService{
         return courseClassifications.size() != 0 ? courseClassifications : null;
     }
 
+    //获取工作流类型
+    @Override
+    public List<TAMSWorkflowStatus> getWorkFlowCategory(){
+        List<TAMSWorkflowStatus> workflowStatuses = workflowStatusDao.selectAll();
+        return workflowStatuses.size() !=0 ? workflowStatuses : null;
+    }
+
+    //工作流类型过滤
+    @Override
+    public List<TAMSWorkflowStatus> getWorkFlowCategoryByCondition(String workflowfunction){
+        List<TAMSWorkflowStatus> workflowStatuses = workflowStatusDao.selectWorkFlowByCondition(workflowfunction);
+        return workflowStatuses.size() !=0 ? workflowStatuses : null;
+    }
+
     @Override
     public boolean addCourseClassificationOnlyWithName(String name) {
 

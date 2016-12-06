@@ -105,4 +105,8 @@ public interface IAdminService {
     List<ClassFundingViewObject> getClassFundByCondition(Map<String, String> conditions);
 
     List<TaFundingViewObject> getTaFundByCondition(Map<String, String> conditions);
+
+    List<TAMSWorkflowStatus> getWorkFlowCategory();
+
+    List<TAMSWorkflowStatus> getWorkFlowCategoryByCondition(String workflowfunction);
 }

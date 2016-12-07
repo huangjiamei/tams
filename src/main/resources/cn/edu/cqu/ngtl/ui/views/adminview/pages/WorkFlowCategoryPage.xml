@@ -190,10 +190,7 @@
                                                                             <bean parent="Uif-HorizontalBoxSection"><!--两个action的methodToCall改动-->
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="xxxx">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="addWorkFlowCaDialog" />
-                                                                                            </property>
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="modifyWorkFlowCategory">
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -238,14 +235,14 @@
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加或修改批次，如需修改请联系系统维护人员！"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="工作流状态"
-                                              p:propertyName="workFlowCaStatus"/>
+                                              p:propertyName="workflowstatus"/>
                                         <bean parent="Uif-InputField" p:label="工作流顺序"
-                                              p:propertyName="workFlowCaRe"/>
+                                              p:propertyName="workfloworder"/>
                                     </list>
                                 </property>
                             </bean>
@@ -258,7 +255,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveWorkFlowCategory" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -275,7 +272,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="deleteWorkFlowCategory" p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

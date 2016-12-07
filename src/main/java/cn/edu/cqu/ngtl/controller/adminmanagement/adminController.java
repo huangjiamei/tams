@@ -9,10 +9,7 @@ import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
@@ -184,7 +181,6 @@ public class adminController extends BaseController {
     public ModelAndView getWorkFlowCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
-
         adminInfoForm.setTamsWorkflowStatuses(
                 adminService.getWorkFlowCategory()
         );
@@ -223,8 +219,99 @@ public class adminController extends BaseController {
         infoForm.setTamsWorkflowStatuses(
                 adminService.getWorkFlowCategoryByCondition(workFlowFunction)
         );
-        return this.getModelAndView(infoForm, "PageWorkFlowCategory");
+        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
     }
+
+    /**
+     * 新添工作流类型，无需获取当前所要修改的对象，此处前台直接ref bean调到addWorkFlowDialog对话框
+     */
+    /*
+    @RequestMapping(params = "methodToCall=addWorkFlowCategory")
+    public ModelAndView updateWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        infoForm.setWorkflowstatus("");
+        infoForm.setWorkfloworder("");
+        return this.showDialog("addWorkFlowCaDialog", true, infoForm);
+        //put conditions
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("workflowstatus", infoForm.getWorkflowstatus());
+        conditions.put("workfloworder", infoForm.getWorkfloworder());
+        conditions.put("workflowfunction", infoForm.getGetWorkFlowStatus());
+        //选中某一行
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = parameters.getSelectedLineIndex();
+        if(infoForm.getTamsWorkflowStatuses().get(index) != null) {
+            String status = infoForm.getTamsWorkflowStatuses().get(index).getWorkflowStatus();
+            String order = infoForm.getTamsWorkflowStatuses().get(index).getOrder().toString();
+            adminService.modifyWorkFlowCategory(conditions, status, order);
+        }
+        else
+            adminService.addWorkFlowCategory(conditions);
+        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+    }
+    */
+
+    /**
+     * 修改工作流类型，需要获取当前所要修改的对象
+     */
+    @RequestMapping(params = "methodToCall=modifyWorkFlowCategory")
+    public ModelAndView modifyWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = parameters.getSelectedLineIndex();
+        String status = infoForm.getTamsWorkflowStatuses().get(index).getWorkflowStatus();
+        String order = infoForm.getTamsWorkflowStatuses().get(index).getOrder().toString();
+        infoForm.setWorkflowstatus(status);
+        infoForm.setWorkfloworder(order);
+        //用于判断是修改还是添加
+        infoForm.setIndex(index);
+        return this.showDialog("addWorkFlowCaDialog", true, infoForm);
+    }
+
+    /**
+     * 添加或者修改工作流类型对话框的保存方法
+     */
+    @RequestMapping(params = "methodToCall=saveWorkFlowCategory")
+    public ModelAndView saveWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        TAMSWorkflowStatus tamsWorkflowStatus = new TAMSWorkflowStatus();
+        tamsWorkflowStatus.setWorkflowStatus(infoForm.getWorkflowstatus());
+        tamsWorkflowStatus.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
+        tamsWorkflowStatus.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
+        if(infoForm.getIndex() != null) {
+            TAMSWorkflowStatus tamsWorkflowStatus1 = infoForm.getTamsWorkflowStatuses().get(infoForm.getIndex());
+            tamsWorkflowStatus1.setWorkflowStatus(infoForm.getWorkflowstatus());
+            tamsWorkflowStatus1.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
+            tamsWorkflowStatus1.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
+            adminService.saveWorkFlowCategory(tamsWorkflowStatus1);
+        }
+        else{
+            adminService.saveWorkFlowCategory(tamsWorkflowStatus);
+        }
+        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+    }
+
+    /**
+     * 删除工作流类型
+     */
+    @RequestMapping(params = "methodToCall=deleteWorkFlowCategory")
+    public ModelAndView deleteWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        //获取某一行
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = parameters.getSelectedLineIndex();
+        TAMSWorkflowStatus selectedWorkFlowStatus = infoForm.getTamsWorkflowStatuses().get(index);
+        adminService.deleteWorkFlowCategory(selectedWorkFlowStatus);
+        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+    }
+
 
     /**
      * 新增一个时间段

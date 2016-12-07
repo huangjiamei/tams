@@ -36,6 +36,17 @@ public class UTSession extends DataObjectBase implements Serializable {
     @Column(name="ACTIVE")
     private String active;
 
+
+    @Transient
+    private String timeInfoName;
+    public String getTimeInfoName(){
+        return this.getYear()+"年"+this.getTerm()+"季";
+    }
+
+    public void setTimeInfoName(String timeInfoName) {
+        this.timeInfoName = timeInfoName;
+    }
+
     public String getActive() {
         return active;
     }

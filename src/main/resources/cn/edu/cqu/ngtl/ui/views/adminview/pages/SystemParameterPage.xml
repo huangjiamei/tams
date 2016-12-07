@@ -145,8 +145,8 @@
                                                                                     <bean parent="Uif-HorizontalCheckboxesControl">
                                                                                         <property name="options">
                                                                                             <list>
-                                                                                                <bean parent="Uif-KeyLabelPair" p:key="1" p:value="Check 1"/>
-                                                                                                <bean parent="Uif-KeyLabelPair" p:key="2" p:value="Check 2"/>
+                                                                                                <bean parent="Uif-KeyLabelPair" p:key="1" p:value="课程信息"/>
+                                                                                                <bean parent="Uif-KeyLabelPair" p:key="2" p:value="教学班信息"/>
                                                                                             </list>
                                                                                         </property>
                                                                                     </bean>

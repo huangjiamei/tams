@@ -17,8 +17,9 @@ public interface SyncInfoService {
 
      void closeConnection(Connection connection) throws SQLException;
 
-
      void syncCourseInfo(Connection connection) throws SQLException;
+
+     void syncClassInfo(Connection connection) throws  SQLException;
 
 
 

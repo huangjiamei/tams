@@ -6,13 +6,15 @@ import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-@Table(name = "UNITIME_COURSE_OFFERING_CONFIG")
+@Table(name = "UNITIME_OFFERING_CONFIG")
 public class UTCourseOfferingConfig extends DataObjectBase implements Serializable{
 
 	private static final long serialVersionUID = 1421778150066946005L;
 
 	@Id
 	@Column(name = "UNIQUEID")
+	@GeneratedValue(generator="utCoConfigSeq")
+	@SequenceGenerator(name="utCoConfigSeq",sequenceName="UNITIME_OFFERING_CONFIG_S",allocationSize=1)
 	private Integer id;
 
 	@Column(name = "COURSEOFFERING_ID")

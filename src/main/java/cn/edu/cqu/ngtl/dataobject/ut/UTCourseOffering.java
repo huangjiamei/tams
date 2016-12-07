@@ -12,6 +12,8 @@ public class UTCourseOffering extends DataObjectBase implements Serializable {
 
 	@Id
 	@Column(name = "UNIQUEID")
+    @GeneratedValue(generator="utCoSeq")
+    @SequenceGenerator(name="utCoSeq",sequenceName="UNITIME_COURSE_OFFERING_S",allocationSize=1)
 	private Integer id;
 
 	@ManyToOne

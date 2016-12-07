@@ -1665,6 +1665,9 @@ public class adminController extends BaseController {
             dbPassWd = dbPassWd.trim();
         }
 
+        infoForm.getCheckboxesTest();
+
+
         Connection con = null;
         try{
             con = syncInfoService.getConnection(hostType, hostIp, hostPort, dbName, dbUserName, dbPassWd);

@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.service.common.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
@@ -47,7 +48,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 break;
         }
         con = DriverManager.getConnection(url,dbUserName, dbPassWd);
-        this.syncCourseInfo(con);
+//        this.syncCourseInfo(con);
         System.out.println("建立了连接");
         return con;
     }
@@ -61,12 +62,17 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     }
 
 
+    /**
+     * 同步课程信息（相关表UNITIME_COURSE）
+     * @param connection
+     * @throws SQLException
+     */
     @Override
     public void syncCourseInfo(Connection connection) throws SQLException {
         List<UTDepartment> allDepartment = utDepartmentDao.getAllUTDepartments();
         Map departmentMap = new HashMap<>();
         for(UTDepartment utDepartment : allDepartment){
-            departmentMap.put(utDepartment.getName(),utDepartment.getId());
+            departmentMap.put(utDepartment.getDeptcode(),utDepartment.getId());
         }
 
         String queryCourse = "SELECT * FROM LESSONINFO";
@@ -78,7 +84,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             while(res.next()){
                 String coureseName = res.getString("KCMC");
                 String courseCode = res.getString("KCDM");
-                String departmentName = res.getString("CDDW").substring(2);
+                String departmentName = res.getString("CDDW").substring(0,2);
                 Integer deptId = (Integer)departmentMap.get(departmentName);
                 String credit = res.getString("XF");
                 String kcId = res.getString("KCID");
@@ -95,7 +101,39 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             if(pre!=null)
                 pre.close();
         }
-
     }
+
+    /**
+     * 同步教学班信息
+     * @param connection
+     * @throws SQLException
+     */
+    public void syncClassInfo(Connection connection) throws  SQLException{
+        List<UTCourse> allCourse = utCourseDao.selectAllMappedByDepartment();
+        Map courseMap = new HashMap<>();
+        for(UTCourse course : allCourse){
+            courseMap.put(course.getCodeR(),course.getId());
+        }
+        String queryCourse = "SELECT * FROM JSKB t WHERE t.SFRZH IS NOT NULL ";
+        int i = 0;
+        PreparedStatement pre = connection.prepareStatement(queryCourse);
+        try{
+            pre.setQueryTimeout(10000);
+            ResultSet res =  pre.executeQuery();
+            while(res.next()){
+                String courseCode = res.getString("KCMD");
+                String classNbr = res.getString("JXBH");
+                String auId = res.getString("SFRZH");
+                UTClass utClass = new UTClass();
+                utClass.setClassNumber(classNbr);
+            }
+        }finally{
+            if(pre!=null)
+                pre.close();
+        }
+    }
+
+
+
 
 }

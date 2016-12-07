@@ -13,4 +13,6 @@ public interface UTCourseDao {
 
     List<UTCourse> selectAllMappedByDepartment();
 
+    void InsertOneByEntity(UTCourse utCourse);
+
 }

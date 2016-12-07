@@ -42,8 +42,7 @@ public class UTCourse extends DataObjectBase implements Serializable {
 
 	@Column(name = "CREDIT")
 	@Label("Credit")
-	@UifValidCharactersConstraintBeanName("NumericPatternConstraint")
-	private Integer credit;
+	private String credit;
 
 	@Column(name = "CODE")
 	private String codeR;
@@ -105,11 +104,11 @@ public class UTCourse extends DataObjectBase implements Serializable {
 		this.hour = hour;
 	}
 
-	public Integer getCredit() {
+	public String getCredit() {
 		return credit;
 	}
 
-	public void setCredit(Integer credit) {
+	public void setCredit(String credit) {
 		this.credit = credit;
 	}
 

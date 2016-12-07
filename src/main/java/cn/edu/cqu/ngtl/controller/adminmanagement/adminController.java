@@ -17,13 +17,12 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
-import org.apache.commons.collections.map.HashedMap;
-import org.jacorb.imr.Admin;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -40,6 +39,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -62,6 +63,8 @@ public class adminController extends BaseController {
     @Autowired
     private IAdminConverter adminConverter;
 
+    @Autowired
+    private SyncInfoService syncInfoService;
 
     @Autowired
     private ITAService taService;
@@ -199,6 +202,11 @@ public class adminController extends BaseController {
     public ModelAndView getSystemParameterPage(@ModelAttribute("KualiForm") UifFormBase form){
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
+        adminInfoForm.setSystemDbName("jwdb");
+        adminInfoForm.setSystemHostIP("202.202.0.123");
+        adminInfoForm.setSystemHostPort("1521");
+        adminInfoForm.setSystemDbUserName("cetman");
+        adminInfoForm.setSystemDbPassword("cet_manager");
 
         return this.getModelAndView(adminInfoForm, "pageSystemParameter");
     }
@@ -1610,6 +1618,74 @@ public class adminController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
+
+
+    /**
+     *  同步数据
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=syncInfo")
+    public ModelAndView syncInfo(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        String hostType = infoForm.getSystemHostType();
+
+        String hostIp = infoForm.getSystemHostIP();
+        if(hostIp==null){
+            hostIp="";
+        }else{
+            hostIp = hostIp.trim();
+        }
+
+        String hostPort = infoForm.getSystemHostPort();
+        if(hostPort==null){
+            hostPort="";
+        }else{
+            hostPort = hostPort.trim();
+        }
+
+        String dbName = infoForm.getSystemDbName();
+        if(dbName==null){
+            dbName="";
+        }else{
+            dbName = dbName.trim();
+        }
+        String dbUserName = infoForm.getSystemDbUserName();
+        if(dbUserName==null){
+            dbUserName="";
+        }else{
+            dbUserName = dbUserName.trim();
+        }
+
+        String dbPassWd = infoForm.getSystemDbPassword();
+        if(dbPassWd==null){
+            dbPassWd="";
+        }else{
+            dbPassWd = dbPassWd.trim();
+        }
+
+        Connection con = null;
+        try{
+            con = syncInfoService.getConnection(hostType, hostIp, hostPort, dbName, dbUserName, dbPassWd);
+        }catch(SQLException | ClassNotFoundException e){
+            infoForm.setConnectMessage(e.getMessage());
+            e.printStackTrace();
+            return this.getModelAndView(infoForm,"pageSystemParameter");
+        }finally {
+            if(con!=null)
+                try {
+                    syncInfoService.closeConnection(con);
+                } catch (SQLException e) {
+                    infoForm.setConnectMessage(e.getMessage());
+                    e.printStackTrace();
+                    return this.getModelAndView(form,"pageSystemParameter");
+                }
+        }
+        return this.getModelAndView(infoForm, "pageSystemParameter");
+    }
+
+
 
     @Override
     protected UifFormBase createInitialForm() {

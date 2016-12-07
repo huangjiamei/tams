@@ -155,7 +155,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:style="margin-bottom:10px;float:right!important"
                                                                                   p:actionLabel="保存"
-                                                                                  p:methodToCall="xxxx"
+                                                                                  p:methodToCall="syncInfo"
                                                                             /><!--p:refreshId="xxxx"-->
                                                                         </list>
                                                                     </property>

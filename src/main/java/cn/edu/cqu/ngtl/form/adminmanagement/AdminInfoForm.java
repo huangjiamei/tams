@@ -159,6 +159,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String systemDbPassword;
     private String test;
     private String checkboxesTest;
+    private String ConnectMessage;
 
     public String getCheckboxesTest() {
         return checkboxesTest;
@@ -1130,5 +1131,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setWorkFlowSearchBtn(String workFlowSearchBtn) {
         this.workFlowSearchBtn = workFlowSearchBtn;
+    }
+
+    public String getConnectMessage() {
+        return ConnectMessage;
+    }
+
+    public void setConnectMessage(String connectMessage) {
+        ConnectMessage = connectMessage;
     }
 }

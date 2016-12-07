@@ -2,9 +2,11 @@ package cn.edu.cqu.ngtl.service.common.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,6 +26,9 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
     @Autowired
     private UTCourseDao utCourseDao;
+
+    @Autowired
+    private UTSessionDao utSessionDao;
 
 
     @Override
@@ -110,6 +115,8 @@ public class SyncInfoServiceImpl implements SyncInfoService {
      */
     public void syncClassInfo(Connection connection) throws  SQLException{
         List<UTCourse> allCourse = utCourseDao.selectAllMappedByDepartment();
+        UTSession curSession = utSessionDao.getCurrentSession();
+        String sessionPrefix = curSession.getYear()+curSession.getTerm();
         Map courseMap = new HashMap<>();
         for(UTCourse course : allCourse){
             courseMap.put(course.getCodeR(),course.getId());
@@ -126,6 +133,8 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String auId = res.getString("SFRZH");
                 UTClass utClass = new UTClass();
                 utClass.setClassNumber(classNbr);
+
+                //TODO 新建CO COC CD等几个表的List对象，然后按需调用方法存入数据库
             }
         }finally{
             if(pre!=null)

@@ -2,17 +2,15 @@ package cn.edu.cqu.ngtl.dao.ut.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
-import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
-import org.opensaml.xml.signature.Q;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.Map;
 import java.util.List;
+import java.util.Map;
 @Repository
 @Component("UTStudentDaoJpa")
 public class UTStudentDaoJpa implements UTStudentDao {

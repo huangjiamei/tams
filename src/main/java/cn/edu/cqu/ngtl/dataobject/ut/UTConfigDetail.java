@@ -18,8 +18,8 @@ public class UTConfigDetail extends DataObjectBase implements Serializable {
 
     @Id
     @Column(name = "UNIQUEID")
-    @GeneratedValue(generator = "utConfigDetailSeq")
-    @SequenceGenerator(name = "utConfigDetailSeq", sequenceName = "UNITIME_CONFIG_DETAIL_S", allocationSize = 1)
+//    @GeneratedValue(generator = "utConfigDetailSeq")
+//    @SequenceGenerator(name = "utConfigDetailSeq", sequenceName = "UNITIME_CONFIG_DETAIL_S", allocationSize = 1)
     private Integer id;
 
     @Column(name = "CONFIG_ID")

@@ -13,8 +13,8 @@ public class UTCourseOfferingConfig extends DataObjectBase implements Serializab
 
 	@Id
 	@Column(name = "UNIQUEID")
-	@GeneratedValue(generator="utCoConfigSeq")
-	@SequenceGenerator(name="utCoConfigSeq",sequenceName="UNITIME_OFFERING_CONFIG_S",allocationSize=1)
+//	@GeneratedValue(generator="utCoConfigSeq")
+//	@SequenceGenerator(name="utCoConfigSeq",sequenceName="UNITIME_OFFERING_CONFIG_S",allocationSize=1)
 	private Integer id;
 
 	@Column(name = "COURSEOFFERING_ID")

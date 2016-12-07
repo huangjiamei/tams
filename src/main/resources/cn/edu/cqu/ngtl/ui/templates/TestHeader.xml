@@ -50,17 +50,7 @@
 
         <property name="applicationNavigation.items">
             <list>
-                <bean parent="Uif-DropdownToggleMenu" p:toggleText="2016-2017第一学期">
-                    <property name="menuItems">
-                        <list>
-                            <bean parent="Uif-MenuAction" p:actionLabel="明天修改" p:methodToCall="xxxx" p:style="background-color:#3C8DBC "/>
-
-                            <bean parent="Uif-MenuAction" p:actionLabel="2015-2016第二学期" p:actionScript="alert('Menu Script');" p:style="background-color:#3C8DBC "/>
-
-                            <bean parent="Uif-MenuAction" p:actionLabel="2015-2016第一学期" p:style="background-color:#3C8DBC "/>
-                        </list>
-                    </property>
-                </bean>
+                <bean id="sessionTermName" parent="Uif-ActionLink" p:actionLabel="@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}" p:actionScript="showDialog('sessionTermFinderDialog');"/>
 
                 <!--导航栏-->
                 <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
@@ -149,6 +139,41 @@
 
     </bean>
 
+    <bean id="sessionTermFinderDialog" parent="Uif-DialogGroup">
+        <property name="headerText" value="当前学期："/>
+        <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection" >
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-MessageField"
+                                  p:messageText="请选择要替换的当前学期:"/>
+
+                            <bean parent="Uif-InputField"
+                                  p:propertyName="sessionTermFinder"
+                                  p:required="true"
+                                  p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder">
+                                <property
+                                        name="control">
+                                    <bean parent="Uif-DropdownControl"/>
+                                </property>
+                            </bean>
+
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
+                      p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST"/>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+
+            </list>
+        </property>
+    </bean>
 
     <bean id="megamenu-items" parent="Uif-VerticalBoxSection" p:additionalCssClasses="">
         <property name="items">

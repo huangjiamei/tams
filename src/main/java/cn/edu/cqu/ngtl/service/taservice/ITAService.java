@@ -56,4 +56,6 @@ public interface ITAService {
     boolean saveTravelSubsidy(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
 
     boolean appraiseOutstanding(List<String> taIds, String uId);
+
+    boolean revocationOutstanding(List<String> taIds, String uid);
 }

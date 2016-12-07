@@ -133,6 +133,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     @Override
     public List<Object> selectClassIdsByStudentId(String stuId) {
         List<Object> list = new ArrayList<>();
+        em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + stuId + "'");
         list = query.getResultList();
         return list;
@@ -210,6 +211,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     public List<WorkBenchViewObject> selectAllCourseInfoByIds(List<Object> ids) {
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         List<WorkBenchViewObject> list = new ArrayList<>(ids.size());
+        em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         for(Object id : ids){
             Query qr = em.createNativeQuery("SELECT c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, SUM(t.ELAPSED_TIME) AS ELAPSED_TIME, p.NAME, c.STATUS, c.UNIQUEID FROM UNITIME_CLASS_INFORMATION c JOIN UNITIME_CLASS_INSTRUCTOR uci ON c.UNIQUEID=uci.CLASS_ID AND c.UNIQUEID='"+ id +"' AND c.SESSION_ID = '"+curSession.getId()+"' JOIN UNITIME_INSTRUCTOR i ON uci.INSTRUCTOR_ID = i.UNIQUEID JOIN TAMS_TEACH_CALENDAR t ON t.CLASS_ID = c.UNIQUEID JOIN CM_PROGRAM_COURSE cp ON c.COURSE_ID = cp.COURSE_ID JOIN CM_PROGRAM p ON cp.PROGRAM_ID = p.UNIQUEID GROUP BY c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, p.NAME, c.STATUS, c.UNIQUEID");
             List<Object> columns = qr.getResultList();
@@ -263,6 +265,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         }
         UTSession curSession = new UTSession();
         List<TaFundingViewObject> list = new ArrayList<>();
+        em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         if(countNull != 10) {
             Query qr = em.createNativeQuery(" SELECT d.NAME, s.UNIQUEID, s.NAME, co.NAME, co.CODE, t.TA_TYPE, t.ASSIGNED_FUNDING, t.PHD_FUNDING, t.TRAVEL_SUBSIDY, t.BONUS from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("Number")+"' AND s.NAME LIKE '"+conditions.get("Name")+"' AND t.TA_TYPE LIKE '"+conditions.get("Type")+"' AND t.ASSIGNED_FUNDING LIKE '"+conditions.get("AssignedFunding")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("PhdFunding")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' AND t.BONUS LIKE '"+conditions.get("Bonus")+"' JOIN UNITIME_DEPARTMENT d ON s.DEPARTMENT_ID = d.UNIQUEID AND d.NAME LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("CourseName")+"' AND co.CODE LIKE '"+conditions.get("CourseCode")+"'");
             List<Object> columns = qr.getResultList();
@@ -370,7 +373,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             return false;
         //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
         int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
-        if(nextIndex < leftEdge || nextIndex > rightEdge)
+        if(nextIndex > rightEdge)
             return false;
         else {
             while (nextIndex <= rightEdge) {
@@ -380,6 +383,50 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                     return true;
                 }
                 nextIndex++;
+            }
+            //应该来说不会跳到这里才对,这里表示已经跳出了管辖范围右边界
+            return false;
+        }
+    }
+
+    @Override
+    public boolean toPreviousStatus(String[] roleIds, String functionId, String taId) {
+        List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);
+
+        TAMSTa current = this.selectById(taId);
+        if(current == null)
+            return false;
+
+        Integer currentIndex = allStatus.indexOf(current.getOutStandingTaWorkflowStatus());
+        Set<Integer> status2IndexCanBe_NotSort = new HashSet<>();
+        for(String roleId : roleIds) {
+            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getOutStandingTaWorkflowStatusId());
+            if(statusRs != null)
+                for(TAMSWorkflowStatusR statusR : statusRs) {
+                    int index = allStatus.indexOf(statusR.getStatus2());
+                    status2IndexCanBe_NotSort.add(index);
+                }
+        }
+        //这个变量表示此用户角色可以转变的状态
+        List<Integer> status2IndexCanBe = new ArrayList<>(status2IndexCanBe_NotSort);
+        Collections.sort(status2IndexCanBe);
+        Integer previousIndex = currentIndex > 0 ? currentIndex - 1 : 0;
+
+        if(status2IndexCanBe == null || status2IndexCanBe.size() == 0)
+            return false;
+        //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
+        int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
+        if(previousIndex < leftEdge)
+            return false;
+        else {
+            while (previousIndex >= leftEdge) {
+                if(status2IndexCanBe.contains(previousIndex)) {
+                    current.setOutStandingTaWorkflowStatusId(allStatus.get(previousIndex).getId());
+                    KradDataServiceLocator.getDataObjectService().save(current);
+                    return true;
+                }
+                previousIndex--;
             }
             //应该来说不会跳到这里才对,这里表示已经跳出了管辖范围右边界
             return false;

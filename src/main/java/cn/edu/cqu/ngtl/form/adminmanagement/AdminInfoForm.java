@@ -181,6 +181,83 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String tBonus;
     private String tTotalFunds;
 
+    /*
+    同步信息页面
+     */
+    private String systemHostType;
+    private String systemHostIP;
+    private String systemHostPort;
+    private String systemDbName;
+    private String systemDbUserName;
+    private String systemDbPassword;
+    private String test;
+    private String checkboxesTest;
+    private String ConnectMessage;
+
+    public String getCheckboxesTest() {
+        return checkboxesTest;
+    }
+
+    public void setCheckboxesTest(String checkboxesTest) {
+        this.checkboxesTest = checkboxesTest;
+    }
+
+    public String getTest() {
+        return test;
+    }
+
+    public void setTest(String test) {
+        this.test = test;
+    }
+
+    public String getSystemHostType() {
+        return systemHostType;
+    }
+
+    public void setSystemHostType(String systemHostType) {
+        this.systemHostType = systemHostType;
+    }
+
+    public String getSystemHostIP() {
+        return systemHostIP;
+    }
+
+    public void setSystemHostIP(String systemHostIP) {
+        this.systemHostIP = systemHostIP;
+    }
+
+    public String getSystemHostPort() {
+        return systemHostPort;
+    }
+
+    public void setSystemHostPort(String systemHostPort) {
+        this.systemHostPort = systemHostPort;
+    }
+
+    public String getSystemDbName() {
+        return systemDbName;
+    }
+
+    public void setSystemDbName(String systemDbName) {
+        this.systemDbName = systemDbName;
+    }
+
+    public String getSystemDbUserName() {
+        return systemDbUserName;
+    }
+
+    public void setSystemDbUserName(String systemDbUserName) {
+        this.systemDbUserName = systemDbUserName;
+    }
+
+    public String getSystemDbPassword() {
+        return systemDbPassword;
+    }
+
+    public void setSystemDbPassword(String systemDbPassword) {
+        this.systemDbPassword = systemDbPassword;
+    }
+
     public String gettDept() {
         return tDept;
     }
@@ -1087,5 +1164,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setWorkFlowSearchBtn(String workFlowSearchBtn) {
         this.workFlowSearchBtn = workFlowSearchBtn;
+    }
+
+    public String getConnectMessage() {
+        return ConnectMessage;
+    }
+
+    public void setConnectMessage(String connectMessage) {
+        ConnectMessage = connectMessage;
     }
 }

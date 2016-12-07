@@ -29,4 +29,12 @@ public class UTCourseDaoJpa implements UTCourseDao {
 
     }
 
+    @Override
+    public void InsertOneByEntity(UTCourse utCourse){
+        KradDataServiceLocator.getDataObjectService().save(utCourse);
+    }
+
+
+
+
 }

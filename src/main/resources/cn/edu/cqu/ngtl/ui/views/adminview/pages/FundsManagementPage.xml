@@ -110,7 +110,8 @@
                                                                         <list>
                                                                             <!--第一页tab-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="批次经费">
+                                                                                  p:headerText="批次经费"
+                                                                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewSessionFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
@@ -394,7 +395,8 @@
                                                                             </bean>
                                                                             <!--第二页tab-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="学院经费">
+                                                                                  p:headerText="学院经费"
+                                                                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewDeptFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
@@ -712,10 +714,10 @@
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
-
                                                                             <!--第三页tab-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="课程经费">
+                                                                                  p:headerText="课程经费"
+                                                                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewClassFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
 
@@ -1000,10 +1002,10 @@
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
-
                                                                             <!--第四页tab-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="助教经费">
+                                                                                  p:headerText="助教经费"
+                                                                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
@@ -1164,10 +1166,10 @@
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
-
                                                                             <!--第五页tab-->
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="经费明细">
+                                                                                  p:headerText="经费明细"
+                                                                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewDetailFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
@@ -1329,14 +1331,6 @@
                                                                                                                       p:propertyName="travelSubsidy"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="9月实发(移到detail？)"
-                                                                                                                      p:propertyName="monthlySalary1"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="10月实发"
-                                                                                                                      p:propertyName="monthlySalary2"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
                                                                                                                       p:label="实发总额"
                                                                                                                       p:propertyName="total"
                                                                                                                       p:sortAs="numeric"/>
@@ -1404,7 +1398,6 @@
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
-
                                                                         </list>
                                                                     </property>
                                                                 </bean>

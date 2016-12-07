@@ -110,13 +110,13 @@
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="撤销"
-                                                                                  p:methodToCall="chexiao"
+                                                                                  p:actionScript="showDialog('confirmRevocationDialog');"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="评优"
-                                                                                  p:actionScript="showDialog('confirmOutstandingDialog');"
+                                                                                  p:actionScript="showDialog('confirmAppraiseDialog');"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
 
@@ -218,7 +218,23 @@
         </property>
     </bean>
 
-    <bean id="confirmOutstandingDialog" parent="Uif-DialogGroup"
+    <bean id="confirmRevocationDialog" parent="Uif-DialogGroup"
+          p:headerText="撤销" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="是否将此助教评撤销优秀？" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="revocationOutstanding"  p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="confirmAppraiseDialog" parent="Uif-DialogGroup"
           p:headerText="选优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>

@@ -44,6 +44,39 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      */
     private String getWorkFlowStatus;
 
+    /**
+     * 工作流添加/修改类别输入框
+     * @return
+     */
+    private String workflowstatus;
+    private String workfloworder;
+    //用index来判断是添加还是修改
+    private Integer index;
+
+    public Integer getIndex() {
+        return index;
+    }
+
+    public void setIndex(Integer index) {
+        this.index = index;
+    }
+
+    public String getWorkflowstatus() {
+        return workflowstatus;
+    }
+
+    public void setWorkflowstatus(String workflowstatus) {
+        this.workflowstatus = workflowstatus;
+    }
+
+    public String getWorkfloworder() {
+        return workfloworder;
+    }
+
+    public void setWorkfloworder(String workfloworder) {
+        this.workfloworder = workfloworder;
+    }
+
     public List<TAMSWorkflowStatus> getTamsWorkflowStatuses() {
         return tamsWorkflowStatuses;
     }

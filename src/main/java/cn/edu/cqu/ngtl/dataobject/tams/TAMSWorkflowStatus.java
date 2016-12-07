@@ -14,7 +14,7 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsWorkflowStatus")
-    @SequenceGenerator(name="tamsWorlflowStatus",sequenceName="TAMS_WORKFLOW_STATUS_S",allocationSize=1)
+    @SequenceGenerator(name="tamsWorkflowStatus",sequenceName="TAMS_WORKFLOW_STATUS_S",allocationSize=1)
     private String id;
 
     @Column(name = "WORKFLOW_STATUS")
@@ -23,8 +23,18 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
     @Column(name = "\"ORDER\"") //order为sql关键字
     private Integer order;
 
+
+    public String getWorkflowFunctionId() {
+        return workflowFunctionId;
+    }
+
+    public void setWorkflowFunctionId(String workflowFunctionId) {
+        this.workflowFunctionId = workflowFunctionId;
+    }
+
     @Column(name = "WORKFLOW_FUNCTION_ID")
     private String workflowFunctionId;
+
 
     @ManyToOne
     @JoinColumn(name = "WORKFLOW_FUNCTION_ID", insertable = false, updatable = false)
@@ -34,9 +44,7 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
         return order;
     }
 
-    public void setOrder(Integer order) {
-        this.order = order;
-    }
+    public void setOrder(Integer order) {this.order = order;}
 
     public String getId() {
         return id;

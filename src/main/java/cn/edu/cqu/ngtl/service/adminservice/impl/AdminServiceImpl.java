@@ -127,6 +127,45 @@ public class AdminServiceImpl implements IAdminService{
         return workflowStatuses.size() !=0 ? workflowStatuses : null;
     }
 
+    /*
+    //添加工作流类型
+    @Override
+    public boolean addWorkFlowCategory(Map<String, String> conditions) {
+        if(workflowStatusDao.insertOne(conditions))
+            return true;
+        else
+            return false;
+    }
+
+    //修改工作流类型
+    @Override
+    public boolean modifyWorkFlowCategory(Map<String, String> conditions, String status, String order) {
+        if(workflowStatusDao.modifyOne(conditions,status,order))
+            return true;
+        else
+            return false;
+    }
+    */
+
+    //保存工作流类型对象
+    @Override
+    public boolean saveWorkFlowCategory(TAMSWorkflowStatus tamsWorkflowStatus) {
+        if(workflowStatusDao.saveOne(tamsWorkflowStatus))
+            return true;
+        else
+            return false;
+    }
+
+
+    //删除工作流类型
+    @Override
+    public boolean deleteWorkFlowCategory(TAMSWorkflowStatus tamsWorkflowStatus){
+        if(workflowStatusDao.deleteOne(tamsWorkflowStatus))
+            return true;
+        else
+            return false;
+    }
+
     @Override
     public boolean addCourseClassificationOnlyWithName(String name) {
 

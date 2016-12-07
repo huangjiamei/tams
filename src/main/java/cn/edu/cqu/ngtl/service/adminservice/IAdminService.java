@@ -109,4 +109,12 @@ public interface IAdminService {
     List<TAMSWorkflowStatus> getWorkFlowCategory();
 
     List<TAMSWorkflowStatus> getWorkFlowCategoryByCondition(String workflowfunction);
+
+    //boolean addWorkFlowCategory(Map<String, String> conditions);
+
+    //boolean modifyWorkFlowCategory(Map<String, String> conditions, String status, String order);
+
+    boolean saveWorkFlowCategory(TAMSWorkflowStatus tamsWorkflowStatus);
+
+    boolean deleteWorkFlowCategory(TAMSWorkflowStatus tamsWorkflowStatus);
 }

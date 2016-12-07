@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowFunctions;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import org.kuali.rice.core.api.criteria.OrderByField;
 import org.kuali.rice.core.api.criteria.OrderDirection;
@@ -15,6 +16,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
@@ -55,6 +57,49 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
         }
         */
         return list.size()!=0 ? list: null;
+    }
+
+    /*
+    //添加工作流类型
+    @Override
+    public boolean insertOne(Map<String, String> conditions) {
+        TAMSWorkflowStatus tamsWorkflowStatus = new TAMSWorkflowStatus();
+        tamsWorkflowStatus.setWorkflowFunctionId(conditions.get("workflowfunction"));
+        tamsWorkflowStatus.setWorkflowStatus(conditions.get("workflowstatus"));
+        tamsWorkflowStatus.setOrder(Integer.parseInt(conditions.get("workfloworder")));
+        KRADServiceLocator.getDataObjectService().save(tamsWorkflowStatus);
+        return true;
+    }
+
+    //修改工作流类型
+    @Override
+    public boolean modifyOne(Map<String, String> conditions, String status, String order) {
+        TAMSWorkflowStatus tamsWorkflowStatus = new TAMSWorkflowStatus();
+        tamsWorkflowStatus.setWorkflowFunctionId(conditions.get("workflowfunction"));
+        if(conditions.get("workflowstatus").toString().equals(""))
+            tamsWorkflowStatus.setWorkflowStatus(status);
+        else
+            tamsWorkflowStatus.setWorkflowStatus(conditions.get("workflowstatus"));
+        if(conditions.get("workfloworder").toString().equals(""))
+            tamsWorkflowStatus.setOrder(Integer.parseInt(order));
+        else
+            tamsWorkflowStatus.setOrder(Integer.parseInt(conditions.get("workfloworder")));
+        KRADServiceLocator.getDataObjectService().save(tamsWorkflowStatus);
+        return true;
+    }
+    */
+    //保存工作流类型
+    @Override
+    public boolean saveOne(TAMSWorkflowStatus tamsWorkflowStatus) {
+        KRADServiceLocator.getDataObjectService().save(tamsWorkflowStatus);
+        return true;
+    }
+
+    //删除工作流类型
+    @Override
+    public boolean deleteOne(TAMSWorkflowStatus tamsWorkflowStatus){
+        KRADServiceLocator.getDataObjectService().delete(tamsWorkflowStatus);
+        return true;
     }
 
     @Override

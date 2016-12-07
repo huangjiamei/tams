@@ -18,7 +18,15 @@ import java.util.List;
  */
 public class BaseForm extends UifFormBase  {
 
+     private String sessionTermFinder;
 
+    public String getSessionTermFinder() {
+        return sessionTermFinder;
+    }
+
+    public void setSessionTermFinder(String sessionTermFinder) {
+        this.sessionTermFinder = sessionTermFinder;
+    }
 
     // region # 开发用属性，后期删除
     /* 可方便新添加的page在各controller转换，后期删除*/

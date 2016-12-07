@@ -289,4 +289,37 @@ public class TAServiceimpl implements ITAService {
         }
         return true;
     }
+
+    @Override
+    public boolean revocationOutstanding(List<String> taIds, String uId) {
+        try {
+            if(taIds == null || taIds.size() == 0 || uId == null)
+                return false;
+            //更改课程申请状态
+            //默认工作方法为“评优”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uId);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return false;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
+            if (function == null) {
+                logger.error("未能找到'评优'的Function");
+                return false;
+            }
+            for(String id : taIds)
+                if(taDao.changeStatusAvailableForUser(roleIds, function.getId(), id)) {
+                    boolean result = taDao.toPreviousStatus(roleIds, function.getId(), id);
+                }
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 }

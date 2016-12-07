@@ -90,7 +90,7 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "OUTSTANDING_TA")
     private String outStandingTaWorkflowStatusId;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL) //更新级联
     @JoinColumn(name = "OUTSTANDING_TA", insertable = false, updatable = false)
     private TAMSWorkflowStatus outStandingTaWorkflowStatus;
 

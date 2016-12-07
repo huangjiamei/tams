@@ -45,4 +45,6 @@ public interface TAMSTaDao {
     boolean changeStatusAvailableForUser(String[] roleIds, String functionId, String taId);
 
     boolean toNextStatus(String[] roleIds, String functionId, String taId);
+
+    boolean toPreviousStatus(String[] roleIds, String functionId, String taId);
 }

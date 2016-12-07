@@ -528,6 +528,10 @@ body{
     margin-top: 15%;
 }
 
+#sessionTermFinderDialog>div>div{
+    margin-top: 15%;
+}
+
 
 /* 让collection table的action格子短一点，暂时无效*/
 /*.uif-collection-column-action{*/
@@ -767,6 +771,11 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     color: #ff624a;
 }
 
+/*当前学期字体颜色*/
+.currentColor{
+    color:red;
+}
+
 /*table的背景色设置*/
 .table > thead > tr > th >label {
     color:#3c8dbc;
@@ -787,3 +796,25 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     vertical-align:middle;
 }
 
+/*学期dialog的位置*/
+#sessionTermFinderDialog>div {
+    float: right;
+    margin-top: 6px;
+    width: 300px;
+}
+.sessionTermFinderDialog{
+    display:none;
+}
+.modal-header{
+    background-color: #3C8DBC;
+}
+.modal-footer{
+    background-color: #eee;
+}
+.modal-title>span.uif-headerText-span{
+    color:#eee;
+}
+
+.modal {
+    background: rgba(0, 0, 0, 0);
+}

@@ -135,6 +135,37 @@ public class TaController extends BaseController {
     }
 
     /**
+     * 助教撤销优秀
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=revocationOutstanding")
+    public ModelAndView revocationOutstanding(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+
+        List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
+
+        //遍历所有list，找到选中的行
+        List<TaInfoViewObject> checkedList = new ArrayList<>();
+        for(TaInfoViewObject per : taList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        String uid = GlobalVariables.getUserSession().getPrincipalId();
+        boolean result = taService.revocationOutstanding(
+                taConverter.extractIdsFromTaInfo(checkedList),
+                uid
+        );
+        if(result)
+            return this.getTaListPage(form, request);
+        else
+            return this.getTaListPage(form, request); //应该返回错误信息
+    }
+
+    /**
      * 助教评优
      * @param form
      * @return

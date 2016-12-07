@@ -50,11 +50,13 @@
 
         <property name="applicationNavigation.items">
             <list>
-                <bean id="sessionTermName" parent="Uif-ActionLink" p:actionLabel="@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}" p:actionScript="showDialog('sessionTermFinderDialog');"/>
+                <bean id="sessionTermName" parent="Uif-ActionLink"
+                      p:actionLabel="@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}"
+                      p:actionScript="showDialogTerm();"/>
 
                 <!--导航栏-->
                 <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="icon-th" p:additionalCssClasses="mainMenu"
-                      p:actionScript="showD();"/>
+                      p:actionScript="showDialogMenu();"/>
 
                 <!--user info-->
                 <bean id="userInfo" parent="Uif-DropdownToggleMenu"
@@ -140,7 +142,7 @@
     </bean>
 
     <bean id="sessionTermFinderDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="当前学期："/>
+        <property name="headerText" value="当前学期：@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}"/>
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
@@ -152,6 +154,7 @@
 
                             <bean parent="Uif-InputField"
                                   p:propertyName="sessionTermFinder"
+                                  p:style="margin: 5% 25% 0;"
                                   p:required="true"
                                   p:optionsFinderClass="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder">
                                 <property
@@ -175,7 +178,7 @@
         </property>
     </bean>
 
-    <bean id="megamenu-items" parent="Uif-VerticalBoxSection" p:additionalCssClasses="">
+    <bean id="megamenu-items" parent="Uif-VerticalBoxSection">
         <property name="items">
             <list>
                 <bean id="megamenu-content" parent="Uif-VerticalBoxSection" p:additionalCssClasses="esmenu-content">

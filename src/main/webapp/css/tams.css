@@ -799,8 +799,22 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 /*学期dialog的位置*/
 #sessionTermFinderDialog>div {
     float: right;
-    margin: 5px 5px 0 0;
+    margin-top: 6px;
     width: 300px;
 }
+.sessionTermFinderDialog{
+    display:none;
+}
+.modal-header{
+    background-color: #3C8DBC;
+}
+.modal-footer{
+    background-color: #eee;
+}
+.modal-title>span.uif-headerText-span{
+    color:#eee;
+}
 
-
+.modal {
+    background: rgba(0, 0, 0, 0);
+}

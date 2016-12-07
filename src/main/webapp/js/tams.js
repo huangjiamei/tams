@@ -59,7 +59,7 @@ function doEditorPreSubmit(editorID,transferID) {
 
 
 function initNavDialog() {
-    jQuery(".modal-content").show();
+    //jQuery("#navDialog").show();
     jQuery(".navigationDialog .nav>ul>:first-child>a").tab('show');
     //去掉dialog本身的header
     jQuery(".navigationDialog>.modal-content>.modal-header").remove();
@@ -75,11 +75,6 @@ function initNavDialog() {
         a.stopPropagation();
         jQuery(".navigationDialog .nav .active").removeClass("active");
         jQuery(".navigationDialog .tab-content .active").removeClass("active");
-    });
-
-    //点击姓名时隐藏菜单栏
-    jQuery(".dropdown-toggle").click(function(a) {
-        jQuery(".modal-content").hide();
     });
 }
 
@@ -756,11 +751,36 @@ function deleteCookie(){
     localStorage.clear();
 }
 
-function showD(){
+function showDialogMenu(){
     showDialog('navDialog');
     if(jQuery("#navDialog").css("display")=="none"){
         jQuery("#navDialog").show();
     }else{
         jQuery("#navDialog").hide();
     }
+
+    //header部分切换时进行隐藏
+    jQuery(".dropdown-toggle").click(function(a) {
+        jQuery("#navDialog").hide();
+    });
+    jQuery("#sessionTermName").click(function(a) {
+        jQuery("#navDialog").hide();
+    });
+}
+
+function showDialogTerm(){
+    showDialog('sessionTermFinderDialog');
+    if(jQuery("#sessionTermFinderDialog").css("display")=="none"){
+        jQuery("#sessionTermFinderDialog").show();
+    }else{
+        jQuery("#sessionTermFinderDialog").hide();
+    }
+
+    //header部分切换时进行隐藏
+    jQuery(".dropdown-toggle").click(function(a) {
+        jQuery("#sessionTermFinderDialog").hide();
+    });
+    jQuery("#menuHeaderItem").click(function(a) {
+        jQuery("#sessionTermFinderDialog").hide();
+    });
 }

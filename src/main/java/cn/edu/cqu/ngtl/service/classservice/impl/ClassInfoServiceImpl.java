@@ -73,7 +73,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     private TAMSWorkflowFunctionsDao workflowFunctionsDao;
 
     @Override
-    public List<UTClassInformation> getAllClassesMappedByDepartment() {
+    public List<UTClassInformation> getAllCurSessionClasses() {
 
         /** Access DataBase */
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
@@ -99,10 +99,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
          if(uId.equalsIgnoreCase("admin")){
-            return this.getAllClassesMappedByDepartment();   //FIXME 测试代码。需要删除
+            return this.getAllCurSessionClasses();   //FIXME 测试代码。需要删除
         }
-        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId))
-            return this.getAllClassesMappedByDepartment();
+        if(userInfoService.isSysAdmin(uId) ||userInfoService.isAcademicAffairsStaff(uId))
+            return this.getAllCurSessionClasses();
         else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 

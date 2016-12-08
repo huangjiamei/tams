@@ -13,7 +13,7 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
-    List<UTClassInformation> getAllClassesMappedByDepartment();
+    List<UTClassInformation> getAllCurSessionClasses();
 
     UTClass getClassInfoById(String classId);
 

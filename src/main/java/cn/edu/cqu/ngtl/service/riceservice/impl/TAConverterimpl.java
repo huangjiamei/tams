@@ -110,13 +110,13 @@ public class TAConverterimpl implements ITAConverter {
         for (UTClassInformation information : informationlist) {
             ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
+            viewObject.setId(information.getId());
             viewObject.setClassNumber(information.getClassNumber());
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());
             viewObject.setCourseCode(information.getCourseCode());
             viewObject.setStatus(information.getStatusName());
             viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
-//            viewObject.setInstructorName("111");
             viewObjects.add(viewObject);
         }
 

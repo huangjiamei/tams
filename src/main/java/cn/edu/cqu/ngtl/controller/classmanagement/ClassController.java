@@ -178,7 +178,7 @@ public class ClassController extends BaseController {
             /**
              * param in end
              */
-            String classId = classObject.getId().toString();
+            String classId = classObject.getId();
             infoForm.setCurrClassId(classId);
 
             UTClass utClass = classInfoService.getClassInfoById(classId);

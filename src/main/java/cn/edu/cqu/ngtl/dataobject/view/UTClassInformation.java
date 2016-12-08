@@ -71,7 +71,7 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     private Integer departmentId;
 
     @Column(name = "CREDIT")
-    private Integer credit;
+    private String credit;
 
     @Column(name = "COURSE_CODE")
     private String courseCode;
@@ -251,11 +251,11 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
         this.departmentId = departmentId;
     }
 
-    public Integer getCredit() {
+    public String getCredit() {
         return credit;
     }
 
-    public void setCredit(Integer credit) {
+    public void setCredit(String credit) {
         this.credit = credit;
     }
 

@@ -10,6 +10,8 @@ public interface UTInstructorDao {
 	List<UTInstructor> getAllInstructorsByDepartmentId(Integer departmentId);
 
 	List<UTInstructor> getAllInstructors();
+
+	List<UTInstructor> getAllInstructorsByEM();
 	 
 	UTInstructor getInstructorByCode(String code);
 

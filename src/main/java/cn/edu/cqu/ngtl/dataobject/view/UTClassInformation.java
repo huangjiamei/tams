@@ -29,7 +29,7 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
 
     @Id
     @Column(name="UNIQUEID")
-    private Integer id;
+    private String id;
 
     @Convert(converter = UnitimeDayOfWeekConverter.class)
     @Column(name = "ASSIGNMENT_DAY")
@@ -153,11 +153,11 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
         this.minPerWeek = minPerWeek;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

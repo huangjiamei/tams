@@ -79,18 +79,23 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
 
+        /**
+         * 取出教师ID和姓名的组合
+         */
         Map InstructorMap = new HashMap();
-        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
+        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructorsByEM();
         for(UTInstructor utInstructor :utInstructorList){
             InstructorMap.put(utInstructor.getId(),utInstructor.getName());
         }
 
-
+        /**
+         * 取出classID和教师ID的组合
+         */
         List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
         Map classInstructorMap = new HashMap();
         for(UTClassInstructor utClassInstructor : utClassInstructors){
-            if(classInstructorMap.get(utClassInstructor.getClassId())!=null)
-                classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId())+" "+InstructorMap.get(utClassInstructor.getInstructorId()));
+            if(classInstructorMap.get(utClassInstructor.getClassId())!=null) //如果一门课有多个教师，则将教师名字进行组合
+                classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId())+" "+classInstructorMap.get(utClassInstructor.getClassId()));
             else
                 classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId()));
         }
@@ -100,13 +105,11 @@ public class TAConverterimpl implements ITAConverter {
             nullObject.add(new ClassTeacherViewObject());
             return nullObject;
         }
-
         List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
 
         for (UTClassInformation information : informationlist) {
             ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
-            viewObject.setInstructorName(information.getInstructorName());
             viewObject.setClassNumber(information.getClassNumber());
             viewObject.setDepartmentName(information.getDeptName());
             viewObject.setCourseName(information.getCourseName());

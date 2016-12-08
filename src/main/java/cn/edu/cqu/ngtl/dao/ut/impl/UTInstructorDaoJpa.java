@@ -7,9 +7,12 @@ import org.kuali.rice.core.api.criteria.OrderDirection;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.like;
 @Repository
 @Component("UTInstructorDaoJpa")
 public class UTInstructorDaoJpa implements UTInstructorDao {
+
+	EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
 	@Override
 	public List<UTInstructor> getAllInstructorsByDepartmentId(Integer departmentId){
@@ -44,6 +49,13 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		return qr.getResults();
 
 	}
+
+	@Override
+	public List<UTInstructor> getAllInstructorsByEM(){
+		Query query = em.createNativeQuery("SELECT * FROM UNITIME_INSTRUCTOR",UTInstructor.class);
+		return query.getResultList();
+	}
+
 
 	@Override
 	public  List<UTInstructor> getInstructorByName(String name){

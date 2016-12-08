@@ -505,6 +505,8 @@
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowCategoryPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSystemParameterPage&amp;viewId=AdminView"
                                   p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"/>
+                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeCategoryPage&amp;viewId=AdminView"
+                                  p:linkText="时间类型管理" p:iconClass="icon-time menuIcon"/>
                         </list>
                     </property>
                 </bean>

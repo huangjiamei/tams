@@ -207,6 +207,21 @@ public class adminController extends BaseController {
         return this.getModelAndView(adminInfoForm, "pageSystemParameter");
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTimeCategoryPage&viewId=AdminView
+     * @param form
+     * @return 同步信息页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getTimeCategoryPage")
+    public ModelAndView getTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
+        adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());
+        return this.getModelAndView(adminInfoForm, "pageTimeCategory");
+    }
+
 
     /**
      * 工作流类型过滤

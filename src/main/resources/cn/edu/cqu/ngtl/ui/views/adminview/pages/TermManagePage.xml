@@ -241,16 +241,16 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="批次名称"
-                                                                                  p:propertyName="termName" p:additionalCssClasses="@{#line.termName.equals(new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName())?'currentColor':''}"/>
+                                                                                  p:propertyName="termName" />
                                                                             <bean parent="Uif-DataField" p:label="总预算金额"
                                                                                   p:propertyName="budget"
-                                                                                  p:sortAs="numeric" p:additionalCssClasses="@{#line.termName.equals(new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName())?'currentColor':''}"/>
+                                                                                  p:sortAs="numeric"/>
                                                                             <bean parent="Uif-DataField" p:label="开始时间"
                                                                                   p:propertyName="startDate"
-                                                                                  p:sortAs="kuali_date" p:additionalCssClasses="@{#line.termName.equals(new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName())?'currentColor':''}"/>
+                                                                                  p:sortAs="kuali_date"/>
                                                                             <bean parent="Uif-DataField" p:label="结束时间"
                                                                                   p:propertyName="endDate"
-                                                                                  p:sortAs="kuali_date" p:additionalCssClasses="@{#line.termName.equals(new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName())?'currentColor':''}"/>
+                                                                                  p:sortAs="kuali_date" />
                                                                         </list>
                                                                     </property>
                                                                     <property name="lineActions">

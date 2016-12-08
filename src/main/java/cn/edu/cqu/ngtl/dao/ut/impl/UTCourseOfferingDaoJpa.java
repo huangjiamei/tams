@@ -6,6 +6,8 @@ import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by 金祖增 on 2016/10/20.
  */
@@ -18,5 +20,18 @@ public class UTCourseOfferingDaoJpa implements UTCourseOfferingDao {
     {
         return KRADServiceLocator.getDataObjectService().find(UTCourseOffering.class, id);
     }
+
+
+    @Override
+    public void saveCourseOfferingByList(List<UTCourseOffering> courseOfferingList){
+        for(UTCourseOffering utCourseOffering : courseOfferingList){
+            KRADServiceLocator.getDataObjectService().save(utCourseOffering);
+        }
+    }
+
+
+
+
+
 
 }

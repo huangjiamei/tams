@@ -1,8 +1,6 @@
 package cn.edu.cqu.ngtl.service.common.impl;
 
-import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
-import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
-import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +26,24 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     @Autowired
     private UTSessionDao utSessionDao;
 
+    @Autowired
+    private UTInstructorDao utInstructorDao;
+
+    @Autowired
+    private UTCourseOfferingDao utCourseOfferingDao;
+
+    @Autowired
+    private UTOfferingConfigDao utOfferingConfigDao;
+
+    @Autowired
+    private UTConfigDetailDao utConfigDetailDao;
+
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
+
+    @Autowired
+    private UTClassDao utClassDao;
+
 
     @Override
     public Connection getConnection(String hostType, String hostIp, String hostPort, String dbName, String dbUserName,
@@ -52,6 +68,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         }
         con = DriverManager.getConnection(url,dbUserName, dbPassWd);
 //        this.syncCourseInfo(con);
+        this.syncClassInfo(con);
         System.out.println("建立了连接");
         return con;
     }
@@ -116,14 +133,21 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         List<UTCourseOffering> utCourseOfferings = new ArrayList<>();
         List<UTCourseOfferingConfig> utCourseOfferingConfigs = new ArrayList<>();
         List<UTConfigDetail> utConfigDetails = new ArrayList<>();
-
-
-        List<String> classNbrs = new ArrayList<>(); //判断是否有重复的教学班号，如果有，说明一个教学班有多个教师一起上
-        List<UTCourse> allCourse = utCourseDao.selectAllMappedByDepartment();
-        UTSession curSession = utSessionDao.getCurrentSession();
-        String sessionPrefix = curSession.getYear()+curSession.getTerm();
+        List<UTClassInstructor> utClassInstructors = new ArrayList<>();
         Map courseMap = new HashMap<>();
         Map classInstructorMap = new HashMap<>();
+        List<String> classNbrs = new ArrayList<>(); //判断是否有重复的教学班号，如果有，说明一个教学班有多个教师一起上
+
+        List<UTCourse> allCourse = utCourseDao.selectAllMappedByDepartment();
+        UTSession curSession = utSessionDao.getCurrentSession();
+        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
+
+        String sessionPrefix = curSession.getYear()+curSession.getTerm();
+
+        for(UTInstructor utInstructor:utInstructorList){
+            classInstructorMap.put(utInstructor.getIdNumber(),utInstructor.getId());
+        }
+
         for(UTCourse course : allCourse){
             courseMap.put(course.getCodeR(),course.getId());
         }
@@ -147,6 +171,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     UTClass utClass = new UTClass();
                     utClass.setClassNumber(classNbr);
                     utClass.setId(Integer.parseInt(sessionPrefix + editClassNbr));//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
+                    utClass.setCourseOfferingId(Integer.parseInt(sessionPrefix + editClassNbr));
                     utClasses.add(utClass);
                     /**
                      * CourseOffering对象
@@ -174,14 +199,28 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     utConfigDetails.add(utConfigDetail);
                 }
                 //教学班号和身份认证号的关系
-                classInstructorMap.put(classNbr,auId);
+//                classInstructorMap.put(classNbr,auId);
 
+                UTClassInstructor utClassInstructor = new UTClassInstructor();
+                utClassInstructor.setClassId(Integer.parseInt(sessionPrefix + editClassNbr));
+                utClassInstructor.setInstructorId((String)classInstructorMap.get(auId));
+                utClassInstructors.add(utClassInstructor);
 
-
-
-
-                //TODO 新建CO COC CD等几个表的List对象，然后按需调用方法存入数据库
             }
+
+            /**
+             * 开始按顺序存储
+             */
+            utCourseOfferingDao.saveCourseOfferingByList(utCourseOfferings);
+
+            utOfferingConfigDao.saveUTOfferingConfigByList(utCourseOfferingConfigs);
+
+            utConfigDetailDao.saveUTConfigDetailDaoByList(utConfigDetails);
+
+            utClassDao.saveUTClassesByList(utClasses);
+
+            utClassInstructorDao.saveClassInstructorByList(utClassInstructors);
+
         }finally{
             if(pre!=null)
                 pre.close();

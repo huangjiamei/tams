@@ -15,4 +15,6 @@ public interface UTClassInstructorDao {
 
     List<UTClassInstructor> getAllClassInstructor();
 
+    void saveClassInstructorByList(List<UTClassInstructor> utClassInstructors);
+
 }

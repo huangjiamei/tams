@@ -771,9 +771,9 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     color: #ff624a;
 }
 
-/*当前学期字体颜色*/
+/*当前学期背景颜色*/
 .currentColor{
-    color:red;
+    background-color: rgba(243, 156, 18, 0.6);
 }
 
 /*table的背景色设置*/

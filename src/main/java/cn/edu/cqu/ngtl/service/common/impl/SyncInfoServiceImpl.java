@@ -142,7 +142,12 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         UTSession curSession = utSessionDao.getCurrentSession();
         List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
 
-        String sessionPrefix = curSession.getYear()+curSession.getTerm();
+        String sessionPrefix = curSession.getYear();
+        if(curSession.getTerm().equals("春")){
+            sessionPrefix+="01";
+        }else if(curSession.getTerm().equals("秋")){
+            sessionPrefix+="02";
+        }
 
         for(UTInstructor utInstructor:utInstructorList){
             classInstructorMap.put(utInstructor.getIdNumber(),utInstructor.getId());
@@ -158,7 +163,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             pre.setQueryTimeout(10000);
             ResultSet res =  pre.executeQuery();
             while(res.next()){
-                String courseCode = res.getString("KCMD");
+                String courseCode = res.getString("KCDM");
                 String classNbr = res.getString("JXBH");
                 String editClassNbr = classNbr.replace("-","");
                 String auId = res.getString("SFRZH");
@@ -170,14 +175,14 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                     UTClass utClass = new UTClass();
                     utClass.setClassNumber(classNbr);
-                    utClass.setId(Integer.parseInt(sessionPrefix + editClassNbr));//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
-                    utClass.setCourseOfferingId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utClass.setId(sessionPrefix + editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
+                    utClass.setCourseOfferingId(sessionPrefix + editClassNbr);
                     utClasses.add(utClass);
                     /**
                      * CourseOffering对象
                      */
                     UTCourseOffering utCourseOffering = new UTCourseOffering();
-                    utCourseOffering.setId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utCourseOffering.setId(sessionPrefix + editClassNbr);
                     utCourseOffering.setCourseId((Integer) courseMap.get(courseCode));
                     utCourseOffering.setSessionId(curSession.getId());
                     utCourseOfferings.add(utCourseOffering);
@@ -185,24 +190,25 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                      * offeringConfig对象
                      */
                     UTCourseOfferingConfig utCourseOfferingConfig = new UTCourseOfferingConfig();
-                    utCourseOfferingConfig.setId(Integer.parseInt(sessionPrefix + editClassNbr));
-                    utCourseOfferingConfig.setCourseOfferingId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utCourseOfferingConfig.setId(sessionPrefix + editClassNbr);
+                    utCourseOfferingConfig.setCourseOfferingId(sessionPrefix + editClassNbr);
                     utCourseOfferingConfig.setConfigName("1");
                     utCourseOfferingConfigs.add(utCourseOfferingConfig);
                     /**
                      * configDetail对象
                      */
                     UTConfigDetail utConfigDetail = new UTConfigDetail();
-                    utConfigDetail.setId(Integer.parseInt(sessionPrefix + editClassNbr));
-                    utConfigDetail.setConfigId(Integer.parseInt(sessionPrefix + editClassNbr));
-                    utConfigDetail.setKlassId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utConfigDetail.setId(sessionPrefix + editClassNbr);
+                    utConfigDetail.setConfigId(sessionPrefix + editClassNbr);
+                    utConfigDetail.setKlassId(sessionPrefix + editClassNbr);
                     utConfigDetails.add(utConfigDetail);
                 }
                 //教学班号和身份认证号的关系
 //                classInstructorMap.put(classNbr,auId);
 
                 UTClassInstructor utClassInstructor = new UTClassInstructor();
-                utClassInstructor.setClassId(Integer.parseInt(sessionPrefix + editClassNbr));
+                utClassInstructor.setId(sessionPrefix + editClassNbr);
+                utClassInstructor.setClassId(sessionPrefix + editClassNbr);
                 utClassInstructor.setInstructorId((String)classInstructorMap.get(auId));
                 utClassInstructors.add(utClassInstructor);
 
@@ -211,14 +217,19 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             /**
              * 开始按顺序存储
              */
+            System.out.println("开始导入CO");
             utCourseOfferingDao.saveCourseOfferingByList(utCourseOfferings);
 
+            System.out.println("开始导入COC");
             utOfferingConfigDao.saveUTOfferingConfigByList(utCourseOfferingConfigs);
 
+            System.out.println("开始导入CD");
             utConfigDetailDao.saveUTConfigDetailDaoByList(utConfigDetails);
 
+            System.out.println("开始导入CLASS");
             utClassDao.saveUTClassesByList(utClasses);
 
+            System.out.println("开始导入CI");
             utClassInstructorDao.saveClassInstructorByList(utClassInstructors);
 
         }finally{

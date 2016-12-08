@@ -15,10 +15,10 @@ public class UTCourseOfferingConfig extends DataObjectBase implements Serializab
 	@Column(name = "UNIQUEID")
 //	@GeneratedValue(generator="utCoConfigSeq")
 //	@SequenceGenerator(name="utCoConfigSeq",sequenceName="UNITIME_OFFERING_CONFIG_S",allocationSize=1)
-	private Integer id;
+	private String id;
 
 	@Column(name = "COURSEOFFERING_ID")
-	private Integer courseOfferingId;
+	private String courseOfferingId;
 
 	@ManyToOne
 	@JoinColumn(name = "COURSEOFFERING_ID", insertable = false, updatable = false)
@@ -27,19 +27,19 @@ public class UTCourseOfferingConfig extends DataObjectBase implements Serializab
 	@Column(name = "CONFIGURATION_NAME")
 	private String configName;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Integer getCourseOfferingId() {
+	public String getCourseOfferingId() {
 		return courseOfferingId;
 	}
 
-	public void setCourseOfferingId(Integer courseOfferingId) {
+	public void setCourseOfferingId(String courseOfferingId) {
 		this.courseOfferingId = courseOfferingId;
 	}
 

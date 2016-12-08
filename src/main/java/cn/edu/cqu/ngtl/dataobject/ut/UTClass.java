@@ -26,10 +26,10 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@Column(name = "UNIQUEID")
   /*  @GeneratedValue(generator="utClassSeq")
     @SequenceGenerator(name="utClassSeq",sequenceName="UNITIME_CLASS_S",allocationSize=1)*/
-	private Integer id;
+	private String id;
 
 	@Column(name = "COURSEOFFERING_ID")
-	private Integer courseOfferingId;
+	private String courseOfferingId;
 
     @ManyToOne
     @JoinColumn(name = "COURSEOFFERING_ID", insertable = false, updatable = false)
@@ -100,19 +100,19 @@ public class UTClass extends DataObjectBase implements Serializable {
         this.programCourse = programCourse;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getCourseOfferingId() {
+    public String getCourseOfferingId() {
         return courseOfferingId;
     }
 
-    public void setCourseOfferingId(Integer courseOfferingId) {
+    public void setCourseOfferingId(String courseOfferingId) {
         this.courseOfferingId = courseOfferingId;
     }
 

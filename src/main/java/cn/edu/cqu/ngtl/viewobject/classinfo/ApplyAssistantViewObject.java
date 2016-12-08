@@ -27,13 +27,13 @@ public class ApplyAssistantViewObject {
     private String applyCourseType;
 
     //隐藏属性
-    private Integer classId;
+    private String classId;
 
-    public Integer getClassId() {
+    public String getClassId() {
         return classId;
     }
 
-    public void setClassId(Integer classId) {
+    public void setClassId(String classId) {
         this.classId = classId;
     }
 

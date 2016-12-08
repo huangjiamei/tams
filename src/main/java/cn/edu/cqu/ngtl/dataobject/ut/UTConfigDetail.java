@@ -20,37 +20,44 @@ public class UTConfigDetail extends DataObjectBase implements Serializable {
     @Column(name = "UNIQUEID")
 //    @GeneratedValue(generator = "utConfigDetailSeq")
 //    @SequenceGenerator(name = "utConfigDetailSeq", sequenceName = "UNITIME_CONFIG_DETAIL_S", allocationSize = 1)
-    private Integer id;
+    private String id;
 
     @Column(name = "CONFIG_ID")
-    private Integer configId;
+    private String configId;
 
     @ManyToOne
     @JoinColumn(name = "CONFIG_ID", updatable = false, insertable = false)
     private UTCourseOfferingConfig offeringConfig;
 
     @Column(name = "CLASS_ID")
-    private Integer klassId;
+    private String klassId;
 
     @ManyToOne
     @JoinColumn(name = "CLASS_ID", updatable = false, insertable = false)
     private UTClass klass;
 
-
-    public Integer getId() {
-        return this.id;
+    public String getId() {
+        return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Integer getConfigId() {
-        return this.configId;
+    public String getConfigId() {
+        return configId;
     }
 
-    public void setConfigId(Integer configId) {
+    public void setConfigId(String configId) {
         this.configId = configId;
+    }
+
+    public String getKlassId() {
+        return klassId;
+    }
+
+    public void setKlassId(String klassId) {
+        this.klassId = klassId;
     }
 
     public UTCourseOfferingConfig getOfferingConfig() {
@@ -61,13 +68,7 @@ public class UTConfigDetail extends DataObjectBase implements Serializable {
         this.offeringConfig = offeringConfig;
     }
 
-    public Integer getKlassId() {
-        return this.klassId;
-    }
 
-    public void setKlassId(Integer klassId) {
-        this.klassId = klassId;
-    }
 
     public UTClass getKlass() {
         return this.klass;

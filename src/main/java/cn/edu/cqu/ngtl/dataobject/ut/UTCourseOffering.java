@@ -14,7 +14,7 @@ public class UTCourseOffering extends DataObjectBase implements Serializable {
 	@Column(name = "UNIQUEID")
 //    @GeneratedValue(generator="utCoSeq")
 //    @SequenceGenerator(name="utCoSeq",sequenceName="UNITIME_COURSE_OFFERING_S",allocationSize=1)
-	private Integer id;
+	private String id;
 
 	@ManyToOne
 	@JoinColumn(name="COURSE_ID", updatable=false, insertable=false)
@@ -33,11 +33,11 @@ public class UTCourseOffering extends DataObjectBase implements Serializable {
 	@OneToMany(fetch= FetchType.EAGER, mappedBy="courseOffering" )
 	private List<UTClass> klasses;
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

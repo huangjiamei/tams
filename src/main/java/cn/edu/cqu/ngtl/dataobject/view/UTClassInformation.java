@@ -76,7 +76,7 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "COURSE_CODE")
     private String courseCode;
 
-    @Column(name="COURSE_HOUR")
+    @Column(name = "COURSE_HOUR")
     private String hour;
 
     @Column(name = "DEPT_NAME")
@@ -161,6 +161,14 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
         this.id = id;
     }
 
+    public Integer getCourseOfferingId() {
+        return courseOfferingId;
+    }
+
+    public void setCourseOfferingId(Integer courseOfferingId) {
+        this.courseOfferingId = courseOfferingId;
+    }
+
     public String getDayOfWeek() {
         return dayOfWeek;
     }
@@ -185,13 +193,7 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
         this.roomId = roomId;
     }
 
-    public Integer getCourseOfferingId() {
-        return courseOfferingId;
-    }
 
-    public void setCourseOfferingId(Integer courseOfferingId) {
-        this.courseOfferingId = courseOfferingId;
-    }
 
     public Integer getDatePatternId() {
         return datePatternId;

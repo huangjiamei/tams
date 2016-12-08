@@ -18,14 +18,14 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 
 	@Id
 	@Column(name = "UNIQUEID")
-	private Integer id;
+	private String id;
 
 	@ManyToOne
 	@JoinColumn(name = "CLASS_ID",updatable=false, insertable=false)
 	private UTClass utClass;
 
 	@Column(name = "CLASS_ID")
-	private Integer classId;
+	private String classId;
 
 	@Column(name = "INSTRUCTOR_ID")
 	private String instructorId;
@@ -38,11 +38,11 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 	@Label("PERCENT_SHARE")
 	private Integer percentShare;
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -54,11 +54,11 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 		this.utClass = utClass;
 	}
 
-	public Integer getClassId() {
+	public String getClassId() {
 		return classId;
 	}
 
-	public void setClassId(Integer classId) {
+	public void setClassId(String classId) {
 		this.classId = classId;
 	}
 

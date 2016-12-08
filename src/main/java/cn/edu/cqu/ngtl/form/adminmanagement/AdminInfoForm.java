@@ -140,6 +140,19 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     /**
      * 经费管理页面————学院经费，过滤器的输入框
      */
+    private String departmentTimes;//批次
+    private String departmentId;//学院
+    private String departmentPreFunds;
+    private String departmentApplyFunds;
+    private String departmentApprovalFunds;
+    private String departmentAddingFunds;
+    private String departmentRewardFunds;
+    private String departmentTrafficFunds;
+    private String departmentTotalFunds;
+
+    /**
+     * 经费管理页面————学院历史经费，过滤器的输入框
+     */
     private String dTimes;
     private String deptId;
     private String dPreFunds;
@@ -180,6 +193,23 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String tTrafficFunds;
     private String tBonus;
     private String tTotalFunds;
+
+    /**
+     * 经费管理页面————经费明细，过滤器的输入框
+     * @return
+     */
+    private String detailsName;
+    private String detailsNumber;
+    private String detailsBank;
+    private String detailsBankNuber;
+    private String detailsIDCard;
+    private String detailsCourseName;
+    private String detailsCourseCode;
+    private String detailsApplyFunds;
+    private String detailsPhdFunds;
+    private String detailsBonus;
+    private String detailsTrafficFunds;
+    private String detailsTotalFunds;
 
     /*
     同步信息页面
@@ -1172,5 +1202,173 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setConnectMessage(String connectMessage) {
         ConnectMessage = connectMessage;
+    }
+
+    public String getDepartmentTimes() {
+        return departmentTimes;
+    }
+
+    public void setDepartmentTimes(String departmentTimes) {
+        this.departmentTimes = departmentTimes;
+    }
+
+    public String getDepartmentId() {
+        return departmentId;
+    }
+
+    public void setDepartmentId(String departmentId) {
+        this.departmentId = departmentId;
+    }
+
+    public String getDepartmentPreFunds() {
+        return departmentPreFunds;
+    }
+
+    public void setDepartmentPreFunds(String departmentPreFunds) {
+        this.departmentPreFunds = departmentPreFunds;
+    }
+
+    public String getDepartmentApplyFunds() {
+        return departmentApplyFunds;
+    }
+
+    public void setDepartmentApplyFunds(String departmentApplyFunds) {
+        this.departmentApplyFunds = departmentApplyFunds;
+    }
+
+    public String getDepartmentApprovalFunds() {
+        return departmentApprovalFunds;
+    }
+
+    public void setDepartmentApprovalFunds(String departmentApprovalFunds) {
+        this.departmentApprovalFunds = departmentApprovalFunds;
+    }
+
+    public String getDepartmentAddingFunds() {
+        return departmentAddingFunds;
+    }
+
+    public void setDepartmentAddingFunds(String departmentAddingFunds) {
+        this.departmentAddingFunds = departmentAddingFunds;
+    }
+
+    public String getDepartmentRewardFunds() {
+        return departmentRewardFunds;
+    }
+
+    public void setDepartmentRewardFunds(String departmentRewardFunds) {
+        this.departmentRewardFunds = departmentRewardFunds;
+    }
+
+    public String getDepartmentTrafficFunds() {
+        return departmentTrafficFunds;
+    }
+
+    public void setDepartmentTrafficFunds(String departmentTrafficFunds) {
+        this.departmentTrafficFunds = departmentTrafficFunds;
+    }
+
+    public String getDepartmentTotalFunds() {
+        return departmentTotalFunds;
+    }
+
+    public void setDepartmentTotalFunds(String departmentTotalFunds) {
+        this.departmentTotalFunds = departmentTotalFunds;
+    }
+
+    public String getDetailsName() {
+        return detailsName;
+    }
+
+    public void setDetailsName(String detailsName) {
+        this.detailsName = detailsName;
+    }
+
+    public String getDetailsNumber() {
+        return detailsNumber;
+    }
+
+    public void setDetailsNumber(String detailsNumber) {
+        this.detailsNumber = detailsNumber;
+    }
+
+    public String getDetailsBank() {
+        return detailsBank;
+    }
+
+    public void setDetailsBank(String detailsBank) {
+        this.detailsBank = detailsBank;
+    }
+
+    public String getDetailsBankNuber() {
+        return detailsBankNuber;
+    }
+
+    public void setDetailsBankNuber(String detailsBankNuber) {
+        this.detailsBankNuber = detailsBankNuber;
+    }
+
+    public String getDetailsIDCard() {
+        return detailsIDCard;
+    }
+
+    public void setDetailsIDCard(String detailsIDCard) {
+        this.detailsIDCard = detailsIDCard;
+    }
+
+    public String getDetailsCourseName() {
+        return detailsCourseName;
+    }
+
+    public void setDetailsCourseName(String detailsCourseName) {
+        this.detailsCourseName = detailsCourseName;
+    }
+
+    public String getDetailsCourseCode() {
+        return detailsCourseCode;
+    }
+
+    public void setDetailsCourseCode(String detailsCourseCode) {
+        this.detailsCourseCode = detailsCourseCode;
+    }
+
+    public String getDetailsApplyFunds() {
+        return detailsApplyFunds;
+    }
+
+    public void setDetailsApplyFunds(String detailsApplyFunds) {
+        this.detailsApplyFunds = detailsApplyFunds;
+    }
+
+    public String getDetailsPhdFunds() {
+        return detailsPhdFunds;
+    }
+
+    public void setDetailsPhdFunds(String detailsPhdFunds) {
+        this.detailsPhdFunds = detailsPhdFunds;
+    }
+
+    public String getDetailsBonus() {
+        return detailsBonus;
+    }
+
+    public void setDetailsBonus(String detailsBonus) {
+        this.detailsBonus = detailsBonus;
+    }
+
+    public String getDetailsTrafficFunds() {
+        return detailsTrafficFunds;
+    }
+
+    public void setDetailsTrafficFunds(String detailsTrafficFunds) {
+        this.detailsTrafficFunds = detailsTrafficFunds;
+    }
+
+    public String getDetailsTotalFunds() {
+        return detailsTotalFunds;
+    }
+
+    public void setDetailsTotalFunds(String detailsTotalFunds) {
+        this.detailsTotalFunds = detailsTotalFunds;
     }
 }

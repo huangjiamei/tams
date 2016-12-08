@@ -455,19 +455,10 @@
                                                                                                                         <list>
                                                                                                                             <!--下拉框搜索-->
 
-                                                                                                                            <!--某批-->
-                                                                                                                            <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dTimes">
-                                                                                                                                <property
-                                                                                                                                        name="control">
-                                                                                                                                    <bean parent="Uif-DropdownControl"/>
-                                                                                                                                </property>
-                                                                                                                                <property
-                                                                                                                                        name="optionsFinder">
-                                                                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.sessionFinder"
-                                                                                                                                          p:blankOption="true"/>
-                                                                                                                                </property>
-                                                                                                                            </bean>
+                                                                                                                            <!--占位-->
+                                                                                                                            <bean parent="Uif-MessageField"
+                                                                                                                                  p:additionalCssClasses="hidden-fields"
+                                                                                                                                  p:messageText="占位"/>
 
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="deptId"

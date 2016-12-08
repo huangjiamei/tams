@@ -145,14 +145,10 @@
                                                                 <bean id="searchTerm" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--占位-->
-                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位" />
                                                                             <!--文字搜索-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="permissionNM"/>
                                                                             <bean parent="Uif-InputField"
-
                                                                                   p:propertyName="permissionNM"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="permissionNM">
@@ -219,8 +215,9 @@
                                                                 </bean>
 
                                                                 <!--table-->
-                                                                <bean id="TermManageTable"  parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript = "refreshTableFilter(searchTerm,TermManageTable);"
+                                                                <bean id="TermManageTable"
+                                                                      parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTerm,TermManageTable);setColor();"
                                                                       p:layoutManager.numberOfColumns="6">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>

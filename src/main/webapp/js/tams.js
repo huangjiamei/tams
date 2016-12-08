@@ -751,6 +751,8 @@ function deleteCookie(){
     localStorage.clear();
 }
 
+
+//显示菜单dialog
 function showDialogMenu(){
     showDialog('navDialog');
     if(jQuery("#navDialog").css("display")=="none"){
@@ -768,6 +770,7 @@ function showDialogMenu(){
     });
 }
 
+//显示学期更改dialog
 function showDialogTerm(){
     showDialog('sessionTermFinderDialog');
     if(jQuery("#sessionTermFinderDialog").css("display")=="none"){
@@ -783,4 +786,20 @@ function showDialogTerm(){
     jQuery("#menuHeaderItem").click(function(a) {
         jQuery("#sessionTermFinderDialog").hide();
     });
+}
+
+//为当table中前学期设置背景色，该行字体大一点
+function setColor(){
+
+    var currenTr=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody > tr");
+    var currenSession=jQuery("#sessionTermName").text();
+
+    for (var i = 0; i < currenTr.length; i++) {
+        var currenSpan=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody").children("tr:eq("+i+")").children("td:eq(0)").children("div:eq(0)").children("span:eq(0)");
+        if(currenSpan.text()==currenSession){//此处是用列表的批次名称和当前学期相同，显示背景色，
+            currenTr[i].style.background = "#d0e9c6";
+            currenTr[i].style.fontSize="16px";
+        }
+    }
+
 }

@@ -5,13 +5,10 @@
  */
 package cn.edu.cqu.ngtl.dataobject.ut;
 
-import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 
 @Entity
@@ -42,16 +39,16 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 	@JoinColumn(name="UNIVERSITY_ID", insertable = false, updatable = false)
 	private UTUniversity utUniversity;
 	
-	@OneToMany(mappedBy="department")
-	@JsonIgnore
-	private List<CMProgram> programs;
+//	@OneToMany(mappedBy="department")
+//	@JsonIgnore
+//	private List<CMProgram> programs;
 	
-	@OneToMany(mappedBy="department")
-	private List<UTInstructor> utInstructors;
+//	@OneToMany(mappedBy="department")
+//	private List<UTInstructor> utInstructors;
 	
-	@OneToMany(mappedBy="department")
-	@JsonIgnore
-	private List<UTStudent> students;
+//	@OneToMany(mappedBy="department")
+//	@JsonIgnore
+//	private List<UTStudent> students;
 
 	public Integer getId() {
 		return id;
@@ -101,27 +98,27 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 		this.utUniversity = utUniversity;
 	}
 
-	public List<CMProgram> getPrograms() {
-		return programs;
-	}
-
-	public void setPrograms(List<CMProgram> programs) {
-		this.programs = programs;
-	}
-
-	public List<UTInstructor> getUtInstructors() {
-		return utInstructors;
-	}
-
-	public void setUtInstructors(List<UTInstructor> utInstructors) {
-		this.utInstructors = utInstructors;
-	}
-
-	public List<UTStudent> getStudents() {
-		return students;
-	}
-
-	public void setStudents(List<UTStudent> students) {
-		this.students = students;
-	}
+//	public List<CMProgram> getPrograms() {
+//		return programs;
+//	}
+//
+//	public void setPrograms(List<CMProgram> programs) {
+//		this.programs = programs;
+//	}
+//
+//	public List<UTInstructor> getUtInstructors() {
+//		return utInstructors;
+//	}
+//
+//	public void setUtInstructors(List<UTInstructor> utInstructors) {
+//		this.utInstructors = utInstructors;
+//	}
+//
+//	public List<UTStudent> getStudents() {
+//		return students;
+//	}
+//
+//	public void setStudents(List<UTStudent> students) {
+//		this.students = students;
+//	}
 }

@@ -20,9 +20,9 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 	@Column(name = "UNIQUEID")
 	private String id;
 
-	@ManyToOne
-	@JoinColumn(name = "CLASS_ID",updatable=false, insertable=false)
-	private UTClass utClass;
+//	@ManyToOne
+//	@JoinColumn(name = "CLASS_ID",updatable=false, insertable=false)
+//	private UTClass utClass;
 
 	@Column(name = "CLASS_ID")
 	private String classId;
@@ -30,9 +30,9 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 	@Column(name = "INSTRUCTOR_ID")
 	private String instructorId;
 
-	@ManyToOne
-	@JoinColumn(name = "INSTRUCTOR_ID",updatable=false, insertable=false)
-	private UTInstructor utInstructor;
+//	@ManyToOne
+//	@JoinColumn(name = "INSTRUCTOR_ID",updatable=false, insertable=false)
+//	private UTInstructor utInstructor;
 
 	@Column(name = "PERCENT_SHARE")
 	@Label("PERCENT_SHARE")
@@ -46,13 +46,13 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 		this.id = id;
 	}
 
-	public UTClass getUtClass() {
-		return utClass;
-	}
-
-	public void setUtClass(UTClass utClass) {
-		this.utClass = utClass;
-	}
+//	public UTClass getUtClass() {
+//		return utClass;
+//	}
+//
+//	public void setUtClass(UTClass utClass) {
+//		this.utClass = utClass;
+//	}
 
 	public String getClassId() {
 		return classId;
@@ -70,13 +70,13 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 		this.instructorId = instructorId;
 	}
 
-	public UTInstructor getUtInstructor() {
-		return utInstructor;
-	}
-
-	public void setUtInstructor(UTInstructor utInstructor) {
-		this.utInstructor = utInstructor;
-	}
+//	public UTInstructor getUtInstructor() {
+//		return utInstructor;
+//	}
+//
+//	public void setUtInstructor(UTInstructor utInstructor) {
+//		this.utInstructor = utInstructor;
+//	}
 
 	public Integer getPercentShare() {
 		return percentShare;

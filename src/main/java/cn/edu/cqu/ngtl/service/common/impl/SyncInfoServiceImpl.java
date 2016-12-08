@@ -1,6 +1,8 @@
 package cn.edu.cqu.ngtl.service.common.impl;
 
+import cn.edu.cqu.ngtl.dao.tams.TAMSClassApplyStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassApplyStatus;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +46,9 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     @Autowired
     private UTClassDao utClassDao;
 
+    @Autowired
+    private TAMSClassApplyStatusDao tamsClassApplyStatusDao;
+
 
     @Override
     public Connection getConnection(String hostType, String hostIp, String hostPort, String dbName, String dbUserName,
@@ -53,20 +58,20 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         switch (hostType) {
             case "0":
                 Class.forName("oracle.jdbc.driver.OracleDriver");
-                url +=  "jdbc:oracle:thin:@" + hostIp+":"+hostPort+"/"+dbName;
+                url += "jdbc:oracle:thin:@" + hostIp + ":" + hostPort + "/" + dbName;
                 break;
             case "1":
                 //暂未测试
                 Class.forName("com.mysql.jdbc.Driver");
-                url += "jdbc:mysql://" + hostIp+":"+hostPort+"/"+dbName;
+                url += "jdbc:mysql://" + hostIp + ":" + hostPort + "/" + dbName;
                 break;
             case "2":
                 //暂未测试
                 Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
-                url += "jdbc:sqlserver://"+ hostIp+":"+hostPort+";DatabaseName="+dbName;
+                url += "jdbc:sqlserver://" + hostIp + ":" + hostPort + ";DatabaseName=" + dbName;
                 break;
         }
-        con = DriverManager.getConnection(url,dbUserName, dbPassWd);
+        con = DriverManager.getConnection(url, dbUserName, dbPassWd);
 //        this.syncCourseInfo(con);
         this.syncClassInfo(con);
         System.out.println("建立了连接");
@@ -77,13 +82,14 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     @Override
     public void closeConnection(Connection connection) throws SQLException {
         // TODO Auto-generated method stub
-        if(connection!=null)
+        if (connection != null)
             connection.close();
     }
 
 
     /**
      * 同步课程信息（相关表UNITIME_COURSE）
+     *
      * @param connection
      * @throws SQLException
      */
@@ -91,21 +97,21 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     public void syncCourseInfo(Connection connection) throws SQLException {
         List<UTDepartment> allDepartment = utDepartmentDao.getAllUTDepartments();
         Map departmentMap = new HashMap<>();
-        for(UTDepartment utDepartment : allDepartment){
-            departmentMap.put(utDepartment.getDeptcode(),utDepartment.getId());
+        for (UTDepartment utDepartment : allDepartment) {
+            departmentMap.put(utDepartment.getDeptcode(), utDepartment.getId());
         }
 
         String queryCourse = "SELECT * FROM LESSONINFO";
         int i = 0;
         PreparedStatement pre = connection.prepareStatement(queryCourse);
-        try{
+        try {
             pre.setQueryTimeout(10000);
-            ResultSet res =  pre.executeQuery();
-            while(res.next()){
+            ResultSet res = pre.executeQuery();
+            while (res.next()) {
                 String coureseName = res.getString("KCMC");
                 String courseCode = res.getString("KCDM");
-                String departmentName = res.getString("CDDW").substring(0,2);
-                Integer deptId = (Integer)departmentMap.get(departmentName);
+                String departmentName = res.getString("CDDW").substring(0, 2);
+                Integer deptId = (Integer) departmentMap.get(departmentName);
                 String credit = res.getString("XF");
                 String kcId = res.getString("KCID");
                 UTCourse utCourse = new UTCourse();
@@ -113,27 +119,31 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 utCourse.setCodeR(courseCode);
                 utCourse.setName(coureseName);
                 utCourse.setCredit(credit);
-                utCourse.setId(Integer.parseInt("2016"+kcId));
+                utCourse.setId(Integer.parseInt("2016" + kcId));
                 utCourseDao.InsertOneByEntity(utCourse);
                 System.out.println(i++);
             }
-        }finally{
-            if(pre!=null)
+        } finally {
+            if (pre != null)
                 pre.close();
         }
     }
 
     /**
      * 同步教学班信息
+     *
      * @param connection
      * @throws SQLException
      */
-    public void syncClassInfo(Connection connection) throws  SQLException{
+    public void syncClassInfo(Connection connection) throws SQLException {
         List<UTClass> utClasses = new ArrayList<>();
         List<UTCourseOffering> utCourseOfferings = new ArrayList<>();
         List<UTCourseOfferingConfig> utCourseOfferingConfigs = new ArrayList<>();
         List<UTConfigDetail> utConfigDetails = new ArrayList<>();
         List<UTClassInstructor> utClassInstructors = new ArrayList<>();
+        List<TAMSClassApplyStatus> tamsClassApplyStatuses = new ArrayList<>();
+
+
         Map courseMap = new HashMap<>();
         Map classInstructorMap = new HashMap<>();
         List<String> classNbrs = new ArrayList<>(); //判断是否有重复的教学班号，如果有，说明一个教学班有多个教师一起上
@@ -143,34 +153,34 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
 
         String sessionPrefix = curSession.getYear();
-        if(curSession.getTerm().equals("春")){
-            sessionPrefix+="01";
-        }else if(curSession.getTerm().equals("秋")){
-            sessionPrefix+="02";
+        if (curSession.getTerm().equals("春")) {
+            sessionPrefix += "01";
+        } else if (curSession.getTerm().equals("秋")) {
+            sessionPrefix += "02";
         }
 
-        for(UTInstructor utInstructor:utInstructorList){
-            classInstructorMap.put(utInstructor.getIdNumber(),utInstructor.getId());
+        for (UTInstructor utInstructor : utInstructorList) {
+            classInstructorMap.put(utInstructor.getIdNumber(), utInstructor.getId());
         }
 
-        for(UTCourse course : allCourse){
-            courseMap.put(course.getCodeR(),course.getId());
+        for (UTCourse course : allCourse) {
+            courseMap.put(course.getCodeR(), course.getId());
         }
         String queryCourse = "SELECT * FROM JSKB t WHERE t.SFRZH IS NOT NULL ";
         int i = 0;
         PreparedStatement pre = connection.prepareStatement(queryCourse);
-        try{
+        try {
             pre.setQueryTimeout(10000);
-            ResultSet res =  pre.executeQuery();
-            while(res.next()){
+            ResultSet res = pre.executeQuery();
+            while (res.next()) {
                 String courseCode = res.getString("KCDM");
                 String classNbr = res.getString("JXBH");
-                String editClassNbr = classNbr.replace("-","");
+                String editClassNbr = classNbr.replace("-", "");
                 String auId = res.getString("SFRZH");
                 /**
                  * Class对象
                  */
-                if(!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
+                if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
                     classNbrs.add(classNbr);
 
                     UTClass utClass = new UTClass();
@@ -202,6 +212,15 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     utConfigDetail.setConfigId(sessionPrefix + editClassNbr);
                     utConfigDetail.setKlassId(sessionPrefix + editClassNbr);
                     utConfigDetails.add(utConfigDetail);
+
+                    /**
+                     * ApplyStatus对象
+                     */
+                    TAMSClassApplyStatus tamsClassApplyStatus = new TAMSClassApplyStatus();
+                    tamsClassApplyStatus.setClassId(sessionPrefix + editClassNbr);
+                    tamsClassApplyStatus.setWorkflowStatusId("1");
+                    tamsClassApplyStatus.setId(sessionPrefix + editClassNbr);
+                    tamsClassApplyStatuses.add(tamsClassApplyStatus);
                 }
                 //教学班号和身份认证号的关系
 //                classInstructorMap.put(classNbr,auId);
@@ -209,7 +228,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 UTClassInstructor utClassInstructor = new UTClassInstructor();
                 utClassInstructor.setId(sessionPrefix + editClassNbr);
                 utClassInstructor.setClassId(sessionPrefix + editClassNbr);
-                utClassInstructor.setInstructorId((String)classInstructorMap.get(auId));
+                utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
                 utClassInstructors.add(utClassInstructor);
 
             }
@@ -217,7 +236,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             /**
              * 开始按顺序存储
              */
-            System.out.println("开始导入CO");
+           System.out.println("开始导入CO");
             utCourseOfferingDao.saveCourseOfferingByList(utCourseOfferings);
 
             System.out.println("开始导入COC");
@@ -232,13 +251,16 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             System.out.println("开始导入CI");
             utClassInstructorDao.saveClassInstructorByList(utClassInstructors);
 
-        }finally{
-            if(pre!=null)
+            System.out.println("开始导入ApplyStatus");
+            tamsClassApplyStatusDao.saveApplyStatueByList(tamsClassApplyStatuses);
+
+
+
+        } finally {
+            if (pre != null)
                 pre.close();
         }
     }
-
-
 
 
 }

@@ -153,4 +153,13 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
         boolean result = workflowStatusDao.isFirstStatus(current.getWorkflowStatusId());
         return result;
     }
+
+    @Override
+    public void saveApplyStatueByList(List<TAMSClassApplyStatus> tamsClassApplyStatuses){
+        for(TAMSClassApplyStatus tamsClassApplyStatus:tamsClassApplyStatuses){
+            KradDataServiceLocator.getDataObjectService().save(tamsClassApplyStatus);
+        }
+
+    }
+
 }

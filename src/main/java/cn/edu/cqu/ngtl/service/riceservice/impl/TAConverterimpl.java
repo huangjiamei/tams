@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
+import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTStudentDaoJpa;
@@ -72,16 +73,26 @@ public class TAConverterimpl implements ITAConverter {
     @Autowired
     private UTClassInstructorDao classInstructorDao;
 
+    @Autowired
+    private UTInstructorDao utInstructorDao;
+
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
+
+        Map InstructorMap = new HashMap();
+        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
+        for(UTInstructor utInstructor :utInstructorList){
+            InstructorMap.put(utInstructor.getId(),utInstructor.getName());
+        }
+
 
         List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
         Map classInstructorMap = new HashMap();
         for(UTClassInstructor utClassInstructor : utClassInstructors){
             if(classInstructorMap.get(utClassInstructor.getClassId())!=null)
-                classInstructorMap.put(utClassInstructor.getClassId(),utClassInstructor.getUtInstructor().getName()+" "+classInstructorMap.get(utClassInstructor.getClassId()));
+                classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId())+" "+InstructorMap.get(utClassInstructor.getInstructorId()));
             else
-                classInstructorMap.put(utClassInstructor.getClassId(),utClassInstructor.getUtInstructor().getName());
+                classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId()));
         }
         //没有数据的话返回一行空数据，否则表格消失
         if(informationlist == null || informationlist.size() == 0) {
@@ -102,7 +113,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setCourseCode(information.getCourseCode());
             viewObject.setStatus(information.getStatusName());
             viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
-
+//            viewObject.setInstructorName("111");
             viewObjects.add(viewObject);
         }
 

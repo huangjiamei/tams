@@ -43,7 +43,10 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
 
     @Override
     public List<UTClassInstructor> getAllClassInstructor(){
-        return KRADServiceLocator.getDataObjectService().findAll(UTClassInstructor.class).getResults();
+        Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INSTRUCTOR t",UTClassInstructor.class);
+//        KRADServiceLocator.getDataObjectService().findAll(UTClassInstructor.class).getResults();
+
+        return query.getResultList();
     }
 
 

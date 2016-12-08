@@ -1,5 +1,9 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassApplyStatus;
+
+import java.util.List;
+
 /**
  * Created by tangjing on 16-11-26.
  */
@@ -10,4 +14,6 @@ public interface TAMSClassApplyStatusDao {
     boolean isInitializedStatus(String functionId, String classId);
 
     boolean toPreviousStatus(String[] roleIds, String functionId, String classId);
+
+    void saveApplyStatueByList(List<TAMSClassApplyStatus> tamsClassApplyStatuses);
 }

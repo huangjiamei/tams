@@ -24,8 +24,8 @@ public class UTClass extends DataObjectBase implements Serializable {
 
 	@Id
 	@Column(name = "UNIQUEID")
-    @GeneratedValue(generator="utClassSeq")
-    @SequenceGenerator(name="utClassSeq",sequenceName="UNITIME_CLASS_S",allocationSize=1)
+  /*  @GeneratedValue(generator="utClassSeq")
+    @SequenceGenerator(name="utClassSeq",sequenceName="UNITIME_CLASS_S",allocationSize=1)*/
 	private Integer id;
 
 	@Column(name = "COURSEOFFERING_ID")

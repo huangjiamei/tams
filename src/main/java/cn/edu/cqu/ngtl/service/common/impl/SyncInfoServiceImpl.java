@@ -3,15 +3,13 @@ package cn.edu.cqu.ngtl.service.common.impl;
 import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
-import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
-import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -114,10 +112,18 @@ public class SyncInfoServiceImpl implements SyncInfoService {
      * @throws SQLException
      */
     public void syncClassInfo(Connection connection) throws  SQLException{
+        List<UTClass> utClasses = new ArrayList<>();
+        List<UTCourseOffering> utCourseOfferings = new ArrayList<>();
+        List<UTCourseOfferingConfig> utCourseOfferingConfigs = new ArrayList<>();
+        List<UTConfigDetail> utConfigDetails = new ArrayList<>();
+
+
+        List<String> classNbrs = new ArrayList<>(); //判断是否有重复的教学班号，如果有，说明一个教学班有多个教师一起上
         List<UTCourse> allCourse = utCourseDao.selectAllMappedByDepartment();
         UTSession curSession = utSessionDao.getCurrentSession();
         String sessionPrefix = curSession.getYear()+curSession.getTerm();
         Map courseMap = new HashMap<>();
+        Map classInstructorMap = new HashMap<>();
         for(UTCourse course : allCourse){
             courseMap.put(course.getCodeR(),course.getId());
         }
@@ -130,9 +136,49 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             while(res.next()){
                 String courseCode = res.getString("KCMD");
                 String classNbr = res.getString("JXBH");
+                String editClassNbr = classNbr.replace("-","");
                 String auId = res.getString("SFRZH");
-                UTClass utClass = new UTClass();
-                utClass.setClassNumber(classNbr);
+                /**
+                 * Class对象
+                 */
+                if(!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
+                    classNbrs.add(classNbr);
+
+                    UTClass utClass = new UTClass();
+                    utClass.setClassNumber(classNbr);
+                    utClass.setId(Integer.parseInt(sessionPrefix + editClassNbr));//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
+                    utClasses.add(utClass);
+                    /**
+                     * CourseOffering对象
+                     */
+                    UTCourseOffering utCourseOffering = new UTCourseOffering();
+                    utCourseOffering.setId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utCourseOffering.setCourseId((Integer) courseMap.get(courseCode));
+                    utCourseOffering.setSessionId(curSession.getId());
+                    utCourseOfferings.add(utCourseOffering);
+                    /**
+                     * offeringConfig对象
+                     */
+                    UTCourseOfferingConfig utCourseOfferingConfig = new UTCourseOfferingConfig();
+                    utCourseOfferingConfig.setId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utCourseOfferingConfig.setCourseOfferingId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utCourseOfferingConfig.setConfigName("1");
+                    utCourseOfferingConfigs.add(utCourseOfferingConfig);
+                    /**
+                     * configDetail对象
+                     */
+                    UTConfigDetail utConfigDetail = new UTConfigDetail();
+                    utConfigDetail.setId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utConfigDetail.setConfigId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utConfigDetail.setKlassId(Integer.parseInt(sessionPrefix + editClassNbr));
+                    utConfigDetails.add(utConfigDetail);
+                }
+                //教学班号和身份认证号的关系
+                classInstructorMap.put(classNbr,auId);
+
+
+
+
 
                 //TODO 新建CO COC CD等几个表的List对象，然后按需调用方法存入数据库
             }

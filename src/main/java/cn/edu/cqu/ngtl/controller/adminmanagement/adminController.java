@@ -855,8 +855,10 @@ public class adminController extends BaseController {
         UTSession curSession = utSessionDao.getCurrentSession();
         if(curSession.getTerm().equals("春")){
             infoForm.setSpringTerm(true);
+            infoForm.setFallTerm(false);
         }else{
             infoForm.setFallTerm(true);
+            infoForm.setSpringTerm(false);
         }
 
         infoForm.setSessionFundings(

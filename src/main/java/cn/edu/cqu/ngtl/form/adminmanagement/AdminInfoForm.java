@@ -115,8 +115,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<DetailFundingViewObject> detailFunding;
 
-    private boolean SpringTerm;
-    private boolean FallTerm;
+    private boolean springTerm;
+    private boolean fallTerm;
 
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
@@ -1466,18 +1466,18 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     }
 
     public boolean isSpringTerm() {
-        return SpringTerm;
+        return springTerm;
     }
 
     public void setSpringTerm(boolean springTerm) {
-        SpringTerm = springTerm;
+        this.springTerm = springTerm;
     }
 
     public boolean isFallTerm() {
-        return FallTerm;
+        return fallTerm;
     }
 
     public void setFallTerm(boolean fallTerm) {
-        FallTerm = fallTerm;
+        this.fallTerm = fallTerm;
     }
 }

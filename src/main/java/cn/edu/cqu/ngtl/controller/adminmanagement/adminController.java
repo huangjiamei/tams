@@ -187,10 +187,10 @@ public class adminController extends BaseController {
     public ModelAndView getWorkFlowCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
+        adminInfoForm.setGetWorkFlowStatus("1");
         adminInfoForm.setTamsWorkflowStatuses(
                 adminService.getWorkFlowCategory()
         );
-
         return this.getModelAndView(adminInfoForm, "pageWorkFlowCategory");
     }
 
@@ -359,7 +359,9 @@ public class adminController extends BaseController {
         else{
             adminService.saveWorkFlowCategory(tamsWorkflowStatus);
         }
-        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+//        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+        return  this.getWorkFlowCategoryPage(infoForm);
+
     }
 
     /**
@@ -375,7 +377,8 @@ public class adminController extends BaseController {
         int index = parameters.getSelectedLineIndex();
         TAMSWorkflowStatus selectedWorkFlowStatus = infoForm.getTamsWorkflowStatuses().get(index);
         adminService.deleteWorkFlowCategory(selectedWorkFlowStatus);
-        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+//        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+        return  this.getWorkFlowCategoryPage(infoForm);
     }
 
 

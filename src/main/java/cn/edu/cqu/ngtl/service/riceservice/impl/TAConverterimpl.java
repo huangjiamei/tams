@@ -78,49 +78,66 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
-
-        /**
-         * 取出教师ID和姓名的组合
-         */
-        Map InstructorMap = new HashMap();
-        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructorsByEM();
-        for(UTInstructor utInstructor :utInstructorList){
-            InstructorMap.put(utInstructor.getId(),utInstructor.getName());
-        }
-
-        /**
-         * 取出classID和教师ID的组合
-         */
-        List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
-        Map classInstructorMap = new HashMap();
-        for(UTClassInstructor utClassInstructor : utClassInstructors){
-            if(classInstructorMap.get(utClassInstructor.getClassId())!=null) //如果一门课有多个教师，则将教师名字进行组合
-                classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId())+" "+classInstructorMap.get(utClassInstructor.getClassId()));
-            else
-                classInstructorMap.put(utClassInstructor.getClassId(),InstructorMap.get(utClassInstructor.getInstructorId()));
-        }
-        //没有数据的话返回一行空数据，否则表格消失
-        if(informationlist == null || informationlist.size() == 0) {
-            List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
-            nullObject.add(new ClassTeacherViewObject());
-            return nullObject;
-        }
         List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
+        if(informationlist.size() > 10) { //需要取出全部数据的阈值，具体数值待调整。
+            /**
+             * 取出教师ID和姓名的组合
+             */
+            System.out.println(System.currentTimeMillis());
+            Map InstructorMap = utInstructorDao.getAllInstructorNameIdMap();
+            System.out.println(System.currentTimeMillis());
+            /**
+             * 取出classID和教师ID的组合
+             */
+            List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
+            System.out.println(System.currentTimeMillis());
+            Map classInstructorMap = new HashMap();
+            for (UTClassInstructor utClassInstructor : utClassInstructors) {
+                if (classInstructorMap.get(utClassInstructor.getClassId()) != null) //如果一门课有多个教师，则将教师名字进行组合
+                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()) + " " + classInstructorMap.get(utClassInstructor.getClassId()));
+                else
+                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()));
+            }
+            System.out.println(System.currentTimeMillis());
+            //没有数据的话返回一行空数据，否则表格消失
+            if (informationlist == null || informationlist.size() == 0) {
+                List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
+                nullObject.add(new ClassTeacherViewObject());
+                return nullObject;
+            }
 
-        for (UTClassInformation information : informationlist) {
-            ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
 
-            viewObject.setId(information.getId());
-            viewObject.setClassNumber(information.getClassNumber());
-            viewObject.setDepartmentName(information.getDeptName());
-            viewObject.setCourseName(information.getCourseName());
-            viewObject.setCourseCode(information.getCourseCode());
-            viewObject.setStatus(information.getStatusName());
-            viewObject.setInstructorName((String)classInstructorMap.get(information.getId()));
-            viewObjects.add(viewObject);
+            for (UTClassInformation information : informationlist) {
+                ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
+                viewObject.setId(information.getId());
+                viewObject.setClassNumber(information.getClassNumber());
+                viewObject.setDepartmentName(information.getDeptName());
+                viewObject.setCourseName(information.getCourseName());
+                viewObject.setCourseCode(information.getCourseCode());
+                viewObject.setStatus(information.getStatusName());
+                viewObject.setInstructorName((String) classInstructorMap.get(information.getId()));
+                viewObjects.add(viewObject);
+            }
+            return viewObjects;
+        }else{
+            for (UTClassInformation information : informationlist) {
+                String instructorname ="";
+                List<UTClassInstructor> instructorName = classInstructorDao.selectByClassId(information.getId());
+                for(UTClassInstructor utClassInstructor :instructorName){
+                    instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
+                }
+                ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
+                viewObject.setId(information.getId());
+                viewObject.setClassNumber(information.getClassNumber());
+                viewObject.setDepartmentName(information.getDeptName());
+                viewObject.setCourseName(information.getCourseName());
+                viewObject.setCourseCode(information.getCourseCode());
+                viewObject.setStatus(information.getStatusName());
+                viewObject.setInstructorName(instructorname);
+                viewObjects.add(viewObject);
+            }
+            return viewObjects;
         }
-
-        return viewObjects;
     }
 
     @Override

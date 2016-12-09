@@ -30,9 +30,9 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 	@Column(name = "INSTRUCTOR_ID")
 	private String instructorId;
 
-//	@ManyToOne
-//	@JoinColumn(name = "INSTRUCTOR_ID",updatable=false, insertable=false)
-//	private UTInstructor utInstructor;
+	@ManyToOne
+	@JoinColumn(name = "INSTRUCTOR_ID",updatable=false, insertable=false)
+	private UTInstructor utInstructor;
 
 	@Column(name = "PERCENT_SHARE")
 	@Label("PERCENT_SHARE")
@@ -70,13 +70,13 @@ public class UTClassInstructor extends DataObjectBase implements Serializable{
 		this.instructorId = instructorId;
 	}
 
-//	public UTInstructor getUtInstructor() {
-//		return utInstructor;
-//	}
-//
-//	public void setUtInstructor(UTInstructor utInstructor) {
-//		this.utInstructor = utInstructor;
-//	}
+	public UTInstructor getUtInstructor() {
+		return utInstructor;
+	}
+
+	public void setUtInstructor(UTInstructor utInstructor) {
+		this.utInstructor = utInstructor;
+	}
 
 	public Integer getPercentShare() {
 		return percentShare;

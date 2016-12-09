@@ -14,7 +14,9 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.like;
@@ -55,6 +57,21 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		Query query = em.createNativeQuery("SELECT * FROM UNITIME_INSTRUCTOR",UTInstructor.class);
 		return query.getResultList();
 	}
+
+
+	@Override
+	public Map getAllInstructorNameIdMap(){
+		Map instructorMap = new HashMap();
+		Query query = em.createNativeQuery("SELECT t.NAME,t.UNIQUEID FROM UNITIME_INSTRUCTOR t");
+		List<Object> columns = query.getResultList();
+		for (Object column : columns) {
+			Object[] instructors = (Object[]) column;
+			instructorMap.put(instructors[1].toString(),instructors[0].toString());
+		}
+
+	return instructorMap;
+	}
+
 
 
 	@Override

@@ -9,7 +9,7 @@ import java.util.List;
  */
 public interface UTClassInstructorDao {
 
-    UTClassInstructor selectOneByClassId(Integer classId);
+    List<UTClassInstructor> selectByClassId(String classId);
 
     List<Object> selectClassIdsByInstructorId(String uId);
 

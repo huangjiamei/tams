@@ -4,6 +4,7 @@ package cn.edu.cqu.ngtl.dao.ut;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 
 import java.util.List;
+import java.util.Map;
 
 public interface UTInstructorDao {
 
@@ -19,5 +20,7 @@ public interface UTInstructorDao {
 
 
 	UTInstructor getInstructorByIdWithoutCache(String Id);
+
+	Map getAllInstructorNameIdMap();
 
 }

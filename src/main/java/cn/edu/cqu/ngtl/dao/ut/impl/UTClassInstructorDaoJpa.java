@@ -25,12 +25,12 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
     EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Override
-    public UTClassInstructor selectOneByClassId(Integer classId) {
+    public List<UTClassInstructor> selectByClassId(String classId) {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
-                equal("CLASS_ID", classId)
+                equal("classId", classId)
         );
         QueryResults<UTClassInstructor> queryResults = KradDataServiceLocator.getDataObjectService().findMatching(UTClassInstructor.class, criteria.build());
-        return queryResults.getResults().isEmpty()? null : queryResults.getResults().get(0);
+        return queryResults.getResults().isEmpty()? null : queryResults.getResults();
     }
 
     //根据教师的id查询批量class_id

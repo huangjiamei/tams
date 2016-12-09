@@ -33,6 +33,19 @@ public class DetailFundingViewObject implements Serializable {
 
     private String monthlySalary6;
 
+    private String monthlySalary7;
+
+    private String monthlySalary8;
+
+    private String monthlySalary9;
+
+    private String monthlySalary10;
+
+    private String monthlySalary11;
+
+    private String monthlySalary12;
+
+
     private String total;
 
 
@@ -146,5 +159,53 @@ public class DetailFundingViewObject implements Serializable {
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+
+    public String getMonthlySalary7() {
+        return monthlySalary7;
+    }
+
+    public void setMonthlySalary7(String monthlySalary7) {
+        this.monthlySalary7 = monthlySalary7;
+    }
+
+    public String getMonthlySalary8() {
+        return monthlySalary8;
+    }
+
+    public void setMonthlySalary8(String monthlySalary8) {
+        this.monthlySalary8 = monthlySalary8;
+    }
+
+    public String getMonthlySalary9() {
+        return monthlySalary9;
+    }
+
+    public void setMonthlySalary9(String monthlySalary9) {
+        this.monthlySalary9 = monthlySalary9;
+    }
+
+    public String getMonthlySalary10() {
+        return monthlySalary10;
+    }
+
+    public void setMonthlySalary10(String monthlySalary10) {
+        this.monthlySalary10 = monthlySalary10;
+    }
+
+    public String getMonthlySalary11() {
+        return monthlySalary11;
+    }
+
+    public void setMonthlySalary11(String monthlySalary11) {
+        this.monthlySalary11 = monthlySalary11;
+    }
+
+    public String getMonthlySalary12() {
+        return monthlySalary12;
+    }
+
+    public void setMonthlySalary12(String monthlySalary12) {
+        this.monthlySalary12 = monthlySalary12;
     }
 }

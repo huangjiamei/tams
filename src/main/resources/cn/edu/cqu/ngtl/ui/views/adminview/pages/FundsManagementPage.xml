@@ -1275,7 +1275,7 @@
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsBank"/>
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsBankNuber"/>
+                                                                                                                      p:propertyName="detailsBankNumber"/>
 
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsIDCard"/>
@@ -1284,16 +1284,6 @@
 
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsCourseCode"/>
-                                                                                                                <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsApplyFunds"/>
-
-                                                                                                                <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsPhdFunds"/>
-                                                                                                                <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsBonus"/>
-
-                                                                                                                <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsTrafficFunds"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsTotalFunds"/>
 
@@ -1350,22 +1340,6 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程编号"
                                                                                                                       p:propertyName="courseCode"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="批准津贴"
-                                                                                                                      p:propertyName="assignedFunding"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="博士津贴"
-                                                                                                                      p:propertyName="phdFunding"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="奖励"
-                                                                                                                      p:propertyName="bonus"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="交通补贴"
-                                                                                                                      p:propertyName="travelSubsidy"
-                                                                                                                      p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="1月实发"
                                                                                                                       p:propertyName="total"

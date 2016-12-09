@@ -59,7 +59,6 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         }
     }
 
-
     @Override
     public Map getAllClassIdAndInstructorId(Map InstructorMap){
         Map classInstructorMap = new HashMap();

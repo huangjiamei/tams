@@ -19,17 +19,7 @@ public class DetailFundingViewObject implements Serializable {
 
     private String courseName;
 
-    private String classNbr;
-
     private String courseCode;
-
-    private String assignedFunding;
-
-    private String phdFunding;
-
-    private String travelSubsidy;
-
-    private String bonus;
 
     private String monthlySalary1;
 
@@ -42,6 +32,19 @@ public class DetailFundingViewObject implements Serializable {
     private String monthlySalary5;
 
     private String monthlySalary6;
+
+    private String monthlySalary7;
+
+    private String monthlySalary8;
+
+    private String monthlySalary9;
+
+    private String monthlySalary10;
+
+    private String monthlySalary11;
+
+    private String monthlySalary12;
+
 
     private String total;
 
@@ -92,46 +95,6 @@ public class DetailFundingViewObject implements Serializable {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getClassNbr() {
-        return classNbr;
-    }
-
-    public void setClassNbr(String classNbr) {
-        this.classNbr = classNbr;
-    }
-
-    public String getAssignedFunding() {
-        return assignedFunding;
-    }
-
-    public void setAssignedFunding(String assignedFunding) {
-        this.assignedFunding = assignedFunding;
-    }
-
-    public String getPhdFunding() {
-        return phdFunding;
-    }
-
-    public void setPhdFunding(String phdFunding) {
-        this.phdFunding = phdFunding;
-    }
-
-    public String getTravelSubsidy() {
-        return travelSubsidy;
-    }
-
-    public void setTravelSubsidy(String travelSubsidy) {
-        this.travelSubsidy = travelSubsidy;
-    }
-
-    public String getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(String bonus) {
-        this.bonus = bonus;
     }
 
     public String getMonthlySalary1() {
@@ -196,5 +159,53 @@ public class DetailFundingViewObject implements Serializable {
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+
+    public String getMonthlySalary7() {
+        return monthlySalary7;
+    }
+
+    public void setMonthlySalary7(String monthlySalary7) {
+        this.monthlySalary7 = monthlySalary7;
+    }
+
+    public String getMonthlySalary8() {
+        return monthlySalary8;
+    }
+
+    public void setMonthlySalary8(String monthlySalary8) {
+        this.monthlySalary8 = monthlySalary8;
+    }
+
+    public String getMonthlySalary9() {
+        return monthlySalary9;
+    }
+
+    public void setMonthlySalary9(String monthlySalary9) {
+        this.monthlySalary9 = monthlySalary9;
+    }
+
+    public String getMonthlySalary10() {
+        return monthlySalary10;
+    }
+
+    public void setMonthlySalary10(String monthlySalary10) {
+        this.monthlySalary10 = monthlySalary10;
+    }
+
+    public String getMonthlySalary11() {
+        return monthlySalary11;
+    }
+
+    public void setMonthlySalary11(String monthlySalary11) {
+        this.monthlySalary11 = monthlySalary11;
+    }
+
+    public String getMonthlySalary12() {
+        return monthlySalary12;
+    }
+
+    public void setMonthlySalary12(String monthlySalary12) {
+        this.monthlySalary12 = monthlySalary12;
     }
 }

@@ -23,7 +23,7 @@ import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-
+import java.util.Map;
 /**
  * Created by awake on 2016/11/25.
  */
@@ -64,6 +64,58 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
         return list;
     }
 
+    @Override
+    public List<TAMSDeptFunding> selectDeptFundDraftCurrByCondition(Map<String, String > conditions) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        List<TAMSDeptFunding> list = new ArrayList<>();
+        //若输入框为空，则前后加通配符，若输入框不为空，则不加
+        int countNull = 0;
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            }
+        }
+        //若输入框不为空
+        if(countNull != 7) {
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING_DRAFT t WHERE t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'");
+            List<Object> columns = qr.getResultList();
+            for (Object column : columns) {
+                TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+                Object[] fundings = (Object[]) column;
+                deptFunding.setDepartment(departmentDao.getUTDepartmentById(Integer.valueOf(fundings[3].toString())));
+                deptFunding.setDepartmentId(((BigDecimal)fundings[3]).intValue());
+                deptFunding.setPlanFunding(String.valueOf(fundings[1]));
+                deptFunding.setApplyFunding(String.valueOf(fundings[7]));
+                deptFunding.setActualFunding(String.valueOf(fundings[2]));
+                deptFunding.setPhdFunding(String.valueOf(fundings[8]));
+                deptFunding.setBonus(String.valueOf(fundings[9]));
+                deptFunding.setTravelSubsidy(String.valueOf(fundings[10]));
+                list.add(deptFunding);
+            }
+            return list;
+        }
+        //若输入框都为空，则返回全部学院
+        else {
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING_DRAFT t WHERE t.SESSION_ID = '" + curSession.getId() + "'");
+            List<TAMSDeptFunding> columns = qr.getResultList();
+            for (Object column : columns) {
+                TAMSDeptFunding deptFunding = new TAMSDeptFunding();
+                Object[] fundings = (Object[]) column;
+                deptFunding.setDepartment(departmentDao.getUTDepartmentById(Integer.valueOf(fundings[3].toString())));
+                deptFunding.setDepartmentId(((BigDecimal)fundings[3]).intValue());
+                deptFunding.setPlanFunding(String.valueOf(fundings[1]));
+                deptFunding.setApplyFunding(String.valueOf(fundings[7]));
+                deptFunding.setActualFunding(String.valueOf(fundings[2]));
+                deptFunding.setPhdFunding(String.valueOf(fundings[8]));
+                deptFunding.setBonus(String.valueOf(fundings[9]));
+                deptFunding.setTravelSubsidy(String.valueOf(fundings[10]));
+                list.add(deptFunding);
+            }
+            return list;
+        }
+    }
 
     @Override
     public TAMSDeptFundingDraft selectDeptDraftFundsByDeptIdAndSession(Integer deptId, Integer sessionId){

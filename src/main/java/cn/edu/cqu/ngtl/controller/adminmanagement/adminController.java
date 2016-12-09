@@ -945,6 +945,33 @@ public class adminController extends BaseController {
     }
 
     /**
+     * 学院当前经费过滤
+     */
+    @RequestMapping(params =  {"methodToCall=searchCurrDeptFundingByCondition"})
+    public ModelAndView searchCurrDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm)  form;
+        super.baseStart(infoForm);
+
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("Dept", infoForm.getDepartmentId());
+        conditions.put("PlanFunding",infoForm.getDepartmentPreFunds());
+        conditions.put("ApplyFunding", infoForm.getDepartmentApplyFunds());
+        conditions.put("ApprovalFunding", infoForm.getDepartmentApprovalFunds());
+        conditions.put("PhdFunding", infoForm.getDepartmentAddingFunds());
+        conditions.put("Bonus", infoForm.getDepartmentRewardFunds());
+        conditions.put("TravelFunding", infoForm.getDepartmentTrafficFunds());
+        //转换成页面所需要的数据对象并调用DAO
+        infoForm.setDepartmentCurrFundings(
+                taConverter.departmentFundingToViewObject(
+                        adminService.getDeptFundCurrByCondition(conditions)
+                )
+        );
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+
+    /**
      * 课程经费过滤
      */
     @RequestMapping(params = {"methodToCall=searchClassFundingByCondition"})
@@ -991,6 +1018,38 @@ public class adminController extends BaseController {
         conditions.put("TravelFunding", infoForm.gettTrafficFunds());
         conditions.put("Bonus", infoForm.gettBonus());
         infoForm.setTaFunding(adminService.getTaFundByCondition(conditions));
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+    /**
+     *经费明细过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchDetailFundingByCondition"})
+    public ModelAndView searchDetailFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        //put conditions
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("Name", infoForm.getDetailsName());
+        conditions.put("Number", infoForm.getDetailsNumber());
+        conditions.put("Bank", infoForm.getDetailsBank());
+        conditions.put("BankNbr", infoForm.getDetailsBankNumber());
+        conditions.put("IdCard", infoForm.getDetailsIDCard());
+        conditions.put("CourseName", infoForm.getDetailsCourseName());
+        conditions.put("CourseCode", infoForm.getDetailsCourseCode());
+        conditions.put("month1", infoForm.getMonth1());
+        conditions.put("month2", infoForm.getMonth2());
+        conditions.put("month3", infoForm.getMonth3());
+        conditions.put("month4", infoForm.getMonth4());
+        conditions.put("month5", infoForm.getMonth5());
+        conditions.put("month6", infoForm.getMonth6());
+        conditions.put("month7", infoForm.getMonth7());
+        conditions.put("month8", infoForm.getMonth8());
+        conditions.put("month9", infoForm.getMonth9());
+        conditions.put("month10", infoForm.getMonth10());
+        conditions.put("month11", infoForm.getMonth11());
+        conditions.put("month12", infoForm.getMonth12());
+        infoForm.setDetailFunding(adminService.getDetailFundByCondition(conditions));
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 

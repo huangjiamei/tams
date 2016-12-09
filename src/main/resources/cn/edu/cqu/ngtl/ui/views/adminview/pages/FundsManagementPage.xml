@@ -461,11 +461,12 @@
                                                                                                                                   p:messageText="占位"/>
 
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="deptId"
+                                                                                                                                  p:propertyName="departmentId"
                                                                                                                                   p:style="margin-left:10px;">
                                                                                                                                 <property
                                                                                                                                         name="optionsFinder">
                                                                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+
                                                                                                                                           p:blankOption="true"/>
                                                                                                                                 </property>
                                                                                                                                 <property
@@ -477,19 +478,19 @@
 
                                                                                                                             <!--文字搜索-->
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dPreFunds"/>
+                                                                                                                                  p:propertyName="departmentPreFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dApplyFunds"/>
+                                                                                                                                  p:propertyName="departmentApplyFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dApprovalFunds"/>
+                                                                                                                                  p:propertyName="departmentApprovalFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dAddingFunds"/>
+                                                                                                                                  p:propertyName="departmentAddingFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dRewardFunds"/>
+                                                                                                                                  p:propertyName="departmentRewardFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dTrafficFunds"/>
+                                                                                                                                  p:propertyName="departmentTrafficFunds"/>
                                                                                                                             <bean parent="Uif-InputField"
-                                                                                                                                  p:propertyName="dTotalFunds"/>
+                                                                                                                                  p:propertyName="departmentTotalFunds"/>
                                                                                                                             <!--占位-->
                                                                                                                             <bean parent="Uif-MessageField"
                                                                                                                                   p:additionalCssClasses="hidden-fields"
@@ -499,7 +500,7 @@
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="查询"
                                                                                                                                   p:additionalCssClasses="icon-search"
-                                                                                                                                  p:methodToCall="xxxx"
+                                                                                                                                  p:methodToCall="searchCurrDeptFundingByCondition"
                                                                                                                                   p:style="margin:15px 5px;"/>
 
                                                                                                                         </list>
@@ -1274,7 +1275,7 @@
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsBank"/>
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsBankNuber"/>
+                                                                                                                      p:propertyName="detailsBankNumber"/>
 
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsIDCard"/>
@@ -1283,16 +1284,39 @@
 
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsCourseCode"/>
+
+                                                                                                                <!--每月工资明细-->
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsApplyFunds"/>
+                                                                                                                      p:propertyName="month1" p:render="@{#form.FallTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month2" p:render="@{#form.FallTerm}"/>
 
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsPhdFunds"/>
+                                                                                                                      p:propertyName="month3" p:render="@{#form.SpringTerm}"/>
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsBonus"/>
+                                                                                                                      p:propertyName="month4" p:render="@{#form.SpringTerm}"/>
 
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="detailsTrafficFunds"/>
+                                                                                                                      p:propertyName="month5" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month6" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month7" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month8" p:render="@{#form.SpringTerm}"/>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month9" p:render="@{#form.FallTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month10" p:render="@{#form.FallTerm}"/>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month11" p:render="@{#form.FallTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month12" p:render="@{#form.FallTerm}"/>
+
+
+
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsTotalFunds"/>
 
@@ -1349,22 +1373,6 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程编号"
                                                                                                                       p:propertyName="courseCode"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="批准津贴"
-                                                                                                                      p:propertyName="assignedFunding"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="博士津贴"
-                                                                                                                      p:propertyName="phdFunding"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="奖励"
-                                                                                                                      p:propertyName="bonus"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="交通补贴"
-                                                                                                                      p:propertyName="travelSubsidy"
-                                                                                                                      p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="1月实发"
                                                                                                                       p:propertyName="total"

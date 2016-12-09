@@ -250,6 +250,33 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
 **/
 
+    //学院当前经费过滤器
+    @Override
+    public List<TAMSDeptFunding> selectDeptFundCurrByCondition(Map<String, String> conditions) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        //此处不是模糊查询
+        //若输入框为空，则加一个通配符使其等于任意值，若输入框不为空，则不加
+        int countNull = 0;
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            }
+        }
+        //若输入框不为空
+        if(countNull != 7) {
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'", TAMSDeptFunding.class);
+            List<TAMSDeptFunding> list = qr.getResultList();
+            return list;
+        }
+        //若输入框都为空，则返回全部学院
+        else {
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID = '" + curSession.getId() + "'", TAMSDeptFunding.class);
+            List<TAMSDeptFunding> list = qr.getResultList();
+            return list;
+        }
+    }
+
     //学院历史经费过滤器
     @Override
     public List<TAMSDeptFunding> selectDeptFundPreByCondition(Map<String, String> conditions) {

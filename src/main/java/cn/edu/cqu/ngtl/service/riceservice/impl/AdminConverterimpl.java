@@ -1,9 +1,11 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTCourseDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
@@ -11,6 +13,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,6 +25,10 @@ import java.util.List;
  */
 @Service
 public class AdminConverterimpl implements IAdminConverter {
+
+    @Autowired
+    private UTSessionDao utSessionDao;
+
 
     private static final Logger logger = Logger.getRootLogger();
 
@@ -96,12 +103,13 @@ public class AdminConverterimpl implements IAdminConverter {
             logger.error("数据为空！");
             return null;
         }
+
+        UTSession curSession = utSessionDao.getCurrentSession();
         List<DetailFundingViewObject> detailFundingViewObjects = new ArrayList<>(tamsTas.size());
         for(TAMSTa ta : tamsTas) {
             DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
             UTCourse course = null;
             if(ta.getTaClass() != null) {
-                detailFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
@@ -113,29 +121,42 @@ public class AdminConverterimpl implements IAdminConverter {
             UTStudent taStu = ta.getTa();
             if(taStu != null) {
                 detailFundingViewObject.setTaName(taStu.getName());
+                detailFundingViewObject.setStuId(taStu.getId());
             }
             //暂时缺失的属性
-            detailFundingViewObject.setBankId("8888888888888888888");
-            detailFundingViewObject.setBankName("宇宙第一银行");
-            detailFundingViewObject.setIdentity("51300000000000023X");
-            detailFundingViewObject.setAssignedFunding(ta.getAssignedFunding());
-            detailFundingViewObject.setBonus(ta.getBonus());
-            detailFundingViewObject.setPhdFunding(ta.getPhdFunding());
-            detailFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy());
-            detailFundingViewObject.setMonthlySalary1("100");
-            detailFundingViewObject.setMonthlySalary2("200");
-            detailFundingViewObject.setMonthlySalary3("300");
-            detailFundingViewObject.setMonthlySalary4("400");
-            detailFundingViewObject.setMonthlySalary5("500");
-            detailFundingViewObject.setMonthlySalary6("600");
+            detailFundingViewObject.setBankId("缺失");
+            detailFundingViewObject.setBankName("缺失");
+            detailFundingViewObject.setIdentity(ta.getTa().getIdNumber());
+            detailFundingViewObject.setMonthlySalary1(ta.getMonth1());
+            detailFundingViewObject.setMonthlySalary2(ta.getMonth2());
+            detailFundingViewObject.setMonthlySalary3(ta.getMonth3());
+            detailFundingViewObject.setMonthlySalary4(ta.getMonth4());
+            detailFundingViewObject.setMonthlySalary5(ta.getMonth5());
+            detailFundingViewObject.setMonthlySalary6(ta.getMonth6());
+            detailFundingViewObject.setMonthlySalary7(ta.getMonth7());
+            detailFundingViewObject.setMonthlySalary8(ta.getMonth8());
+            detailFundingViewObject.setMonthlySalary9(ta.getMonth9());
+            detailFundingViewObject.setMonthlySalary10(ta.getMonth10());
+            detailFundingViewObject.setMonthlySalary11(ta.getMonth11());
+            detailFundingViewObject.setMonthlySalary12(ta.getMonth12());
+            Integer total = 0;
 
 
-            Integer total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1())+
-                    Integer.parseInt(detailFundingViewObject.getMonthlySalary2())+
-                    Integer.parseInt(detailFundingViewObject.getMonthlySalary3())+
-                    Integer.parseInt(detailFundingViewObject.getMonthlySalary4())+
-                    Integer.parseInt(detailFundingViewObject.getMonthlySalary5())+
-                    Integer.parseInt(detailFundingViewObject.getMonthlySalary6()));
+            if(curSession.getTerm().equals("春")) {
+                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary3()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary4()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary5()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary6()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary7()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary8()));
+            }else if(curSession.getTerm().equals("秋")){
+                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary2()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary9()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary10()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary11()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary12()));
+            }
             detailFundingViewObject.setTotal(total.toString());
             detailFundingViewObjects.add(detailFundingViewObject);
         }

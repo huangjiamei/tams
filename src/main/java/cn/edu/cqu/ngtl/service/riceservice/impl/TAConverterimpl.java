@@ -689,6 +689,21 @@ public class TAConverterimpl implements ITAConverter {
         }
         for(TAMSDeptFunding deptFunding : allFundingBySession){
             DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
+            /*
+            String zero = "0";
+            if(deptFunding.getTravelSubsidy().equals("null"))
+                deptFunding.setTravelSubsidy(zero);
+            if(deptFunding.getPlanFunding().equals("null"))
+                deptFunding.setPlanFunding(zero);
+            if(deptFunding.getActualFunding().equals("null"))
+                deptFunding.setActualFunding(zero);
+            if(deptFunding.getApplyFunding().equals("null"))
+                deptFunding.setApplyFunding(zero);
+            if(deptFunding.getBonus().equals("null"))
+                deptFunding.setBonus(zero);
+            if(deptFunding.getPhdFunding().equals("null"))
+                deptFunding.setPhdFunding(zero);
+            */
             viewObject.setDepartmentId(deptFunding.getDepartmentId());
             viewObject.setBonus(deptFunding.getBonus());
             viewObject.setApplyFunding(deptFunding.getApplyFunding());
@@ -699,7 +714,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTrafficFunding(deptFunding.getTravelSubsidy());
             Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
                     Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
-                    Integer.valueOf(deptFunding.getPlanFunding());
+                    Integer.valueOf(deptFunding.getPlanFunding()) + Integer.valueOf(deptFunding.getTravelSubsidy());
             viewObject.setTotal(total.toString());
             if (deptFunding.getSession() != null ){
                 viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +

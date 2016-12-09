@@ -26,4 +26,6 @@ public interface TAMSDeptFundingDao {
     TAMSDeptFunding selectDeptFundsByDeptIdAndSession(Integer deptId,Integer sessionId);
 
     boolean saveOneByEntity(TAMSDeptFunding tamsDeptFunding);
+
+    List<TAMSDeptFunding> selectDeptFundCurrByCondition(Map<String, String> conditions);
 }

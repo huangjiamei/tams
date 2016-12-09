@@ -131,7 +131,91 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean id="taListTable" parent="Uif-Disclosure-TableCollectionSection">
+
+                                                                <!--搜索框-->
+                                                                <bean id="searchTaListTable" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
+
+                                                                            <!--课程名称-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taCourseName"/>
+                                                                            <!--课程编号-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taCourseCode"/>
+                                                                            <!--教学班-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taClassNumber"/>
+                                                                            <!--教师-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taTeacherName"/>
+                                                                            <!--助教-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taAssitantName"/>
+                                                                            <!--助教学号-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taAssitantIDNumber"/>
+
+                                                                            <!--助教学历-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taAssitantMasterMajorName">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaTaskCategoryFinder"
+                                                                                          p:blankOption="true"/><!--改为相应的optionFinder-->
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <!--教师考核-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taTeacherAppraise">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <!--学生考核-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taStuAppraise">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <!--成绩-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taScore"/>
+                                                                            <!--评优-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taStatus"/>
+
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位" />
+
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="查询"
+                                                                                  p:additionalCssClasses="icon-search hidden-fields search-button"
+                                                                                  p:methodToCall="xxxx"
+                                                                                  p:style="margin:15px"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean id="taListTable" parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTaListTable,taListTable);">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject"/>
                                                                     <property name="propertyName" value="allTaInfo"/>

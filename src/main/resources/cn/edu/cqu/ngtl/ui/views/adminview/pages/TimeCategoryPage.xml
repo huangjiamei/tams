@@ -114,7 +114,6 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加时间类别"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="xxxx"
                                                                                   p:actionScript="showDialog('addTimeCategoryDialog');"
                                                                                   p:additionalCssClasses="icon-plus bg-success tamsbtn"><!--methodToCall做了就删除actionScript-->
                                                                             </bean>
@@ -134,8 +133,8 @@
                                                                       p:layoutManager.numberOfColumns="1">
                                                                     <property name="headerText" value="Table Layout"/>
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType"/>
-                                                                    <property name="propertyName" value="allIssueTypes"/><!--collectionObjectClass和propertyName都要改-->
+                                                                              value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettingType"/>
+                                                                    <property name="propertyName" value="allTimeTypes"/><!--collectionObjectClass和propertyName都要改-->
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="false"/>
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
@@ -160,10 +159,7 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="xxxx"><!--后期做了methodToCall可以删除confirmationDialog-->
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="editTimeCategoryDialog" />
-                                                                                            </property>
+                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="modifyTimeCategory"><!--后期做了methodToCall可以删除confirmationDialog-->
                                                                                             <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
@@ -216,7 +212,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="任务"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="issueType.typeName"/><!--propertyName改为相应的-->
+                                              p:propertyName="timeSettingType.typeName"/><!--propertyName改为相应的-->
                                     </list>
                                 </property>
                             </bean>
@@ -229,7 +225,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveTimeCategoryPage" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
@@ -250,7 +246,7 @@
                                         <bean parent="Uif-MessageField" p:label="类别"
                                               p:messageText="任务"/>
                                         <bean parent="Uif-InputField" p:label="名称"
-                                              p:propertyName="issueType.typeName"/>
+                                              p:propertyName="timeSettingType.typeName"/>
                                     </list>
                                 </property>
                             </bean>
@@ -264,7 +260,7 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:successCallback="dismissDialog('editTimeCategoryDialog');"/>
+                      p:methodToCall="saveTimeCategoryPage" p:successCallback="dismissDialog('editTimeCategoryDialog');"/>
             </list>
         </property>
     </bean>
@@ -280,7 +276,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="deleteTimeCategoryPage" p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

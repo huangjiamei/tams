@@ -33,6 +33,9 @@ public class AdminServiceImpl implements IAdminService{
     private static final Logger logger = Logger.getRootLogger();
 
     @Autowired
+    private TAMSTimeSettingTypeDao timeSettingTypeDao;
+
+    @Autowired
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
 
     @Autowired
@@ -591,7 +594,18 @@ public class AdminServiceImpl implements IAdminService{
         return true;
     }
 
+    @Override
+    public List<TAMSTimeSettingType> getAllTimeCategory() {
+        return timeSettingTypeDao.selectAll();
+    }
 
+    @Override
+    public boolean saveTimeCategory(TAMSTimeSettingType timeSettingType) {
+        return timeSettingTypeDao.insertOneByEntity(timeSettingType);
+    }
 
-
+    @Override
+    public boolean deleteTimeCategory(TAMSTimeSettingType timeSettingType) {
+        return timeSettingTypeDao.deleteOneByEntity(timeSettingType);
+    }
 }

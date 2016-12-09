@@ -810,7 +810,7 @@ public class adminController extends BaseController {
         if(curSession.getTerm().equals("春")){
             infoForm.setSpringTerm(true);
         }else{
-            infoForm.setSpringTerm(false);
+            infoForm.setFallTerm(true);
         }
 
         infoForm.setSessionFundings(

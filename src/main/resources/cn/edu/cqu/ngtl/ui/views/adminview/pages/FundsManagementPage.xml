@@ -1364,15 +1364,15 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="交通补贴"
                                                                                                                       p:propertyName="travelSubsidy"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="1月实发"
                                                                                                                       p:propertyName="total"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="2月实发"
                                                                                                                       p:propertyName="total"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="3月实发"
                                                                                                                       p:propertyName="total"
@@ -1400,19 +1400,19 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="9月实发"
                                                                                                                       p:propertyName="total"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="10月实发"
                                                                                                                       p:propertyName="total"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="11月实发"
                                                                                                                       p:propertyName="total"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="12月实发"
                                                                                                                       p:propertyName="total"
-                                                                                                                      p:sortAs="numeric" p:render="@{#form.SpringTerm}"/>
+                                                                                                                      p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="实发总额"
                                                                                                                       p:propertyName="total"

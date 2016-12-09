@@ -100,11 +100,6 @@ public class TAConverterimpl implements ITAConverter {
 //            }
             System.out.println(System.currentTimeMillis());
             //没有数据的话返回一行空数据，否则表格消失
-            if (informationlist == null || informationlist.size() == 0) {
-                List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
-                nullObject.add(new ClassTeacherViewObject());
-                return nullObject;
-            }
 
 
             for (UTClassInformation information : informationlist) {
@@ -120,6 +115,13 @@ public class TAConverterimpl implements ITAConverter {
             }
             return viewObjects;
         }else{
+
+            if (informationlist == null || informationlist.size() == 0) {
+                List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
+                nullObject.add(new ClassTeacherViewObject());
+                return nullObject;
+            }
+
             for (UTClassInformation information : informationlist) {
                 String instructorname ="";
                 List<UTClassInstructor> instructorName = classInstructorDao.selectByClassId(information.getId());

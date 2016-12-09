@@ -765,7 +765,7 @@ function showDialogMenu(){
     jQuery(".dropdown-toggle").click(function(a) {
         jQuery("#navDialog").hide();
     });
-    jQuery("#sessionTermName").click(function(a) {
+    jQuery("#sessionTermInfo").click(function(a) {
         jQuery("#navDialog").hide();
     });
 }
@@ -792,7 +792,7 @@ function showDialogTerm(){
 function setColor(){
 
     var currenTr=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody > tr");
-    var currenSession=jQuery("#sessionTermName").text();
+    var currenSession=jQuery("#sessionTermMessage").text();
 
     for (var i = 0; i < currenTr.length; i++) {
         var currenSpan=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody").children("tr:eq("+i+")").children("td:eq(0)").children("div:eq(0)").children("span:eq(0)");

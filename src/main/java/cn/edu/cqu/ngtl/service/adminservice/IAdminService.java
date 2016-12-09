@@ -115,4 +115,10 @@ public interface IAdminService {
     boolean saveWorkFlowCategory(TAMSWorkflowStatus tamsWorkflowStatus);
 
     boolean deleteWorkFlowCategory(TAMSWorkflowStatus tamsWorkflowStatus);
+
+    List<TAMSTimeSettingType> getAllTimeCategory();
+
+    boolean saveTimeCategory(TAMSTimeSettingType timeSettingType);
+
+    boolean deleteTimeCategory(TAMSTimeSettingType timeSettingType);
 }

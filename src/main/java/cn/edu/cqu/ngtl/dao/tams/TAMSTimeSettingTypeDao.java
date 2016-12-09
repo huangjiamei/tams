@@ -11,7 +11,7 @@ public interface TAMSTimeSettingTypeDao {
 
     List<TAMSTimeSettingType> selectAll();
 
-    boolean insetOneByEntity(TAMSTimeSettingType settingType);
+    boolean insertOneByEntity(TAMSTimeSettingType settingType);
 
     boolean deleteOneByEntity(TAMSTimeSettingType settingType);
 

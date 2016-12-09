@@ -3,10 +3,7 @@ package cn.edu.cqu.ngtl.form.adminmanagement;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSIssueType;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaCategory;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTimeSettings;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
@@ -22,7 +19,12 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = -1974217788100313751L;
 
+    /**
+     * 时间类别管理页面
+     */
+    private List<TAMSTimeSettingType> allTimeTypes;
 
+    private TAMSTimeSettingType timeSettingType;
 
     /**
      * 工作流管理页面相关
@@ -234,6 +236,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String test;
     private String checkboxesTest;
     private String ConnectMessage;
+
+    public TAMSTimeSettingType getTimeSettingType() {
+        return timeSettingType;
+    }
+
+    public void setTimeSettingType(TAMSTimeSettingType timeSettingType) {
+        this.timeSettingType = timeSettingType;
+    }
+
+    public List<TAMSTimeSettingType> getAllTimeTypes() {
+        return allTimeTypes;
+    }
+
+    public void setAllTimeTypes(List<TAMSTimeSettingType> allTimeTypes) {
+        this.allTimeTypes = allTimeTypes;
+    }
 
     public String getCheckboxesTest() {
         return checkboxesTest;

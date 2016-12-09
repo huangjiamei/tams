@@ -1284,6 +1284,39 @@
 
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsCourseCode"/>
+
+                                                                                                                <!--每月工资明细-->
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month1" p:render="@{#form.FallTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month2" p:render="@{#form.FallTerm}"/>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month3" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month4" p:render="@{#form.SpringTerm}"/>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month5" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month6" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month7" p:render="@{#form.SpringTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month8" p:render="@{#form.SpringTerm}"/>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month9" p:render="@{#form.FallTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month10" p:render="@{#form.FallTerm}"/>
+
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month11" p:render="@{#form.FallTerm}"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="month12" p:render="@{#form.FallTerm}"/>
+
+
+
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="detailsTotalFunds"/>
 

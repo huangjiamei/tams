@@ -216,7 +216,7 @@ public class adminController extends BaseController {
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTimeCategoryPage&viewId=AdminView
      * @param form
-     * @return 同步信息页面
+     * @return 时间类别管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getTimeCategoryPage")
@@ -224,10 +224,55 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
-        adminInfoForm.setAllIssueTypes(adminService.getAllIssueTypes());
+        adminInfoForm.setAllTimeTypes(adminService.getAllTimeCategory());
         return this.getModelAndView(adminInfoForm, "pageTimeCategory");
     }
 
+    /**
+     * 修改时间类别，需要获取当前所要修改的对象
+     */
+    @RequestMapping(params = "methodToCall=modifyTimeCategory")
+    public ModelAndView modifyTimeCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = parameters.getSelectedLineIndex();
+        infoForm.setTimeSettingType(infoForm.getAllTimeTypes().get(index));
+        //用于判断是修改还是添加
+        infoForm.setIndex(index);
+        return this.showDialog("editTimeCategoryDialog", true, infoForm);
+    }
+
+    /**
+     * 保存时间类别
+     */
+    @RequestMapping(params = "methodToCall=saveTimeCategoryPage")
+    public ModelAndView saveTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        TAMSTimeSettingType timeSettingType = infoForm.getTimeSettingType();
+        adminService.saveTimeCategory(timeSettingType);
+        return this.getTimeCategoryPage(infoForm);
+    }
+
+    /**
+     * 删除时间类别
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=deleteTimeCategoryPage")
+    public ModelAndView deleteTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        //获取某一行
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = parameters.getSelectedLineIndex();
+        TAMSTimeSettingType timeSettingType = infoForm.getAllTimeTypes().get(index);
+        adminService.deleteTimeCategory(timeSettingType);
+        return this.getTimeCategoryPage(infoForm);
+    }
 
     /**
      * 工作流类型过滤

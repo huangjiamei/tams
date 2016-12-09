@@ -173,7 +173,7 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
-                      p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="selectCurSession"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
 
             </list>

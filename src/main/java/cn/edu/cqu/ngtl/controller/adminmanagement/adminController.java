@@ -72,6 +72,7 @@ public class adminController extends BaseController {
     private UTSessionDao utSessionDao;
 
 
+
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
         String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
@@ -1860,7 +1861,14 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageSystemParameter");
     }
 
-
+    @RequestMapping(params =  {"methodToCall=selectCurSession"})
+    public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
+        request.getParameterMap().get("pageId");
+        return this.getModelAndView(infoForm, infoForm.getPageId());
+    }
 
     @Override
     protected UifFormBase createInitialForm() {

@@ -1,12 +1,14 @@
 package cn.edu.cqu.ngtl.controller.homemanagement;
 
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.form.commonhome.CommonHomePage;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.web.form.UifFormBase;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,6 +23,10 @@ import javax.servlet.http.HttpServletResponse;
 @Controller
 @RequestMapping("/home")
 public class HomeController extends BaseController {
+
+    @Autowired
+    private UTSessionDao utSessionDao;
+
 
     private final static String KRAD_PATH="portal";
     private final static String CONTROLLER_PATH="home";
@@ -49,6 +55,18 @@ public class HomeController extends BaseController {
                 KRAD_PATH,CONTROLLER_PATH,HOMEPAGE_METHOD,VIEW_ID));
         return this.performRedirect(form, redirectUrl.toString());
     }
+
+
+    @RequestMapping(params =  {"methodToCall=selectCurSession"})
+    public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        CommonHomePage homeForm = (CommonHomePage) form;
+        super.baseStart(homeForm);
+        utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(homeForm.getSessionTermFinder())));
+        request.getParameterMap().get("pageId");
+        return this.getModelAndView(homeForm, homeForm.getPageId());
+    }
+
+
 
     @Override
     protected UifFormBase createInitialForm() {

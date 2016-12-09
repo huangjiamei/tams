@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.krim.*;
@@ -41,6 +42,7 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 /**
  * Created by awake on 2016-10-21.
  */
@@ -65,6 +67,9 @@ public class adminController extends BaseController {
 
     @Autowired
     private ITAService taService;
+
+    @Autowired
+    private UTSessionDao utSessionDao;
 
 
     @RequestMapping(params = "methodToCall=logout")
@@ -798,6 +803,16 @@ public class adminController extends BaseController {
         );
         */
 
+        /*
+            确定当前是春季还是秋季
+         */
+        UTSession curSession = utSessionDao.getCurrentSession();
+        if(curSession.getTerm().equals("春")){
+            infoForm.setSpringTerm(true);
+        }else{
+            infoForm.setSpringTerm(false);
+        }
+
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
                         adminService.getCurrFundingBySession()
@@ -857,10 +872,6 @@ public class adminController extends BaseController {
 
        return this.getModelAndView(infoForm, "pageFundsManagement");
     }
-
-
-
-
 
         /**
          * 学校（批次）历史经费过滤

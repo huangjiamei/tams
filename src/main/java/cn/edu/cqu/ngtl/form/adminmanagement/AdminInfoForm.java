@@ -113,6 +113,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<DetailFundingViewObject> detailFunding;
 
+    private boolean SpringTerm;
+
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
      * TAB_FLAG_SCHOOL：学校tab
@@ -1370,5 +1372,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setDetailsTotalFunds(String detailsTotalFunds) {
         this.detailsTotalFunds = detailsTotalFunds;
+    }
+
+    public boolean isSpringTerm() {
+        return SpringTerm;
+    }
+
+    public void setSpringTerm(boolean springTerm) {
+        SpringTerm = springTerm;
     }
 }

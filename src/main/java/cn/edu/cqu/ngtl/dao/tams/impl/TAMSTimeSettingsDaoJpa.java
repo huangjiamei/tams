@@ -76,6 +76,19 @@ public class TAMSTimeSettingsDaoJpa implements TAMSTimeSettingsDao {
     }
 
     @Override
+    public TAMSTimeSettings selectByTypeIdAndSessionId(String typeId, String sessionId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("timeSettingTypeId" , typeId),
+                        equal("sessionId", sessionId)
+                )
+        );
+        QueryResults<TAMSTimeSettings> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTimeSettings.class, criteria.build());
+        return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
+    }
+
+    @Override
     public List<TAMSTimeSettings> selectAll() {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create();
         OrderByField orderByField = OrderByField.Builder.create("timeSettingType.id", OrderDirection.DESCENDING).build();

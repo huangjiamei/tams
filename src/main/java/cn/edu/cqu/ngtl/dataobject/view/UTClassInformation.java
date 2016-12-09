@@ -43,7 +43,7 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     private Integer roomId;
 
     @Column(name = "COURSEOFFERING_ID")
-    private Integer courseOfferingId;
+    private String courseOfferingId;
 
 
     @Column(name = "SESSION_ID")
@@ -161,11 +161,11 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
         this.id = id;
     }
 
-    public Integer getCourseOfferingId() {
+    public String getCourseOfferingId() {
         return courseOfferingId;
     }
 
-    public void setCourseOfferingId(Integer courseOfferingId) {
+    public void setCourseOfferingId(String courseOfferingId) {
         this.courseOfferingId = courseOfferingId;
     }
 

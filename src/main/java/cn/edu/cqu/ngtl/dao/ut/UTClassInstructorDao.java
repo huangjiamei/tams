@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.dao.ut;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
@@ -16,5 +17,7 @@ public interface UTClassInstructorDao {
     List<UTClassInstructor> getAllClassInstructor();
 
     void saveClassInstructorByList(List<UTClassInstructor> utClassInstructors);
+
+    Map getAllClassIdAndInstructorId(Map InstructorMap);
 
 }

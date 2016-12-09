@@ -493,7 +493,7 @@ function refreshTableFilter(searchbox,tablebox) {
  * @param smallTitle 副标题
  */
 function initContentHeader(id,icon,bigTitle,smallTitle) {
-    jQuery('#'+id).html('<h2> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h2>');
+    jQuery('#'+id).html('<h3> <i class="'+icon+'"></i> '+bigTitle+' |<small> '+smallTitle+'</small></h3>');
 }
 
 
@@ -803,3 +803,37 @@ function setColor(){
     }
 
 }
+
+jQuery(document).ready(function(){
+    jQuery("table.uif-tableCollectionLayout tbody tr:odd").css("background-color","rgba(243, 156, 18, 0.2)");//隔行变色-奇行
+    jQuery("table.uif-tableCollectionLayout tbody tr:even").css("background-color","white");//隔行变色-偶行
+
+    //助教列表点击checkbox变色
+    jQuery("#taListTable table.uif-tableCollectionLayout>tbody>tr>td>div>input:eq(1):has(:checked)").parent().find("td").addClass("selected");//给当前选择行的所有td加class，如果是tr，全部列表加上背景色，就不是该行了。
+    jQuery("#taListTable table.uif-tableCollectionLayout>tbody>tr").click(function(){//点击整行可以更改checkbox的状态以及背景色
+        if(jQuery(this).find(":checkbox").attr("checked")){//点击时，如果是选中状态，移除样式，checkbox为false；
+            jQuery(this).find("td").removeClass("selected")
+                .end().find(":checkbox").attr("checked",false);
+        }else{
+            jQuery(this).find("td").addClass("selected")
+                .end().find(":checkbox").attr("checked",true);//没选中状态，加上样式，checkbox为true;
+        }
+    });
+
+    //课程列表点击checkbox变色
+    jQuery("#ClassListPageTable table.uif-tableCollectionLayout>tbody>tr>td>div>input:eq(1):has(:checked)").parent().find("td").addClass("selected");
+    jQuery("#ClassListPageTable table.uif-tableCollectionLayout>tbody>tr").click(function(){
+        if(jQuery(this).find(":checkbox").attr("checked")){
+            jQuery(this).find("td").removeClass("selected")
+                .end().find(":checkbox").attr("checked",false);
+        }else{
+            jQuery(this).find("td").addClass("selected")
+                .end().find(":checkbox").attr("checked",true);
+        }
+    });
+
+
+    jQuery(":checkbox").click(function(){
+        jQuery(this).parents("tr").trigger("click");
+    });
+});

@@ -57,7 +57,7 @@
                 <!--学期信息-->
                 <bean id="sessionTermInfo" parent="Uif-ActionLink"
                       p:iconClass="icon-time"
-                      p:style="font-size:17px;"
+                      p:style="font-size:18px;"
                       p:actionScript="showDialogTerm();"/>
                 <bean id="sessionTermMessage" parent="Uif-ActionLink"
                       p:actionLabel="@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}"
@@ -65,7 +65,7 @@
 
                 <!--user info-->
                 <bean id="userInfo" parent="Uif-DropdownToggleMenu"
-                      p:iconClass="icon-user" p:style="font-size:17px;"><!--p:toggleText="@{user.getName()}"-->
+                      p:iconClass="icon-user" p:style="font-size:18px;"><!--p:toggleText="@{user.getName()}"-->
                     <property name="menuItems">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
@@ -491,12 +491,6 @@
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
                                   p:linkText="批次管理" p:iconClass="icon-th-list menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTermManagerPage')}"/>
-                            <!--<bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"-->
-                                  <!--p:linkText="课程类别管理" p:iconClass="icon-th menuIcon"/>-->
-                            <!--<bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"-->
-                                  <!--p:linkText="助教类别管理" p:iconClass="icon-tasks menuIcon"/>-->
-                            <!--<bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"-->
-                                  <!--p:linkText="任务类别管理" p:iconClass="icon-file menuIcon"/>-->
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
                                   p:linkText="经费管理" p:iconClass="icon-money menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewFundsManagementPage')}"/>
@@ -506,13 +500,10 @@
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
                                   p:linkText="时间管理" p:iconClass="icon-time menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTimeSettingsPage')}"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowCategoryPage&amp;viewId=AdminView"
-                                  p:linkText="工作流任务类别管理" p:iconClass="icon-file menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowCategoryPage')}"/>
+
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSystemParameterPage&amp;viewId=AdminView"
                                   p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeCategoryPage&amp;viewId=AdminView"
-                                  p:linkText="时间类型管理" p:iconClass="icon-time menuIcon"/>
+
                         </list>
                     </property>
                 </bean>

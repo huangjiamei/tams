@@ -217,7 +217,7 @@
                                                                 <!--table-->
                                                                 <bean id="TermManageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTerm,TermManageTable);setColor();"
+                                                                      p:onDocumentReadyScript="setColor();"
                                                                       p:layoutManager.numberOfColumns="6">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>
@@ -402,7 +402,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveTerm" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveTerm" p:dialogDismissOption="REQUEST" p:successCallback="refreshPage();"/>
             </list>
         </property>
     </bean>
@@ -503,7 +503,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveTerm" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="saveTerm" p:dialogDismissOption="REQUEST" p:refreshId="TermManagementPage"/>
             </list>
         </property>
     </bean>
@@ -535,7 +535,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="setCurrentSession"  p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="setCurrentSession"  p:dialogDismissOption="REQUEST" p:successCallback="refreshPage();"/>
             </list>
         </property>
     </bean>

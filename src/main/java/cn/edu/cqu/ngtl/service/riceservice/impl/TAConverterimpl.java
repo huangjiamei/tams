@@ -89,15 +89,15 @@ public class TAConverterimpl implements ITAConverter {
             /**
              * 取出classID和教师ID的组合
              */
-            List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
+//            List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
             System.out.println(System.currentTimeMillis());
-            Map classInstructorMap = new HashMap();
-            for (UTClassInstructor utClassInstructor : utClassInstructors) {
-                if (classInstructorMap.get(utClassInstructor.getClassId()) != null) //如果一门课有多个教师，则将教师名字进行组合
-                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()) + " " + classInstructorMap.get(utClassInstructor.getClassId()));
-                else
-                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()));
-            }
+            Map classInstructorMap = classInstructorDao.getAllClassIdAndInstructorId(InstructorMap);
+//            for (UTClassInstructor utClassInstructor : utClassInstructors) {
+//                if (classInstructorMap.get(utClassInstructor.getClassId()) != null) //如果一门课有多个教师，则将教师名字进行组合
+//                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()) + " " + classInstructorMap.get(utClassInstructor.getClassId()));
+//                else
+//                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()));
+//            }
             System.out.println(System.currentTimeMillis());
             //没有数据的话返回一行空数据，否则表格消失
             if (informationlist == null || informationlist.size() == 0) {

@@ -11,7 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
@@ -57,5 +59,20 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         }
     }
 
+
+    @Override
+    public Map getAllClassIdAndInstructorId(Map InstructorMap){
+        Map classInstructorMap = new HashMap();
+        Query query = em.createNativeQuery("SELECT t.CLASS_ID,t.INSTRUCTOR_ID FROM UNITIME_CLASS_INSTRUCTOR t");
+        List<Object> columns = query.getResultList();
+        for (Object column : columns) {
+            Object[] insIdAndClassId = (Object[]) column;
+            if (classInstructorMap.get(insIdAndClassId[0].toString()) != null) //如果一门课有多个教师，则将教师名字进行组合
+                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]) + " " + classInstructorMap.get(insIdAndClassId[0].toString()));
+            else
+                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]));
+        }
+        return classInstructorMap;
+    }
 
 }

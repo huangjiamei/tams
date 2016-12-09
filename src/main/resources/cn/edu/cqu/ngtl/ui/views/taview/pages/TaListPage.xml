@@ -131,7 +131,7 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                <bean id="taListTable" parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject"/>
                                                                     <property name="propertyName" value="allTaInfo"/>
@@ -148,8 +148,8 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label=""
-                                                                                  p:propertyName="checkBox">
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="checkBox" >
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

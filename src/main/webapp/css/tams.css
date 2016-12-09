@@ -818,3 +818,8 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .modal {
     background: rgba(0, 0, 0, 0);
 }
+
+/*checkbox选择背景色*/
+td.selected{
+    background-color:#d0e9c6;
+}

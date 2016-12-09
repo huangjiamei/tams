@@ -19,17 +19,7 @@ public class DetailFundingViewObject implements Serializable {
 
     private String courseName;
 
-    private String classNbr;
-
     private String courseCode;
-
-    private String assignedFunding;
-
-    private String phdFunding;
-
-    private String travelSubsidy;
-
-    private String bonus;
 
     private String monthlySalary1;
 
@@ -92,46 +82,6 @@ public class DetailFundingViewObject implements Serializable {
 
     public void setCourseName(String courseName) {
         this.courseName = courseName;
-    }
-
-    public String getClassNbr() {
-        return classNbr;
-    }
-
-    public void setClassNbr(String classNbr) {
-        this.classNbr = classNbr;
-    }
-
-    public String getAssignedFunding() {
-        return assignedFunding;
-    }
-
-    public void setAssignedFunding(String assignedFunding) {
-        this.assignedFunding = assignedFunding;
-    }
-
-    public String getPhdFunding() {
-        return phdFunding;
-    }
-
-    public void setPhdFunding(String phdFunding) {
-        this.phdFunding = phdFunding;
-    }
-
-    public String getTravelSubsidy() {
-        return travelSubsidy;
-    }
-
-    public void setTravelSubsidy(String travelSubsidy) {
-        this.travelSubsidy = travelSubsidy;
-    }
-
-    public String getBonus() {
-        return bonus;
-    }
-
-    public void setBonus(String bonus) {
-        this.bonus = bonus;
     }
 
     public String getMonthlySalary1() {

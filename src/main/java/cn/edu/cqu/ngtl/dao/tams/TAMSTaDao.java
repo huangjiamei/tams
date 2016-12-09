@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
@@ -47,4 +48,7 @@ public interface TAMSTaDao {
     boolean toNextStatus(String[] roleIds, String functionId, String taId);
 
     boolean toPreviousStatus(String[] roleIds, String functionId, String taId);
+
+    List<DetailFundingViewObject> selectDetailFundByCondition(Map<String, String> conditions);
+
 }

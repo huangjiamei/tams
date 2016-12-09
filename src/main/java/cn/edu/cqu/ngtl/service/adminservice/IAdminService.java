@@ -4,10 +4,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -90,8 +87,9 @@ public interface IAdminService {
     //发布学院经费
     boolean releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
+    List<TAMSDeptFunding> getDeptFundCurrByCondition(Map<String, String> conditions);
 
-
+    List<DetailFundingViewObject> getDetailFundByCondition(Map<String, String> conditions);
 
     /**
      * 时间阶段设置

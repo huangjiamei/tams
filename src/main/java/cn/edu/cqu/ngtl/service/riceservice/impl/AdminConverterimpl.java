@@ -2,14 +2,12 @@ package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.impl.UTCourseDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Service;
 
@@ -101,7 +99,6 @@ public class AdminConverterimpl implements IAdminConverter {
             DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
             UTCourse course = null;
             if(ta.getTaClass() != null) {
-                detailFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
@@ -115,13 +112,9 @@ public class AdminConverterimpl implements IAdminConverter {
                 detailFundingViewObject.setTaName(taStu.getName());
             }
             //暂时缺失的属性
-            detailFundingViewObject.setBankId("8888888888888888888");
-            detailFundingViewObject.setBankName("宇宙第一银行");
-            detailFundingViewObject.setIdentity("51300000000000023X");
-            detailFundingViewObject.setAssignedFunding(ta.getAssignedFunding());
-            detailFundingViewObject.setBonus(ta.getBonus());
-            detailFundingViewObject.setPhdFunding(ta.getPhdFunding());
-            detailFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy());
+            detailFundingViewObject.setBankId("缺失");
+            detailFundingViewObject.setBankName("缺失");
+            detailFundingViewObject.setIdentity(ta.getTa().getIdNumber());
             detailFundingViewObject.setMonthlySalary1("100");
             detailFundingViewObject.setMonthlySalary2("200");
             detailFundingViewObject.setMonthlySalary3("300");

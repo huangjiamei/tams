@@ -424,6 +424,7 @@ public class TaController extends BaseController {
         super.baseStart(taInfoForm);
 
         MyTaViewObject curTa=taInfoForm.getSelectedTa();
+
         String classid = taInfoForm.getCurClassId();
 
         boolean result = taService.submitApplicationAssistant(

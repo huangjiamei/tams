@@ -9,6 +9,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -304,6 +305,133 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 taFundingViewObject.setTravelSubsidy(tafunding[8].toString());
                 taFundingViewObject.setBonus(tafunding[9].toString());
                 list.add(taFundingViewObject);
+            }
+            return list;
+        }
+    }
+
+    //根据条件查询经费明细
+    @Override
+    public List<DetailFundingViewObject> selectDetailFundByCondition(Map<String, String> conditions) {
+        UTSession curSession = new UTSession();
+        List<DetailFundingViewObject> list = new ArrayList<>();
+        //此处除资金外，其他都是前后加通配符
+        //若输入框为空，则加通配符；若输入框为资金，则不加；若输入框为除资金外的字段，则前后加通配符
+        int countNull = 0;
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            }
+            else if(entry.getValue() == "Name" )
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getValue() == "Number")
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getValue() == "Bank")
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getValue() == "BankNbr")
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getValue() == "IdCard")
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getValue() == "CourseName")
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getValue() == "CourseCode")
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        //若输入不为空，查询
+        List<Object> columns = new ArrayList<>();
+        if(countNull != 13) {
+            if (curSession.getTerm() == "春") {
+                Query qr = em.createNativeQuery("SELECT s.UNIQUEID, s.NAME, s.ID_NUMBER, co.NAME, co.CODE, t.MONTH_3, t.MONTH_4, t.MONTH_5, t.MONTH_6, t.MONTH_7, t.MONTH_8 from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' AND s.UNIQUEID LIKE '" + conditions.get("Number") + "' AND s.NAME LIKE '" + conditions.get("Name") + "' AND s.ID_NUMBER LIKE '" + conditions.get("IdCard") + "' AND t.MONTH_3 LIKE '" + conditions.get("month3") + "' AND t.MONTH_4 LIKE '" + conditions.get("month4") + "' AND t.MONTH_5 LIKE '" + conditions.get("month5") + "' AND t.MONTH_6 LIKE '" + conditions.get("month6") + "' AND t.MONTH_7 LIKE '" + conditions.get("month7") + "' AND t.MONTH_8 LIKE '" + conditions.get("month8") + "' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '" + conditions.get("CourseName") + "' AND co.CODE LIKE '" + conditions.get("CourseCode") + "' ");
+                columns = qr.getResultList();
+                for(Object column : columns) {
+                    Object[] detailFunding = (Object[]) column;
+                    DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
+                    detailFundingViewObject.setStuId(detailFunding[0].toString());
+                    detailFundingViewObject.setTaName(detailFunding[1].toString());
+                    detailFundingViewObject.setBankName("缺失");
+                    detailFundingViewObject.setBankId("缺失");
+                    detailFundingViewObject.setIdentity(detailFunding[2].toString());
+                    detailFundingViewObject.setCourseName(detailFunding[3].toString());
+                    detailFundingViewObject.setCourseCode(detailFunding[4].toString());
+                    detailFundingViewObject.setMonthlySalary1(detailFunding[5].toString());
+                    detailFundingViewObject.setMonthlySalary2(detailFunding[6].toString());
+                    detailFundingViewObject.setMonthlySalary3(detailFunding[7].toString());
+                    detailFundingViewObject.setMonthlySalary4(detailFunding[8].toString());
+                    detailFundingViewObject.setMonthlySalary5(detailFunding[9].toString());
+                    detailFundingViewObject.setMonthlySalary6(detailFunding[10].toString());
+                    list.add(detailFundingViewObject);
+                }
+            }
+            if (curSession.getTerm() == "春") {
+                Query qr = em.createNativeQuery("SELECT s.UNIQUEID, s.NAME, s.ID_NUMBER, co.NAME, co.CODE, t.MONTH_9, t.MONTH_10, t.MONTH_11, t.MONTH_12, t.MONTH_1, t.MONTH_2 from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' AND s.UNIQUEID LIKE '" + conditions.get("Number") + "' AND s.NAME LIKE '" + conditions.get("Name") + "' AND s.ID_NUMBER LIKE '" + conditions.get("IdCard") + "' AND t.MONTH_9 LIKE '" + conditions.get("month9") + "' AND t.MONTH_10 LIKE '" + conditions.get("month10") + "' AND t.MONTH_11 LIKE '" + conditions.get("month11") + "' AND t.MONTH_12 LIKE '" + conditions.get("month12") + "' AND t.MONTH_1 LIKE '" + conditions.get("month1") + "' AND t.MONTH_2 LIKE '" + conditions.get("month2") + "' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '" + conditions.get("CourseName") + "' AND co.CODE LIKE '" + conditions.get("CourseCode") + "' ");
+                columns = qr.getResultList();
+                for(Object column : columns) {
+                    Object[] detailFunding = (Object[]) column;
+                    DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
+                    detailFundingViewObject.setStuId(detailFunding[0].toString());
+                    detailFundingViewObject.setTaName(detailFunding[1].toString());
+                    detailFundingViewObject.setBankName("缺失");
+                    detailFundingViewObject.setBankId("缺失");
+                    detailFundingViewObject.setIdentity(detailFunding[2].toString());
+                    detailFundingViewObject.setCourseName(detailFunding[3].toString());
+                    detailFundingViewObject.setCourseCode(detailFunding[4].toString());
+                    detailFundingViewObject.setMonthlySalary1(detailFunding[5].toString());
+                    detailFundingViewObject.setMonthlySalary2(detailFunding[6].toString());
+                    detailFundingViewObject.setMonthlySalary3(detailFunding[7].toString());
+                    detailFundingViewObject.setMonthlySalary4(detailFunding[8].toString());
+                    detailFundingViewObject.setMonthlySalary5(detailFunding[9].toString());
+                    detailFundingViewObject.setMonthlySalary6(detailFunding[10].toString());
+                    list.add(detailFundingViewObject);
+                }
+            }
+            return list;
+        }
+        //若输入为空，则返回全部经费明细
+        else{
+            if (curSession.getTerm() == "春") {
+                Query qr = em.createNativeQuery("SELECT s.UNIQUEID, s.NAME, s.ID_NUMBER, co.NAME, co.CODE, t.MONTH_3, t.MONTH_4, t.MONTH_5, t.MONTH_6, t.MONTH_7, t.MONTH_8 from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID  ");
+                columns = qr.getResultList();
+                for(Object column : columns) {
+                    Object[] detailFunding = (Object[]) column;
+                    DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
+                    detailFundingViewObject.setStuId(detailFunding[0].toString());
+                    detailFundingViewObject.setTaName(detailFunding[1].toString());
+                    detailFundingViewObject.setBankName("缺失");
+                    detailFundingViewObject.setBankId("缺失");
+                    detailFundingViewObject.setIdentity(detailFunding[2].toString());
+                    detailFundingViewObject.setCourseName(detailFunding[3].toString());
+                    detailFundingViewObject.setCourseCode(detailFunding[4].toString());
+                    detailFundingViewObject.setMonthlySalary1(detailFunding[5].toString());
+                    detailFundingViewObject.setMonthlySalary2(detailFunding[6].toString());
+                    detailFundingViewObject.setMonthlySalary3(detailFunding[7].toString());
+                    detailFundingViewObject.setMonthlySalary4(detailFunding[8].toString());
+                    detailFundingViewObject.setMonthlySalary5(detailFunding[9].toString());
+                    detailFundingViewObject.setMonthlySalary6(detailFunding[10].toString());
+                    list.add(detailFundingViewObject);
+                }
+            }
+            if (curSession.getTerm() == "春") {
+                Query qr = em.createNativeQuery("SELECT s.UNIQUEID, s.NAME, s.ID_NUMBER, co.NAME, co.CODE, t.MONTH_9, t.MONTH_10, t.MONTH_11, t.MONTH_12, t.MONTH_1, t.MONTH_2 from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID ");
+                columns = qr.getResultList();
+                for(Object column : columns) {
+                    Object[] detailFunding = (Object[]) column;
+                    DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
+                    detailFundingViewObject.setStuId(detailFunding[0].toString());
+                    detailFundingViewObject.setTaName(detailFunding[1].toString());
+                    detailFundingViewObject.setBankName("缺失");
+                    detailFundingViewObject.setBankId("缺失");
+                    detailFundingViewObject.setIdentity(detailFunding[2].toString());
+                    detailFundingViewObject.setCourseName(detailFunding[3].toString());
+                    detailFundingViewObject.setCourseCode(detailFunding[4].toString());
+                    detailFundingViewObject.setMonthlySalary1(detailFunding[5].toString());
+                    detailFundingViewObject.setMonthlySalary2(detailFunding[6].toString());
+                    detailFundingViewObject.setMonthlySalary3(detailFunding[7].toString());
+                    detailFundingViewObject.setMonthlySalary4(detailFunding[8].toString());
+                    detailFundingViewObject.setMonthlySalary5(detailFunding[9].toString());
+                    detailFundingViewObject.setMonthlySalary6(detailFunding[10].toString());
+                    list.add(detailFundingViewObject);
+                }
             }
             return list;
         }

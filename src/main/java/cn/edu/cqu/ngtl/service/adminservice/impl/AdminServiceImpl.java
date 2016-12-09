@@ -36,6 +36,9 @@ public class AdminServiceImpl implements IAdminService{
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
 
     @Autowired
+    private TAMSDeptFundingDao tamsDeptFundingDao;
+
+    @Autowired
     private TAMSClassFundingDao tamsClassFundingDao;
 
     @Autowired
@@ -105,6 +108,12 @@ public class AdminServiceImpl implements IAdminService{
     public List<TaFundingViewObject> getTaFundByCondition(Map<String, String> conditions) {
         List<TaFundingViewObject> taFundingViewObjects = tamsTaDao.selectTaFundByCondition(conditions);
         return taFundingViewObjects;
+    }
+
+    //经费明细过滤
+    @Override
+    public List<DetailFundingViewObject> getDetailFundByCondition(Map<String, String> conditions) {
+        return tamsTaDao.selectDetailFundByCondition(conditions);
     }
 
     @Override
@@ -366,6 +375,7 @@ public class AdminServiceImpl implements IAdminService{
 
     }
     */
+
     //获取学校经费
     @Override
     public List<TAMSUniversityFunding> getCurrFundingBySession() {
@@ -381,6 +391,7 @@ public class AdminServiceImpl implements IAdminService{
 
     }
 
+    //获取学院当前经费
     @Override
     public List<TAMSDeptFunding> getDepartmentCurrFundingBySession(){
 
@@ -394,6 +405,22 @@ public class AdminServiceImpl implements IAdminService{
         return deptFundingDao.selectDepartmentCurrBySession();
     }
 
+    //学院当前经费过滤
+    public List<TAMSDeptFunding> getDeptFundCurrByCondition(Map<String, String> conditions) {
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+
+        /**如果是教务处管理员或者系统管理员则显示过滤后草稿表的内容，在下拉框里显示发布的数据
+         */
+        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())) {
+            List<TAMSDeptFunding> list =tamsDeptFundingDraftDao.selectDeptFundDraftCurrByCondition(conditions);
+            return list;
+        }
+        else{
+            return tamsDeptFundingDao.selectDeptFundCurrByCondition(conditions);
+        }
+    }
+
+    //获取学院历史经费
     @Override
     public List<TAMSDeptFunding> getDepartmentPreFundingBySession(){
 

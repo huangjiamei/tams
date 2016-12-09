@@ -354,12 +354,12 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                     detailFundingViewObject.setIdentity(detailFunding[2].toString());
                     detailFundingViewObject.setCourseName(detailFunding[3].toString());
                     detailFundingViewObject.setCourseCode(detailFunding[4].toString());
-                    detailFundingViewObject.setMonthlySalary1(detailFunding[5].toString());
-                    detailFundingViewObject.setMonthlySalary2(detailFunding[6].toString());
-                    detailFundingViewObject.setMonthlySalary3(detailFunding[7].toString());
-                    detailFundingViewObject.setMonthlySalary4(detailFunding[8].toString());
-                    detailFundingViewObject.setMonthlySalary5(detailFunding[9].toString());
-                    detailFundingViewObject.setMonthlySalary6(detailFunding[10].toString());
+                    detailFundingViewObject.setMonthlySalary3(detailFunding[5].toString());
+                    detailFundingViewObject.setMonthlySalary4(detailFunding[6].toString());
+                    detailFundingViewObject.setMonthlySalary5(detailFunding[7].toString());
+                    detailFundingViewObject.setMonthlySalary6(detailFunding[8].toString());
+                    detailFundingViewObject.setMonthlySalary7(detailFunding[9].toString());
+                    detailFundingViewObject.setMonthlySalary8(detailFunding[10].toString());
                     list.add(detailFundingViewObject);
                 }
             }
@@ -376,12 +376,12 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                     detailFundingViewObject.setIdentity(detailFunding[2].toString());
                     detailFundingViewObject.setCourseName(detailFunding[3].toString());
                     detailFundingViewObject.setCourseCode(detailFunding[4].toString());
-                    detailFundingViewObject.setMonthlySalary1(detailFunding[5].toString());
-                    detailFundingViewObject.setMonthlySalary2(detailFunding[6].toString());
-                    detailFundingViewObject.setMonthlySalary3(detailFunding[7].toString());
-                    detailFundingViewObject.setMonthlySalary4(detailFunding[8].toString());
-                    detailFundingViewObject.setMonthlySalary5(detailFunding[9].toString());
-                    detailFundingViewObject.setMonthlySalary6(detailFunding[10].toString());
+                    detailFundingViewObject.setMonthlySalary9(detailFunding[5].toString());
+                    detailFundingViewObject.setMonthlySalary10(detailFunding[6].toString());
+                    detailFundingViewObject.setMonthlySalary11(detailFunding[7].toString());
+                    detailFundingViewObject.setMonthlySalary12(detailFunding[8].toString());
+                    detailFundingViewObject.setMonthlySalary1(detailFunding[9].toString());
+                    detailFundingViewObject.setMonthlySalary2(detailFunding[10].toString());
                     list.add(detailFundingViewObject);
                 }
             }

@@ -32,7 +32,7 @@ public class TAMSTimeSettingTypeDaoJpa implements TAMSTimeSettingTypeDao {
     }
 
     @Override
-    public boolean insetOneByEntity(TAMSTimeSettingType settingType) {
+    public boolean insertOneByEntity(TAMSTimeSettingType settingType) {
         String generatedId = KradDataServiceLocator.getDataObjectService().save(settingType).getId();
         return generatedId != null;
     }

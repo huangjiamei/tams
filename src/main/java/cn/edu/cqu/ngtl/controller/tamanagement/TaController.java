@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.controller.tamanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
@@ -46,6 +47,9 @@ public class TaController extends BaseController {
 
     @Autowired
     private ITAService taService;
+
+    @Autowired
+    private UTSessionDao utSessionDao;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -615,6 +619,8 @@ public class TaController extends BaseController {
         }
         return this.getModelAndView(taInfoForm, "pageTaDetail");
     }
+
+
 
     @Override
     protected UifFormBase createInitialForm() {

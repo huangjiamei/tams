@@ -509,19 +509,25 @@ public class TAConverterimpl implements ITAConverter {
 
         //List<WorkBenchViewObject> viewObject = new ArrayList<>();
         //WorkBenchViewObject workbenchviewobject = new WorkBenchViewObject();
-        for(int i=0; i<list.size(); i++){
-            for(int j=i+1; j<list.size(); j++){
-                //System.out.println(list.get(i).getClassNbr());
-                //System.out.println(list.get(j).getClassNbr());
-                if(list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
-                    list.get(i).setTeacher(list.get(i).getTeacher() + ',' + list.get(j).getTeacher());
-                    list.remove(j);
+        if (list == null || list.size() == 0) {
+            List<WorkBenchViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new WorkBenchViewObject());
+            return nullObject;
+        }
+            for(int i=0; i<list.size(); i++) {
+                for (int j = i + 1; j < list.size(); j++) {
+                    //System.out.println(list.get(i).getClassNbr());
+                    //System.out.println(list.get(j).getClassNbr());
+                    if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
+                        list.get(i).setTeacher(list.get(i).getTeacher() + ',' + list.get(j).getTeacher());
+                        list.remove(j);
+                    }
+                    //viewObject.set(i,list.get(i));
+                    //break;
                 }
-                //viewObject.set(i,list.get(i));
-                //break;
             }
             //viewObject.set(i,list.get(i));
-        }
+
         return list;
     }
 

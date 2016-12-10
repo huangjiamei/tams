@@ -781,10 +781,10 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     color:#357ca5;
 }
 .uif-tableCollectionLayout th {
-    background: #ddd;
+    background: #eee;
 }
 .table > tbody > tr > th{
-    background: #eee;
+    background: #f5f5f5;
 }
 /*table内某些列的字体颜色*/
 .font-teal{
@@ -823,9 +823,27 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 td.selected{
     background-color:#d0e9c6;
 }
+/*table隔行不同色*/
 .odd{
     background-color:white;
 }
 .even{
-    background-color:#eee;
+    background-color:#f5f5f5;
+}
+
+.nav-tabs>li.active {
+    border-top-color: #00c0ef;
+}
+.nav-tabs>li{
+    border-top: 3px solid transparent;
+}
+.nav-tabs>li:first-of-type.active > a {
+    border-left-color: transparent;
+}
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    border-top-color: transparent;
+    border-right: 1px solid #ddd;
+}
+.nav-tabs>li>a{
+    margin: 0px;
 }

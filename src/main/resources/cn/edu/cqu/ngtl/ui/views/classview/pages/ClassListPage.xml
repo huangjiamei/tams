@@ -44,7 +44,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="classListHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('classListHeaderTitle','fa fa-book','课程','教学班')">
+                                  p:onDocumentReadyScript="initContentHeader('classListHeaderTitle','icon-book','课程','教学班')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

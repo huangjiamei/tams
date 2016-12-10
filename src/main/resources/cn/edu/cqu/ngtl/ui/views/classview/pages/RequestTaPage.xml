@@ -43,13 +43,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-address-book','课程','助教申报')">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-HeaderOne" p:headerText="申报助教"/>
-                                    </list>
-                                </property>
-                            </bean>
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-book','课程','助教申报')"/>
 
                             <!-- 右上角 当前路径 -->
                             <bean parent="Uif-HorizontalBoxSection"
@@ -111,7 +105,7 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-TabGroup" p:onDocumentReadyScript="tabGroupIcon();">
+                                                                <bean parent="Uif-TabGroup" ><!--p:onDocumentReadyScript="tabGroupIcon();"-->
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean id="tabGroupOne"

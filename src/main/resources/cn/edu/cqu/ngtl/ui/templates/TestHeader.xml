@@ -51,7 +51,7 @@
         <property name="applicationNavigation.items">
             <list>
                 <!--导航栏-->
-                <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="icon-th" p:style="font-size:16px;float:left!important" p:additionalCssClasses="mainMenu"
+                <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="fa fa-th-large fa-lg" p:style="font-size:16px;float:left!important" p:additionalCssClasses="mainMenu"
                       p:actionScript="showDialogMenu();"/>
 
                 <!--学期信息-->
@@ -204,9 +204,9 @@
                                                                 <bean parent="Uif-Link" p:href="#nav-Innovation"
                                                                       p:linkText="创新实践平台" p:iconClass="icon-cogs2 menuHeaderIcon"/>
                                                                 <bean parent="Uif-Link" p:href="#nav-test"
-                                                                      p:linkText="四六级系统" p:iconClass="icon-book menuHeaderIcon"/>
+                                                                      p:linkText="四六级系统" p:iconClass="icon-check menuHeaderIcon"/>
                                                                 <bean parent="Uif-Link" p:href="#nav-file"
-                                                                      p:linkText="教学档案管理系统" p:iconClass="icon-book menuHeaderIcon"/>
+                                                                      p:linkText="教学档案管理系统" p:iconClass="icon-file menuHeaderIcon"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -415,7 +415,7 @@
                     <property name="items">
                         <list>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/ta?methodToCall=getTaListPage&amp;viewId=TaView"
-                                  p:linkText="助教" p:iconClass="icon-th menuIcon"
+                                  p:linkText="助教" p:iconClass="fa fa-users menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaListPage')}"/>
                         </list>
                     </property>
@@ -432,7 +432,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="报表" parent="Uif-Link" p:href="#" p:iconClass="icon-bars menuIcon"/>
+                            <bean p:linkText="报表" parent="Uif-Link" p:href="#" p:iconClass="fa fa-line-chart menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -443,9 +443,9 @@
                             <bean parent="Uif-Link" p:href="#"
                                   p:linkText="经费报表" p:iconClass="icon-bars menuIcon"/>
                             <bean parent="Uif-Link" p:href="#"
-                                  p:linkText="助教工作情况表" p:iconClass="icon-users menuIcon"/>
+                                  p:linkText="助教工作情况表" p:iconClass="icon-align-left menuIcon"/>
                             <bean parent="Uif-Link" p:href="#"
-                                  p:linkText="教师助教工作情况表" p:iconClass="icon-user menuIcon"/>
+                                  p:linkText="教师助教工作情况表" p:iconClass="icon-list menuIcon"/>
 
                         </list>
                     </property>
@@ -460,7 +460,7 @@
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
                     <property name="items">
                         <list>
-                            <bean p:linkText="管理台" parent="Uif-Link" p:href="#" p:iconClass="icon-laptop menuIcon"/>
+                            <bean p:linkText="管理台" parent="Uif-Link" p:href="#" p:iconClass="fa fa-tachometer  menuIcon"/>
                         </list>
                     </property>
                 </bean>
@@ -483,7 +483,7 @@
                                   p:linkText="用户管理" p:iconClass="icon-users menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewUserRoleManagerPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getPermissionManagementPage&amp;viewId=AdminView"
-                                  p:linkText="权限管理" p:iconClass="icon-briefcase menuIcon"
+                                  p:linkText="权限管理" p:iconClass="fa fa-user-secret menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewPermissionManagementPage')}"/>
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
                                   p:linkText="课程负责人管理" p:iconClass="icon-user menuIcon"

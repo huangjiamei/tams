@@ -716,7 +716,7 @@ public class ClassController extends BaseController {
 
 
         infoForm.setAllApplication(taConverter.applicationToViewObjectClass(
-                taService.getAllApplicationFilterByUid(uId)
+                taService.getAllApplicationFilterByClassid(classId)
         ));
         return this.getModelAndView(infoForm, "pageTaManagement");
     }

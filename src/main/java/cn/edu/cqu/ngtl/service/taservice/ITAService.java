@@ -35,10 +35,12 @@ public interface ITAService {
     List<TAMSTa> getAllTaFilteredByUid(String uId);
 
     //根据classid查申请者列表
-    //List<TAMSTaApplication> getAllApplicationFilterByUid(String classId);
+    List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId);
 
     //根据uid查看申请者列表
     List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
+
+
 
     boolean changeStatusBatchByIds(List<String> ids, String status);
 

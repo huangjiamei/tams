@@ -157,14 +157,16 @@ public class TAServiceimpl implements ITAService {
     }
 
 
-/*
+
+
+
 
     //根据classId查看申请者列表
     @Override
-    public List<TAMSTaApplication> getAllApplicationFilterByUid(String classId) {
+    public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId) {
         return tamsTaApplicationDao.selectByClassId(classId);
     }
-*/
+
 
     @Override
     public boolean changeStatusBatchByIds(List<String> ids, String status) {

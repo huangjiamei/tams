@@ -421,6 +421,12 @@ public class ClassController extends BaseController {
 
         //添加日历信息到数据库
         added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
+        if(added == null){
+            infoForm.setErrMsg("你不是该门课的主管教师，无法添加");
+
+            //FIXME 错误信息
+            return this.getModelAndView(infoForm, "pageTeachingCalendar");
+        }
         if (added.getId() != null) { //添加数据库成功
             //添加附件
             if(added.isHasAttachment()) {
@@ -429,8 +435,7 @@ public class ClassController extends BaseController {
 
             return this.getTeachingCalendar(infoForm, request);
         }
-        else //// FIXME: 16-11-18 应当返回错误页面
-            return this.getTeachingCalendar(infoForm, request);
+        return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
 
     /**
@@ -945,15 +950,6 @@ public class ClassController extends BaseController {
         }
         else
             return this.getModelAndView(infoForm, "pageTaManagement");
-    }
-
-    @RequestMapping(params =  {"methodToCall=selectCurSession"})
-    public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
-        ClassInfoForm infoForm = (ClassInfoForm) form;
-        super.baseStart(infoForm);
-        utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
-        request.getParameterMap().get("pageId");
-        return this.getModelAndView(infoForm, infoForm.getPageId());
     }
 
 }

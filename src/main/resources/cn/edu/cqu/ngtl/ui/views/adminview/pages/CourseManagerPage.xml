@@ -41,7 +41,7 @@
                     <list>
                         <!-- 左上角 -->
                         <bean id="courseMaHeaderTitle" parent="Uif-VerticalBoxSection"
-                              p:onDocumentReadyScript="initContentHeader('courseMaHeaderTitle','fa fa-user','管理台','课程负责人管理')">
+                              p:onDocumentReadyScript="initContentHeader('courseMaHeaderTitle','fa fa-tachometer','管理台','课程负责人管理')">
                         </bean>
 
                         <!-- 右上角 当前路径 -->
@@ -97,8 +97,8 @@
                                                       p:additionalCssClasses="box-header">
                                                     <property name="items">
                                                         <list>
-                                                            <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                            <bean parent="Uif-MessageField" p:messageText="课程负责人"
+                                                            <bean parent="Uif-Icon" p:iconClass="fa fa-list"/>
+                                                            <bean parent="Uif-MessageField" p:messageText="课程负责人列表"
                                                                   p:additionalCssClasses="boxheaderTitle"/>
                                                             <bean parent="Uif-HorizontalBoxSection"
                                                                   p:style="float: right!important;">

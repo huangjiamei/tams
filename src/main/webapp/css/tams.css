@@ -132,7 +132,7 @@ body{
     font-weight: 400;
     position: relative;
     text-transform: none;
-    border-bottom: 1px solid rgba(0, 0, 0, .1)!important;
+    border-bottom: 0px solid rgba(0, 0, 0, .1)!important;
     list-style: none !important;
     background-color: transparent !important;
     width:100%;
@@ -251,7 +251,7 @@ body{
     padding-top: 20px!important;
     width:auto;
     min-width:300px;
-    background-color: #3C8DBC!important;
+    background-color:#357ca5!important;
     z-index:10000!important;
 }
 
@@ -587,7 +587,7 @@ table.uif-tableCollectionLayout th {
 
 /*修复dashboard中的box变矮的问题*/
 .small-box .icon{
-    top: -4px;
+    top: 2px;
 }
 
 .small-box > .inner {
@@ -778,10 +778,10 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 
 /*table的背景色设置*/
 .table > thead > tr > th >label {
-    color:#3c8dbc;
+    color:#357ca5;
 }
 .uif-tableCollectionLayout th {
-    background: #f5f5f5;
+    background: #eee;
 }
 .table > tbody > tr > th{
     background: #f5f5f5;
@@ -806,7 +806,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     display:none;
 }
 .modal-header{
-    background-color: #3C8DBC;
+    background-color: #357ca5!important;
 }
 .modal-footer{
     background-color: #eee;
@@ -822,4 +822,28 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 /*checkbox选择背景色*/
 td.selected{
     background-color:#d0e9c6;
+}
+/*table隔行不同色*/
+.odd{
+    background-color:white;
+}
+.even{
+    background-color:#f5f5f5;
+}
+
+.nav-tabs>li.active {
+    border-top-color: #00c0ef;
+}
+.nav-tabs>li{
+    border-top: 3px solid transparent;
+}
+.nav-tabs>li:first-of-type.active > a {
+    border-left-color: transparent;
+}
+.nav-tabs>li.active>a,.nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
+    border-top-color: transparent;
+    border-right: 1px solid #ddd;
+}
+.nav-tabs>li>a{
+    margin: 0px;
 }

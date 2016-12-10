@@ -41,7 +41,7 @@
 						<list>
                             <!-- 左上角 -->
                             <bean id="userRoleMaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('userRoleMaHeaderTitle','fa fa-users','管理台','用户管理')">
+                                  p:onDocumentReadyScript="initContentHeader('userRoleMaHeaderTitle','fa fa-tachometer','管理台','用户管理')">
                             </bean>
 
 							<!-- 右上角 当前路径 -->
@@ -102,7 +102,7 @@
 														  p:additionalCssClasses="box-header">
 														<property name="items">
 															<list>
-																<bean parent="Uif-Icon" p:iconClass="icon-table"/>
+																<bean parent="Uif-Icon" p:iconClass="fa fa-list"/>
 																<bean parent="Uif-MessageField" p:messageText="用户角色列表"
 																	  p:additionalCssClasses="boxheaderTitle"/>
 																<bean parent="Uif-HorizontalBoxSection"

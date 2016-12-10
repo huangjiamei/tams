@@ -621,6 +621,15 @@ public class TaController extends BaseController {
     }
 
 
+    @RequestMapping(params =  {"methodToCall=selectCurSession"})
+    public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        super.baseStart(taInfoForm);
+        utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(taInfoForm.getSessionTermFinder())));
+        request.getParameterMap().get("pageId");
+        return this.getModelAndView(taInfoForm, taInfoForm.getPageId());
+    }
+
 
     @Override
     protected UifFormBase createInitialForm() {

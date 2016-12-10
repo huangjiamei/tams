@@ -112,6 +112,22 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     private String totalTimeConsume;
 
+
+    /*
+    助教页面搜索框
+     */
+    private String taCourseName;
+    private String taCourseCode;
+    private String taClassNumber;
+    private String taTeacherName;
+    private String taAssitantName;
+    private String taAssitantIDNumber;
+    private String taAssitantMasterMajorName;
+    private String taTeacherAppraise;
+    private String taStuAppraise;
+    private String taScore;
+    private String taStatus;
+
     /** Getter and Setter **/
 
     public List<IssueViewObject> getAllIssues() {
@@ -336,5 +352,97 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setCurClassId(String curClassId) {
         this.curClassId = curClassId;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getTaCourseName() {
+        return taCourseName;
+    }
+
+    public void setTaCourseName(String taCourseName) {
+        this.taCourseName = taCourseName;
+    }
+
+    public String getTaCourseCode() {
+        return taCourseCode;
+    }
+
+    public void setTaCourseCode(String taCourseCode) {
+        this.taCourseCode = taCourseCode;
+    }
+
+    public String getTaClassNumber() {
+        return taClassNumber;
+    }
+
+    public void setTaClassNumber(String taClassNumber) {
+        this.taClassNumber = taClassNumber;
+    }
+
+    public String getTaTeacherName() {
+        return taTeacherName;
+    }
+
+    public void setTaTeacherName(String taTeacherName) {
+        this.taTeacherName = taTeacherName;
+    }
+
+    public String getTaAssitantName() {
+        return taAssitantName;
+    }
+
+    public void setTaAssitantName(String taAssitantName) {
+        this.taAssitantName = taAssitantName;
+    }
+
+    public String getTaAssitantIDNumber() {
+        return taAssitantIDNumber;
+    }
+
+    public void setTaAssitantIDNumber(String taAssitantIDNumber) {
+        this.taAssitantIDNumber = taAssitantIDNumber;
+    }
+
+    public String getTaAssitantMasterMajorName() {
+        return taAssitantMasterMajorName;
+    }
+
+    public void setTaAssitantMasterMajorName(String taAssitantMasterMajorName) {
+        this.taAssitantMasterMajorName = taAssitantMasterMajorName;
+    }
+
+    public String getTaTeacherAppraise() {
+        return taTeacherAppraise;
+    }
+
+    public void setTaTeacherAppraise(String taTeacherAppraise) {
+        this.taTeacherAppraise = taTeacherAppraise;
+    }
+
+    public String getTaStuAppraise() {
+        return taStuAppraise;
+    }
+
+    public void setTaStuAppraise(String taStuAppraise) {
+        this.taStuAppraise = taStuAppraise;
+    }
+
+    public String getTaScore() {
+        return taScore;
+    }
+
+    public void setTaScore(String taScore) {
+        this.taScore = taScore;
+    }
+
+    public String getTaStatus() {
+        return taStatus;
+    }
+
+    public void setTaStatus(String taStatus) {
+        this.taStatus = taStatus;
     }
 }

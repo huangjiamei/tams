@@ -44,7 +44,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="classListHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('classListHeaderTitle','fa fa-book','课程','教学班')">
+                                  p:onDocumentReadyScript="initContentHeader('classListHeaderTitle','icon-book','课程','教学班')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -212,7 +212,7 @@
                                                         <property name="items">
                                                             <list>
 
-                                                                <bean id="searchFields"
+                                                                <bean id="searchClassFields"
                                                                       parent="Uif-HorizontalBoxSection"
                                                                       p:additionalCssClasses="search-fields">
                                                                     <property name="items">
@@ -221,7 +221,6 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
                                                                                   p:messageText="占位"/>
-
                                                                             <!--占位-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
@@ -252,14 +251,20 @@
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condInstructorName"/>
 
-                                                                            <!--占位-->
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位"/>
-                                                                            <!--占位-->
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位"/>
+                                                                            <!--耗费工时-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="courseWorkTime"/>
+                                                                            <!--状态-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="courseStatus">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.WorkflowFunctionFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <!--占位-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
@@ -278,37 +283,32 @@
 
 
                                                                 <bean id="ClassListPageTable"
-                                                                      p:additionalCssClasses="table-minY"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="20"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable')">
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable')">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
-                                                                    <property name="layoutManager.richTable.render"
-                                                                              value="true"/>
+                                                                    <property name="layoutManager.richTable.render" value="true"/>
 
-                                                                    <property name="useServerPaging" value="true"/>
+                                                                    <property name="useServerPaging" value="true" />
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="true"/>
-                                                                    <!--<property name="readOnly" value="true"/>-->
-
                                                                     <property name="disclosure.render" value="false"/>
                                                                     <property name="layoutManager.showToggleAllDetails"
                                                                               value="false"/>
+
                                                                     <!--在这里后期更改rowDetails的图标-->
                                                                     <property
                                                                             name="layoutManager.expandDetailsActionPrototype">
                                                                         <bean parent="Uif-ExpandDetailsImageAction"/>
                                                                     </property>
 
-
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label=""
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:propertyName="checked">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>

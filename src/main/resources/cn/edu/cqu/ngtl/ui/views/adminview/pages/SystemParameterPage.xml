@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="systemParameterHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('systemParameterHeaderTitle','fa fa-retweet','管理台','信息同步')">
+                                  p:onDocumentReadyScript="initContentHeader('systemParameterHeaderTitle','fa fa-tachometer','管理台','信息同步')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -82,7 +82,7 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-info">
+                                              p:additionalCssClasses="box box-success">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-TabGroup"

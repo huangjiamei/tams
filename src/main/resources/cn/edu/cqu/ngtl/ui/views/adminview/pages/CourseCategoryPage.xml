@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="courseCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('courseCaHeaderTitle','fa fa-reorder','管理台','课程类别管理')">
+                                  p:onDocumentReadyScript="initContentHeader('courseCaHeaderTitle','fa fa-tachometer','管理台','课程类别管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

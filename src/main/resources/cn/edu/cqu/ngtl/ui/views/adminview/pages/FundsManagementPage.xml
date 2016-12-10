@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="fundsHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('fundsHeaderTitle','fa fa-money','管理台','经费管理')">
+                                  p:onDocumentReadyScript="initContentHeader('fundsHeaderTitle','fa fa-tachometer','管理台','经费管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

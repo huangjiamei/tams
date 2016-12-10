@@ -43,7 +43,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-list','助教','工作台')">
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-laptop','助教','工作台')">
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-HeaderTwo" p:headerText="工作台"/>

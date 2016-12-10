@@ -674,10 +674,10 @@ function removeSideBar()
  Uif-TabGroup部分的切换列表加上icon图片
  */
 function tabGroupIcon(){
-    jQuery("#RequestTaPage .nav-tabs").children("li:eq(0)").find("a").html('<h5><i class="icon-book"></i><big>课程</big></h5>');
-    jQuery("#RequestTaPage .nav-tabs").children("li:eq(1)").find("a").html('<h5><i class="icon-arrow-up"></i><big>反馈</big></h5>');
-    jQuery("#tabGroupOne .uif-sectionHeader").html('<h4><i class="icon-book"></i><big>课程信息</big></h4>');
-    jQuery("#tabGroupTwo .uif-sectionHeader").html('<h4><i class="icon-arrow-up"></i><big>反馈信息</big></h4>');
+    // jQuery("#RequestTaPage .nav-tabs").children("li:eq(0)").find("a").html('<h5><i class="icon-book"></i><big>课程</big></h5>');
+    // jQuery("#RequestTaPage .nav-tabs").children("li:eq(1)").find("a").html('<h5><i class="icon-arrow-up"></i><big>反馈</big></h5>');
+    // jQuery("#tabGroupOne .uif-sectionHeader").html('<h4><i class="icon-book"></i><big>课程信息</big></h4>');
+    // jQuery("#tabGroupTwo .uif-sectionHeader").html('<h4><i class="icon-arrow-up"></i><big>反馈信息</big></h4>');
 }
 
 
@@ -805,7 +805,7 @@ function setColor(){
 }
 
 jQuery(document).ready(function(){
-    jQuery("table.uif-tableCollectionLayout tbody tr:odd").css("background-color","#eee");
+    jQuery("table.uif-tableCollectionLayout tbody tr:odd").css("background-color","#f5f5f5");
     jQuery("table.uif-tableCollectionLayout tbody tr:even").css("background-color","white");
 
     //助教列表点击checkbox变色

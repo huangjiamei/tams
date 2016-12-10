@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="taCourseCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','fa fa-reorder','管理台','助教类别管理')">
+                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','fa fa-tachometer','管理台','助教类别管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -97,7 +97,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-list"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="fa fa-bars"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="助教类别"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"

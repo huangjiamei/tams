@@ -587,7 +587,7 @@ table.uif-tableCollectionLayout th {
 
 /*修复dashboard中的box变矮的问题*/
 .small-box .icon{
-    top: -4px;
+    top: 2px;
 }
 
 .small-box > .inner {

@@ -535,13 +535,14 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> myTaCombinePayDayClass(List<TAMSTa> allTaFilteredByUid) {
 
-        List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allTaFilteredByUid.size());
 
         if (allTaFilteredByUid == null || allTaFilteredByUid.size() == 0) {
             List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> nullObject = new ArrayList<>(1);
             nullObject.add(new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject());
             return nullObject;
         }
+
+        List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allTaFilteredByUid.size());
 
         for(TAMSTa ta : allTaFilteredByUid) {
             cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject viewObject = new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject();

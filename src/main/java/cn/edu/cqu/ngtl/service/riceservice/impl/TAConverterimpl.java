@@ -537,6 +537,12 @@ public class TAConverterimpl implements ITAConverter {
 
         List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allTaFilteredByUid.size());
 
+        if (allTaFilteredByUid == null || allTaFilteredByUid.size() == 0) {
+            List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject());
+            return nullObject;
+        }
+
         for(TAMSTa ta : allTaFilteredByUid) {
             cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject viewObject = new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject();
             UTStudent taStu = ta.getTa();
@@ -560,8 +566,13 @@ public class TAConverterimpl implements ITAConverter {
     //我的助教界面申请人助教列表
     @Override
     public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> applicationToViewObjectClass(List<TAMSTaApplication> allApplicationFilterByUid) {
-        if(allApplicationFilterByUid == null)
-            return null;
+
+        if (allApplicationFilterByUid == null || allApplicationFilterByUid.size() == 0) {
+            List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject());
+            return nullObject;
+        }
+
         List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allApplicationFilterByUid.size());
 
         for(TAMSTaApplication application : allApplicationFilterByUid) {

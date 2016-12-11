@@ -13,4 +13,6 @@ public interface TAMSUniversityFundingDao {
     List<TAMSUniversityFunding> selectPreBySession();
     //过滤学校历史经费
     List<TAMSUniversityFunding> selectUniFundPreByCondition(Map<String, String> conditions);
+
+    boolean insertOneByEntity(TAMSUniversityFunding tamsUniversityFunding);
 }

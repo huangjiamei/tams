@@ -145,6 +145,13 @@
                                                                                                           p:messageText="3000000"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="保存"
+                                                                                                          p:actionImagePlacement="LEFT"
+                                                                                                          p:style="float:right!important;"
+                                                                                                          p:methodToCall="SaveSessionFunding"
+                                                                                                          p:render="@{#form.academicAffairManager}"
+                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>

@@ -959,6 +959,15 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+    @RequestMapping(params = "methodToCall=SaveSessionFunding")
+    public ModelAndView SaveSessionFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        List<SessionFundingViewObject> sessionFundingViewObjects = infoForm.getSessionFundings();
+        adminService.saveSessionFunding(sessionFundingViewObjects);
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
     /**
      * 学校（批次）历史经费过滤
      */

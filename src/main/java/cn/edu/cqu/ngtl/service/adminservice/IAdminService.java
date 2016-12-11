@@ -90,6 +90,9 @@ public interface IAdminService {
     //保存学院经费
     void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
+    //保存学期经费
+    void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects);
+
     List<TAMSDeptFunding> getDeptFundCurrByCondition(Map<String, String> conditions);
 
     List<DetailFundingViewObject> getDetailFundByCondition(Map<String, String> conditions);

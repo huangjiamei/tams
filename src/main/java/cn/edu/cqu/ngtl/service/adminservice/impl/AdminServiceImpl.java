@@ -38,6 +38,7 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
 
+
     @Autowired
     private TAMSDeptFundingDao tamsDeptFundingDao;
 
@@ -81,6 +82,10 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSCourseManagerDao tamsCourseManagerDao;
 
+    @Autowired
+    private TAMSUniversityFundingDao tamsUniversityFundingDao;
+
+
     @Override
     public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions){
         List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
@@ -88,8 +93,6 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     //历史批次经费过滤
-    @Autowired
-    private TAMSUniversityFundingDao tamsUniversityFundingDao;
 
     @Override
     public List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions){
@@ -632,6 +635,15 @@ public class AdminServiceImpl implements IAdminService{
         }
     }
 
+    @Override
+    public void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects){
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(SessionFundingViewObject per:sessionFundingViewObjects){
+            TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
+            existFunding.setActualFunding(per.getActualFunding());
+            tamsUniversityFundingDao.insertOneByEntity(existFunding);
+        }
+    }
 
 
     @Override

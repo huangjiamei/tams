@@ -130,9 +130,9 @@
                                                                         <bean parent="Uif-InputField"
                                                                               p:propertyName="searchCourseNmb"/>
                                                                         <bean parent="Uif-InputField"
-                                                                              p:propertyName="searchCourseManager"/>
+                                                                              p:propertyName="searchCourseManager" p:additionalCssClasses="searchBoxWidth"/>
                                                                         <bean parent="Uif-InputField"
-                                                                              p:propertyName="searchCourseInsCode"/>
+                                                                              p:propertyName="searchCourseInsCode" p:additionalCssClasses="searchBoxWidth"/>
                                                                         <!--占位-->
                                                                         <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
                                                                               p:messageText="占位" />

@@ -148,20 +148,20 @@
                                                                                   p:propertyName="taCourseCode"/>
                                                                             <!--教学班-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taClassNumber"/>
+                                                                                  p:propertyName="taClassNumber" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--教师-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taTeacherName"/>
                                                                             <!--助教-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantName"/>
+                                                                                  p:propertyName="taAssitantName" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--助教学号-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taAssitantIDNumber"/>
 
                                                                             <!--助教学历-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantMasterMajorName">
+                                                                                  p:propertyName="taAssitantMasterMajorName" p:additionalCssClasses="searchBoxWidth">
                                                                                 <property name="optionsFinder">
                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.TaTaskCategoryFinder"
                                                                                           p:blankOption="true"/><!--改为相应的optionFinder-->
@@ -173,7 +173,7 @@
 
                                                                             <!--教师考核-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taTeacherAppraise">
+                                                                                  p:propertyName="taTeacherAppraise" p:additionalCssClasses="searchBoxWidth">
                                                                                 <property name="optionsFinder">
                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"
                                                                                           p:blankOption="true"/>
@@ -185,7 +185,7 @@
 
                                                                             <!--学生考核-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taStuAppraise">
+                                                                                  p:propertyName="taStuAppraise" p:additionalCssClasses="searchBoxWidth">
                                                                                 <property name="optionsFinder">
                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"
                                                                                           p:blankOption="true"/>
@@ -196,10 +196,10 @@
                                                                             </bean>
                                                                             <!--成绩-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taScore"/>
+                                                                                  p:propertyName="taScore" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--评优-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taStatus"/>
+                                                                                  p:propertyName="taStatus" p:additionalCssClasses="searchBoxWidth"/>
 
                                                                             <!--占位-->
                                                                             <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"

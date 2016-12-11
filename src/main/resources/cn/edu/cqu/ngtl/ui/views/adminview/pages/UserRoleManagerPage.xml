@@ -156,7 +156,7 @@
 																				  p:propertyName="userRoleName"/>
 																			<!--性别-->
 																			<bean parent="Uif-InputField"
-																				  p:propertyName="userRoleGender">
+																				  p:propertyName="userRoleGender" p:additionalCssClasses="searchBoxWidth">
 																				<property name="control">
 																					<bean parent="Uif-DropdownControl">
 																						<property name="options">
@@ -174,10 +174,10 @@
 																			</bean>
 																			<!--工号-->
 																			<bean parent="Uif-InputField"
-																				  p:propertyName="userRoleNumber"/>
+																				  p:propertyName="userRoleNumber" p:additionalCssClasses="searchBoxWidth"/>
 																			<!--统一认证号-->
 																			<bean parent="Uif-InputField"
-																				  p:propertyName="userRoleIDNumber"/>
+																				  p:propertyName="userRoleIDNumber" p:additionalCssClasses="searchBoxWidth"/>
 
 																			<!--占位-->
 																			<bean parent="Uif-MessageField"

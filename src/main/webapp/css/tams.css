@@ -479,6 +479,7 @@ body{
     border-radius: 5px;
     padding:3px;
     vertical-align: middle;
+    width: 90px;
 }
 .tams-form-label:hover{
     /*cursor: pointer;*/
@@ -851,4 +852,9 @@ td.selected{
 /*菜单栏close符号位置*/
 .uif-actionLink.uif-boxLayoutHorizontalItem.close.pull-right{
     width:auto;
+}
+
+/*过滤器宽度*/
+.searchBoxWidth input[type="text"].form-control{
+    width: 90px;
 }

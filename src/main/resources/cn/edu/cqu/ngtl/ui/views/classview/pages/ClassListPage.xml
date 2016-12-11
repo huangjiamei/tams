@@ -246,17 +246,17 @@
                                                                                   p:propertyName="condCourseCode"/>
                                                                             <!--教学班-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="condClassNumber"/>
+                                                                                  p:propertyName="condClassNumber" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--教师-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="condInstructorName"/>
+                                                                                  p:propertyName="condInstructorName" p:additionalCssClasses="searchBoxWidth"/>
 
                                                                             <!--耗费工时-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="courseWorkTime"/>
+                                                                                  p:propertyName="courseWorkTime" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--状态-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="courseStatus">
+                                                                                  p:propertyName="courseStatus" p:additionalCssClasses="searchBoxWidth">
                                                                                 <property name="optionsFinder">
                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
                                                                                           p:blankOption="true"/>

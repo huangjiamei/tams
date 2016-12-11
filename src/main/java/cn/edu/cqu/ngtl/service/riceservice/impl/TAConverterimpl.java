@@ -125,9 +125,10 @@ public class TAConverterimpl implements ITAConverter {
             for (UTClassInformation information : informationlist) {
                 String instructorname ="";
                 List<UTClassInstructor> instructorName = classInstructorDao.selectByClassId(information.getId());
-                for(UTClassInstructor utClassInstructor :instructorName){
-                    instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
-                }
+                if(instructorName != null)
+                    for(UTClassInstructor utClassInstructor :instructorName){
+                        instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
+                    }
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());

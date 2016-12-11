@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -70,6 +71,9 @@ public class adminController extends BaseController {
 
     @Autowired
     private UTSessionDao utSessionDao;
+
+    @Autowired
+    private IUserInfoService iUserInfoService;
 
 
     @RequestMapping(params = "methodToCall=logout")
@@ -878,6 +882,13 @@ public class adminController extends BaseController {
             infoForm.setSpringTerm(false);
         }
 
+        if(iUserInfoService.isAcademicAffairsStaff(uId)||iUserInfoService.isSysAdmin(uId))
+            infoForm.setAcademicAffairManager(true);
+        else
+            infoForm.setAcademicAffairManager(false);
+
+
+
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
                         adminService.getCurrFundingBySession()
@@ -933,6 +944,17 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
         adminService.releaseDeptFunding(draftDepartmentFunding);
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+
+    @RequestMapping(params = "methodToCall=SaveDeptFunding")
+    public ModelAndView SaveDeptFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
+        adminService.saveDeptFunding(draftDepartmentFunding);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

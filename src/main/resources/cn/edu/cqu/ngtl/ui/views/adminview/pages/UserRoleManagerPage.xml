@@ -156,7 +156,22 @@
 																				  p:propertyName="userRoleName"/>
 																			<!--性别-->
 																			<bean parent="Uif-InputField"
-																				  p:propertyName="userRoleGender"/>
+																				  p:propertyName="userRoleGender">
+																				<property name="control">
+																					<bean parent="Uif-DropdownControl">
+																						<property name="options">
+																							<list>
+																								<bean parent="Uif-KeyLabelPair" p:key=""
+																									  p:value=""/>
+																								<bean parent="Uif-KeyLabelPair" p:key="1"
+																									  p:value="男"/>
+																								<bean parent="Uif-KeyLabelPair" p:key="2"
+																									  p:value="女"/>
+																							</list>
+																						</property>
+																					</bean>
+																				</property>
+																			</bean>
 																			<!--工号-->
 																			<bean parent="Uif-InputField"
 																				  p:propertyName="userRoleNumber"/>

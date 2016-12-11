@@ -847,3 +847,8 @@ td.selected{
 .nav-tabs>li>a{
     margin: 0px;
 }
+
+/*菜单栏close符号位置*/
+.uif-actionLink.uif-boxLayoutHorizontalItem.close.pull-right{
+    width:auto;
+}

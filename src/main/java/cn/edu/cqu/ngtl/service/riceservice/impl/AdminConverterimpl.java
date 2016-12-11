@@ -87,10 +87,10 @@ public class AdminConverterimpl implements IAdminConverter {
             taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getBonus());
             taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getBonus());
             taFundingViewObject.setTaType("博士");
-            Integer total =  (Integer.parseInt(ta.getAssignedFunding())+
-                    Integer.parseInt(ta.getBonus())+
-                    Integer.parseInt(ta.getPhdFunding())+
-                    Integer.parseInt(ta.getTravelSubsidy()));
+            Integer total =  (Integer.parseInt(taFundingViewObject.getAssignedFunding())+
+                    Integer.parseInt(taFundingViewObject.getBonus())+
+                    Integer.parseInt(taFundingViewObject.getPhdFunding())+
+                    Integer.parseInt(taFundingViewObject.getTravelSubsidy()));
             taFundingViewObject.setTotal(total.toString());
             taFundingViewObjects.add(taFundingViewObject);
         }

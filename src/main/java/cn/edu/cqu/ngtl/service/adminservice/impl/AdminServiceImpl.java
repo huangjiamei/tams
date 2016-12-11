@@ -622,6 +622,19 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects){
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(DepartmentFundingViewObject per : departmentFundingViewObjects){
+            TAMSDeptFundingDraft existDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(per.getDepartmentId(),curSession.getId());
+            existDraft.setActualFunding(per.getActualFunding());//保存批准经费
+            existDraft.setPlanFunding(per.getPlanFunding());//保存计划经费
+            tamsDeptFundingDraftDao.saveOneByEntity(existDraft);
+        }
+    }
+
+
+
+    @Override
     public List<TAMSTimeSettingType> getAllTimeCategory() {
         return timeSettingTypeDao.selectAll();
     }

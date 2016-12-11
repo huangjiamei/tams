@@ -87,6 +87,9 @@ public interface IAdminService {
     //发布学院经费
     boolean releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
+    //保存学院经费
+    void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
+
     List<TAMSDeptFunding> getDeptFundCurrByCondition(Map<String, String> conditions);
 
     List<DetailFundingViewObject> getDetailFundByCondition(Map<String, String> conditions);

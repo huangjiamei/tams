@@ -431,10 +431,18 @@
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="保存"
+                                                                                                          p:actionImagePlacement="LEFT"
+                                                                                                          p:style="float:right!important;"
+                                                                                                          p:methodToCall="SaveDeptFunding"
+                                                                                                          p:render="@{#form.academicAffairManager}"
+                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="发布学院经费"
                                                                                                           p:actionImagePlacement="LEFT"
                                                                                                           p:style="float:right!important;"
                                                                                                           p:methodToCall="ReleaseDeptFunding"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
                                                                                                 </list>
                                                                                             </property>
@@ -550,14 +558,13 @@
                                                                                                                                   p:propertyName="department"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="planFunding"
-                                                                                                                                  p:readOnly="false"
                                                                                                                                   p:label="预算经费"
                                                                                                                                   p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_DEPARTMENT')"/>
                                                                                                                             <bean parent="Uif-DataField"
                                                                                                                                   p:label="申报经费"
                                                                                                                                   p:propertyName="applyFunding"
                                                                                                                                   p:sortAs="numeric"/>
-                                                                                                                            <bean parent="Uif-DataField"
+                                                                                                                            <bean parent="Uif-InputField"
                                                                                                                                   p:label="批准经费"
                                                                                                                                   p:propertyName="actualFunding"
                                                                                                                                   p:sortAs="numeric"/>

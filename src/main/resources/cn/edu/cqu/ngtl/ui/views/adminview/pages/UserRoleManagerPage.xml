@@ -188,7 +188,7 @@
 																				  parent="Uif-PrimaryActionButton"
 																				  p:actionLabel="查询"
 																				  p:additionalCssClasses="icon-search hidden-fields search-button"
-																				  p:methodToCall="xxxx"
+																				  p:methodToCall="searchUserByCondition"
 																				  p:refreshId="UserRoleManagerPage"/>
 
 																		</list>

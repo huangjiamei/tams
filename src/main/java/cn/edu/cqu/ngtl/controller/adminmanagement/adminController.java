@@ -1103,6 +1103,25 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+
+    /**
+     * 用户管理页面搜索
+     */
+    @RequestMapping(params = {"methodToCall=searchUserByCondition"})
+    public ModelAndView searchUserByCondition(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("departmentId",infoForm.getUserRoleDepartmentName());
+        conditions.put("userName",infoForm.getUserRoleName());
+        conditions.put("userGender",infoForm.getUserRoleGender());
+        conditions.put("userCode",infoForm.getUserRoleNumber());
+        conditions.put("userAuthId",infoForm.getUserRoleIDNumber());
+        infoForm.setURMutInstructors(adminService.getInstructorByconditions(conditions));
+        return this.getModelAndView(infoForm, "pageUserRoleManager");
+    }
+
+
     /**
      * 删除课程负责人
      */

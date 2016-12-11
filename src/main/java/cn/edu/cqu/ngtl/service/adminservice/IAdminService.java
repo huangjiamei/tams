@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.service.adminservice;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 
@@ -51,6 +52,8 @@ public interface IAdminService {
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
     boolean setCurrentSession (String termYear, String termTerm);
+
+    List<UTInstructor> getInstructorByconditions(Map<String, String> conditions);
 
 /*
     List<TAMSDeptFunding> getCurrFundingBySession();

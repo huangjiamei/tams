@@ -73,6 +73,33 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 	}
 
 
+	@Override
+	public List<UTInstructor> getInstructorByConditions(Map<String,String> conditions){
+		List<UTInstructor> instructorsByconditions = new ArrayList<>();
+		int countNull = 0;
+		//加通配符
+		for (Map.Entry<String, String> entry : conditions.entrySet()) {
+			if (entry.getValue() == null) {
+				conditions.put(entry.getKey(), "%");
+				countNull++;
+			} else
+				conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+		}
+		if (countNull != 5) {
+			Query query = em.createNativeQuery("SELECT * FROM UNITIME_INSTRUCTOR t " +
+					"where t.NAME LIKE '" +conditions.get("userName")
+					+"' AND t.GENDER LIKE '"+conditions.get("userGender")
+					+"' AND  t.CODE LIKE '" + conditions.get("userCode")
+					+"' AND  t.ID_NUBER LIKE '" + conditions.get("userAuthId")
+					+"' AND  t.DEPARTMENT_ID LIKE '"+conditions.get("departmentId") +"'",UTInstructor.class);
+			instructorsByconditions = query.getResultList();
+		}else{
+			instructorsByconditions = this.getAllInstructors();
+		}
+		return instructorsByconditions;
+	}
+
+
 
 	@Override
 	public  List<UTInstructor> getInstructorByName(String name){

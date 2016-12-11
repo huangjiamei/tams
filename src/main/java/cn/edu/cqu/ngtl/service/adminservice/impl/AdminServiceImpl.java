@@ -3,10 +3,12 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
@@ -38,6 +40,8 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
 
+    @Autowired
+    private UTInstructorDao utInstructorDao;
 
     @Autowired
     private TAMSDeptFundingDao tamsDeptFundingDao;
@@ -363,7 +367,10 @@ public class AdminServiceImpl implements IAdminService{
         }
     }
 
-
+    @Override
+    public List<UTInstructor> getInstructorByconditions(Map<String, String> conditions){
+        return utInstructorDao.getInstructorByConditions(conditions);
+    }
 
 
     /*

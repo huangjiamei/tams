@@ -238,6 +238,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String checkboxesTest;
     private String ConnectMessage;
 
+
     public TAMSTimeSettingType getTimeSettingType() {
         return timeSettingType;
     }
@@ -635,6 +636,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
 
+    private String userRoleDepartmentName;//学院
+    private String userRoleName;//姓名
+    private String userRoleGender;//性别
+    private String userRoleNumber;//工号
+    private String userRoleIDNumber;//统一认证号
+
+
+
     /**
      *
      * 时间设置页面的类型名称，时间输入框
@@ -643,6 +652,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String startTimeSet;
     private String endTimeSet;
     private List<TAMSTimeSettings> timeSettingsList;
+
 
    /*
    工作流类别
@@ -1488,5 +1498,45 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setFallTerm(boolean fallTerm) {
         this.fallTerm = fallTerm;
+    }
+
+    public String getUserRoleDepartmentName() {
+        return userRoleDepartmentName;
+    }
+
+    public void setUserRoleDepartmentName(String userRoleDepartmentName) {
+        this.userRoleDepartmentName = userRoleDepartmentName;
+    }
+
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
+    }
+
+    public String getUserRoleGender() {
+        return userRoleGender;
+    }
+
+    public void setUserRoleGender(String userRoleGender) {
+        this.userRoleGender = userRoleGender;
+    }
+
+    public String getUserRoleNumber() {
+        return userRoleNumber;
+    }
+
+    public void setUserRoleNumber(String userRoleNumber) {
+        this.userRoleNumber = userRoleNumber;
+    }
+
+    public String getUserRoleIDNumber() {
+        return userRoleIDNumber;
+    }
+
+    public void setUserRoleIDNumber(String userRoleIDNumber) {
+        this.userRoleIDNumber = userRoleIDNumber;
     }
 }

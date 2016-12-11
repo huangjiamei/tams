@@ -194,7 +194,8 @@ public class ClassController extends BaseController {
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+           //e.printStackTrace();
         }
         return this.getModelAndView(infoForm, "pageClassInfo");
     }

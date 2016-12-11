@@ -541,4 +541,16 @@
         </property>
     </bean>
 
+    <bean id="refreshPageViewDialog" parent="Uif-DialogGroup">
+        <property name="headerText" value="错误信息提示："/>
+        <property name="promptText" value="错误啦！！！！！"/>
+        <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
+                      p:actionScript="refreshPage();" />
+            </list>
+        </property>
+    </bean>
+
 </beans>

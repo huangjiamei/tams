@@ -51,4 +51,6 @@ public interface TAMSTaDao {
 
     List<DetailFundingViewObject> selectDetailFundByCondition(Map<String, String> conditions);
 
+    List<TAMSTa> selectByTaId(String taId);
+
 }

@@ -137,11 +137,16 @@ public class TAServiceimpl implements ITAService {
 
                 //教师，查看自己课程的助教
                 //测试：01012657
-                else {
+                else if(userInfoService.isInstructor(uId)){
                      //先根据教师id查到该教师所教授的批量课程id，然后再根据批量的课程id查出所有的助教
                      List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
                      return taDao.selectByClassIds(classIds);
                 }
+
+                //助教，查询自己担任的课程
+                else {
+            return taDao.selectByTaId(uId);
+        }
 
     }
 

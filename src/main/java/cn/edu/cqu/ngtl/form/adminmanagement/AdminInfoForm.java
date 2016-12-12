@@ -16,9 +16,6 @@ import java.util.List;
  */
 public class AdminInfoForm extends BaseForm implements Serializable {
 
-
-    private static final long serialVersionUID = -1974217788100313751L;
-
     /**
      * 时间类别管理页面
      */
@@ -98,6 +95,10 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     /**
      * 经费管理页面
      */
+
+    private String sessionFundingStatistics;
+
+    private String sessionFundingTotalApproved;
 
     private String pieChartsNameValuePairs;
 
@@ -238,6 +239,21 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String checkboxesTest;
     private String ConnectMessage;
 
+    public String getSessionFundingStatistics() {
+        return sessionFundingStatistics;
+    }
+
+    public void setSessionFundingStatistics(String sessionFundingStatistics) {
+        this.sessionFundingStatistics = sessionFundingStatistics;
+    }
+
+    public String getSessionFundingTotalApproved() {
+        return sessionFundingTotalApproved;
+    }
+
+    public void setSessionFundingTotalApproved(String sessionFundingTotalApproved) {
+        this.sessionFundingTotalApproved = sessionFundingTotalApproved;
+    }
 
     public TAMSTimeSettingType getTimeSettingType() {
         return timeSettingType;

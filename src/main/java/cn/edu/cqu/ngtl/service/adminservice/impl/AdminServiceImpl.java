@@ -667,4 +667,28 @@ public class AdminServiceImpl implements IAdminService{
     public boolean deleteTimeCategory(TAMSTimeSettingType timeSettingType) {
         return timeSettingTypeDao.deleteOneByEntity(timeSettingType);
     }
+
+    @Override
+    public String getSessionFundingStatistics() {
+        List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDepartmentCurrBySession();
+        String totalPlan = "";
+        Long setted = 0l;
+        for(TAMSDeptFunding deptFunding : deptFundings) {
+            setted = setted + Integer.parseInt(deptFunding.getPlanFunding());
+        }
+        totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();
+
+        return setted + "/" + totalPlan;
+    }
+
+    @Override
+    public String getSessionFundingTotalApprove() {
+        List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDepartmentCurrBySession();
+        Long setted = 0l;
+        for(TAMSDeptFunding deptFunding : deptFundings) {
+            setted = setted + Integer.parseInt(deptFunding.getActualFunding());
+        }
+
+        return setted.toString();
+    }
 }

@@ -49,6 +49,9 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     @Autowired
     private TAMSClassApplyStatusDao tamsClassApplyStatusDao;
 
+    @Autowired
+    private UTStudentTimetableDao utStudentTimetableDao;
+
 
     @Override
     public Connection getConnection(String hostType, String hostIp, String hostPort, String dbName, String dbUserName,
@@ -73,7 +76,8 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         }
         con = DriverManager.getConnection(url, dbUserName, dbPassWd);
 //        this.syncCourseInfo(con);
-        this.syncClassInfo(con);
+//        this.syncClassInfo(con);
+        this.syncStudentTimetableInfo(con);
         System.out.println("建立了连接");
         return con;
     }
@@ -167,7 +171,6 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             courseMap.put(course.getCodeR(), course.getId());
         }
         String queryCourse = "SELECT * FROM JSKB t WHERE t.SFRZH IS NOT NULL ";
-        int i = 0;
         PreparedStatement pre = connection.prepareStatement(queryCourse);
         try {
             pre.setQueryTimeout(10000);
@@ -261,6 +264,49 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 pre.close();
         }
     }
+
+    /**
+     * 导入学生课表
+     * @param connection
+     * @throws SQLException
+     */
+    public void syncStudentTimetableInfo(Connection connection) throws SQLException {
+
+        List<UTStudentTimetable> utStudentTimetables = new ArrayList<>();
+        UTSession curSession = utSessionDao.getCurrentSession();
+
+        String sessionPrefix = curSession.getYear();
+        if (curSession.getTerm().equals("春")) {
+            sessionPrefix += "01";
+        } else if (curSession.getTerm().equals("秋")) {
+            sessionPrefix += "02";
+        }
+        int i =0;
+        String queryCourse = "SELECT * FROM XSKB t";
+        PreparedStatement pre = connection.prepareStatement(queryCourse);
+        try {
+            pre.setQueryTimeout(10000);
+            ResultSet res = pre.executeQuery();
+            while (res.next()) {
+                String studentId = res.getString("XH");
+                String classNbr = res.getString("JXBH");
+                String editClassNbr = classNbr.replace("-", "");
+                UTStudentTimetable utStudentTimetable = new UTStudentTimetable();
+                utStudentTimetable.setClassId(sessionPrefix+classNbr);
+                utStudentTimetable.setStudentId(studentId);
+                utStudentTimetable.setSessionId(curSession.getId());
+                System.out.println("添加了" + i++);
+                utStudentTimetables.add(utStudentTimetable);
+            }
+            utStudentTimetableDao.insertOneByEntityList(utStudentTimetables);
+        } finally {
+            if (pre != null)
+                pre.close();
+        }
+
+    }
+
+
 
 
 }

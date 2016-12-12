@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.util.List;
@@ -40,7 +41,7 @@ public interface ITAService {
     //根据uid查看申请者列表
     List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
 
-
+    List<UTStudentTimetable> getStudentTimetableByUid(String uId);
 
     boolean changeStatusBatchByIds(List<String> ids, String status);
 

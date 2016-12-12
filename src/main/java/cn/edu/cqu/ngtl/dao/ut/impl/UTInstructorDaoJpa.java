@@ -96,7 +96,12 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		}else{
 			instructorsByconditions = this.getAllInstructors();
 		}
-		return instructorsByconditions;
+		if(instructorsByconditions.size()!=0||instructorsByconditions!=null) {
+			return instructorsByconditions;
+		}else{
+			instructorsByconditions.add(new UTInstructor());
+			return instructorsByconditions;
+		}
 	}
 
 

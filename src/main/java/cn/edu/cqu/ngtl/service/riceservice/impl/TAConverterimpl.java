@@ -6,6 +6,7 @@ import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -25,7 +26,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
-import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.MyClassViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
@@ -36,7 +37,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -75,6 +79,12 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private UTInstructorDao utInstructorDao;
+
+    @Autowired
+    private UTClassInfoDao utClassInfoDao;
+
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
@@ -1062,4 +1072,35 @@ public class TAConverterimpl implements ITAConverter {
         }
         return viewObjects;
     }
+
+    @Override
+    public List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables){
+        List<MyClassViewObject> myClassViewObjects = new ArrayList<>();
+        List<Object> classIdList = new ArrayList<>();
+        for(UTStudentTimetable utStudentTimetable : utStudentTimetables){
+            classIdList.add(utStudentTimetable.getClassId());
+        }
+
+        List<UTClassInformation> utClassInformations = utClassInfoDao.selectBatchByIds(classIdList);
+
+        for(UTClassInformation utClassInformation : utClassInformations) {
+            MyClassViewObject myClassViewObject = new MyClassViewObject();
+            myClassViewObject.setClassNbr(utClassInformation.getClassNumber());
+            myClassViewObject.setCourseCode(utClassInformation.getCourseCode());
+            myClassViewObject.setCourseName(utClassInformation.getCourseName());
+            myClassViewObject.setCredit(utClassInformation.getCredit());
+            myClassViewObject.setDepartmentName(utClassInformation.getDeptName());
+            List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(utClassInformation.getId());
+            String instructorName = "";
+            for(UTClassInstructor utClassInstructor : utClassInstructors){
+                instructorName += utClassInstructor.getUtInstructor().getName()+"  ";
+            }
+            myClassViewObject.setInstructorName(instructorName);
+            myClassViewObjects.add(myClassViewObject);
+
+        }
+        return myClassViewObjects;
+    }
+
+
 }

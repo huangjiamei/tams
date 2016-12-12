@@ -2,11 +2,7 @@ package cn.edu.cqu.ngtl.form.tamanagement;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.BaseForm;
-import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
-import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
-import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
-import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
-import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.*;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -83,6 +79,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
      */
     private List<WorkBenchViewObject> workbench;
     private List<TAMSTaTravelSubsidy> travelSubsidies;
+    private List<MyClassViewObject> myClassViewObjects;
+
     private String taUniqueId;
     private String travelTime;
     private String travelNote;
@@ -444,5 +442,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTaStatus(String taStatus) {
         this.taStatus = taStatus;
+    }
+
+    public List<MyClassViewObject> getMyClassViewObjects() {
+        return myClassViewObjects;
+    }
+
+    public void setMyClassViewObjects(List<MyClassViewObject> myClassViewObjects) {
+        this.myClassViewObjects = myClassViewObjects;
     }
 }

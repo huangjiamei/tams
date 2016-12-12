@@ -10,7 +10,6 @@ import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
-import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -28,9 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 /**
  * Created by tangjing on 16-10-19.
  * 助教信息查看的相关view及function
@@ -201,197 +198,197 @@ public class TaController extends BaseController {
     }
 
     //我的助教（教师用户看到的）(管理助教)界面
-    /**
-     * 获取助教管理页面(包含我的助教列表+申请助教列表)
-     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=getTaManagementPage")
-    public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                            HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//    /**
+//     * 获取助教管理页面(包含我的助教列表+申请助教列表)
+//     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTaManagementPage&viewId=TaView
+//     * @param form
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=getTaManagementPage")
+//    public ModelAndView getTaManagementPage(@ModelAttribute("KualiForm") UifFormBase form,
+//                                            HttpServletRequest request) {
+//        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//
+//        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+//        String uId = userSession.getLoggedInUserPrincipalId();
+//        taInfoForm.setAllMyTa(taConverter.myTaCombinePayDay(
+//                taService.getAllTaFilteredByUid(uId)
+//        ));
+//
+//
+//        taInfoForm.setAllApplication(taConverter.applicationToViewObject(
+//                taService.getAllApplicationFilterByUid(uId)
+//        ));
+//
+//        return this.getModelAndView(taInfoForm, "pageTaManagement");
+//    }
 
-        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
-        taInfoForm.setAllMyTa(taConverter.myTaCombinePayDay(
-                taService.getAllTaFilteredByUid(uId)
-        ));
-
-
-        taInfoForm.setAllApplication(taConverter.applicationToViewObject(
-                taService.getAllApplicationFilterByUid(uId)
-        ));
-
-        return this.getModelAndView(taInfoForm, "pageTaManagement");
-    }
-
-    /**
-     * 聘请助教
-     * @param form
-     * @param request
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=employ")
-    public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
-                                            HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-
-        List<MyTaViewObject> applicationList = taInfoForm.getAllApplication();
-
-        //遍历所有list，找到选中的行
-        List<MyTaViewObject> checkedList = new ArrayList<>();
-        for(MyTaViewObject per : applicationList) {
-            if(per.isCheckBox())
-                checkedList.add(per);
-        }
-
-        boolean result = taService.employBatchByStuIdsWithClassId(
-                taConverter.extractIdsFromApplication(checkedList)
-        );
-        for(MyTaViewObject needToAdd : checkedList){
-            needToAdd.setCheckBox(false);
-            taInfoForm.getAllMyTa().add(needToAdd);
-            taInfoForm.getAllApplication().remove(needToAdd);
-        }
-
-
-        if(result)
-            return this.getModelAndView(taInfoForm, "pageTaManagement");
-        else
-            return this.getModelAndView(taInfoForm, "pageTaManagement"); //应该返回错误信息
-    }
-
-
-    /**
-     * 恢复助教
-     * 属于TaManagementPage
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=setTaToLiving")
-    public ModelAndView setTaToLiving(@ModelAttribute("KualiForm") UifFormBase form,
-                                      HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-
-        List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
-
-        List<MyTaViewObject> isOkToChange = new ArrayList<>();
-
-        for (MyTaViewObject per : objects) {
-            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.PAUSED))
-                isOkToChange.add(per);
-        }
-
-        if (isOkToChange.isEmpty()) {
-            return this.getTaManagementPage(form, request);
-        }
-
-        boolean result = taService.changeStatusBatchByTaIds(
-                taConverter.extractIdsFromMyTaInfo(isOkToChange),
-                TA_STATUS.LIVING
-        );
-
-        if (result)
-            return this.getTaManagementPage(form, request);
-        else {
-            // TODO: 2016/11/12 等待错误信息设计
-            return this.getTaManagementPage(form, request);
-        }
-    }
-
-    /**
-     * 暂停助教
-     * 属于TaManagementPage
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=setTaToPause")
-    public ModelAndView setTaToPause(@ModelAttribute("KualiForm") UifFormBase form,
-                                     HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-
-        List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
-
-        List<MyTaViewObject> isOkToChange = new ArrayList<>();
-
-        for (MyTaViewObject per : objects) {
-            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.LIVING))
-                isOkToChange.add(per);
-        }
-
-        int n = isOkToChange.size();
-
-        if (isOkToChange.isEmpty()) {
-            return this.getTaManagementPage(form, request);
-        }
-
-        n = taConverter.extractIdsFromMyTaInfo(isOkToChange).size();
-
-        boolean result = taService.changeStatusBatchByTaIds(
-                taConverter.extractIdsFromMyTaInfo(isOkToChange),
-                TA_STATUS.PAUSED
-        );
-
-        if (result)
-            return this.getTaManagementPage(form, request);
-        else {
-            // TODO: 2016/11/12 等待错误信息设计
-            return this.getTaManagementPage(form, request);
-        }
-    }
-
-    /**
-     * 解聘助教
-     * 属于TaManagementPage
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=setTaToDismiss")
-    public ModelAndView setTaToDismiss(@ModelAttribute("KualiForm") UifFormBase form,
-                                       HttpServletRequest request) {
+//    /**
+//     * 聘请助教
+//     * @param form
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=employ")
+//    public ModelAndView employ(@ModelAttribute("KualiForm") UifFormBase form,
+//                                            HttpServletRequest request) {
+//        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//
+//        List<MyTaViewObject> applicationList = taInfoForm.getAllApplication();
+//
+//        //遍历所有list，找到选中的行
+//        List<MyTaViewObject> checkedList = new ArrayList<>();
+//        for(MyTaViewObject per : applicationList) {
+//            if(per.isCheckBox())
+//                checkedList.add(per);
+//        }
+//
+//        boolean result = taService.employBatchByStuIdsWithClassId(
+//                taConverter.extractIdsFromApplication(checkedList)
+//        );
+//        for(MyTaViewObject needToAdd : checkedList){
+//            needToAdd.setCheckBox(false);
+//            taInfoForm.getAllMyTa().add(needToAdd);
+//            taInfoForm.getAllApplication().remove(needToAdd);
+//        }
+//
+//
+//        if(result)
+//            return this.getModelAndView(taInfoForm, "pageTaManagement");
+//        else
+//            return this.getModelAndView(taInfoForm, "pageTaManagement"); //应该返回错误信息
+//    }
 
 
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-        // TODO: 2016/11/12 等待需求 
-        return this.getTaManagementPage(form, request);
-    }
+//    /**
+//     * 恢复助教
+//     * 属于TaManagementPage
+//     * @param form
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=setTaToLiving")
+//    public ModelAndView setTaToLiving(@ModelAttribute("KualiForm") UifFormBase form,
+//                                      HttpServletRequest request) {
+//        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//
+//        List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
+//
+//        List<MyTaViewObject> isOkToChange = new ArrayList<>();
+//
+//        for (MyTaViewObject per : objects) {
+//            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.PAUSED))
+//                isOkToChange.add(per);
+//        }
+//
+//        if (isOkToChange.isEmpty()) {
+//            return this.getTaManagementPage(form, request);
+//        }
+//
+//        boolean result = taService.changeStatusBatchByTaIds(
+//                taConverter.extractIdsFromMyTaInfo(isOkToChange),
+//                TA_STATUS.LIVING
+//        );
+//
+//        if (result)
+//            return this.getTaManagementPage(form, request);
+//        else {
+//            // TODO: 2016/11/12 等待错误信息设计
+//            return this.getTaManagementPage(form, request);
+//        }
+//    }
 
-    /**
-     * 测试用方法：
-     * 助教管理页面，输入姓名或学号，查询助教
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=searchTaByCondition")
-    public ModelAndView searchTaByCondition(@ModelAttribute("KualiForm") UifFormBase form,
-                                       HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-        // TODO: 2016/11/24 要获取前端输入的姓名、学号，所以需要在form中添加对应属性并修改TaManagementPage.xml中375行左右参数名。(现在前端用的是inputField8/9)
+//    /**
+//     * 暂停助教
+//     * 属于TaManagementPage
+//     * @param form
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=setTaToPause")
+//    public ModelAndView setTaToPause(@ModelAttribute("KualiForm") UifFormBase form,
+//                                     HttpServletRequest request) {
+//        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//
+//        List<MyTaViewObject> objects = taInfoForm.getAllMyTa();
+//
+//        List<MyTaViewObject> isOkToChange = new ArrayList<>();
+//
+//        for (MyTaViewObject per : objects) {
+//            if (per.isCheckBox() && per.getStatus().equals(TA_STATUS.LIVING))
+//                isOkToChange.add(per);
+//        }
+//
+//        int n = isOkToChange.size();
+//
+//        if (isOkToChange.isEmpty()) {
+//            return this.getTaManagementPage(form, request);
+//        }
+//
+//        n = taConverter.extractIdsFromMyTaInfo(isOkToChange).size();
+//
+//        boolean result = taService.changeStatusBatchByTaIds(
+//                taConverter.extractIdsFromMyTaInfo(isOkToChange),
+//                TA_STATUS.PAUSED
+//        );
+//
+//        if (result)
+//            return this.getTaManagementPage(form, request);
+//        else {
+//            // TODO: 2016/11/12 等待错误信息设计
+//            return this.getTaManagementPage(form, request);
+//        }
+//    }
 
+//    /**
+//     * 解聘助教
+//     * 属于TaManagementPage
+//     * @param form
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=setTaToDismiss")
+//    public ModelAndView setTaToDismiss(@ModelAttribute("KualiForm") UifFormBase form,
+//                                       HttpServletRequest request) {
+//
+//
+//        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//        // TODO: 2016/11/12 等待需求
+//        return this.getTaManagementPage(form, request);
+//    }
 
-        // TODO: 2016/11/24 下面为测试用代码，需要添加一个新的存储符合条件ta列表的属性 ，同时修改TaManagementPage.xml中约326行的propertyName
-        // TODO: 2016/11/24 注意：需要在TaInfoForm中为新添加的属性赋初始值(List<xx> xxlist=new arraylist<>();) 否则页面加载时会出错
-        /*
-        List<MyTaViewObject> list= taInfoForm.getConditionTAList();
-        MyTaViewObject newobj=new MyTaViewObject();
-        newobj.setTaName("Zsf");
-        newobj.setTaIdNumber("20135040");
-        list.add(newobj);
-        */
-//        taInfoForm.setConditionTAList(list);
-        Map<String, String> conditions = new HashMap<>();
-        //put conditions
-        conditions.put("StudentName", taInfoForm.getStudentName());
-        conditions.put("StudentId", taInfoForm.getStudentNumber());
-        taInfoForm.setConditionTAList(
-                taConverter.studentInfoToMyTaViewObject(
-                        taService.getConditionTaByNameAndId(conditions)
-                )
-        );
-
-        return this.getModelAndView(taInfoForm, "pageTaManagement");
-    }
+//    /**
+//     * 测试用方法：
+//     * 助教管理页面，输入姓名或学号，查询助教
+//     * @param form
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=searchTaByCondition")
+//    public ModelAndView searchTaByCondition(@ModelAttribute("KualiForm") UifFormBase form,
+//                                       HttpServletRequest request) {
+//        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+//        // TODO: 2016/11/24 要获取前端输入的姓名、学号，所以需要在form中添加对应属性并修改TaManagementPage.xml中375行左右参数名。(现在前端用的是inputField8/9)
+//
+//
+//        // TODO: 2016/11/24 下面为测试用代码，需要添加一个新的存储符合条件ta列表的属性 ，同时修改TaManagementPage.xml中约326行的propertyName
+//        // TODO: 2016/11/24 注意：需要在TaInfoForm中为新添加的属性赋初始值(List<xx> xxlist=new arraylist<>();) 否则页面加载时会出错
+//        /*
+//        List<MyTaViewObject> list= taInfoForm.getConditionTAList();
+//        MyTaViewObject newobj=new MyTaViewObject();
+//        newobj.setTaName("Zsf");
+//        newobj.setTaIdNumber("20135040");
+//        list.add(newobj);
+//        */
+////        taInfoForm.setConditionTAList(list);
+//        Map<String, String> conditions = new HashMap<>();
+//        //put conditions
+//        conditions.put("StudentName", taInfoForm.getStudentName());
+//        conditions.put("StudentId", taInfoForm.getStudentNumber());
+//        taInfoForm.setConditionTAList(
+//                taConverter.studentInfoToMyTaViewObject(
+//                        taService.getConditionTaByNameAndId(conditions)
+//                )
+//        );
+//
+//        return this.getModelAndView(taInfoForm, "pageTaManagement");
+//    }
 
     /**
      * 助教管理页面，输入姓名或学号查询得到助教列表后，点击助教列表中某一行查看该助教的具体信息
@@ -412,38 +409,38 @@ public class TaController extends BaseController {
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
-    /**
-     * 在dialog中'确定'对应的后台方法
-     * 首先需要判断当前是否有选中有效目标
-     * 如果没选中，则弹出errDialog
-     * 已选中则将目标ta加入到候选人列表(allApplication),并刷新整个页面
-     * @param form
-     * @param request
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=addSelectedTaApplicant")
-    public ModelAndView addSelectedTaApplicant(@ModelAttribute("KualiForm") UifFormBase form,
-                                  HttpServletRequest request) {
-        TaInfoForm taInfoForm = (TaInfoForm) form;
-        super.baseStart(taInfoForm);
-
-        MyTaViewObject curTa=taInfoForm.getSelectedTa();
-
-        String classid = taInfoForm.getCurClassId();
-
-        boolean result = taService.submitApplicationAssistant(
-                taConverter.TaViewObjectToTaApplication(curTa, classid)
-        );
-
-        if(result){
-            //避免延迟刷新
-            taInfoForm.getAllApplication().add(curTa);
-            taInfoForm.getConditionTAList().remove(curTa);
-            return this.getTaManagementPage(form, request);
-        }
-        else
-            return this.getTaManagementPage(form, request);
-    }
+//    /**
+//     * 在dialog中'确定'对应的后台方法
+//     * 首先需要判断当前是否有选中有效目标
+//     * 如果没选中，则弹出errDialog
+//     * 已选中则将目标ta加入到候选人列表(allApplication),并刷新整个页面
+//     * @param form
+//     * @param request
+//     * @return
+//     */
+//    @RequestMapping(params = "methodToCall=addSelectedTaApplicant")
+//    public ModelAndView addSelectedTaApplicant(@ModelAttribute("KualiForm") UifFormBase form,
+//                                  HttpServletRequest request) {
+//        TaInfoForm taInfoForm = (TaInfoForm) form;
+//        super.baseStart(taInfoForm);
+//
+//        MyTaViewObject curTa=taInfoForm.getSelectedTa();
+//
+//        String classid = taInfoForm.getCurClassId();
+//
+//        boolean result = taService.submitApplicationAssistant(
+//                taConverter.TaViewObjectToTaApplication(curTa, classid)
+//        );
+//
+//        if(result){
+//            //避免延迟刷新
+//            taInfoForm.getAllApplication().add(curTa);
+//            taInfoForm.getConditionTAList().remove(curTa);
+//            return this.getTaManagementPage(form, request);
+//        }
+//        else
+//            return this.getTaManagementPage(form, request);
+//    }
 
     /**
      * 获取助教考核表(教师给助教评分)
@@ -546,6 +543,13 @@ public class TaController extends BaseController {
                         )
                 )
         );
+
+        //我的课程
+//        taInfoForm.setMyClassViewObjects(ta);
+
+
+
+
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 

@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
@@ -61,6 +62,9 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private TAMSWorkflowFunctionsDao workflowFunctionsDao;
+
+    @Autowired
+    private UTStudentTimetableDao utStudentTimetableDao;
 
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
@@ -157,7 +161,12 @@ public class TAServiceimpl implements ITAService {
     }
 
 
+    @Override
+    public List<UTStudentTimetable> getStudentTimetableByUid(String uId){
 
+        return utStudentTimetableDao.getStudentTimetableByUid(uId);
+
+    }
 
 
 

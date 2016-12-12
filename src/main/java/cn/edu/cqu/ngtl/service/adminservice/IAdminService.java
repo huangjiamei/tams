@@ -130,4 +130,8 @@ public interface IAdminService {
     boolean saveTimeCategory(TAMSTimeSettingType timeSettingType);
 
     boolean deleteTimeCategory(TAMSTimeSettingType timeSettingType);
+
+    String getSessionFundingStatistics();
+
+    String getSessionFundingTotalApprove();
 }

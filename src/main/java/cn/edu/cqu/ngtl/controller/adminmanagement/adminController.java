@@ -895,6 +895,13 @@ public class adminController extends BaseController {
                 )
         );
 
+        infoForm.setSessionFundingStatistics(
+                adminService.getSessionFundingStatistics()
+        );
+        infoForm.setSessionFundingTotalApproved(
+                adminService.getSessionFundingTotalApprove()
+        );
+
         infoForm.setPreviousSessionFundings(
                 taConverter.sessionFundingToViewObject(
                         adminService.getPreviousFundingBySession()

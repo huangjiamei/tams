@@ -31,7 +31,7 @@ public class TAServiceimpl implements ITAService {
     private static final Logger logger = Logger.getRootLogger();
 
     @Autowired
-    private UTClassInfoDao classInfoDao;
+    private TAMSWorkflowStatusDao workflowStatusDao;
 
     @Autowired
     private UTClassDao classDao;
@@ -213,6 +213,10 @@ public class TAServiceimpl implements ITAService {
             //预处理录入信息
             newTa.setSessionId(sessionDao.getCurrentSession().getId().toString());
             newTa.setStatus(TA_STATUS.LIVING);
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
+            List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(function.getId());
+            if(allStatus != null && !allStatus.isEmpty())
+                newTa.setOutStandingTaWorkflowStatusId(allStatus.get(0).getOrder().toString());
             TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
             newTa.setApplicationNote(readyToRemove.getNote());
             if(taDao.insertByEntity(newTa)) {

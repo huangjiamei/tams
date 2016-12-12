@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
-import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
@@ -35,9 +34,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/ta")
 public class TaController extends BaseController {
-
-    @Autowired
-    private IClassInfoService classInfoService;
 
     @Autowired
     private ITAConverter taConverter;

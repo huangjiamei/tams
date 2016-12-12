@@ -873,3 +873,17 @@ td.selected{
 .dropdown-toggle span{
     font-size:16px;
 }
+
+/*table中的颜色，稍微淡一点*/
+.bg-table-red{
+    background-color: rgba(221, 75, 57, 0.89)!important;
+}
+.bg-table-success{
+    background-color: rgba(0, 166, 90, 0.88) !important;
+}
+.bg-table-grey{
+    background-color: rgb(128, 128, 128)!important;
+}
+.bg-table-orange{
+    background-color: rgba(243, 156, 18, 0.88) !important;
+}

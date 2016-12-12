@@ -106,7 +106,7 @@
                                                                                   p:actionLabel="暂停"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="pause"
-                                                                                  p:additionalCssClasses="icon-stop bg-red box-btngroup">
+                                                                                  p:additionalCssClasses="icon-stop bg-orange box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="撤销"
@@ -118,7 +118,7 @@
                                                                                   p:actionLabel="评优"
                                                                                   p:actionScript="showDialog('confirmAppraiseDialog');"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-check bg-orange box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-check bg-red box-btngroup"/>
 
                                                                         </list>
                                                                     </property>
@@ -265,10 +265,10 @@
                                                                                   p:propertyName="instructorName"/>
                                                                             <bean parent="Uif-DataField" p:label="教师考核"
                                                                                   p:propertyName="teacherAppraise"
-                                                                                  p:additionalCssClasses="@{#line.teacherAppraise.equals('优秀')?'bg-orange tams-form-label':'bg-success tams-form-label'}"/>
+                                                                                  p:additionalCssClasses="@{#line.teacherAppraise.equals('优秀')?'bg-table-red tams-form-label':'bg-table-success tams-form-label'}"/>
                                                                             <bean parent="Uif-DataField" p:label="学生考核"
                                                                                   p:propertyName="stuAppraise"
-                                                                                  p:additionalCssClasses="@{#line.stuAppraise.equals('优秀')?'bg-orange tams-form-label':'bg-success tams-form-label'}"/><!--1合格，2优秀-->
+                                                                                  p:additionalCssClasses="@{#line.stuAppraise.equals('优秀')?'bg-table-red tams-form-label':'bg-table-success tams-form-label'}"/><!--1合格，2优秀-->
 
                                                                             <bean parent="Uif-DataField" p:label="成绩"
                                                                                   p:propertyName="score"/>
@@ -276,7 +276,7 @@
                                                                             <!--评优也要做一个optionfinder：6，待评选、7待学院评选、8待学校审核、9已评优-->
                                                                             <bean parent="Uif-DataField" p:label="评优"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.status.equals('已评优')?'bg-success tams-form-label':(#line.status.equals('待学校审核')?'bg-red tams-form-label':'bg-grey tams-form-label')}">
+                                                                                  p:additionalCssClasses="@{#line.status.equals('已评优')?'bg-table-red tams-form-label':(#line.status.equals('待学校审核')?'bg-table-orange tams-form-label':'bg-table-grey tams-form-label')}">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

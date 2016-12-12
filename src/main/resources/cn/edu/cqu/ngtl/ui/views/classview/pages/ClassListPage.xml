@@ -184,13 +184,13 @@
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
                                                                                   p:actionScript="showDialog('returnDialog');"
-                                                                                  p:additionalCssClasses="icon-arrow-left bg-orange box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审批"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:actionScript="showDialog('approveDialog');"
-                                                                                  p:additionalCssClasses="icon-zoom-in bg-primary box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="EXCEL"
@@ -336,7 +336,7 @@
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.status.equals('工作')?'bg-success tams-form-label':(#line.status.equals('编辑')?'bg-red tams-form-label':'bg-grey tams-form-label')}"/>
+                                                                                  p:additionalCssClasses="@{#line.status.equals('工作')?'bg-table-success tams-form-label':(#line.status.equals('编辑')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label')}"/>
 
                                                                         </list>
                                                                     </property>

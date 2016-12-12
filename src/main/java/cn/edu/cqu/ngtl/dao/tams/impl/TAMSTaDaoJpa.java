@@ -466,7 +466,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             return false;
         //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
         int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
-        if(previousIndex < leftEdge || nextIndex > rightEdge)
+        if(previousIndex < leftEdge && nextIndex > rightEdge)
             return false;
         else {
             return true;

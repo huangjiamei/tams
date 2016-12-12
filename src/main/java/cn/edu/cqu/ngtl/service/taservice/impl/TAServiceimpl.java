@@ -4,7 +4,10 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
-import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dao.ut.UTClassDao;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
@@ -12,6 +15,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -61,6 +65,9 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private TAMSWorkflowFunctionsDao workflowFunctionsDao;
+
+    @Autowired
+    private TAMSTaDao tamstadao;
 
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
@@ -327,5 +334,11 @@ public class TAServiceimpl implements ITAService {
             return false;
         }
         return true;
+    }
+
+    @Override
+    public List<TaInfoViewObject> seachTainfoListByConditions(Map<String, String> conditions){
+
+        return  tamstadao.getTaInfoByConditions(conditions);
     }
 }

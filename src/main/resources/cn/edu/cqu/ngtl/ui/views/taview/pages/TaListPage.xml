@@ -106,19 +106,19 @@
                                                                                   p:actionLabel="暂停"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="pause"
-                                                                                  p:additionalCssClasses="icon-stop bg-orange box-btngroup">
+                                                                                  p:additionalCssClasses="icon-stop bg-red box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="撤销"
                                                                                   p:actionScript="showDialog('confirmRevocationDialog');"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-check bg-grey box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-trash bg-grey box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="评优"
                                                                                   p:actionScript="showDialog('confirmAppraiseDialog');"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-check bg-orange box-btngroup"/>
 
                                                                         </list>
                                                                     </property>
@@ -140,6 +140,25 @@
                                                                             <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
                                                                                   p:messageText="占位" />
 
+                                                                            <!--姓名-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taAssitantName" p:additionalCssClasses="searchBoxWidth"/>
+                                                                            <!--学号-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taAssitantIDNumber"/>
+
+                                                                            <!--学历-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taAssitantMasterMajorName" p:additionalCssClasses="searchBoxWidth"><!--改为相应的optionFinder-->
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaTaskCategoryFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
+
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taCourseName"/>
@@ -152,24 +171,6 @@
                                                                             <!--教师-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taTeacherName"/>
-                                                                            <!--助教-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantName" p:additionalCssClasses="searchBoxWidth"/>
-                                                                            <!--助教学号-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantIDNumber"/>
-
-                                                                            <!--助教学历-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantMasterMajorName" p:additionalCssClasses="searchBoxWidth">
-                                                                                <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaTaskCategoryFinder"
-                                                                                          p:blankOption="true"/><!--改为相应的optionFinder-->
-                                                                                </property>
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-DropdownControl"/>
-                                                                                </property>
-                                                                            </bean>
 
                                                                             <!--教师考核-->
                                                                             <bean parent="Uif-InputField"
@@ -196,10 +197,18 @@
                                                                             </bean>
                                                                             <!--成绩-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taScore" p:additionalCssClasses="searchBoxWidth"/>
+                                                                                  p:propertyName="taScore" p:additionalCssClasses="searchBoxWidthMin"/>
                                                                             <!--评优-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taStatus" p:additionalCssClasses="searchBoxWidth"/>
+                                                                                  p:propertyName="taStatus" p:additionalCssClasses="searchBoxWidth"><!--改为相应的optionFinder-->
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
 
                                                                             <!--占位-->
                                                                             <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
@@ -208,8 +217,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
                                                                                   p:additionalCssClasses="icon-search hidden-fields search-button"
-                                                                                  p:methodToCall="xxxx"
-                                                                                  p:style="margin:15px"/>
+                                                                                  p:methodToCall="xxxx"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -221,7 +229,7 @@
                                                                     <property name="propertyName" value="allTaInfo"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
-                                                                    <property name="layoutManager.richTable.render" value="false"/>
+                                                                    <property name="layoutManager.richTable.render" value="true"/>
 
                                                                     <property name="useServerPaging" value="true" />
 
@@ -239,6 +247,13 @@
                                                                                 </property>
                                                                             </bean>
 
+                                                                            <bean parent="Uif-DataField" p:label="姓名"
+                                                                                  p:propertyName="taName" p:additionalCssClasses="font-teal"/>
+                                                                            <bean parent="Uif-DataField" p:label="学号"
+                                                                                  p:propertyName="taIDNumber"/>
+                                                                            <bean parent="Uif-DataField" p:label="学历"
+                                                                                  p:propertyName="taMasterMajorName"/>
+
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"/>
                                                                             <bean parent="Uif-DataField" p:label="课程编号"
@@ -248,25 +263,20 @@
                                                                                   p:additionalCssClasses="font-teal"/>
                                                                             <bean parent="Uif-DataField" p:label="教师"
                                                                                   p:propertyName="instructorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教"
-                                                                                  p:propertyName="taName" p:additionalCssClasses="font-teal"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教学号"
-                                                                                  p:propertyName="taIDNumber"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教学历"
-                                                                                  p:propertyName="taMasterMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="教师考核"
                                                                                   p:propertyName="teacherAppraise"
-                                                                                  p:additionalCssClasses="bg-success tams-form-label"/>
+                                                                                  p:additionalCssClasses="@{#line.teacherAppraise.equals('优秀')?'bg-orange tams-form-label':'bg-success tams-form-label'}"/>
                                                                             <bean parent="Uif-DataField" p:label="学生考核"
                                                                                   p:propertyName="stuAppraise"
-                                                                                  p:additionalCssClasses="bg-orange tams-form-label"/>
+                                                                                  p:additionalCssClasses="@{#line.stuAppraise.equals('优秀')?'bg-orange tams-form-label':'bg-success tams-form-label'}"/><!--1合格，2优秀-->
 
                                                                             <bean parent="Uif-DataField" p:label="成绩"
                                                                                   p:propertyName="score"/>
 
+                                                                            <!--评优也要做一个optionfinder：6，待评选、7待学院评选、8待学校审核、9已评优-->
                                                                             <bean parent="Uif-DataField" p:label="评优"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.status=='1'?'bg-grey tams-form-label':(#line.status=='-1'?'bg-success tams-form-label':'bg-red tams-form-label')}">
+                                                                                  p:additionalCssClasses="@{#line.status.equals('已评优')?'bg-success tams-form-label':(#line.status.equals('待学校审核')?'bg-red tams-form-label':'bg-grey tams-form-label')}">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -279,7 +289,7 @@
                                                                                               p:ajaxSubmit="false"
                                                                                               p:methodToCall="getTaDetailPage"
                                                                                               p:navigateToPageId="pageTaDetail"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-form-label"/><!--此处要将line.status-->
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/><!--此处要将line.status-->
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

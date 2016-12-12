@@ -528,7 +528,7 @@ public class TaController extends BaseController {
      * @return
      */
     @RequestMapping(params = "methodToCall=getWorkbenchPage")
-    public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
         super.baseStart(taInfoForm);
         //我担任助教的课程
@@ -539,9 +539,10 @@ public class TaController extends BaseController {
                         )
                 )
         );
-
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
         //我的课程
-//        taInfoForm.setMyClassViewObjects(ta);
+        taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(taService.getStudentTimetableByUid(uId)));
 
 
 

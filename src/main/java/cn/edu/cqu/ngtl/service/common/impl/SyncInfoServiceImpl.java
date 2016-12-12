@@ -292,7 +292,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String classNbr = res.getString("JXBH");
                 String editClassNbr = classNbr.replace("-", "");
                 UTStudentTimetable utStudentTimetable = new UTStudentTimetable();
-                utStudentTimetable.setClassId(sessionPrefix+classNbr);
+                utStudentTimetable.setClassId(sessionPrefix+editClassNbr);
                 utStudentTimetable.setStudentId(studentId);
                 utStudentTimetable.setSessionId(curSession.getId());
                 System.out.println("添加了" + i++);
@@ -305,8 +305,5 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         }
 
     }
-
-
-
 
 }

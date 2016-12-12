@@ -190,7 +190,6 @@ public class TAServiceimpl implements ITAService {
             if(!taDao.updateByEntity(ta))
                 return false;
         }
-
         return true;
     }
 

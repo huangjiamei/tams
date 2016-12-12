@@ -1105,7 +1105,7 @@ public class adminController extends BaseController {
 
 
     /**
-     * 用户管理页面搜索
+     * 用户管理页面过滤
      */
     @RequestMapping(params = {"methodToCall=searchUserByCondition"})
     public ModelAndView searchUserByCondition(@ModelAttribute("KualiForm") UifFormBase form) {

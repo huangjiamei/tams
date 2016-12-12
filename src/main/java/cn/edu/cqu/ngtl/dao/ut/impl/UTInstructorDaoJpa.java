@@ -90,7 +90,7 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 					"where t.NAME LIKE '" +conditions.get("userName")
 					+"' AND t.GENDER LIKE '"+conditions.get("userGender")
 					+"' AND  t.CODE LIKE '" + conditions.get("userCode")
-					+"' AND  t.ID_NUBER LIKE '" + conditions.get("userAuthId")
+					+"' AND  t.ID_NUMBER LIKE '" + conditions.get("userAuthId")
 					+"' AND  t.DEPARTMENT_ID LIKE '"+conditions.get("departmentId") +"'",UTInstructor.class);
 			instructorsByconditions = query.getResultList();
 		}else{

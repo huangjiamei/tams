@@ -68,7 +68,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
-                        equal("taClassId", classId),
+                        equal("applicationClassId", classId),
                         equal("sessionId",curSession.getId())
                 )
         );

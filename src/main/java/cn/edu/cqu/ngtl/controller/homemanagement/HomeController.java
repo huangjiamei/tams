@@ -62,7 +62,6 @@ public class HomeController extends BaseController {
         CommonHomePage homeForm = (CommonHomePage) form;
         super.baseStart(homeForm);
         utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(homeForm.getSessionTermFinder())));
-        request.getParameterMap().get("pageId");
         return this.getModelAndView(homeForm, homeForm.getPageId());
     }
 

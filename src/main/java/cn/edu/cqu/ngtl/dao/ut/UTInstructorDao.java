@@ -23,4 +23,6 @@ public interface UTInstructorDao {
 
 	Map getAllInstructorNameIdMap();
 
+	List<UTInstructor> getInstructorByConditions(Map<String,String> conditions);
+
 }

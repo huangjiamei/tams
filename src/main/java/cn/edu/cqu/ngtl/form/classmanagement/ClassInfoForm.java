@@ -51,6 +51,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String condCourseCode;
     private String condClassNumber;
     private String condInstructorName;
+    private String courseWorkTime;
+    private String courseStatus;
+
+
 
     private String condJudgeStatus;
     private String condCourseHour;
@@ -363,5 +367,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setAllApplication(List<MyTaViewObject> allApplication) {
         this.allApplication = allApplication;
+    }
+
+    public String getCourseWorkTime() {
+        return courseWorkTime;
+    }
+
+    public void setCourseWorkTime(String courseWorkTime) {
+        this.courseWorkTime = courseWorkTime;
+    }
+
+    public String getCourseStatus() {
+        return courseStatus;
+    }
+
+    public void setCourseStatus(String courseStatus) {
+        this.courseStatus = courseStatus;
     }
 }

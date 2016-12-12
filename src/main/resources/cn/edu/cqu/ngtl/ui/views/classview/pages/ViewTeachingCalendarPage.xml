@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="viewTeachingCalendarHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('viewTeachingCalendarHeaderTitle','icon-calendar4','课程','教学日历')">
+                                  p:onDocumentReadyScript="initContentHeader('viewTeachingCalendarHeaderTitle','icon-book','课程','教学日历')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

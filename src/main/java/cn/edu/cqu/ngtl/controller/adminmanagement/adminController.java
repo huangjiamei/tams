@@ -20,6 +20,7 @@ import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -74,6 +75,9 @@ public class adminController extends BaseController {
 
     @Autowired
     private UserInfoServiceImpl userInfoService;
+    @Autowired
+    private IUserInfoService iUserInfoService;
+
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -87,7 +91,9 @@ public class adminController extends BaseController {
      * @param form
      * @return
      */
-    /**权限控制Start**/
+    /**
+     * 权限控制Start
+     **/
     @RequestMapping(params = "methodToCall=getConsolePage")
     public ModelAndView getConsolePage(@ModelAttribute("KualiForm") UifFormBase form) {
 //        if(new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission((User) GlobalVariables.getUserSession().retrieveObject("user"),"ViewConsolePage")) {
@@ -164,12 +170,13 @@ public class adminController extends BaseController {
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTimeSetPage&viewId=AdminView
      * 设置时间页面
+     *
      * @param form
      * @return 用户管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getTimeSetPage")
-    public ModelAndView getTimeSetPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView getTimeSetPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         infoForm.setTimeSettingsList(
@@ -181,29 +188,31 @@ public class adminController extends BaseController {
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getWorkFlowCategoryPage&viewId=AdminView
+     *
      * @param form
      * @return 工作流类型管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getWorkFlowCategoryPage")
-    public ModelAndView getWorkFlowCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView getWorkFlowCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
+        adminInfoForm.setGetWorkFlowStatus("1");
         adminInfoForm.setTamsWorkflowStatuses(
                 adminService.getWorkFlowCategory()
         );
-
         return this.getModelAndView(adminInfoForm, "pageWorkFlowCategory");
     }
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getSystemParameterPage&viewId=AdminView
+     *
      * @param form
      * @return 同步信息页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getSystemParameterPage")
-    public ModelAndView getSystemParameterPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView getSystemParameterPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
         adminInfoForm.setSystemDbName("jwdb");
@@ -217,12 +226,13 @@ public class adminController extends BaseController {
 
     /**
      * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getTimeCategoryPage&viewId=AdminView
+     *
      * @param form
      * @return 时间类别管理页面
      * @throws Exception
      */
     @RequestMapping(params = "methodToCall=getTimeCategoryPage")
-    public ModelAndView getTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView getTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
@@ -250,7 +260,7 @@ public class adminController extends BaseController {
      * 保存时间类别
      */
     @RequestMapping(params = "methodToCall=saveTimeCategoryPage")
-    public ModelAndView saveTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView saveTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         TAMSTimeSettingType timeSettingType = infoForm.getTimeSettingType();
@@ -260,11 +270,12 @@ public class adminController extends BaseController {
 
     /**
      * 删除时间类别
+     *
      * @param form
      * @return
      */
     @RequestMapping(params = "methodToCall=deleteTimeCategoryPage")
-    public ModelAndView deleteTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form){
+    public ModelAndView deleteTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         //获取某一行
@@ -351,17 +362,18 @@ public class adminController extends BaseController {
         tamsWorkflowStatus.setWorkflowStatus(infoForm.getWorkflowstatus());
         tamsWorkflowStatus.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
         tamsWorkflowStatus.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
-        if(infoForm.getIndex() != null) {
+        if (infoForm.getIndex() != null) {
             TAMSWorkflowStatus tamsWorkflowStatus1 = infoForm.getTamsWorkflowStatuses().get(infoForm.getIndex());
             tamsWorkflowStatus1.setWorkflowStatus(infoForm.getWorkflowstatus());
             tamsWorkflowStatus1.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
             tamsWorkflowStatus1.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
             adminService.saveWorkFlowCategory(tamsWorkflowStatus1);
-        }
-        else{
+        } else {
             adminService.saveWorkFlowCategory(tamsWorkflowStatus);
         }
-        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+//        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+        return  this.getWorkFlowCategoryPage(infoForm);
+
     }
 
     /**
@@ -377,12 +389,14 @@ public class adminController extends BaseController {
         int index = parameters.getSelectedLineIndex();
         TAMSWorkflowStatus selectedWorkFlowStatus = infoForm.getTamsWorkflowStatuses().get(index);
         adminService.deleteWorkFlowCategory(selectedWorkFlowStatus);
-        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+//        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+        return  this.getWorkFlowCategoryPage(infoForm);
     }
 
 
     /**
      * 新增一个时间段
+     *
      * @param form
      * @return
      */
@@ -397,7 +411,7 @@ public class adminController extends BaseController {
         String startTime = timeSets[0];
         String endTime = timeSets[1];
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
-        if(user == null) //// TODO: 16-11-23 应当返回错误信息
+        if (user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");
         boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
         this.resetSettingTime(infoForm);
@@ -407,6 +421,7 @@ public class adminController extends BaseController {
 
     /**
      * 清空页面上已填的数值
+     *
      * @param form
      * @return
      */
@@ -420,6 +435,7 @@ public class adminController extends BaseController {
 
     /**
      * 删除一个时间段
+     *
      * @param form
      * @return
      */
@@ -445,13 +461,15 @@ public class adminController extends BaseController {
         int index = params.getSelectedLineIndex();
         TAMSTimeSettings selectedTimeSettings = infoForm.getTimeSettingsList().get(index);
         infoForm.setTimeType(selectedTimeSettings.getTimeSettingType().getId());
-        infoForm.setSettingsTime(selectedTimeSettings.getStartTime()+"~"+selectedTimeSettings.getEndTime());
+        infoForm.setSettingsTime(selectedTimeSettings.getStartTime() + "~" + selectedTimeSettings.getEndTime());
         return this.getModelAndView(infoForm, "pageTimeSet");
     }
 
     //TODO 新增和删除对话框的实例  START
+
     /**
      * 新增权限对话框   新增的对话框将属性设为空值再直接弹对话框
+     *
      * @param form
      * @return
      * @throws Exception
@@ -463,12 +481,13 @@ public class adminController extends BaseController {
         infoForm.setPermissionNM("");
         infoForm.setPermissionContent("");
         infoForm.setPermissionIndex(null);
-        return this.showDialog("savePermissionDialog",true,infoForm);
+        return this.showDialog("savePermissionDialog", true, infoForm);
     }
 
     /**
      * 更新的对话框需要取到当前需要修改的对象，然后将该对象中的值赋予对话框中的相应字段中。然后再弹对话框
      * PS:务必将选择对象的index放入到form中（或者用其他方法记录下来）
+     *
      * @param form
      * @return
      * @throws Exception
@@ -485,13 +504,14 @@ public class adminController extends BaseController {
         infoForm.setPermissionContent(selectedKrim_perm_t.getDescription());
         infoForm.setPermissionStatus(selectedKrim_perm_t.getActive());
         infoForm.setPermissionIndex(index);                  //记录index
-        return this.showDialog("savePermissionDialog",true,infoForm);
+        return this.showDialog("savePermissionDialog", true, infoForm);
     }
 
     /**
      * 保存/新增权限二合一方法
      * 根据index的值去判断页面执行的是更新还是新增操作。index如果值是null，则页面是进行的新增操作；反之则是进行的更新操作
      * PS:数据库操作结束之后务必将更新的对象重新放入到页面的显示对象中
+     *
      * @param form
      * @return
      * @throws Exception
@@ -501,7 +521,7 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         KRIM_PERM_T krimPermTs = new KRIM_PERM_T();
-        if(infoForm.getPermissionIndex()!=null){
+        if (infoForm.getPermissionIndex() != null) {
             krimPermTs = infoForm.getRMPkrimPermTs().get(infoForm.getPermissionIndex());
         }
         String permissionNM = infoForm.getPermissionNM();
@@ -514,8 +534,8 @@ public class adminController extends BaseController {
         //TODO 权限属性分类
         krimPermTs.setTemplateId("56");
         KRIM_PERM_T exist = new KRIM_PERM_T_DaoJpa().findPermissionByName(permissionNM);
-        if( exist != null){
-            if(exist.getDescription().equals(permissionContent)) {               //名字描述都相同返回错误信息
+        if (exist != null) {
+            if (exist.getDescription().equals(permissionContent)) {               //名字描述都相同返回错误信息
                 infoForm.setErrMsg("已存在相同权限内容的权限");
                 return this.showDialog("adminErrDialog", true, infoForm);
             }
@@ -523,10 +543,10 @@ public class adminController extends BaseController {
             new KRIM_PERM_T_DaoJpa().addPermissions(exist);
         }
         new KRIM_PERM_T_DaoJpa().addPermissions(krimPermTs);
-        if(infoForm.getPermissionIndex()==null) {
+        if (infoForm.getPermissionIndex() == null) {
             infoForm.getRMPkrimPermTs().add(krimPermTs);   //根据不同的操作对页面显示对象进行修改
-        }else{
-            infoForm.getRMPkrimPermTs().set((infoForm.getPermissionIndex()),krimPermTs);
+        } else {
+            infoForm.getRMPkrimPermTs().set((infoForm.getPermissionIndex()), krimPermTs);
         }
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
@@ -535,6 +555,7 @@ public class adminController extends BaseController {
 
     /**
      * 删除权限
+     *
      * @param form
      * @param request
      * @param response
@@ -761,11 +782,12 @@ public class adminController extends BaseController {
         infoForm.setCourseNmb(selectedObject.getCourseNmb());
         infoForm.setCourseManager(selectedObject.getCourseManager());
         infoForm.setInstructorCode(selectedObject.getInstructorCode());
-        return this.showDialog("confirmEditManagerDialog",true,infoForm);
+        return this.showDialog("confirmEditManagerDialog", true, infoForm);
     }
 
     /**
      * 更新课程负责人
+     *
      * @param form
      * @return
      */
@@ -777,14 +799,14 @@ public class adminController extends BaseController {
         CourseManagerViewObject selectedObject = infoForm.getSelectedCourseManagerObject();
         TAMSCourseManager tamsCourseManager = tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId());
         UTInstructor newManager = new UTInstructorDaoJpa().getInstructorByCode(infoForm.getInstructorCode());
-        if(newManager!=null) {
+        if (newManager != null) {
             tamsCourseManager.setCourseManagerId(newManager.getId());
             tamsCourseManagerDaoJpa.saveCourseManager(tamsCourseManager);
             infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setCourseManager(newManager.getName());
             infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setInstructorCode(newManager.getCode());
             infoForm.getCourseManagerViewObjects().get(infoForm.getCourseManagerIndex()).setId(newManager.getId());
             return this.getModelAndView(infoForm, "pageCourseManager");
-        }else{
+        } else {
             infoForm.setErrMsg("查无此人");
         }
         //TODO 报错页面待做
@@ -855,18 +877,32 @@ public class adminController extends BaseController {
             确定当前是春季还是秋季
          */
         UTSession curSession = utSessionDao.getCurrentSession();
-        if(curSession.getTerm().equals("春")){
+        if (curSession.getTerm().equals("春")) {
             infoForm.setSpringTerm(true);
             infoForm.setFallTerm(false);
-        }else{
+        } else {
             infoForm.setFallTerm(true);
             infoForm.setSpringTerm(false);
         }
+
+        if(iUserInfoService.isAcademicAffairsStaff(uId)||iUserInfoService.isSysAdmin(uId))
+            infoForm.setAcademicAffairManager(true);
+        else
+            infoForm.setAcademicAffairManager(false);
+
+
 
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
                         adminService.getCurrFundingBySession()
                 )
+        );
+
+        infoForm.setSessionFundingStatistics(
+                adminService.getSessionFundingStatistics()
+        );
+        infoForm.setSessionFundingTotalApproved(
+                adminService.getSessionFundingTotalApprove()
         );
 
         infoForm.setPreviousSessionFundings(
@@ -902,7 +938,7 @@ public class adminController extends BaseController {
 
         infoForm.setDetailFunding(
                 adminConverter.detailFundingToViewObject(
-                taService.getAllTaFilteredByUid(uId)
+                        taService.getAllTaFilteredByUid(uId)
                 )
         );
 
@@ -912,29 +948,48 @@ public class adminController extends BaseController {
     }
 
 
-
     @RequestMapping(params = "methodToCall=ReleaseDeptFunding")
     public ModelAndView Release(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
-        AdminInfoForm infoForm = (AdminInfoForm)  form;
+        AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        List<DepartmentFundingViewObject> draftDepartmentFunding =infoForm.getDepartmentCurrFundings();
+        List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
         adminService.releaseDeptFunding(draftDepartmentFunding);
 
-       return this.getModelAndView(infoForm, "pageFundsManagement");
+        return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
-        /**
-         * 学校（批次）历史经费过滤
-         */
-    @RequestMapping(params =  {"methodToCall=searchUTFundingByCondition"})
+
+    @RequestMapping(params = "methodToCall=SaveDeptFunding")
+    public ModelAndView SaveDeptFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
+        adminService.saveDeptFunding(draftDepartmentFunding);
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+    @RequestMapping(params = "methodToCall=SaveSessionFunding")
+    public ModelAndView SaveSessionFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        List<SessionFundingViewObject> sessionFundingViewObjects = infoForm.getSessionFundings();
+        adminService.saveSessionFunding(sessionFundingViewObjects);
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+    /**
+     * 学校（批次）历史经费过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchUTFundingByCondition"})
     public ModelAndView searchUTFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
-        AdminInfoForm infoForm = (AdminInfoForm)  form;
+        AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
         Map<String, String> conditions = new HashMap<>();
         //put conditions
         conditions.put("Session", infoForm.getsTimes());
-        conditions.put("PlanFunding",infoForm.getsPreFunds());
+        conditions.put("PlanFunding", infoForm.getsPreFunds());
         conditions.put("ApplyFunding", infoForm.getsApplyFunds());
         conditions.put("ApprovalFunding", infoForm.getsApprovalFunds());
         conditions.put("AddFunding", infoForm.getsAddingFunds());
@@ -952,15 +1007,15 @@ public class adminController extends BaseController {
     /**
      * 学院当前经费过滤
      */
-    @RequestMapping(params =  {"methodToCall=searchCurrDeptFundingByCondition"})
+    @RequestMapping(params = {"methodToCall=searchCurrDeptFundingByCondition"})
     public ModelAndView searchCurrDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
-        AdminInfoForm infoForm = (AdminInfoForm)  form;
+        AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
         Map<String, String> conditions = new HashMap<>();
         //put conditions
         conditions.put("Dept", infoForm.getDepartmentId());
-        conditions.put("PlanFunding",infoForm.getDepartmentPreFunds());
+        conditions.put("PlanFunding", infoForm.getDepartmentPreFunds());
         conditions.put("ApplyFunding", infoForm.getDepartmentApplyFunds());
         conditions.put("ApprovalFunding", infoForm.getDepartmentApprovalFunds());
         conditions.put("PhdFunding", infoForm.getDepartmentAddingFunds());
@@ -1027,7 +1082,7 @@ public class adminController extends BaseController {
     }
 
     /**
-     *经费明细过滤
+     * 经费明细过滤
      */
     @RequestMapping(params = {"methodToCall=searchDetailFundingByCondition"})
     public ModelAndView searchDetailFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
@@ -1102,6 +1157,25 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+
+    /**
+     * 用户管理页面过滤
+     */
+    @RequestMapping(params = {"methodToCall=searchUserByCondition"})
+    public ModelAndView searchUserByCondition(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("departmentId",infoForm.getUserRoleDepartmentName());
+        conditions.put("userName",infoForm.getUserRoleName());
+        conditions.put("userGender",infoForm.getUserRoleGender());
+        conditions.put("userCode",infoForm.getUserRoleNumber());
+        conditions.put("userAuthId",infoForm.getUserRoleIDNumber());
+        infoForm.setURMutInstructors(adminService.getInstructorByconditions(conditions));
+        return this.getModelAndView(infoForm, "pageUserRoleManager");
+    }
+
+
     /**
      * 删除课程负责人
      */
@@ -1158,8 +1232,7 @@ public class adminController extends BaseController {
             adminInfoForm.setClassification(adminInfoForm.getAllClassifications().get(index));
 
             return this.showDialog("editCourseCategoryDialog", true, adminInfoForm);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             adminInfoForm.setClassification(new CMCourseClassification());
             return this.showDialog("addCourseCategoryDialog", true, adminInfoForm);
         }
@@ -1227,7 +1300,7 @@ public class adminController extends BaseController {
         else
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
-            return this.showDialog("adminErrDialog", true, adminInfoForm);
+        return this.showDialog("adminErrDialog", true, adminInfoForm);
     }
 
     /**
@@ -1271,8 +1344,7 @@ public class adminController extends BaseController {
             adminInfoForm.setTaIndex(index);
 
             return this.showDialog("editTaCategoryDialog", true, adminInfoForm);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             //没有选中则进入catch，进而进入new dialog
             adminInfoForm.setOldTaCategory(new TAMSTaCategory());
 
@@ -1292,14 +1364,14 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
-        if(adminInfoForm.getTaIndex()!=null){
-            if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
+        if (adminInfoForm.getTaIndex() != null) {
+            if (!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
-        }else{
-            if(!adminService.addTaCategory(adminInfoForm.getOldTaCategory())){
+        } else {
+            if (!adminService.addTaCategory(adminInfoForm.getOldTaCategory())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("添加助教类别失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1311,6 +1383,7 @@ public class adminController extends BaseController {
     /**
      * 删除助教类别
      * pageCourseCategory
+     *
      * @param form
      * @return
      */
@@ -1323,12 +1396,11 @@ public class adminController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
 
-        TAMSTaCategory taCategory=adminInfoForm.getAllTaCategories().get(index);
+        TAMSTaCategory taCategory = adminInfoForm.getAllTaCategories().get(index);
 
-        if(adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))){
+        if (adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))) {
             return this.getTaCategoryPage(form);
-        }
-        else{
+        } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1338,6 +1410,7 @@ public class adminController extends BaseController {
     /**
      * 获取任务类别管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTaskCategoryPage&viewId=AdminView
+     *
      * @param form
      * @return
      */
@@ -1371,8 +1444,7 @@ public class adminController extends BaseController {
             adminInfoForm.setIssueType(adminInfoForm.getAllIssueTypes().get((index)));
             adminInfoForm.setIssueIndex(index);
             return this.showDialog("editTaskCategoryDialog", true, adminInfoForm);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             //没有选中则进入catch
             //进而进入new dialog
             adminInfoForm.setIssueType(new TAMSIssueType());
@@ -1394,16 +1466,16 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
-        if(adminInfoForm.getIssueIndex()!=null){
+        if (adminInfoForm.getIssueIndex() != null) {
             // index不为空说明要调用update
-            if(!adminService.changeIssueType(adminInfoForm.getIssueType())){
+            if (!adminService.changeIssueType(adminInfoForm.getIssueType())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
-        }else{
+        } else {
             // add
-            if(!adminService.addTaIssueType(adminInfoForm.getIssueType())){
+            if (!adminService.addTaIssueType(adminInfoForm.getIssueType())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1415,6 +1487,7 @@ public class adminController extends BaseController {
     /**
      * 删除任务类别
      * pageTaskCategory
+     *
      * @param form
      * @return
      */
@@ -1429,10 +1502,9 @@ public class adminController extends BaseController {
 
         TAMSIssueType issueType = adminInfoForm.getAllIssueTypes().get(index);
 
-        if(adminService.removeIssueTypeById(issueType.getId())){
+        if (adminService.removeIssueTypeById(issueType.getId())) {
             return this.getTaskCategoryPage(form);
-        }
-        else{
+        } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1442,6 +1514,7 @@ public class adminController extends BaseController {
     /**
      * 获取term(学期或批次)管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getTermManagePage&viewId=AdminView
+     *
      * @param form
      * @return
      */
@@ -1464,6 +1537,7 @@ public class adminController extends BaseController {
      * 查询批次
      * pageTermManage
      * 三个条件不能缺省
+     *
      * @param form
      * @return
      */
@@ -1477,12 +1551,12 @@ public class adminController extends BaseController {
         String startTime = adminInfoForm.getStartTime();
         String endTime = adminInfoForm.getEndTime();
 
-         if (adminInfoForm.getTotalMoney() != null) {
+        if (adminInfoForm.getTotalMoney() != null) {
             // FIXME: 2016/11/5 暂不使用这一参数，如需使用需修改
             adminInfoForm.setErrMsg("这一参数不可用");
 
             return this.showDialog("adminErrDialog", true, adminInfoForm);
-         }
+        }
 
         // 参数全空，返回原来值
         if (termName == null && startTime == null && endTime == null) {
@@ -1516,12 +1590,13 @@ public class adminController extends BaseController {
             }
             adminInfoForm.setAllTerms(
                     taConverter.termInfoToViewObject(
-                        results
+                            results
                     )
             );
             return this.getModelAndView(adminInfoForm, "pageTermManagement");
         }
     }
+
     /**
      * 编辑/添加项返回方法
      * pageTaskCategory
@@ -1548,8 +1623,7 @@ public class adminController extends BaseController {
             adminInfoForm.setCurrentTerm(termManagerViewObject);
             adminInfoForm.setTermIndex(index);
             return this.showDialog("confirmEditTermDialog", true, adminInfoForm);
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             //没有选中则进入catch
             //进而进入new dialog
             //// FIXME: 16-10-30 无法实现默认选择当前年份
@@ -1580,18 +1654,18 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
-        if(adminInfoForm.getTermIndex()!=null){
+        if (adminInfoForm.getTermIndex() != null) {
             // index不为空说明要调用update
-            if(!adminService.changeSession(taConverter.termToDataObject(
-                    adminInfoForm.getCurrentTerm()))){
+            if (!adminService.changeSession(taConverter.termToDataObject(
+                    adminInfoForm.getCurrentTerm()))) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
-        }else{
+        } else {
             // add
-            if(!adminService.addSession(taConverter.termToDataObject(
-                    adminInfoForm.getCurrentTerm()))){
+            if (!adminService.addSession(taConverter.termToDataObject(
+                    adminInfoForm.getCurrentTerm()))) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1603,6 +1677,7 @@ public class adminController extends BaseController {
     /**
      * 删除批次
      * pageTermManagement
+     *
      * @param form
      * @return
      */
@@ -1620,11 +1695,10 @@ public class adminController extends BaseController {
         String termName = termManagerViewObject.getTermName();
         String year = termName.substring(0, termName.indexOf("年"));
         String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("季"));
-        if(adminService.removeTermByYearAndTerm(year,
-                term)){
+        if (adminService.removeTermByYearAndTerm(year,
+                term)) {
             return this.getTermManagePage(form);
-        }
-        else{
+        } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1646,10 +1720,9 @@ public class adminController extends BaseController {
         String termName = termManagerViewObject.getTermName();
         String year = termName.substring(0, termName.indexOf("年"));
         String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("季"));
-        if(adminService.setCurrentSession(year, term)){
+        if (adminService.setCurrentSession(year, term)) {
             return this.getTermManagePage(form);
-        }
-        else{
+        } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("设置失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1677,6 +1750,7 @@ public class adminController extends BaseController {
 
     /**
      * 修改助教酬劳
+     *
      * @param form
      * @return
      */
@@ -1688,11 +1762,12 @@ public class adminController extends BaseController {
         int index = params.getSelectedLineIndex();
         adminInfoForm.setOldTaCategory(adminInfoForm.getAllTaCategories().get(index));
         adminInfoForm.setTaIndex(index);
-        return this.showDialog("editTaRewardDialog" ,true,adminInfoForm);
+        return this.showDialog("editTaRewardDialog", true, adminInfoForm);
     }
 
     /**
      * 修改助教酬劳
+     *
      * @param form
      * @return
      */
@@ -1701,8 +1776,8 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
-        TAMSTaCategory newTaReward  = adminInfoForm.getOldTaCategory();
-        if(!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())){
+        TAMSTaCategory newTaReward = adminInfoForm.getOldTaCategory();
+        if (!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
             // TODO: 2016/11/8 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
@@ -1712,6 +1787,7 @@ public class adminController extends BaseController {
 
     /**
      * 删除助教酬劳
+     *
      * @param form
      * @return
      */
@@ -1733,7 +1809,7 @@ public class adminController extends BaseController {
      */
     @RequestMapping(params = "methodToCall=searchPreDeptFundingByCondition")
     public ModelAndView searchPreDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form,
-                                               HttpServletRequest request) {
+                                                        HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
@@ -1742,8 +1818,8 @@ public class adminController extends BaseController {
         Map<String, String> conditions = new HashMap<>();
 
         //put conditions
-        conditions.put("dTimes",infoForm.getdTimes());  //选择批次
-        conditions.put("deptId",infoForm.getDeptId());  //选择学院
+        conditions.put("dTimes", infoForm.getdTimes());  //选择批次
+        conditions.put("deptId", infoForm.getDeptId());  //选择学院
         //文字搜索
         conditions.put("dPreFunds", infoForm.getdPreFunds());
         conditions.put("dApplyFunds", infoForm.getdApplyFunds());
@@ -1766,6 +1842,7 @@ public class adminController extends BaseController {
     /**
      * 获取工作流程管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getWorkFlowManagePage&viewId=AdminView
+     *
      * @param form
      * @return
      */
@@ -1842,29 +1919,30 @@ public class adminController extends BaseController {
      * 经费页面每一行编辑过后就调用此方法将数据存储到草稿中
      * 经费页面存在多个tab(学校、学院、教学班)，通过curTabFlag来进行区分
      * 存储数据之后，需要及时更新页面上的'金额总计'属性
+     *
      * @param form
-     * @return 更新成功时返回pageFundsManagement页面,失败时弹出errDialog。
+     * @return 更新成功时返回pageFundsManagement页面, 失败时弹出errDialog。
      */
     @RequestMapping(params = "methodToCall=savaFundsDraft")
-    public ModelAndView savaFundsDraft(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+    public ModelAndView savaFundsDraft(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
-        try{
+        try {
             CollectionControllerServiceImpl.CollectionActionParameters params =
                     new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
             int index = params.getSelectedLineIndex();
 
-            String curTabFlag=infoForm.getCurTabFlag();
-            switch (curTabFlag){
+            String curTabFlag = infoForm.getCurTabFlag();
+            switch (curTabFlag) {
                 case AdminInfoForm.TAB_FLAG_SCHOOL:
-                    SessionFundingViewObject curSchoolFundObj=infoForm.getPreviousSessionFundings().get(index);
+                    SessionFundingViewObject curSchoolFundObj = infoForm.getPreviousSessionFundings().get(index);
                     // TODO: 2016/11/25 把这个对象存到数据库的draft中。
 
                     // TODO: 2016/11/25 重新计算该tab的经费总计。
                     break;
                 case AdminInfoForm.TAB_FLAG_DEPARTMENT:
-                    DepartmentFundingViewObject curDepartFundObj=infoForm.getDepartmentCurrFundings().get(index);
+                    DepartmentFundingViewObject curDepartFundObj = infoForm.getDepartmentCurrFundings().get(index);
                     System.out.println(curDepartFundObj.getPlanFunding());
                     // TODO: 2016/11/25 把这个对象存到数据库的draft中。
 
@@ -1878,7 +1956,7 @@ public class adminController extends BaseController {
                     break;
             }
 
-        }catch (Exception e){
+        } catch (Exception e) {
             // TODO: 2016/11/25 return error
         }
 
@@ -1887,47 +1965,48 @@ public class adminController extends BaseController {
 
 
     /**
-     *  同步数据
+     * 同步数据
+     *
      * @return
      */
     @RequestMapping(params = "methodToCall=syncInfo")
-    public ModelAndView syncInfo(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+    public ModelAndView syncInfo(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
         String hostType = infoForm.getSystemHostType();
 
         String hostIp = infoForm.getSystemHostIP();
-        if(hostIp==null){
-            hostIp="";
-        }else{
+        if (hostIp == null) {
+            hostIp = "";
+        } else {
             hostIp = hostIp.trim();
         }
 
         String hostPort = infoForm.getSystemHostPort();
-        if(hostPort==null){
-            hostPort="";
-        }else{
+        if (hostPort == null) {
+            hostPort = "";
+        } else {
             hostPort = hostPort.trim();
         }
 
         String dbName = infoForm.getSystemDbName();
-        if(dbName==null){
-            dbName="";
-        }else{
+        if (dbName == null) {
+            dbName = "";
+        } else {
             dbName = dbName.trim();
         }
         String dbUserName = infoForm.getSystemDbUserName();
-        if(dbUserName==null){
-            dbUserName="";
-        }else{
+        if (dbUserName == null) {
+            dbUserName = "";
+        } else {
             dbUserName = dbUserName.trim();
         }
 
         String dbPassWd = infoForm.getSystemDbPassword();
-        if(dbPassWd==null){
-            dbPassWd="";
-        }else{
+        if (dbPassWd == null) {
+            dbPassWd = "";
+        } else {
             dbPassWd = dbPassWd.trim();
         }
 
@@ -1935,26 +2014,26 @@ public class adminController extends BaseController {
 
 
         Connection con = null;
-        try{
+        try {
             con = syncInfoService.getConnection(hostType, hostIp, hostPort, dbName, dbUserName, dbPassWd);
-        }catch(SQLException | ClassNotFoundException e){
+        } catch (SQLException | ClassNotFoundException e) {
             infoForm.setConnectMessage(e.getMessage());
             e.printStackTrace();
-            return this.getModelAndView(infoForm,"pageSystemParameter");
-        }finally {
-            if(con!=null)
+            return this.getModelAndView(infoForm, "pageSystemParameter");
+        } finally {
+            if (con != null)
                 try {
                     syncInfoService.closeConnection(con);
                 } catch (SQLException e) {
                     infoForm.setConnectMessage(e.getMessage());
                     e.printStackTrace();
-                    return this.getModelAndView(form,"pageSystemParameter");
+                    return this.getModelAndView(form, "pageSystemParameter");
                 }
         }
         return this.getModelAndView(infoForm, "pageSystemParameter");
     }
 
-    @RequestMapping(params =  {"methodToCall=selectCurSession"})
+    @RequestMapping(params = {"methodToCall=selectCurSession"})
     public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);

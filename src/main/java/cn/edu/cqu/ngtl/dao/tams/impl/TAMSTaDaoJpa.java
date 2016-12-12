@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowRoleFunctionDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusRDao;
+import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
@@ -11,6 +12,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
@@ -34,6 +36,9 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Repository
 @Component("TAMSTaDaoJpa")
 public class TAMSTaDaoJpa implements TAMSTaDao {
+
+    @Autowired
+    private UTSessionDao utSessionDao;
 
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
@@ -269,6 +274,28 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
 
     }
+
+    //根据条件查询助教列表
+    public List<TaInfoViewObject> getTaInfoByConditions(Map<String, String> conditions){
+        UTSession curSession = utSessionDao.getCurrentSession();
+        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.STATUS FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
+                "' AND s.UNIQUEID LIKE '"+conditions.get("taId")+
+                "' AND s. NAME LIKE '"+conditions.get("taName")+
+                "' AND t .TA_TYPE LIKE '"+conditions.get("taDegree")+
+                "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
+                "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
+                "' AND t .STATUS LIKE '"+conditions.get("taStatus")+
+                "'JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID " +
+                "JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("taCourseName")+
+                "' AND co.CODE LIKE '"+conditions.get("taCourseCode")+"'");
+
+        return null;
+    }
+
+
+
+
+
 
     //查询助教经费信息
     public List<TaFundingViewObject> selectTaFundByCondition(Map<String, String> conditions) {
@@ -507,7 +534,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             return false;
         //如果小于可选index最小值或者大于最大值,表示当前状态不属于此用户管辖范围
         int leftEdge = status2IndexCanBe.get(0), rightEdge = status2IndexCanBe.get(status2IndexCanBe.size()-1);
-        if(previousIndex < leftEdge || nextIndex > rightEdge)
+        if(previousIndex < leftEdge && nextIndex > rightEdge)
             return false;
         else {
             return true;

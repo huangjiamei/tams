@@ -16,9 +16,6 @@ import java.util.List;
  */
 public class AdminInfoForm extends BaseForm implements Serializable {
 
-
-    private static final long serialVersionUID = -1974217788100313751L;
-
     /**
      * 时间类别管理页面
      */
@@ -99,6 +96,10 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      * 经费管理页面
      */
 
+    private String sessionFundingStatistics;
+
+    private String sessionFundingTotalApproved;
+
     private String pieChartsNameValuePairs;
 
     private List<SessionFundingViewObject> sessionFundings;
@@ -117,6 +118,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private boolean springTerm;
     private boolean fallTerm;
+    private boolean academicAffairManager;
 
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
@@ -237,6 +239,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String checkboxesTest;
     private String ConnectMessage;
 
+    public String getSessionFundingStatistics() {
+        return sessionFundingStatistics;
+    }
+
+    public void setSessionFundingStatistics(String sessionFundingStatistics) {
+        this.sessionFundingStatistics = sessionFundingStatistics;
+    }
+
+    public String getSessionFundingTotalApproved() {
+        return sessionFundingTotalApproved;
+    }
+
+    public void setSessionFundingTotalApproved(String sessionFundingTotalApproved) {
+        this.sessionFundingTotalApproved = sessionFundingTotalApproved;
+    }
+
     public TAMSTimeSettingType getTimeSettingType() {
         return timeSettingType;
     }
@@ -259,6 +277,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setCheckboxesTest(String checkboxesTest) {
         this.checkboxesTest = checkboxesTest;
+    }
+
+    public boolean isAcademicAffairManager() {
+        return academicAffairManager;
+    }
+
+    public void setAcademicAffairManager(boolean academicAffairManager) {
+        this.academicAffairManager = academicAffairManager;
     }
 
     public String getTest() {
@@ -626,6 +652,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private UTInstructor URMutInstructor;
     private String URMsearchDepartmentId;
 
+    private String userRoleDepartmentName;//学院
+    private String userRoleName;//姓名
+    private String userRoleGender;//性别
+    private String userRoleNumber;//工号
+    private String userRoleIDNumber;//统一认证号
+
+
+
     /**
      *
      * 时间设置页面的类型名称，时间输入框
@@ -634,6 +668,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String startTimeSet;
     private String endTimeSet;
     private List<TAMSTimeSettings> timeSettingsList;
+
 
    /*
    工作流类别
@@ -1479,5 +1514,45 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setFallTerm(boolean fallTerm) {
         this.fallTerm = fallTerm;
+    }
+
+    public String getUserRoleDepartmentName() {
+        return userRoleDepartmentName;
+    }
+
+    public void setUserRoleDepartmentName(String userRoleDepartmentName) {
+        this.userRoleDepartmentName = userRoleDepartmentName;
+    }
+
+    public String getUserRoleName() {
+        return userRoleName;
+    }
+
+    public void setUserRoleName(String userRoleName) {
+        this.userRoleName = userRoleName;
+    }
+
+    public String getUserRoleGender() {
+        return userRoleGender;
+    }
+
+    public void setUserRoleGender(String userRoleGender) {
+        this.userRoleGender = userRoleGender;
+    }
+
+    public String getUserRoleNumber() {
+        return userRoleNumber;
+    }
+
+    public void setUserRoleNumber(String userRoleNumber) {
+        this.userRoleNumber = userRoleNumber;
+    }
+
+    public String getUserRoleIDNumber() {
+        return userRoleIDNumber;
+    }
+
+    public void setUserRoleIDNumber(String userRoleIDNumber) {
+        this.userRoleIDNumber = userRoleIDNumber;
     }
 }

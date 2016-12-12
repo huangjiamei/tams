@@ -41,7 +41,7 @@
 						<list>
 							<!-- 左上角 -->
 							<bean id="headerTitle" parent="Uif-VerticalBoxSection"
-								  p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-list','管理','角色管理')">
+								  p:onDocumentReadyScript="initContentHeader('headerTitle','fa fa-tachometer','管理','角色管理')">
 								<property name="items">
 									<list>
 										<bean parent="Uif-HeaderTwo" p:headerText="管理员角色管理"/>
@@ -107,7 +107,7 @@
 														  p:additionalCssClasses="box-header">
 														<property name="items">
 															<list>
-																<bean parent="Uif-Icon" p:iconClass="icon-table"/>
+																<bean parent="Uif-Icon" p:iconClass="fa fa-list"/>
 																<bean parent="Uif-MessageField" p:messageText="管理员角色列表"
 																	  p:additionalCssClasses="boxheaderTitle"/>
 																<bean parent="Uif-HorizontalBoxSection"

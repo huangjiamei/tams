@@ -41,7 +41,7 @@
 						<list>
                             <!-- 左上角 -->
                             <bean id="userRoleMaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('userRoleMaHeaderTitle','fa fa-users','管理台','用户管理')">
+                                  p:onDocumentReadyScript="initContentHeader('userRoleMaHeaderTitle','fa fa-tachometer','管理台','用户管理')">
                             </bean>
 
 							<!-- 右上角 当前路径 -->
@@ -102,7 +102,7 @@
 														  p:additionalCssClasses="box-header">
 														<property name="items">
 															<list>
-																<bean parent="Uif-Icon" p:iconClass="icon-table"/>
+																<bean parent="Uif-Icon" p:iconClass="fa fa-list"/>
 																<bean parent="Uif-MessageField" p:messageText="用户角色列表"
 																	  p:additionalCssClasses="boxheaderTitle"/>
 																<bean parent="Uif-HorizontalBoxSection"
@@ -126,8 +126,78 @@
 														  p:additionalCssClasses="box-body">
 														<property name="items">
 															<list>
+																<!--过滤框-->
+																<bean id="userRoleManagerFields"
+																	  parent="Uif-HorizontalBoxSection"
+																	  p:additionalCssClasses="search-fields">
+																	<property name="items">
+																		<list>
+
+																			<!--占位-->
+																			<bean parent="Uif-MessageField"
+																				  p:additionalCssClasses="hidden-fields"
+																				  p:messageText="占位"/>
+
+																			<!--下拉框搜索-->
+																			<!--学院-->
+																			<bean parent="Uif-InputField"
+																				  p:propertyName="userRoleDepartmentName">
+																				<property name="optionsFinder">
+																					<bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+																						  p:blankOption="true"/>
+																				</property>
+																				<property name="control">
+																					<bean parent="Uif-DropdownControl"/>
+																				</property>
+																			</bean>
+
+																			<!--姓名-->
+																			<bean parent="Uif-InputField"
+																				  p:propertyName="userRoleName"/>
+																			<!--性别-->
+																			<bean parent="Uif-InputField"
+																				  p:propertyName="userRoleGender" p:additionalCssClasses="searchBoxWidth">
+																				<property name="control">
+																					<bean parent="Uif-DropdownControl">
+																						<property name="options">
+																							<list>
+																								<bean parent="Uif-KeyLabelPair" p:key=""
+																									  p:value=""/>
+																								<bean parent="Uif-KeyLabelPair" p:key="1"
+																									  p:value="男"/>
+																								<bean parent="Uif-KeyLabelPair" p:key="2"
+																									  p:value="女"/>
+																							</list>
+																						</property>
+																					</bean>
+																				</property>
+																			</bean>
+																			<!--工号-->
+																			<bean parent="Uif-InputField"
+																				  p:propertyName="userRoleNumber" p:additionalCssClasses="searchBoxWidth"/>
+																			<!--统一认证号-->
+																			<bean parent="Uif-InputField"
+																				  p:propertyName="userRoleIDNumber" p:additionalCssClasses="searchBoxWidth"/>
+
+																			<!--占位-->
+																			<bean parent="Uif-MessageField"
+																				  p:additionalCssClasses="hidden-fields"
+																				  p:messageText="占位"/>
+
+																			<bean id="searchUserRoleManagerButton"
+																				  parent="Uif-PrimaryActionButton"
+																				  p:actionLabel="查询"
+																				  p:additionalCssClasses="icon-search hidden-fields search-button"
+																				  p:methodToCall="searchUserByCondition"
+																				  p:refreshId="UserRoleManagerPage"/>
+
+																		</list>
+																	</property>
+																</bean>
+
 																<!--table-->
-																<bean  parent="Uif-Disclosure-TableCollectionSection">
+																<bean id="UserRoleManagerTable" parent="Uif-Disclosure-TableCollectionSection"
+																	  p:onDocumentReadyScript="refreshTableFilter(userRoleManagerFields,UserRoleManagerTable);">
 																	<property name="collectionObjectClass"
 																			  value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor" />
 																	<property name="propertyName" value="URMutInstructors" />
@@ -155,7 +225,8 @@
 																			<bean parent="Uif-DataField" p:propertyName="name"
 																				  p:label="姓名" />
 																			<bean parent="Uif-DataField" p:propertyName="gender"
-																				  p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}" />
+																				  p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}"
+																				  p:additionalCssClasses="@{#line.idNumber==null?' ':#line.gender.equals('1')?'genderM':'genderF'}"/>
 																			<bean parent="Uif-DataField" p:propertyName="code"
 																				  p:label="工号" />
 																			<bean parent="Uif-DataField" p:propertyName="idNumber" p:label="统一认证号"

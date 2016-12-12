@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="timeSetHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('timeSetHeaderTitle','fa fa-laptop','管理台','时间设置')">
+                                  p:onDocumentReadyScript="initContentHeader('timeSetHeaderTitle','fa fa-tachometer','管理台','时间设置')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -176,7 +176,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon"
-                                                                      p:iconClass="icon-table"/>
+                                                                      p:iconClass="fa fa-list"/>
                                                                 <bean parent="Uif-MessageField"
                                                                       p:messageText="时间信息列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>

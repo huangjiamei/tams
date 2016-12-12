@@ -3,10 +3,12 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
@@ -37,6 +39,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
+    @Autowired
+    private UTInstructorDao utInstructorDao;
 
     @Autowired
     private TAMSDeptFundingDao tamsDeptFundingDao;
@@ -81,6 +86,10 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private TAMSCourseManagerDao tamsCourseManagerDao;
 
+    @Autowired
+    private TAMSUniversityFundingDao tamsUniversityFundingDao;
+
+
     @Override
     public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions){
         List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
@@ -88,8 +97,6 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     //历史批次经费过滤
-    @Autowired
-    private TAMSUniversityFundingDao tamsUniversityFundingDao;
 
     @Override
     public List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions){
@@ -360,7 +367,10 @@ public class AdminServiceImpl implements IAdminService{
         }
     }
 
-
+    @Override
+    public List<UTInstructor> getInstructorByconditions(Map<String, String> conditions){
+        return utInstructorDao.getInstructorByConditions(conditions);
+    }
 
 
     /*
@@ -622,6 +632,28 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects){
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(DepartmentFundingViewObject per : departmentFundingViewObjects){
+            TAMSDeptFundingDraft existDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(per.getDepartmentId(),curSession.getId());
+            existDraft.setActualFunding(per.getActualFunding());//保存批准经费
+            existDraft.setPlanFunding(per.getPlanFunding());//保存计划经费
+            tamsDeptFundingDraftDao.saveOneByEntity(existDraft);
+        }
+    }
+
+    @Override
+    public void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects){
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(SessionFundingViewObject per:sessionFundingViewObjects){
+            TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
+            existFunding.setActualFunding(per.getActualFunding());
+            tamsUniversityFundingDao.insertOneByEntity(existFunding);
+        }
+    }
+
+
+    @Override
     public List<TAMSTimeSettingType> getAllTimeCategory() {
         return timeSettingTypeDao.selectAll();
     }
@@ -634,5 +666,29 @@ public class AdminServiceImpl implements IAdminService{
     @Override
     public boolean deleteTimeCategory(TAMSTimeSettingType timeSettingType) {
         return timeSettingTypeDao.deleteOneByEntity(timeSettingType);
+    }
+
+    @Override
+    public String getSessionFundingStatistics() {
+        List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDepartmentCurrBySession();
+        String totalPlan = "";
+        Long setted = 0l;
+        for(TAMSDeptFunding deptFunding : deptFundings) {
+            setted = setted + Integer.parseInt(deptFunding.getPlanFunding());
+        }
+        totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();
+
+        return setted + "/" + totalPlan;
+    }
+
+    @Override
+    public String getSessionFundingTotalApprove() {
+        List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDepartmentCurrBySession();
+        Long setted = 0l;
+        for(TAMSDeptFunding deptFunding : deptFundings) {
+            setted = setted + Integer.parseInt(deptFunding.getActualFunding());
+        }
+
+        return setted.toString();
     }
 }

@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
@@ -51,6 +52,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private ITAService taService;
 
     @Autowired
     private UTSessionDao sessionDao;
@@ -100,11 +104,6 @@ public class TAConverterimpl implements ITAConverter {
 //            }
             System.out.println(System.currentTimeMillis());
             //没有数据的话返回一行空数据，否则表格消失
-            if (informationlist == null || informationlist.size() == 0) {
-                List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
-                nullObject.add(new ClassTeacherViewObject());
-                return nullObject;
-            }
 
 
             for (UTClassInformation information : informationlist) {
@@ -120,12 +119,20 @@ public class TAConverterimpl implements ITAConverter {
             }
             return viewObjects;
         }else{
+
+            if (informationlist == null || informationlist.size() == 0) {
+                List<ClassTeacherViewObject> nullObject = new ArrayList<>(1);
+                nullObject.add(new ClassTeacherViewObject());
+                return nullObject;
+            }
+
             for (UTClassInformation information : informationlist) {
                 String instructorname ="";
                 List<UTClassInstructor> instructorName = classInstructorDao.selectByClassId(information.getId());
-                for(UTClassInstructor utClassInstructor :instructorName){
-                    instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
-                }
+                if(instructorName != null)
+                    for(UTClassInstructor utClassInstructor :instructorName){
+                        instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
+                    }
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());
@@ -507,25 +514,38 @@ public class TAConverterimpl implements ITAConverter {
 
         //List<WorkBenchViewObject> viewObject = new ArrayList<>();
         //WorkBenchViewObject workbenchviewobject = new WorkBenchViewObject();
-        for(int i=0; i<list.size(); i++){
-            for(int j=i+1; j<list.size(); j++){
-                //System.out.println(list.get(i).getClassNbr());
-                //System.out.println(list.get(j).getClassNbr());
-                if(list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
-                    list.get(i).setTeacher(list.get(i).getTeacher() + ',' + list.get(j).getTeacher());
-                    list.remove(j);
+        if (list == null || list.size() == 0) {
+            List<WorkBenchViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new WorkBenchViewObject());
+            return nullObject;
+        }
+            for(int i=0; i<list.size(); i++) {
+                for (int j = i + 1; j < list.size(); j++) {
+                    //System.out.println(list.get(i).getClassNbr());
+                    //System.out.println(list.get(j).getClassNbr());
+                    if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
+                        list.get(i).setTeacher(list.get(i).getTeacher() + ',' + list.get(j).getTeacher());
+                        list.remove(j);
+                    }
+                    //viewObject.set(i,list.get(i));
+                    //break;
                 }
-                //viewObject.set(i,list.get(i));
-                //break;
             }
             //viewObject.set(i,list.get(i));
-        }
+
         return list;
     }
 
     //FIXME 迁移后删掉
     @Override
     public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> myTaCombinePayDayClass(List<TAMSTa> allTaFilteredByUid) {
+
+
+        if (allTaFilteredByUid == null || allTaFilteredByUid.size() == 0) {
+            List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject());
+            return nullObject;
+        }
 
         List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allTaFilteredByUid.size());
 
@@ -552,8 +572,13 @@ public class TAConverterimpl implements ITAConverter {
     //我的助教界面申请人助教列表
     @Override
     public List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> applicationToViewObjectClass(List<TAMSTaApplication> allApplicationFilterByUid) {
-        if(allApplicationFilterByUid == null)
-            return null;
+
+        if (allApplicationFilterByUid == null || allApplicationFilterByUid.size() == 0) {
+            List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject());
+            return nullObject;
+        }
+
         List<cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject> viewObjects = new ArrayList<>(allApplicationFilterByUid.size());
 
         for(TAMSTaApplication application : allApplicationFilterByUid) {
@@ -1041,4 +1066,26 @@ public class TAConverterimpl implements ITAConverter {
         }
         return viewObjects;
     }
+
+
+    @Override
+    public List<TaInfoViewObject> getTaInfoListByConditions(Map<String, String> conditions,String uId){
+        int countNull = 0;
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+
+        if(countNull!=11){
+            return  taService.seachTainfoListByConditions(conditions);
+        }else{
+            return this.taCombineDetailInfo(
+                    taService.getAllTaFilteredByUid(uId));
+        }
+
+    }
+
 }

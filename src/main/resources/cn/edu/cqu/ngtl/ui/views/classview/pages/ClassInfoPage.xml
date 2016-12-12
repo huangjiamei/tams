@@ -41,7 +41,8 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean parent="Uif-HeaderThree" p:headerText="课程信息"/>
+                            <bean id="classInfoHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('classInfoHeaderTitle','icon-book','课程','课程信息')"/>
 
                             <!-- 右上角 当前路径 -->
                             <bean id="breadcrumb" parent="Uif-HorizontalBoxSection"
@@ -90,6 +91,17 @@
                                               p:additionalCssClasses="box box-info">
                                             <property name="items">
                                                 <list>
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
+                                                        <property name="items">
+                                                            <list>
+
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="课程详细信息"
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
                                                     <bean parent="Uif-VerticalBoxSection"
                                                           p:additionalCssClasses="">
                                                         <property name="items">
@@ -101,8 +113,8 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="课程名称" p:colSpan="3"
-                                                                                  p:fieldLabel.colSpan="1" p:messageText="@{detailInfoViewObject.courseName}"/>
+                                                                                  p:label="课程名称"
+                                                                                  p:messageText="@{detailInfoViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程编号" p:messageText="@{detailInfoViewObject.courseId}"/>
                                                                             <bean parent="Uif-MessageField"

@@ -8,16 +8,8 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.RelationTable;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ApplyAssistantViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTaApplyViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.AppraisalDetailViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject;
@@ -26,6 +18,7 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -90,4 +83,6 @@ public interface ITAConverter {
     List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
+
+    List<TaInfoViewObject> getTaInfoListByConditions(Map<String,String> conditions,String uId);
 }

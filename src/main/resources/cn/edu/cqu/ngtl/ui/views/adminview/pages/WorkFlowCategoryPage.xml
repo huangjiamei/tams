@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="workFlowHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('workFlowHeaderTitle','fa fa-reorder','管理台','工作流类型管理')">
+                                  p:onDocumentReadyScript="initContentHeader('workFlowHeaderTitle','fa fa-tachometer','管理台','工作流类型管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -97,8 +97,8 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="工作流类型"
+                                                                <bean parent="Uif-Icon" p:iconClass="fa fa-bars"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="工作流类别"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">

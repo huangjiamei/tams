@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="toTeaAppraHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('toTeaAppraHeaderTitle','fa fa-plus-square','助教管理','教师考核')">
+                                  p:onDocumentReadyScript="initContentHeader('toTeaAppraHeaderTitle','fa fa-users','助教管理','教师考核')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

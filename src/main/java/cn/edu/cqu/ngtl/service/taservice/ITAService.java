@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.util.List;
@@ -35,10 +36,12 @@ public interface ITAService {
     List<TAMSTa> getAllTaFilteredByUid(String uId);
 
     //根据classid查申请者列表
-    //List<TAMSTaApplication> getAllApplicationFilterByUid(String classId);
+    List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId);
 
     //根据uid查看申请者列表
     List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
+
+
 
     boolean changeStatusBatchByIds(List<String> ids, String status);
 
@@ -58,4 +61,6 @@ public interface ITAService {
     boolean appraiseOutstanding(List<String> taIds, String uId);
 
     boolean revocationOutstanding(List<String> taIds, String uid);
+
+    List<TaInfoViewObject> seachTainfoListByConditions(Map<String,String> conditions);
 }

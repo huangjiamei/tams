@@ -3,9 +3,6 @@ package cn.edu.cqu.ngtl.tools.converter;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Properties;
 
 /**
@@ -88,18 +85,18 @@ public class UnitimeTimeSlotConverter implements AttributeConverter<String, Inte
 	    */
 
 		Properties enrollProperties = new Properties();
-		try {
-			enrollProperties.load( new FileInputStream(propertyPath));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			enrollProperties.load( new FileInputStream(propertyPath));
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 		boolean classTimeSlot = false;
-		if(enrollProperties.getProperty("classTimeSlot") !=null){
-			classTimeSlot = Boolean.parseBoolean(enrollProperties.getProperty("classTimeSlot"));
-		}
+//		if(enrollProperties.getProperty("classTimeSlot") !=null){
+//			classTimeSlot = Boolean.parseBoolean(enrollProperties.getProperty("classTimeSlot"));
+//		}
 
 		String name="";
 		if(!classTimeSlot){

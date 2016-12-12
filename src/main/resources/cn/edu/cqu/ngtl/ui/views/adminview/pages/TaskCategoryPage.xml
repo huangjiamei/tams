@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="taskCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('taskCaHeaderTitle','fa fa-reorder','管理台','任务类别管理')">
+                                  p:onDocumentReadyScript="initContentHeader('taskCaHeaderTitle','fa fa-tachometer','管理台','任务类别管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -97,7 +97,7 @@
                                                           p:additionalCssClasses="box-header">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-list"/>
+                                                                <bean parent="Uif-Icon" p:iconClass="fa fa-bars"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="任务类别"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"

@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.service.classservice.impl;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.*;
@@ -76,8 +77,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public List<UTClassInformation> getAllCurSessionClasses() {
 
         /** Access DataBase */
+        System.out.println(System.currentTimeMillis());
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
-
+        System.out.println(System.currentTimeMillis());
         return classInformations;
     }
 
@@ -118,15 +120,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
-        if(userInfoService.isSysAdmin(uId)) {
+        if(userInfoService.isSysAdmin(uId)||userInfoService.isAcademicAffairsStaff(uId)) {
             /** Access DataBase */
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
-        }
-        else if (userInfoService.isInstructor(uId)) {
-            //FIXME 按照教师ID去查课程信息
-            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
-//            return classInfoDao.selectBatchByIds(classIds);
+        }else if(userInfoService.isCollegeStaff(uId)){ //如果是二级单位管理员则固定学院id
+            conditions.put("DepartmentId",((User)GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            return classInformations;
+        } else if (userInfoService.isInstructor(uId)) {
+            conditions.put("InstructorName",((User)GlobalVariables.getUserSession().retrieveObject("user")).getName());
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            return classInformations;
         }
         return null;
     }

@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
-import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
@@ -38,9 +37,6 @@ import java.util.Map;
 @Controller
 @RequestMapping("/ta")
 public class TaController extends BaseController {
-
-    @Autowired
-    private IClassInfoService classInfoService;
 
     @Autowired
     private ITAConverter taConverter;
@@ -75,6 +71,33 @@ public class TaController extends BaseController {
         ));
 
         return this.getModelAndView(taInfoForm, "pageTaList");
+    }
+
+    /**
+     * 助教列表过滤器
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=searchTaList")
+    public ModelAndView searchTaList(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request){
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("taName", taInfoForm.getTaAssitantName());
+        conditions.put("taId", taInfoForm.getTaAssitantIDNumber());
+        conditions.put("taDegree", taInfoForm.getTaAssitantMasterMajorName());
+        conditions.put("taCourseName", taInfoForm.getTaCourseName());
+        conditions.put("taCourseCode", taInfoForm.getTaCourseCode());
+        conditions.put("taClassNumber", taInfoForm.getTaClassNumber());
+        conditions.put("taTeacherName", taInfoForm.getTaTeacherName());
+        conditions.put("taTeacherAppraise", taInfoForm.getTaTeacherAppraise());
+        conditions.put("taStuAppraise", taInfoForm.getTaStuAppraise());
+        conditions.put("taTaScore", taInfoForm.getTaScore());
+        conditions.put("taStatus", taInfoForm.getTaStatus());
+
+        taInfoForm.setAllTaInfo(taConverter.getTaInfoListByConditions(conditions,uId));
+        return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
 
     /**
@@ -225,6 +248,8 @@ public class TaController extends BaseController {
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
+
+
 
     /**
      * 聘请助教
@@ -620,6 +645,15 @@ public class TaController extends BaseController {
         return this.getModelAndView(taInfoForm, "pageTaDetail");
     }
 
+
+    @RequestMapping(params =  {"methodToCall=selectCurSession"})
+    public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        super.baseStart(taInfoForm);
+        utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(taInfoForm.getSessionTermFinder())));
+        request.getParameterMap().get("pageId");
+        return this.getModelAndView(taInfoForm, taInfoForm.getPageId());
+    }
 
 
     @Override

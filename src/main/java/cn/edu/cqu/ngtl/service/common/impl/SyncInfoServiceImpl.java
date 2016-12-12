@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by awake on 2016/12/7.
@@ -55,7 +52,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
     @Override
     public Connection getConnection(String hostType, String hostIp, String hostPort, String dbName, String dbUserName,
-                                    String dbPassWd) throws SQLException, ClassNotFoundException {
+                                    String dbPassWd,String[] syncInfo) throws SQLException, ClassNotFoundException {
         String url = "";
         Connection con = null;
         switch (hostType) {
@@ -75,10 +72,14 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 break;
         }
         con = DriverManager.getConnection(url, dbUserName, dbPassWd);
-//        this.syncCourseInfo(con);
-//        this.syncClassInfo(con);
-        this.syncStudentTimetableInfo(con);
-        System.out.println("建立了连接");
+        List<String> needToSync = Arrays.asList(syncInfo);
+
+        if(needToSync.contains("1"))
+            this.syncCourseInfo(con);  //导入课程信息
+        if(needToSync.contains("2"))
+            this.syncClassInfo(con);   //导入班次信息
+        if(needToSync.contains("3"))
+            this.syncStudentTimetableInfo(con);  //导入学生课表
         return con;
     }
 
@@ -295,7 +296,6 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 utStudentTimetable.setClassId(sessionPrefix+editClassNbr);
                 utStudentTimetable.setStudentId(studentId);
                 utStudentTimetable.setSessionId(curSession.getId());
-                System.out.println("添加了" + i++);
                 utStudentTimetables.add(utStudentTimetable);
             }
             utStudentTimetableDao.insertOneByEntityList(utStudentTimetables);

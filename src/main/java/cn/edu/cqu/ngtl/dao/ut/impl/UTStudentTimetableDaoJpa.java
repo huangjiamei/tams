@@ -31,7 +31,6 @@ public class UTStudentTimetableDaoJpa implements UTStudentTimetableDao {
     public void insertOneByEntityList(List<UTStudentTimetable> utStudentTimetables){
         int i = 0;
         for(UTStudentTimetable utStudentTimetable :utStudentTimetables) {
-            System.out.println("保存了" + i++);
             KradDataServiceLocator.getDataObjectService().save(utStudentTimetable);
         }
     }

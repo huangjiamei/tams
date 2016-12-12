@@ -1925,7 +1925,9 @@ public class adminController extends BaseController {
     @RequestMapping(params = "methodToCall=syncInfo")
     public ModelAndView syncInfo(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
-        super.baseStart(infoForm);
+        baseStart(infoForm);
+
+        String[] syncInfo = infoForm.getCheckboxesTest().split(",");
 
         String hostType = infoForm.getSystemHostType();
 
@@ -1968,7 +1970,7 @@ public class adminController extends BaseController {
 
         Connection con = null;
         try {
-            con = syncInfoService.getConnection(hostType, hostIp, hostPort, dbName, dbUserName, dbPassWd);
+            con = syncInfoService.getConnection(hostType, hostIp, hostPort, dbName, dbUserName, dbPassWd, syncInfo);
         } catch (SQLException | ClassNotFoundException e) {
             infoForm.setConnectMessage(e.getMessage());
             e.printStackTrace();

@@ -13,7 +13,8 @@ public interface SyncInfoService {
                                     String hostPort,
                                     String dbName,
                                     String dbUserName,
-                                    String dbPassWd) throws SQLException,ClassNotFoundException;
+                                    String dbPassWd,
+                                    String[] syncInfo) throws SQLException,ClassNotFoundException;
 
      void closeConnection(Connection connection) throws SQLException;
 

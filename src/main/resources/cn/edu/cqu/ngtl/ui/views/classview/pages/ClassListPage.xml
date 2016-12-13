@@ -487,11 +487,22 @@
         </property>
     </bean>
     <bean id="returnDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="警告："/>
-        <property name="promptText" value="确认要驳回申请助教信息？"/>
+        <property name="headerText" value="驳回"/>
         <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="items">
+            <list>
+                <bean parent="Uif-InputField" p:label="请填写驳回理由："
+                      p:propertyName="returnReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
         <property name="footer.items">
             <list>
+
                 <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
                       p:methodToCall="reject"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
@@ -500,11 +511,22 @@
         </property>
     </bean>
     <bean id="approveDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="提示："/>
-        <property name="promptText" value="确认要批准申请助教信息？"/>
+        <property name="headerText" value="审批"/>
         <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="items">
+            <list>
+                <bean parent="Uif-InputField" p:label="请填写审批理由："
+                      p:propertyName="approveReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
         <property name="footer.items">
             <list>
+
                 <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
                       p:methodToCall="approve"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>

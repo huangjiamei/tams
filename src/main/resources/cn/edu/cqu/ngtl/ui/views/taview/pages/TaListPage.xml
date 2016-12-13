@@ -316,30 +316,42 @@
           p:headerText="撤销" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="是否将此助教评撤销优秀？" />
+                <bean parent="Uif-InputField" p:label="请填写撤销理由："
+                      p:propertyName="revocationReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
             </list>
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
                       p:methodToCall="revocationOutstanding"  p:dialogDismissOption="REQUEST" />
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
             </list>
         </property>
     </bean>
 
     <bean id="confirmAppraiseDialog" parent="Uif-DialogGroup"
-          p:headerText="选优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="评优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="是否将此助教评为优秀？" />
+                <bean parent="Uif-InputField" p:label="请填写批准为优秀的理由："
+                      p:propertyName="appraiseReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
             </list>
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
                       p:methodToCall="appraiseOutstanding"  p:dialogDismissOption="REQUEST" />
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
             </list>
         </property>
     </bean>

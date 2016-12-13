@@ -68,7 +68,7 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
 
     /**
-     * 助教列表相关
+     * 助教列表页面相关
      */
 
     private List<TaInfoViewObject> allTaInfo;
@@ -77,6 +77,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String classIdForDetailPage;
     private TaInfoViewObject selectedTaInfo;
 
+    private String revocationReason;
+    private String appraiseReason;
 
     /**
      * 工作台相关
@@ -444,5 +446,21 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTaStatus(String taStatus) {
         this.taStatus = taStatus;
+    }
+
+    public String getRevocationReason() {
+        return revocationReason;
+    }
+
+    public void setRevocationReason(String revocationReason) {
+        this.revocationReason = revocationReason;
+    }
+
+    public String getAppraiseReason() {
+        return appraiseReason;
+    }
+
+    public void setAppraiseReason(String appraiseReason) {
+        this.appraiseReason = appraiseReason;
     }
 }

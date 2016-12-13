@@ -64,7 +64,11 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String condSessionYear;
     private String condProgramName;
 
-
+    /*
+    课程页面
+     */
+    private String returnReason;//驳回理由
+    private String approveReason;//审批理由
     private List<ClassTeacherViewObject> classList;
 
     private ClassDetailInfoViewObject detailInfoViewObject;
@@ -383,5 +387,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCourseStatus(String courseStatus) {
         this.courseStatus = courseStatus;
+    }
+
+    public String getReturnReason() {
+        return returnReason;
+    }
+
+    public void setReturnReason(String returnReason) {
+        this.returnReason = returnReason;
+    }
+
+    public String getApproveReason() {
+        return approveReason;
+    }
+
+    public void setApproveReason(String approveReason) {
+        this.approveReason = approveReason;
     }
 }

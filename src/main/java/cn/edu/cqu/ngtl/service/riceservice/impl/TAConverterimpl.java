@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
+import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
@@ -51,6 +52,9 @@ public class TAConverterimpl implements ITAConverter {
 
     @Autowired
     private ICourseInfoService courseInfoService;
+
+    @Autowired
+    private ITAService taService;
 
     @Autowired
     private UTSessionDao sessionDao;
@@ -1062,4 +1066,26 @@ public class TAConverterimpl implements ITAConverter {
         }
         return viewObjects;
     }
+
+
+    @Override
+    public List<TaInfoViewObject> getTaInfoListByConditions(Map<String, String> conditions,String uId){
+        int countNull = 0;
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+
+        if(countNull!=11){
+            return  taService.seachTainfoListByConditions(conditions);
+        }else{
+            return this.taCombineDetailInfo(
+                    taService.getAllTaFilteredByUid(uId));
+        }
+
+    }
+
 }

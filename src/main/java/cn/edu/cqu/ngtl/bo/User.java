@@ -21,7 +21,7 @@ public class User implements Serializable {
 
 	private Integer departmentId;	//所在学院Id
 
-	private String department;	//所在学院
+	private String department;	//所在学院名称
 
 	private String type;		//工号  or 学号
 	

@@ -74,6 +74,33 @@ public class TaController extends BaseController {
     }
 
     /**
+     * 助教列表过滤器
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=searchTaList")
+    public ModelAndView searchTaList(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request){
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        Map<String, String> conditions = new HashMap<>();
+        conditions.put("taName", taInfoForm.getTaAssitantName());
+        conditions.put("taId", taInfoForm.getTaAssitantIDNumber());
+        conditions.put("taDegree", taInfoForm.getTaAssitantMasterMajorName());
+        conditions.put("taCourseName", taInfoForm.getTaCourseName());
+        conditions.put("taCourseCode", taInfoForm.getTaCourseCode());
+        conditions.put("taClassNumber", taInfoForm.getTaClassNumber());
+        conditions.put("taTeacherName", taInfoForm.getTaTeacherName());
+        conditions.put("taTeacherAppraise", taInfoForm.getTaTeacherAppraise());
+        conditions.put("taStuAppraise", taInfoForm.getTaStuAppraise());
+        conditions.put("taTaScore", taInfoForm.getTaScore());
+        conditions.put("taStatus", taInfoForm.getTaStatus());
+
+        taInfoForm.setAllTaInfo(taConverter.getTaInfoListByConditions(conditions,uId));
+        return this.getModelAndView(taInfoForm, "pageTaManagement");
+    }
+
+    /**
      * 恢复助教状态
      * @param form
      * @return
@@ -221,6 +248,8 @@ public class TaController extends BaseController {
 
         return this.getModelAndView(taInfoForm, "pageTaManagement");
     }
+
+
 
     /**
      * 聘请助教

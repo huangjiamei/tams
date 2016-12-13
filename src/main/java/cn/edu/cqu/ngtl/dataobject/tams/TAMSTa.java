@@ -67,12 +67,15 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     private String applicationNote;
 
 
+
     @Column(name = "EVALUATION")
     private String evaluation;
 
     @Column(name = "EVALUATION_DETAIL")
     private String evaluationDetail;
 
+    @Column(name = "STUDENT_EVALUATION")
+    private String stuEva;
 
     @Column(name = "ASSIGNED_FUNDING")
     private String assignedFunding;
@@ -392,5 +395,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setBonus(String bonus) {
         this.bonus = bonus;
+    }
+
+    public String getStuEva() {
+        return stuEva;
+    }
+
+    public void setStuEva(String stuEva) {
+        this.stuEva = stuEva;
     }
 }

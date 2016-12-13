@@ -202,7 +202,7 @@
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taStatus" p:additionalCssClasses="searchBoxWidth"><!--改为相应的optionFinder-->
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaClassificationFinder"
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.AppriseOptionFinder"
                                                                                           p:blankOption="true"/>
                                                                                 </property>
                                                                                 <property name="control">

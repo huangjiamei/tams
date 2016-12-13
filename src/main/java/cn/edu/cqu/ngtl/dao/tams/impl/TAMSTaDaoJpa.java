@@ -4,11 +4,13 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSTaDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowRoleFunctionDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusRDao;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
@@ -47,6 +49,9 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
+
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
 
     EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
@@ -276,29 +281,47 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     //根据条件查询助教列表
     public List<TaInfoViewObject> getTaInfoByConditions(Map<String, String> conditions){
+        List<TaInfoViewObject> taInfoViewObjects = new ArrayList<>();
         UTSession curSession = utSessionDao.getCurrentSession();
-        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.STATUS FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
+        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.STATUS,cl.UNIQUEID,ws.WORKFLOW_STATUS FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
                 "' AND s.UNIQUEID LIKE '"+conditions.get("taId")+
                 "' AND s. NAME LIKE '"+conditions.get("taName")+
                 "' AND t .TA_TYPE LIKE '"+conditions.get("taDegree")+
-                "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
-                "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
-                "' AND t .STATUS LIKE '"+conditions.get("taStatus")+
+//                "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
+//                "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
+                "' AND t .STATUS LIKE '"+conditions.get("taStatus") +
                 "'JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID " +
-                "JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("taCourseName")+
-                "' AND co.CODE LIKE '"+conditions.get("taCourseCode")+"'");
+                "JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID JOIN TAMS_WORKFLOW_STATUS ws ON T.STATUS = ws.\"ORDER\"" +
+                "AND co.NAME LIKE '"+conditions.get("taCourseName")+
+                "' AND co.CODE LIKE '"+conditions.get("taCourseCode")+"' AND ws.WORKFLOW_FUNCTION_ID ='2" +
+                "' AND T.TA_CLASS IN (SELECT ci.CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR ci WHERE ci.INSTRUCTOR_ID IN (SELECT i.UNIQUEID FROM UNITIME_INSTRUCTOR i WHERE i.NAME like '" + conditions.get("taTeacherName")+"'))");
 
 
 
-
-
-        return null;
+        List<Object> columns = query.getResultList();
+        for(Object column : columns) {
+            Object[] informations = (Object[]) column;
+            String classId = informations[9].toString();
+            List<UTClassInstructor> classInstructors = utClassInstructorDao.selectByClassId(classId);
+            String insName = "";
+            for(UTClassInstructor utClassInstructor : classInstructors){
+                insName+=utClassInstructor.getUtInstructor().getName()+" ";
+            }
+            TaInfoViewObject taInfoViewObject = new TaInfoViewObject();
+            taInfoViewObject.setTaName(informations[0].toString());
+            taInfoViewObject.setTaIDNumber(informations[1].toString());
+            taInfoViewObject.setTaMasterMajorName(informations[2].toString());
+            taInfoViewObject.setCourseName(informations[3].toString());
+            taInfoViewObject.setCourseCode(informations[4].toString());
+            taInfoViewObject.setClassNumber(informations[5].toString());
+            taInfoViewObject.setTeacherAppraise(informations[6]==null?"未评价":informations[6].toString());
+            taInfoViewObject.setStuAppraise(informations[7]==null?"未评价":informations[7].toString());
+            taInfoViewObject.setStatus(informations[10].toString());
+            taInfoViewObject.setInstructorName(insName);
+            taInfoViewObjects.add(taInfoViewObject);
+        }
+        return taInfoViewObjects;
     }
-
-
-
-
-
 
     //查询助教经费信息
     public List<TaFundingViewObject> selectTaFundByCondition(Map<String, String> conditions) {

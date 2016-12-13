@@ -97,7 +97,7 @@ public class TaController extends BaseController {
         conditions.put("taStatus", taInfoForm.getTaStatus());
 
         taInfoForm.setAllTaInfo(taConverter.getTaInfoListByConditions(conditions,uId));
-        return this.getModelAndView(taInfoForm, "pageTaManagement");
+        return this.getModelAndView(taInfoForm, "pageTaList");
     }
 
     /**

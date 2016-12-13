@@ -9,10 +9,13 @@ body{
     background-color: #ecf0f5;
 }
 
-
 .photo{
     margin: 0 auto;
     float: none!important;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    float:none!important;
 }
 
 /*View的header样式*/
@@ -754,7 +757,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
 .table > tbody > tr > th{
     background: #f5f5f5;
 }
-/*table内某些列的字体颜色*/
+/*table内某些列的字体颜色---------暂时没用*/
 .font-teal{
     color:blue;
 }
@@ -879,7 +882,7 @@ td.selected{
     background-color:rgba(221, 57, 57, 0.85)!important;
 }
 .bg-table-success{
-    background-color: rgba(89, 189, 45, 0.82) !important;
+    background-color: rgba(64, 144, 29, 0.66) !important;
 }
 .bg-table-grey{
     background-color: rgb(128, 128, 128)!important;

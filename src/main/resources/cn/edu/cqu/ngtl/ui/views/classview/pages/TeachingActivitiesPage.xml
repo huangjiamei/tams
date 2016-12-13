@@ -92,7 +92,7 @@
                                     <list>
                                         <!--具体显示的经费的tab表-->
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-info">
+                                              p:additionalCssClasses="box box-success">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-VerticalBoxSection"

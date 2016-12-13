@@ -134,8 +134,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <!--table-->
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="3">
+                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T" />
                                                                     <property name="propertyName" value="RMPkrimPermTs" />

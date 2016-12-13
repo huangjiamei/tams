@@ -89,7 +89,7 @@
                                 <property name="items"  >
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-info"
+                                              p:additionalCssClasses="box box-success"
                                               p:style="padding:5px;width=250px!important;">
                                             <property name="items">
                                                 <list>
@@ -154,15 +154,15 @@
                                 <property name="items"  >
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-success">
+                                              p:additionalCssClasses="box box-info">
                                                 <property name="items">
                                                     <list>
                                                         <bean parent="Uif-HorizontalBoxSection"
                                                               p:additionalCssClasses="box-header">
                                                             <property name="items">
                                                                 <list>
-                                                                    <bean parent="Uif-Icon" p:iconClass="icon-user"/>
-                                                                    <bean parent="Uif-MessageField" p:messageText="待定信息"
+                                                                    <bean parent="Uif-Icon" p:iconClass="icon-info"/>
+                                                                    <bean parent="Uif-MessageField" p:messageText="其他信息"
                                                                           p:additionalCssClasses="boxheaderTitle"/>
                                                                 </list>
                                                             </property>

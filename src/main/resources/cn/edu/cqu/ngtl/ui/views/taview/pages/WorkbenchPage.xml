@@ -81,70 +81,70 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                    <property name="items">
-                        <list>
+                <!-- <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                     <property name="items">
+                         <list>
 
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-lg-6">
-                                <property name="items"  >
-                                    <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-heart"/>
-                                                                <bean parent="Uif-Message" p:messageText="正在进行的活动" p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Image" p:additionalCssClasses="photo"
-                                                                      p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
+                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-lg-6">
+                                 <property name="items"  >
+                                     <list>
+                                         <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
+                                             <property name="items">
+                                                 <list>
+                                                     <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
+                                                         <property name="items">
+                                                             <list>
+                                                                 <bean parent="Uif-Icon" p:iconClass="icon-heart"/>
+                                                                 <bean parent="Uif-Message" p:messageText="正在进行的活动" p:additionalCssClasses="boxheaderTitle"/>
+                                                             </list>
+                                                         </property>
+                                                     </bean>
+                                                     <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
+                                                         <property name="items">
+                                                             <list>
+                                                                 <bean parent="Uif-Image" p:additionalCssClasses="photo"
+                                                                       p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
+                                                             </list>
+                                                         </property>
+                                                     </bean>
+                                                 </list>
+                                             </property>
+                                         </bean>
+                                     </list>
+                                 </property>
+                             </bean>
 
-                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-lg-6">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-star"/>
-                                                                <bean parent="Uif-Message" p:messageText="待定内容" p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Image" p:additionalCssClasses="photo"
-                                                                      p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                </list>
-                                            </property>
-                                        </bean>
-                                    </list>
-                                </property>
-                            </bean>
-                        </list>
-                    </property>
-                </bean>
+                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-lg-6">
+                                 <property name="items">
+                                     <list>
+                                         <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-primary">
+                                             <property name="items">
+                                                 <list>
+                                                     <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header">
+                                                         <property name="items">
+                                                             <list>
+                                                                 <bean parent="Uif-Icon" p:iconClass="icon-star"/>
+                                                                 <bean parent="Uif-Message" p:messageText="待定内容" p:additionalCssClasses="boxheaderTitle"/>
+                                                             </list>
+                                                         </property>
+                                                     </bean>
+                                                     <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
+                                                         <property name="items">
+                                                             <list>
+                                                                 <bean parent="Uif-Image" p:additionalCssClasses="photo"
+                                                                       p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
+                                                             </list>
+                                                         </property>
+                                                     </bean>
+                                                 </list>
+                                             </property>
+                                         </bean>
+                                     </list>
+                                 </property>
+                             </bean>
+                         </list>
+                     </property>
+                 </bean>-->
 <!--
     <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
         <property name="items">

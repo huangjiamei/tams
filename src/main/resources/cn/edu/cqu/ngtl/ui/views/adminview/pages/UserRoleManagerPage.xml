@@ -225,8 +225,7 @@
 																			<bean parent="Uif-DataField" p:propertyName="name"
 																				  p:label="姓名" />
 																			<bean parent="Uif-DataField" p:propertyName="gender"
-																				  p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}"
-																				  p:additionalCssClasses="@{#line.idNumber==null?' ':#line.gender.equals('1')?'genderM':'genderF'}"/>
+																				  p:label="性别" p:readOnlyDisplayReplacement="@{#line.idNumber==null?' ':#line.gender.equals('1')?'男':'女'}"/>
 																			<bean parent="Uif-DataField" p:propertyName="code"
 																				  p:label="工号" />
 																			<bean parent="Uif-DataField" p:propertyName="idNumber" p:label="统一认证号"

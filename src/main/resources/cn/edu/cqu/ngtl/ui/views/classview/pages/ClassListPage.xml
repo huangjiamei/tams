@@ -78,7 +78,7 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
                         <list>
 
@@ -148,7 +148,7 @@
                             </bean>
                         </list>
                     </property>
-                </bean>
+                </bean>-->
 
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
@@ -336,7 +336,7 @@
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.status.equals('工作')?'bg-table-success tams-form-label':(#line.status.equals('编辑')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label')}"/>
+                                                                                  p:additionalCssClasses="@{#line.courseName.equals(' ')?' ':(#line.status.equals('工作')?'bg-table-success tams-form-label':(#line.status.equals('编辑')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
 
                                                                         </list>
                                                                     </property>

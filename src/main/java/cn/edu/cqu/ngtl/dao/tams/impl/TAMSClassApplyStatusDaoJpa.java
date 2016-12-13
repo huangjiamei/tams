@@ -159,7 +159,53 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
         for(TAMSClassApplyStatus tamsClassApplyStatus:tamsClassApplyStatuses){
             KradDataServiceLocator.getDataObjectService().save(tamsClassApplyStatus);
         }
-
     }
 
+    @Override
+    public List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds, String functionId, String classId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("classId", classId)
+        );
+        QueryResults<TAMSClassApplyStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassApplyStatus.class,
+                criteria.build()
+        );
+        if(qr.getResults() == null || qr.getResults().size() == 0)
+            return null;
+
+        TAMSClassApplyStatus current = qr.getResults().get(0);
+
+        Set<TAMSWorkflowStatus> availableStatus = new HashSet<>();
+        for(String roleId : roleIds) {
+            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getWorkflowStatusId());
+            if(statusRs != null)
+                for(TAMSWorkflowStatusR statusR : statusRs) {
+                    availableStatus.add(statusR.getStatus2());
+                }
+        }
+        return new ArrayList<>(availableStatus);
+    }
+
+    @Override
+    public boolean changeStatusToCertainStatus(String classId, String workflowStatusId) {
+        if(classId == null || workflowStatusId == null)
+            return false;
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("classId", classId)
+        );
+        QueryResults<TAMSClassApplyStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassApplyStatus.class,
+                criteria.build()
+        );
+        if(qr.getResults() == null || qr.getResults().size() == 0)
+            return false;
+
+        TAMSClassApplyStatus current = qr.getResults().get(0);
+
+        current.setWorkflowStatusId(workflowStatusId);
+
+        KradDataServiceLocator.getDataObjectService().save(current);
+        return true;
+    }
 }

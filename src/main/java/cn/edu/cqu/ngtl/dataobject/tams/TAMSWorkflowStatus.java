@@ -10,7 +10,7 @@ import java.io.Serializable;
  */
 @Entity
 @Table(name = "TAMS_WORKFLOW_STATUS")
-public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
+public class TAMSWorkflowStatus extends DataObjectBase implements Serializable,Comparable {
     @Id
     @Column(name = "UNIQUEID")
     @GeneratedValue(generator="tamsWorkflowStatus")
@@ -34,7 +34,6 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
 
     @Column(name = "WORKFLOW_FUNCTION_ID")
     private String workflowFunctionId;
-
 
     @ManyToOne
     @JoinColumn(name = "WORKFLOW_FUNCTION_ID", insertable = false, updatable = false)
@@ -60,5 +59,16 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable {
 
     public void setWorkflowStatus(String workflowStatus) {
         this.workflowStatus = workflowStatus;
+    }
+
+    @Override
+    public int compareTo(Object o) {
+        if(this == o)
+            return 0;
+        else if (o!=null && o instanceof TAMSWorkflowStatus) {
+            return this.getOrder() - ((TAMSWorkflowStatus) o).getOrder();
+        }
+        else
+            return -1;
     }
 }

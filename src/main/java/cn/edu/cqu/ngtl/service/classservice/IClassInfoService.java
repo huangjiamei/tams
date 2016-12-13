@@ -44,4 +44,8 @@ public interface IClassInfoService {
     boolean approveToNextStatus(List<String> classIds, String uid);
 
     boolean rejectToPreviousStatus(List<String> classIds, String uid);
+
+    List<TAMSWorkflowStatus> classStatusAvailable(String uid, String classId);
+
+    boolean classStatusToCertainStatus(String uid, String classId, String workflowStatusId);
 }

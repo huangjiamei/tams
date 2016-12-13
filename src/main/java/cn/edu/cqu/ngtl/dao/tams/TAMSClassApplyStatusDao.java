@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassApplyStatus;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 
 import java.util.List;
 
@@ -16,4 +17,8 @@ public interface TAMSClassApplyStatusDao {
     boolean toPreviousStatus(String[] roleIds, String functionId, String classId);
 
     void saveApplyStatueByList(List<TAMSClassApplyStatus> tamsClassApplyStatuses);
+
+    List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds, String functionId, String classId);
+
+    boolean changeStatusToCertainStatus(String classId, String workflowStatusId);
 }

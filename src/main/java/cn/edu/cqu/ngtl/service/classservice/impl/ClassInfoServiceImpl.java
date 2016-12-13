@@ -371,4 +371,49 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return false;
         }
     }
+
+    @Override
+    public List<TAMSWorkflowStatus> classStatusAvailable(String uid, String classId) {
+        try {
+            //更改课程申请状态
+            //默认工作方法为“审批”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uid);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return null;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("审核");
+            if (function == null) {
+                logger.error("未能找到'审核'的Function");
+                return null;
+            }
+            List<TAMSWorkflowStatus> result = classApplyStatusDao.getAvailableStatus(roleIds, function.getId(), classId);
+            Collections.sort(result);
+            return result;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
+    public boolean classStatusToCertainStatus(String uid, String classId, String workflowStatusId) {
+        if(uid == null)
+            return false;
+        List<TAMSWorkflowStatus> availableStatus = this.classStatusAvailable(uid, classId);
+        boolean flag = false;
+        for(TAMSWorkflowStatus status : availableStatus) {
+            if(status.getWorkflowFunctionId().equals(workflowStatusId))
+                flag = true;
+        }
+        if(!flag)  //此用户并不拥有改变为此状态的权力
+            return false;
+
+        return classApplyStatusDao.changeStatusToCertainStatus(classId, workflowStatusId);
+    }
 }

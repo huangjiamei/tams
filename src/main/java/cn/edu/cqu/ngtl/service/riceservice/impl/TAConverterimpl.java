@@ -434,11 +434,12 @@ public class TAConverterimpl implements ITAConverter {
     //全校所有助教界面
     @Override
     public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
+        List<TaInfoViewObject> viewObjects = new ArrayList<>();
         if(allTa == null || allTa.size() == 0) {
             logger.error("数据为空！");
-            return null;
+            viewObjects.add(new TaInfoViewObject());
+            return viewObjects;
         }
-        List<TaInfoViewObject> viewObjects = new ArrayList<>(allTa.size());
 
         for(TAMSTa ta : allTa) {
             TaInfoViewObject viewObject = new TaInfoViewObject();

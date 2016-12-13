@@ -431,11 +431,11 @@ body{
 /* 修改header的样式 */
 /*把navbar.less中对应的属性全都重写(覆盖)一遍*/
 .navbar-nav li {
-    float: left!important;  /*f:left保证右边数据不会垂直排列(避免原有小屏那种排列方式)。*/
+    /* float: left!important; */  /*f:left保证右边数据不会垂直排列(避免原有小屏那种排列方式)。*/
 }
 
 .navbar-nav {
-    float: right!important;  /*小屏时源码中会f:left，需要固定住*/
+    float: none!important;  /*小屏时源码中会f:left，需要固定住*/
 }
 
 .navbar-toggle{
@@ -854,8 +854,8 @@ td.selected{
     border-radius: 8px;
 }
 /*.box-btngroup > button {*/
-    /*font-size: 12px;*/
-    /*margin-left: 5px;*/
+/*font-size: 12px;*/
+/*margin-left: 5px;*/
 /*}*/
 
 /*table的footer部分*/
@@ -876,10 +876,10 @@ td.selected{
 
 /*table中的颜色，稍微淡一点*/
 .bg-table-red{
-    background-color: rgba(221, 75, 57, 0.89)!important;
+    background-color:rgba(221, 57, 57, 0.85)!important;
 }
 .bg-table-success{
-    background-color: rgba(0, 166, 90, 0.88) !important;
+    background-color: rgba(89, 189, 45, 0.82) !important;
 }
 .bg-table-grey{
     background-color: rgb(128, 128, 128)!important;
@@ -888,5 +888,25 @@ td.selected{
     background-color: rgba(243, 156, 18, 0.88) !important;
 }
 .bg-table-blue{
-    background-color: rgba(243, 156, 18, 0.88) !important;
+    background-color: rgba(45, 104, 189, 0.82) !important;
+}
+
+/*header部分的排列*/
+.uif-applicationHeader .navbar .nav li:nth-child(3){
+    float:right;
+}
+.uif-applicationHeader .navbar .nav li:nth-child(4){
+    float:right;
+}
+.uif-applicationHeader .navbar .nav li:nth-child(1){
+    float:left;
+}
+.uif-applicationHeader .navbar .nav li:nth-child(2){
+    float:left;
+}
+.navbar-nav {
+    margin: 0;
+}
+.navbar-nav>li>a{
+    padding-top: 16px;
 }

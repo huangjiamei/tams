@@ -33,11 +33,11 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <bean id="TestHeader" parent="Uif-ApplicationHeaderBase" p:additionalCssClasses="navbar-fixed-top">
-        <property name="applicationNavigation.brandImage">
+       <!-- <property name="applicationNavigation.brandImage">
             <bean parent="Uif-Image" p:style="width:150px;margin: 2px 5px;"
                   p:source="@{#ConfigProperties['application.url']}/images/logo.png" />
         </property>
-        <property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />
+        <property name="applicationNavigation.brandUrl" value="http://www.cqu.edu.cn" />-->
 
         <property name="applicationNavigation.navigationBarGroup.libraryCssClasses">
             <list merge="true">
@@ -51,21 +51,14 @@
         <property name="applicationNavigation.items">
             <list>
                 <!--导航栏-->
-                <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="fa fa-th-large fa-lg" p:style="font-size:16px;float:left!important" p:additionalCssClasses="mainMenu"
-                     p:actionScript="showDialogMenu();"/>
-
-                <!--学期信息-->
-                <bean id="sessionTermInfo" parent="Uif-ActionLink"
-                      p:iconClass="icon-time"
-                      p:style="font-size:18px;"
-                      p:actionScript="showDialogTerm();"/>
-                <bean id="sessionTermMessage" parent="Uif-ActionLink"
-                      p:actionLabel="@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}"
-                      p:style="display:none;"/>
+                <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="fa fa-th-large fa-lg" p:style="font-size:16px;margin:0 5px;" p:additionalCssClasses="mainMenu"
+                      p:actionScript="showDialogMenu();"/>
+                <bean parent="Uif-Image" p:style="width:150px;margin: 2px 5px;"
+                        p:source="@{#ConfigProperties['application.url']}/images/logo.png" p:onClickScript="onClickHerf();"/>
 
                 <!--user info-->
                 <bean id="userInfo" parent="Uif-DropdownToggleMenu"
-                      p:iconClass="icon-user" ><!--p:toggleText="@{user.getName()}"-->
+                      p:iconClass="icon-user" p:style="float:right!important"><!--p:toggleText="@{user.getName()}"-->
                     <property name="menuItems">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
@@ -99,6 +92,17 @@
                     </property>
 
                 </bean>
+
+                <!--学期信息-->
+                <bean id="sessionTermInfo" parent="Uif-ActionLink"
+                      p:iconClass="icon-time"
+                      p:style="font-size:18px;float:right!important"
+                      p:actionScript="showDialogTerm();"/>
+                <bean id="sessionTermMessage" parent="Uif-ActionLink"
+                      p:actionLabel="@{new cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa().getCurrentSession().getTimeInfoName()}"
+                      p:style="display:none;"/>
+
+
 
 
             </list>

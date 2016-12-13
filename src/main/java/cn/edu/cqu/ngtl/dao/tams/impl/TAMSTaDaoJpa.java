@@ -24,7 +24,6 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
@@ -288,6 +287,10 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 "'JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID " +
                 "JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("taCourseName")+
                 "' AND co.CODE LIKE '"+conditions.get("taCourseCode")+"'");
+
+
+
+
 
         return null;
     }

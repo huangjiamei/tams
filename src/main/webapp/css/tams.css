@@ -309,17 +309,6 @@ body{
     font-size: 18px;
 }
 
-/*box-header的btn*/
-.box-btngroup{
-    /*float: right!important;*/
-    margin-right: 5px;
-    font-size:12px;
-}
-.box-btngroup > button {
-    /*float: left;*/
-    font-size: 12px;
-    margin-left: 5px;
-}
 /*box end*/
 
 /* 背景颜色 */
@@ -359,16 +348,6 @@ body{
     -webkit-box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
     box-shadow: inset 0 0 100px rgba(0, 0, 0, 0.2);
     border-color:transparent;
-}
-
-.tamsbtn{
-    /*float:right!important;*/
-    font-size:12px;
-    margin-left: 5px;
-    margin-right:5px;
-    height:30px;
-    border-width:0;
-    color: white!important;
 }
 
 /* 导出、复制等btn的统一样式 */
@@ -472,18 +451,6 @@ body{
     width: 1%!important;
 }
 
-/* 用于实现助教列表中的'优秀助教'或'还未评价'样式，配合btn-success等使用 */
-.tams-form-label{
-    text-align: center;
-    color:white;
-    border-radius: 5px;
-    padding:3px;
-    vertical-align: middle;
-    width: 90px;
-}
-.tams-form-label:hover{
-    /*cursor: pointer;*/
-}
 
 /*用于区分教学活动页面中的分组标题和具体项目标题*/
 .tams-activity-group-title{
@@ -803,7 +770,7 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     margin-top: 6px;
     width: 300px;
 }
-.sessionTermFinderDialog{
+#sessionTermFinderDialog{
     display:none;
 }
 .modal-header{
@@ -857,4 +824,69 @@ td.selected{
 /*过滤器宽度*/
 .searchBoxWidth input[type="text"].form-control{
     width: 90px;
+}
+.searchBoxWidthMin input[type="text"].form-control{
+    width: 60px;
+}
+/*按钮统一样式*/
+
+/*action部分的按钮*/
+.tams-action-btn{
+    border-width:0;
+    color: white!important;
+    border-radius: 5px;
+    padding: 4px;
+    margin-top:7px;
+}
+/* table内的按钮 */
+.tams-form-label{
+    text-align: center;
+    color:white;
+    border-radius: 5px;
+    padding:2px;
+    vertical-align: middle;
+    width: 90px;
+}
+/*header部分的按钮*/
+.box-btngroup{
+    margin-right: 5px;
+    font-size:12px;
+    border-radius: 8px;
+}
+/*.box-btngroup > button {*/
+    /*font-size: 12px;*/
+    /*margin-left: 5px;*/
+/*}*/
+
+/*table的footer部分*/
+.dataTables_paginate a{
+    font-size: 16px;
+}
+.dataTables_info{
+    font-size: 15px;
+}
+
+/*header部分的用户信息*/
+.caret{
+    display:none;
+}
+.dropdown-toggle span{
+    font-size:16px;
+}
+
+/*table中的颜色，稍微淡一点*/
+.bg-table-red{
+    background-color: rgba(221, 75, 57, 0.89)!important;
+}
+.bg-table-success{
+    background-color: rgba(0, 166, 90, 0.88) !important;
+}
+.bg-table-grey{
+    background-color: rgb(128, 128, 128)!important;
+}
+.bg-table-orange{
+    background-color: rgba(243, 156, 18, 0.88) !important;
+}
+.bg-table-blue{
+    background-color: rgba(243, 156, 18, 0.88) !important;
 }

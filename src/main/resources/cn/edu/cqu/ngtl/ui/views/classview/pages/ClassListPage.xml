@@ -178,27 +178,29 @@
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="驳回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
                                                                                   p:actionScript="showDialog('returnDialog');"
-                                                                                  p:additionalCssClasses="icon-plus bg-orange box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>
+
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审批"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:actionScript="showDialog('approveDialog');"
-                                                                                  p:additionalCssClasses="icon-plus bg-primary box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
 
-                                                                            <!--右上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="EXCEL"
                                                                                   p:methodToCall="exportClassListExcel"
-                                                                                  p:additionalCssClasses="icon-th-list bg-primary box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="PDF"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="icon-th bg-orange box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
 
                                                                         </list>
                                                                     </property>
@@ -225,19 +227,7 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
                                                                                   p:messageText="占位"/>
-                                                                            <!--下拉框搜索-->
-                                                                            <!--学院-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="condDepartmentName">
-                                                                                <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
-                                                                                          p:blankOption="true"/>
-                                                                                </property>
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-DropdownControl"/>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <!--文字搜索-->
+
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseName"/>
@@ -254,6 +244,19 @@
                                                                             <!--耗费工时-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="courseWorkTime" p:additionalCssClasses="searchBoxWidth"/>
+
+                                                                            <!--学院-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condDepartmentName">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
+
                                                                             <!--状态-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="courseStatus" p:additionalCssClasses="searchBoxWidth">
@@ -314,8 +317,7 @@
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-DataField" p:label="学院"
-                                                                                  p:propertyName="departmentName"/>
+
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"
                                                                                   p:sortAs="numeric"/>
@@ -327,11 +329,14 @@
                                                                             <bean parent="Uif-DataField" p:label="教师"
                                                                                   p:propertyName="instructorName"/>
                                                                             <bean parent="Uif-DataField" p:label="耗费工时"
-                                                                                  p:propertyName="workTime"
-                                                                                  p:additionalCssClasses="#line.workTime.equals(' ')?' ':'bg-btn-blue tams-form-label'"/>
+                                                                                  p:propertyName="workTime"/>
+                                                                            <bean parent="Uif-DataField" p:label="学院"
+                                                                                  p:propertyName="departmentName"/>
+
+                                                                            <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="bg-success tams-form-label"/>
+                                                                                  p:additionalCssClasses="@{#line.status.equals('工作')?'bg-table-success tams-form-label':(#line.status.equals('编辑')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label')}"/>
 
                                                                         </list>
                                                                     </property>
@@ -441,7 +446,7 @@
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getClassInfoPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-form-label"/>
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -482,11 +487,22 @@
         </property>
     </bean>
     <bean id="returnDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="警告："/>
-        <property name="promptText" value="确认要驳回申请助教信息？"/>
+        <property name="headerText" value="驳回"/>
         <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="items">
+            <list>
+                <bean parent="Uif-InputField" p:label="请填写驳回理由："
+                      p:propertyName="returnReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
         <property name="footer.items">
             <list>
+
                 <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
                       p:methodToCall="reject"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
@@ -495,11 +511,22 @@
         </property>
     </bean>
     <bean id="approveDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="提示："/>
-        <property name="promptText" value="确认要批准申请助教信息？"/>
+        <property name="headerText" value="审批"/>
         <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="items">
+            <list>
+                <bean parent="Uif-InputField" p:label="请填写审批理由："
+                      p:propertyName="approveReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
         <property name="footer.items">
             <list>
+
                 <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
                       p:methodToCall="approve"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>

@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
@@ -72,6 +73,8 @@ public class adminController extends BaseController {
     @Autowired
     private UTSessionDao utSessionDao;
 
+    @Autowired
+    private UserInfoServiceImpl userInfoService;
     @Autowired
     private IUserInfoService iUserInfoService;
 
@@ -1087,8 +1090,51 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         //put conditions
         Map<String, String> conditions = new HashMap<>();
-        conditions.put("Name", infoForm.getDetailsName());
-        conditions.put("Number", infoForm.getDetailsNumber());
+        //获取uId(主键)
+        /*
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+        */
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+        //若是系统管理员和教务处管理员，则查看全部
+        if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)){
+            conditions.put("dept", null);
+            conditions.put("user", null);
+
+            conditions.put("Name", infoForm.getDetailsName());
+            conditions.put("Number", infoForm.getDetailsNumber());
+
+        }
+        //若是学院管理员，则查看本学院的助教的经费明细
+        else if(userInfoService.isCollegeStaff(uId)){
+            conditions.put("dept", user.getDepartment());
+            conditions.put("user", null);
+
+            conditions.put("Name", infoForm.getDetailsName());
+            conditions.put("Number", infoForm.getDetailsNumber());
+
+        }
+        //若是教师，查看自己的助教的经费
+        else if(userInfoService.isInstructor(uId)){
+            conditions.put("dept", null);
+            conditions.put("user", uId);
+
+            conditions.put("Name", infoForm.getDetailsName());
+            conditions.put("Number", infoForm.getDetailsNumber());
+
+        }
+        //若是助教，则查看自己的
+        else{
+            conditions.put("dept",null);
+            conditions.put("user", null);
+
+            conditions.put("Name", infoForm.getDetailsName());
+            conditions.put("Number", uId);
+            //conditions.put("Number", infoForm.getDetailsNumber());
+
+        }
+
         conditions.put("Bank", infoForm.getDetailsBank());
         conditions.put("BankNbr", infoForm.getDetailsBankNumber());
         conditions.put("IdCard", infoForm.getDetailsIDCard());
@@ -1106,6 +1152,7 @@ public class adminController extends BaseController {
         conditions.put("month10", infoForm.getMonth10());
         conditions.put("month11", infoForm.getMonth11());
         conditions.put("month12", infoForm.getMonth12());
+
         infoForm.setDetailFunding(adminService.getDetailFundByCondition(conditions));
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

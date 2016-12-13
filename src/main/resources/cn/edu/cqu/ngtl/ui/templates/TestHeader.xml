@@ -52,7 +52,7 @@
             <list>
                 <!--导航栏-->
                 <bean id="menuHeaderItem" parent="Uif-ActionLink" p:iconClass="fa fa-th-large fa-lg" p:style="font-size:16px;float:left!important" p:additionalCssClasses="mainMenu"
-                      p:actionScript="showDialogMenu();"/>
+                     p:actionScript="showDialogMenu();"/>
 
                 <!--学期信息-->
                 <bean id="sessionTermInfo" parent="Uif-ActionLink"
@@ -65,7 +65,7 @@
 
                 <!--user info-->
                 <bean id="userInfo" parent="Uif-DropdownToggleMenu"
-                      p:iconClass="icon-user" p:style="font-size:18px;"><!--p:toggleText="@{user.getName()}"-->
+                      p:iconClass="icon-user" ><!--p:toggleText="@{user.getName()}"-->
                     <property name="menuItems">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"

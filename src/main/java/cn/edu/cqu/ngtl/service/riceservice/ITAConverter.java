@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -84,6 +85,8 @@ public interface ITAConverter {
     List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
+
+    List<TaInfoViewObject> getTaInfoListByConditions(Map<String,String> conditions,String uId);
 
     List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables);
 }

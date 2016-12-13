@@ -410,6 +410,17 @@ var filterHintCache = {
         "239118-002"],
     "condInstructorName": [
         "test"],
+    "taAssitantName": [
+        "谢方奎",
+        "黄家梅",
+        "周小雯",
+        "欧明瞭",
+        "张海标"
+    ],
+    "taAssitantIDNumber":[
+        "20131774",
+        "20131772"
+    ]
 
 }
 
@@ -840,4 +851,7 @@ jQuery(document).ready(function(){
 
 function refreshPage(){
     location.reload();
+}
+ function onClickHerf(){
+     window.location="http://www.cqu.edu.cn";//Header部分Logo跳至重庆大学页面
 }

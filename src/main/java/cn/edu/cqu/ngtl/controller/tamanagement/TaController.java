@@ -572,7 +572,9 @@ public class TaController extends BaseController {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
         //我的课程
-        taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(taService.getStudentTimetableByUid(uId)));
+        taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(
+                taService.getStudentTimetableByUid(uId))
+        );
 
 
 

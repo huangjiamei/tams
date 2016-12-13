@@ -1102,6 +1102,10 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables){
         List<MyClassViewObject> myClassViewObjects = new ArrayList<>();
+        if(utStudentTimetables == null || utStudentTimetables.size() == 0) {
+            myClassViewObjects.add(new MyClassViewObject());
+            return myClassViewObjects;
+        }
         List<Object> classIdList = new ArrayList<>();
         for(UTStudentTimetable utStudentTimetable : utStudentTimetables){
             classIdList.add(utStudentTimetable.getClassId());

@@ -279,7 +279,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     }
 
-    //根据条件查询助教列表
+    //根据条件查询助教列表  //TODO 效率改进,特别是教师姓名的查询部分
     public List<TaInfoViewObject> getTaInfoByConditions(Map<String, String> conditions){
         List<TaInfoViewObject> taInfoViewObjects = new ArrayList<>();
         UTSession curSession = utSessionDao.getCurrentSession();

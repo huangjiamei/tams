@@ -283,13 +283,13 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     public List<TaInfoViewObject> getTaInfoByConditions(Map<String, String> conditions){
         List<TaInfoViewObject> taInfoViewObjects = new ArrayList<>();
         UTSession curSession = utSessionDao.getCurrentSession();
-        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.STATUS,cl.UNIQUEID,ws.WORKFLOW_STATUS FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
+        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.OUTSTANDING_TA,cl.UNIQUEID,ws.WORKFLOW_STATUS FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
                 "' AND s.UNIQUEID LIKE '"+conditions.get("taId")+
                 "' AND s. NAME LIKE '"+conditions.get("taName")+
                 "' AND t .TA_TYPE LIKE '"+conditions.get("taDegree")+
 //                "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
 //                "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
-                "' AND t .STATUS LIKE '"+conditions.get("taStatus") +
+                "' AND t .OUTSTANDING_TA LIKE '"+conditions.get("taStatus") +
                 "'JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID " +
                 "JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID JOIN TAMS_WORKFLOW_STATUS ws ON T.STATUS = ws.\"ORDER\"" +
                 "AND co.NAME LIKE '"+conditions.get("taCourseName")+

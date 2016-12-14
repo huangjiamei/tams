@@ -691,4 +691,18 @@ public class AdminServiceImpl implements IAdminService{
 
         return setted.toString();
     }
+
+    @Override
+    public String getClassTotalPlanFunding() {
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        TAMSDeptFunding deptFunding;
+        if(userInfoService.isSysAdmin(user.getCode()))
+            return this.getSessionFundingTotalApprove();
+        else
+            deptFunding = deptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), sessionDao.getCurrentSession().getId());
+        if(deptFunding != null)
+            return deptFunding.getPlanFunding();
+        else
+            return "数据缺失";
+    }
 }

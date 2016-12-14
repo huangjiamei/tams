@@ -927,7 +927,17 @@ public class adminController extends BaseController {
                         adminService.getFundingByClass()
                 )
         );
-
+        infoForm.setClassFundingStatistics(
+                taConverter.countClassFunding(
+                        infoForm.getClassFundings(),
+                        adminService.getClassTotalPlanFunding()
+                )
+        );
+        infoForm.setClassFundingTotalApproved(
+                taConverter.countClassFundingTotalApproved(
+                        infoForm.getClassFundings()
+                )
+        );
 
         infoForm.setTaFunding(
                 adminConverter.taFundingToViewObject(

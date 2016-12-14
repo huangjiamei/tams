@@ -89,4 +89,8 @@ public interface ITAConverter {
     List<TaInfoViewObject> getTaInfoListByConditions(Map<String,String> conditions,String uId);
 
     List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables);
+
+    String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding);
+
+    String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings);
 }

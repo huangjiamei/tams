@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
@@ -41,8 +42,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import cn.edu.cqu.ngtl.form.BaseForm;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -125,10 +124,13 @@ public class ClassController extends BaseController {
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
 
-        boolean result = classInfoService.approveToNextStatus(
-                classConverter.extractIdsFromClassList(checkedList),
-                uid
-        );
+        boolean result = false;
+        for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
+            result = classInfoService.classStatusToCertainStatus(
+                    classTeacherViewObject.getId(),
+                    uid,infoForm.getReturnReasonOptionFinder()
+            );
+        }
 
         if(result)
             return this.getClassListPage(infoForm, request);
@@ -155,13 +157,14 @@ public class ClassController extends BaseController {
             if(per.isChecked())
                 checkedList.add(per);
         }
-
+        boolean result = false;
         String uid = GlobalVariables.getUserSession().getPrincipalId();
-
-        boolean result = classInfoService.rejectToPreviousStatus(
-                classConverter.extractIdsFromClassList(checkedList),
-                uid
-        );
+        for(ClassTeacherViewObject classTeacherViewObject:checkedList) {    //依次将选择列表中的班次调整到设置的状态
+             result = classInfoService.classStatusToCertainStatus(
+                    classTeacherViewObject.getId(),
+                    uid, infoForm.getApproveReasonOptionFinder()
+            );
+        }
 
         if(result)
             return this.getClassListPage(infoForm, request);

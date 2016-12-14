@@ -184,7 +184,7 @@ public class TaController extends BaseController {
         String uid = GlobalVariables.getUserSession().getPrincipalId();
         boolean result = taService.appraiseOutstandingToSpecifiedStatus(
                 taConverter.extractIdsFromTaInfo(checkedList),
-                uid,taInfoForm.getAppraiseReasonOptionFinder()
+                uid,taInfoForm.getRevocationReasonOptionFinder()
         );
         if(result)
             return this.getTaListPage(form, request);

@@ -222,13 +222,13 @@
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>
                                                                     <property name="propertyName" value="allTerms"/>
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="false"/>
+                                                                              value="true"/>
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.generateAutoSequence"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true"/>
 

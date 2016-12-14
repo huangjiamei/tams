@@ -182,7 +182,6 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="驳回"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
                                                                                   p:actionScript="showDialog('returnDialog');"
                                                                                   p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>
 
@@ -491,6 +490,16 @@
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
+                <bean parent="Uif-InputField"  p:label="选择啥啥啥"
+                      p:propertyName="returnReasonOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                              p:blankOption="true"/>
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
                 <bean parent="Uif-InputField" p:label="请填写驳回理由："
                       p:propertyName="returnReason">
                     <property name="control">
@@ -515,6 +524,16 @@
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
+                <bean parent="Uif-InputField"  p:label="选择啥啥啥"
+                      p:propertyName="approveReasonOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                              p:blankOption="true"/>
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
                 <bean parent="Uif-InputField" p:label="请填写审批理由："
                       p:propertyName="approveReason">
                     <property name="control">

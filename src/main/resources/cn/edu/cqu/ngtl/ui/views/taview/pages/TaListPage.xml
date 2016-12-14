@@ -315,6 +315,16 @@
           p:headerText="撤销" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
+                <bean parent="Uif-InputField"  p:label="选择啥啥啥"
+                      p:propertyName="revocationReasonOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                              p:blankOption="true"/>
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
                 <bean parent="Uif-InputField" p:label="请填写撤销理由："
                       p:propertyName="revocationReason">
                     <property name="control">
@@ -337,6 +347,16 @@
           p:headerText="评优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
+                <bean parent="Uif-InputField"  p:label="选择啥啥啥"
+                      p:propertyName="appraiseReasonOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                              p:blankOption="true"/>
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
                 <bean parent="Uif-InputField" p:label="请填写批准为优秀的理由："
                       p:propertyName="appraiseReason">
                     <property name="control">

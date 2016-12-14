@@ -73,8 +73,11 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String classIdForDetailPage;
     private TaInfoViewObject selectedTaInfo;
 
-    private String revocationReason;
-    private String appraiseReason;
+    private String revocationReason;//撤销
+    private String appraiseReason;//评优
+    private String revocationReasonOptionFinder;//撤销optionfinder
+    private String appraiseReasonOptionFinder;//评优optionfinder
+
 
     /**
      * 工作台相关
@@ -468,5 +471,21 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setMyClassViewObjects(List<MyClassViewObject> myClassViewObjects) {
         this.myClassViewObjects = myClassViewObjects;
+    }
+
+    public String getRevocationReasonOptionFinder() {
+        return revocationReasonOptionFinder;
+    }
+
+    public void setRevocationReasonOptionFinder(String revocationReasonOptionFinder) {
+        this.revocationReasonOptionFinder = revocationReasonOptionFinder;
+    }
+
+    public String getAppraiseReasonOptionFinder() {
+        return appraiseReasonOptionFinder;
+    }
+
+    public void setAppraiseReasonOptionFinder(String appraiseReasonOptionFinder) {
+        this.appraiseReasonOptionFinder = appraiseReasonOptionFinder;
     }
 }

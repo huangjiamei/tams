@@ -69,6 +69,9 @@ public class ClassInfoForm extends BaseForm implements Serializable {
      */
     private String returnReason;//驳回理由
     private String approveReason;//审批理由
+    private String returnReasonOptionFinder;//驳回optionfinder
+    private String approveReasonOptionFinder;//审批optionfinder
+
     private List<ClassTeacherViewObject> classList;
 
     private ClassDetailInfoViewObject detailInfoViewObject;
@@ -403,5 +406,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setApproveReason(String approveReason) {
         this.approveReason = approveReason;
+    }
+
+    public String getReturnReasonOptionFinder() {
+        return returnReasonOptionFinder;
+    }
+
+    public void setReturnReasonOptionFinder(String returnReasonOptionFinder) {
+        this.returnReasonOptionFinder = returnReasonOptionFinder;
+    }
+
+    public String getApproveReasonOptionFinder() {
+        return approveReasonOptionFinder;
+    }
+
+    public void setApproveReasonOptionFinder(String approveReasonOptionFinder) {
+        this.approveReasonOptionFinder = approveReasonOptionFinder;
     }
 }

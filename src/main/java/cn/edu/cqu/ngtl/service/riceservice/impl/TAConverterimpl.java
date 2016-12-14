@@ -473,6 +473,7 @@ public class TAConverterimpl implements ITAConverter {
             }
 
             viewObject.setId(ta.getId());
+            viewObject.setStatusId(ta.getOutStandingTaWorkflowStatusId());
             viewObject.setStatus(ta.getOutStandingTaWorkflowStatus() != null ? ta.getOutStandingTaWorkflowStatus().getWorkflowStatus() : "缺失");
 
             //暂时缺失的属性

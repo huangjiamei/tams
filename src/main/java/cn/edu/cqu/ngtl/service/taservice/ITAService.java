@@ -1,10 +1,7 @@
 package cn.edu.cqu.ngtl.service.taservice;
 
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
@@ -50,6 +47,7 @@ public interface ITAService {
 
     boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs);
 
+    boolean appraiseOutstandingToSpecifiedStatus(List<String> taIds, String uId, String workFlowStatusId);
 
     List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId);
 
@@ -64,4 +62,7 @@ public interface ITAService {
     boolean revocationOutstanding(List<String> taIds, String uid);
 
     List<TaInfoViewObject> seachTainfoListByConditions(Map<String,String> conditions);
+
+    List<TAMSWorkflowStatus> appriseStatusAvailable(String uid, String taId);
+
 }

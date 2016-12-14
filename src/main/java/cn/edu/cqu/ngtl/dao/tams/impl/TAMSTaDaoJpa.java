@@ -283,7 +283,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     public List<TaInfoViewObject> getTaInfoByConditions(Map<String, String> conditions){
         List<TaInfoViewObject> taInfoViewObjects = new ArrayList<>();
         UTSession curSession = utSessionDao.getCurrentSession();
-        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.OUTSTANDING_TA,cl.UNIQUEID,ws.WORKFLOW_STATUS FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
+        Query query =em.createNativeQuery("SELECT s.NAME,s.UNIQUEID,t.TA_TYPE,co.NAME,co.CODE,cl.CLASS_NBR,t.EVALUATION,t.STUDENT_EVALUATION,t.OUTSTANDING_TA,cl.UNIQUEID,ws.WORKFLOW_STATUS,t.OUTSTANDING_TA FROM TAMS_TA t JOIN UNITIME_STUDENT s ON T .TA_ID = s.UNIQUEID AND t .SESSION_ID = '"+curSession.getId()+
                 "' AND s.UNIQUEID LIKE '"+conditions.get("taId")+
                 "' AND s. NAME LIKE '"+conditions.get("taName")+
                 "' AND t .TA_TYPE LIKE '"+conditions.get("taDegree")+
@@ -317,6 +317,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             taInfoViewObject.setTeacherAppraise(informations[6]==null?"未评价":informations[6].toString());
             taInfoViewObject.setStuAppraise(informations[7]==null?"未评价":informations[7].toString());
             taInfoViewObject.setStatus(informations[10].toString());
+            taInfoViewObject.setStatusId(informations[11].toString());
             taInfoViewObject.setInstructorName(insName);
             taInfoViewObjects.add(taInfoViewObject);
         }
@@ -654,4 +655,57 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             return false;
         }
     }
+
+
+    @Override
+    public List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds ,String functionId,String taId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("id", taId)
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+        if(qr.getResults() == null || qr.getResults().size() == 0)
+            return null;
+
+        TAMSTa current = qr.getResults().get(0);
+
+        Set<TAMSWorkflowStatus> availableStatus = new HashSet<>();
+        for(String roleId : roleIds) {
+            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getOutStandingTaWorkflowStatusId());
+            if(statusRs != null)
+                for(TAMSWorkflowStatusR statusR : statusRs) {
+                    availableStatus.add(statusR.getStatus2());
+                }
+        }
+        return new ArrayList<>(availableStatus);
+
+    }
+
+
+    @Override
+    public boolean changeStatusToSpecifiedStatus(String taId, String workflowStatusId){
+        if(taId == null || workflowStatusId == null)
+            return false;
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                equal("id", taId)
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+        if(qr.getResults() == null || qr.getResults().size() == 0)
+            return false;
+
+        TAMSTa current = qr.getResults().get(0);
+
+        current.setOutStandingTaWorkflowStatusId(workflowStatusId);
+
+        KradDataServiceLocator.getDataObjectService().save(current);
+
+        return false;
+    }
+
 }

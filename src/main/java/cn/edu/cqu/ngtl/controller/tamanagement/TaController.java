@@ -213,14 +213,14 @@ public class TaController extends BaseController {
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
-        boolean result = taService.appraiseOutstanding(
+        boolean result = taService.appraiseOutstandingToSpecifiedStatus(
                 taConverter.extractIdsFromTaInfo(checkedList),
-                uid
+                uid,taInfoForm.getAppraiseReasonOptionFinder()
         );
         if(result)
-            return this.getTaListPage(form, request);
+            return this.getTaListPage(taInfoForm, request);
         else
-            return this.getTaListPage(form, request); //应该返回错误信息
+            return this.getTaListPage(taInfoForm, request); //应该返回错误信息
     }
 
     //我的助教（教师用户看到的）(管理助教)界面
@@ -662,6 +662,21 @@ public class TaController extends BaseController {
         request.getParameterMap().get("pageId");
         return this.getModelAndView(taInfoForm, taInfoForm.getPageId());
     }
+
+    @RequestMapping(params =  {"methodToCall=showRevocationDialog"})
+    public ModelAndView showRevocationDialog(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        super.baseStart(taInfoForm);
+
+
+
+
+
+        return this.showDialog("confirmRevocationDialog" ,true,taInfoForm);
+    }
+
+
+
 
 
     @Override

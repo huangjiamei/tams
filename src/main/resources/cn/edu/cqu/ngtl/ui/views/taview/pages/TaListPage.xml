@@ -318,7 +318,7 @@
                 <bean parent="Uif-InputField"  p:label="选择啥啥啥"
                       p:propertyName="revocationReasonOptionFinder" >
                     <property name="optionsFinder">
-                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.AppriseOptionFinder"
                               p:blankOption="true"/>
                     </property>
                     <property name="control">
@@ -350,7 +350,7 @@
                 <bean parent="Uif-InputField"  p:label="选择啥啥啥"
                       p:propertyName="appraiseReasonOptionFinder" >
                     <property name="optionsFinder">
-                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.AppriseOptionFinder"
                               p:blankOption="true"/>
                     </property>
                     <property name="control">

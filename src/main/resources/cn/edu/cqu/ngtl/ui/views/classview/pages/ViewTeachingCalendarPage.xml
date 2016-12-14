@@ -121,7 +121,7 @@
                                                                                   p:actionLabel="更新"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageTeachingCalendar"
-                                                                                  p:additionalCssClasses="icon-happy bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-repeat bg-success tamsbtn">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

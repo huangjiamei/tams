@@ -114,15 +114,16 @@
                                                                                                 <list>
                                                                                                     <!--左上角btnlist-->
                                                                                                     <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionScript=""
+                                                                                                          p:actionLabel="添加" p:methodToCall="addxxxx"
+                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="复制(定位不对，稍候修复)"
                                                                                                           p:actionImagePlacement="LEFT"
                                                                                                           p:navigateToPageId="copyxxxx"
-                                                                                                          p:additionalCssClasses="icon-copy bg-success tamsbtn">
+                                                                                                          p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                                                     </bean>
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionScript=""
-                                                                                                          p:actionLabel="添加" p:methodToCall="addxxxx"
-                                                                                                          p:additionalCssClasses="icon-plus bg-teal tamsbtn"/>
+
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -198,13 +199,11 @@
                                                                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                                                                 <property name="items">
                                                                                                                                     <list>
-                                                                                                                                        <bean parent="Uif-ActionImage">
-                                                                                                                                            <property name="actionImage">
-                                                                                                                                                <bean parent="Uif-Image"
-                                                                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
+                                                                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                                                                              p:ajaxSubmit="false"
+                                                                                                                                              p:actionImagePlacement="LEFT"
+                                                                                                                                              p:methodToCall="xxxx"
+                                                                                                                                              p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>
@@ -231,15 +230,15 @@
                                                                                                 <list>
                                                                                                     <!--左上角btnlist-->
                                                                                                     <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionScript=""
+                                                                                                          p:actionLabel="添加" p:methodToCall="addxxxx"
+                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="复制(定位不对，稍候修复)"
                                                                                                           p:actionImagePlacement="LEFT"
                                                                                                           p:navigateToPageId="copyxxxx"
-                                                                                                          p:additionalCssClasses="icon-copy bg-success tamsbtn">
+                                                                                                          p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                                                     </bean>
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionScript=""
-                                                                                                          p:actionLabel="添加" p:methodToCall="addxxxx"
-                                                                                                          p:additionalCssClasses="icon-plus bg-teal tamsbtn"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -316,13 +315,11 @@
                                                                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                                                                 <property name="items">
                                                                                                                                     <list>
-                                                                                                                                        <bean parent="Uif-ActionImage">
-                                                                                                                                            <property name="actionImage">
-                                                                                                                                                <bean parent="Uif-Image"
-                                                                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
+                                                                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                                                                              p:ajaxSubmit="false"
+                                                                                                                                              p:actionImagePlacement="LEFT"
+                                                                                                                                              p:methodToCall="xxxx"
+                                                                                                                                              p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>

@@ -106,18 +106,18 @@
                                                                                   p:actionLabel="恢复"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="setTaToLiving"
-                                                                                  p:additionalCssClasses="bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-repeat bg-success box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="暂停"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="setTaToPause"
-                                                                                  p:additionalCssClasses="bg-orange tamsbtn">
+                                                                                  p:additionalCssClasses="icon-stop bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="解聘"
                                                                                   p:methodToCall="setTaToDismiss"
-                                                                                  p:additionalCssClasses="bg-teal tamsbtn"/>
+                                                                                  p:additionalCssClasses="icon-trash bg-orange box-btngroup"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -215,10 +215,10 @@
                                                                                   p:methodToCall="employ"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加申请人"
+                                                                                  p:actionLabel="添加"
 
                                                                                   p:actionScript="showDialog('addApplicantDialog');"
-                                                                                  p:additionalCssClasses="icon-plus bg-red box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -316,9 +316,11 @@
                                               p:additionalCssClasses="col-md-6 col-lg-6"
                                               p:onDocumentReadyScript="clickButton('studentNumTaM')"/>
 
+
                                         <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
+                                              p:actionImagePlacement="LEFT"
                                               p:methodToCall="searchTaByCondition"
-                                              p:additionalCssClasses="col-md-3 col-lg-3"
+                                              p:additionalCssClasses="box-btngroup col-md-3 col-lg-3"
                                               p:preSubmitCall="return true;"
                                               p:ajaxSubmit="true"
                                               p:onClickScript="deleteCookie();"
@@ -373,7 +375,6 @@
                                         <bean id="searchTaApplicantList"
                                               p:additionalCssClasses="table-minY"
                                               parent="Uif-Disclosure-TableCollectionSection"
-                                              p:layoutManager.numberOfColumns="10"
                                               p:onDocumentReadyScript="searchTaApplicantListALengthMenu();">
                                             <property name="collectionObjectClass"
                                                       value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>

@@ -42,6 +42,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import cn.edu.cqu.ngtl.form.BaseForm;
+
 /**
  * Created by tangjing on 16-10-20.
  * 课程管理相关的view及function
@@ -82,15 +84,23 @@ public class ClassController extends BaseController {
                                          HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-
+        try {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
-        infoForm.setClassList(
-                taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesFilterByUid(uId)
-                )
-        );
-        return this.getModelAndView(infoForm, "pageClassList");
+                infoForm.setClassList(
+                        taConverter.classInfoToViewObject(
+                                classInfoService.getAllClassesFilterByUid(uId)
+                        )
+                );
+
+            return this.getModelAndView(infoForm, "pageClassList");
+        } catch (Exception e) {
+            BaseForm baseForm=(BaseForm)form;
+            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            //e.printStackTrace();
+        }
+
     }
 
     /**
@@ -194,6 +204,8 @@ public class ClassController extends BaseController {
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
         } catch (Exception e) {
+            BaseForm baseForm=(BaseForm)form;
+            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
            //e.printStackTrace();
         }

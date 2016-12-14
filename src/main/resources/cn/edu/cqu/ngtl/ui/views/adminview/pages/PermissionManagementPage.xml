@@ -139,7 +139,7 @@
                                                                               value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T" />
                                                                     <property name="propertyName" value="RMPkrimPermTs" />
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="false"/>
+                                                                              value="true"/>
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"

@@ -6,11 +6,8 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
-import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
-import cn.edu.cqu.ngtl.service.adminservice.impl.AdminServiceImpl;
-import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
@@ -26,10 +23,10 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-import java.util.Map;
 /**
  * Created by awake on 2016/11/25.
  */
@@ -115,6 +112,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
                     )
             );
             List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();
+            List<TAMSClassFunding> copyList = new ArrayList<>();
             for (TAMSClassFunding per : list) {
                 per.setClassInformation(
                         classInfoDao.getOneById(
@@ -123,17 +121,18 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
                                 )
                         )
                 );
+                copyList.add(per);
             }
 
             //删除不是当前用户学院的课程
-            Iterator iterator = list.iterator();
+            Iterator iterator = copyList.iterator();
             while (iterator.hasNext()){
                 TAMSClassFunding tamsClassFunding = (TAMSClassFunding)iterator.next();
                 if(!tamsClassFunding.getClassInformation().getDepartmentId().equals(user.getDepartmentId())){
                     iterator.remove();
                 }
             }
-            return list;
+            return copyList;
         }
 
 

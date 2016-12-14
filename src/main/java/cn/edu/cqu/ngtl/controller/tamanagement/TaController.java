@@ -182,13 +182,14 @@ public class TaController extends BaseController {
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
-        boolean result = taService.revocationOutstanding(
+        boolean result = taService.appraiseOutstandingToSpecifiedStatus(
                 taConverter.extractIdsFromTaInfo(checkedList),
-                uid
+                uid,taInfoForm.getAppraiseReasonOptionFinder()
         );
         if(result)
             return this.getTaListPage(form, request);
         else
+            taInfoForm.setErrMsg("撤销助教出现错误");
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 

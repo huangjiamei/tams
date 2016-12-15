@@ -40,6 +40,7 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
     @Autowired
     private UTDepartmentDao departmentDao;
 
+    //获取当前学期学院的草稿经费
     @Override
     public List<TAMSDeptFunding> selectDepartmentCurrDraftBySession() {
         List<TAMSDeptFunding> list = new ArrayList<>();
@@ -69,16 +70,16 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         List<TAMSDeptFunding> list = new ArrayList<>();
-        //若输入框为空，则前后加通配符，若输入框不为空，则不加
-        int countNull = 0;
+        //若输入框为空，则加通配符，若输入框不为空，则不加
+        //int countNull = 0;
         for (Map.Entry<String, String> entry : conditions.entrySet()) {
             if (entry.getValue() == null) {
                 conditions.put(entry.getKey(), "%");
-                countNull++;
+        //        countNull++;
             }
         }
         //若输入框不为空
-        if(countNull != 7) {
+        //if(countNull != 7) {
             Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING_DRAFT t WHERE t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'");
             List<Object> columns = qr.getResultList();
             for (Object column : columns) {
@@ -94,8 +95,9 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
                 deptFunding.setTravelSubsidy(String.valueOf(fundings[10]));
                 list.add(deptFunding);
             }
-            return list;
+            return list.size() !=0 ? list : null;
         }
+        /*
         //若输入框都为空，则返回全部学院
         else {
             Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING_DRAFT t WHERE t.SESSION_ID = '" + curSession.getId() + "'");
@@ -115,7 +117,8 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
             }
             return list;
         }
-    }
+
+    }*/
 
     @Override
     public TAMSDeptFundingDraft selectDeptDraftFundsByDeptIdAndSession(Integer deptId, Integer sessionId){

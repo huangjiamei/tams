@@ -20,4 +20,8 @@ public interface IAdminConverter {
 
     List<ClassFundingViewObject> combineClassFunding(List<ClassFundingViewObject> list);
 
+    List<TaFundingViewObject> combineTaFunding(List<TaFundingViewObject> list);
+
+    List<DetailFundingViewObject> combineDetailFunding(List<DetailFundingViewObject> list);
+
 }

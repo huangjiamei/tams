@@ -58,27 +58,28 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
         List<TAMSUniversityFunding> list = new ArrayList<>();
         //当前学期
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        int countNull = 0;
-        //加通配符
+        //int countNull = 0;
+        //加通配符,若输入为空，则加通配符，否则不加
         for (Map.Entry<String, String> entry : conditions.entrySet()) {
             if (entry.getValue() == null) {
                 conditions.put(entry.getKey(), "%");
-                countNull++;
-            } else
-                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+         //       countNull++;
+            }
         }
-        if ( countNull != 7) {
+        //if ( countNull != 7) {
             //Query qr = em.createNativeQuery("SELECT f.PLAN_FUNDING, f.APPLY_FUNDING, f.ACTUAL_FUNDING, f.PHD_FUNDING, f.BONUS, f.TRAVEL_SUBSIDY FROM TAMS_UNIVERSITY_FUNDING f JOIN UNITIME_SESSION s ON f.SESSION_ID != '"+curSession.getId()+"' AND f.SESSION_ID = s.UNIQUEID  AND ( (f.SESSION_ID = conditions.get("Session"))  OR (f.PLAN_FUNDING LIKE '"+conditions.get("PlanFunding")+"') OR (f.APPLY_FUNDING LIKE '"+conditions.get("ApplyFunding")+"') OR (f.ACTUAL_FUNDING LIKE '"+conditions.get("ApprovalFunding")+"') OR (f.PHD_FUNDING LIKE '"+conditions.get("AddFunding")+"') OR (f.BONUS LIKE '"+conditions.get("Bonus")+"') OR (f.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"') ) ");
-            Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING f JOIN UNITIME_SESSION s ON f.SESSION_ID != '"+curSession.getId()+"' AND f.SESSION_ID = s.UNIQUEID  AND (  f.SESSION_ID LIKE '"+conditions.get("Session")+"'  AND  f.PLAN_FUNDING LIKE '"+conditions.get("PlanFunding")+"'  AND  f.APPLY_FUNDING LIKE '"+conditions.get("ApplyFunding")+"'  AND  f.ACTUAL_FUNDING LIKE '"+conditions.get("ApprovalFunding")+"'  AND  f.PHD_FUNDING LIKE '"+conditions.get("AddFunding")+"'  AND  f.BONUS LIKE '"+conditions.get("Bonus")+"'  AND  f.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' ) ",TAMSUniversityFunding.class);
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING f JOIN UNITIME_SESSION s ON f.SESSION_ID != '"+curSession.getId()+"' AND f.SESSION_ID = s.UNIQUEID  AND   f.SESSION_ID LIKE '"+conditions.get("Session")+"'  AND  f.PLAN_FUNDING LIKE '"+conditions.get("PlanFunding")+"'  AND  f.APPLY_FUNDING LIKE '"+conditions.get("ApplyFunding")+"'  AND  f.ACTUAL_FUNDING LIKE '"+conditions.get("ApprovalFunding")+"'  AND  f.PHD_FUNDING LIKE '"+conditions.get("AddFunding")+"'  AND  f.BONUS LIKE '"+conditions.get("Bonus")+"'  AND  f.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"'  ",TAMSUniversityFunding.class);
             //System.out.print("SELECT f.SESSION_ID, f.PLAN_FUNDING, f.APPLY_FUNDING, f.ACTUAL_FUNDING, f.PHD_FUNDING, f.BONUS, f.TRAVEL_SUBSIDY FROM TAMS_UNIVERSITY_FUNDING f JOIN UNITIME_SESSION s ON f.SESSION_ID != '"+curSession.getId()+"' AND f.SESSION_ID = s.UNIQUEID  AND (  f.SESSION_ID LIKE '"+conditions.get("Session")+"'  OR  f.PLAN_FUNDING LIKE '"+conditions.get("PlanFunding")+"'  OR  f.APPLY_FUNDING LIKE '"+conditions.get("ApplyFunding")+"'  OR  f.ACTUAL_FUNDING LIKE '"+conditions.get("ApprovalFunding")+"'  OR  f.PHD_FUNDING LIKE '"+conditions.get("AddFunding")+"'  OR  f.BONUS LIKE '"+conditions.get("Bonus")+"'  OR  f.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' ) ");
             list = qr.getResultList();
-        }
+        //}
+        /*
         //若输入为空，则返回全部历史学期经费
         else {
             Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING t JOIN UNITIME_SESSION s ON s.UNIQUEID = t.SESSION_ID AND t.SESSION_ID != '"+curSession.getId()+"' ORDER BY s.YEAR DESC, s.TERM DESC ",TAMSUniversityFunding.class);
             list = qr.getResultList();
         }
-        return list;
+        */
+        return list.size() !=0 ? list : null;
     }
 
     @Override

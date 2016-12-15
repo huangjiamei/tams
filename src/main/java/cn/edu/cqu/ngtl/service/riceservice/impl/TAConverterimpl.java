@@ -698,7 +698,30 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
             viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
             viewObject.setClassNumber(classFunding.getClassInformation().getClassNumber());
-            viewObject.setInstructorName("test");
+            //设定教师名称
+            List<UTClassInstructor> classInstructors = utClassInstructorDao.selectByClassId(classFunding.getClassId());
+            if(classInstructors == null || classInstructors.size() == 0) {
+                viewObject.setInstructorName("缺失");
+            }
+            else if(classInstructors.size() == 1) {
+                viewObject.setInstructorName(classInstructors.get(0).getUtInstructor().getName());
+            }
+            else{
+                for(int i=0; i<classInstructors.size(); i++) {
+                    for(int j=i+1; j<classInstructors.size(); j++) {
+                        if(classInstructors.get(i).getClassId().toString().equals(classInstructors.get(j).getClassId().toString())) {
+                            /*classInstructors.get(i).getUtInstructor().setName(
+                                    classInstructors.get(i).getUtInstructor().getName() + ',' +
+                                            classInstructors.get(j).getUtInstructor().getName()
+                            );
+                            */
+                            String name = classInstructors.get(i).getUtInstructor().getName() + ',' + classInstructors.get(j).getUtInstructor().getName();
+                            //classInstructors.remove(j);
+                            viewObject.setInstructorName(name);
+                        }
+                    }
+                }
+            }
             viewObject.setApplyFunding(classFunding.getApplyFunding());
             viewObject.setAssignedFunding(classFunding.getAssignedFunding());
             viewObject.setPhdFunding(classFunding.getPhdFunding());
@@ -718,6 +741,10 @@ public class TAConverterimpl implements ITAConverter {
     //学院经费
     @Override
     public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
+        if(allFundingBySession == null || allFundingBySession.size() == 0) {
+            logger.error("数据为空！");
+            return null;
+        }
         List<DepartmentFundingViewObject> viewObjects = new ArrayList<>();
         if(allFundingBySession == null || allFundingBySession.size() == 0) {
             viewObjects.add(new DepartmentFundingViewObject());
@@ -764,6 +791,10 @@ public class TAConverterimpl implements ITAConverter {
     //学校经费
     @Override
     public List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSUniversityFunding> allFundingBySession) {
+        if(allFundingBySession == null || allFundingBySession.size() == 0){
+            logger.error("数据为空！");
+            return null;
+        }
         List<SessionFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
 
         for(TAMSUniversityFunding universityFunding : allFundingBySession) {

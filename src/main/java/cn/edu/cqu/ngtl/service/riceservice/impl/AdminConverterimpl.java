@@ -1,9 +1,12 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
+import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTCourseDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
@@ -28,6 +31,9 @@ public class AdminConverterimpl implements IAdminConverter {
 
     @Autowired
     private UTSessionDao utSessionDao;
+
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
 
 
     private static final Logger logger = Logger.getRootLogger();
@@ -67,13 +73,14 @@ public class AdminConverterimpl implements IAdminConverter {
                     if(course != null) {
                         taFundingViewObject.setCourseName(course.getName());
                         taFundingViewObject.setCourseCode(course.getCodeR());
+                        taFundingViewObject.setDepartmentName(course.getDepartment().getName());
                     }
                 }
             }
             UTStudent taStu = ta.getTa();
             if(taStu != null) {
                 taFundingViewObject.setTaName(taStu.getName());
-                taFundingViewObject.setDepartmentName(taStu.getDepartment().getName());
+                //taFundingViewObject.setDepartmentName(taStu.getDepartment().getName());
             }
 
             if (ta.getCurSession() != null ){
@@ -165,25 +172,107 @@ public class AdminConverterimpl implements IAdminConverter {
     }
 
     //转换课程经费
-    public List<ClassFundingViewObject> combineClassFunding(List<ClassFundingViewObject> list){
+    public List<ClassFundingViewObject> combineClassFunding(List<ClassFundingViewObject> list) {
+        if (list == null || list.size() == 0) {
+            logger.error("数据为空！");
+            return null;
+        } else {
+            for (ClassFundingViewObject listone : list) {
+                Integer total = Integer.parseInt(listone.getApplyFunding()) + Integer.parseInt(listone.getAssignedFunding()) + Integer.parseInt(listone.getPhdFunding()) + Integer.parseInt(listone.getBonus()) + Integer.parseInt(listone.getTravelSubsidy());
+                listone.setTotal(total.toString());
+                List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(listone.getClassId());
+                if (utClassInstructors == null || utClassInstructors.size() == 0) {
+                    listone.setInstructorName("缺失");
+                } else if (utClassInstructors.size() == 1) {
+                    listone.setInstructorName(utClassInstructors.get(0).getUtInstructor().getName());
+                } else {
+                    for (int i = 0; i < utClassInstructors.size(); i++) {
+                        for (int j = i + 1; j < utClassInstructors.size(); j++) {
+                            if (utClassInstructors.get(i).getClassId().toString().equals(utClassInstructors.get(j).getClassId().toString())) {
+                                String name = utClassInstructors.get(i).getUtInstructor().getName() + ',' +
+                                        utClassInstructors.get(j).getUtInstructor().getName();
+                                listone.setInstructorName(name);
+                            }
+                        }
+                    }
+                }
+            }
+            return list;
+        }
+    }
+        /*
+        if(list.size() == 1) {
+            Integer total = Integer.parseInt(list.get(0).getApplyFunding()) + Integer.parseInt(list.get(0).getAssignedFunding()) + Integer.parseInt(list.get(0).getPhdFunding()) + Integer.parseInt(list.get(0).getBonus()) + Integer.parseInt(list.get(0).getTravelSubsidy());
+            list.get(0).setTotal(total.toString());
+        }
         for(int i=0; i<list.size(); i++){
-            Integer total = Integer.valueOf(list.get(i).getApplyFunding() + list.get(i).getAssignedFunding() + list.get(i).getPhdFunding() + list.get(i).getBonus() + list.get(i).getTravelSubsidy());
+            Integer total = Integer.parseInt(list.get(i).getApplyFunding()) + Integer.parseInt(list.get(i).getAssignedFunding()) + Integer.parseInt(list.get(i).getPhdFunding()) + Integer.parseInt(list.get(i).getBonus()) + Integer.parseInt(list.get(i).getTravelSubsidy());
             list.get(i).setTotal(total.toString());
-            for(int j=0; j<list.size(); j++){
+            for(int j=i+1; j<list.size(); j++){
                 if(list.get(i).getClassNumber().toString().equals(list.get(j).getClassNumber().toString())){
                     list.get(i).setInstructorName(list.get(i).getInstructorName()+','+list.get(j).getInstructorName());
                     list.remove(j);
                 }
             }
         }
+        */
         /*
         for(ClassFundingViewObject listone : list){
             Integer total = Integer.valueOf(listone.getApplyFunding() + listone.getAssignedFunding() + listone.getPhdFunding() + listone.getBonus() + listone.getTravelSubsidy());
             listone.setTotal(total.toString());
             list.add(listone);
         }
-        */
+
         return list;
+
+    }*/
+
+    //转换助教经费
+    @Override
+    public List<TaFundingViewObject> combineTaFunding(List<TaFundingViewObject> list) {
+        if(list == null || list.size() ==0) {
+            logger.error("数据为空！");
+            return null;
+        }
+        if(list.size() == 1){
+            Integer total = Integer.parseInt(list.get(0).getAssignedFunding()) + Integer.parseInt(list.get(0).getPhdFunding()) + Integer.parseInt(list.get(0).getBonus()) + Integer.parseInt(list.get(0).getTravelSubsidy());
+            list.get(0).setTotal(total.toString());
+            return list;
+        }
+        else{
+            for (int i = 0; i < list.size(); i++) {
+                Integer total = Integer.parseInt(list.get(i).getAssignedFunding()) + Integer.parseInt(list.get(i).getPhdFunding()) + Integer.parseInt(list.get(i).getBonus()) + Integer.parseInt(list.get(i).getTravelSubsidy());
+                list.get(i).setTotal(total.toString());
+                for (int j = i+1; j < list.size(); j++) {
+                    if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString()) &&
+                            list.get(i).getInstrucotrName().toString().equals(list.get(j).getInstrucotrName().toString()) == false) {
+                        list.remove(j);
+                    }
+                }
+            }
+            return list;
+        }
     }
 
+    //转换经费明细
+    @Override
+    public List<DetailFundingViewObject> combineDetailFunding(List<DetailFundingViewObject> list) {
+        if(list == null || list.size() == 0){
+            logger.error("数据为空！");
+            return null;
+        }
+        if (list.size() == 1)
+            return list;
+        else {
+            for (int i = 0; i < list.size(); i++) {
+                for (int j = i+1; j < list.size(); j++) {
+                    if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString()) &&
+                            list.get(i).getInstructorName().toString().equals(list.get(j).getInstructorName()) == false) {
+                        list.remove(j);
+                    }
+                }
+            }
+            return list;
+        }
+    }
 }

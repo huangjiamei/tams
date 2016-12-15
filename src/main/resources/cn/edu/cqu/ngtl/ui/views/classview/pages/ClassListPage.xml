@@ -335,7 +335,7 @@
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.courseName.equals(' ')?' ':(#line.order.equals('5')?'bg-table-success tams-form-label':(#line.status.equals('1')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
+                                                                                  p:additionalCssClasses="@{#line.courseName.equals(' ')?' ':(#line.order.equals('5')?'bg-table-success tams-form-label':(#line.order.equals('1')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
 
                                                                         </list>
                                                                     </property>

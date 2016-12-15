@@ -71,4 +71,12 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable,C
         else
             return -1;
     }
+
+    @Override
+    public boolean equals(Object obj){
+        TAMSWorkflowStatus tamsWorkflowStatus = (TAMSWorkflowStatus)obj;
+        if(tamsWorkflowStatus == null)
+            return false;
+        return tamsWorkflowStatus.getId().equals(this.id);
+    }
 }

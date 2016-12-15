@@ -406,7 +406,7 @@
                                                                                                           p:style="float:right!important;"
                                                                                                           p:methodToCall="SaveSessionFunding"
                                                                                                           p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -477,14 +477,11 @@
                                                                                                                 <bean parent="Uif-HorizontalBoxSection">
                                                                                                                     <property name="items">
                                                                                                                         <list>
-                                                                                                                            <bean parent="Uif-ActionImage"
+                                                                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                                                                  p:ajaxSubmit="false"
+                                                                                                                                  p:style="display:none;"
                                                                                                                                   p:methodToCall="savaFundsDraft"
-                                                                                                                            p:style="display:none;">
-                                                                                                                                <property name="actionImage">
-                                                                                                                                    <bean parent="Uif-Image"
-                                                                                                                                          p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                                                                </property>
-                                                                                                                            </bean>
+                                                                                                                                  p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
                                                                                                                         </list>
                                                                                                                     </property>
                                                                                                                 </bean>
@@ -681,7 +678,7 @@
                                                                                                           p:messageText="已设置/总预算经费："
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="1000000/2500000"
+                                                                                                          p:messageText="@{sessionFundingStatistics}"
                                                                                                           p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
@@ -689,7 +686,7 @@
                                                                                                           p:messageText="批准经费："
                                                                                                           p:style="margin-left:20px;font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="3000000"
+                                                                                                          p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
@@ -698,14 +695,14 @@
                                                                                                           p:style="float:right!important;"
                                                                                                           p:methodToCall="SaveDeptFunding"
                                                                                                           p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="发布学院经费"
                                                                                                           p:actionImagePlacement="LEFT"
                                                                                                           p:style="float:right!important;"
                                                                                                           p:methodToCall="ReleaseDeptFunding"
                                                                                                           p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -852,14 +849,11 @@
                                                                                                                                 <property
                                                                                                                                         name="items">
                                                                                                                                     <list>
-                                                                                                                                        <bean parent="Uif-ActionImage"
-                                                                                                                                              p:methodToCall="xxxx">
-                                                                                                                                            <property
-                                                                                                                                                    name="actionImage">
-                                                                                                                                                <bean parent="Uif-Image"
-                                                                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
+                                                                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                                                                              p:ajaxSubmit="false"
+                                                                                                                                              p:style="display:none;"
+                                                                                                                                              p:methodToCall="xxxx"
+                                                                                                                                              p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>
@@ -1069,7 +1063,7 @@
                                                                                                           p:messageText="已设置/总预算经费："
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="1000000/2500000"
+                                                                                                          p:messageText="@{classFundingStatistics}"
                                                                                                           p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
@@ -1077,7 +1071,7 @@
                                                                                                           p:messageText="批准经费："
                                                                                                           p:style="margin-left:20px;font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="3000000"
+                                                                                                          p:messageText="@{classFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
                                                                                                 </list>

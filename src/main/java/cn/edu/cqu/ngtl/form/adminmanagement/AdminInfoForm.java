@@ -112,6 +112,10 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private List<ClassFundingViewObject> classFundings;
 
+    private String classFundingStatistics;
+
+    private String classFundingTotalApproved;
+
     private List<TaFundingViewObject> taFunding;
 
     private List<DetailFundingViewObject> detailFunding;
@@ -238,6 +242,22 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String test;
     private String checkboxesTest;
     private String ConnectMessage;
+
+    public String getClassFundingStatistics() {
+        return classFundingStatistics;
+    }
+
+    public void setClassFundingStatistics(String classFundingStatistics) {
+        this.classFundingStatistics = classFundingStatistics;
+    }
+
+    public String getClassFundingTotalApproved() {
+        return classFundingTotalApproved;
+    }
+
+    public void setClassFundingTotalApproved(String classFundingTotalApproved) {
+        this.classFundingTotalApproved = classFundingTotalApproved;
+    }
 
     public String getSessionFundingStatistics() {
         return sessionFundingStatistics;

@@ -4,6 +4,8 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
@@ -20,8 +22,7 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -344,6 +345,68 @@ public class TAServiceimpl implements ITAService {
             return false;
         }
         return true;
+    }
+
+
+
+    public boolean appraiseOutstandingToSpecifiedStatus(List<String> taIds, String uId, String workFlowStatusId){
+        Set availableStat = new HashSet();
+        if(uId == null)
+            return false;
+        for(String taid : taIds) {
+            List<TAMSWorkflowStatus> availableStatus = this.appriseStatusAvailable(uId, taid);
+            for(TAMSWorkflowStatus tamsWorkflowStatus:availableStatus) {
+                availableStat.add(tamsWorkflowStatus);
+            }
+        }
+        boolean flag = false;
+
+        Iterator it = availableStat.iterator();
+        while(it.hasNext()){
+            TAMSWorkflowStatus tamsWorkflowStatus = (TAMSWorkflowStatus)it.next();
+            if(tamsWorkflowStatus.getId().equals(workFlowStatusId))
+                flag = true;
+        }
+
+        if(!flag)  //此用户并不拥有改变为此状态的权力
+            return false;
+
+        for(String taid :taIds) {
+             tamstadao.changeStatusToSpecifiedStatus(taid, workFlowStatusId);
+        }
+        return true;
+    }
+
+    public List<TAMSWorkflowStatus> appriseStatusAvailable(String uid, String taId){
+        try {
+            //更改课程申请状态
+            //默认工作方法为“审批”
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(uid);
+            if (roles == null || roles.size() == 0) {
+                logger.error("未能找到用户所属角色！");
+                return null;
+            }
+            String[] roleIds = new String[roles.size()];
+            for (int i = 0; i < roleIds.length; i++) {
+                roleIds[i] = roles.get(i).getRoleId();
+            }
+            TAMSWorkflowFunctions function = new TAMSWorkflowFunctionsDaoJpa().selectOneByName("评优");
+            if (function == null) {
+                logger.error("未能找到'评优'的Function");
+                return null;
+            }
+            List<TAMSWorkflowStatus> result = new TAMSTaDaoJpa().getAvailableStatus(roleIds, function.getId(), taId);
+            Collections.sort(result);
+            return result;
+        }
+        catch (RuntimeException e) {
+            e.printStackTrace();
+            return null;
+        }
+
+
+
+
     }
 
     @Override

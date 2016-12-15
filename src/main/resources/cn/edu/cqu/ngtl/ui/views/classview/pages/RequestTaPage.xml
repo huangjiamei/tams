@@ -279,7 +279,6 @@
                                                                                                                             <!--<bean parent="Uif-AddLineAction"/>-->
                                                                                                                             <bean parent="Uif-SecondaryActionButton-Mini"
                                                                                                                                   p:methodToCall="addLine"
-                                                                                                                                  p:actionLabel="添加评定方式"
                                                                                                                                   p:actionEvent="addLine"
                                                                                                                                   p:loadingMessageText="请稍候..."
                                                                                                                                   p:focusOnIdAfterSubmit="LINE_FIRST"
@@ -287,7 +286,7 @@
                                                                                                                                   p:dirtyOnAction="true"
                                                                                                                                   p:id="@{#collectionGroup.id}_add"
                                                                                                                                   p:defaultEnterKeyAction="true"
-                                                                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn"/>
+                                                                                                                                  p:additionalCssClasses="icon-plus bg-success tams-action-btn"/>
                                                                                                                         </list>
                                                                                                                     </property>
 
@@ -321,18 +320,14 @@
                                                                                                                             name="lineActions">
                                                                                                                         <list>
                                                                                                                             <bean parent="Uif-HorizontalBoxSection">
-                                                                                                                                <property
-                                                                                                                                        name="items">
+                                                                                                                                <property name="items">
                                                                                                                                     <list>
-                                                                                                                                        <bean parent="Uif-ActionImage"
+                                                                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                                                                              p:ajaxSubmit="false"
+                                                                                                                                              p:actionImagePlacement="LEFT"
                                                                                                                                               p:methodToCall="deleteEvaluationLine"
-                                                                                                                                              p:refreshId="EvaluationTable">
-                                                                                                                                            <property
-                                                                                                                                                    name="actionImage">
-                                                                                                                                                <bean parent="Uif-Image"
-                                                                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
+                                                                                                                                              p:refreshId="EvaluationTable"
+                                                                                                                                              p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>
@@ -351,7 +346,7 @@
                                                                                                                       p:actionLabel="提交"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="submitRequestTaPage"
-                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
+                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>

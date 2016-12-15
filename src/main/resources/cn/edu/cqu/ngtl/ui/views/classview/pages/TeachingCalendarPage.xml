@@ -112,15 +112,15 @@
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionScript=""
+                                                                                  p:actionLabel="添加"
+                                                                                  p:methodToCall="getAddTeachCalendarPage"
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-copy bg-success tamsbtn"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加教学日历"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="getAddTeachCalendarPage"
-                                                                                  p:additionalCssClasses="icon-plus bg-primary tamsbtn">
+                                                                                  p:navigateToPageId="copyxxxx"
+                                                                                  p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -224,15 +224,14 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel=""
-                                                                                              p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getViewTeachingCalendarPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"
                                                                                         />
                                                                                         <bean parent="Uif-ActionImage"
+                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="deleteTeachCalendar"
                                                                                               p:refreshId="calenderBox"
-                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tamsbtn"/>
+                                                                                              p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

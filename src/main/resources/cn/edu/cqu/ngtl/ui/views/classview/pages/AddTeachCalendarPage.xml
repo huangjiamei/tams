@@ -268,12 +268,12 @@
                                                                                   p:actionLabel="创建"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="submitTeachCalendarPage"
-                                                                                  p:additionalCssClasses="icon-file2 bg-teal tamsbtn"/>
+                                                                                  p:additionalCssClasses="icon-plus-sign bg-success box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="创建并继续"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-paste bg-orange tamsbtn"/>
+                                                                                  p:additionalCssClasses="icon-arrow-right bg-teal box-btngroup"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

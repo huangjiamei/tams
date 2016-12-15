@@ -134,4 +134,10 @@ public interface IAdminService {
     String getSessionFundingStatistics();
 
     String getSessionFundingTotalApprove();
+
+    String  getClassTotalPlanFunding();
+
+    String getSessionFundingStatistics(String totalPlan);
+
+    String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 }

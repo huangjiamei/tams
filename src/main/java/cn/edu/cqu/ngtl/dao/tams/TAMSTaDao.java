@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
@@ -55,5 +56,9 @@ public interface TAMSTaDao {
     List<TaInfoViewObject> getTaInfoByConditions(Map<String,String> conditions);
 
     List<TAMSTa> selectByTaId(String taId);
+
+    boolean changeStatusToSpecifiedStatus(String classId, String workflowStatusId);
+
+    List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds ,String functionId,String taId);
 
 }

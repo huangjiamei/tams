@@ -324,7 +324,10 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
                 )
         );
         QueryResults<TAMSDeptFunding> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFunding.class,criteria.build());
-        return qr.getResults().get(0);
+        if(qr.getResults() != null && !qr.getResults().isEmpty())
+            return qr.getResults().get(0);
+        else
+            return null;
     }
 
 

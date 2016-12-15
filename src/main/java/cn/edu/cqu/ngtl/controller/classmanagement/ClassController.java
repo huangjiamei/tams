@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
@@ -82,15 +83,24 @@ public class ClassController extends BaseController {
                                          HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+        try {
+            final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+            String uId = userSession.getLoggedInUserPrincipalId();
+            infoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
+                infoForm.setClassList(
+                        taConverter.classInfoToViewObject(
+                                classInfoService.getAllClassesFilterByUid(uId)
+                        )
+                );
 
-        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
-        infoForm.setClassList(
-                taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesFilterByUid(uId)
-                )
-        );
-        return this.getModelAndView(infoForm, "pageClassList");
+            return this.getModelAndView(infoForm, "pageClassList");
+        } catch (Exception e) {
+            BaseForm baseForm=(BaseForm)form;
+            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            //e.printStackTrace();
+        }
+
     }
 
     /**
@@ -115,10 +125,14 @@ public class ClassController extends BaseController {
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
 
-        boolean result = classInfoService.approveToNextStatus(
-                classConverter.extractIdsFromClassList(checkedList),
-                uid
-        );
+        boolean result = false;
+        for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
+            result = classInfoService.classStatusToCertainStatus(
+                    uid,
+                    classTeacherViewObject.getId(),
+                    infoForm.getApproveReasonOptionFinder()
+            );
+        }
 
         if(result)
             return this.getClassListPage(infoForm, request);
@@ -145,13 +159,15 @@ public class ClassController extends BaseController {
             if(per.isChecked())
                 checkedList.add(per);
         }
-
+        boolean result = false;
         String uid = GlobalVariables.getUserSession().getPrincipalId();
-
-        boolean result = classInfoService.rejectToPreviousStatus(
-                classConverter.extractIdsFromClassList(checkedList),
-                uid
-        );
+        for(ClassTeacherViewObject classTeacherViewObject:checkedList) {    //依次将选择列表中的班次调整到设置的状态
+             result = classInfoService.classStatusToCertainStatus(
+                     uid,
+                     classTeacherViewObject.getId(),
+                     infoForm.getReturnReasonOptionFinder()
+            );
+        }
 
         if(result)
             return this.getClassListPage(infoForm, request);
@@ -194,6 +210,8 @@ public class ClassController extends BaseController {
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
         } catch (Exception e) {
+            BaseForm baseForm=(BaseForm)form;
+            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
            //e.printStackTrace();
         }

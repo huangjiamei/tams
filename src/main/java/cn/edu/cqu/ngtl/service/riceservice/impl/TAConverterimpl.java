@@ -473,7 +473,7 @@ public class TAConverterimpl implements ITAConverter {
             }
 
             viewObject.setId(ta.getId());
-            viewObject.setStatus(ta.getStatus());
+            viewObject.setStatusId(ta.getOutStandingTaWorkflowStatusId());
             viewObject.setStatus(ta.getOutStandingTaWorkflowStatus() != null ? ta.getOutStandingTaWorkflowStatus().getWorkflowStatus() : "缺失");
 
             //暂时缺失的属性
@@ -1164,5 +1164,26 @@ public class TAConverterimpl implements ITAConverter {
         return myClassViewObjects;
     }
 
+    @Override
+    public String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding) {
+        Long totalSetted = 0l;
+        if(classFundings != null && !classFundings.isEmpty())
+            for(ClassFundingViewObject classFunding : classFundings) {
+                totalSetted += Long.parseLong(classFunding.getApplyFunding());
+            }
 
+        return totalSetted + "/" + totalPlanFunding;
+    }
+
+    @Override
+    public String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings) {
+        if(classFundings == null || classFundings.isEmpty())
+            return "0";
+        Long totalApproved = 0l;
+        for(ClassFundingViewObject classFunding : classFundings) {
+            totalApproved += Long.parseLong(classFunding.getAssignedFunding());
+        }
+
+        return totalApproved.toString();
+    }
 }

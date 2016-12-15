@@ -275,7 +275,7 @@
                                                                             <!--评优也要做一个optionfinder：6，待评选、7待学院评选、8待学校审核、9已评优-->
                                                                             <bean parent="Uif-DataField" p:label="评优"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.taName.equals('')?'':(#line.status.equals('已评优')?'bg-table-red tams-form-label':(#line.status.equals('待学校审核')?'bg-table-orange tams-form-label':'bg-table-grey tams-form-label'))}">
+                                                                                  p:additionalCssClasses="@{#line.taName.equals('')?'':(#line.status.equals('已评优')?'bg-table-red tams-form-label':(#line.status.equals('待学校审核')?'bg-table-blue tams-form-label':'bg-table-grey tams-form-label'))}">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -315,6 +315,16 @@
           p:headerText="撤销" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
+                <bean parent="Uif-InputField"  p:label="选择审批的状态"
+                      p:propertyName="revocationReasonOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.AppriseAllStatusOptionFinder"
+                              p:blankOption="true"/>
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
                 <bean parent="Uif-InputField" p:label="请填写撤销理由："
                       p:propertyName="revocationReason">
                     <property name="control">
@@ -337,6 +347,16 @@
           p:headerText="评优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
+                <bean parent="Uif-InputField"  p:label="选择评优的状态"
+                      p:propertyName="appraiseReasonOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.AppriseAllStatusOptionFinder"
+                              p:blankOption="true"/>
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
                 <bean parent="Uif-InputField" p:label="请填写批准为优秀的理由："
                       p:propertyName="appraiseReason">
                     <property name="control">

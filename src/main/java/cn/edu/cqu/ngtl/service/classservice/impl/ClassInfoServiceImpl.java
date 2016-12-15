@@ -408,7 +408,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         List<TAMSWorkflowStatus> availableStatus = this.classStatusAvailable(uid, classId);
         boolean flag = false;
         for(TAMSWorkflowStatus status : availableStatus) {
-            if(status.getWorkflowFunctionId().equals(workflowStatusId))
+            if(status.getId().equals(workflowStatusId))
                 flag = true;
         }
         if(!flag)  //此用户并不拥有改变为此状态的权力

@@ -218,8 +218,12 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-                                                                <bean parent="Uif-PrimaryActionButton" p:actionLabel="提交"
-                                                                      p:actionScript="alert('You clicked a button');" />
+
+                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="提交"
+                                                                      p:actionImagePlacement="LEFT"
+                                                                      p:actionScript="showDialog('confirmRevocationDialog');"
+                                                                      p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                             </list>
                                                         </property>
                                                     </bean>

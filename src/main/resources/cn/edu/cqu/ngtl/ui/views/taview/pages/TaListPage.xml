@@ -275,7 +275,7 @@
                                                                             <!--评优也要做一个optionfinder：6，待评选、7待学院评选、8待学校审核、9已评优-->
                                                                             <bean parent="Uif-DataField" p:label="评优"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.taName.equals('')?'':(#line.status.equals('已评优')?'bg-table-orange tams-form-label':(#line.status.equals('待学校审核')?'bg-table-blue tams-form-label':'bg-table-grey tams-form-label'))}">
+                                                                                  p:additionalCssClasses="@{#line.taName.equals('')?'':(#line.status.equals('已评优')?'bg-table-red tams-form-label':(#line.status.equals('待学校审核')?'bg-table-blue tams-form-label':'bg-table-grey tams-form-label'))}">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

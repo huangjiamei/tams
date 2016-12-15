@@ -24,6 +24,8 @@ public class ClassTeacherViewObject {
 
     private String status;
 
+    private String order;
+
     /**
      * 暂时缺失的参数
      */
@@ -264,5 +266,13 @@ public class ClassTeacherViewObject {
 
     public void setProgramName(String programName) {
         this.programName = programName;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 }

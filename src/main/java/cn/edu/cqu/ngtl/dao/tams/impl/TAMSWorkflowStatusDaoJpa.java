@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowFunctions;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import org.kuali.rice.core.api.criteria.OrderByField;
 import org.kuali.rice.core.api.criteria.OrderDirection;
@@ -14,9 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
@@ -36,6 +33,7 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
     public List<TAMSWorkflowStatus> selectAll() {
         //List<TAMSWorkflowStatus> result = KradDataServiceLocator.getDataObjectService().findAll(TAMSWorkflowStatus.class).getResults();
         //return result.size() !=0 ? result : null;
+        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         Query qr = em.createNativeQuery("SELECT * FROM TAMS_WORKFLOW_STATUS s WHERE s.WORKFLOW_FUNCTION_ID IN (SELECT UNIQUEID FROM TAMS_WORKFLOW_FUNCTIONS f WHERE f.NAME = '审核' )", TAMSWorkflowStatus.class);
         List<TAMSWorkflowStatus> list = qr.getResultList();
         return list.size()!=0 ? list: null;

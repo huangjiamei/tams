@@ -126,14 +126,15 @@ public class ClassController extends BaseController {
         String uid = GlobalVariables.getUserSession().getPrincipalId();
 
         boolean result = false;
+        String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
             result = classInfoService.classStatusToCertainStatus(
                     uid,
                     classTeacherViewObject.getId(),
                     infoForm.getApproveReasonOptionFinder()
             );
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason);
         }
-
         if(result)
             return this.getClassListPage(infoForm, request);
         else  //应当返回错误信息
@@ -160,6 +161,7 @@ public class ClassController extends BaseController {
                 checkedList.add(per);
         }
         boolean result = false;
+        String feedBackReason = infoForm.getReturnReason();
         String uid = GlobalVariables.getUserSession().getPrincipalId();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {    //依次将选择列表中的班次调整到设置的状态
              result = classInfoService.classStatusToCertainStatus(
@@ -167,6 +169,7 @@ public class ClassController extends BaseController {
                      classTeacherViewObject.getId(),
                      infoForm.getReturnReasonOptionFinder()
             );
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason);
         }
 
         if(result)

@@ -19,6 +19,7 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -74,6 +75,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private TAMSWorkflowFunctionsDao workflowFunctionsDao;
+
+    @Autowired
+    private TAMSClassApplyFeedbackDao tamsClassApplyFeedbackDao;
 
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
@@ -417,5 +421,16 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return false;
 
         return classApplyStatusDao.changeStatusToCertainStatus(classId, workflowStatusId);
+    }
+
+    @Override
+    public boolean insertFeedBack(String classId, String uId, String reasons){
+        DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
+        tamsClassApplyFeedback.setClassId(classId);
+        tamsClassApplyFeedback.setFeedbackUid(uId);
+        tamsClassApplyFeedback.setFeedback(reasons);
+        tamsClassApplyFeedback.setFeedbackTime(df1.format(new Date()));
+        return tamsClassApplyFeedbackDao.saveFbByEntity(tamsClassApplyFeedback);
     }
 }

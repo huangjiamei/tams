@@ -493,7 +493,7 @@
                 <bean parent="Uif-InputField"  p:label="选择驳回的状态"
                       p:propertyName="returnReasonOptionFinder" >
                     <property name="optionsFinder">
-                        <bean class="cn.edu.cqu.ngtl.optionfinder.ApproveStatusFinder"
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.ApproveAllStatusOptionFinder"
                               p:blankOption="true"/>
                     </property>
                     <property name="control">

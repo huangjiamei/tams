@@ -670,10 +670,10 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public String getSessionFundingStatistics() {
-        List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
+        List<TAMSDeptFunding> deptFunds = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         String totalPlan = "";
         Long setted = 0l;
-        for(TAMSDeptFunding deptFunding : deptFundings) {
+        for(TAMSDeptFunding deptFunding : deptFunds) {
             setted = setted + Integer.parseInt(deptFunding.getPlanFunding());
         }
         totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();

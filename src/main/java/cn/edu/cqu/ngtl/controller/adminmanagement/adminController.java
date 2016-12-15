@@ -940,7 +940,6 @@ public class adminController extends BaseController {
          /*
             课程经费的已批准经费
          */
-
         infoForm.setClassFundingTotalApproved(
                 taConverter.countClassFundingTotalApproved(
                         infoForm.getClassFundings()

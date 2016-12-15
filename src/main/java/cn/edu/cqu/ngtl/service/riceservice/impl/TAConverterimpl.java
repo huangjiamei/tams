@@ -150,6 +150,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setCourseName(information.getCourseName());
                 viewObject.setCourseCode(information.getCourseCode());
                 viewObject.setStatus(information.getStatusName());
+                viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName(instructorname);
                 viewObjects.add(viewObject);
             }

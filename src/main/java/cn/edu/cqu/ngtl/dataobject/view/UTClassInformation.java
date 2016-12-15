@@ -100,6 +100,10 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "WORKFLOW_STATUS")
     private String statusName;
 
+    @Column(name = "\"ORDER\"")
+    private String order;
+
+
     @Transient
     private String instructorName;
 
@@ -321,5 +325,13 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getOrder() {
+        return order;
+    }
+
+    public void setOrder(String order) {
+        this.order = order;
     }
 }

@@ -42,6 +42,7 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
     //根据workflowfunctionid查询
     @Override
     public List<TAMSWorkflowStatus> selectWorkFlowByCondition(String workflowfunction){
+        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         Query qr = em.createNativeQuery("SELECT * FROM TAMS_WORKFLOW_STATUS s WHERE s.WORKFLOW_FUNCTION_ID  = '"+workflowfunction+"' ", TAMSWorkflowStatus.class);
         List<TAMSWorkflowStatus> list = qr.getResultList();
         /*

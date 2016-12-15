@@ -902,8 +902,6 @@ public class adminController extends BaseController {
                 adminService.getSessionFundingStatistics()
         );
         infoForm.setSessionFundingTotalApproved(      //已批准经费
-
-        infoForm.setSessionFundingTotalApproved(
                 adminService.getSessionFundingTotalApprove()
         );
 

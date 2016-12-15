@@ -201,6 +201,13 @@
                                                                                   p:methodToCall="exportApplicantPhoto"
                                                                                   p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
 
+                                                                            <bean id="classRefreshReturnDialog" parent="Uif-PrimaryActionButton"
+                                                                                  p:style="display:none;"
+                                                                                  p:refreshId="returnDialog"/>
+                                                                            <bean id="classRefreshApproveDialog" parent="Uif-PrimaryActionButton"
+                                                                                  p:style="display:none;"
+                                                                                  p:refreshId="approveDialog"/>
+
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -311,7 +318,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="checked">
+                                                                                  p:propertyName="checked" p:onClickScript="jQuery('#classRefreshReturnDialog').click();jQuery('#classRefreshApproveDialog').click();">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
@@ -335,7 +342,7 @@
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.courseName.equals(' ')?' ':(#line.status.equals('工作')?'bg-table-success tams-form-label':(#line.status.equals('编辑')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
+                                                                                  p:additionalCssClasses="@{#line.courseName.equals(' ')?' ':(#line.status.equals('工作')?'bg-table-success tams-form-label':(#line.status.equals('未提交')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
 
                                                                         </list>
                                                                     </property>
@@ -445,7 +452,8 @@
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getClassInfoPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"
+                                                                                              p:style="padding:4px 4px 4px 5px;"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

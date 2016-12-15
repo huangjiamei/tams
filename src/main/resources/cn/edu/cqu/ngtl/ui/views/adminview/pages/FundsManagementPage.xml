@@ -400,13 +400,20 @@
                                                                                                           p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionLabel="保存"
-                                                                                                          p:actionImagePlacement="LEFT"
-                                                                                                          p:style="float:right!important;"
-                                                                                                          p:methodToCall="SaveSessionFunding"
-                                                                                                          p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:style="float: right!important;">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="保存"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="SaveSessionFunding"
+                                                                                                                      p:render="@{#form.academicAffairManager}"
+                                                                                                                      p:additionalCssClasses="icon-save bg-success box-btngroup"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -561,12 +568,6 @@
                                                                                                                                   p:style="margin:15px 5px;"
                                                                                                                                   p:refreshId="FundsManagementPage"
                                                                                                                             />
-                                                                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                  p:actionLabel="重置"
-                                                                                                                                  p:additionalCssClasses="icon-cancel-circle"
-                                                                                                                                  p:methodToCall="xxxx"
-                                                                                                                                  p:style="margin:15px 5px;"/>
-
                                                                                                                         </list>
                                                                                                                     </property>
                                                                                                                 </bean>
@@ -689,20 +690,26 @@
                                                                                                           p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionLabel="保存"
-                                                                                                          p:actionImagePlacement="LEFT"
-                                                                                                          p:style="float:right!important;"
-                                                                                                          p:methodToCall="SaveDeptFunding"
-                                                                                                          p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionLabel="发布学院经费"
-                                                                                                          p:actionImagePlacement="LEFT"
-                                                                                                          p:style="float:right!important;"
-                                                                                                          p:methodToCall="ReleaseDeptFunding"
-                                                                                                          p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:style="float: right!important;">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="保存"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="SaveDeptFunding"
+                                                                                                                      p:render="@{#form.academicAffairManager}"
+                                                                                                                      p:additionalCssClasses="icon-save bg-success box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="发布"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="ReleaseDeptFunding"
+                                                                                                                      p:render="@{#form.academicAffairManager}"
+                                                                                                                      p:additionalCssClasses="icon-share bg-teal box-btngroup"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>

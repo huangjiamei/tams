@@ -109,12 +109,12 @@
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加类别"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                                 <property name="confirmationDialog">
                                                                                     <ref bean="addWorkFlowCaDialog" />
                                                                                 </property>
@@ -145,7 +145,7 @@
                                                                       p:actionLabel="查询"
                                                                       p:actionImagePlacement="LEFT"
                                                                       p:methodToCall="searchWorkFlowCategory"
-                                                                      p:additionalCssClasses="icon-search bg-teal tamsbtn">
+                                                                      p:additionalCssClasses="icon-search bg-teal box-btngroup">
                                                                 </bean>
                                                             </list>
                                                         </property>
@@ -190,19 +190,15 @@
                                                                             <bean parent="Uif-HorizontalBoxSection"><!--两个action的methodToCall改动-->
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="modifyWorkFlowCategory">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-ActionImage">
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:methodToCall="modifyWorkFlowCategory"
+                                                                                              p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteWorkFlowCaDialog" />
-                                                                                            </property>
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                             </property>
                                                                                         </bean>
                                                                                     </list>

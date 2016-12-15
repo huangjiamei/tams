@@ -840,6 +840,8 @@ td.selected{
     border-radius: 5px;
     padding: 4px;
     margin-top:7px;
+    width: 25px;
+    height: 25px;
 }
 /* table内的按钮 */
 .tams-form-label{
@@ -849,6 +851,7 @@ td.selected{
     padding:2px;
     vertical-align: middle;
     width: 90px;
+    /*display: inline-block; */
 }
 /*header部分的按钮*/
 .box-btngroup{
@@ -882,13 +885,13 @@ td.selected{
     background-color:rgba(221, 57, 57, 0.85)!important;
 }
 .bg-table-success{
-    background-color: rgba(64, 144, 29, 0.66) !important;
+    background-color: #82AF6F!important;
 }
 .bg-table-grey{
     background-color: rgb(128, 128, 128)!important;
 }
 .bg-table-orange{
-    background-color: rgba(243, 156, 18, 0.88) !important;
+    background-color: #F89406!important;
 }
 .bg-table-blue{
     background-color: rgba(45, 104, 189, 0.82) !important;

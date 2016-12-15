@@ -109,13 +109,13 @@
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加时间类别"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:actionScript="showDialog('addTimeCategoryDialog');"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn"><!--methodToCall做了就删除actionScript-->
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup"><!--methodToCall做了就删除actionScript-->
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -159,19 +159,17 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="modifyTimeCategory"><!--后期做了methodToCall可以删除confirmationDialog-->
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-ActionImage">
+
+
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:methodToCall="modifyTimeCategory"
+                                                                                              p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteTimeCategoryDialog" />
-                                                                                            </property>
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                             </property>
                                                                                         </bean>
                                                                                     </list>

@@ -13,6 +13,17 @@ public class ClassFundingViewObject {
 
     String classNumber;
 
+    //converter中会用到
+    String classId;
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
+    }
+
     String instructorName;
 
     String planFunding;

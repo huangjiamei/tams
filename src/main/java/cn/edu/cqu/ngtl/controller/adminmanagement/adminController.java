@@ -902,6 +902,8 @@ public class adminController extends BaseController {
                 adminService.getSessionFundingStatistics()
         );
         infoForm.setSessionFundingTotalApproved(      //已批准经费
+
+        infoForm.setSessionFundingTotalApproved(
                 adminService.getSessionFundingTotalApprove()
         );
 
@@ -1052,7 +1054,14 @@ public class adminController extends BaseController {
 
         Map<String, String> conditions = new HashMap<>();
         //put conditions
-        conditions.put("Dept", infoForm.getDepartmentId());
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+        if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
+            conditions.put("Dept", infoForm.getDepartmentId());
+        }else if(userInfoService.isCollegeStaff(uId)){
+            conditions.put("Dept", user.getDepartmentId().toString());
+        }
+        //conditions.put("Dept", infoForm.getDepartmentId());
         conditions.put("PlanFunding", infoForm.getDepartmentPreFunds());
         conditions.put("ApplyFunding", infoForm.getDepartmentApplyFunds());
         conditions.put("ApprovalFunding", infoForm.getDepartmentApprovalFunds());
@@ -1078,7 +1087,16 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         //put conditions
         Map<String, String> conditions = new HashMap<>();
-        conditions.put("department", infoForm.getcDept());
+
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+        if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
+            conditions.put("dept", infoForm.getcDept());
+        }
+        else if(userInfoService.isCollegeStaff(uId)){
+            conditions.put("dept", user.getDepartmentId().toString());
+        }
+
         conditions.put("className", infoForm.getcName());
         conditions.put("classCode", infoForm.getcCode());
         conditions.put("classNbr", infoForm.getcNbr());
@@ -1105,9 +1123,34 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         //put conditions
         Map<String, String> conditions = new HashMap<>();
-        conditions.put("dept", infoForm.gettDept());
-        conditions.put("Number", infoForm.gettNumber());
-        conditions.put("Name", infoForm.gettName());
+
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+        if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
+            conditions.put("dept", infoForm.gettDept());
+            conditions.put("user", null);
+            conditions.put("Number", infoForm.gettNumber());
+            conditions.put("Name", infoForm.gettName());
+        }
+        else if(userInfoService.isCollegeStaff(uId)){
+            conditions.put("dept", user.getDepartmentId().toString());
+            conditions.put("user", null);
+            conditions.put("Name", infoForm.gettName());
+            conditions.put("Number", infoForm.gettNumber());
+        }
+        else if(userInfoService.isInstructor(uId)){
+            conditions.put("dept", null);
+            conditions.put("user", uId);
+            conditions.put("Name", infoForm.gettName());
+            conditions.put("Number", infoForm.gettNumber());
+        }
+        else{
+            conditions.put("dept",null);
+            conditions.put("user", null);
+            conditions.put("Name", infoForm.gettName());
+            conditions.put("Number", uId);
+        }
+
         conditions.put("Type", infoForm.gettType());
         conditions.put("CourseName", infoForm.gettCourseName());
         conditions.put("CourseCode", infoForm.gettCourseCode());
@@ -1115,7 +1158,11 @@ public class adminController extends BaseController {
         conditions.put("PhdFunding", infoForm.gettPhdFunds());
         conditions.put("TravelFunding", infoForm.gettTrafficFunds());
         conditions.put("Bonus", infoForm.gettBonus());
-        infoForm.setTaFunding(adminService.getTaFundByCondition(conditions));
+        infoForm.setTaFunding(
+                adminConverter.combineTaFunding(
+                        adminService.getTaFundByCondition(conditions)
+                )
+        );
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1191,7 +1238,10 @@ public class adminController extends BaseController {
         conditions.put("month11", infoForm.getMonth11());
         conditions.put("month12", infoForm.getMonth12());
 
-        infoForm.setDetailFunding(adminService.getDetailFundByCondition(conditions));
+        infoForm.setDetailFunding(
+                adminConverter.combineDetailFunding(
+                        adminService.getDetailFundByCondition(conditions))
+                );
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1850,14 +1900,22 @@ public class adminController extends BaseController {
                                                         HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-
+/*
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
+        String uId = userSession.getLoggedInUserPrincipalId();*/
         Map<String, String> conditions = new HashMap<>();
 
         //put conditions
+
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+        if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)){
+            conditions.put("deptId", infoForm.getDeptId());  //选择学院
+        }
+        else if(userInfoService.isAcademicAffairsStaff(uId)) {
+            conditions.put("deptId", user.getDepartmentId().toString());
+        }
         conditions.put("dTimes", infoForm.getdTimes());  //选择批次
-        conditions.put("deptId", infoForm.getDeptId());  //选择学院
         //文字搜索
         conditions.put("dPreFunds", infoForm.getdPreFunds());
         conditions.put("dApplyFunds", infoForm.getdApplyFunds());
@@ -1869,7 +1927,7 @@ public class adminController extends BaseController {
 
         infoForm.setDepartmentPreFundings(
                 taConverter.departmentFundingToViewObject(
-                        adminService.getDepartmentPreFundingByCondition(uId, conditions)
+                        adminService.getDepartmentPreFundingByCondition(conditions)
                 )
         );
 

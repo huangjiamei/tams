@@ -15,6 +15,9 @@ public class TaFundingViewObject {
 
     private String taType;
 
+    private String classNbr; //converter中会用到
+    private String instrucotrName;
+
     private String courseName;
 
     private String courseCode;
@@ -29,6 +32,21 @@ public class TaFundingViewObject {
 
     private String total;
 
+    public String getClassNbr() {
+        return classNbr;
+    }
+
+    public void setClassNbr(String classNbr) {
+        this.classNbr = classNbr;
+    }
+
+    public String getInstrucotrName() {
+        return instrucotrName;
+    }
+
+    public void setInstrucotrName(String instrucotrName) {
+        this.instrucotrName = instrucotrName;
+    }
 
     public String getSessionName() {
         return sessionName;

@@ -97,7 +97,6 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     //历史批次经费过滤
-
     @Override
     public List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions){
         List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectUniFundPreByCondition(conditions);
@@ -107,13 +106,22 @@ public class AdminServiceImpl implements IAdminService{
     //课程经费过滤
     @Override
     public List<ClassFundingViewObject> getClassFundByCondition(Map<String, String> conditions) {
-        List<ClassFundingViewObject> classFundingViewObjects = tamsClassFundingDao.selectClassFundByCondition(conditions);
-        return classFundingViewObjects;
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
+         */
+        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
+            return tamsClassFundingDraftDao.selectClassFundDraftByCondition(conditions);
+        }
+        else {
+            return tamsClassFundingDao.selectClassFundByCondition(conditions);
+        }
+
     }
 
     @Autowired
     private TAMSTaDao tamsTaDao;
     //助教经费过滤
+
     @Override
     public List<TaFundingViewObject> getTaFundByCondition(Map<String, String> conditions) {
         List<TaFundingViewObject> taFundingViewObjects = tamsTaDao.selectTaFundByCondition(conditions);
@@ -415,7 +423,8 @@ public class AdminServiceImpl implements IAdminService{
         if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
             return tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         }
-        return deptFundingDao.selectDepartmentCurrBySession();
+        else
+            return deptFundingDao.selectDepartmentCurrBySession();
     }
 
     //学院当前经费过滤
@@ -436,17 +445,19 @@ public class AdminServiceImpl implements IAdminService{
     //获取学院历史经费
     @Override
     public List<TAMSDeptFunding> getDepartmentPreFundingBySession(){
-
         return deptFundingDao.selectDepartmentPreBySession();
     }
 
     @Override
-    public List<TAMSDeptFunding> getDepartmentPreFundingByCondition(String uId, Map<String, String> conditions){
+    public List<TAMSDeptFunding> getDepartmentPreFundingByCondition(Map<String, String> conditions){
+        /*
         if (!userInfoService.isSysAdmin(uId)){
             List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDeptFundPreByCondition(conditions);
             return deptFundings;
         }
         return null;
+        */
+        return deptFundingDao.selectDeptFundPreByCondition(conditions);
     }
 
     @Override
@@ -520,7 +531,9 @@ public class AdminServiceImpl implements IAdminService{
         if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
             return tamsClassFundingDraftDao.selectAll();
         }
+        else {
             return tamsClassFundingDao.selectAll(user);
+        }
     }
 
     @Override

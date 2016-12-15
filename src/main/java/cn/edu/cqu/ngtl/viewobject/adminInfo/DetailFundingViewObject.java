@@ -17,6 +17,9 @@ public class DetailFundingViewObject implements Serializable {
 
     private String identity;
 
+    private String classNbr; //converter中会用到
+    private String instructorName;
+
     private String courseName;
 
     private String courseCode;
@@ -48,6 +51,21 @@ public class DetailFundingViewObject implements Serializable {
 
     private String total;
 
+    public String getClassNbr() {
+        return classNbr;
+    }
+
+    public void setClassNbr(String classNbr) {
+        this.classNbr = classNbr;
+    }
+
+    public String getInstructorName() {
+        return instructorName;
+    }
+
+    public void setInstructorName(String instructorName) {
+        this.instructorName = instructorName;
+    }
 
     public String getTaName() {
         return taName;

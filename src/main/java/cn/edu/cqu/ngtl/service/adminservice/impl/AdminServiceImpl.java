@@ -647,7 +647,7 @@ public class AdminServiceImpl implements IAdminService{
         UTSession curSession = sessionDao.getCurrentSession();
         for(SessionFundingViewObject per:sessionFundingViewObjects){
             TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
-            existFunding.setActualFunding(per.getActualFunding());
+            existFunding.setPlanFunding(per.getPlanFunding());
             tamsUniversityFundingDao.insertOneByEntity(existFunding);
         }
     }
@@ -670,7 +670,7 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public String getSessionFundingStatistics() {
-        List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDepartmentCurrBySession();
+        List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         String totalPlan = "";
         Long setted = 0l;
         for(TAMSDeptFunding deptFunding : deptFundings) {
@@ -681,15 +681,35 @@ public class AdminServiceImpl implements IAdminService{
         return setted + "/" + totalPlan;
     }
 
+
+    @Override
+    public String getSessionFundingStatistics(String totalPlan) {
+        List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
+        Long setted = 0l;
+        for(TAMSDeptFunding deptFunding : deptFundings) {
+            setted = setted + Integer.parseInt(deptFunding.getPlanFunding());
+        };
+
+        return setted + "/" + totalPlan;
+    }
+
     @Override
     public String getSessionFundingTotalApprove() {
-        List<TAMSDeptFunding> deptFundings = deptFundingDao.selectDepartmentCurrBySession();
+        List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         Long setted = 0l;
         for(TAMSDeptFunding deptFunding : deptFundings) {
             setted = setted + Integer.parseInt(deptFunding.getActualFunding());
         }
-
         return setted.toString();
+    }
+
+    @Override
+    public String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects){
+        Long totalApproved = 0l;
+        for(DepartmentFundingViewObject departmentFundingViewObject:departmentFundingViewObjects){
+            totalApproved+=Long.valueOf(departmentFundingViewObject.getActualFunding());
+        }
+        return totalApproved.toString();
     }
 
     @Override

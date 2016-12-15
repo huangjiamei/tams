@@ -681,7 +681,7 @@
                                                                                                           p:messageText="已设置/总预算经费："
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="1000000/2500000"
+                                                                                                          p:messageText="@{sessionFundingStatistics}"
                                                                                                           p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
@@ -689,7 +689,7 @@
                                                                                                           p:messageText="批准经费："
                                                                                                           p:style="margin-left:20px;font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="3000000"
+                                                                                                          p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"

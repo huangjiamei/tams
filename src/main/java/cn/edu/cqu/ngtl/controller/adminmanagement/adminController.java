@@ -898,10 +898,10 @@ public class adminController extends BaseController {
                 )
         );
 
-        infoForm.setSessionFundingStatistics(
+        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
                 adminService.getSessionFundingStatistics()
         );
-        infoForm.setSessionFundingTotalApproved(
+        infoForm.setSessionFundingTotalApproved(      //已批准经费
                 adminService.getSessionFundingTotalApprove()
         );
 
@@ -927,12 +927,20 @@ public class adminController extends BaseController {
                         adminService.getFundingByClass()
                 )
         );
+
+        /*
+            课程经费的已设置/总经费
+         */
         infoForm.setClassFundingStatistics(
                 taConverter.countClassFunding(
                         infoForm.getClassFundings(),
                         adminService.getClassTotalPlanFunding()
                 )
         );
+         /*
+            课程经费的已批准经费
+         */
+
         infoForm.setClassFundingTotalApproved(
                 taConverter.countClassFundingTotalApproved(
                         infoForm.getClassFundings()
@@ -965,27 +973,48 @@ public class adminController extends BaseController {
         List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
         adminService.releaseDeptFunding(draftDepartmentFunding);
 
+        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                adminService.getSessionFundingStatistics()
+        );
+        infoForm.setSessionFundingTotalApproved(      //已批准经费
+                adminService.getSessionFundingTotalApprove()
+        );
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
 
     @RequestMapping(params = "methodToCall=SaveDeptFunding")
-    public ModelAndView SaveDeptFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+    public ModelAndView SaveDeptFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
         adminService.saveDeptFunding(draftDepartmentFunding);
 
+        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                adminService.getSessionFundingStatistics()
+        );
+
+        infoForm.setSessionFundingTotalApproved(      //已批准经费
+                adminService.getSessionFundingTotalApprove(draftDepartmentFunding)
+        );
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
     @RequestMapping(params = "methodToCall=SaveSessionFunding")
-    public ModelAndView SaveSessionFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+    public ModelAndView SaveSessionFunding(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         List<SessionFundingViewObject> sessionFundingViewObjects = infoForm.getSessionFundings();
         adminService.saveSessionFunding(sessionFundingViewObjects);
+        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                adminService.getSessionFundingStatistics(sessionFundingViewObjects.get(0).getPlanFunding())
+        );
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
+
+
     }
 
     /**

@@ -673,8 +673,8 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
         Set<TAMSWorkflowStatus> availableStatus = new HashSet<>();
         for(String roleId : roleIds) {
-            String RFId = workflowRoleFunctionDao.selectIdByRoleIdAndFunctionId(roleId, functionId);
-            List<TAMSWorkflowStatusR> statusRs = workflowStatusRDao.selectByRFIdAndStatus1(RFId, current.getOutStandingTaWorkflowStatusId());
+            String RFId = new TAMSWorkflowRoleFunctionDaoJpa().selectIdByRoleIdAndFunctionId(roleId, functionId);
+            List<TAMSWorkflowStatusR> statusRs = new TAMSWorkflowStatusRDaoJpa().selectByRFIdAndStatus1(RFId, current.getOutStandingTaWorkflowStatusId());
             if(statusRs != null)
                 for(TAMSWorkflowStatusR statusR : statusRs) {
                     availableStatus.add(statusR.getStatus2());

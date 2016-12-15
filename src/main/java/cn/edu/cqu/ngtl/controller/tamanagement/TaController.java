@@ -66,6 +66,7 @@ public class TaController extends BaseController {
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
+        taInfoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
         taInfoForm.setAllTaInfo(taConverter.taCombineDetailInfo(
                 taService.getAllTaFilteredByUid(uId)
         ));

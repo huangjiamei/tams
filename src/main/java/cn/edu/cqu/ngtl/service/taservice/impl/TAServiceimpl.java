@@ -4,6 +4,8 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
@@ -388,12 +390,12 @@ public class TAServiceimpl implements ITAService {
             for (int i = 0; i < roleIds.length; i++) {
                 roleIds[i] = roles.get(i).getRoleId();
             }
-            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
+            TAMSWorkflowFunctions function = new TAMSWorkflowFunctionsDaoJpa().selectOneByName("评优");
             if (function == null) {
                 logger.error("未能找到'评优'的Function");
                 return null;
             }
-            List<TAMSWorkflowStatus> result = tamstadao.getAvailableStatus(roleIds, function.getId(), taId);
+            List<TAMSWorkflowStatus> result = new TAMSTaDaoJpa().getAvailableStatus(roleIds, function.getId(), taId);
             Collections.sort(result);
             return result;
         }

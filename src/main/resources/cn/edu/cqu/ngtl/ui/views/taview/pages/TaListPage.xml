@@ -315,10 +315,10 @@
           p:headerText="撤销" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-InputField"  p:label="选择啥啥啥"
+                <bean parent="Uif-InputField"  p:label="选择审批的状态"
                       p:propertyName="revocationReasonOptionFinder" >
                     <property name="optionsFinder">
-                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.AppriseOptionFinder"
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.AppriseAllStatusOptionFinder"
                               p:blankOption="true"/>
                     </property>
                     <property name="control">
@@ -347,10 +347,10 @@
           p:headerText="评优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-InputField"  p:label="选择啥啥啥"
+                <bean parent="Uif-InputField"  p:label="选择评优的状态"
                       p:propertyName="appraiseReasonOptionFinder" >
                     <property name="optionsFinder">
-                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.AppriseOptionFinder"
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.AppriseAllStatusOptionFinder"
                               p:blankOption="true"/>
                     </property>
                     <property name="control">

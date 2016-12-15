@@ -84,8 +84,9 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         try {
-        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
+            final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+            String uId = userSession.getLoggedInUserPrincipalId();
+            infoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
                 infoForm.setClassList(
                         taConverter.classInfoToViewObject(
                                 classInfoService.getAllClassesFilterByUid(uId)

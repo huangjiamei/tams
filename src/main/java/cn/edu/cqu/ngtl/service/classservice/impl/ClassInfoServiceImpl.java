@@ -3,6 +3,8 @@ package cn.edu.cqu.ngtl.service.classservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSClassApplyStatusDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
@@ -386,12 +388,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             for (int i = 0; i < roleIds.length; i++) {
                 roleIds[i] = roles.get(i).getRoleId();
             }
-            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("审核");
+            TAMSWorkflowFunctions function = new TAMSWorkflowFunctionsDaoJpa().selectOneByName("审核");
             if (function == null) {
                 logger.error("未能找到'审核'的Function");
                 return null;
             }
-            List<TAMSWorkflowStatus> result = classApplyStatusDao.getAvailableStatus(roleIds, function.getId(), classId);
+            List<TAMSWorkflowStatus> result = new TAMSClassApplyStatusDaoJpa().getAvailableStatus(roleIds, function.getId(), classId);
             Collections.sort(result);
             return result;
         }

@@ -1209,6 +1209,8 @@ public class TAConverterimpl implements ITAConverter {
         List<ClassApplyFeedBackViewObject> classApplyFeedBackViewObjects = new ArrayList<>();
         for(TAMSClassApplyFeedback tamsClassApplyFeedback:tamsClassApplyFeedbacks){
             ClassApplyFeedBackViewObject classApplyFeedBackViewObject = new ClassApplyFeedBackViewObject();
+            classApplyFeedBackViewObject.setNewStatus(tamsClassApplyFeedback.getNewStatus());
+            classApplyFeedBackViewObject.setOldStatue(tamsClassApplyFeedback.getOldStatus());
             classApplyFeedBackViewObject.setFeedBacks(tamsClassApplyFeedback.getFeedback()==null?"无":tamsClassApplyFeedback.getFeedback());
             classApplyFeedBackViewObject.setFeedBackTime(tamsClassApplyFeedback.getFeedbackTime());
             List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(tamsClassApplyFeedback.getFeedbackUid());

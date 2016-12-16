@@ -13,6 +13,10 @@ public class ClassApplyFeedBackViewObject {
 
     private String note;
 
+    private String oldStatue;
+
+    private String newStatus;
+
     public String getFeedBacks() {
         return feedBacks;
     }
@@ -43,5 +47,21 @@ public class ClassApplyFeedBackViewObject {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getOldStatue() {
+        return oldStatue;
+    }
+
+    public void setOldStatue(String oldStatue) {
+        this.oldStatue = oldStatue;
+    }
+
+    public String getNewStatus() {
+        return newStatus;
+    }
+
+    public void setNewStatus(String newStatus) {
+        this.newStatus = newStatus;
     }
 }

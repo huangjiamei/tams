@@ -49,7 +49,7 @@ public interface IClassInfoService {
 
     boolean classStatusToCertainStatus(String uid, String classId, String workflowStatusId);
 
-    boolean insertFeedBack(String classId,String uId,String reasons);
+    boolean insertFeedBack(String classId,String uId,String reasons,String oldStatus,String newStatus);
 
     List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId);
 }

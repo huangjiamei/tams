@@ -432,12 +432,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public boolean insertFeedBack(String classId, String uId, String reasons){
+    public boolean insertFeedBack(String classId, String uId, String reasons,String oldStatus,String newStatus){
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
         tamsClassApplyFeedback.setClassId(classId);
         tamsClassApplyFeedback.setFeedbackUid(uId);
         tamsClassApplyFeedback.setFeedback(reasons);
+        tamsClassApplyFeedback.setNewStatus(newStatus);
+        tamsClassApplyFeedback.setOldStatus(oldStatus);
         tamsClassApplyFeedback.setFeedbackTime(df1.format(new Date()));
         return tamsClassApplyFeedbackDao.saveFbByEntity(tamsClassApplyFeedback);
     }

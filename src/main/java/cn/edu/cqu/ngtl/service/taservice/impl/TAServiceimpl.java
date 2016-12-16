@@ -114,7 +114,9 @@ public class TAServiceimpl implements ITAService {
     //添加申请人
     @Override
     public boolean submitApplicationAssistant(TAMSTaApplication application) {
-
+        if(tamsTaApplicationDao.selectByStuIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null){
+            return false;
+        }
         if (tamsTaApplicationDao.insertOne(application))
             return true;
         else

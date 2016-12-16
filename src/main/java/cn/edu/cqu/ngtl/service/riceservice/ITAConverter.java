@@ -82,6 +82,7 @@ public interface ITAConverter {
     List<AppraisalDetailViewObject> teachCalendarToAppraisalViewObject(List<TAMSTeachCalendar> teachCalendars);
 
     List<FileViewObject> attachmentsToFileViewObject(List<TAMSAttachments> attachments);
+
     List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
@@ -93,4 +94,6 @@ public interface ITAConverter {
     String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding);
 
     String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings);
+
+    List<ClassApplyFeedBackViewObject> feedBackToViewObject(List<TAMSClassApplyFeedback> tamsClassApplyFeedbacks);
 }

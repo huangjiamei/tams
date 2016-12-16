@@ -125,4 +125,11 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
         else
             return false;
     }
+
+    @Override
+    public TAMSWorkflowStatus getOneById(String id){
+        return KradDataServiceLocator.getDataObjectService().find(TAMSWorkflowStatus.class, id);
+
+    }
+
 }

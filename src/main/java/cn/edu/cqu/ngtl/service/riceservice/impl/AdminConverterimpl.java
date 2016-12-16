@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTCourseDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
@@ -150,19 +149,19 @@ public class AdminConverterimpl implements IAdminConverter {
 
 
             if(curSession.getTerm().equals("春")) {
-                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary3()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary4()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary5()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary6()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary7()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary8()));
+                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary3()==null?"0":detailFundingViewObject.getMonthlySalary3()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary4()==null?"0":detailFundingViewObject.getMonthlySalary4()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary5()==null?"0":detailFundingViewObject.getMonthlySalary5()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary6()==null?"0":detailFundingViewObject.getMonthlySalary6()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary7()==null?"0":detailFundingViewObject.getMonthlySalary7()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary8()==null?"0":detailFundingViewObject.getMonthlySalary8()));
             }else if(curSession.getTerm().equals("秋")){
-                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary2()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary9()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary10()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary11()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary12()));
+                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1()==null?"0":detailFundingViewObject.getMonthlySalary1()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary2()==null?"0":detailFundingViewObject.getMonthlySalary2()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary9()==null?"0":detailFundingViewObject.getMonthlySalary9()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary10()==null?"0":detailFundingViewObject.getMonthlySalary10()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary11()==null?"0":detailFundingViewObject.getMonthlySalary11()) +
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary12()==null?"0":detailFundingViewObject.getMonthlySalary12()));
             }
             detailFundingViewObject.setTotal(total.toString());
             detailFundingViewObjects.add(detailFundingViewObject);

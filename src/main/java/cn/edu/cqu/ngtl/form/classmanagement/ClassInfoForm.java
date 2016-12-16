@@ -28,7 +28,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /**
      * 教学日历相关
      */
-    private List<TeachCalendarViewObject> allCalendar;
 
     private String totalElapsedTime;
 
@@ -39,6 +38,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TeachCalendarViewObject currentCalendarInfo;
 
     private List<FileViewObject> calendarFiles;
+
+   /*
+    助教申报页面
+    */
+    private List<TeachCalendarViewObject> allCalendar;
+
+    private List<ClassApplyFeedBackViewObject> feedbacks;
 
 
     /**
@@ -73,6 +79,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String approveReasonOptionFinder;//审批optionfinder
 
     private List<ClassTeacherViewObject> classList;
+
+    Boolean checkedClassListAll;
 
     private ClassDetailInfoViewObject detailInfoViewObject;
 
@@ -422,5 +430,20 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setApproveReasonOptionFinder(String approveReasonOptionFinder) {
         this.approveReasonOptionFinder = approveReasonOptionFinder;
+    }
+
+    public List<ClassApplyFeedBackViewObject> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<ClassApplyFeedBackViewObject> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
+    public Boolean getCheckedClassListAll() {
+        return checkedClassListAll;
+    }
+
+    public void setCheckedClassListAll(Boolean checkedClassListAll) {
+        this.checkedClassListAll = checkedClassListAll;
     }
 }

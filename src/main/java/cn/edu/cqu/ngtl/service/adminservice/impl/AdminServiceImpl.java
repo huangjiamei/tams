@@ -689,7 +689,10 @@ public class AdminServiceImpl implements IAdminService{
         for(TAMSDeptFunding deptFunding : deptFunds) {
             setted = setted + Integer.parseInt(deptFunding.getPlanFunding());
         }
-        totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();
+        if(tamsUniversityFundingDao.selectCurrBySession() == null || tamsUniversityFundingDao.selectCurrBySession().size() == 0)
+            totalPlan = "0";
+        else
+            totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();
 
         return setted + "/" + totalPlan;
     }

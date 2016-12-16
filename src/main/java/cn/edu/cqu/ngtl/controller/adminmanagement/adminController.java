@@ -1137,14 +1137,14 @@ public class adminController extends BaseController {
             conditions.put("Number", infoForm.gettNumber());
         }
         else if(userInfoService.isInstructor(uId)){
-            conditions.put("dept", null);
+            conditions.put("dept", infoForm.gettDept());
             conditions.put("user", uId);
             conditions.put("Name", infoForm.gettName());
             conditions.put("Number", infoForm.gettNumber());
         }
         else{
-            conditions.put("dept",null);
-            conditions.put("user", null);
+            conditions.put("dept", user.getDepartmentId().toString());
+            conditions.put("user", uId);
             conditions.put("Name", infoForm.gettName());
             conditions.put("Number", uId);
         }
@@ -1910,7 +1910,7 @@ public class adminController extends BaseController {
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)){
             conditions.put("deptId", infoForm.getDeptId());  //选择学院
         }
-        else if(userInfoService.isAcademicAffairsStaff(uId)) {
+        else if(userInfoService.isCollegeStaff(uId)) {
             conditions.put("deptId", user.getDepartmentId().toString());
         }
         conditions.put("dTimes", infoForm.getdTimes());  //选择批次

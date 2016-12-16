@@ -999,7 +999,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
-        return this.getModelAndView(infoForm, infoForm.getPageId());
+        return this.getClassListPage(form,request);
     }
 
 }

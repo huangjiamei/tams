@@ -662,7 +662,7 @@ public class TaController extends BaseController {
         super.baseStart(taInfoForm);
         utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(taInfoForm.getSessionTermFinder())));
         request.getParameterMap().get("pageId");
-        return this.getModelAndView(taInfoForm, taInfoForm.getPageId());
+        return this.getTaListPage(form,request);
     }
 
     @RequestMapping(params =  {"methodToCall=showRevocationDialog"})

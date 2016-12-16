@@ -609,7 +609,7 @@ public class ClassController extends BaseController {
                 taConverter.TeachCalendarToViewObject(
                         classInfoService.getAllTaTeachCalendarFilterByUidAndClassId(
                                 uId,
-                                classId.toString()),
+                                classId),
                         true
                 )
         );
@@ -623,6 +623,9 @@ public class ClassController extends BaseController {
                         infoForm.getAllCalendar()
                 )
         );
+
+        infoForm.setFeedbacks(taConverter.feedBackToViewObject(classInfoService.getFeedBackByClassId(classId)));
+
         infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
 
         return this.getModelAndView(infoForm, "pageRequestTa");

@@ -50,4 +50,6 @@ public interface IClassInfoService {
     boolean classStatusToCertainStatus(String uid, String classId, String workflowStatusId);
 
     boolean insertFeedBack(String classId,String uId,String reasons);
+
+    List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId);
 }

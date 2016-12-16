@@ -441,4 +441,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         tamsClassApplyFeedback.setFeedbackTime(df1.format(new Date()));
         return tamsClassApplyFeedbackDao.saveFbByEntity(tamsClassApplyFeedback);
     }
+
+    @Override
+    public List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId){
+            return tamsClassApplyFeedbackDao.getFbByClassId(classId);
+    }
 }

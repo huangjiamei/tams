@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.service.riceservice.impl;
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
@@ -14,6 +15,7 @@ import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTStudentDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -1200,5 +1202,26 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         return totalApproved.toString();
+    }
+
+    @Override
+    public List<ClassApplyFeedBackViewObject> feedBackToViewObject(List<TAMSClassApplyFeedback> tamsClassApplyFeedbacks){
+        List<ClassApplyFeedBackViewObject> classApplyFeedBackViewObjects = new ArrayList<>();
+        for(TAMSClassApplyFeedback tamsClassApplyFeedback:tamsClassApplyFeedbacks){
+            ClassApplyFeedBackViewObject classApplyFeedBackViewObject = new ClassApplyFeedBackViewObject();
+            classApplyFeedBackViewObject.setFeedBacks(tamsClassApplyFeedback.getFeedback()==null?"无":tamsClassApplyFeedback.getFeedback());
+            classApplyFeedBackViewObject.setFeedBackTime(tamsClassApplyFeedback.getFeedbackTime());
+            List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(tamsClassApplyFeedback.getFeedbackUid());
+            if(roles.size()>1) {
+                for (KRIM_ROLE_MBR_T krim_role_mbr_t : roles) {
+                    if (krim_role_mbr_t.getKrimRoleT().getName().contains("管理员"))
+                        classApplyFeedBackViewObject.setFeedBackRole(krim_role_mbr_t.getKrimRoleT().getName());
+                }
+            }else{
+                classApplyFeedBackViewObject.setFeedBackRole(roles.get(0).getKrimRoleT().getName());
+            }
+            classApplyFeedBackViewObjects.add(classApplyFeedBackViewObject);
+        }
+        return  classApplyFeedBackViewObjects;
     }
 }

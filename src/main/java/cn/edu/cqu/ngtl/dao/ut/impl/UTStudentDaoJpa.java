@@ -43,8 +43,8 @@ public class UTStudentDaoJpa implements UTStudentDao {
 				conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
 		}
 		if(countNull != 2) {
-			Query qr = em.createNativeQuery("SELECT * FROM UNITIME_STUDENT WHERE NAME LIKE '"+conditions.get("StudentName")+"' AND UNIQUEID LIKE '"+conditions.get("StudentId")+"'", UTStudent.class);
-			return qr.getResultList();
+			Query qr = em.createNativeQuery("SELECT * FROM UNITIME_STUDENT s WHERE s.NAME LIKE '"+conditions.get("StudentName")+"' AND s.UNIQUEID LIKE '"+conditions.get("StudentId")+"' AND s.UNIQUEID NOT IN (SELECT TA_ID FROM TAMS_TA) AND s.UNIQUEID NOT IN (SELECT APPLICANT_ID FROM TAMS_TA_APPLICATION) ", UTStudent.class);
+			return qr.getResultList().size() !=0 ? qr.getResultList() : null;
 		}
 		//若输入为空，返回。。。。
 		else{

@@ -218,6 +218,10 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
+                                                                <bean id="checkedAllButton" parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="全选"
+                                                                      p:onClickScript="deleteCookie();"
+                                                                      p:methodToCall="checkClassListAllButton" p:style="display:none;"/>
 
                                                                 <bean id="searchClassFields"
                                                                       parent="Uif-HorizontalBoxSection"
@@ -228,10 +232,13 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
                                                                                   p:messageText="占位"/>
-                                                                            <!--占位-->
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位"/>
+
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="checkedClassListAll" p:onClickScript="checkedAll('checkedAllButton');">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-CheckboxControl"/>
+                                                                                </property>
+                                                                            </bean>
 
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
@@ -451,8 +458,7 @@
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getClassInfoPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"
-                                                                                              p:style="padding:4px 4px 4px 5px;"/>
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

@@ -75,6 +75,21 @@ public class TaController extends BaseController {
     }
 
     /**
+     * 助教页面checkbox全选
+     */
+    @RequestMapping(params = "methodToCall=checkTaListAllButton")
+    public ModelAndView checkTaListAllButton(@ModelAttribute("KualiForm") UifFormBase form,
+                                             HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+
+        for(TaInfoViewObject taInfoViewObject:taInfoForm.getAllTaInfo()){
+            taInfoViewObject.setCheckBox(taInfoForm.getCheckedTaListAll());
+        }
+        return this.getModelAndView(taInfoForm, "pageTaList");
+    }
+
+    /**
      * 助教列表过滤器
      * @param form
      * @return

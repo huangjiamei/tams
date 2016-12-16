@@ -130,21 +130,27 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-
+                                                                <bean id="checkedTaAllButton" parent="Uif-PrimaryActionButton"
+                                                                      p:actionLabel="全选"
+                                                                      p:onClickScript="deleteCookie();"
+                                                                      p:methodToCall="checkTaListAllButton" p:style="display:none;"/>
                                                                 <!--搜索框-->
                                                                 <bean id="searchTaListTable" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--占位-->
-                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位" />
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="checkedTaListAll" p:onClickScript="checkedAll('checkedTaAllButton');">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-CheckboxControl"/>
+                                                                                </property>
+                                                                            </bean>
 
                                                                             <!--姓名-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taAssitantName" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--学号-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantIDNumber"/>
+                                                                                  p:propertyName="taAssitantIDNumber" p:additionalCssClasses="searchBoxWidth"/>
 
                                                                             <!--学历-->
                                                                             <bean parent="Uif-InputField"

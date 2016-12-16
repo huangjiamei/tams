@@ -103,6 +103,19 @@ public class ClassController extends BaseController {
 //        }
 
     }
+    /**
+      * 课程页面checkbox全选
+    */
+    @RequestMapping(params = "methodToCall=checkClassListAllButton")
+    public ModelAndView checkClassListAllButton(@ModelAttribute("KualiForm") UifFormBase form,
+                                         HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        for(ClassTeacherViewObject classTeacherViewObject:infoForm.getClassList()){
+            classTeacherViewObject.setChecked(infoForm.getCheckedClassListAll());
+        }
+        return this.getModelAndView(infoForm, "pageClassList");
+    }
 
     @RequestMapping(params = "methodToCall=showApproveDialog")
     public ModelAndView showApproveDialog(@ModelAttribute("KualiForm") UifFormBase form,
@@ -808,6 +821,8 @@ public class ClassController extends BaseController {
         );
         for(MyTaViewObject needToAdd : checkedList){
             needToAdd.setCheckBox(false);
+            needToAdd.setPayDay("暂未设置");
+            needToAdd.setStatus("1");
             infoForm.getAllMyTa().add(needToAdd);
             infoForm.getAllApplication().remove(needToAdd);
         }

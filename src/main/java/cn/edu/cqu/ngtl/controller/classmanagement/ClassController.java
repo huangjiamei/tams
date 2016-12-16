@@ -273,7 +273,7 @@ public class ClassController extends BaseController {
 
         taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
 
-        return null;
+        return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 
 

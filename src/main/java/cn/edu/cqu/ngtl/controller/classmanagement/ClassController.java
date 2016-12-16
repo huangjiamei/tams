@@ -994,4 +994,12 @@ public class ClassController extends BaseController {
             return this.getModelAndView(infoForm, "pageTaManagement");
     }
 
+    @RequestMapping(params =  {"methodToCall=selectCurSession"})
+    public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
+        return this.getModelAndView(infoForm, infoForm.getPageId());
+    }
+
 }

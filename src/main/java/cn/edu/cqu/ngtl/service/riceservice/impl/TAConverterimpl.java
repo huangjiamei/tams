@@ -124,6 +124,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setCourseName(information.getCourseName());
                 viewObject.setCourseCode(information.getCourseCode());
                 viewObject.setStatus(information.getStatusName());
+                viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName((String) classInstructorMap.get(information.getId()));
                 viewObjects.add(viewObject);
             }

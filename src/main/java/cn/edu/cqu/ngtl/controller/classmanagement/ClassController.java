@@ -104,6 +104,14 @@ public class ClassController extends BaseController {
 
     }
 
+    @RequestMapping(params = "methodToCall=showApproveDialog")
+    public ModelAndView showApproveDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        return this.showDialog("approveDialog",true,infoForm);
+    }
+
     /**
      * 审批的方法
      * @param form

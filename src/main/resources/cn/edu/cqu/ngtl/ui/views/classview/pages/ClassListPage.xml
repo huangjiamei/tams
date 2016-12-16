@@ -188,8 +188,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审批"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="showDialog('approveDialog');"
-                                                                                  p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
+                                                                                  approveDialog                                                                                  p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="EXCEL"
@@ -318,7 +317,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="checked" p:onClickScript="jQuery('#classRefreshReturnDialog').click();jQuery('#classRefreshApproveDialog').click();">
+                                                                                  p:propertyName="checked">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

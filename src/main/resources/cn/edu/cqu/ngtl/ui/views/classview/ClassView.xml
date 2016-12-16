@@ -85,7 +85,7 @@
                 <property name="items">
                     <list>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-info" p:actionLabel="课程信息" p:methodToCall="getClassInfoPageFromInside"/>
-                        <bean parent="Uif-NavigationActionLink" p:iconClass="icon-flag" p:actionLabel="教学活动" p:methodToCall="getTeachActivities" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTeachActivitiesPage')}"/>
+                       <!-- <bean parent="Uif-NavigationActionLink"  p:iconClass="icon-flag" p:actionLabel="教学活动" p:methodToCall="getTeachActivities" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTeachActivitiesPage')}"/>-->
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-calendar" p:actionLabel="教学日历" p:methodToCall="getTeachingCalendar" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTeachingCalendarPage')}"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-user" p:actionLabel="助教管理" p:methodToCall="getTaManagementPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaManagementPage')}"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="教师申报助教" p:methodToCall="getRequestTaPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewRequestTaPage')}"/>

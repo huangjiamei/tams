@@ -173,17 +173,17 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--右上角btnlist-->
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
-                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
+                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:actionLabel="添加"-->
+                                                                                  <!--p:actionImagePlacement="LEFT"-->
+                                                                                  <!--p:methodToCall="copyxxx"-->
+                                                                                  <!--p:additionalCssClasses="icon-plus bg-success box-btngroup"/>-->
 
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="驳回"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="showDialog('returnDialog');"
-                                                                                  p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>
+                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:actionLabel="驳回"-->
+                                                                                  <!--p:actionImagePlacement="LEFT"-->
+                                                                                  <!--p:actionScript="showDialog('returnDialog');"-->
+                                                                                  <!--p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>-->
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审批"

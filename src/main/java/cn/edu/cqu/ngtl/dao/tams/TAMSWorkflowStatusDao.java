@@ -3,7 +3,6 @@ package cn.edu.cqu.ngtl.dao.tams;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by tangjing on 16-11-9.
@@ -25,4 +24,6 @@ public interface TAMSWorkflowStatusDao {
     boolean saveOne(TAMSWorkflowStatus tamsWorkflowStatus);
 
     boolean deleteOne(TAMSWorkflowStatus tamsWorkflowStatus);
+
+    TAMSWorkflowStatus getOneById(String id);
 }

@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
@@ -138,6 +139,8 @@ public class ClassController extends BaseController {
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
 
+
+        String newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder()).getWorkflowStatus();
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
@@ -146,7 +149,7 @@ public class ClassController extends BaseController {
                     classTeacherViewObject.getId(),
                     infoForm.getApproveReasonOptionFinder()
             );
-            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason);
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatus);
         }
         if(result)
             return this.getClassListPage(infoForm, request);
@@ -175,6 +178,7 @@ public class ClassController extends BaseController {
         }
         boolean result = false;
         String feedBackReason = infoForm.getReturnReason();
+        String newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder()).getWorkflowStatus();
         String uid = GlobalVariables.getUserSession().getPrincipalId();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {    //依次将选择列表中的班次调整到设置的状态
              result = classInfoService.classStatusToCertainStatus(
@@ -182,7 +186,7 @@ public class ClassController extends BaseController {
                      classTeacherViewObject.getId(),
                      infoForm.getReturnReasonOptionFinder()
             );
-            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason);
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatus);
         }
 
         if(result)
@@ -477,9 +481,7 @@ public class ClassController extends BaseController {
         added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
         if(added == null){
             infoForm.setErrMsg("你不是该门课的主管教师，无法添加");
-
-            //FIXME 错误信息
-            return this.getModelAndView(infoForm, "pageTeachingCalendar");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         if (added.getId() != null) { //添加数据库成功
             //添加附件
@@ -523,7 +525,8 @@ public class ClassController extends BaseController {
             return this.getTeachingCalendar(infoForm, request);
         }
         else //// FIXME: 16-11-18 应当返回错误页面
-            return this.getTeachingCalendar(infoForm, request);
+            infoForm.setErrMsg("删除失败！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
     }
 
     /**
@@ -622,7 +625,7 @@ public class ClassController extends BaseController {
                 taConverter.TeachCalendarToViewObject(
                         classInfoService.getAllTaTeachCalendarFilterByUidAndClassId(
                                 uId,
-                                classId.toString()),
+                                classId),
                         true
                 )
         );
@@ -636,6 +639,9 @@ public class ClassController extends BaseController {
                         infoForm.getAllCalendar()
                 )
         );
+
+        infoForm.setFeedbacks(taConverter.feedBackToViewObject(classInfoService.getFeedBackByClassId(classId)));
+
         infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
 
         return this.getModelAndView(infoForm, "pageRequestTa");
@@ -671,12 +677,19 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         String assistantNumber = infoForm.getApplyViewObject().getAssistantNumber();
+        if(assistantNumber==null){
+            infoForm.setErrMsg("请填写本课程所需助教的数量！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
-
-        return this.getModelAndView(infoForm, "pageRequestTa");
+        if(result)
+            return this.getModelAndView(infoForm, "pageRequestTa");
+        else
+            infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
     }
 
 

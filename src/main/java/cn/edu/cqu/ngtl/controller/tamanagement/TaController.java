@@ -685,15 +685,8 @@ public class TaController extends BaseController {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         super.baseStart(taInfoForm);
 
-
-
-
-
         return this.showDialog("confirmRevocationDialog" ,true,taInfoForm);
     }
-
-
-
 
 
     @Override

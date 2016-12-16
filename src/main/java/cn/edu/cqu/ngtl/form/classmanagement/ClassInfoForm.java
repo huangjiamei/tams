@@ -42,7 +42,9 @@ public class ClassInfoForm extends BaseForm implements Serializable {
    /*
     助教申报页面
     */
-   private List<TeachCalendarViewObject> allCalendar;
+    private List<TeachCalendarViewObject> allCalendar;
+
+    private List<ClassApplyFeedBackViewObject> feedbacks;
 
 
     /**
@@ -430,6 +432,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.approveReasonOptionFinder = approveReasonOptionFinder;
     }
 
+    public List<ClassApplyFeedBackViewObject> getFeedbacks() {
+        return feedbacks;
+    }
+
+    public void setFeedbacks(List<ClassApplyFeedBackViewObject> feedbacks) {
+        this.feedbacks = feedbacks;
+    }
     public Boolean getCheckedClassListAll() {
         return checkedClassListAll;
     }

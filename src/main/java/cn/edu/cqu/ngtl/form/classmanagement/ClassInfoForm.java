@@ -43,7 +43,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     助教申报页面
     */
    private List<TeachCalendarViewObject> allCalendar;
-   private String ruquestMsg;
 
 
     /**
@@ -429,11 +428,4 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.approveReasonOptionFinder = approveReasonOptionFinder;
     }
 
-    public String getRuquestMsg() {
-        return ruquestMsg;
-    }
-
-    public void setRuquestMsg(String ruquestMsg) {
-        this.ruquestMsg = ruquestMsg;
-    }
 }

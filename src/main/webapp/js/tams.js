@@ -1338,3 +1338,8 @@ function refreshPage(){
  function onClickHerf(){
      window.location="http://www.cqu.edu.cn";//Header部分Logo跳至重庆大学页面
 }
+
+//checkbox全选
+function checkedAll(id) {
+    jQuery("#"+id).click();
+}

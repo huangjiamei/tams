@@ -855,7 +855,7 @@ td.selected{
     padding:2px;
     vertical-align: middle;
     width: 90px;
-    /*display: inline-block; */
+    font-size: 12px;
 }
 /*header部分的按钮*/
 .box-btngroup{
@@ -929,9 +929,9 @@ td.selected{
     width:100%;
 }
 /*反馈信息页面table不要表头*/
-#requestTable thead{
-    display:none;
-}
+/*#requestTable thead{*/
+    /*display:none;*/
+/*}*/
 #RequestTaPage .uif-tabGroup{
     width:100%;
 }

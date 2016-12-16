@@ -102,6 +102,19 @@ public class ClassController extends BaseController {
 //        }
 
     }
+    /**
+      * 课程页面checkbox全选
+    */
+    @RequestMapping(params = "methodToCall=checkClassListAllButton")
+    public ModelAndView checkClassListAllButton(@ModelAttribute("KualiForm") UifFormBase form,
+                                         HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        for(ClassTeacherViewObject classTeacherViewObject:infoForm.getClassList()){
+            classTeacherViewObject.setChecked(infoForm.getCheckedClassListAll());
+        }
+        return this.getModelAndView(infoForm, "pageClassList");
+    }
 
     /**
      * 审批的方法

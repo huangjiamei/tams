@@ -39,6 +39,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
 
+    Boolean checkedTaListAll;
+
     {
         // 赋初始空值测试
         conditionTAList.add(new MyTaViewObject());
@@ -487,5 +489,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setAppraiseReasonOptionFinder(String appraiseReasonOptionFinder) {
         this.appraiseReasonOptionFinder = appraiseReasonOptionFinder;
+    }
+
+    public Boolean getCheckedTaListAll() {
+        return checkedTaListAll;
+    }
+
+    public void setCheckedTaListAll(Boolean checkedTaListAll) {
+        this.checkedTaListAll = checkedTaListAll;
     }
 }

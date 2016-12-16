@@ -78,6 +78,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private List<ClassTeacherViewObject> classList;
 
+    Boolean checkedClassListAll;
+
     private ClassDetailInfoViewObject detailInfoViewObject;
 
     /**
@@ -428,4 +430,11 @@ public class ClassInfoForm extends BaseForm implements Serializable {
         this.approveReasonOptionFinder = approveReasonOptionFinder;
     }
 
+    public Boolean getCheckedClassListAll() {
+        return checkedClassListAll;
+    }
+
+    public void setCheckedClassListAll(Boolean checkedClassListAll) {
+        this.checkedClassListAll = checkedClassListAll;
+    }
 }

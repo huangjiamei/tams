@@ -445,6 +445,7 @@ public class AdminServiceImpl implements IAdminService{
     //获取学院历史经费
     @Override
     public List<TAMSDeptFunding> getDepartmentPreFundingBySession(){
+
         return deptFundingDao.selectDepartmentPreBySession();
     }
 

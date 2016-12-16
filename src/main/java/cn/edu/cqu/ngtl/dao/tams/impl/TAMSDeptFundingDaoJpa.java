@@ -8,6 +8,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFunding;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
@@ -44,6 +45,8 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
     @Autowired
     private UTClassInfoDao classInfoDao;
 
+    @Autowired
+    private IUserInfoService userInfoService;
     /*
 
     @Override
@@ -135,8 +138,13 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
     }
     @Override
     public List<TAMSDeptFunding> selectDepartmentPreBySession() {
+        String departmentId;
         User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
-        String departmentId = user.getDepartmentId().toString();
+        if(userInfoService.isAcademicAffairsStaff(user.getCode()) || userInfoService.isSysAdmin(user.getCode()))
+            departmentId = "%";
+        else
+            departmentId = user.getDepartmentId().toString();
+
         List<TAMSDeptFunding> list = new ArrayList<>();
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();

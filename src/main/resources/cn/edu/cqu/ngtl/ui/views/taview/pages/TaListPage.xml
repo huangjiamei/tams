@@ -286,7 +286,7 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:render="@{#line.taName == null}"
+                                                                                              p:render="@{#line.taName != null}"
                                                                                               p:methodToCall="getTaDetailPage"
                                                                                               p:navigateToPageId="pageTaDetail"
                                                                                               p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/><!--此处要将line.status-->

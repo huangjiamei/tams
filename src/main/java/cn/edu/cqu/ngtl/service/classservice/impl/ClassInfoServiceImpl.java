@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
@@ -79,6 +80,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSClassApplyFeedbackDao tamsClassApplyFeedbackDao;
 
+    @Autowired
+    private UTStudentTimetableDao utStudentTimetableDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
@@ -118,7 +122,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         else if (userInfoService.isStudent(uId)) {
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
-
+            List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
+            for(UTStudentTimetable utStudentTimetable:utStudentTimetables){
+                classIds.add(utStudentTimetable.getClassId());
+            }
             return classInfoDao.selectBatchByIds(classIds);
         }
         return null;

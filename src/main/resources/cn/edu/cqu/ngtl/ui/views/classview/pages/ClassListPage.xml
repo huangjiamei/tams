@@ -338,8 +338,6 @@
                                                                                   p:propertyName="workTime"/>
                                                                             <bean parent="Uif-DataField" p:label="学院"
                                                                                   p:propertyName="departmentName"/>
-                                                                            <bean parent="Uif-DataField" p:label="学院"
-                                                                                  p:propertyName="order" p:style="display:none"/>
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
@@ -450,7 +448,7 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:render="@{#line.courseName == null}"
+                                                                                              p:render="@{#line.courseName != null}"
                                                                                               p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getClassInfoPage"

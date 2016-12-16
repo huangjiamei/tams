@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 
@@ -37,8 +36,7 @@ public class UTStudentTimetableDaoJpa implements UTStudentTimetableDao {
 
     @Override
     public List<UTStudentTimetable> getStudentTimetableByUid(String uId){
-        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
-                and(equal("studentId", uId))
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("studentId", uId)
         );
 
         QueryResults<UTStudentTimetable> qr = KradDataServiceLocator.getDataObjectService().findMatching(

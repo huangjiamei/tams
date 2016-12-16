@@ -1173,12 +1173,17 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding) {
+        if(classFundings == null || classFundings.size()==0)
+            return "0" + totalPlanFunding;
         Long totalSetted = 0l;
-        if(classFundings != null && !classFundings.isEmpty())
-            for(ClassFundingViewObject classFunding : classFundings) {
-                totalSetted += Long.parseLong(classFunding.getApplyFunding());
+        if(classFundings != null && !classFundings.isEmpty()) {
+            for (ClassFundingViewObject classFunding : classFundings) {
+                if(classFunding.getApplyFunding() == null)
+                    totalSetted += Long.parseLong("0");
+                else
+                    totalSetted += Long.parseLong(classFunding.getApplyFunding());
             }
-
+        }
         return totalSetted + "/" + totalPlanFunding;
     }
 
@@ -1188,7 +1193,10 @@ public class TAConverterimpl implements ITAConverter {
             return "0";
         Long totalApproved = 0l;
         for(ClassFundingViewObject classFunding : classFundings) {
-            totalApproved += Long.parseLong(classFunding.getAssignedFunding());
+            if(classFunding.getAssignedFunding() == null)
+                totalApproved += Long.parseLong("0");
+            else
+                totalApproved += Long.parseLong(classFunding.getAssignedFunding());
         }
 
         return totalApproved.toString();

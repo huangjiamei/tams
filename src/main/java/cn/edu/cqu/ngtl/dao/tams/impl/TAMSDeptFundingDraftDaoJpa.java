@@ -85,6 +85,7 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
             for (Object column : columns) {
                 TAMSDeptFunding deptFunding = new TAMSDeptFunding();
                 Object[] fundings = (Object[]) column;
+                deptFunding.setSession(sessionDao.getUTSessionById(Integer.valueOf(fundings[6].toString())));
                 deptFunding.setDepartment(departmentDao.getUTDepartmentById(Integer.valueOf(fundings[3].toString())));
                 deptFunding.setDepartmentId(((BigDecimal)fundings[3]).intValue());
                 deptFunding.setPlanFunding(String.valueOf(fundings[1]));

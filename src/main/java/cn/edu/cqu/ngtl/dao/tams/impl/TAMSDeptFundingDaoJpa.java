@@ -135,11 +135,13 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
     }
     @Override
     public List<TAMSDeptFunding> selectDepartmentPreBySession() {
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        String departmentId = user.getDepartmentId().toString();
         List<TAMSDeptFunding> list = new ArrayList<>();
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID !='"+curSession.getId()+"'ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
+        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID !='"+curSession.getId()+"' AND t.DEPARTMENT_ID LIKE '"+departmentId+"' ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
         List<Object> columns = query.getResultList();
 
         for (Object column : columns) {

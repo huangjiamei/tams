@@ -166,7 +166,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
                     iterator.remove();
                 }
             }
-            return copyList;
+            return copyList.size() != 0 ? copyList : null;
         }
 
 

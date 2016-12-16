@@ -5,12 +5,15 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSActivity;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFundingDraft;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,9 @@ import javax.persistence.Query;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
  * Created by awake on 2016/11/25.
@@ -47,7 +53,19 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
     @Override
     public List<TAMSClassFunding> selectAll() {
 
-        List<TAMSClassFundingDraft> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSClassFundingDraft.class).getResults();
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", curSession.getId())
+                )
+        );
+        QueryResults<TAMSClassFundingDraft> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassFundingDraft.class,
+                criteria.build()
+        );
+        List<TAMSClassFundingDraft> list = qr.getResults();
+        //List<TAMSClassFundingDraft> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSClassFundingDraft.class).getResults();
         List<TAMSClassFunding> result = new ArrayList<>(list.size());
 
         for (TAMSClassFundingDraft per : list) {
@@ -72,7 +90,7 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
         }
 
 
-        return result;
+        return result.size() != 0 ? result : null;
     }
 
     //过滤classdraft经费

@@ -91,7 +91,7 @@ public interface ITAConverter {
 
     List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables);
 
-    String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding);
+    String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding,String totalsetted);
 
     String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings);
 

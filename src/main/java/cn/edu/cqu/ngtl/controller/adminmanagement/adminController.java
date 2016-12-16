@@ -937,17 +937,16 @@ public class adminController extends BaseController {
         infoForm.setClassFundingStatistics(
                 taConverter.countClassFunding(
                         infoForm.getClassFundings(),
-                        adminService.getClassTotalPlanFunding()
+                        adminService.getClassTotalPlanFunding(),
+                        taConverter.countClassFundingTotalApproved(
+                                infoForm.getClassFundings()
+                        )
                 )
         );
          /*
             课程经费的已批准经费
          */
-        infoForm.setClassFundingTotalApproved(
-                taConverter.countClassFundingTotalApproved(
-                        infoForm.getClassFundings()
-                )
-        );
+
 
         infoForm.setTaFunding(
                 adminConverter.taFundingToViewObject(

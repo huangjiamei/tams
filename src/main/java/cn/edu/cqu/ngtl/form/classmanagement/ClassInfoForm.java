@@ -28,7 +28,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /**
      * 教学日历相关
      */
-    private List<TeachCalendarViewObject> allCalendar;
 
     private String totalElapsedTime;
 
@@ -39,6 +38,12 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TeachCalendarViewObject currentCalendarInfo;
 
     private List<FileViewObject> calendarFiles;
+
+   /*
+    助教申报页面
+    */
+   private List<TeachCalendarViewObject> allCalendar;
+   private String ruquestMsg;
 
 
     /**
@@ -422,5 +427,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setApproveReasonOptionFinder(String approveReasonOptionFinder) {
         this.approveReasonOptionFinder = approveReasonOptionFinder;
+    }
+
+    public String getRuquestMsg() {
+        return ruquestMsg;
+    }
+
+    public void setRuquestMsg(String ruquestMsg) {
+        this.ruquestMsg = ruquestMsg;
     }
 }

@@ -73,7 +73,7 @@ public interface ITAConverter {
 
     List<TeachCalendarViewObject> activitiesToViewObject(List<TAMSTeachCalendar> calendarsContainActivities);
 
-    ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfoById);
+    ClassTaApplyViewObject instructorAndClassInfoToViewObject(UTClass classInfoById);
 
     List<WorkBenchViewObject> taCombineWorkbench(List<WorkBenchViewObject> list);
 

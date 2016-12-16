@@ -283,7 +283,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             sessionPrefix += "02";
         }
         int i =0;
-        String queryCourse = "SELECT * FROM XSKB t WHERE  t.XH LIKE '%20134%'";
+        String queryCourse = "SELECT * FROM XSKB t WHERE  t.XH LIKE '%20164%'";
         PreparedStatement pre = connection.prepareStatement(queryCourse);
         try {
             pre.setQueryTimeout(10000);

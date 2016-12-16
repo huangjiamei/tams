@@ -386,6 +386,7 @@ public class ClassController extends BaseController {
 
             new TamsFileControllerServiceImpl().downloadCalendarFile(classId, calendarId, attachmentId, response);
 
+
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
         catch (IndexOutOfBoundsException e) {
@@ -413,12 +414,10 @@ public class ClassController extends BaseController {
             String attachmentId = infoForm.getCalendarFiles().get(index).getId();
 
             classInfoService.removeCalendarFileById(classId, attachmentId);
-
-            return this.getViewTeachingCalendarPage(infoForm, request);
-        }
+            infoForm.getCalendarFiles().remove(index);
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");        }
         catch (IndexOutOfBoundsException e) {
-            return this.getViewTeachingCalendarPage(infoForm, request);
-        }
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");        }
     }
 
     /**

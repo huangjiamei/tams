@@ -658,6 +658,10 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         String assistantNumber = infoForm.getApplyViewObject().getAssistantNumber();
+        if(assistantNumber==null){
+            infoForm.setErrMsg("请填写本课程所需助教的数量！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();

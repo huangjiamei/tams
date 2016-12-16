@@ -938,15 +938,17 @@ public class adminController extends BaseController {
                 taConverter.countClassFunding(
                         infoForm.getClassFundings(),
                         adminService.getClassTotalPlanFunding(),
-                        taConverter.countClassFundingTotalApproved(
-                                infoForm.getClassFundings()
-                        )
+                        taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
                 )
         );
          /*
             课程经费的已批准经费
          */
-
+//        infoForm.setClassFundingTotalApproved(
+//                taConverter.countClassFundingTotalApproved(
+//                        infoForm.getClassFundings()
+//                )
+//        );
 
         infoForm.setTaFunding(
                 adminConverter.taFundingToViewObject(
@@ -967,7 +969,7 @@ public class adminController extends BaseController {
     }
 
     /**
-     *  发布学院经费
+     * 发布学院经费
      * @param form
      * @param request
      * @return
@@ -998,9 +1000,15 @@ public class adminController extends BaseController {
     public ModelAndView ReleaseCourseFunding(@ModelAttribute("KualiForm") UifFormBase form ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-
-
-
+        List<ClassFundingViewObject> classFundingViewObjects = infoForm.getClassFundings();
+        adminService.saveClassFunding(classFundingViewObjects);
+        infoForm.setClassFundingStatistics(
+                taConverter.countClassFunding(
+                        infoForm.getClassFundings(),
+                        adminService.getClassTotalPlanFunding(),
+                        taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
+                )
+        );
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 

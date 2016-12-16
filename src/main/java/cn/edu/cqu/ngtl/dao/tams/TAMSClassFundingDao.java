@@ -14,4 +14,8 @@ public interface TAMSClassFundingDao {
 
     List<TAMSClassFunding> selectAll(User user);
     List<ClassFundingViewObject> selectClassFundByCondition(Map<String, String> conditions);
+
+    TAMSClassFunding getOneByClassIdAndSessionId(String classId,String SessionId);
+
+    boolean saveOneByEntity(TAMSClassFunding tamsClassFunding);
 }

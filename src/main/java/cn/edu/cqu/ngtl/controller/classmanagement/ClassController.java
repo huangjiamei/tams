@@ -662,8 +662,11 @@ public class ClassController extends BaseController {
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
-
-        return this.getModelAndView(infoForm, "pageRequestTa");
+        if(result)
+            return this.getModelAndView(infoForm, "pageRequestTa");
+        else
+            infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
     }
 
 

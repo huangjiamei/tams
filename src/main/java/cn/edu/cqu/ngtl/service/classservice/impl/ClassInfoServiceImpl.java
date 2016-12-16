@@ -233,6 +233,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         TAMSClassTaApplication isExist = classTaApplicationDao.selectByInstructorIdAndClassId(instructorId, classId);
         if(isExist != null) {
             logger.warn("已存在数据！");
+            return false;
         }
         else {
             TAMSClassTaApplication entity = new TAMSClassTaApplication();

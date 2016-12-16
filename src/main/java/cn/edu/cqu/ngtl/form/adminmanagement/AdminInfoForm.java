@@ -123,6 +123,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private boolean springTerm;
     private boolean fallTerm;
     private boolean academicAffairManager;
+    private boolean deptManager;
 
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
@@ -1574,5 +1575,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setUserRoleIDNumber(String userRoleIDNumber) {
         this.userRoleIDNumber = userRoleIDNumber;
+    }
+
+    public boolean isDeptManager() {
+        return deptManager;
+    }
+
+    public void setDeptManager(boolean deptManager) {
+        this.deptManager = deptManager;
     }
 }

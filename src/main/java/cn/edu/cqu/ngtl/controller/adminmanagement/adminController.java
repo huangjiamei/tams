@@ -890,7 +890,10 @@ public class adminController extends BaseController {
         else
             infoForm.setAcademicAffairManager(false);
 
-
+        if(iUserInfoService.isCollegeStaff(uId)||iUserInfoService.isSysAdmin(uId)||iUserInfoService.isAcademicAffairsStaff(uId))
+            infoForm.setDeptManager(true);
+        else
+            infoForm.setDeptManager(false);
 
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
@@ -964,7 +967,12 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
-
+    /**
+     *  发布学院经费
+     * @param form
+     * @param request
+     * @return
+     */
     @RequestMapping(params = "methodToCall=ReleaseDeptFunding")
     public ModelAndView Release(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -982,7 +990,26 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+    /**
+     * 发布课程经费
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=ReleaseCourseFunding")
+    public ModelAndView ReleaseCourseFunding(@ModelAttribute("KualiForm") UifFormBase form ) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
 
+
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+    /**
+     * 保存学院经费
+     * @param form
+     * @return
+     */
     @RequestMapping(params = "methodToCall=SaveDeptFunding")
     public ModelAndView SaveDeptFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -1001,6 +1028,11 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
+    /**
+     * 保存批次经费
+     * @param form
+     * @return
+     */
     @RequestMapping(params = "methodToCall=SaveSessionFunding")
     public ModelAndView SaveSessionFunding(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;

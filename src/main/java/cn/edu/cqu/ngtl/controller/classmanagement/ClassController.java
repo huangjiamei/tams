@@ -788,6 +788,8 @@ public class ClassController extends BaseController {
         );
         for(MyTaViewObject needToAdd : checkedList){
             needToAdd.setCheckBox(false);
+            needToAdd.setPayDay("暂未设置");
+            needToAdd.setStatus("1");
             infoForm.getAllMyTa().add(needToAdd);
             infoForm.getAllApplication().remove(needToAdd);
         }

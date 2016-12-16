@@ -8,7 +8,6 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
@@ -83,7 +82,7 @@ public class ClassController extends BaseController {
                                          HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-        try {
+//        try {
             final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
             String uId = userSession.getLoggedInUserPrincipalId();
             infoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
@@ -94,12 +93,13 @@ public class ClassController extends BaseController {
                 );
 
             return this.getModelAndView(infoForm, "pageClassList");
-        } catch (Exception e) {
-            BaseForm baseForm=(BaseForm)form;
-            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
-            //e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            BaseForm baseForm=(BaseForm)form;
+//            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
+//            e.printStackTrace();
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+//
+//        }
 
     }
 
@@ -213,13 +213,33 @@ public class ClassController extends BaseController {
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
         } catch (Exception e) {
-            BaseForm baseForm=(BaseForm)form;
-            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
-           //e.printStackTrace();
+//            BaseForm baseForm=(BaseForm)form;
+//            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+           e.printStackTrace();
         }
         return this.getModelAndView(infoForm, "pageClassInfo");
     }
+
+
+    /**
+     *
+     */
+    @RequestMapping(params = {"methodToCall=getClassInfoPageFromInside"})
+    public ModelAndView getClassInfoPageFromInside(@ModelAttribute("KualiForm") UifFormBase form) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        UTClass utClass = classInfoService.getClassInfoById(infoForm.getCurrClassId());
+
+        ClassDetailInfoViewObject detailInfoViewObject = taConverter.classInfoToViewObject(
+                utClass
+        );
+        infoForm.setDetailInfoViewObject(detailInfoViewObject);
+        return this.getModelAndView(infoForm, "pageClassInfo");
+    }
+
+
+
 
     /**
      * 获取学生申请当助教页面(填表)
@@ -583,9 +603,8 @@ public class ClassController extends BaseController {
         String uId = GlobalVariables.getUserSession().getPrincipalId();
         String classId = infoForm.getCurrClassId();
 
-        User instructor = (User) GlobalVariables.getUserSession().retrieveObject("user");
         infoForm.setApplyViewObject(
-                taConverter.instructorAndClassInfoToViewObject(instructor, classInfoService.getClassInfoById(classId))
+                taConverter.instructorAndClassInfoToViewObject(classInfoService.getClassInfoById(classId))
         );
         infoForm.setAllCalendar(
                 taConverter.TeachCalendarToViewObject(

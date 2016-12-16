@@ -218,14 +218,12 @@ public class TAConverterimpl implements ITAConverter {
         ApplyAssistantViewObject viewObject = new ApplyAssistantViewObject();
 
         if (student != null) {
-
             viewObject.setUsername(student.getName());
             viewObject.setStudentId(student.getId());
             viewObject.setUg_Major(student.getProgram() != null ?
                     student.getProgram().getName() : null);
-
             /** 需要修改 */
-            viewObject.setG_Major("挖掘机");
+            viewObject.setG_Major(" ");
         }
 
         if (clazz != null) {
@@ -1009,16 +1007,23 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public ClassTaApplyViewObject instructorAndClassInfoToViewObject(User instructor, UTClass classInfo) {
+    public ClassTaApplyViewObject instructorAndClassInfoToViewObject( UTClass classInfo) {
         ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
-        if(instructor != null) {
-            viewObject.setTeacherName(instructor.getName());
-            viewObject.setTeacherType(instructor.getCode());
+        List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(classInfo.getId());
+        String instructorName = "";
+        String instrctorCode ="";
+        if(utClassInstructors!=null){
+            for(UTClassInstructor utClassInstructor : utClassInstructors){
+                instructorName += utClassInstructor.getUtInstructor().getName()+" ";
+                instrctorCode += utClassInstructor.getUtInstructor().getCode()+" ";
+            }
         }
+        viewObject.setTeacherName(instructorName);
+        viewObject.setTeacherType(instrctorCode);
         if(classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() : null;
             viewObject.setClassNumber(classInfo.getClassNumber());
-            viewObject.setStudentNumber(classInfo.getMinPerWeek().toString());
+            viewObject.setStudentNumber(classInfo.getMinPerWeek()==null?" ":classInfo.getMinPerWeek().toString());
             if(course != null) {
                 UTSession session = classInfo.getCourseOffering().getSession();
                 viewObject.setCourseName(course.getName());

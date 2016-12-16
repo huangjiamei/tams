@@ -108,15 +108,14 @@
                                                                                   p:methodToCall="pause"
                                                                                   p:additionalCssClasses="icon-stop bg-orange box-btngroup">
                                                                             </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="撤销"
-                                                                                  p:actionScript="showDialog('confirmRevocationDialog');"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-trash bg-grey box-btngroup"/>
-
+                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:actionLabel="撤销"-->
+                                                                                  <!--p:actionScript="showDialog('confirmRevocationDialog');"-->
+                                                                                  <!--p:actionImagePlacement="LEFT"-->
+                                                                                  <!--p:additionalCssClasses="icon-trash bg-grey box-btngroup"/>-->
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="评优"
-                                                                                  p:actionScript="showDialog('confirmAppraiseDialog');"
+                                                                                  p:methodToCall="showAppriseDialog"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-red box-btngroup"/>
 

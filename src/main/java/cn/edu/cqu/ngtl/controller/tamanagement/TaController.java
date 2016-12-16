@@ -680,12 +680,12 @@ public class TaController extends BaseController {
         return this.getTaListPage(form,request);
     }
 
-    @RequestMapping(params =  {"methodToCall=showRevocationDialog"})
+    @RequestMapping(params =  {"methodToCall=showAppriseDialog"})
     public ModelAndView showRevocationDialog(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         super.baseStart(taInfoForm);
 
-        return this.showDialog("confirmRevocationDialog" ,true,taInfoForm);
+        return this.showDialog("confirmAppraiseDialog" ,true,taInfoForm);
     }
 
 

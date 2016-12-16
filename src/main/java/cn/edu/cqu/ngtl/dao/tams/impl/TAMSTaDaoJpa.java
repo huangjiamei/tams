@@ -299,6 +299,10 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
 
         List<Object> columns = query.getResultList();
+        if(columns==null||columns.size()==0){
+            taInfoViewObjects.add(new TaInfoViewObject());
+            return taInfoViewObjects;
+        }
         for(Object column : columns) {
             Object[] informations = (Object[]) column;
             String classId = informations[9].toString();

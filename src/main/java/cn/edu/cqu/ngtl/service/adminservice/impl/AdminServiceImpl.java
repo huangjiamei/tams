@@ -658,7 +658,6 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects){
-        UTSession curSession = sessionDao.getCurrentSession();
         for(SessionFundingViewObject per:sessionFundingViewObjects){
             TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
             existFunding.setPlanFunding(per.getPlanFunding());
@@ -666,6 +665,17 @@ public class AdminServiceImpl implements IAdminService{
         }
     }
 
+    @Override
+    public void saveClassFunding(List<ClassFundingViewObject> classFundingViewObjects){
+        UTSession curSession = sessionDao.getCurrentSession();
+
+        for(ClassFundingViewObject classFundingViewObject:classFundingViewObjects){
+            TAMSClassFunding exitFunding = tamsClassFundingDao.getOneByClassIdAndSessionId(classFundingViewObject.getClassId(),curSession.getId().toString());
+            exitFunding.setAssignedFunding(classFundingViewObject.getAssignedFunding());
+            tamsClassFundingDao.saveOneByEntity(exitFunding);
+        }
+
+    }
 
     @Override
     public List<TAMSTimeSettingType> getAllTimeCategory() {

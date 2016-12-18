@@ -5,12 +5,17 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
+import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
+import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
+import com.itextpdf.text.DocumentException;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -25,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,6 +53,9 @@ public class TaController extends BaseController {
 
     @Autowired
     private UTSessionDao utSessionDao;
+
+    @Autowired
+    private IPDFService PDFService;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -688,6 +698,61 @@ public class TaController extends BaseController {
         return this.showDialog("confirmAppraiseDialog" ,true,taInfoForm);
     }
 
+    /**
+     * 将表格打印为PDF，整体可用，各列具体参数还需修改
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportTaListPDF"})
+    public ModelAndView exportClassListPDF(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
+                                           HttpServletResponse response) {
+        TaInfoForm infoForm = (TaInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getAllTaInfo() == null) {
+//            examForm.setErrMsg("导出内容为空");
+            return this.showDialog("errWarnDialog", true, infoForm);
+        }
+
+        List<TaInfoViewObject> taList = infoForm.getAllTaInfo();
+
+        try {
+            String[] header = {"姓名", "学号", "学历", "课程名称", "课程编号", "教学班", "教师", "教师考核", "学生考核", "成绩"};
+            List<String[]> Content = new ArrayList(taList.size());
+            for(TaInfoViewObject ta : taList) {
+                String name = ta.getTaName() == null ? "" : ta.getTaName();
+                String stuNumber = ta.getTaIDNumber() == null ? "" : ta.getTaIDNumber();
+                String masterMajor = ta.getTaMasterMajorName() == null ? "" : ta.getTaMasterMajorName();
+                String courseName = ta.getCourseName() == null ? "" : ta.getCourseName();
+                String courseCode = ta.getCourseCode() == null ? "" : ta.getCourseCode();
+                String clazzCode = ta.getClassNumber() == null ? "" : ta.getClassNumber();
+                String instructor = ta.getInstructorName() == null ? "" : ta.getInstructorName();
+                String instructorAppraise = ta.getTeacherAppraise() == null ? "" : ta.getTeacherAppraise();
+                String stuAppraise = ta.getStuAppraise() == null ? "" : ta.getStuAppraise();
+                String score = ta.getScore() == null ? "" : ta.getScore();
+                String[] content = {
+                        name, stuNumber, masterMajor,
+                        courseName, courseCode, clazzCode,
+                        instructor, instructorAppraise, stuAppraise,
+                        score
+                };
+                Content.add(content);
+            }
+
+            PDFService.printNormalTable("助教信息列表", header, Content, "TaList");
+        } catch (DocumentException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+
+        return this.performRedirect(infoForm, baseUrl + "/" + "TaList.pdf");
+    }
 
     @Override
     protected UifFormBase createInitialForm() {

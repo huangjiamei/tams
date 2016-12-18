@@ -744,7 +744,7 @@ public class ClassController extends BaseController {
     }
 
     /**
-     * 将表格打印为excel，整体可用，各列具体参数还需修改
+     * 将表格打印为PDF，整体可用，各列具体参数还需修改
      *
      * @param form
      * @param request

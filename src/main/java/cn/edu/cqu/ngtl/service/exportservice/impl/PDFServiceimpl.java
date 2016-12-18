@@ -72,7 +72,7 @@ public class PDFServiceimpl implements IPDFService {
         Document document = new Document();
         try {
             String rootPath = System.getProperty("catalina.home");
-            String dir = rootPath + File.separator + "webapps" + File.separator + "exam" + File.separator;
+            String dir = rootPath + File.separator + "webapps" + File.separator + "tams" + File.separator;
             //如果文件存在则在文件后追加
             OutputStream out = new FileOutputStream(dir + fileName + ".pdf");
             PdfWriter.getInstance(document, out);

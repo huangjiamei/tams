@@ -198,7 +198,7 @@
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="PDF"
-                                                                                  p:methodToCall="exportApplicantPhoto"
+                                                                                  p:methodToCall="exportClassListPDF"
                                                                                   p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
 
                                                                             <bean id="classRefreshReturnDialog" parent="Uif-PrimaryActionButton"

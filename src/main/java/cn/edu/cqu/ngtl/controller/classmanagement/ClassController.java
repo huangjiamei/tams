@@ -13,12 +13,14 @@ import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
+import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
+import com.itextpdf.text.DocumentException;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -68,6 +70,9 @@ public class ClassController extends BaseController {
 
     @Autowired
     private UTSessionDao utSessionDao;
+
+    @Autowired
+    private IPDFService PDFService;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -718,7 +723,6 @@ public class ClassController extends BaseController {
 
 
         if (infoForm.getClassList() == null) {
-            // TODO: 2016/10/21 错误处理
 //            examForm.setErrMsg("导出内容为空");
             return this.showDialog("errWarnDialog", true, infoForm);
         }
@@ -737,6 +741,55 @@ public class ClassController extends BaseController {
                     .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
             return this.performRedirect(infoForm, baseUrl + "/tams");
         }
+    }
+
+    /**
+     * 将表格打印为excel，整体可用，各列具体参数还需修改
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportClassListPDF"})
+    public ModelAndView exportClassListPDF(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
+                                             HttpServletResponse response) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getClassList() == null) {
+//            examForm.setErrMsg("导出内容为空");
+            return this.showDialog("errWarnDialog", true, infoForm);
+        }
+
+        List<ClassTeacherViewObject> classList = infoForm.getClassList();
+
+        try {
+            String[] header = {"课程名称", "课程编号", "教学班", "教师", "耗费工时", "学院"};
+            List<String[]> Content = new ArrayList(classList.size());
+            for(ClassTeacherViewObject clazz : classList) {
+                String courseName = clazz.getCourseName() == null ? "" : clazz.getCourseName();
+                String courseCode = clazz.getCourseCode() == null ? "" : clazz.getCourseCode();
+                String clazzCode = clazz.getClassNumber() == null ? "" : clazz.getClassNumber();
+                String instructor = clazz.getInstructorName() == null ? "" : clazz.getInstructorName();
+                String time = clazz.getWorkTime() == null ? "" : clazz.getWorkTime();
+                String department = clazz.getDepartmentName() == null ? "" : clazz.getDepartmentName();
+                String[] content = {
+                        courseName, courseCode, clazzCode, instructor, time, department
+                };
+                Content.add(content);
+            }
+
+            PDFService.printNormalTable("课程信息列表", header, Content, "ClassList");
+        } catch (DocumentException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+
+        return this.performRedirect(infoForm, baseUrl + "/" + "ClassList.pdf");
     }
 
     /**

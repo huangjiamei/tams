@@ -289,8 +289,8 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 "' AND s.UNIQUEID LIKE '"+conditions.get("taId")+
                 "' AND s. NAME LIKE '"+conditions.get("taName")+
                 "' AND t .TA_TYPE LIKE '"+conditions.get("taDegree")+
-//                "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
-//                "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
+                "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
+                "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
                 "' AND t .OUTSTANDING_TA LIKE '"+conditions.get("taStatus") +
                 "'JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID" +
                 " JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID JOIN TAMS_WORKFLOW_STATUS ws ON T .OUTSTANDING_TA = ws.UNIQUEID" +

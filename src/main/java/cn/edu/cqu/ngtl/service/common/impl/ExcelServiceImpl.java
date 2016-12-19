@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.service.common.impl;
 
 import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.apache.log4j.Logger;
 import org.apache.poi.hssf.usermodel.HSSFRichTextString;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -38,7 +39,7 @@ public class ExcelServiceImpl implements ExcelService {
      * @throws IOException
      */
     @Override
-    public String printClasslistExcel(List<ClassTeacherViewObject> classlist, String folderPath, String filename,
+    public String printClassListExcel(List<ClassTeacherViewObject> classlist, String folderPath, String filename,
                                       String version) throws IOException {
         Workbook wb;
         Sheet sheet;
@@ -49,7 +50,7 @@ public class ExcelServiceImpl implements ExcelService {
         } else {
             wb = new HSSFWorkbook();
         }
-        sheet = wb.createSheet("考生导出");
+        sheet = wb.createSheet("课程信息导出");
 
         Map<String, CellStyle> styles = createStyles(wb);
         String[] titles = ClassTeacherViewObject.getAttrTittles();
@@ -60,91 +61,43 @@ public class ExcelServiceImpl implements ExcelService {
         // 顶端一长排字
         Row topRow = sheet.createRow(rowNum++);
         Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
-        topCell.setCellValue("社考处(全国大学英语四、六级考试)集体报名导入模板");
+        topCell.setCellValue("教务处(重庆大学助教管理系统)课程信息导出模板");
         topCell.setCellStyle(styles.get("content"));
 
-        // 空一行
+        /*// 空一行
         rowNum++;
         CellRangeAddress cra2 = new CellRangeAddress(1, 1, 0, 15);
-        sheet.addMergedRegion(cra2);
+        sheet.addMergedRegion(cra2);*/
 
         // region # 添加各列标题上方的注意事项
-        Row infoRow = sheet.createRow(rowNum++);
+        /*Row infoRow = sheet.createRow(rowNum++);
         Cell InfoCell = infoRow.createCell(0, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("填写序号顺序");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(1, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("学院");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(2, Cell.CELL_TYPE_STRING);
         InfoCell.setCellValue("课程名称");
         InfoCell.setCellStyle(styles.get("content"));
 
-        InfoCell = infoRow.createCell(3, Cell.CELL_TYPE_STRING);
+        InfoCell = infoRow.createCell(1, Cell.CELL_TYPE_STRING);
         InfoCell.setCellValue("课程编号");
         InfoCell.setCellStyle(styles.get("content"));
 
-        InfoCell = infoRow.createCell(4, Cell.CELL_TYPE_STRING);
+        InfoCell = infoRow.createCell(2, Cell.CELL_TYPE_STRING);
         InfoCell.setCellValue("教学班");
         InfoCell.setCellStyle(styles.get("content"));
 
-        InfoCell = infoRow.createCell(5, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("身教师");
+        InfoCell = infoRow.createCell(3, Cell.CELL_TYPE_STRING);
+        InfoCell.setCellValue("教师");
         InfoCell.setCellStyle(styles.get("content"));
 
-        InfoCell = infoRow.createCell(6, Cell.CELL_TYPE_STRING);
+        InfoCell = infoRow.createCell(4, Cell.CELL_TYPE_STRING);
         InfoCell.setCellValue("耗费工时");
         InfoCell.setCellStyle(styles.get("content"));
 
-        InfoCell = infoRow.createCell(7, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("津贴估算");
+        InfoCell = infoRow.createCell(5, Cell.CELL_TYPE_STRING);
+        InfoCell.setCellValue("学院");
         InfoCell.setCellStyle(styles.get("content"));
 
-        InfoCell = infoRow.createCell(8, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("拟配备助教数");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(9, Cell.CELL_TYPE_STRING);
+        InfoCell = infoRow.createCell(6, Cell.CELL_TYPE_STRING);
         InfoCell.setCellValue("状态");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(10, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("学时");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(11, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("学分");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(12, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("选修/必修");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(13, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("课程类型");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(14, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("授课年级");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(15, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("专业");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(16, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("学生人数");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(17, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("教学班数");
-        InfoCell.setCellStyle(styles.get("content"));
-
-        InfoCell = infoRow.createCell(18, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("上课教师数");
-        InfoCell.setCellStyle(styles.get("content"));
+        InfoCell.setCellStyle(styles.get("content"));*/
 
         // endregion
 
@@ -157,21 +110,94 @@ public class ExcelServiceImpl implements ExcelService {
             titleCell.setCellStyle(styles.get("title"));
         }
 
-        List<String[]> contens = new ArrayList<String[]>();
+        List<String[]> content = new ArrayList<>();
         for (ClassTeacherViewObject classObj : classlist) {
-            contens.add(classObj.getContents());
+            content.add(classObj.getContents());
         }
 
-        for (int i = 0; i < contens.size(); i++) {
+        for (int i = 0; i < content.size(); i++) {
             Row row = sheet.createRow(rowNum++);
-            String[] content = contens.get(i);
+            String[] contentStrings = content.get(i);
 
-            for (int colNum = 1; colNum <= content.length; colNum++) {
+            for (int colNum = 0; colNum < contentStrings.length; colNum++) {
                 Cell cell = row.createCell(colNum);
                 if (version.equals("2007")) {
-                    cell.setCellValue(new XSSFRichTextString(content[colNum - 1]));
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
                 } else {
-                    cell.setCellValue(new HSSFRichTextString(content[colNum - 1]));
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
+                }
+                cell.setCellStyle(styles.get("content"));
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+            }
+            sheet.autoSizeColumn((short) i);
+        }
+
+//        String rootPath = System.getProperty("catalina.home");
+        String rootPath = getServletContext().getRealPath("/");
+
+        File folder = new File(rootPath + File.separator + folderPath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+        }
+
+        String filePath=File.separator + folderPath + File.separator + filename;
+
+        FileOutputStream out = new FileOutputStream(rootPath+filePath);
+        wb.write(out);
+        out.close();
+
+        return filePath;
+    }
+
+    @Override
+    public String printTaListExcel(List<TaInfoViewObject> taList, String folderPath, String filename, String version) throws IOException {
+        Workbook wb;
+        Sheet sheet;
+
+        //默认输出版本为03版
+        if (version.equals("2007")) {
+            wb = new XSSFWorkbook();
+        } else {
+            wb = new HSSFWorkbook();
+        }
+        sheet = wb.createSheet("助教信息导出");
+
+        Map<String, CellStyle> styles = createStyles(wb);
+        String[] titles = TaInfoViewObject.getAttrTittles();
+        CellRangeAddress cra1 = new CellRangeAddress(0, 0, 0, 15);
+        sheet.addMergedRegion(cra1);
+
+        int rowNum = 0; // 控制在excel的第几行输出文本
+        // 顶端一长排字
+        Row topRow = sheet.createRow(rowNum++);
+        Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
+        topCell.setCellValue("教务处(重庆大学助教管理系统)助教信息导出模板");
+        topCell.setCellStyle(styles.get("content"));
+
+        Row titleRow = sheet.createRow(rowNum++);
+        Cell titleCell;
+        for (int i = 0; i < titles.length; i++) {
+            titleCell = titleRow.createCell(i);
+            titleCell.setCellValue(titles[i]);
+            titleCell.setCellType(Cell.CELL_TYPE_STRING);
+            titleCell.setCellStyle(styles.get("title"));
+        }
+
+        List<String[]> content = new ArrayList<>();
+        for (TaInfoViewObject taObj : taList) {
+            content.add(taObj.getContents());
+        }
+
+        for (int i = 0; i < content.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            String[] contentStrings = content.get(i);
+
+            for (int colNum = 0; colNum < contentStrings.length; colNum++) {
+                Cell cell = row.createCell(colNum);
+                if (version.equals("2007")) {
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
+                } else {
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
                 }
                 cell.setCellStyle(styles.get("content"));
                 cell.setCellType(Cell.CELL_TYPE_STRING);

@@ -118,6 +118,14 @@
                                                                                   p:methodToCall="showAppriseDialog"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-red box-btngroup"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="EXCEL"
+                                                                                  p:methodToCall="exportTaListExcel"
+                                                                                  p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="PDF"
+                                                                                  p:methodToCall="exportTaListPDF"
+                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
 
                                                                         </list>
                                                                     </property>

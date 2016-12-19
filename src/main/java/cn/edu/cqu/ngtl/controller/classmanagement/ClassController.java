@@ -40,10 +40,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -728,10 +725,11 @@ public class ClassController extends BaseController {
         }
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
-        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + System.currentTimeMillis() + ".xls";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
 
         try {
-            String filePath = excelService.printClasslistExcel(classList, "exportfolder", fileName, "2003");
+            String filePath = excelService.printClassListExcel(classList, "exportfolder", fileName, "2003");
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                     .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
@@ -764,7 +762,9 @@ public class ClassController extends BaseController {
         }
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
+        String filePath = "";
         try {
             String[] header = {"课程名称", "课程编号", "教学班", "教师", "耗费工时", "学院"};
             List<String[]> Content = new ArrayList(classList.size());
@@ -781,7 +781,7 @@ public class ClassController extends BaseController {
                 Content.add(content);
             }
 
-            PDFService.printNormalTable("课程信息列表", header, Content, "ClassList");
+            filePath = PDFService.printNormalTable("课程信息列表", header, Content, fileName);
         } catch (DocumentException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -789,7 +789,7 @@ public class ClassController extends BaseController {
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm, baseUrl + "/" + "ClassList.pdf");
+        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
     }
 
     /**

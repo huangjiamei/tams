@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
+import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -31,11 +32,10 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -56,6 +56,9 @@ public class TaController extends BaseController {
 
     @Autowired
     private IPDFService PDFService;
+
+    @Autowired
+    private ExcelService excelService;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -699,6 +702,43 @@ public class TaController extends BaseController {
     }
 
     /**
+     * 将表格打印为excel，整体可用，各列具体参数还需修改
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = {"methodToCall=exportTaListExcel"})
+    public ModelAndView exportTaListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
+                                             HttpServletResponse response) {
+        TaInfoForm infoForm = (TaInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getAllTaInfo() == null) {
+//            examForm.setErrMsg("导出内容为空");
+            return this.showDialog("errWarnDialog", true, infoForm);
+        }
+
+        List<TaInfoViewObject> taList = infoForm.getAllTaInfo();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "助教列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
+
+        try {
+            String filePath = excelService.printTaListExcel(taList, "exportfolder", fileName, "2003");
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+
+            return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+        } catch (IOException e) {
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm, baseUrl + "/tams");
+        }
+    }
+
+    /**
      * 将表格打印为PDF，整体可用，各列具体参数还需修改
      *
      * @param form
@@ -707,7 +747,7 @@ public class TaController extends BaseController {
      * @return
      * @throws Exception
      */
-    @RequestMapping(params = {"pageId=pageClassList", "methodToCall=exportTaListPDF"})
+    @RequestMapping(params = {"methodToCall=exportTaListPDF"})
     public ModelAndView exportClassListPDF(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
                                            HttpServletResponse response) {
         TaInfoForm infoForm = (TaInfoForm) form;
@@ -719,7 +759,9 @@ public class TaController extends BaseController {
         }
 
         List<TaInfoViewObject> taList = infoForm.getAllTaInfo();
-
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "助教列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
+        String filePath = "";
         try {
             String[] header = {"姓名", "学号", "学历", "课程名称", "课程编号", "教学班", "教师", "教师考核", "学生考核", "成绩"};
             List<String[]> Content = new ArrayList(taList.size());
@@ -743,7 +785,7 @@ public class TaController extends BaseController {
                 Content.add(content);
             }
 
-            PDFService.printNormalTable("助教信息列表", header, Content, "TaList");
+            filePath = PDFService.printNormalTable("助教信息列表", header, Content, fileName);
         } catch (DocumentException | IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -751,7 +793,7 @@ public class TaController extends BaseController {
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm, baseUrl + "/" + "TaList.pdf");
+        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
     }
 
     @Override

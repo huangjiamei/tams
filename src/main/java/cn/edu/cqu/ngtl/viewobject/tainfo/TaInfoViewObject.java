@@ -50,6 +50,40 @@ public class TaInfoViewObject {
 
     private String score;
 
+    public static String[] getAttrTittles() {
+        String[] attrTittles={
+                "姓名"
+                ,"学号"
+                ,"学历"
+                ,"课程名称"
+                ,"课程编号"
+                ,"教学班"
+                ,"教师"
+                ,"教师考核"
+                ,"学生考核"
+                ,"成绩"
+                ,"评优"
+        };
+        return attrTittles;
+    }
+
+
+    public String[] getContents() {
+        String[] contents=new String[11];
+        contents[0]=getTaName();
+        contents[1]=getTaIDNumber();
+        contents[2]=getTaMasterMajorName();
+        contents[3]=getCourseName();
+        contents[4]=getCourseCode();
+        contents[5]=getClassNumber();
+        contents[6]=getInstructorName();
+        contents[7]=getTeacherAppraise();
+        contents[8]=getStuAppraise();
+        contents[9]=getScore();
+        contents[10]=getStatus();
+        return contents;
+    }
+
     public String getId() {
         return id;
     }

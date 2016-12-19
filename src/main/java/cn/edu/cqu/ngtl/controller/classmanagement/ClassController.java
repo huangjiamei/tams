@@ -705,6 +705,20 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
+        if(classEvaluations == null || classEvaluations.isEmpty()) {
+            infoForm.setErrMsg("请填写至少一种成绩评定方式！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            Integer percent = 0;
+            for(TAMSClassEvaluation classEvaluation : classEvaluations) {
+                percent += Integer.valueOf(classEvaluation.getEvaluationPercent());
+            }
+            if(percent != 100) {
+                infoForm.setErrMsg("成绩评定方式成绩占比之和必须等于100！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
@@ -732,9 +746,11 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
 
-        if (infoForm.getClassList() == null) {
-//            examForm.setErrMsg("导出内容为空");
-            return this.showDialog("errWarnDialog", true, infoForm);
+        if (infoForm.getClassList() == null || infoForm.getClassList().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getClassList().get(0).getId() == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
@@ -748,9 +764,9 @@ public class ClassController extends BaseController {
 
             return this.performRedirect(infoForm, baseUrl + "/" + filePath);
         } catch (IOException e) {
-            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
-                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
-            return this.performRedirect(infoForm, baseUrl + "/tams");
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 
@@ -769,9 +785,11 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        if (infoForm.getClassList() == null) {
-//            examForm.setErrMsg("导出内容为空");
-            return this.showDialog("errWarnDialog", true, infoForm);
+        if (infoForm.getClassList() == null || infoForm.getClassList().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getClassList().get(0).getId() == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();

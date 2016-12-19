@@ -726,9 +726,11 @@ public class TaController extends BaseController {
         TaInfoForm infoForm = (TaInfoForm) form;
         super.baseStart(infoForm);
 
-        if (infoForm.getAllTaInfo() == null) {
-//            examForm.setErrMsg("导出内容为空");
-            return this.showDialog("errWarnDialog", true, infoForm);
+        if (infoForm.getAllTaInfo() == null || infoForm.getAllTaInfo().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getAllTaInfo().get(0).getId() == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         List<TaInfoViewObject> taList = infoForm.getAllTaInfo();
@@ -742,9 +744,9 @@ public class TaController extends BaseController {
 
             return this.performRedirect(infoForm, baseUrl + "/" + filePath);
         } catch (IOException e) {
-            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
-                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
-            return this.performRedirect(infoForm, baseUrl + "/tams");
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 
@@ -763,9 +765,11 @@ public class TaController extends BaseController {
         TaInfoForm infoForm = (TaInfoForm) form;
         super.baseStart(infoForm);
 
-        if (infoForm.getAllTaInfo() == null) {
-//            examForm.setErrMsg("导出内容为空");
-            return this.showDialog("errWarnDialog", true, infoForm);
+        if (infoForm.getAllTaInfo() == null || infoForm.getAllTaInfo().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getAllTaInfo().get(0).getId() == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         List<TaInfoViewObject> taList = infoForm.getAllTaInfo();
@@ -797,8 +801,9 @@ public class TaController extends BaseController {
 
             filePath = PDFService.printNormalTable("助教信息列表", header, Content, fileName);
         } catch (DocumentException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            infoForm.setErrMsg("系统导出PDF文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);

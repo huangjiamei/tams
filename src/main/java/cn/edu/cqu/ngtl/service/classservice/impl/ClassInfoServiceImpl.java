@@ -123,7 +123,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         else if (userInfoService.isStudent(uId)) {
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
             List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
-            if(utStudentTimetables!=null||utStudentTimetables.size()!=0) {
+            if(utStudentTimetables!=null&&utStudentTimetables.size()!=0) {
                 for (UTStudentTimetable utStudentTimetable : utStudentTimetables) {
                     classIds.add(utStudentTimetable.getClassId());
                 }

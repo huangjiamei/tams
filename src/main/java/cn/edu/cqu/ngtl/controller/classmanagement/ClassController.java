@@ -796,8 +796,9 @@ public class ClassController extends BaseController {
 
             filePath = PDFService.printNormalTable("课程信息列表", header, Content, fileName);
         } catch (DocumentException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
+            infoForm.setErrMsg("系统导出PDF文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);

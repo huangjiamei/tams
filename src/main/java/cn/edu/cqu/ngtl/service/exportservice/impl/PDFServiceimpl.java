@@ -75,7 +75,7 @@ public class PDFServiceimpl implements IPDFService {
         String filePath = null;
         try {
             String rootPath = getServletContext().getRealPath("/");
-            File folder = new File(rootPath + File.separator + "exportfolder");
+            File folder = new File(rootPath + "exportfolder");
             if (!folder.exists() || !folder.isDirectory()) {
                 folder.mkdir();
             }

@@ -135,14 +135,14 @@ public class ExcelServiceImpl implements ExcelService {
 //        String rootPath = System.getProperty("catalina.home");
         String rootPath = getServletContext().getRealPath("/");
 
-        File folder = new File(rootPath + File.separator + folderPath);
+        File folder = new File(rootPath+ folderPath);
         if (!folder.exists() || !folder.isDirectory()) {
             folder.mkdir();
         }
 
-        String filePath=File.separator + folderPath + File.separator + filename;
+        String filePath= folderPath + File.separator + filename;
 
-        FileOutputStream out = new FileOutputStream(rootPath+filePath);
+        FileOutputStream out = new FileOutputStream(rootPath + File.separator + filePath);
         wb.write(out);
         out.close();
 
@@ -213,9 +213,9 @@ public class ExcelServiceImpl implements ExcelService {
             folder.mkdir();
         }
 
-        String filePath=File.separator + folderPath + File.separator + filename;
+        String filePath= folderPath + File.separator + filename;
 
-        FileOutputStream out = new FileOutputStream(rootPath+filePath);
+        FileOutputStream out = new FileOutputStream(rootPath + File.separator + filePath);
         wb.write(out);
         out.close();
 

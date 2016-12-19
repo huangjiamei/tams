@@ -93,6 +93,9 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
                 TAMSTaApplication.class,
                 criteria.build()
         );
+        if(qr.getResults().size()==0||qr.getResults()==null) {
+            return null;
+        }
         return qr.getResults().get(0);
     }
 

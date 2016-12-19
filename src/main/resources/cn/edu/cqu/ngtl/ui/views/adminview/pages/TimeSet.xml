@@ -155,6 +155,7 @@
 
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="保存"
+                                                                                                          p:additionalCssClasses="icon-save bg-success box-btngroup"
                                                                                                           p:methodToCall="addNewTimeSet"
                                                                                                           p:refreshId="TimeSetPage"/>
                                                                                                 </list>
@@ -228,23 +229,15 @@
                                                                     <property
                                                                             name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-ActionImage"
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:ajaxSubmit="false"
                                                                                   p:methodToCall="updateTimeSetting"
-                                                                                  p:refreshId="timeSet">
-                                                                                <property
-                                                                                        name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-ActionImage"
-                                                                                  p:methodToCall="deleteTimeSetting">
-                                                                                <property
-                                                                                        name="actionImage">
-                                                                                    <bean parent="Uif-Image"
-                                                                                          p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
-                                                                                </property>
-                                                                            </bean>
+                                                                                  p:refreshId="timeSet"
+                                                                                  p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:ajaxSubmit="false"
+                                                                                  p:methodToCall="deleteTimeSetting"
+                                                                                  p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

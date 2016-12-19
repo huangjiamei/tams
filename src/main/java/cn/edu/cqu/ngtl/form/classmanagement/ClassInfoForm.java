@@ -80,7 +80,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private List<ClassTeacherViewObject> classList;
 
-    Boolean checkedClassListAll;
+    Boolean checkedClassListAll;//课程页面全选
 
     private ClassDetailInfoViewObject detailInfoViewObject;
 

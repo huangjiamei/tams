@@ -108,7 +108,7 @@
 													<bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-body">
 														<property name="items">
 															<list>
-																<bean parent="Uif-TableCollectionSection">
+																<bean parent="Uif-TableCollectionSection" p:style="width:100%">
 																	<property name="collectionObjectClass"
 																			  value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T" />
 																	<property name="propertyName" value="URMPkrimRoleTs" />
@@ -155,10 +155,10 @@
 																		<list>
 																			<bean parent="Uif-PrimaryActionButton"
 																				  p:actionLabel="保存" p:methodToCall="saveURMPuser"
-																				  p:additionalCssClasses="bg-success tamsbtn"/>
+																				  p:additionalCssClasses="icon-save bg-success box-btngroup"/>
 																			<bean parent="Uif-PrimaryActionButton"
 																				  p:actionLabel="返回" p:navigateToPageId="pageUserRoleManager"
-																				  p:additionalCssClasses="bg-grey tamsbtn"/>
+																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup"/>
 																		</list>
 																	</property>
 																</bean>

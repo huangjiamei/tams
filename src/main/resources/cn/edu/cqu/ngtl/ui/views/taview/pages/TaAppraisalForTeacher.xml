@@ -187,10 +187,26 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                      p:actionLabel="提交"
-                                                                      p:actionImagePlacement="LEFT"
-                                                                      p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-HorizontalBoxSection">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="提交"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:methodToCall="xxxx"
+                                                                                  p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup">
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>

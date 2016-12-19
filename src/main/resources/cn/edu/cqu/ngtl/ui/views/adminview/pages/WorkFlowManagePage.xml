@@ -118,14 +118,14 @@
                                                                                               p:actionLabel="返回"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:navigateToPageId="pageConsole"
-                                                                                              p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+                                                                                              p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                                         </bean>
                                                                                         <!--这个保存按钮只是调用js将json数据放到中转站中-->
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="保存"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:actionScript="save('@{workflowRelationTable}')"
-                                                                                              p:additionalCssClasses="icon-save bg-success tamsbtn">
+                                                                                              p:additionalCssClasses="icon-save bg-success box-btngroup">
                                                                                         </bean>
                                                                                     </list>
                                                                                 </property>

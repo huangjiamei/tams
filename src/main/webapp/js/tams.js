@@ -1341,9 +1341,11 @@ function refreshPage(){
 
 //checkbox全选
 function checkedAll(id) {
-    jQuery("#"+id).click();
+        jQuery("#"+id).click();
+        //jQuery("#"+id).parent().parent().siblings().find("tbody").find("td").addClass("selected");//为选中项添加背景颜色
 }
 
+//助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
 function getDetailPage(){
     var listLength=jQuery('#taListTable tbody>tr').length;
     for(var i=0;i<listLength;i++){

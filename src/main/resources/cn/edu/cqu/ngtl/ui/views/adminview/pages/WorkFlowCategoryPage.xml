@@ -112,7 +112,7 @@
                                                                                   p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加类别"
+                                                                                  p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                                 <property name="confirmationDialog">
@@ -193,7 +193,7 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:methodToCall="modifyWorkFlowCategory"
-                                                                                              p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
+                                                                                              p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">

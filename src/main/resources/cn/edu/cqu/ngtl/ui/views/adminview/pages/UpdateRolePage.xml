@@ -35,15 +35,9 @@
 		  p:additionalCssClasses="container" >
 		<property name="items">
 			<list>
-				<bean id="UpdateRolePageHeader" parent="Uif-HorizontalBoxSection"
-					p:additionalCssClasses="pageHeaderBox">
-					<property name="items">
-						<list>
-							<bean parent="Uif-Icon" p:iconClass="icon-pencil" />
-							<bean parent="Uif-MessageField" p:messageText="编辑管理员权限"
-								p:additionalCssClasses="headerTitle" />
-						</list>
-					</property>
+				<!-- 左上角 -->
+				<bean id="UpdateRolePageHeader" parent="Uif-VerticalBoxSection"
+					  p:onDocumentReadyScript="initContentHeader('UpdateRolePageHeader','fa fa-tachometer','管理台','编辑管理员权限')">
 				</bean>
 
 				<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-info">
@@ -131,10 +125,18 @@
 										<bean parent="Uif-HorizontalFieldGroup" p:style="margin-top: 10px;">
 											<property name="items">
 												<list>
-													<bean parent="Uif-PrimaryActionButton" p:actionLabel="保存"
-														p:methodToCall="saveExmKrimRole" />
-													<bean parent="Uif-PrimaryActionButton" p:actionLabel="返回"
-														p:navigateToPageId="pageRoleManager" />
+													<bean parent="Uif-PrimaryActionButton"
+														  p:actionLabel="保存"
+														  p:actionImagePlacement="LEFT"
+														  p:navigateToPageId="saveExmKrimRole"
+														  p:additionalCssClasses="icon-save bg-success box-btngroup">
+													</bean>
+													<bean parent="Uif-PrimaryActionButton"
+														  p:actionLabel="返回"
+														  p:actionImagePlacement="LEFT"
+														  p:navigateToPageId="pageRoleManager"
+														  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
+													</bean>
 												</list>
 											</property>
 										</bean>

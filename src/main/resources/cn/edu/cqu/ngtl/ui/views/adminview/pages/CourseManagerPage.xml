@@ -106,9 +106,9 @@
                                                                     <list>
                                                                         <!--右上角btnlist-->
                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                              p:actionLabel="导出EXCEL"
+                                                                              p:actionLabel="EXCEL"
                                                                               p:methodToCall=""
-                                                                              p:additionalCssClasses="bg-orange box-btngroup"/>
+                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
                                                                     </list>
                                                                 </property>
                                                             </bean>
@@ -188,19 +188,15 @@
                                                                                     <!--<bean parent="Uif-EditLineInDialogSaveAction"/>-->
                                                                                     <!--<bean parent="Uif-DeleteLineAction"-->
                                                                                     <!--p:confirmationPromptText="Are you sure you wish to delete line: @{#line.field4}?"/>-->
-                                                                                    <bean parent="Uif-ActionImage" p:methodToCall="updateCourseManager">
-                                                                                        <property name="actionImage">
-                                                                                            <bean parent="Uif-Image"
-                                                                                                  p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-                                                                                        </property>
-                                                                                    </bean>
-                                                                                    <bean parent="Uif-ActionImage">
+                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                          p:ajaxSubmit="false"
+                                                                                          p:methodToCall="updateCourseManager"
+                                                                                          p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
+                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                          p:ajaxSubmit="false"
+                                                                                          p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                         <property name="confirmationDialog">
                                                                                             <ref bean="confirmDeleteManagerDialog" />
-                                                                                        </property>
-                                                                                        <property name="actionImage">
-                                                                                            <bean parent="Uif-Image"
-                                                                                                  p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                         </property>
                                                                                     </bean>
                                                                                 </list>

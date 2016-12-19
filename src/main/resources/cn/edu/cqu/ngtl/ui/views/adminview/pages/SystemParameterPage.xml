@@ -168,11 +168,20 @@
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:style="margin-bottom:10px;float:right!important"
-                                                                                  p:actionLabel="保存"
-                                                                                  p:methodToCall="syncInfo"
-                                                                            /><!--p:refreshId="xxxx"-->
+                                                                            <bean parent="Uif-HorizontalBoxSection"
+                                                                                  p:additionalCssClasses="box-header">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:style="margin-bottom:10px;float:right!important"
+                                                                                              p:actionLabel="保存"
+                                                                                              p:additionalCssClasses="icon-save bg-success box-btngroup"
+                                                                                              p:methodToCall="syncInfo"
+                                                                                        /><!--p:refreshId="xxxx"-->
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -197,6 +206,7 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:style="margin-bottom:10px;float:right!important"
                                                                                               p:actionLabel="保存"
+                                                                                              p:additionalCssClasses="icon-save bg-success box-btngroup"
                                                                                               p:methodToCall="xxxx"
                                                                                         />
                                                                                     </list>

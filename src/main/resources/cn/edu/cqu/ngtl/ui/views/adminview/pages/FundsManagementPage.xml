@@ -442,7 +442,7 @@
                                                                                                         <property name="renderAddLine"
                                                                                                                 value="false"/>
                                                                                                         <property name="renderLineActions"
-                                                                                                                value="true"/>
+                                                                                                                value="false"/>
                                                                                                         <property name="readOnly"
                                                                                                                 value="false"/>
 
@@ -477,21 +477,6 @@
                                                                                                                       p:label="交通补贴"
                                                                                                                       p:propertyName="trafficFunding"
                                                                                                                       p:sortAs="numeric"/>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                        <property name="lineActions">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-HorizontalBoxSection">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                  p:ajaxSubmit="false"
-                                                                                                                                  p:style="display:none;"
-                                                                                                                                  p:methodToCall="savaFundsDraft"
-                                                                                                                                  p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
@@ -762,10 +747,6 @@
                                                                                                                                   p:propertyName="departmentTrafficFunds" p:additionalCssClasses="searchBoxWidth"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="departmentTotalFunds"/>
-                                                                                                                            <!--占位-->
-                                                                                                                            <bean parent="Uif-MessageField"
-                                                                                                                                  p:additionalCssClasses="hidden-fields"
-                                                                                                                                  p:messageText="占位"/>
 
                                                                                                                             <!--按钮-->
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
@@ -800,7 +781,7 @@
                                                                                                                             value="false"/>
                                                                                                                     <property
                                                                                                                             name="renderLineActions"
-                                                                                                                            value="true"/>
+                                                                                                                            value="false"/>
                                                                                                                     <property
                                                                                                                             name="readOnly"
                                                                                                                             value="@{!#form.academicAffairManager}"/>
@@ -847,23 +828,6 @@
                                                                                                                                   p:propertyName="total"
                                                                                                                                   p:sortAs="numeric"/>
 
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                    <property
-                                                                                                                            name="lineActions">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection">
-                                                                                                                                <property
-                                                                                                                                        name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                              p:ajaxSubmit="false"
-                                                                                                                                              p:style="display:none;"
-                                                                                                                                              p:methodToCall="xxxx"
-                                                                                                                                              p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
                                                                                                                         </list>
                                                                                                                     </property>
                                                                                                                 </bean>

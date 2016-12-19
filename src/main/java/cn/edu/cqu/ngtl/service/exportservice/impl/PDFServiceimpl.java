@@ -24,6 +24,8 @@ import com.itextpdf.text.pdf.PdfStamper;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.springframework.stereotype.Service;
 
+import static org.kuali.rice.krad.uif.freemarker.FreeMarkerInlineRenderBootstrap.getServletContext;
+
 /**
  * Created by tangjing on 2016/12/15.
  */
@@ -67,15 +69,21 @@ public class PDFServiceimpl implements IPDFService {
     }
 
     @Override
-    public void printNormalTable(String title, String[] headers, List<String[]> T, String fileName)
+    public String printNormalTable(String title, String[] headers, List<String[]> T, String fileName)
             throws DocumentException, IOException {
         Document document = new Document();
+        String filePath = null;
         try {
-            String rootPath = System.getProperty("catalina.home");
-            String dir = rootPath + File.separator + "webapps" + File.separator + "tams" + File.separator;
+            String rootPath = getServletContext().getRealPath("/");
+            File folder = new File(rootPath + File.separator + "exportfolder");
+            if (!folder.exists() || !folder.isDirectory()) {
+                folder.mkdir();
+            }
             //如果文件存在则在文件后追加
-            OutputStream out = new FileOutputStream(dir + fileName + ".pdf");
+            filePath = "exportfolder"+ File.separator + fileName + ".pdf";
+            OutputStream out = new FileOutputStream(rootPath+ File.separator + filePath);
             PdfWriter.getInstance(document, out);
+
         } catch (FileNotFoundException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
@@ -121,8 +129,10 @@ public class PDFServiceimpl implements IPDFService {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
-        document.close();
+        finally {
+            document.close();
+        }
+        return filePath;
     }
 
     @Override

@@ -61,50 +61,26 @@ public class ClassTeacherViewObject {
     @Transient
     public static String[] getAttrTittles(){
         String[] attrTittles={
-                "序号"
-                ,"姓名"
-                ,"性别"
-                ,"学号"
-                ,"证件类型"
-                ,"证件号码"
-                ,"学历"
-                ,"学制"
-                ,"入学年份"
-                ,"年级"
-                ,"院系"
-                ,"专业"
-                ,"班级"
-                ,"学籍所在校"
-                ,"科目编号"
-                ,"电子邮箱"
-                ,"学籍所在校"
-                ,"科目编号"
-                ,"电子邮箱"
+                "课程名称"
+                ,"课程编号"
+                ,"教学班"
+                ,"教师"
+                ,"耗费工时"
+                ,"学院"
+                ,"状态"
         };
         return attrTittles;
     }
     @Transient
     public String[] getContents(){
-        String[] contents=new String[18];
-        contents[0]=getDepartmentName();
-        contents[1]=getCourseName();
-        contents[2]=getCourseCode();
-        contents[3]=getClassNumber();
-        contents[4]=getInstructorName();
+        String[] contents=new String[7];
+        contents[0]=getCourseName();
+        contents[1]=getCourseCode();
+        contents[2]=getClassNumber();
+        contents[3]=getInstructorName();
+        contents[4]=getWorkTime();
         contents[5]=getDepartmentName();
-        contents[6]=getCourseName();
-        contents[7]=getCourseCode();
-        contents[8]=getClassNumber();
-        contents[9]=getInstructorName();
-        contents[10]=getDepartmentName();
-        contents[11]=getCourseName();
-        contents[12]=getCourseCode();
-        contents[13]=getClassNumber();
-        contents[14]=getInstructorName();
-        contents[15]=getDepartmentName();
-        contents[16]=getCourseName();
-        contents[17]=getCourseCode();
-        contents[18]=getStatus();
+        contents[6]=getStatus();
         return contents;
     }
 

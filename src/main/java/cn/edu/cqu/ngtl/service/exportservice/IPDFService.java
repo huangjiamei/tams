@@ -23,7 +23,7 @@ public interface IPDFService {
      * @param String fileName    文件名
      * @return
      */
-    public void printNormalTable(String title,String[] headers,List<String[]> T,String fileName)throws DocumentException, IOException;
+    public String printNormalTable(String title,String[] headers,List<String[]> T,String fileName)throws DocumentException, IOException;
 
     /**
      *

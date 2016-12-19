@@ -453,6 +453,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaId(ta.getTaId());
             viewObject.setClassid(ta.getTaClassId());
             viewObject.setApplicationReason(ta.getApplicationNote());
+            viewObject.setTaCategory(ta.getTamsTaCategory().getName());
             UTCourse course = null;
             List<UTInstructor> instructors = null;
             if(ta.getTaClass() != null) {

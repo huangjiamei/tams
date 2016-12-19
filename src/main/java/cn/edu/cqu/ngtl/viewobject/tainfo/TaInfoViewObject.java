@@ -32,6 +32,8 @@ public class TaInfoViewObject {
 
     private String taMasterMajorName;
 
+    private String taCategory;
+
     private String advisorName;
 
     private String contactPhone;
@@ -258,5 +260,13 @@ public class TaInfoViewObject {
 
     public void setStatusId(String statusId) {
         this.statusId = statusId;
+    }
+
+    public String getTaCategory() {
+        return taCategory;
+    }
+
+    public void setTaCategory(String taCategory) {
+        this.taCategory = taCategory;
     }
 }

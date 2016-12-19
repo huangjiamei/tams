@@ -253,9 +253,6 @@ public class ClassController extends BaseController {
             infoForm.setDetailInfoViewObject(detailInfoViewObject);
 
         } catch (Exception e) {
-//            BaseForm baseForm=(BaseForm)form;
-//            baseForm.setErrMsg("哈哈哈哈，出错了！！！！！");
-//            return this.showDialog("refreshPageViewDialog", true, infoForm);
            e.printStackTrace();
         }
         return this.getModelAndView(infoForm, "pageClassInfo");

@@ -746,7 +746,7 @@ public class ClassController extends BaseController {
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                     .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-            return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+            return this.performRedirect(infoForm, baseUrl + "/" + filePath);
         } catch (IOException e) {
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                     .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
@@ -802,7 +802,7 @@ public class ClassController extends BaseController {
         String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
                 .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm, baseUrl + File.separator + filePath);
+        return this.performRedirect(infoForm, baseUrl + "/" + filePath);
     }
 
     /**

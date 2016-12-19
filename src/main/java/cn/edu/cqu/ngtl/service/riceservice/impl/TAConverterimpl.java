@@ -275,7 +275,7 @@ public class TAConverterimpl implements ITAConverter {
 
                 for (UTInstructor instructor : clazz.getUtInstructors()) {
                     countTeacherNum++;
-                    sb.append(instructor.getName() + ",\n");
+                    sb.append(instructor.getName() + " ");
                 }
             }
             classDetailInfoViewObject.setInstructor(sb.toString());
@@ -287,10 +287,10 @@ public class TAConverterimpl implements ITAConverter {
         CMProgram program = new CMProgram();
 
         if (course != null) {
-            classDetailInfoViewObject.setCourseName(course.getName());
-            classDetailInfoViewObject.setCourseId(course.getCodeR());
-            classDetailInfoViewObject.setClassHour(course.getHour());   //目前为空
-            classDetailInfoViewObject.setCredit(course.getCredit() + "");
+            classDetailInfoViewObject.setCourseName(course.getName()==null?" ":course.getName());
+            classDetailInfoViewObject.setCourseId(course.getCodeR()==null?" ":course.getCodeR());
+            classDetailInfoViewObject.setClassHour(course.getHour()==null?" ":course.getHour());   //目前为空
+            classDetailInfoViewObject.setCredit(course.getCredit()==null?" ":course.getCredit());
             programCourse = courseInfoService.getProgramCourseByCourseId(course.getId());
         }
 

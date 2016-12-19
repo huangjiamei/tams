@@ -5,12 +5,10 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
-import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
-import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
@@ -694,6 +692,18 @@ public class TaController extends BaseController {
     public ModelAndView showRevocationDialog(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         super.baseStart(taInfoForm);
+        List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
+
+        List<TaInfoViewObject> checkedList = new ArrayList<>();
+        for(TaInfoViewObject per : taList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        if(checkedList.size()==0){
+            taInfoForm.setErrMsg("请选择需要评优的助教！");
+            return this.showDialog("refreshPageViewDialog",true,taInfoForm);
+        }
 
         return this.showDialog("confirmAppraiseDialog" ,true,taInfoForm);
     }

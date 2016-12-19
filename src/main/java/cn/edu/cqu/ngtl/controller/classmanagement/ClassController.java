@@ -122,11 +122,24 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageClassList");
     }
 
+
     @RequestMapping(params = "methodToCall=showApproveDialog")
     public ModelAndView showApproveDialog(@ModelAttribute("KualiForm") UifFormBase form,
                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        List<ClassTeacherViewObject> classList = infoForm.getClassList();
+        //遍历所有list，找到选中的行
+        List<ClassTeacherViewObject> checkedList = new ArrayList<>();
+        for(ClassTeacherViewObject per : classList) {
+            if(per.isChecked())
+                checkedList.add(per);
+        }
+        if(checkedList.size()==0){
+            infoForm.setErrMsg("请选择需要审批的课程！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         return this.showDialog("approveDialog",true,infoForm);
     }
 

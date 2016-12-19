@@ -94,6 +94,11 @@ public class TAConverterimpl implements ITAConverter {
 
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
+        if(informationlist == null || informationlist.isEmpty()) {
+            List<ClassTeacherViewObject> viewObjects = new ArrayList<>(1);
+            viewObjects.add(new ClassTeacherViewObject());
+            return viewObjects;
+        }
         List<ClassTeacherViewObject> viewObjects = new ArrayList<>(informationlist.size());
         if(informationlist.size() > 10) { //需要取出全部数据的阈值，具体数值待调整。
             /**

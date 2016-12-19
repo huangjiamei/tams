@@ -90,9 +90,13 @@ public class AdminConverterimpl implements IAdminConverter {
             //暂时缺失的属性
             taFundingViewObject.setAssignedFunding(ta.getAssignedFunding()==null?"0":ta.getAssignedFunding());
             taFundingViewObject.setBonus(ta.getBonus()==null?"0":ta.getBonus());
-            taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getBonus());
-            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getBonus());
-            taFundingViewObject.setTaType("博士");
+            taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getPhdFunding());
+            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getTravelSubsidy());
+            if(ta.getTamsTaCategory() != null){
+                taFundingViewObject.setTaType(ta.getTamsTaCategory().getName());
+            }
+            else
+                taFundingViewObject.setTaType("缺失");
             Integer total =  (Integer.parseInt(taFundingViewObject.getAssignedFunding())+
                     Integer.parseInt(taFundingViewObject.getBonus())+
                     Integer.parseInt(taFundingViewObject.getPhdFunding())+
@@ -133,18 +137,18 @@ public class AdminConverterimpl implements IAdminConverter {
             detailFundingViewObject.setBankId("缺失");
             detailFundingViewObject.setBankName("缺失");
             detailFundingViewObject.setIdentity(ta.getTa().getIdNumber());
-            detailFundingViewObject.setMonthlySalary1(ta.getMonth1());
-            detailFundingViewObject.setMonthlySalary2(ta.getMonth2());
-            detailFundingViewObject.setMonthlySalary3(ta.getMonth3());
-            detailFundingViewObject.setMonthlySalary4(ta.getMonth4());
-            detailFundingViewObject.setMonthlySalary5(ta.getMonth5());
-            detailFundingViewObject.setMonthlySalary6(ta.getMonth6());
-            detailFundingViewObject.setMonthlySalary7(ta.getMonth7());
-            detailFundingViewObject.setMonthlySalary8(ta.getMonth8());
-            detailFundingViewObject.setMonthlySalary9(ta.getMonth9());
-            detailFundingViewObject.setMonthlySalary10(ta.getMonth10());
-            detailFundingViewObject.setMonthlySalary11(ta.getMonth11());
-            detailFundingViewObject.setMonthlySalary12(ta.getMonth12());
+            detailFundingViewObject.setMonthlySalary1(ta.getMonth1()==null ? "0" : ta.getMonth1());
+            detailFundingViewObject.setMonthlySalary2(ta.getMonth2()==null ? "0" : ta.getMonth2());
+            detailFundingViewObject.setMonthlySalary3(ta.getMonth3()==null ? "0" : ta.getMonth3());
+            detailFundingViewObject.setMonthlySalary4(ta.getMonth4()==null ? "0" : ta.getMonth4());
+            detailFundingViewObject.setMonthlySalary5(ta.getMonth5()==null ? "0" : ta.getMonth5());
+            detailFundingViewObject.setMonthlySalary6(ta.getMonth6()==null ? "0" : ta.getMonth6());
+            detailFundingViewObject.setMonthlySalary7(ta.getMonth7()==null ? "0" : ta.getMonth7());
+            detailFundingViewObject.setMonthlySalary8(ta.getMonth8()==null ? "0" : ta.getMonth8());
+            detailFundingViewObject.setMonthlySalary9(ta.getMonth9()==null ? "0" : ta.getMonth9());
+            detailFundingViewObject.setMonthlySalary10(ta.getMonth10()==null ? "0" : ta.getMonth10());
+            detailFundingViewObject.setMonthlySalary11(ta.getMonth11()==null ? "0" : ta.getMonth11());
+            detailFundingViewObject.setMonthlySalary12(ta.getMonth12()==null ? "0" : ta.getMonth12());
             Integer total = 0;
 
 
@@ -173,8 +177,11 @@ public class AdminConverterimpl implements IAdminConverter {
     //转换课程经费
     public List<ClassFundingViewObject> combineClassFunding(List<ClassFundingViewObject> list) {
         if (list == null || list.size() == 0) {
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<ClassFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new ClassFundingViewObject());
+            return nullObject;
         } else {
             for (ClassFundingViewObject listone : list) {
                 Integer total = Integer.parseInt(listone.getApplyFunding()) + Integer.parseInt(listone.getAssignedFunding()) + Integer.parseInt(listone.getPhdFunding()) + Integer.parseInt(listone.getBonus()) + Integer.parseInt(listone.getTravelSubsidy());
@@ -230,8 +237,11 @@ public class AdminConverterimpl implements IAdminConverter {
     @Override
     public List<TaFundingViewObject> combineTaFunding(List<TaFundingViewObject> list) {
         if(list == null || list.size() ==0) {
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<TaFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new TaFundingViewObject());
+            return nullObject;
         }
         if(list.size() == 1){
             Integer total = Integer.parseInt(list.get(0).getAssignedFunding()) + Integer.parseInt(list.get(0).getPhdFunding()) + Integer.parseInt(list.get(0).getBonus()) + Integer.parseInt(list.get(0).getTravelSubsidy());
@@ -257,8 +267,11 @@ public class AdminConverterimpl implements IAdminConverter {
     @Override
     public List<DetailFundingViewObject> combineDetailFunding(List<DetailFundingViewObject> list) {
         if(list == null || list.size() == 0){
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<DetailFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new DetailFundingViewObject());
+            return nullObject;
         }
         if (list.size() == 1)
             return list;

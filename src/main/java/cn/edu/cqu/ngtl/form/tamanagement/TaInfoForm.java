@@ -41,6 +41,9 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     Boolean checkedTaListAll;
 
+    private String indexTaListPage;//页面table的index
+
+
     {
         // 赋初始空值测试
         conditionTAList.add(new MyTaViewObject());
@@ -497,5 +500,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setCheckedTaListAll(Boolean checkedTaListAll) {
         this.checkedTaListAll = checkedTaListAll;
+    }
+
+    public String getIndexTaListPage() {
+        return indexTaListPage;
+    }
+
+    public void setIndexTaListPage(String indexTaListPage) {
+        this.indexTaListPage = indexTaListPage;
     }
 }

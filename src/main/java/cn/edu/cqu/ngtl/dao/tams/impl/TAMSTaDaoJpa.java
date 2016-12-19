@@ -353,7 +353,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         List<TaFundingViewObject> list = new ArrayList<>();
         em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         //if(countNull != 12) {
-            Query qr = em.createNativeQuery(" SELECT d.NAME, s.UNIQUEID, s.NAME, co.NAME, co.CODE, t.TA_TYPE, t.ASSIGNED_FUNDING, t.PHD_FUNDING, t.TRAVEL_SUBSIDY, t.BONUS, t.TA_CLASS, i.NAME from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("Number")+"' AND s.NAME LIKE '"+conditions.get("Name")+"' AND t.TA_TYPE LIKE '"+conditions.get("Type")+"' AND t.ASSIGNED_FUNDING LIKE '"+conditions.get("AssignedFunding")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("PhdFunding")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' AND t.BONUS LIKE '"+conditions.get("Bonus")+"' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("CourseName")+"' AND co.CODE LIKE '"+conditions.get("CourseCode")+"' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID AND d.UNIQUEID LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS_INSTRUCTOR ci ON t.TA_CLASS = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.UNIQUEID LIKE '"+conditions.get("user")+"' ");
+            Query qr = em.createNativeQuery(" SELECT d.NAME, s.UNIQUEID, s.NAME, co.NAME, co.CODE, tc.NAME, t.ASSIGNED_FUNDING, t.PHD_FUNDING, t.TRAVEL_SUBSIDY, t.BONUS, t.TA_CLASS, i.NAME from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("Number")+"' AND s.NAME LIKE '"+conditions.get("Name")+"' AND t.ASSIGNED_FUNDING LIKE '"+conditions.get("AssignedFunding")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("PhdFunding")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' AND t.BONUS LIKE '"+conditions.get("Bonus")+"' JOIN TAMS_TA_CATEGORY tc ON t.TA_TYPE = tc.UNIQUEID AND tc.NAME LIKE '"+conditions.get("Type")+"' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("CourseName")+"' AND co.CODE LIKE '"+conditions.get("CourseCode")+"' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID AND d.UNIQUEID LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS_INSTRUCTOR ci ON t.TA_CLASS = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.UNIQUEID LIKE '"+conditions.get("user")+"' ");
             List<Object> columns = qr.getResultList();
             for(Object column : columns) {
                 Object[] tafunding = (Object[]) column;
@@ -363,11 +363,11 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 taFundingViewObject.setTaName(tafunding[2].toString());
                 taFundingViewObject.setCourseName(tafunding[3].toString());
                 taFundingViewObject.setCourseCode(tafunding[4].toString());
-                taFundingViewObject.setTaType("博士");
-                taFundingViewObject.setAssignedFunding(tafunding[6].toString());
-                taFundingViewObject.setPhdFunding(tafunding[7].toString());
-                taFundingViewObject.setTravelSubsidy(tafunding[8].toString());
-                taFundingViewObject.setBonus(tafunding[9].toString());
+                taFundingViewObject.setTaType(tafunding[5].toString());
+                taFundingViewObject.setAssignedFunding(tafunding[6].toString() == null ? "0" : tafunding[6].toString());
+                taFundingViewObject.setPhdFunding(tafunding[7].toString() == null ? "0" : tafunding[7].toString());
+                taFundingViewObject.setTravelSubsidy(tafunding[8].toString() == null ? "0" : tafunding[8].toString());
+                taFundingViewObject.setBonus(tafunding[9].toString() == null ? "0" : tafunding[9].toString());
                 taFundingViewObject.setClassNbr(tafunding[10].toString()); //converter中会用到
                 taFundingViewObject.setInstrucotrName(tafunding[11].toString());
                 list.add(taFundingViewObject);

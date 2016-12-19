@@ -734,7 +734,7 @@ public class AdminServiceImpl implements IAdminService{
     public String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects){
         Long totalApproved = 0l;
         for(DepartmentFundingViewObject departmentFundingViewObject:departmentFundingViewObjects){
-            totalApproved+=Long.valueOf(departmentFundingViewObject.getActualFunding());
+            totalApproved+=Integer.parseInt(departmentFundingViewObject.getActualFunding());
         }
         return totalApproved.toString();
     }

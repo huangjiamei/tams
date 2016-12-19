@@ -224,6 +224,7 @@ public class TAServiceimpl implements ITAService {
             //预处理录入信息
             newTa.setSessionId(sessionDao.getCurrentSession().getId().toString());
             newTa.setStatus(TA_STATUS.LIVING);
+            //新添默认数据
             newTa.setAssignedFunding("0");
             newTa.setApplicationNote("0");
             newTa.setPhdFunding("0");
@@ -241,6 +242,17 @@ public class TAServiceimpl implements ITAService {
             newTa.setMonth10("0");
             newTa.setMonth11("0");
             newTa.setMonth12("0");
+            //newTa.setType("1");
+            UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
+            if(utStudent != null){
+                if(utStudent.getProgram() != null){
+                    if(utStudent.getProgram().getDuration() == 3){
+                        newTa.setType("1");
+                    }
+                }
+                else
+                    newTa.setType("缺失");
+            }
             TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
             List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(function.getId());
             if(allStatus != null && !allStatus.isEmpty())

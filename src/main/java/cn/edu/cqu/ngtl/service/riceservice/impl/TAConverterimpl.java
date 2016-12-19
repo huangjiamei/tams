@@ -582,6 +582,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
+
             viewObjects.add(viewObject);
         }
         return viewObjects;
@@ -749,8 +750,11 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<DepartmentFundingViewObject> departmentFundingToViewObject(List<TAMSDeptFunding> allFundingBySession) {
         if(allFundingBySession == null || allFundingBySession.size() == 0) {
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<DepartmentFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new DepartmentFundingViewObject());
+            return nullObject;
         }
         List<DepartmentFundingViewObject> viewObjects = new ArrayList<>();
         if(allFundingBySession == null || allFundingBySession.size() == 0) {
@@ -799,8 +803,11 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSUniversityFunding> allFundingBySession) {
         if(allFundingBySession == null || allFundingBySession.size() == 0){
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<SessionFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new SessionFundingViewObject());
+            return nullObject;
         }
         List<SessionFundingViewObject> viewObjects = new ArrayList<>(allFundingBySession.size());
 

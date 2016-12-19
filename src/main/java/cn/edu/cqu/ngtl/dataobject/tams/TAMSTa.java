@@ -26,6 +26,11 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name="TA_TYPE")
     private String type;
 
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name="TA_TYPE", insertable=false, updatable=false)
+    private TAMSTaCategory tamsTaCategory;
+
     @Column(name = "TA_CLASS")
     private String taClassId;
 
@@ -411,5 +416,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setMonth12(String month12) {
         this.month12 = month12;
+    }
+
+    public TAMSTaCategory getTamsTaCategory() {
+        return tamsTaCategory;
+    }
+
+    public void setTamsTaCategory(TAMSTaCategory tamsTaCategory) {
+        this.tamsTaCategory = tamsTaCategory;
     }
 }

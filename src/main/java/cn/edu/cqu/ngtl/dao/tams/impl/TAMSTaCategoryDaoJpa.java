@@ -9,7 +9,9 @@ import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
@@ -66,5 +68,15 @@ public class TAMSTaCategoryDaoJpa implements TAMSTaCategoryDao {
         KRADServiceLocator.getDataObjectService().delete(tamsTaCategory);
 
         return true;
+    }
+
+    @Override
+    public Map getNameAndIdMap(){
+        Map result = new HashMap();
+        List<TAMSTaCategory> tamsTaCategories = this.selectAll();
+        for(TAMSTaCategory tamsTaCategory:tamsTaCategories){
+            result.put(tamsTaCategory.getId(),tamsTaCategory.getName());
+        }
+    return result;
     }
 }

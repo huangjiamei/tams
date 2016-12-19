@@ -23,6 +23,7 @@ public class TaClassificationFinder extends KeyValuesBase {
         if(blankOption){
             keyValues.add(new ConcreteKeyValue("", ""));
         }
+        keyValues.add(new ConcreteKeyValue("未评价", "未评价"));
         keyValues.add(new ConcreteKeyValue("合格", "合格"));
         keyValues.add(new ConcreteKeyValue("优秀", "优秀"));
         return keyValues;

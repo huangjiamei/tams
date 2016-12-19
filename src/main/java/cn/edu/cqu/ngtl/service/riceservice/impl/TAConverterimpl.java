@@ -453,6 +453,7 @@ public class TAConverterimpl implements ITAConverter {
             List<UTInstructor> instructors = null;
             if(ta.getTaClass() != null) {
                 viewObject.setClassNumber(ta.getTaClass().getClassNumber());
+                viewObject.setCredit(ta.getTaClass().getCourseOffering().getCourse().getCredit());
                 instructors = ta.getTaClass().getUtInstructors();
                 StringBuilder sb = new StringBuilder();
                 if(instructors != null)
@@ -484,13 +485,9 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
-
-
             viewObject.setVitality("缺失");
-
             viewObjects.add(viewObject);
         }
-
         return viewObjects;
     }
 

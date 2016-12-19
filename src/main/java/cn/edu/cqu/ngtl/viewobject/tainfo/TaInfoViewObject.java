@@ -52,6 +52,8 @@ public class TaInfoViewObject {
 
     private String score;
 
+    private String credit;
+
     public static String[] getAttrTittles() {
         String[] attrTittles={
                 "姓名"
@@ -268,5 +270,13 @@ public class TaInfoViewObject {
 
     public void setTaCategory(String taCategory) {
         this.taCategory = taCategory;
+    }
+
+    public String getCredit() {
+        return credit;
+    }
+
+    public void setCredit(String credit) {
+        this.credit = credit;
     }
 }

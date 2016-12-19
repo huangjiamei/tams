@@ -725,7 +725,7 @@ public class AdminServiceImpl implements IAdminService{
         List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         Long setted = 0l;
         for(TAMSDeptFunding deptFunding : deptFundings) {
-            setted = setted + Long.parseLong(deptFunding.getActualFunding());
+            setted = setted + Integer.parseInt(deptFunding.getActualFunding());
         }
         return setted.toString();
     }
@@ -734,7 +734,7 @@ public class AdminServiceImpl implements IAdminService{
     public String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects){
         Long totalApproved = 0l;
         for(DepartmentFundingViewObject departmentFundingViewObject:departmentFundingViewObjects){
-            totalApproved+=Long.valueOf(departmentFundingViewObject.getActualFunding());
+            totalApproved+=Integer.parseInt(departmentFundingViewObject.getActualFunding());
         }
         return totalApproved.toString();
     }

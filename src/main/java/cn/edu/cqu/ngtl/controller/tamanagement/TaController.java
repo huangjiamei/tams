@@ -30,7 +30,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -113,7 +112,7 @@ public class TaController extends BaseController {
         Map<String, String> conditions = new HashMap<>();
         conditions.put("taName", taInfoForm.getTaAssitantName());
         conditions.put("taId", taInfoForm.getTaAssitantIDNumber());
-        conditions.put("taDegree", taInfoForm.getTaAssitantMasterMajorName());
+        conditions.put("taDegree", taInfoForm.getTaCategoryName());
         conditions.put("taCourseName", taInfoForm.getTaCourseName());
         conditions.put("taCourseCode", taInfoForm.getTaCourseCode());
         conditions.put("taClassNumber", taInfoForm.getTaClassNumber());

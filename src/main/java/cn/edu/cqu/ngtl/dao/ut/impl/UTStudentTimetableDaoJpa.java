@@ -31,6 +31,7 @@ public class UTStudentTimetableDaoJpa implements UTStudentTimetableDao {
         int i = 0;
         for(UTStudentTimetable utStudentTimetable :utStudentTimetables) {
             KradDataServiceLocator.getDataObjectService().save(utStudentTimetable);
+            System.out.println(i++);
         }
     }
 

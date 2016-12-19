@@ -74,11 +74,15 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String taIdForDetailpage;
     private String classIdForDetailPage;
     private TaInfoViewObject selectedTaInfo;
+    private String taCategoryName;
+
 
     private String revocationReason;//撤销
     private String appraiseReason;//评优
     private String revocationReasonOptionFinder;//撤销optionfinder
     private String appraiseReasonOptionFinder;//评优optionfinder
+
+
 
 
     /**
@@ -127,7 +131,6 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String taTeacherName;
     private String taAssitantName;
     private String taAssitantIDNumber;
-    private String taAssitantMasterMajorName;
     private String taTeacherAppraise;
     private String taStuAppraise;
     private String taScore;
@@ -411,13 +414,6 @@ public class TaInfoForm extends BaseForm implements Serializable {
         this.taAssitantIDNumber = taAssitantIDNumber;
     }
 
-    public String getTaAssitantMasterMajorName() {
-        return taAssitantMasterMajorName;
-    }
-
-    public void setTaAssitantMasterMajorName(String taAssitantMasterMajorName) {
-        this.taAssitantMasterMajorName = taAssitantMasterMajorName;
-    }
 
     public String getTaTeacherAppraise() {
         return taTeacherAppraise;
@@ -497,5 +493,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setCheckedTaListAll(Boolean checkedTaListAll) {
         this.checkedTaListAll = checkedTaListAll;
+    }
+
+    public String getTaCategoryName() {
+        return taCategoryName;
+    }
+
+    public void setTaCategoryName(String taCategoryName) {
+        this.taCategoryName = taCategoryName;
     }
 }

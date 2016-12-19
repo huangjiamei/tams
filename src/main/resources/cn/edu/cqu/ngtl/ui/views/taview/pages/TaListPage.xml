@@ -162,9 +162,9 @@
 
                                                                             <!--学历-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taAssitantMasterMajorName" p:additionalCssClasses="searchBoxWidth"><!--改为相应的optionFinder-->
+                                                                                  p:propertyName="taCategoryName" p:additionalCssClasses="searchBoxWidth"><!--改为相应的optionFinder-->
                                                                                 <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaTaskCategoryFinder"
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.TaCategoryFinder"
                                                                                           p:blankOption="true"/>
                                                                                 </property>
                                                                                 <property name="control">
@@ -265,7 +265,7 @@
                                                                             <bean parent="Uif-DataField" p:label="学号"
                                                                                   p:propertyName="taIDNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="学历"
-                                                                                  p:propertyName="taMasterMajorName"/>
+                                                                                  p:propertyName="taCategory"/>
 
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"/>

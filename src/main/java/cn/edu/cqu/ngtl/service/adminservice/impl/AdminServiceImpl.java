@@ -725,7 +725,7 @@ public class AdminServiceImpl implements IAdminService{
         List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         Long setted = 0l;
         for(TAMSDeptFunding deptFunding : deptFundings) {
-            setted = setted + Integer.parseInt(deptFunding.getActualFunding());
+            setted = setted + Long.parseLong(deptFunding.getActualFunding());
         }
         return setted.toString();
     }

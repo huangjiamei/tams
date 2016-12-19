@@ -1343,3 +1343,36 @@ function refreshPage(){
 function checkedAll(id) {
     jQuery("#"+id).click();
 }
+
+function getDetailPage(){
+    var listLength=jQuery('#taListTable tbody>tr').length;
+    for(var i=0;i<listLength;i++){
+
+        jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:eq(0)',function (e) {
+            jQuery(this).parent().find("td").addClass("selected");//为选中项添加背景颜色
+        });
+
+        jQuery('#taListTable').on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
+            if(jQuery(this).find(":checkbox").attr("checked")){
+                jQuery(this).find("td").removeClass("selected")
+                    .end().find(":checkbox").attr("checked",false);
+            }else{
+                jQuery(this).find("td").addClass("selected")
+                    .end().find(":checkbox").attr("checked",true);
+            }
+        });
+
+        jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:not(:first)',function (e) {
+
+            var targetid=taListTable;
+            var id = e.target.id;
+            var patt = new RegExp(".*line[0-9]+.*");
+            if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                id = jQuery(e.target).children("*[id*='line']")[0].id;
+            var index=id.match("line[0-9]+")[0].match('[0-9]+');
+            document.getElementById('indexTaList_control').value=index;
+            //alert(document.getElementById('indexTaList_control').value);
+            jQuery("#taDetailPageId").click();
+        });
+    }
+}

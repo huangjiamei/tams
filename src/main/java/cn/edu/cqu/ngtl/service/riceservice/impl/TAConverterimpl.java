@@ -578,7 +578,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
-            
+
             viewObjects.add(viewObject);
         }
         return viewObjects;
@@ -782,7 +782,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setPlanFunding(deptFunding.getPlanFunding());
             viewObject.setDepartment(deptFunding.getDepartment().getName());
             viewObject.setTrafficFunding(deptFunding.getTravelSubsidy());
-            Long total = Integer.valueOf(deptFunding.getBonus()) + Long.valueOf(deptFunding.getActualFunding()) +
+            Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
                     Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
                     Integer.valueOf(deptFunding.getPlanFunding()) + Integer.valueOf(deptFunding.getTravelSubsidy());
             viewObject.setTotal(total.toString());

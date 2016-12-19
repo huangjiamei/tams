@@ -142,6 +142,21 @@
                                                                       p:actionLabel="全选"
                                                                       p:onClickScript="deleteCookie();"
                                                                       p:methodToCall="checkTaListAllButton" p:style="display:none;"/>
+
+                                                                <bean id="indexTaList" parent="Uif-InputField"
+                                                                     p:style="display:none;" p:propertyName="indexTaListPage">
+                                                                    <property name="control">
+                                                                         <bean parent="Uif-TextControl"/>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean id="taDetailPageId" parent="Uif-PrimaryActionButton"
+                                                                      p:style="display:none;"
+                                                                      p:ajaxSubmit="false"
+                                                                      p:navigateToPageId="pageTaDetail"
+                                                                      p:methodToCall="getTaDetailPage"
+                                                                      p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
+
                                                                 <!--搜索框-->
                                                                 <bean id="searchTaListTable" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                     <property name="items">
@@ -223,10 +238,6 @@
                                                                                 </property>
                                                                             </bean>
 
-                                                                            <!--占位-->
-                                                                            <bean parent="Uif-MessageField" p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位" />
-
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
                                                                                   p:additionalCssClasses="icon-search hidden-fields search-button"
@@ -236,7 +247,7 @@
                                                                 </bean>
 
                                                                 <bean id="taListTable" parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTaListTable,taListTable);">
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTaListTable,taListTable);getDetailPage();">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject"/>
                                                                     <property name="propertyName" value="allTaInfo"/>
@@ -247,7 +258,7 @@
                                                                     <property name="useServerPaging" value="true" />
 
                                                                     <property name="renderAddLine" value="false"/>
-                                                                    <property name="renderLineActions" value="true"/>
+                                                                    <property name="renderLineActions" value="false"/>
                                                                     <property name="disclosure.render" value="false"/>
 
 
@@ -292,22 +303,7 @@
                                                                             </bean>
                                                                         </list>
                                                                     </property>
-                                                                    <property name="lineActions">
-                                                                        <list>
-                                                                            <bean parent="Uif-HorizontalBoxSection">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
-                                                                                              p:render="@{#line.taName != null}"
-                                                                                              p:methodToCall="getTaDetailPage"
-                                                                                              p:navigateToPageId="pageTaDetail"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/><!--此处要将line.status-->
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
+
                                                                 </bean>
                                                             </list>
                                                         </property>

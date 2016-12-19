@@ -80,6 +80,7 @@ public class TaController extends BaseController {
         taInfoForm.setAllTaInfo(taConverter.taCombineDetailInfo(
                 taService.getAllTaFilteredByUid(uId)
         ));
+        taInfoForm.setCheckedTaListAll(false);//刷新页面，全选框不选。
 
         return this.getModelAndView(taInfoForm, "pageTaList");
     }
@@ -665,9 +666,10 @@ public class TaController extends BaseController {
     public ModelAndView getTaDetailPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
         try {
-            CollectionControllerServiceImpl.CollectionActionParameters params =
-                    new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
-            int index = params.getSelectedLineIndex();
+//            CollectionControllerServiceImpl.CollectionActionParameters params =
+//                    new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
+//            int index = params.getSelectedLineIndex();
+            int index=Integer.parseInt(taInfoForm.getIndexTaListPage());
             String classid = taInfoForm.getAllTaInfo().get(index).getClassid();
             String taid = taInfoForm.getAllTaInfo().get(index).getTaId();
             taInfoForm.setSelectedTaInfo(taInfoForm.getAllTaInfo().get(index));

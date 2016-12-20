@@ -11,7 +11,7 @@ public interface UTStudentDao {
 
 	UTStudent getUTStudentById(String id);
 	
-	UTStudent saveUTStudent(UTStudent utStudent);
+	UTStudent selectByAuthId(String authId);
 
 	List<UTStudent> selectStudentByNameAndId(Map<String, String> conditions);
 }

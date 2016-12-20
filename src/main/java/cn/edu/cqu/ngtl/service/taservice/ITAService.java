@@ -35,7 +35,18 @@ public interface ITAService {
 
     UTClass applicationAssistantTable(Integer classId);
 
-    boolean submitApplicationAssistant(TAMSTaApplication application);
+    /**
+     * 助教提交申请的函数<br>
+     * return : 状态码<br>
+     *      1 : 不在学生申请助教期间<br>
+     *      2 : 重复申请
+     *      3 : 已经被此课程聘用
+     *      4 : 成功
+     *      5 : 未知错误
+     * @param application
+     * @return
+     */
+    short submitApplicationAssistant(TAMSTaApplication application);
 
     List<TAMSTa> getAllTaFilteredByUid(String uId);
 

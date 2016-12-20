@@ -72,8 +72,8 @@ public class ClassController extends BaseController {
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
-        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
-        return this.performRedirect(form, redirctURL);
+        String redirectURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirectURL);
     }
 
     /**
@@ -309,6 +309,11 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 
+    /**
+     * 学生提交助教申请
+     * @param form
+     * @return
+     */
     @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
     public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
@@ -323,9 +328,26 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
-
-        return this.getModelAndView(infoForm, "pageApplyForTaForm");
+        short code = taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
+        if(code == 1) {
+            infoForm.setErrMsg("非助教申请时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 2) {
+            infoForm.setErrMsg("您的提交已申请，请勿重复提交");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 3) {
+            infoForm.setErrMsg("您已经被此课程聘用，请勿重复提交！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 4) {
+            return this.getModelAndView(infoForm, "pageApplyForTaForm");
+        }
+        else {
+            infoForm.setErrMsg("未知错误");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
 
@@ -758,13 +780,42 @@ public class ClassController extends BaseController {
             }
         }
         String classId = infoForm.getCurrClassId();
-        String instructorId = getUserSession().getPrincipalId();
-        boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
-        if(result)
+        String instructorId = GlobalVariables.getUserSession().getPrincipalId();
+        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
+        if(result == 1) {
+            infoForm.setErrMsg("不在教师申请助教期间!");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 2) {
+            infoForm.setErrMsg("已处于审核状态中！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 3) {
+            infoForm.setErrMsg("写入申请信息失败！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 4) {
+            infoForm.setErrMsg("写入课程考核信息失败！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 5) {
+            infoForm.setErrMsg("未找到用户的角色！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 6) {
+            infoForm.setErrMsg("未找到\"审核方法\"！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 7)
             return this.getModelAndView(infoForm, "pageRequestTa");
-        else
+        else if(result == 8) {
             infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            infoForm.setErrMsg("未知错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
 
@@ -1127,18 +1178,29 @@ public class ClassController extends BaseController {
                                                HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-        String classid = infoForm.getCurrClassId();
+        String classId = infoForm.getCurrClassId();
 
         MyTaViewObject curTa=infoForm.getSelectedTa();
-        curTa.setApplicationClassId(classid);
+        curTa.setApplicationClassId(classId);
         List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
         needToBeAddToApplication.add(curTa);
 
-        boolean result = taService.submitApplicationAssistant(
-                classConverter.TaViewObjectToTaApplication(curTa, classid)
+        short code = taService.submitApplicationAssistant(
+                classConverter.TaViewObjectToTaApplication(curTa, classId)
         );
-
-        if(result){
+        if(code == 1) {
+            infoForm.setErrMsg("非助教申请时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 2) {
+            infoForm.setErrMsg("您的提交已申请，请勿重复提交");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 3) {
+            infoForm.setErrMsg("已经被此课程聘用！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 4) {
             //避免延迟刷新
             if(infoForm.getAllApplication()==null)
                 infoForm.setAllApplication(needToBeAddToApplication);
@@ -1148,8 +1210,10 @@ public class ClassController extends BaseController {
             infoForm.getConditionTAList().remove(curTa);
             return this.getModelAndView(infoForm, "pageTaManagement");
         }
-        else
-            return this.getModelAndView(infoForm, "pageTaManagement");
+        else {
+            infoForm.setErrMsg("未知错误");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
     @RequestMapping(params =  {"methodToCall=selectCurSession"})

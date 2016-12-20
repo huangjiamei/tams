@@ -19,5 +19,5 @@ public interface TAMSTimeSettingsDao {
 
     TAMSTimeSettings selectByTypeIdAndSessionId(String typeId, String sessionId);
 
-    List<TAMSTimeSettings> selectAll();
+    List<TAMSTimeSettings> selectAllCurrentSession();
 }

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+
 /**
  * Created by tangjing on 16-11-23.
  */
@@ -59,5 +61,18 @@ public class TAMSTimeSettingTypeDaoJpa implements TAMSTimeSettingTypeDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+    @Override
+    public TAMSTimeSettingType selectByName(String typeName) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create();
+        OrderByField orderByField = OrderByField.Builder.create("id", OrderDirection.DESCENDING).build();
+        criteria.setOrderByFields(orderByField);
+        criteria.setPredicates(
+                equal("typeName", typeName)
+        );
+        QueryResults<TAMSTimeSettingType> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTimeSettingType.class, criteria.build());
+        return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
     }
 }

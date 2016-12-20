@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
@@ -40,6 +41,9 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     @Autowired
     private TAMSWorkflowStatusRDao workflowStatusRDao;
+
+    @Autowired
+    private UTStudentDao studentDao;
 
     @Autowired
     private TAMSWorkflowRoleFunctionDao workflowRoleFunctionDao;
@@ -161,6 +165,16 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     @Override
     public List<Object> selectClassIdsByStudentId(String stuId) {
         List<Object> list = new ArrayList<>();
+        em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + stuId + "'");
+        list = query.getResultList();
+        return list;
+    }
+
+    @Override
+    public List<Object> selectClassIdsByStudentAuthId(String stuAuthId) {
+        List<Object> list = new ArrayList<>();
+        String stuId = studentDao.selectByAuthId(stuAuthId).getId();
         em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         Query query = em.createNativeQuery("SELECT TA_CLASS FROM TAMS_TA t WHERE t.TA_ID='" + stuId + "'");
         list = query.getResultList();

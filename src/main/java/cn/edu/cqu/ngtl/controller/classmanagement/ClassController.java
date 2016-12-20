@@ -158,7 +158,10 @@ public class ClassController extends BaseController {
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
-
+        if(infoForm.getApproveReasonOptionFinder()==null){
+            infoForm.setErrMsg("请选择审批的状态！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         TAMSWorkflowStatus newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder());
         String newStatusName = newStatus.getWorkflowStatus();
         Integer newStatusOrder = newStatus.getOrder();

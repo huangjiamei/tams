@@ -1189,7 +1189,7 @@
                                                                                                                       p:label="申报经费"
                                                                                                                       p:propertyName="applyFunding"
                                                                                                                       p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric"/>

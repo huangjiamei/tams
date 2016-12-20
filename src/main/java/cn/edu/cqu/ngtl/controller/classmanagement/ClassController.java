@@ -37,7 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -293,6 +292,9 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
+        infoForm.setApplicationPhoneNbr(taService.getApplicationPhoneNbr(stuId,classId)); //设置申请人电话号码
+        infoForm.setApplyReason(taService.getApplicationReason(stuId,classId));   //设置申请人理由
+
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
                         classInfoService.getStudentInfoById(stuId),
@@ -307,6 +309,15 @@ public class ClassController extends BaseController {
     public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        if(infoForm.getApplicationPhoneNbr()==null){
+            infoForm.setErrMsg("请申请人填写本人联系电话！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getApplyReason()==null){
+            infoForm.setErrMsg("请申请人填写申请理由！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
 
         taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
 

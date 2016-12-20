@@ -375,7 +375,7 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public TAMSTaApplication submitInfoToTaApplication(ClassInfoForm form) {
         TAMSTaApplication application = new TAMSTaApplication();
-
+        application.setPhoneNbr(form.getApplicationPhoneNbr());
         application.setApplicationId(form.getApplyAssistantViewObject().getStudentId());
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));

@@ -137,8 +137,9 @@
                                                                                   p:messageText="@{applyAssistantViewObject.ug_Major}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="研究生专业" p:messageText="64"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="联系方式" p:messageText="5.0 "/>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="联系方式" p:propertyName="applicationPhoneNbr"
+                                                                                  p:readOnly="false" />
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学时数"
                                                                                   p:messageText="@{applyAssistantViewObject.classHour}"/>
@@ -173,14 +174,16 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
                                                                                   p:actionImagePlacement="LEFT"
+                                                                                  p:render="@{applicationPhoneNbr==null}"
                                                                                   p:methodToCall="submitTaForm"
                                                                                   p:successCallback="alert('提交成功，返回测试页面homepage，未来可换成dialog');"
                                                                                   p:id="submitTaFormBtn"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="取消"
+                                                                                  p:actionLabel="取消申请"
+                                                                                  p:render="@{applicationPhoneNbr!=null}"
+                                                                                  p:methodToCall="cancelSubmitTaForm"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="alert('取消');"
                                                                                   p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup"/>
                                                                         </list>
                                                                     </property>

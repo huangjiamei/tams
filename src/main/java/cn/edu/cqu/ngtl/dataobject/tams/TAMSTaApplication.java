@@ -65,6 +65,9 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
     private UTSession curSession;
 
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNbr;
+
     public UTStudent getApplicant() {
         return applicant;
     }
@@ -139,4 +142,11 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
         this.note = note;
     }
 
+    public String getPhoneNbr() {
+        return phoneNbr;
+    }
+
+    public void setPhoneNbr(String phoneNbr) {
+        this.phoneNbr = phoneNbr;
+    }
 }

@@ -566,7 +566,7 @@
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"/>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="确认"/>
             </list>
         </property>
     </bean>

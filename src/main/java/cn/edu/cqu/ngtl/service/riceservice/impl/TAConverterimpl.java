@@ -468,6 +468,7 @@ public class TAConverterimpl implements ITAConverter {
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
                     if(course != null) {
+                        viewObject.setDeptName(course.getDepartment().getName());
                         viewObject.setCourseName(course.getName());
                         viewObject.setCourseCode(course.getCodeR());
                     }
@@ -475,6 +476,7 @@ public class TAConverterimpl implements ITAConverter {
             }
             UTStudent taStu = ta.getTa();
             if(taStu != null) {
+                viewObject.setTaMasterMajorName(taStu.getProgram().getName());
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIDNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());

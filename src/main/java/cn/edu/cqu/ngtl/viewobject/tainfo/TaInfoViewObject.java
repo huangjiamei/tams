@@ -54,6 +54,8 @@ public class TaInfoViewObject {
 
     private String credit;
 
+    private String deptName;
+
     public static String[] getAttrTittles() {
         String[] attrTittles={
                 "姓名"
@@ -278,5 +280,13 @@ public class TaInfoViewObject {
 
     public void setCredit(String credit) {
         this.credit = credit;
+    }
+
+    public String getDeptName() {
+        return deptName;
+    }
+
+    public void setDeptName(String deptName) {
+        this.deptName = deptName;
     }
 }

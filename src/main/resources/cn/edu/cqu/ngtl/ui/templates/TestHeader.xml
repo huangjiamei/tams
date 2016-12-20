@@ -557,8 +557,7 @@
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
-                      p:actionScript="refreshPage();" />
+                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"/>
             </list>
         </property>
     </bean>

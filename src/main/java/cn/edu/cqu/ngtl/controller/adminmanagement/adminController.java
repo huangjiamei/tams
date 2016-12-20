@@ -1785,6 +1785,10 @@ public class adminController extends BaseController {
         //批次总经费
         //String sessionFunds = adminInfoForm.getCurrentTerm().getBudget().toString();
         if (adminInfoForm.getTermIndex() != null) {
+            if(adminInfoForm.getCurrentTerm().getStartDate()==null||adminInfoForm.getCurrentTerm().getEndDate()==null){
+                adminInfoForm.setErrMsg("请填写开始时间以及完成时间！");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
             // index不为空说明要调用update
             if (!adminService.changeSession(
                     taConverter.termToDataObject(
@@ -1797,6 +1801,10 @@ public class adminController extends BaseController {
         } else {
             // add
             //同时进行批次和学院经费初始化
+            if(adminInfoForm.getCurrentTerm().getStartDate()==null||adminInfoForm.getCurrentTerm().getEndDate()==null){
+                adminInfoForm.setErrMsg("请填写开始时间以及完成时间！");
+                return this.showDialog("adminErrDialog", true, adminInfoForm);
+            }
             if (!adminService.addSession(
                     taConverter.termToDataObject(
                             adminInfoForm.getCurrentTerm()

@@ -331,8 +331,8 @@
                                             </property>
                                         </bean>
 
-                                        <bean parent="Uif-InputField" p:label="经费"
-                                              p:propertyName="currentTerm.budget"/>
+                                        <!--<bean parent="Uif-InputField" p:label="经费"-->
+                                              <!--p:propertyName="currentTerm.budget"/>-->
 
                                         <bean parent="Uif-InputField" p:label="开始时间"
                                               p:propertyName="currentTerm.startDate" >

@@ -184,7 +184,7 @@ public class AdminConverterimpl implements IAdminConverter {
             return nullObject;
         } else {
             for (ClassFundingViewObject listone : list) {
-                Integer total = Integer.parseInt(listone.getApplyFunding()) + Integer.parseInt(listone.getAssignedFunding()) + Integer.parseInt(listone.getPhdFunding()) + Integer.parseInt(listone.getBonus()) + Integer.parseInt(listone.getTravelSubsidy());
+                Integer total =  Integer.parseInt(listone.getAssignedFunding()) + Integer.parseInt(listone.getPhdFunding()) + Integer.parseInt(listone.getBonus()) + Integer.parseInt(listone.getTravelSubsidy());
                 listone.setTotal(total.toString());
                 List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(listone.getClassId());
                 if (utClassInstructors == null || utClassInstructors.size() == 0) {

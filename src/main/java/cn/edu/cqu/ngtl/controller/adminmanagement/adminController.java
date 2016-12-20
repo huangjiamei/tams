@@ -1778,19 +1778,27 @@ public class adminController extends BaseController {
     public ModelAndView saveTerm(@ModelAttribute("KualiForm") UifFormBase form) throws ParseException {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
-
+        //批次总经费
+        //String sessionFunds = adminInfoForm.getCurrentTerm().getBudget().toString();
         if (adminInfoForm.getTermIndex() != null) {
             // index不为空说明要调用update
-            if (!adminService.changeSession(taConverter.termToDataObject(
-                    adminInfoForm.getCurrentTerm()))) {
+            if (!adminService.changeSession(
+                    taConverter.termToDataObject(
+                            adminInfoForm.getCurrentTerm()
+                    ))) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
         } else {
             // add
-            if (!adminService.addSession(taConverter.termToDataObject(
-                    adminInfoForm.getCurrentTerm()))) {
+            //同时进行批次和学院经费初始化
+            if (!adminService.addSession(
+                    taConverter.termToDataObject(
+                            adminInfoForm.getCurrentTerm()
+                    )
+            )
+                    ) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);

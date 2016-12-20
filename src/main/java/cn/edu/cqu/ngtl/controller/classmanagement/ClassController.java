@@ -1126,26 +1126,36 @@ public class ClassController extends BaseController {
         String classid = infoForm.getCurrClassId();
 
         MyTaViewObject curTa=infoForm.getSelectedTa();
-        curTa.setApplicationClassId(classid);
-        List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
-        needToBeAddToApplication.add(curTa);
-
-        boolean result = taService.submitApplicationAssistant(
-                classConverter.TaViewObjectToTaApplication(curTa, classid)
-        );
-
-        if(result){
-            //避免延迟刷新
-            if(infoForm.getAllApplication()==null)
-                infoForm.setAllApplication(needToBeAddToApplication);
-            else
-                infoForm.getAllApplication().addAll(needToBeAddToApplication);
-
-            infoForm.getConditionTAList().remove(curTa);
-            return this.getModelAndView(infoForm, "pageTaManagement");
+        //如果没有选择任何人
+        if(curTa.getTaIdNumber() == null){
+            infoForm.setErrMsg("请选择某位学生！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
-        else
-            return this.getModelAndView(infoForm, "pageTaManagement");
+        else {
+            curTa.setApplicationClassId(classid);
+            List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
+            needToBeAddToApplication.add(curTa);
+
+            boolean result = taService.submitApplicationAssistant(
+                    classConverter.TaViewObjectToTaApplication(curTa, classid)
+            );
+
+            if (result) {
+                //避免延迟刷新
+                //if(infoForm.getAllApplication()==null)
+                //    infoForm.setAllApplication(needToBeAddToApplication);
+                //如果为空，定义为空对象，所以默认为空对象
+                if (infoForm.getAllApplication().get(0).getTaName() == null) {
+                    infoForm.getAllApplication().remove(0);
+                    infoForm.getAllApplication().addAll(needToBeAddToApplication);
+                } else
+                    infoForm.getAllApplication().addAll(needToBeAddToApplication);
+
+                infoForm.getConditionTAList().remove(curTa);
+                return this.getModelAndView(infoForm, "pageTaManagement");
+            } else
+                return this.getModelAndView(infoForm, "pageTaManagement");
+        }
     }
 
     @RequestMapping(params =  {"methodToCall=selectCurSession"})

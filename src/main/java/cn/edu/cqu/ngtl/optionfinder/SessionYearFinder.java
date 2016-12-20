@@ -31,7 +31,7 @@ public class SessionYearFinder extends KeyValuesBase {
         if(blankOption){
             keyValues.add(new ConcreteKeyValue("", ""));
         }
-        for(int offset = -4 ; offset < 2; offset++) {
+        for(int offset = -14 ; offset < 2; offset++) {
             String year = new Integer(cuYear + offset).toString();
             keyValues.add(new ConcreteKeyValue(year , year));
         }

@@ -84,7 +84,9 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
 
     @Override
     public boolean insertOneByEntity(TAMSUniversityFunding tamsUniversityFunding){
-        return KRADServiceLocator.getDataObjectService().save(tamsUniversityFunding)==null;
+       // return KRADServiceLocator.getDataObjectService().save(tamsUniversityFunding) !=null;
+        KRADServiceLocator.getDataObjectService().save(tamsUniversityFunding);
+        return true;
     }
 
 }

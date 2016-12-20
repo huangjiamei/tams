@@ -76,6 +76,7 @@ public class ClassConverterImpl implements IClassConverter {
     //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
     @Override
     public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid){
+
         TAMSTaApplication tamsTaApplication = new TAMSTaApplication();
         tamsTaApplication.setApplicationClassId(classid);
         tamsTaApplication.setApplicationId(application.getTaIdNumber());

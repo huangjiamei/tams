@@ -19,7 +19,7 @@ public interface TAMSDeptFundingDraftDao {
 
     List<TAMSDeptFunding> selectDeptFundDraftCurrByCondition(Map<String, String > conditions);
 
-
+    boolean saveBatchByEntities(List<TAMSDeptFundingDraft> tamsDeptFundingDrafts);
 
 
 }

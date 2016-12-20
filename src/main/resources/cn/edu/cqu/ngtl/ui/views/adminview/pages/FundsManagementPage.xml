@@ -466,7 +466,7 @@
                                                                                                                       p:propertyName="actualFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="追加经费"
+                                                                                                                      p:label="博士津贴"
                                                                                                                       p:propertyName="phdFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
@@ -611,7 +611,7 @@
                                                                                                                                   p:propertyName="actualFunding"
                                                                                                                                   p:sortAs="numeric"/>
                                                                                                                             <bean parent="Uif-DataField"
-                                                                                                                                  p:label="追加经费"
+                                                                                                                                  p:label="博士津贴"
                                                                                                                                   p:propertyName="phdFunding"
                                                                                                                                   p:sortAs="numeric"/>
                                                                                                                             <bean parent="Uif-DataField"

@@ -130,25 +130,32 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学号"
                                                                                   p:messageText="@{applyAssistantViewObject.studentId}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="导师" p:messageText="导师1"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="本科专业"
-                                                                                  p:messageText="@{applyAssistantViewObject.ug_Major}"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="导师" p:messageText="导师1"/>-->
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="本科专业"-->
+                                                                                  <!--p:messageText="@{applyAssistantViewObject.ug_Major}"/>-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="研究生专业" p:messageText="64"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="联系方式" p:propertyName="applicationPhoneNbr"
                                                                                   p:readOnly="false" />
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="课程名称" p:messageText="@{applyAssistantViewObject.courseName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="教学班号" p:messageText="@{applyAssistantViewObject.classNbr}"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="学时数"
                                                                                   p:messageText="@{applyAssistantViewObject.classHour}"/>
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="学分"
+                                                                                  p:messageText="@{applyAssistantViewObject.credit}"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="申请课程教师"
                                                                                   p:messageText="@{applyAssistantViewObject.applyTeacher}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="申请课程类型"
-                                                                                  p:messageText="@{applyAssistantViewObject.applyCourseType}"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="申请课程类型"-->
+                                                                                  <!--p:messageText="@{applyAssistantViewObject.applyCourseType}"/>-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>

@@ -227,15 +227,17 @@ public class TAConverterimpl implements ITAConverter {
         if (student != null) {
             viewObject.setUsername(student.getName());
             viewObject.setStudentId(student.getId());
-            viewObject.setUg_Major(student.getProgram() != null ?
-                    student.getProgram().getName() : null);
+//            viewObject.setUg_Major(student.getProgram() != null ?
+//                    student.getProgram().getName() : null);
             /** 需要修改 */
-            viewObject.setG_Major(" ");
+            viewObject.setG_Major(student.getProgram() != null ? student.getProgram().getName() : null);
         }
 
         if (clazz != null) {
             viewObject.setClassId(clazz.getId());
-
+            viewObject.setCourseName(clazz.getCourseOffering().getCourse().getName());
+            viewObject.setClassNbr(clazz.getClassNumber());
+            viewObject.setCredit(clazz.getCourseOffering().getCourse().getCredit());
             StringBuilder sb = new StringBuilder();
             if (clazz.getUtInstructors() != null) {
                 for (UTInstructor instructor : clazz.getUtInstructors()) {

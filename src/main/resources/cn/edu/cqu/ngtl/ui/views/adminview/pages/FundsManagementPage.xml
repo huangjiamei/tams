@@ -385,7 +385,7 @@
                                                                                                           p:messageText="|"
                                                                                                           p:additionalCssClasses="font-teal"/>
 
-                                                                                                    <bean parent="Uif-Message"
+                                                                                                 <!--   <bean parent="Uif-Message"
                                                                                                           p:messageText="已设置/总预算经费："
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
@@ -399,7 +399,7 @@
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
-                                                                                                          p:style="font-size:15px;"/>
+                                                                                                          p:style="font-size:15px;"/>-->
 
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:style="float: right!important;">
@@ -661,17 +661,21 @@
                                                                                                           p:additionalCssClasses="font-teal"/>
 
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="已设置/总预算经费："
+                                                                                                          p:messageText="预算经费："
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{sessionFundingStatistics}"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="批准经费："
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="margin-left:20px;font-weight:bold;"/>
                                                                                                     <bean parent="Uif-Message"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>

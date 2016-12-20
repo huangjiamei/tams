@@ -233,6 +233,11 @@ public class TaController extends BaseController {
 
         List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
 
+        if(taInfoForm.getAppraiseReasonOptionFinder()==null){
+            taInfoForm.setErrMsg("请选择助教需要转到的状态！");
+            return this.showDialog("refreshPageViewDialog",true,taInfoForm);
+        }
+
         //遍历所有list，找到选中的行
         List<TaInfoViewObject> checkedList = new ArrayList<>();
         for(TaInfoViewObject per : taList) {

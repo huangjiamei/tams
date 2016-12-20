@@ -62,18 +62,11 @@
 																  p:location.controllerMapping="/home"
 																  p:location.methodToCall="getCommonHome"/>
 															<bean parent="Uif-KeyValueLocation" p:key="2"
-																  p:value="管理台"
+																  p:value="用户管理"
 																  p:location.viewId="AdminView"
 																  p:location.controllerMapping="/admin"
-																  p:location.methodToCall="getConsolePage"/>
-															<bean parent="Uif-KeyValueLocation" p:key="3"
-																  p:value="类别管理"
-																  p:location.viewId="AdminView"
-																  p:location.controllerMapping="/admin"
-																  p:location.methodToCall="getConsolePage"/>
-															<bean parent="Uif-KeyLabelPair" p:key="4"
-																  p:value="用户管理"/>
-															<bean parent="Uif-KeyLabelPair" p:key="5"
+																  p:location.methodToCall="getUserRoleManagerPage"/>
+															<bean parent="Uif-KeyLabelPair" p:key="3"
 																  p:value="编辑用户角色"/>
 														</list>
 													</property>

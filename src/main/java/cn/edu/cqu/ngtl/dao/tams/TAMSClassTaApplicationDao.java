@@ -9,4 +9,6 @@ public interface TAMSClassTaApplicationDao {
     TAMSClassTaApplication selectByInstructorIdAndClassId(String instructorId, String classId);
 
     TAMSClassTaApplication insertOneByEntity(TAMSClassTaApplication classTaApplication);
+
+    TAMSClassTaApplication selectByClassId(String classId);
 }

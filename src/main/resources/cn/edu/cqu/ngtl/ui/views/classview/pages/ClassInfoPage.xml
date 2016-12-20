@@ -117,8 +117,8 @@
                                                                                   p:messageText="@{detailInfoViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程编号" p:messageText="@{detailInfoViewObject.courseId}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="课程类别" p:messageText="@{detailInfoViewObject.courseClassification}"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="课程类别" p:messageText="@{detailInfoViewObject.courseClassification}"/>-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学时" p:messageText="@{detailInfoViewObject.classHour}"/>
                                                                             <bean parent="Uif-MessageField"
@@ -135,8 +135,8 @@
                                                                                   p:label="上课教师人数" p:messageText="@{detailInfoViewObject.instructorNumber}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="上课教师" p:messageText="@{detailInfoViewObject.instructor}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="选课人数" p:messageText="400"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="选课人数" p:messageText="400"/>-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="拟配备的助教数" p:messageText="1"/>
                                                                             <bean parent="Uif-MessageField"

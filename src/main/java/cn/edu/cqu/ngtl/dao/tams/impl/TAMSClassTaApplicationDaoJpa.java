@@ -44,4 +44,19 @@ public class TAMSClassTaApplicationDaoJpa implements TAMSClassTaApplicationDao {
         TAMSClassTaApplication result = KradDataServiceLocator.getDataObjectService().save(classTaApplication);
         return result;
     }
+
+    @Override
+    public TAMSClassTaApplication selectByClassId(String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("applicationClassId", classId),
+                        equal("sessionId", sessionDao.getCurrentSession().getId())
+                )
+        );
+        QueryResults<TAMSClassTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassTaApplication.class,
+                criteria.build()
+        );
+        return  qr.getResults().isEmpty() ? null : qr.getResults().get(0);
+    }
 }

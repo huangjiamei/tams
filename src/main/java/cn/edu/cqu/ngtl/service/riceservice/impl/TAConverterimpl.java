@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
@@ -20,6 +21,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -33,6 +35,7 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.MyClassViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -60,10 +63,16 @@ public class TAConverterimpl implements ITAConverter {
     private ICourseInfoService courseInfoService;
 
     @Autowired
+    private IClassInfoService iClassInfoService;
+
+    @Autowired
     private ITAService taService;
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
@@ -268,6 +277,21 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public ClassDetailInfoViewObject classInfoToViewObject(UTClass clazz) {
         ClassDetailInfoViewObject classDetailInfoViewObject = new ClassDetailInfoViewObject();
+        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(clazz.getId());
+        if(tamsClassTaApplication!=null){
+            classDetailInfoViewObject.setTaNumber(tamsClassTaApplication.getTaNumber().toString());
+        }
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        List<TAMSTeachCalendar> tamsTeachCalendars = iClassInfoService.getAllTaTeachCalendarFilterByUidAndClassId(user.getCode(),clazz.getId());
+        if(tamsTeachCalendars!=null||tamsTeachCalendars.size()!=0){
+            Integer workHour = 0;
+            for(TAMSTeachCalendar tamsTeachCalendar : tamsTeachCalendars){
+                workHour+=Integer.valueOf(tamsTeachCalendar.getElapsedTime());
+            }
+            classDetailInfoViewObject.setWorkHour(workHour.toString());
+        }else{
+            classDetailInfoViewObject.setWorkHour("待定");
+        }
 
         UTCourse course = new UTCourse();
 

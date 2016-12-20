@@ -236,10 +236,10 @@ public class ClassController extends BaseController {
             /**
              * param in
              */
-            CollectionControllerServiceImpl.CollectionActionParameters params =
-                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
-            int index = params.getSelectedLineIndex();
-
+//            CollectionControllerServiceImpl.CollectionActionParameters params =
+//                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+//            int index = params.getSelectedLineIndex();
+            int index=Integer.parseInt(infoForm.getIndexClassListPage());
             ClassTeacherViewObject classObject = infoForm.getClassList().get(index);
             /**
              * param in end

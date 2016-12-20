@@ -1321,9 +1321,8 @@ function checkedAll(id) {
 }
 
 //助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
-function getDetailPage(){
+function getTaDetailPage(){
     var listLength=jQuery('#taListTable tbody>tr').length;
-
     for(var i=0;i<listLength;i++){
         jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:eq(0)',function (e) {
             jQuery(this).parent().find("td").addClass("selected");//为选中项添加背景颜色
@@ -1352,20 +1351,60 @@ function getDetailPage(){
         });
     }
 }
+//课程页面点击整行进入详细页面
+function getTaDetailPage(){
+    var listLength=jQuery('#ClassListPageTable tbody>tr').length;
+    for(var i=0;i<listLength;i++){
+        jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:eq(1)',function (e) {
+            jQuery(this).parent().find("td").addClass("selected");//为选中项添加背景颜色
+        });
+
+        jQuery('#ClassListPageTable').on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
+            if(jQuery(this).find(":checkbox").attr("checked")){
+                jQuery(this).find("td").removeClass("selected")
+                    .end().find(":checkbox").attr("checked",false);
+            }else{
+                jQuery(this).find("td").addClass("selected")
+                    .end().find(":checkbox").attr("checked",true);
+            }
+        });
+
+        jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:not(:eq(0),:eq(1))',function (e) {
+            var targetid=ClassListPageTable;
+            var id = e.target.id;
+            var patt = new RegExp(".*line[0-9]+.*");
+            if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                id = jQuery(e.target).children("*[id*='line']")[0].id;
+            var index=id.match("line[0-9]+")[0].match('[0-9]+');
+            document.getElementById('indexClassList_control').value=index;
+            //alert(document.getElementById('indexClassList_control').value);
+            jQuery("#classDetailPageId").click();
+        });
+    }
+}
 
 //统一的点击整行变色
 function setBgColor(id){
-    jQuery("#"+id).on('click','tbody>tr',function (e) {
-        jQuery(this).find("td").addClass("selected");//为选中项添加背景颜色
-    });
-
-    jQuery("#"+id).on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
-        if(jQuery(this).find(":checkbox").attr("checked")){
-            jQuery(this).find("td").removeClass("selected")
-                .end().find(":checkbox").attr("checked",false);
-        }else{
-            jQuery(this).find("td").addClass("selected")
-                .end().find(":checkbox").attr("checked",true);
-        }
-    });
+    var lengthTable=jQuery("#"+id).find("tbody").find("tr").length;
+    for(var i=0;i<lengthTable;i++) {
+        jQuery("#"+id).on('click','tbody>tr:eq('+i+')>td',function (e) {
+            jQuery(this).find("td").addClass("selected");//为选中项添加背景颜色
+        });
+        jQuery("#"+id).on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
+            if(jQuery(this).find(":checkbox").attr("checked")){
+                jQuery(this).find("td").removeClass("selected")
+                    .end().find(":checkbox").attr("checked",false);
+            }else{
+                jQuery(this).find("td").addClass("selected")
+                    .end().find(":checkbox").attr("checked",true);
+            }
+        });
+    }
 }
+
+// (function(){
+//     jQuery('#taManagerTable').on('mouseover','td', function () {
+//         jQuery(this).addClass("selected");
+//     } );
+//
+// })();

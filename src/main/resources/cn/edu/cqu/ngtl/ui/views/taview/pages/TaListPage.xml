@@ -246,7 +246,7 @@
                                                                 </bean>
 
                                                                 <bean id="taListTable" parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTaListTable,taListTable);getDetailPage();">
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchTaListTable,taListTable);getTaDetailPage();">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject"/>
                                                                     <property name="propertyName" value="allTaInfo"/>

@@ -81,6 +81,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<ClassTeacherViewObject> classList;
 
     Boolean checkedClassListAll;//课程页面全选
+    private String indexClassListPage;//课程table的index值
 
     private ClassDetailInfoViewObject detailInfoViewObject;
 
@@ -454,5 +455,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setApplicationPhoneNbr(String applicationPhoneNbr) {
         this.applicationPhoneNbr = applicationPhoneNbr;
+    }
+
+    public String getIndexClassListPage() {
+        return indexClassListPage;
+    }
+
+    public void setIndexClassListPage(String indexClassListPage) {
+        this.indexClassListPage = indexClassListPage;
     }
 }

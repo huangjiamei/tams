@@ -225,6 +225,19 @@
                                                                       p:onClickScript="deleteCookie();"
                                                                       p:methodToCall="checkClassListAllButton" p:style="display:none;"/>
 
+                                                                <bean id="indexClassList" parent="Uif-InputField"
+                                                                      p:style="display:none;" p:propertyName="indexClassListPage">
+                                                                    <property name="control">
+                                                                        <bean parent="Uif-TextControl"/>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean id="classDetailPageId" parent="Uif-PrimaryActionButton"
+                                                                      p:style="display:none;"
+                                                                      p:ajaxSubmit="false"
+                                                                      p:navigateToPageId="pageClassInfo"
+                                                                      p:methodToCall="getClassInfoPage"/>
+
                                                                 <bean id="searchClassFields"
                                                                       parent="Uif-HorizontalBoxSection"
                                                                       p:additionalCssClasses="search-fields">
@@ -282,10 +295,6 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <!--占位-->
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:additionalCssClasses="hidden-fields"
-                                                                                  p:messageText="占位"/>
-
                                                                             <bean id="searchButton"
                                                                                   parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
@@ -300,7 +309,7 @@
 
                                                                 <bean id="ClassListPageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable')">
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable');getTaDetailPage();">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>
@@ -311,7 +320,7 @@
                                                                     <property name="useServerPaging" value="true" />
 
                                                                     <property name="renderAddLine" value="false"/>
-                                                                    <property name="renderLineActions" value="true"/>
+                                                                    <property name="renderLineActions" value="false"/>
                                                                     <property name="disclosure.render" value="false"/>
                                                                     <property name="layoutManager.showToggleAllDetails"
                                                                               value="false"/>
@@ -445,26 +454,6 @@
                                                                                 </list>
                                                                             </property>
                                                                         </bean>
-                                                                    </property>
-
-
-                                                                    <property name="lineActions">
-                                                                        <list>
-                                                                            <bean parent="Uif-VerticalBoxSection">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
-                                                                                              p:render="@{#line.courseName != null}"
-                                                                                              p:actionLabel=""
-                                                                                              p:actionImagePlacement="LEFT"
-                                                                                              p:methodToCall="getClassInfoPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"
-                                                                                              p:style="padding:4px 4px 4px 5px;"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
                                                                     </property>
                                                                 </bean>
                                                             </list>

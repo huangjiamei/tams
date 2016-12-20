@@ -112,13 +112,13 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageTaskList" p:title="任务列表">
-                    <property name="items">
-                        <list>
-                            <ref bean="TaskListPage"/>
-                        </list>
-                    </property>
-                </bean>
+                <!--<bean parent="Uif-Page" p:id="pageTaskList" p:title="任务列表">-->
+                    <!--<property name="items">-->
+                        <!--<list>-->
+                            <!--<ref bean="TaskListPage"/>-->
+                        <!--</list>-->
+                    <!--</property>-->
+                <!--</bean>-->
                 <bean parent="Uif-Page" p:id="pageClassInfo" p:title="教学班信息">
                     <property name="items">
                         <list>

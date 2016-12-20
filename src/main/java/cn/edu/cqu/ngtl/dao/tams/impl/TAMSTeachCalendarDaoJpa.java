@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import org.kuali.rice.core.api.criteria.CountFlag;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
@@ -9,6 +10,8 @@ import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
@@ -20,6 +23,7 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Repository
 @Component("TAMSTeachCalendarDaoJpa")
 public class TAMSTeachCalendarDaoJpa implements TAMSTeachCalendarDao {
+
     @Override
     public List<TAMSTeachCalendar> selectAllByClassId(String classId) {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
@@ -48,5 +52,14 @@ public class TAMSTeachCalendarDaoJpa implements TAMSTeachCalendarDao {
     public boolean deleteByEntity(TAMSTeachCalendar teachCalendar) {
         KradDataServiceLocator.getDataObjectService().delete(teachCalendar);
         return true;
+    }
+
+    @Override
+    public String countWorkTimeByClassId(String classId) {
+        EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        Query query = em.createNativeQuery("SELECT SUM(t.ELAPSED_TIME) FROM TAMS_TEACH_CALENDAR t WHERE t.CLASS_ID = " + classId);
+        Object sum = query.getSingleResult();
+
+        return sum == null ? null : sum.toString();
     }
 }

@@ -172,20 +172,14 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-ActionImage"
                                                                                               p:methodToCall="deleteApplicant">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="applicantDeleteConfirmationDialog"/>
-                                                                                            </property>
-                                                                                            <property name="actionImage">
+                                                                                          <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/eye_detail.png"/>
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean parent="Uif-ActionImage"
                                                                                               p:methodToCall="deleteApplicant">
-                                                                                            <property name="confirmationDialog">
-                                                                                                <ref bean="applicantDeleteConfirmationDialog"/>
-                                                                                            </property>
-                                                                                            <property name="actionImage">
+                                                                                           <property name="actionImage">
                                                                                                 <bean parent="Uif-Image"
                                                                                                       p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png"/>
                                                                                             </property>

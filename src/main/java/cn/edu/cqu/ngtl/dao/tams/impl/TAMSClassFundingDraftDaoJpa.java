@@ -5,11 +5,8 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSActivity;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFundingDraft;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
-import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -49,6 +46,22 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
 
+
+    @Override
+    public TAMSClassFundingDraft selectOneByClassID(String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("classId", classId)
+                )
+        );
+
+        QueryResults<TAMSClassFundingDraft> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassFundingDraft.class,
+                criteria.build()
+        );
+
+        return (qr.getResults()==null||qr.getResults().size()==0)?null:qr.getResults().get(0);
+    }
 
     @Override
     public List<TAMSClassFunding> selectAll() {
@@ -155,5 +168,10 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
         }
 
         return list.size() != 0 ? list : null;
+    }
+
+    @Override
+    public boolean insertOneByEntity(TAMSClassFundingDraft tamsClassFundingDraft){
+        return KradDataServiceLocator.getDataObjectService().save(tamsClassFundingDraft)==null;
     }
 }

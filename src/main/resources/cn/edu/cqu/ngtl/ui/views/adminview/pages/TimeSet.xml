@@ -208,8 +208,8 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="timeSettingTypeId"
-                                                                                  p:readOnlyDisplayReplacement="@{new cn.edu.cqu.ngtl.tools.TimeSettingsTypeName().getTimeSettingsTypeName(#line.timeSettingTypeId)}"
+                                                                                  p:propertyName="timeSettingType.typeName"
+
                                                                                   p:readOnly="true"
                                                                                   p:label="类型"/>
                                                                             <bean parent="Uif-InputField"

@@ -24,6 +24,8 @@ public interface TAMSTaDao {
 
     List<Object> selectClassIdsByStudentId(String stuId);
 
+    List<Object> selectClassIdsByStudentAuthId(String stuAuthId);
+
     List<TAMSTa> selectBatchByIds(List<String> ids);
 
     List<TAMSTa> selectBatchByTaIds(List<String> ids);

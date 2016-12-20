@@ -143,20 +143,35 @@
                                                                                   p:label="教学主题"
                                                                                   p:messageText="@{currentCalendarInfo.theme}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="教学描述"
-                                                                                  p:messageText="@{currentCalendarInfo.description}"/>
+                                                                                  p:label="总耗时"
+                                                                                  p:messageText="@{currentCalendarInfo.elapsedTime}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="起始时间"
                                                                                   p:messageText="@{currentCalendarInfo.startTime}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="完成时间"
                                                                                   p:messageText="@{currentCalendarInfo.endTime}"/>
-                                                                            <bean parent="Uif-MessageField"
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="教学描述"
+                                                                                  p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
+                                                                                  p:propertyName="currentCalendarInfo.description" p:readOnly="true">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"
+                                                                                          p:style="height:200px;resize: none;"/>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:label="助教任务描述"
-                                                                                  p:messageText="@{currentCalendarInfo.taTask}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="总耗时"
-                                                                                  p:messageText="@{currentCalendarInfo.elapsedTime}"/>
+                                                                                  p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
+                                                                                  p:propertyName="currentCalendarInfo.taTask" p:readOnly="true">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"
+                                                                                          p:style="height:200px;resize: none;"/>
+                                                                                </property>
+                                                                            </bean>
+
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -215,66 +230,6 @@
                                                                     </property>
                                                                 </bean>
 
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                </list>
-                                            </property>
-                                        </bean>
-
-                                        <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-success">
-                                            <property name="items">
-                                                <list>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-header">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Icon" p:iconClass="icon-smile"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="教学活动"
-                                                                      p:additionalCssClasses="boxheaderTitle"/>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                          p:additionalCssClasses="box-body">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
-                                                                    <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject"/>
-                                                                    <property name="propertyName"
-                                                                              value="allActivities"/><!--viewobject和propertyName要改-->
-                                                                    <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
-                                                                    <property name="layoutManager.richTable.render" value="false"/>
-                                                                    <property name="useServerPaging" value="true" />
-                                                                    <property name="renderAddLine" value="false"/>
-                                                                    <property name="renderLineActions" value="false"/>
-                                                                    <property name="disclosure.render" value="false"/>
-
-
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-Icon" p:iconClass="icon-comment"/>
-                                                                            <bean parent="Uif-DataField"
-                                                                                  p:propertyName="taTask"
-                                                                                  p:label="活动类型（后期删去title）"
-                                                                                  p:additionalCssClasses="tams-activity-item-title"/>
-                                                                            <bean parent="Uif-DataField"
-                                                                                  p:propertyName="description"
-                                                                                  p:label="描述"
-                                                                                  p:additionalCssClasses="tams-activity-item-title"/>
-                                                                            <bean parent="Uif-DataField"
-                                                                                  p:label="人数"
-                                                                                  p:propertyName="code"/>
-                                                                            <bean parent="Uif-DataField"
-                                                                                  p:label="时间"
-                                                                                  p:additionalCssClasses="tams-activity-state"
-                                                                                  p:propertyName="theme"/>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
                                                             </list>
                                                         </property>
                                                     </bean>

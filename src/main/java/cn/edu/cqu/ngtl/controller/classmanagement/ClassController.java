@@ -5,9 +5,7 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -41,6 +39,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
+
 /**
  * Created by tangjing on 16-10-20.
  * 课程管理相关的view及function
@@ -72,25 +72,23 @@ public class ClassController extends BaseController {
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
-        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
-        return this.performRedirect(form, redirctURL);
+        String redirectURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
+        return this.performRedirect(form, redirectURL);
     }
 
     /**
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getClassListPage")
-    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                         HttpServletRequest request) {
+    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 //        try {
-            final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-            String uId = userSession.getLoggedInUserPrincipalId();
-            infoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
+            User user = (User) getUserSession().retrieveObject("user");
+            infoForm.setUser(user);
                 infoForm.setClassList(
                         taConverter.classInfoToViewObject(
-                                classInfoService.getAllClassesFilterByUid(uId)
+                                classInfoService.getAllClassesFilterByUid(user.getCode())
                         )
                 );
 
@@ -108,8 +106,8 @@ public class ClassController extends BaseController {
       * 课程页面checkbox全选
     */
     @RequestMapping(params = "methodToCall=checkClassListAllButton")
-    public ModelAndView checkClassListAllButton(@ModelAttribute("KualiForm") UifFormBase form,
-                                         HttpServletRequest request) {
+    public ModelAndView checkClassListAllButton(@ModelAttribute("KualiForm") UifFormBase form
+                                        ) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         for(ClassTeacherViewObject classTeacherViewObject:infoForm.getClassList()){
@@ -145,8 +143,8 @@ public class ClassController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping(params = "methodToCall=approve")
-    public ModelAndView approve(@ModelAttribute("KualiForm") UifFormBase form,
+    @RequestMapping(params = "methodToCall=approveCourseApplicant")
+    public ModelAndView approveCourseApplicant(@ModelAttribute("KualiForm") UifFormBase form,
                                          HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
@@ -161,22 +159,28 @@ public class ClassController extends BaseController {
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
 
+        TAMSWorkflowStatus newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder());
+        String newStatusName = newStatus.getWorkflowStatus();
+        Integer newStatusOrder = newStatus.getOrder();
+        Integer maxOrder = new TAMSWorkflowStatusDaoJpa().getMaxOrderByFunctionId("1");
 
-        String newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder()).getWorkflowStatus();
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
+            if(newStatusOrder==maxOrder){
+                classInfoService.validClassFunds(classTeacherViewObject.getId());
+            }
             result = classInfoService.classStatusToCertainStatus(
                     uid,
                     classTeacherViewObject.getId(),
                     infoForm.getApproveReasonOptionFinder()
             );
-            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatus);
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatusName);
         }
         if(result)
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
         else  //应当返回错误信息
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
     }
 
     /**
@@ -201,7 +205,7 @@ public class ClassController extends BaseController {
         boolean result = false;
         String feedBackReason = infoForm.getReturnReason();
         String newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder()).getWorkflowStatus();
-        String uid = GlobalVariables.getUserSession().getPrincipalId();
+        String uid = getUserSession().getPrincipalId();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {    //依次将选择列表中的班次调整到设置的状态
              result = classInfoService.classStatusToCertainStatus(
                      uid,
@@ -212,9 +216,9 @@ public class ClassController extends BaseController {
         }
 
         if(result)
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
         else  //应当返回错误信息
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
     }
 
     /**
@@ -305,6 +309,11 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 
+    /**
+     * 学生提交助教申请
+     * @param form
+     * @return
+     */
     @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
     public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
@@ -319,9 +328,26 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
-
-        return this.getModelAndView(infoForm, "pageApplyForTaForm");
+        short code = taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
+        if(code == 1) {
+            infoForm.setErrMsg("非助教申请时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 2) {
+            infoForm.setErrMsg("您的提交已申请，请勿重复提交");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 3) {
+            infoForm.setErrMsg("您已经被此课程聘用，请勿重复提交！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 4) {
+            return this.getModelAndView(infoForm, "pageApplyForTaForm");
+        }
+        else {
+            infoForm.setErrMsg("未知错误");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
 
@@ -397,7 +423,7 @@ public class ClassController extends BaseController {
             infoForm.setAllCalendar(null);  //节省内存
 
             String classId = infoForm.getCurrClassId();
-            String uId = GlobalVariables.getUserSession().getPrincipalId();
+            String uId = getUserSession().getPrincipalId();
             infoForm.setAllActivities(
                     taConverter.activitiesToViewObject(
                             classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
@@ -477,7 +503,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        UserSession session = GlobalVariables.getUserSession();
+        UserSession session = getUserSession();
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
@@ -561,7 +587,7 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         /** uid **/
-        UserSession session = GlobalVariables.getUserSession();
+        UserSession session = getUserSession();
         String uId = session.getPrincipalId();
 
         /** classid **/
@@ -672,7 +698,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        String uId = GlobalVariables.getUserSession().getPrincipalId();
+        String uId = getUserSession().getPrincipalId();
         String classId = infoForm.getCurrClassId();
 
         infoForm.setApplyViewObject(
@@ -755,12 +781,41 @@ public class ClassController extends BaseController {
         }
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
-        boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
-        if(result)
+        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
+        if(result == 1) {
+            infoForm.setErrMsg("不在教师申请助教期间!");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 2) {
+            infoForm.setErrMsg("已处于审核状态中！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 3) {
+            infoForm.setErrMsg("写入申请信息失败！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 4) {
+            infoForm.setErrMsg("写入课程考核信息失败！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 5) {
+            infoForm.setErrMsg("未找到用户的角色！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 6) {
+            infoForm.setErrMsg("未找到\"审核方法\"！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(result == 7)
             return this.getModelAndView(infoForm, "pageRequestTa");
-        else
+        else if(result == 8) {
             infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            infoForm.setErrMsg("未知错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
 
@@ -789,7 +844,7 @@ public class ClassController extends BaseController {
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
+        String fileName = "教学班列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
 
         try {
             String filePath = excelService.printClassListExcel(classList, "exportfolder", fileName, "2003");
@@ -828,7 +883,7 @@ public class ClassController extends BaseController {
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
+        String fileName = "教学班列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
         String filePath = "";
         try {
             String[] header = {"课程名称", "课程编号", "教学班", "教师", "耗费工时", "学院"};
@@ -1123,9 +1178,12 @@ public class ClassController extends BaseController {
                                                HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-        String classid = infoForm.getCurrClassId();
+        String classId = infoForm.getCurrClassId();
 
         MyTaViewObject curTa=infoForm.getSelectedTa();
+        curTa.setApplicationClassId(classId);
+        List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
+        needToBeAddToApplication.add(curTa);
         //如果没有选择任何人
         if(curTa.getTaIdNumber() == null){
             infoForm.setErrMsg("请选择某位学生！");
@@ -1136,6 +1194,27 @@ public class ClassController extends BaseController {
             List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
             needToBeAddToApplication.add(curTa);
 
+        short code = taService.submitApplicationAssistant(
+                classConverter.TaViewObjectToTaApplication(curTa, classId)
+        );
+        if(code == 1) {
+            infoForm.setErrMsg("非助教申请时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 2) {
+            infoForm.setErrMsg("您的提交已申请，请勿重复提交");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 3) {
+            infoForm.setErrMsg("已经被此课程聘用！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else if(code == 4) {
+            //避免延迟刷新
+            if(infoForm.getAllApplication()==null)
+                infoForm.setAllApplication(needToBeAddToApplication);
+            else
+                infoForm.getAllApplication().addAll(needToBeAddToApplication);
             boolean result = taService.submitApplicationAssistant(
                     classConverter.TaViewObjectToTaApplication(curTa, classid)
             );
@@ -1156,6 +1235,13 @@ public class ClassController extends BaseController {
             } else
                 return this.getModelAndView(infoForm, "pageTaManagement");
         }
+            infoForm.getConditionTAList().remove(curTa);
+            return this.getModelAndView(infoForm, "pageTaManagement");
+        }
+        else {
+            infoForm.setErrMsg("未知错误");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
     @RequestMapping(params =  {"methodToCall=selectCurSession"})
@@ -1163,7 +1249,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
-        return this.getClassListPage(form,request);
+        return this.getClassListPage(form);
     }
 
 }

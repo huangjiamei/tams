@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
@@ -101,6 +102,9 @@ public class TAConverterimpl implements ITAConverter {
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
 
+    @Autowired
+    private TAMSTeachCalendarDao tamsTeachCalendarDao;
+
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
         if(informationlist == null || informationlist.isEmpty()) {
@@ -160,6 +164,7 @@ public class TAConverterimpl implements ITAConverter {
                     for(UTClassInstructor utClassInstructor :instructorName){
                         instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
                     }
+                String workTime = tamsTeachCalendarDao.countWorkTimeByClassId(information.getId());
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());
@@ -169,6 +174,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setStatus(information.getStatusName());
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName(instructorname);
+                viewObject.setWorkTime(workTime);
                 viewObjects.add(viewObject);
             }
             return viewObjects;

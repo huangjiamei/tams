@@ -116,12 +116,12 @@
                                                                                   p:actionLabel="添加"
                                                                                   p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                            <!--<bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="copyxxxx"
                                                                                   p:additionalCssClasses="icon-copy bg-teal box-btngroup">
-                                                                            </bean>
+                                                                            </bean>-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -184,7 +184,8 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                <bean id="teachCalendarTable" parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:onDocumentReadyScript="setBgColor('teachCalendarTable');">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar"/>
                                                                     <property name="propertyName" value="allCalendar"/>
@@ -210,10 +211,18 @@
                                                                             </bean>
                                                                             <bean parent="Uif-DataField" p:label="编号" p:propertyName="code"/> <!-- id是否可以当做编号? -->
                                                                             <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教任务描述" p:propertyName="taTask"/>
-                                                                            <bean parent="Uif-DataField" p:label="更新于" p:propertyName="endTime"/>
-                                                                            <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"/>
-                                                                            <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="endTime"/>
+                                                                            <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask" p:readOnly="true">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"
+                                                                                          p:style="height:200px;resize: none;"/>
+                                                                                </property>
+                                                                              </bean>
+                                                                            <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"
+                                                                                   /><!--p:readOnlyDisplayReplacement="@{new java.text.SimpleDateFormat('yyyy-MM-dd').format(#line.startTime)}"-->
+                                                                            <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="endTime"
+                                                                                 /><!-- p:readOnlyDisplayReplacement="@{new java.text.SimpleDateFormat('yyyy-MM-dd').format(#line.endTime)}"-->
+                                                                            <bean parent="Uif-DataField" p:label="更新于" p:propertyName="endTime"
+                                                                                 /><!-- p:readOnlyDisplayReplacement="@{new java.text.SimpleDateFormat('yyyy-MM-dd').format(#line.endTime)}"-->
                                                                             <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="elapsedTime"/>
                                                                         </list>
                                                                     </property>
@@ -225,10 +234,8 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:methodToCall="getViewTeachingCalendarPage"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"
-                                                                                        />
+                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
                                                                                         <bean parent="Uif-ActionImage"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="deleteTeachCalendar"
                                                                                               p:refreshId="calenderBox"
                                                                                               p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>

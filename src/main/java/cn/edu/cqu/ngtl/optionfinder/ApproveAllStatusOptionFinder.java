@@ -27,9 +27,6 @@ public class ApproveAllStatusOptionFinder extends UifKeyValuesFinderBase {
     public List<KeyValue> getKeyValues(ViewModel model) {
         ClassInfoForm infoForm = (ClassInfoForm) model;
         List<KeyValue> keyValues = new ArrayList();
-        if(blankOption){
-            keyValues.add(new ConcreteKeyValue("", ""));
-        }
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         List<ClassTeacherViewObject> checkedList = new ArrayList<>();

@@ -407,6 +407,10 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         String typeId = infoForm.getTimeType();
 
+        if(infoForm.getSettingsTime() == null) {
+            infoForm.setErrMsg("未设置时间段");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         String[] timeSets = infoForm.getSettingsTime().split("~");
         String startTime = timeSets[0];
         String endTime = timeSets[1];
@@ -414,9 +418,8 @@ public class adminController extends BaseController {
         if (user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");
         boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
-        this.resetSettingTime(infoForm);
 
-        return this.getModelAndView(infoForm, "pageTimeSet");
+        return this.resetSettingTime(infoForm);
     }
 
     /**
@@ -430,7 +433,8 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         infoForm.setTimeType(null);
         infoForm.setSettingsTime(null);
-        return this.getTimeSetPage(infoForm);
+        String redirectURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/admin?methodToCall=getTimeSetPage&viewId=AdminView";
+        return this.performRedirect(infoForm, redirectURL);
     }
 
     /**

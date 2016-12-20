@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
+    void validClassFunds(String classId);
+
     List<UTClassInformation> getAllCurSessionClasses();
 
     UTClass getClassInfoById(String classId);
@@ -31,7 +33,21 @@ public interface IClassInfoService {
 
     List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId);
 
-    boolean instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations);
+    /**
+     * 助教提交申请的函数<br>
+     * return : 状态码<br>
+     *      1 : 不在教师申请助教期间
+     *      2 : 已经提交过的申请，因为其他原因处于未申请的状态（将会重设为申请初始状态）
+     *      3 : 写入申请信息失败
+     *      4 : 写入课程考核信息失败
+     *      5 : 未找到用户的角色
+     *      6 : 未找到"审核方法"
+     *      7 : 成功
+     *      8 : 正常提交过的申请，即（看上去像是重复申请）
+     *      9 : 未知错误
+     * @return
+     */
+    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations);
 
     List<TAMSTa> getAllTaFilteredByClassid(String classId);
 

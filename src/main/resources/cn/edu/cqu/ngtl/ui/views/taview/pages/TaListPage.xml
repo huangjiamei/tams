@@ -329,7 +329,7 @@
                       p:propertyName="revocationReasonOptionFinder" >
                     <property name="optionsFinder">
                         <bean class="cn.edu.cqu.ngtl.optionfinder.AppriseAllStatusOptionFinder"
-                              p:blankOption="true"/>
+                              p:blankOption="false"/>
                     </property>
                     <property name="control">
                         <bean parent="Uif-DropdownControl"/>
@@ -361,7 +361,7 @@
                       p:propertyName="appraiseReasonOptionFinder" >
                     <property name="optionsFinder">
                         <bean class="cn.edu.cqu.ngtl.optionfinder.AppriseAllStatusOptionFinder"
-                              p:blankOption="true"/>
+                              p:blankOption="false"/>
                     </property>
                     <property name="control">
                         <bean parent="Uif-DropdownControl"/>

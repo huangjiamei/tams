@@ -16,4 +16,6 @@ public interface TAMSTimeSettingTypeDao {
     boolean deleteOneByEntity(TAMSTimeSettingType settingType);
 
     boolean updateOneByEntity(TAMSTimeSettingType settingType);
+
+    TAMSTimeSettingType selectByName(String typeName);
 }

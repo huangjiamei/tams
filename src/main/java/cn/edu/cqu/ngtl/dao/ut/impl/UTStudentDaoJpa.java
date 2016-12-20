@@ -1,7 +1,10 @@
 package cn.edu.cqu.ngtl.dao.ut.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
@@ -11,6 +14,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Map;
+
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+
 @Repository
 @Component("UTStudentDaoJpa")
 public class UTStudentDaoJpa implements UTStudentDao {
@@ -25,10 +32,15 @@ public class UTStudentDaoJpa implements UTStudentDao {
 	}
 
 	@Override
-	public UTStudent saveUTStudent(UTStudent utStudent) {
-
-		return KradDataServiceLocator.getDataObjectService().save(utStudent);
-
+	public UTStudent selectByAuthId(String authId) {
+		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+				equal("authId", authId)
+		);
+		QueryResults<UTStudent> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+				UTStudent.class,
+				criteria.build()
+		);
+		return qr.getResults().isEmpty()? null : qr.getResults().get(0);
 	}
 
 	//根据姓名和学号查询学生

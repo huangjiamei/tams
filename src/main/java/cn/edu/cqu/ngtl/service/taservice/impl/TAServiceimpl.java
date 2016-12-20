@@ -15,6 +15,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
@@ -71,6 +72,9 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private UTStudentTimetableDao utStudentTimetableDao;
 
+    @Autowired
+    private TAMSTimeSettingTypeDao tamsTimeSettingTypeDao;
+
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
         List<UTStudent> studentInfo = studentDao.selectStudentByNameAndId(conditions);
@@ -111,16 +115,23 @@ public class TAServiceimpl implements ITAService {
 
     }
 
-    //添加申请人
     @Override
-    public boolean submitApplicationAssistant(TAMSTaApplication application) {
+    public short submitApplicationAssistant(TAMSTaApplication application) {
+        TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
+        TimeUtil timeUtil = new TimeUtil();
+        if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+            return 1;
+        }
         if(tamsTaApplicationDao.selectByStuIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null){
-            return false;
+            return 2;
+        }
+        if(taDao.selectByStudentIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null) {
+            return 3;
         }
         if (tamsTaApplicationDao.insertOne(application))
-            return true;
+            return 4;
         else
-            return false;
+            return 5;
     }
 
 

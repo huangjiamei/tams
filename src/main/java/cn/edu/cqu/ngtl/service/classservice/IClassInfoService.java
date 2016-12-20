@@ -31,7 +31,20 @@ public interface IClassInfoService {
 
     List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId);
 
-    boolean instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations);
+    /**
+     * 助教提交申请的函数<br>
+     * return : 状态码<br>
+     *      1 : 不在教师申请助教期间
+     *      2 : 重复申请
+     *      3 : 写入申请信息失败
+     *      4 : 写入课程考核信息失败
+     *      5 : 未找到用户的角色
+     *      6 : 未找到"审核方法"
+     *      7 : 成功
+     *      8 : 未知错误
+     * @return
+     */
+    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations);
 
     List<TAMSTa> getAllTaFilteredByClassid(String classId);
 

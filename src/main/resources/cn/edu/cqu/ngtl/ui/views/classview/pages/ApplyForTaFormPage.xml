@@ -174,7 +174,6 @@
                                                                                   p:actionLabel="提交"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="submitTaForm"
-                                                                                  p:successCallback="alert('提交成功，返回测试页面homepage，未来可换成dialog');"
                                                                                   p:id="submitTaFormBtn"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"

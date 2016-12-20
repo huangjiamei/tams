@@ -451,20 +451,24 @@ public class TAConverterimpl implements ITAConverter {
 
         //新建和编辑的公共部分
         session.setActive(term.getActive());
-        session.setBeginDate(
-                outputFormat.format(
-                        inputFormat.parse(
-                                term.getStartDate()
-                        )
-                )
-        );
-        session.setEndDate(
-                outputFormat.format(
-                        inputFormat.parse(
-                                term.getEndDate()
-                        )
-                )
-        );
+        if(term.getStartDate() != null) {
+            session.setBeginDate(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    term.getStartDate()
+                            )
+                    )
+            );
+        }
+        if(term.getEndDate() != null) {
+            session.setEndDate(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    term.getEndDate()
+                            )
+                    )
+            );
+        }
 
         return session;
     }
@@ -768,8 +772,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setPhdFunding(classFunding.getPhdFunding());
             viewObject.setBonus(classFunding.getBonus());
             viewObject.setTravelSubsidy(classFunding.getTravelSubsidy());
-            Integer total = Integer.valueOf(classFunding.getAssignedFunding()) +
-                    Integer.valueOf(classFunding.getApplyFunding())
+            Integer total = Integer.valueOf(classFunding.getAssignedFunding())
                     + Integer.valueOf(classFunding.getPhdFunding())
                     + Integer.valueOf(classFunding.getBonus())
                     + Integer.valueOf(classFunding.getTravelSubsidy());
@@ -820,8 +823,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setDepartment(deptFunding.getDepartment().getName());
             viewObject.setTrafficFunding(deptFunding.getTravelSubsidy());
             Integer total = Integer.valueOf(deptFunding.getBonus()) + Integer.valueOf(deptFunding.getActualFunding()) +
-                    Integer.valueOf(deptFunding.getApplyFunding()) + Integer.valueOf(deptFunding.getPhdFunding()) +
-                    Integer.valueOf(deptFunding.getPlanFunding()) + Integer.valueOf(deptFunding.getTravelSubsidy());
+                    Integer.valueOf(deptFunding.getTravelSubsidy()) + Integer.valueOf(deptFunding.getPhdFunding()) ;
             viewObject.setTotal(total.toString());
             if (deptFunding.getSession() != null ){
                 viewObject.setSessionName(deptFunding.getSession().getYear() + "年" +
@@ -852,9 +854,8 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setActualFunding(universityFunding.getActualFunding());
             viewObject.setPlanFunding(universityFunding.getPlanFunding());
             viewObject.setTrafficFunding(universityFunding.getTravelSubsidy());
-            Integer total = Integer.valueOf(universityFunding.getTravelSubsidy()) + Integer.valueOf(universityFunding.getBonus()) + Integer.valueOf(universityFunding.getActualFunding()) +
-                    Integer.valueOf(universityFunding.getApplyFunding()) + Integer.valueOf(universityFunding.getPhdFunding()) +
-                    Integer.valueOf(universityFunding.getPlanFunding());
+            Integer total = Integer.valueOf(universityFunding.getTravelSubsidy()) + Integer.valueOf(universityFunding.getBonus()) +
+                    Integer.valueOf(universityFunding.getActualFunding()) + Integer.valueOf(universityFunding.getPhdFunding());
             viewObject.setTotal(total.toString());
             if(universityFunding.getUtSession() != null)
                 viewObject.setSessionName(universityFunding.getUtSession().getYear() + "年" +

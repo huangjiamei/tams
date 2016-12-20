@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.dao.ut.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
@@ -146,4 +147,24 @@ public class UTSessionDaoJpa implements UTSessionDao{
         return utSessions;
 
     }
+
+    //根据term和year来查询sessionId
+    @Override
+    public Integer selectSessionByCondition(String term, String year) {
+        UTSession utSession = new UTSession();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create()
+                .setPredicates(
+                        and(
+                                equal("term", term),
+                                equal("year", year)
+                        )
+                );
+        QueryResults<UTSession> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                UTSession.class, criteria.build());
+
+        utSession = qr.getResults().get(0);
+
+        return utSession.getId();
+    }
+
 }

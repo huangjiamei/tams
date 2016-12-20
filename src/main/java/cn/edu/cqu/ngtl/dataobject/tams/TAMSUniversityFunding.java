@@ -12,6 +12,8 @@ import javax.persistence.*;
 public class TAMSUniversityFunding {
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsUniversityFunding")
+    @SequenceGenerator(name="tamsUniversityFunding",sequenceName="TAMS_UNIVERSITY_FUNDING_S",allocationSize=1)
     private String id;
 
     @Column(name = "PLAN_FUNDING")
@@ -110,4 +112,16 @@ public class TAMSUniversityFunding {
     @OneToOne
     @JoinColumn(name = "SESSION_ID", updatable = false, insertable = false)
     private UTSession utSession;
+
+    @Column(name = "SESSION_ID")
+    private Integer sessionId;
+
+    public Integer getSessionId() {
+        return sessionId;
+    }
+
+    public void setSessionId(Integer sessionId) {
+        this.sessionId = sessionId;
+    }
+
 }

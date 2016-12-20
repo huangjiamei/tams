@@ -24,6 +24,8 @@ import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.isNotNull;
+
 /**
  * Created by awake on 2016/11/25.
  */
@@ -138,6 +140,15 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
     public boolean saveOneByEntity(TAMSDeptFundingDraft tamsDeptDraftFunding){
 
         return KradDataServiceLocator.getDataObjectService().save(tamsDeptDraftFunding)!=null;
+    }
+
+    //批量添加
+    @Override
+    public boolean saveBatchByEntities(List<TAMSDeptFundingDraft> tamsDeptFundingDrafts){
+        for(TAMSDeptFundingDraft per : tamsDeptFundingDrafts){
+            KradDataServiceLocator.getDataObjectService().save(per);
+        }
+        return true;
     }
 
 

@@ -27,4 +27,6 @@ public interface UTSessionDao {
     boolean deleteOneByEntity(UTSession session);
 
     List<UTSession> selectByCondition(String termName, String startTime, String endTime) throws ParseException;
+
+    Integer selectSessionByCondition(String term, String year);
 }

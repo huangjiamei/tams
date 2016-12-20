@@ -405,6 +405,8 @@
                                                 <list>
                                                     <bean parent="Uif-PrimaryActionButton"
                                                           p:ajaxSubmit="true"
+                                                          p:actionLabel="选择"
+                                                          p:actionImagePlacement="LEFT"
                                                           p:methodToCall="getSelectedTaInfo"
                                                           p:refreshId="taDetailInfoGrid"
                                                           p:render="@{#line.taName!=null}"

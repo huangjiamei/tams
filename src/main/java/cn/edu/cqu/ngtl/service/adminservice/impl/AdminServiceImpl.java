@@ -3,11 +3,14 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSDeptFundingDraftDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
@@ -21,6 +24,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +70,9 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private UTDepartmentDao utDepartmentDao;
 
     @Autowired
     private TAMSDeptFundingDao deptFundingDao;
@@ -319,7 +326,39 @@ public class AdminServiceImpl implements IAdminService{
         session.setActive(SESSION_ACTIVE.NO);
         //// FIXME: 16-10-27 还需要处理预算
 
-        return sessionDao.insertOneByEntity(session);
+        if(sessionDao.insertOneByEntity(session)){
+            //批次经费初始化
+            TAMSUniversityFunding tamsUniversityFunding = new TAMSUniversityFunding();
+            Integer sessionId = sessionDao.selectSessionByCondition(session.getTerm(), session.getYear());
+            tamsUniversityFunding.setSessionId(sessionId);
+            tamsUniversityFunding.setUniversityId("1");
+            tamsUniversityFunding.setPlanFunding("0");
+            tamsUniversityFunding.setActualFunding("0");
+            tamsUniversityFunding.setApplyFunding("0");
+            tamsUniversityFunding.setPhdFunding("0");
+            tamsUniversityFunding.setBonus("0");
+            tamsUniversityFunding.setTravelSubsidy("0");
+            tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
+            //学院经费初始化
+            List<TAMSDeptFundingDraft> tamsDeptFundingDrafts = new ArrayList<>();
+            List<UTDepartment> departments = utDepartmentDao.getAllUTDepartments();
+            for(int i=0; i<departments.size(); i++){
+                TAMSDeptFundingDraft tamsDeptFundingDraft = new TAMSDeptFundingDraft();
+                tamsDeptFundingDraft.setSessionId(sessionId);
+                tamsDeptFundingDraft.setDepartmentId(departments.get(i).getId());
+                tamsDeptFundingDraft.setPlanFunding("0");
+                tamsDeptFundingDraft.setActualFunding("0");
+                tamsDeptFundingDraft.setApplyFunding("0");
+                tamsDeptFundingDraft.setPhdFunding("0");
+                tamsDeptFundingDraft.setBonus("0");
+                tamsDeptFundingDraft.setTravelSubsidy("0");
+                tamsDeptFundingDrafts.add(tamsDeptFundingDraft);
+            }
+            tamsDeptFundingDraftDao.saveBatchByEntities(tamsDeptFundingDrafts);
+            return true;
+        }
+        else
+            return false;
     }
 
 
@@ -345,9 +384,7 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public boolean changeSession(UTSession session) {
-
         return sessionDao.updateOneByEntity(session);
-
     }
 
     @Override

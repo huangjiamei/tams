@@ -286,6 +286,11 @@ public class TAServiceimpl implements ITAService {
                 else
                     newTa.setType("缺失");
             }
+            //初始状态设为已聘请
+            newTa.setStatus("1");
+            //设置未评价
+            newTa.setEvaluation("未评价");
+            newTa.setStuEva("未评价");
             TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
             List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(function.getId());
             if(allStatus != null && !allStatus.isEmpty())

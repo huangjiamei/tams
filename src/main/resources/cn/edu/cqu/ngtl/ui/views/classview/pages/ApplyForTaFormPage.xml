@@ -138,8 +138,14 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="研究生专业" p:messageText="@{applyAssistantViewObject.g_Major}"/>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:label="联系方式" p:propertyName="applicationPhoneNbr"
-                                                                                  p:readOnly="false" />
+                                                                                  p:label="联系方式"
+                                                                                  p:propertyName="applicationPhoneNbr"
+                                                                                  p:required="true"
+                                                                                  p:readOnly="false" >
+                                                                                <property name="validCharactersConstraint">
+                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程名称" p:messageText="@{applyAssistantViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
@@ -164,6 +170,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="申请理由及特长"
+                                                                                  p:required="true"
                                                                                   p:propertyName="applyReason"
                                                                                   p:additionalCssClasses="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                 <property name="control">

@@ -23,7 +23,7 @@ public class ClassTaApplyViewObject {
 
     private String classNumber;
 
-    private String studyTime;
+    private String courseHour;
 
     private String credit;
 
@@ -103,12 +103,12 @@ public class ClassTaApplyViewObject {
         this.classNumber = classNumber;
     }
 
-    public String getStudyTime() {
-        return studyTime;
+    public String getCourseHour() {
+        return courseHour;
     }
 
-    public void setStudyTime(String studyTime) {
-        this.studyTime = studyTime;
+    public void setCourseHour(String courseHour) {
+        this.courseHour = courseHour;
     }
 
     public String getCredit() {

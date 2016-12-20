@@ -187,7 +187,7 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setCourseNumber(course.getCodeR());
 
-            viewObject.setStudyTime(course.getHour());
+            viewObject.setCourseHour(course.getHour());
 
             viewObject.setCredit(course.getCredit() + "");
 
@@ -1028,17 +1028,18 @@ public class TAConverterimpl implements ITAConverter {
         ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
         List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(classInfo.getId());
         String instructorName = "";
-        String instrctorCode ="";
+        String instructorCode ="";
         if(utClassInstructors!=null){
             for(UTClassInstructor utClassInstructor : utClassInstructors){
                 instructorName += utClassInstructor.getUtInstructor().getName()+" ";
-                instrctorCode += utClassInstructor.getUtInstructor().getCode()+" ";
+                instructorCode += utClassInstructor.getUtInstructor().getCode()+" ";
             }
         }
         viewObject.setTeacherName(instructorName);
-        viewObject.setTeacherType(instrctorCode);
+        viewObject.setTeacherType(instructorCode);
         if(classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() : null;
+            viewObject.setCourseHour(course.getHour());
             viewObject.setClassNumber(classInfo.getClassNumber());
             viewObject.setStudentNumber(classInfo.getMinPerWeek()==null?" ":classInfo.getMinPerWeek().toString());
             if(course != null) {

@@ -1180,67 +1180,43 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
         String classId = infoForm.getCurrClassId();
 
-        MyTaViewObject curTa=infoForm.getSelectedTa();
+        MyTaViewObject curTa = infoForm.getSelectedTa();
         curTa.setApplicationClassId(classId);
         List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
         needToBeAddToApplication.add(curTa);
         //如果没有选择任何人
-        if(curTa.getTaIdNumber() == null){
+        if (curTa.getTaIdNumber() == null) {
             infoForm.setErrMsg("请选择某位学生！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
-        }
-        else {
-            curTa.setApplicationClassId(classid);
-            List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
+        } else {
+            curTa.setApplicationClassId(classId);
             needToBeAddToApplication.add(curTa);
 
-        short code = taService.submitApplicationAssistant(
-                classConverter.TaViewObjectToTaApplication(curTa, classId)
-        );
-        if(code == 1) {
-            infoForm.setErrMsg("非助教申请时间！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
-        }
-        else if(code == 2) {
-            infoForm.setErrMsg("您的提交已申请，请勿重复提交");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
-        }
-        else if(code == 3) {
-            infoForm.setErrMsg("已经被此课程聘用！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
-        }
-        else if(code == 4) {
-            //避免延迟刷新
-            if(infoForm.getAllApplication()==null)
-                infoForm.setAllApplication(needToBeAddToApplication);
-            else
-                infoForm.getAllApplication().addAll(needToBeAddToApplication);
-            boolean result = taService.submitApplicationAssistant(
-                    classConverter.TaViewObjectToTaApplication(curTa, classid)
+            short code = taService.submitApplicationAssistant(
+                    classConverter.TaViewObjectToTaApplication(curTa, classId)
             );
-
-            if (result) {
+            if (code == 1) {
+                infoForm.setErrMsg("非助教申请时间！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            } else if (code == 2) {
+                infoForm.setErrMsg("您的提交已申请，请勿重复提交");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            } else if (code == 3) {
+                infoForm.setErrMsg("已经被此课程聘用！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            } else if (code == 4) {
                 //避免延迟刷新
-                //if(infoForm.getAllApplication()==null)
-                //    infoForm.setAllApplication(needToBeAddToApplication);
-                //如果为空，定义为空对象，所以默认为空对象
-                if (infoForm.getAllApplication().get(0).getTaName() == null) {
-                    infoForm.getAllApplication().remove(0);
-                    infoForm.getAllApplication().addAll(needToBeAddToApplication);
-                } else
+                if (infoForm.getAllApplication() == null)
+                    infoForm.setAllApplication(needToBeAddToApplication);
+                else
                     infoForm.getAllApplication().addAll(needToBeAddToApplication);
 
                 infoForm.getConditionTAList().remove(curTa);
                 return this.getModelAndView(infoForm, "pageTaManagement");
-            } else
-                return this.getModelAndView(infoForm, "pageTaManagement");
-        }
-            infoForm.getConditionTAList().remove(curTa);
-            return this.getModelAndView(infoForm, "pageTaManagement");
-        }
-        else {
-            infoForm.setErrMsg("未知错误");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            } else {
+                infoForm.setErrMsg("未知错误");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
     }
 

@@ -539,8 +539,7 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public boolean addTimeSetting(User user, String typeId, String startTime, String endTime) {
-        //// FIXME: 16-11-23 测试需要，必须去掉一个!
-        if(!!userInfoService.hasPermission(user, "ViewConsolePage")) {
+        if(!userInfoService.hasPermission(user, "ViewConsolePage")) {
             logger.warn("未授权用户请求：(新增时间段)addTimeSetting(User user, String typeId, String startTime, String endTime)\n");
             logger.warn("未授权用户信息：" + user.toString() + "\n");
             return false;
@@ -608,7 +607,7 @@ public class AdminServiceImpl implements IAdminService{
 
     @Override
     public List<TAMSTimeSettings> getallTimeSettings() {
-        return timeSettingsDao.selectAll();
+        return timeSettingsDao.selectAllCurrentSession();
     }
 
 

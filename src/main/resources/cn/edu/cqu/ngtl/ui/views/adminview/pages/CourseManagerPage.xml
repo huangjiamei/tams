@@ -62,12 +62,7 @@
                                                               p:location.viewId="PortalView"
                                                               p:location.controllerMapping="/home"
                                                               p:location.methodToCall="getCommonHome"/>
-                                                        <bean parent="Uif-KeyValueLocation" p:key="2"
-                                                              p:value="管理台"
-                                                              p:location.viewId="AdminView"
-                                                              p:location.controllerMapping="/admin"
-                                                              p:location.methodToCall="getConsolePage"/>
-                                                        <bean parent="Uif-KeyLabelPair" p:key="3"
+                                                        <bean parent="Uif-KeyLabelPair" p:key="2"
                                                               p:value="课程负责人管理"/>
                                                     </list>
                                                 </property>
@@ -105,6 +100,7 @@
                                                                 <property name="items">
                                                                     <list>
                                                                         <!--右上角btnlist-->
+
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="EXCEL"
                                                                               p:methodToCall=""
@@ -189,11 +185,9 @@
                                                                                     <!--<bean parent="Uif-DeleteLineAction"-->
                                                                                     <!--p:confirmationPromptText="Are you sure you wish to delete line: @{#line.field4}?"/>-->
                                                                                     <bean parent="Uif-PrimaryActionButton"
-                                                                                          p:ajaxSubmit="false"
                                                                                           p:methodToCall="updateCourseManager"
                                                                                           p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                     <bean parent="Uif-PrimaryActionButton"
-                                                                                          p:ajaxSubmit="false"
                                                                                           p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                         <property name="confirmationDialog">
                                                                                             <ref bean="confirmDeleteManagerDialog" />

@@ -75,6 +75,25 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private TAMSTimeSettingTypeDao tamsTimeSettingTypeDao;
 
+
+    @Override
+    public String getApplicationPhoneNbr(String stuId, String classId){
+        TAMSTaApplication tamsTaApplication =  tamsTaApplicationDao.selectByStuIdAndClassId(stuId,classId);
+        if(tamsTaApplication!=null) {
+            return tamsTaApplication.getPhoneNbr();
+        }
+        return null;
+    }
+
+    @Override
+    public String getApplicationReason(String stuId, String classId){
+        TAMSTaApplication tamsTaApplication =  tamsTaApplicationDao.selectByStuIdAndClassId(stuId,classId);
+        if(tamsTaApplication!=null) {
+            return tamsTaApplication.getNote();
+        }
+        return null;
+    }
+
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
         List<UTStudent> studentInfo = studentDao.selectStudentByNameAndId(conditions);
@@ -255,11 +274,14 @@ public class TAServiceimpl implements ITAService {
             newTa.setMonth12("0");
             //newTa.setType("1");
             UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
+            newTa.setEvaluation("未评价");
+            newTa.setStuEva("未评价");
             if(utStudent != null){
                 if(utStudent.getProgram() != null){
                     if(utStudent.getProgram().getDuration() == 3){
                         newTa.setType("1");
                     }
+                    newTa.setType("2"); //TODO
                 }
                 else
                     newTa.setType("缺失");

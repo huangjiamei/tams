@@ -261,15 +261,15 @@
                                                                                             <property name="items">
                                                                                                 <list>
 
-                                                                                                    <bean parent="AdminMap"/>
+                                                                                                    <bean parent="TableMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12" p:render="false">
                                                                                             <property name="items">
                                                                                                 <list>
 
-                                                                                                    <bean parent="TableMap"/>
+                                                                                                    <bean parent="AdminMap"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -430,34 +430,6 @@
         </property>
     </bean>
 
-    <bean id="AdminMap" parent="Uif-VerticalBoxSection" >
-        <property name="items">
-            <list>
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
-                    <property name="items">
-                        <list>
-                            <bean p:linkText="报表" parent="Uif-Link" p:href="#" p:iconClass="fa fa-line-chart menuIcon"/>
-                        </list>
-                    </property>
-                </bean>
-
-                <bean parent="Uif-VerticalBoxSection">
-                    <property name="items">
-                        <list>
-                            <bean parent="Uif-Link" p:href="#"
-                                  p:linkText="经费报表" p:iconClass="icon-bars menuIcon"/>
-                            <bean parent="Uif-Link" p:href="#"
-                                  p:linkText="助教工作情况表" p:iconClass="icon-align-left menuIcon"/>
-                            <bean parent="Uif-Link" p:href="#"
-                                  p:linkText="教师助教工作情况表" p:iconClass="icon-list menuIcon"/>
-
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
-
     <bean id="ClassMap" parent="Uif-VerticalBoxSection">
         <property name="items">
             <list>
@@ -492,22 +464,25 @@
                             <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
                                   p:linkText="课程负责人管理" p:iconClass="icon-user menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewCourseManagerPage')}"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
                                   p:linkText="批次管理" p:iconClass="icon-th-list menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTermManagerPage')}"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
                                   p:linkText="经费管理" p:iconClass="icon-money menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewFundsManagementPage')}"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
                                   p:linkText="工作流管理" p:iconClass="icon-random menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowManagePage')}"/>
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
                                   p:linkText="时间管理" p:iconClass="icon-time menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTimeSettingsPage')}"/>
-
-                            <bean parent="Uif-Link" p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSystemParameterPage&amp;viewId=AdminView"
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSystemParameterPage&amp;viewId=AdminView"
                                   p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"/>
-
                         </list>
                     </property>
                 </bean>
@@ -518,7 +493,41 @@
     <bean id="TableMap" parent="Uif-VerticalBoxSection">
         <property name="items">
             <list>
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
 
+                        </list>
+                    </property>
+                </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="AdminMap" parent="Uif-VerticalBoxSection" >
+        <property name="items">
+            <list>
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
+                    <property name="items">
+                        <list>
+                            <bean p:linkText="报表" parent="Uif-Link" p:href="#" p:iconClass="fa fa-line-chart menuIcon"/>
+                        </list>
+                    </property>
+                </bean>
+
+                <bean parent="Uif-VerticalBoxSection">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-Link" p:href="#"
+                                  p:linkText="经费报表" p:iconClass="icon-bars menuIcon"/>
+                            <bean parent="Uif-Link" p:href="#"
+                                  p:linkText="助教工作情况表" p:iconClass="icon-align-left menuIcon"/>
+                            <bean parent="Uif-Link" p:href="#"
+                                  p:linkText="教师助教工作情况表" p:iconClass="icon-list menuIcon"/>
+
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>
@@ -557,7 +566,7 @@
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"/>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="确认"/>
             </list>
         </property>
     </bean>

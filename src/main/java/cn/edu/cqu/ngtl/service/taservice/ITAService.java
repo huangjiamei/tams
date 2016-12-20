@@ -16,6 +16,12 @@ import java.util.Map;
  */
 public interface ITAService {
 
+    //查询申请人电话
+    String getApplicationPhoneNbr(String stuId,String classId);
+
+    //查询申请人理由
+    String getApplicationReason(String stuId,String classId);
+
     //根据姓名和学号查找候选人
     List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions);
 

@@ -109,13 +109,13 @@
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加类别"
+                                                                                  p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="selectCurObj"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -165,19 +165,13 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <!-- 注意若要使用confirmDialog，那么就需要关闭dialog的ajaxsubmit-->
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="selectCurObj">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-ActionImage">
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:methodToCall="selectCurObj"
+                                                                                              p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteCourseCategoryDialog" />
-                                                                                            </property>
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                             </property>
                                                                                         </bean>
                                                                                     </list>
@@ -204,7 +198,7 @@
     </bean>
 
     <bean id="addCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加课程大类" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:headerText="添加课程大类" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#addCourseCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -266,13 +260,13 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="updateCourseCategory" p:successCallback="dismissDialog('editCourseCategoryDialog');"/>
+                      p:methodToCall="updateCourseCategory" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
 
     <bean id="deleteCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="删除课程类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="删除课程类别" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除批次，如需删除请联系系统维护人员！" />

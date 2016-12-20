@@ -87,6 +87,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /**
      * 学生申请助教页面相关
      */
+    private String applicationPhoneNbr;
 
     private ApplyAssistantViewObject applyAssistantViewObject;
 
@@ -445,5 +446,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCheckedClassListAll(Boolean checkedClassListAll) {
         this.checkedClassListAll = checkedClassListAll;
+    }
+
+    public String getApplicationPhoneNbr() {
+        return applicationPhoneNbr;
+    }
+
+    public void setApplicationPhoneNbr(String applicationPhoneNbr) {
+        this.applicationPhoneNbr = applicationPhoneNbr;
     }
 }

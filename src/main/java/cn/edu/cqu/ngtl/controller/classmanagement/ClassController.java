@@ -37,7 +37,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -293,6 +292,9 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
+        infoForm.setApplicationPhoneNbr(taService.getApplicationPhoneNbr(stuId,classId)); //设置申请人电话号码
+        infoForm.setApplyReason(taService.getApplicationReason(stuId,classId));   //设置申请人理由
+
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
                         classInfoService.getStudentInfoById(stuId),
@@ -312,6 +314,15 @@ public class ClassController extends BaseController {
     public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        if(infoForm.getApplicationPhoneNbr()==null){
+            infoForm.setErrMsg("请申请人填写本人联系电话！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getApplyReason()==null){
+            infoForm.setErrMsg("请申请人填写申请理由！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
 
         short code = taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
         if(code == 1) {
@@ -492,9 +503,35 @@ public class ClassController extends BaseController {
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-
+        if(infoForm.getAddTeachCTime()==null){
+            infoForm.setErrMsg("请申请人填写时间范围！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         String arr[] = infoForm.getAddTeachCTime().split("~");
+
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
+        /*
+            控制判断 start
+         */
+        if(added.getElapsedTime()==null){
+            infoForm.setErrMsg("请申请人填写总耗时！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(added.getTheme()==null){
+            infoForm.setErrMsg("请申请人填写教学主题！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(added.getDescription()==null){
+            infoForm.setErrMsg("请申请人填写教学描述！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(added.getTaTask()==null){
+            infoForm.setErrMsg("请申请人填写助教任务！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
 
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()

@@ -106,8 +106,7 @@
                                                                                               p:headerText="1"
                                                                                               p:additionalCssClasses="headerCss"/>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="课程类别管理"
-                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                              p:messageText="课程类别管理"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -116,13 +115,13 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-VerticalBoxSection"
-                                                                                              p:additionalCssClasses="fa fa-wpforms"/>
+                                                                                              p:additionalCssClasses="fa fa-book"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>
@@ -151,8 +150,7 @@
                                                                                               p:headerText="2"
                                                                                               p:additionalCssClasses="headerCss"/>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="助教类别管理"
-                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                              p:messageText="助教类别管理"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -167,7 +165,7 @@
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>
@@ -196,8 +194,7 @@
                                                                                               p:headerText="3"
                                                                                               p:additionalCssClasses="headerCss"/>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="任务类别管理"
-                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                              p:messageText="任务类别管理"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -212,7 +209,7 @@
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>
@@ -241,8 +238,7 @@
                                                                                               p:headerText="4"
                                                                                               p:additionalCssClasses="headerCss"/>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="工作流类别管理"
-                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                              p:messageText="工作流类别管理"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -286,8 +282,7 @@
                                                                                               p:headerText="5"
                                                                                               p:additionalCssClasses="headerCss"/>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="时间类别管理"
-                                                                                              p:additionalCssClasses="zzz"/>
+                                                                                              p:messageText="时间类别管理"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
@@ -21,6 +22,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
+import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.courseservice.ICourseInfoService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -34,6 +36,7 @@ import cn.edu.cqu.ngtl.viewobject.tainfo.MyClassViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.apache.log4j.Logger;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -61,10 +64,16 @@ public class TAConverterimpl implements ITAConverter {
     private ICourseInfoService courseInfoService;
 
     @Autowired
+    private IClassInfoService iClassInfoService;
+
+    @Autowired
     private ITAService taService;
 
     @Autowired
     private UTSessionDao sessionDao;
+
+    @Autowired
+    private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
@@ -193,7 +202,7 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setCourseNumber(course.getCodeR());
 
-            viewObject.setStudyTime(course.getHour());
+            viewObject.setCourseHour(course.getHour());
 
             viewObject.setCredit(course.getCredit() + "");
 
@@ -233,15 +242,17 @@ public class TAConverterimpl implements ITAConverter {
         if (student != null) {
             viewObject.setUsername(student.getName());
             viewObject.setStudentId(student.getId());
-            viewObject.setUg_Major(student.getProgram() != null ?
-                    student.getProgram().getName() : null);
+//            viewObject.setUg_Major(student.getProgram() != null ?
+//                    student.getProgram().getName() : null);
             /** 需要修改 */
-            viewObject.setG_Major(" ");
+            viewObject.setG_Major(student.getProgram() != null ? student.getProgram().getName() : null);
         }
 
         if (clazz != null) {
             viewObject.setClassId(clazz.getId());
-
+            viewObject.setCourseName(clazz.getCourseOffering().getCourse().getName());
+            viewObject.setClassNbr(clazz.getClassNumber());
+            viewObject.setCredit(clazz.getCourseOffering().getCourse().getCredit());
             StringBuilder sb = new StringBuilder();
             if (clazz.getUtInstructors() != null) {
                 for (UTInstructor instructor : clazz.getUtInstructors()) {
@@ -272,6 +283,21 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public ClassDetailInfoViewObject classInfoToViewObject(UTClass clazz) {
         ClassDetailInfoViewObject classDetailInfoViewObject = new ClassDetailInfoViewObject();
+        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(clazz.getId());
+        if(tamsClassTaApplication!=null){
+            classDetailInfoViewObject.setTaNumber(tamsClassTaApplication.getTaNumber().toString());
+        }
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        List<TAMSTeachCalendar> tamsTeachCalendars = iClassInfoService.getAllTaTeachCalendarFilterByUidAndClassId(user.getCode(),clazz.getId());
+        if(tamsTeachCalendars!=null||tamsTeachCalendars.size()!=0){
+            Integer workHour = 0;
+            for(TAMSTeachCalendar tamsTeachCalendar : tamsTeachCalendars){
+                workHour+=Integer.valueOf(tamsTeachCalendar.getElapsedTime());
+            }
+            classDetailInfoViewObject.setWorkHour(workHour.toString());
+        }else{
+            classDetailInfoViewObject.setWorkHour("待定");
+        }
 
         UTCourse course = new UTCourse();
 
@@ -381,7 +407,7 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public TAMSTaApplication submitInfoToTaApplication(ClassInfoForm form) {
         TAMSTaApplication application = new TAMSTaApplication();
-
+        application.setPhoneNbr(form.getApplicationPhoneNbr());
         application.setApplicationId(form.getApplyAssistantViewObject().getStudentId());
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
@@ -1032,17 +1058,18 @@ public class TAConverterimpl implements ITAConverter {
         ClassTaApplyViewObject viewObject = new ClassTaApplyViewObject();
         List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(classInfo.getId());
         String instructorName = "";
-        String instrctorCode ="";
+        String instructorCode ="";
         if(utClassInstructors!=null){
             for(UTClassInstructor utClassInstructor : utClassInstructors){
                 instructorName += utClassInstructor.getUtInstructor().getName()+" ";
-                instrctorCode += utClassInstructor.getUtInstructor().getCode()+" ";
+                instructorCode += utClassInstructor.getUtInstructor().getCode()+" ";
             }
         }
         viewObject.setTeacherName(instructorName);
-        viewObject.setTeacherType(instrctorCode);
+        viewObject.setTeacherType(instructorCode);
         if(classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() : null;
+            viewObject.setCourseHour(course.getHour());
             viewObject.setClassNumber(classInfo.getClassNumber());
             viewObject.setStudentNumber(classInfo.getMinPerWeek()==null?" ":classInfo.getMinPerWeek().toString());
             if(course != null) {

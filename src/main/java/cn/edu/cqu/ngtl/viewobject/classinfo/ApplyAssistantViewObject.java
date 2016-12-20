@@ -26,6 +26,12 @@ public class ApplyAssistantViewObject {
     //申请课程类型
     private String applyCourseType;
 
+    private String courseName;
+
+    private String classNbr;
+
+    private String credit;
+
     //隐藏属性
     private String classId;
 
@@ -107,5 +113,29 @@ public class ApplyAssistantViewObject {
 
     public void setApplyCourseType(String applyCourseType) {
         this.applyCourseType = applyCourseType;
+    }
+
+    public String getCourseName() {
+        return courseName;
+    }
+
+    public void setCourseName(String courseName) {
+        this.courseName = courseName;
+    }
+
+    public String getClassNbr() {
+        return classNbr;
+    }
+
+    public void setClassNbr(String classNbr) {
+        this.classNbr = classNbr;
+    }
+
+    public String getCredit() {
+        return credit;
+    }
+
+    public void setCredit(String credit) {
+        this.credit = credit;
     }
 }

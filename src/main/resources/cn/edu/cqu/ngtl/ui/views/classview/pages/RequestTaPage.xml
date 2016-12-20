@@ -132,30 +132,30 @@
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="课程编号"
                                                                                                           p:messageText="@{applyViewObject.courseNumber}"/>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:label="课程类别"
-                                                                                                          p:messageText="@{applyViewObject.courseType}"/>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:label="授课专业"
-                                                                                                          p:messageText="@{applyViewObject.programName}"/>
+                                                                                                    <!--<bean parent="Uif-MessageField"-->
+                                                                                                          <!--p:label="课程类别"-->
+                                                                                                          <!--p:messageText="@{applyViewObject.courseType}"/>-->
+                                                                                                    <!--<bean parent="Uif-MessageField"-->
+                                                                                                          <!--p:label="授课专业"-->
+                                                                                                          <!--p:messageText="@{applyViewObject.programName}"/>-->
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="授课年级"
                                                                                                           p:messageText="@{applyViewObject.grade}"/>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:label="必修/选修"
-                                                                                                          p:messageText="@{applyViewObject.isRequired}"/>
+                                                                                                    <!--<bean parent="Uif-MessageField"-->
+                                                                                                          <!--p:label="必修/选修"-->
+                                                                                                          <!--p:messageText="@{applyViewObject.isRequired}"/>-->
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="教学班号"
                                                                                                           p:messageText="@{applyViewObject.classNumber}"/>
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="学时"
-                                                                                                          p:messageText="@{applyViewObject.studyTime}"/>
+                                                                                                          p:messageText="@{applyViewObject.courseHour}"/>
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="学分"
                                                                                                           p:messageText="@{applyViewObject.credit}"/>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:label="学生人数"
-                                                                                                          p:messageText="@{applyViewObject.studentNumber}"/>
+                                                                                                    <!--<bean parent="Uif-MessageField"-->
+                                                                                                          <!--p:label="学生人数"-->
+                                                                                                          <!--p:messageText="@{applyViewObject.studentNumber}"/>-->
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="拟配备助教数"
                                                                                                           p:required="true"
@@ -361,9 +361,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean id="requestTable"
-                                                                                              parent="Uif-Disclosure-TableCollectionSection"
-                                                                                              p:layoutManager.numberOfColumns="4"
-                                                                                              p:style="margin-top:20px;">
+                                                                                              parent="Uif-Disclosure-TableCollectionSection">
                                                                                             <property
                                                                                                     name="collectionObjectClass"
                                                                                                     value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassApplyFeedBackViewObject"/>
@@ -401,9 +399,14 @@
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="新状态"
                                                                                                           p:propertyName="newStatus"/>
-                                                                                                    <bean parent="Uif-DataField"
+                                                                                                    <bean parent="Uif-InputField"
                                                                                                           p:label="反馈信息"
-                                                                                                          p:propertyName="feedBacks"/>
+                                                                                                          p:propertyName="feedBacks" p:readOnly="true">
+                                                                                                        <property name="control">
+                                                                                                            <bean parent="Uif-TextAreaControl"
+                                                                                                                  p:style="height:200px;resize: none;"/>
+                                                                                                        </property>
+                                                                                                     </bean>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="反馈者"
                                                                                                           p:propertyName="feedBackRole"/>

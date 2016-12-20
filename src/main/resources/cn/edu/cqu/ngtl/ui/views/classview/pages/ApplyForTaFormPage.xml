@@ -130,24 +130,38 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学号"
                                                                                   p:messageText="@{applyAssistantViewObject.studentId}"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="导师" p:messageText="导师1"/>-->
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="本科专业"-->
+                                                                                  <!--p:messageText="@{applyAssistantViewObject.ug_Major}"/>-->
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="导师" p:messageText="导师1"/>
+                                                                                  p:label="研究生专业" p:messageText="@{applyAssistantViewObject.g_Major}"/>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="联系方式"
+                                                                                  p:propertyName="applicationPhoneNbr"
+                                                                                  p:required="true"
+                                                                                  p:readOnly="false" >
+                                                                                <property name="validCharactersConstraint">
+                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="本科专业"
-                                                                                  p:messageText="@{applyAssistantViewObject.ug_Major}"/>
+                                                                                  p:label="课程名称" p:messageText="@{applyAssistantViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="研究生专业" p:messageText="64"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="联系方式" p:messageText="5.0 "/>
+                                                                                  p:label="教学班号" p:messageText="@{applyAssistantViewObject.classNbr}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学时数"
                                                                                   p:messageText="@{applyAssistantViewObject.classHour}"/>
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="学分"
+                                                                                  p:messageText="@{applyAssistantViewObject.credit}"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="申请课程教师"
                                                                                   p:messageText="@{applyAssistantViewObject.applyTeacher}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="申请课程类型"
-                                                                                  p:messageText="@{applyAssistantViewObject.applyCourseType}"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="申请课程类型"-->
+                                                                                  <!--p:messageText="@{applyAssistantViewObject.applyCourseType}"/>-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -156,6 +170,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label="申请理由及特长"
+                                                                                  p:required="true"
                                                                                   p:propertyName="applyReason"
                                                                                   p:additionalCssClasses="form-group col-lg-12 col-md-12 col-sm-12 col-xs-12">
                                                                                 <property name="control">
@@ -173,13 +188,15 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
                                                                                   p:actionImagePlacement="LEFT"
+                                                                                  p:render="@{applicationPhoneNbr==null}"
                                                                                   p:methodToCall="submitTaForm"
                                                                                   p:id="submitTaFormBtn"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="取消"
+                                                                                  p:actionLabel="取消申请"
+                                                                                  p:render="@{applicationPhoneNbr!=null}"
+                                                                                  p:methodToCall="cancelSubmitTaForm"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="alert('取消');"
                                                                                   p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup"/>
                                                                         </list>
                                                                     </property>

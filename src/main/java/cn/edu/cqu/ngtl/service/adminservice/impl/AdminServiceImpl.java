@@ -38,6 +38,9 @@ public class AdminServiceImpl implements IAdminService{
     private TAMSTimeSettingTypeDao timeSettingTypeDao;
 
     @Autowired
+    private IUserInfoService iUserInfoService;
+
+    @Autowired
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
 
     @Autowired
@@ -704,7 +707,7 @@ public class AdminServiceImpl implements IAdminService{
         else
             totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();
 
-        return setted + "/" + totalPlan;
+        return setted+"("+totalPlan+")";
     }
 
 
@@ -714,9 +717,9 @@ public class AdminServiceImpl implements IAdminService{
         Long setted = 0l;
         for(TAMSDeptFunding deptFunding : deptFundings) {
             setted = setted + Integer.parseInt(deptFunding.getPlanFunding());
-        };
+        }
 
-        return setted + "/" + totalPlan;
+        return setted+"("+totalPlan+")";
     }
 
     @Override

@@ -191,11 +191,9 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="modifyWorkFlowCategory"
                                                                                               p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteWorkFlowCaDialog" />
@@ -258,7 +256,7 @@
 
 
     <bean id="deleteWorkFlowCaDialog" parent="Uif-DialogGroup"
-          p:headerText="删除类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="删除类别" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除工作流类别，如需删除请联系系统维护人员！" />

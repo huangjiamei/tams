@@ -35,10 +35,51 @@
 		  p:additionalCssClasses="container" >
 		<property name="items">
 			<list>
-				<!-- 左上角 -->
-				<bean id="UpdateRolePageHeader" parent="Uif-VerticalBoxSection"
-					  p:onDocumentReadyScript="initContentHeader('UpdateRolePageHeader','fa fa-tachometer','管理台','编辑管理员权限')">
+				<bean parent="Uif-HorizontalBoxSection"
+					  p:additionalCssClasses="content-header">
+					<property name="items">
+						<list>
+							<!-- 左上角 -->
+							<bean id="UpdateRolePageHeader" parent="Uif-VerticalBoxSection"
+								  p:onDocumentReadyScript="initContentHeader('UpdateRolePageHeader','fa fa-tachometer','管理台','编辑管理员权限')">
+							</bean>
+							<!-- 右上角 当前路径 -->
+							<bean parent="Uif-HorizontalBoxSection"
+								  p:additionalCssClasses="breadcrumb">
+								<property name="items">
+									<list>
+										<bean parent="Uif-Icon" p:iconClass="icon-home myIcon"
+											  p:style="float:left!important;"/>
+										<bean parent="Uif-InputField">
+											<property name="control">
+												<bean parent="Uif-OptionListControl"
+													  p:additionalCssClasses="breadcrumb"
+													  p:style="background: transparent!important;">
+													<property name="options">
+														<list>
+															<bean parent="Uif-KeyValueLocation" p:key="1" p:value="主页"
+																  p:location.viewId="PortalView"
+																  p:location.controllerMapping="/home"
+																  p:location.methodToCall="getCommonHome"/>
+															<bean parent="Uif-KeyValueLocation" p:key="2"
+																  p:value="管理员角色管理"
+																  p:location.viewId="AdminView"
+																  p:location.controllerMapping="/admin"
+																  p:location.methodToCall="getRoleManagerPage"/>
+															<bean parent="Uif-KeyLabelPair" p:key="3"
+																  p:value="管理员权限管理"/>
+														</list>
+													</property>
+												</bean>
+											</property>
+										</bean>
+									</list>
+								</property>
+							</bean>
+						</list>
+					</property>
 				</bean>
+
 
 				<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="box box-info">
 					<property name="items">
@@ -50,6 +91,19 @@
 										<bean parent="Uif-Icon" p:iconClass="icon-table" />
 										<bean parent="Uif-MessageField" p:messageText="权限列表"
 											p:additionalCssClasses="boxheaderTitle" />
+										<bean parent="Uif-HorizontalBoxSection"
+											  p:style="float: right!important;">
+											<property name="items">
+												<list>
+													<bean parent="Uif-PrimaryActionButton"
+														  p:actionLabel="返回"
+														  p:actionImagePlacement="LEFT"
+														  p:navigateToPageId="pageRoleManager"
+														  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
+													</bean>
+												</list>
+											</property>
+										</bean>
 									</list>
 								</property>
 							</bean>
@@ -83,8 +137,7 @@
 											</property>
 										</bean>
 
-
-										<bean id="permissionTable" parent="Uif-TableCollectionSection">
+										<bean id="permissionTable" parent="Uif-Disclosure-TableCollectionSection">
 											<property name="collectionObjectClass"
 												value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_PERM_T" />
 											<property name="propertyName" value="RMPkrimPermTs" />
@@ -130,12 +183,6 @@
 														  p:actionImagePlacement="LEFT"
 														  p:navigateToPageId="saveExmKrimRole"
 														  p:additionalCssClasses="icon-save bg-success box-btngroup">
-													</bean>
-													<bean parent="Uif-PrimaryActionButton"
-														  p:actionLabel="返回"
-														  p:actionImagePlacement="LEFT"
-														  p:navigateToPageId="pageRoleManager"
-														  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
 													</bean>
 												</list>
 											</property>

@@ -130,7 +130,8 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
+                                                                <bean id="taManagerTable" parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:onDocumentReadyScript="setBgColor('taManagerTable');">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
                                                                     <property name="propertyName" value="allMyTa"/>
@@ -231,8 +232,8 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:layoutManager.numberOfColumns="8">
+                                                                <bean id="taManagerApplyTable" parent="Uif-Disclosure-TableCollectionSection"
+                                                                      p:onDocumentReadyScript="setBgColor('taManagerApplyTable');">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
                                                                     <property name="propertyName"
@@ -316,12 +317,18 @@
                                               p:additionalCssClasses="col-md-6 col-lg-6"
                                               p:onDocumentReadyScript="clickButton('studentNumTaM')"/>
 
-                                        <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
-                                              p:actionLabel="查询"
-                                              p:actionImagePlacement="LEFT"
-                                              p:additionalCssClasses="icon-search box-btngroup"
-                                              p:methodToCall="searchTaByCondition"
-                                              p:refreshId="searchTaApplicantList"/>
+                                        <bean parent="Uif-HorizontalBoxSection">
+                                            <property name="items">
+                                                <list>
+                                                    <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
+                                                          p:actionLabel="查询"
+                                                          p:actionImagePlacement="LEFT"
+                                                          p:additionalCssClasses="icon-search box-btngroup"
+                                                          p:methodToCall="searchTaByCondition"
+                                                          p:refreshId="searchTaApplicantList"/>
+                                                </list>
+                                            </property>
+                                        </bean>
 
                                         <!--ta的更多的信息-->
                                         <bean parent="Uif-MessageField" p:messageText="学生详情："/>
@@ -398,11 +405,10 @@
                                                 <list>
                                                     <bean parent="Uif-PrimaryActionButton"
                                                           p:ajaxSubmit="true"
-                                                          p:actionLabel="查看"
-                                                          p:actionImagePlacement="LEFT"
                                                           p:methodToCall="getSelectedTaInfo"
                                                           p:refreshId="taDetailInfoGrid"
-                                                          p:render="@{#line.taName!=null}"/>
+                                                          p:render="@{#line.taName!=null}"
+                                                          p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
                                                 </list>
                                             </property>
                                         </bean>

@@ -136,7 +136,7 @@
                                                                                   <!--p:label="本科专业"-->
                                                                                   <!--p:messageText="@{applyAssistantViewObject.ug_Major}"/>-->
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="研究生专业" p:messageText="64"/>
+                                                                                  p:label="研究生专业" p:messageText="@{applyAssistantViewObject.g_Major}"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="联系方式" p:propertyName="applicationPhoneNbr"
                                                                                   p:readOnly="false" />

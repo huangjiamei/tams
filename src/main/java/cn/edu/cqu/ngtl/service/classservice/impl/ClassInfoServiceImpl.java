@@ -249,7 +249,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         TAMSClassTaApplication isExist = classTaApplicationDao.selectByInstructorIdAndClassId(instructorId, classId);
         if(isExist != null) {
             logger.warn("已存在数据！");
-            return 2;
         }
         else {
             TAMSClassTaApplication entity = new TAMSClassTaApplication();
@@ -293,16 +292,22 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 logger.error("未能找到'审核'的Function");
                 return 6;
             }
-            if(classApplyStatusDao.isInitializedStatus(function.getId(), classId))
+            if(classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
                 classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
-            //执行到这里既是成功
-            //如果新提交的课程的状态并非初始状态，则返回true，表示已经通过了提交
-            return 7;
+                if(isExist != null)
+                    return 2;
+                //执行到这里既是成功
+                //如果新提交的课程的状态并非初始状态，则返回true，表示已经通过了提交
+                return 7;
+            }
+            else {
+                return 8;
+            }
         }
         catch (RuntimeException e) {
             e.printStackTrace();
         }
-        return 8;
+        return 9;
     }
 
     public List<TAMSTa> getAllTaFilteredByClassid(String classId){

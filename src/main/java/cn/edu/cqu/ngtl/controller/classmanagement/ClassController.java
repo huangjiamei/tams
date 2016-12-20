@@ -746,7 +746,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else if(result == 2) {
-            infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
+            infoForm.setErrMsg("已处于审核状态中！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else if(result == 3) {
@@ -767,6 +767,10 @@ public class ClassController extends BaseController {
         }
         else if(result == 7)
             return this.getModelAndView(infoForm, "pageRequestTa");
+        else if(result == 8) {
+            infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         else {
             infoForm.setErrMsg("未知错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);

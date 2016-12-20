@@ -201,13 +201,16 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="任务类型"
+                                                                                                                      p:label="教学主题"
                                                                                                                       p:propertyName="theme"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="子活动数"
-                                                                                                                      p:propertyName="taTaskTimes"/>
+                                                                                                                      p:label="开始时间"
+                                                                                                                      p:propertyName="startTime"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="耗时(小时)"
+                                                                                                                      p:label="结束时间"
+                                                                                                                      p:propertyName="endTime"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="预计耗时(小时)"
                                                                                                                       p:propertyName="elapsedTime"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="预算"

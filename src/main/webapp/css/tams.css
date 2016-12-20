@@ -489,7 +489,8 @@ body{
 /* 修改表格中inputfiled的宽高 */
 .uif-inputField input[type="text"].form-control{
     height: 32px!important;
-    /*width: 100%!important;*/
+    font-size: 14px;
+    color: #000;
 }
 
 /* 所有dialog往屏幕中间移动*/
@@ -818,9 +819,11 @@ td.selected{
 .nav-tabs>li.active>a,.nav-tabs>li.active>a:hover, .nav-tabs>li.active>a:focus{
     border-top-color: transparent;
     border-right: 1px solid #ddd;
+    font-size: 18px;
 }
 .nav-tabs>li>a{
     margin: 0px;
+    font-size: 18px;
 }
 
 /*菜单栏close符号位置*/
@@ -921,27 +924,22 @@ td.selected{
     padding-top: 16px;
 }
 
-/*反馈信息页面table不要表头*/
-#requestTable thead{
-    display:none;
-}
-#RequestTaPage .uif-tabGroup{
-    width:100%;
-}
-/*反馈信息页面table不要表头*/
-/*#requestTable thead{*/
-    /*display:none;*/
-/*}*/
+/*反馈信息table样式*/
 #RequestTaPage .uif-tabGroup{
     width:100%;
 }
 #requestTable .table{
-    margin-top:14px;
-    background-color: #f4f4f4;
-    font-size:18px;
+    margin-top:20px;
+    /*background-color: #f4f4f4;*/
+    font-size:14px;
+}
+#requestTable table.uif-tableCollectionLayout tbody tr {
+    border-bottom: 0px solid #ccc;
 }
 
-#requestTable table.uif-tableCollectionLayout tbody tr {
-    border-bottom: 3px solid #ccc;
+/*table中的inputField内字体大小颜色*/
+.uif-field pre, .uif-inputField pre {
+    font-size: 14px;
+    color: #000;
 }
 

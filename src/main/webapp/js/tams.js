@@ -1283,7 +1283,7 @@ function showDialogTerm(){
 }
 
 //为当table中前学期设置背景色，该行字体大一点
-function setColor(){
+function setCurrentColor(){
 
     var currenTr=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody > tr");
     var currenSession=jQuery("#sessionTermMessage").text();
@@ -1298,45 +1298,20 @@ function setColor(){
 
 }
 
+//table的隔行变色
 jQuery(document).ready(function(){
     jQuery("table.uif-tableCollectionLayout tbody tr:odd").css("background-color","#f5f5f5");
     jQuery("table.uif-tableCollectionLayout tbody tr:even").css("background-color","white");
-
-    //助教列表点击checkbox变色
-    jQuery("#taListTable table.uif-tableCollectionLayout>tbody>tr>td>div>input:eq(1):has(:checked)").parent().find("td").addClass("selected");//给当前选择行的所有td加class，如果是tr，全部列表加上背景色，就不是该行了。
-    jQuery("#taListTable table.uif-tableCollectionLayout>tbody>tr").click(function(){
-        if(jQuery(this).find(":checkbox").attr("checked")){
-            jQuery(this).find("td").removeClass("selected")
-                .end().find(":checkbox").attr("checked",false);
-        }else{
-            jQuery(this).find("td").addClass("selected")
-                .end().find(":checkbox").attr("checked",true);
-        }
-    });
-
-    //课程列表点击checkbox变色
-    jQuery("#ClassListPageTable table.uif-tableCollectionLayout>tbody>tr>td:eq(1)>div>input:eq(1):has(:checked)").parent().find("td").addClass("selected");//给当前选择行的所有td加class，如果是tr，全部列表加上背景色，就不是该行了。
-    jQuery("#ClassListPageTable table.uif-tableCollectionLayout>tbody>tr").click(function(){
-        if(jQuery(this).find(":checkbox").attr("checked")){
-            jQuery(this).find("td").removeClass("selected")
-                .end().find(":checkbox").attr("checked",false);
-        }else{
-            jQuery(this).find("td").addClass("selected")
-                .end().find(":checkbox").attr("checked",true);
-        }
-    });
-
-    jQuery(":checkbox").click(function(){
-        jQuery(this).parents("tr").trigger("click");
-    });
-
 });
 
+//刷新整个页面
 function refreshPage(){
     location.reload();
 }
+
+//Header部分Logo跳至重庆大学页面
  function onClickHerf(){
-     window.location="http://www.cqu.edu.cn";//Header部分Logo跳至重庆大学页面
+     window.location="http://www.cqu.edu.cn";
 }
 
 //checkbox全选
@@ -1348,8 +1323,8 @@ function checkedAll(id) {
 //助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
 function getDetailPage(){
     var listLength=jQuery('#taListTable tbody>tr').length;
-    for(var i=0;i<listLength;i++){
 
+    for(var i=0;i<listLength;i++){
         jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:eq(0)',function (e) {
             jQuery(this).parent().find("td").addClass("selected");//为选中项添加背景颜色
         });
@@ -1365,7 +1340,6 @@ function getDetailPage(){
         });
 
         jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:not(:first)',function (e) {
-
             var targetid=taListTable;
             var id = e.target.id;
             var patt = new RegExp(".*line[0-9]+.*");
@@ -1377,4 +1351,21 @@ function getDetailPage(){
             jQuery("#taDetailPageId").click();
         });
     }
+}
+
+//统一的点击整行变色
+function setBgColor(id){
+    jQuery("#"+id).on('click','tbody>tr',function (e) {
+        jQuery(this).find("td").addClass("selected");//为选中项添加背景颜色
+    });
+
+    jQuery("#"+id).on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
+        if(jQuery(this).find(":checkbox").attr("checked")){
+            jQuery(this).find("td").removeClass("selected")
+                .end().find(":checkbox").attr("checked",false);
+        }else{
+            jQuery(this).find("td").addClass("selected")
+                .end().find(":checkbox").attr("checked",true);
+        }
+    });
 }

@@ -361,9 +361,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean id="requestTable"
-                                                                                              parent="Uif-Disclosure-TableCollectionSection"
-                                                                                              p:layoutManager.numberOfColumns="4"
-                                                                                              p:style="margin-top:20px;">
+                                                                                              parent="Uif-Disclosure-TableCollectionSection">
                                                                                             <property
                                                                                                     name="collectionObjectClass"
                                                                                                     value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassApplyFeedBackViewObject"/>
@@ -401,9 +399,14 @@
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="新状态"
                                                                                                           p:propertyName="newStatus"/>
-                                                                                                    <bean parent="Uif-DataField"
+                                                                                                    <bean parent="Uif-InputField"
                                                                                                           p:label="反馈信息"
-                                                                                                          p:propertyName="feedBacks"/>
+                                                                                                          p:propertyName="feedBacks" p:readOnly="true">
+                                                                                                        <property name="control">
+                                                                                                            <bean parent="Uif-TextAreaControl"
+                                                                                                                  p:style="height:200px;resize: none;"/>
+                                                                                                        </property>
+                                                                                                     </bean>
                                                                                                     <bean parent="Uif-DataField"
                                                                                                           p:label="反馈者"
                                                                                                           p:propertyName="feedBackRole"/>

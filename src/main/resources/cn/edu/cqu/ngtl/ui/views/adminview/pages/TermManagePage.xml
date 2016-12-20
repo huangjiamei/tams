@@ -217,7 +217,7 @@
                                                                 <!--table-->
                                                                 <bean id="TermManageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="setColor();">
+                                                                      p:onDocumentReadyScript="setCurrentColor();">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.adminInfo.TermManagerViewObject"/>
                                                                     <property name="propertyName" value="allTerms"/>

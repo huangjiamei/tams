@@ -57,6 +57,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     private TAMSTeachCalendarDao teachCalendarDao;
 
     @Autowired
+    private TAMSClassFundingDraftDao tamsClassFundingDraftDao;
+
+    @Autowired
     private TAMSTaDao taDao;
 
     @Autowired
@@ -449,5 +452,21 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId){
             return tamsClassApplyFeedbackDao.getFbByClassId(classId);
+    }
+
+    @Override
+    public void validClassFunds(String classId){  //初始化课程经费
+        TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
+        if(tamsClassFundingDraftExist==null){
+            TAMSClassFundingDraft tamsClassFundingDraft = new TAMSClassFundingDraft();
+            tamsClassFundingDraft.setClassId(classId);
+            tamsClassFundingDraft.setApplyFunding("0");
+            tamsClassFundingDraft.setAssignedFunding("0");
+            tamsClassFundingDraft.setPhdFunding("0");
+            tamsClassFundingDraft.setBonus("0");
+            tamsClassFundingDraft.setTravelSubsidy("0");
+            tamsClassFundingDraft.setSessionId(sessionDao.getCurrentSession().getId().toString());
+            tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
+        }
     }
 }

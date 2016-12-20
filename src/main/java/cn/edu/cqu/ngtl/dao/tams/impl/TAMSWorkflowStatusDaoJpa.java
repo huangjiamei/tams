@@ -127,9 +127,19 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
     }
 
     @Override
+    public Integer getMaxOrderByFunctionId(String functionId) {
+        List<TAMSWorkflowStatus> tamsWorkflowStatuses = this.selectByFunctionId(functionId);
+        Integer maxOrder = 0;
+        for(TAMSWorkflowStatus tamsWorkflowStatus:tamsWorkflowStatuses){
+            if(tamsWorkflowStatus.getOrder()>maxOrder)
+                maxOrder = tamsWorkflowStatus.getOrder();
+        }
+        return maxOrder;
+    }
+
+    @Override
     public TAMSWorkflowStatus getOneById(String id){
         return KradDataServiceLocator.getDataObjectService().find(TAMSWorkflowStatus.class, id);
-
     }
 
 }

@@ -26,4 +26,6 @@ public interface TAMSWorkflowStatusDao {
     boolean deleteOne(TAMSWorkflowStatus tamsWorkflowStatus);
 
     TAMSWorkflowStatus getOneById(String id);
+
+    Integer getMaxOrderByFunctionId(String functionId);
 }

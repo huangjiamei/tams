@@ -5,9 +5,7 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -40,6 +38,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
 /**
  * Created by tangjing on 16-10-20.
@@ -80,17 +80,15 @@ public class ClassController extends BaseController {
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getClassListPage")
-    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form,
-                                         HttpServletRequest request) {
+    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 //        try {
-            final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-            String uId = userSession.getLoggedInUserPrincipalId();
-            infoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
+            User user = (User) getUserSession().retrieveObject("user");
+            infoForm.setUser(user);
                 infoForm.setClassList(
                         taConverter.classInfoToViewObject(
-                                classInfoService.getAllClassesFilterByUid(uId)
+                                classInfoService.getAllClassesFilterByUid(user.getCode())
                         )
                 );
 
@@ -108,8 +106,8 @@ public class ClassController extends BaseController {
       * 课程页面checkbox全选
     */
     @RequestMapping(params = "methodToCall=checkClassListAllButton")
-    public ModelAndView checkClassListAllButton(@ModelAttribute("KualiForm") UifFormBase form,
-                                         HttpServletRequest request) {
+    public ModelAndView checkClassListAllButton(@ModelAttribute("KualiForm") UifFormBase form
+                                        ) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         for(ClassTeacherViewObject classTeacherViewObject:infoForm.getClassList()){
@@ -145,8 +143,8 @@ public class ClassController extends BaseController {
      * @param request
      * @return
      */
-    @RequestMapping(params = "methodToCall=approve")
-    public ModelAndView approve(@ModelAttribute("KualiForm") UifFormBase form,
+    @RequestMapping(params = "methodToCall=approveCourseApplicant")
+    public ModelAndView approveCourseApplicant(@ModelAttribute("KualiForm") UifFormBase form,
                                          HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
@@ -161,22 +159,28 @@ public class ClassController extends BaseController {
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
 
+        TAMSWorkflowStatus newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder());
+        String newStatusName = newStatus.getWorkflowStatus();
+        Integer newStatusOrder = newStatus.getOrder();
+        Integer maxOrder = new TAMSWorkflowStatusDaoJpa().getMaxOrderByFunctionId("1");
 
-        String newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder()).getWorkflowStatus();
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
+            if(newStatusOrder==maxOrder){
+                classInfoService.validClassFunds(classTeacherViewObject.getId());
+            }
             result = classInfoService.classStatusToCertainStatus(
                     uid,
                     classTeacherViewObject.getId(),
                     infoForm.getApproveReasonOptionFinder()
             );
-            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatus);
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatusName);
         }
         if(result)
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
         else  //应当返回错误信息
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
     }
 
     /**
@@ -201,7 +205,7 @@ public class ClassController extends BaseController {
         boolean result = false;
         String feedBackReason = infoForm.getReturnReason();
         String newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder()).getWorkflowStatus();
-        String uid = GlobalVariables.getUserSession().getPrincipalId();
+        String uid = getUserSession().getPrincipalId();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {    //依次将选择列表中的班次调整到设置的状态
              result = classInfoService.classStatusToCertainStatus(
                      uid,
@@ -212,9 +216,9 @@ public class ClassController extends BaseController {
         }
 
         if(result)
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
         else  //应当返回错误信息
-            return this.getClassListPage(infoForm, request);
+            return this.getClassListPage(infoForm);
     }
 
     /**
@@ -397,7 +401,7 @@ public class ClassController extends BaseController {
             infoForm.setAllCalendar(null);  //节省内存
 
             String classId = infoForm.getCurrClassId();
-            String uId = GlobalVariables.getUserSession().getPrincipalId();
+            String uId = getUserSession().getPrincipalId();
             infoForm.setAllActivities(
                     taConverter.activitiesToViewObject(
                             classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
@@ -477,7 +481,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        UserSession session = GlobalVariables.getUserSession();
+        UserSession session = getUserSession();
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
@@ -561,7 +565,7 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         /** uid **/
-        UserSession session = GlobalVariables.getUserSession();
+        UserSession session = getUserSession();
         String uId = session.getPrincipalId();
 
         /** classid **/
@@ -672,7 +676,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        String uId = GlobalVariables.getUserSession().getPrincipalId();
+        String uId = getUserSession().getPrincipalId();
         String classId = infoForm.getCurrClassId();
 
         infoForm.setApplyViewObject(
@@ -754,7 +758,7 @@ public class ClassController extends BaseController {
             }
         }
         String classId = infoForm.getCurrClassId();
-        String instructorId = GlobalVariables.getUserSession().getPrincipalId();
+        String instructorId = getUserSession().getPrincipalId();
         boolean result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
         if(result)
             return this.getModelAndView(infoForm, "pageRequestTa");
@@ -789,7 +793,7 @@ public class ClassController extends BaseController {
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
+        String fileName = "教学班列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
 
         try {
             String filePath = excelService.printClassListExcel(classList, "exportfolder", fileName, "2003");
@@ -828,7 +832,7 @@ public class ClassController extends BaseController {
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fileName = "教学班列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
+        String fileName = "教学班列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
         String filePath = "";
         try {
             String[] header = {"课程名称", "课程编号", "教学班", "教师", "耗费工时", "学院"};
@@ -1153,7 +1157,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
-        return this.getClassListPage(form,request);
+        return this.getClassListPage(form);
     }
 
 }

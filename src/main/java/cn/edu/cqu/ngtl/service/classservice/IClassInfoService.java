@@ -13,6 +13,8 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
+    void validClassFunds(String classId);
+
     List<UTClassInformation> getAllCurSessionClasses();
 
     UTClass getClassInfoById(String classId);

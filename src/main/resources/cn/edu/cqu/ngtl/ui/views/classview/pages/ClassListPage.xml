@@ -201,12 +201,12 @@
                                                                                   p:methodToCall="exportClassListPDF"
                                                                                   p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
 
-                                                                            <bean id="classRefreshReturnDialog" parent="Uif-PrimaryActionButton"
-                                                                                  p:style="display:none;"
-                                                                                  p:refreshId="returnDialog"/>
-                                                                            <bean id="classRefreshApproveDialog" parent="Uif-PrimaryActionButton"
-                                                                                  p:style="display:none;"
-                                                                                  p:refreshId="approveDialog"/>
+                                                                            <!--<bean id="classRefreshReturnDialog" parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:style="display:none;"-->
+                                                                                  <!--p:refreshId="returnDialog"/>-->
+                                                                            <!--<bean id="classRefreshApproveDialog" parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:style="display:none;"-->
+                                                                                  <!--p:refreshId="approveDialog"/>-->
 
                                                                         </list>
                                                                     </property>
@@ -488,18 +488,6 @@
     </bean>
 
 
-    <bean id="applicantDeleteConfirmationDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="警告："/>
-        <property name="promptText" value="确认要删除考生信息？"/>
-        <property name="dialogCssClass" value="confirmDialog"/>
-        <property name="footer.items">
-            <list>
-                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"/>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
-
-            </list>
-        </property>
-    </bean>
     <bean id="returnDialog" parent="Uif-DialogGroup">
         <property name="headerText" value="驳回"/>
         <property name="dialogCssClass" value="confirmDialog"/>
@@ -534,7 +522,7 @@
             </list>
         </property>
     </bean>
-    <bean id="approveDialog" parent="Uif-DialogGroup">
+    <bean id="approveDialog" parent="Uif-DialogGroup" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="headerText" value="审批"/>
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
@@ -561,8 +549,8 @@
         <property name="footer.items">
             <list>
 
-                <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
-                      p:methodToCall="approve"  p:dialogDismissOption="REQUEST"/>
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确认"
+                      p:methodToCall="approveCourseApplicant"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
 
             </list>

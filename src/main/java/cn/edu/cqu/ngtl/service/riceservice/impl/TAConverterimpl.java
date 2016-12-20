@@ -289,7 +289,7 @@ public class TAConverterimpl implements ITAConverter {
         }
         User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
         List<TAMSTeachCalendar> tamsTeachCalendars = iClassInfoService.getAllTaTeachCalendarFilterByUidAndClassId(user.getCode(),clazz.getId());
-        if(tamsTeachCalendars!=null||tamsTeachCalendars.size()!=0){
+        if(tamsTeachCalendars!=null){
             Integer workHour = 0;
             for(TAMSTeachCalendar tamsTeachCalendar : tamsTeachCalendars){
                 workHour+=Integer.valueOf(tamsTeachCalendar.getElapsedTime());

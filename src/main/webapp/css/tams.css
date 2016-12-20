@@ -943,3 +943,7 @@ td.selected{
     color: #000;
 }
 
+/*鼠标移动跟随*/
+.addPointer {
+    cursor:pointer;
+}

@@ -1352,7 +1352,7 @@ function getTaDetailPage(){
     }
 }
 //课程页面点击整行进入详细页面
-function getTaDetailPage(){
+function getClassDetailPage(){
     var listLength=jQuery('#ClassListPageTable tbody>tr').length;
     for(var i=0;i<listLength;i++){
         jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:eq(1)',function (e) {
@@ -1403,8 +1403,8 @@ function setBgColor(id){
 }
 
 // (function(){
-//     jQuery('#taManagerTable').on('mouseover','td', function () {
-//         jQuery(this).addClass("selected");
+//     jQuery('table').on('mouseover','td', function () {
+//         jQuery(this).addClass("addPointer");
 //     } );
 //
 // })();

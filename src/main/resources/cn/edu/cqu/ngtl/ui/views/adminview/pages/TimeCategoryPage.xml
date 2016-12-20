@@ -112,7 +112,7 @@
                                                                                   p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加时间类别"
+                                                                                  p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:actionScript="showDialog('addTimeCategoryDialog');"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"><!--methodToCall做了就删除actionScript-->
@@ -159,14 +159,10 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-
-
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="modifyTimeCategory"
                                                                                               p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteTimeCategoryDialog" />
@@ -196,7 +192,7 @@
     </bean>
 
     <bean id="addTimeCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加时间类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:headerText="添加时间类别" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#addTaskCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -230,7 +226,7 @@
 
 
     <bean id="editTimeCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改时间类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:headerText="修改时间类别" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#editTaskCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -258,13 +254,13 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <!--dismiss必须，refreshid非必需-->
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="saveTimeCategoryPage" p:successCallback="dismissDialog('editTimeCategoryDialog');"/>
+                      p:methodToCall="saveTimeCategoryPage" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>
 
     <bean id="deleteTimeCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="删除时间类别" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="删除时间类别" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除时间类别，如需删除请联系系统维护人员！" />

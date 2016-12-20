@@ -62,17 +62,7 @@
                                                                   p:location.viewId="PortalView"
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2"
-                                                                  p:value="管理台"
-                                                                  p:location.viewId="AdminView"
-                                                                  p:location.controllerMapping="/admin"
-                                                                  p:location.methodToCall="getConsolePage"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="3"
-                                                                  p:value="类别管理"
-                                                                  p:location.viewId="AdminView"
-                                                                  p:location.controllerMapping="/admin"
-                                                                  p:location.methodToCall="getConsolePage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="4"
+                                                            <bean parent="Uif-KeyLabelPair" p:key="2"
                                                                   p:value="权限管理"/>
                                                         </list>
                                                     </property>
@@ -110,12 +100,6 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--右上角btnlist-->
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="返回"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
-                                                                            </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
@@ -180,11 +164,9 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="updateKrimPerm"
                                                                                               p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deletePermissionDialog" />
@@ -213,7 +195,7 @@
     </bean>
 
     <bean id="savePermissionDialog" parent="Uif-DialogGroup"
-          p:headerText="添加权限" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:headerText="添加权限"  p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#savePermissionDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -250,7 +232,7 @@
 
 
     <bean id="deletePermissionDialog" parent="Uif-DialogGroup"
-          p:headerText="删除权限" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="删除权限" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除权限，如需删除请联系系统维护人员！" />

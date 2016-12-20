@@ -62,17 +62,7 @@
 																  p:location.viewId="PortalView"
 																  p:location.controllerMapping="/home"
 																  p:location.methodToCall="getCommonHome"/>
-															<bean parent="Uif-KeyValueLocation" p:key="2"
-																  p:value="管理台"
-																  p:location.viewId="AdminView"
-																  p:location.controllerMapping="/admin"
-																  p:location.methodToCall="getConsolePage"/>
-															<bean parent="Uif-KeyValueLocation" p:key="3"
-																  p:value="类别管理"
-																  p:location.viewId="AdminView"
-																  p:location.controllerMapping="/admin"
-																  p:location.methodToCall="getConsolePage"/>
-															<bean parent="Uif-KeyLabelPair" p:key="4"
+															<bean parent="Uif-KeyLabelPair" p:key="2"
 																  p:value="用户管理"/>
 														</list>
 													</property>
@@ -109,12 +99,7 @@
 																	  p:style="float: right!important;">
 																	<property name="items">
 																		<list>
-																			<bean parent="Uif-PrimaryActionButton"
-																				  p:actionLabel="返回"
-																				  p:actionImagePlacement="LEFT"
-																				  p:navigateToPageId="pageConsole"
-																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
-																			</bean>
+																			<!--header部分右上角操作按钮-->
 																		</list>
 																	</property>
 																</bean>

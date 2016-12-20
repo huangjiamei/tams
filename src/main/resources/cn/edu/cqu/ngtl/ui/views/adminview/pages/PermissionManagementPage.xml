@@ -114,13 +114,13 @@
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加权限"
+                                                                                  p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="addPermissionDialog"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -179,19 +179,15 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage" p:methodToCall="updateKrimPerm">
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-ActionImage">
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:methodToCall="updateKrimPerm"
+                                                                                              p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:ajaxSubmit="false"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deletePermissionDialog" />
-                                                                                            </property>
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                             </property>
                                                                                         </bean>
                                                                                     </list>

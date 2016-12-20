@@ -113,7 +113,7 @@
 																				  p:actionLabel="返回"
 																				  p:actionImagePlacement="LEFT"
 																				  p:navigateToPageId="pageConsole"
-																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
 																			</bean>
 																		</list>
 																	</property>
@@ -234,14 +234,12 @@
 																	</property>
 																	<property name="lineActions">
 																		<list>
-																			<bean parent="Uif-ActionImage" p:methodToCall="selectURMInstructor"
+																			<bean parent="Uif-PrimaryActionButton"
+																				  p:ajaxSubmit="false"
+																				  p:render="@{#line.idNumber==null? false:true}"
+																				  p:methodToCall="selectURMInstructor"
 																				  p:successCallback="jQuery('#updateUserRoleBtn').click();"
-																				  p:render="@{#line.idNumber==null? false:true}">
-																				<property name="actionImage">
-																					<bean parent="Uif-Image"
-																						  p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-																				</property>
-																			</bean>
+																				  p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
 																		</list>
 																	</property>
 																</bean>

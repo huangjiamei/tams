@@ -154,8 +154,7 @@
                                                                       p:style="display:none;"
                                                                       p:ajaxSubmit="false"
                                                                       p:navigateToPageId="pageTaDetail"
-                                                                      p:methodToCall="getTaDetailPage"
-                                                                      p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
+                                                                      p:methodToCall="getTaDetailPage"/>
 
                                                                 <!--搜索框-->
                                                                 <bean id="searchTaListTable" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">

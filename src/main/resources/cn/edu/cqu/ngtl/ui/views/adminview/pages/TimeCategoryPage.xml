@@ -164,7 +164,7 @@
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:methodToCall="modifyTimeCategory"
-                                                                                              p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
+                                                                                              p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">

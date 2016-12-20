@@ -118,13 +118,13 @@
 																				  p:actionLabel="返回"
 																				  p:actionImagePlacement="LEFT"
 																				  p:navigateToPageId="pageConsole"
-																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+																				  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
 																			</bean>
 																			<bean parent="Uif-PrimaryActionButton"
-																				  p:actionLabel="添加角色"
+																				  p:actionLabel="添加"
 																				  p:actionImagePlacement="LEFT"
 																				  p:methodToCall="addExmKrimRole"
-																				  p:additionalCssClasses="icon-plus bg-success tamsbtn">
+																				  p:additionalCssClasses="icon-plus bg-success box-btngroup">
 																			</bean>
 																		</list>
 																	</property>
@@ -184,13 +184,10 @@
 																			<bean parent="Uif-HorizontalBoxSection">
 																				<property name="items">
 																					<list>
-																						<bean parent="Uif-ActionImage" p:methodToCall="updateExmKrimRole"
-																							  p:ajaxSubmit="false">
-																							<property name="actionImage">
-																								<bean parent="Uif-Image"
-																									  p:source="@{#ConfigProperties['application.url']}/images/edit_enabled.png" />
-																							</property>
-																						</bean>
+																						<bean parent="Uif-PrimaryActionButton"
+																							  p:ajaxSubmit="false"
+																							  p:methodToCall="updateExmKrimRole"
+																							  p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
 																					</list>
 																				</property>
 																			</bean>

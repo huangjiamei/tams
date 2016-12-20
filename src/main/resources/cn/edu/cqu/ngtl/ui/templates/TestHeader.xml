@@ -257,7 +257,7 @@
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12" >
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12" p:render="false">
                                                                                             <property name="items">
                                                                                                 <list>
 

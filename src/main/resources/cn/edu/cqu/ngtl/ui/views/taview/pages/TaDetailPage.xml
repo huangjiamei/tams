@@ -110,11 +110,10 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="助教课程" p:colSpan="3"
-                                                                                  p:fieldLabel.colSpan="1"
-                                                                                  p:messageText="@{selectedTaInfo.courseName}"/>
-                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="助教姓名" p:messageText="@{selectedTaInfo.taName}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="助教课程"
+                                                                                  p:messageText="@{selectedTaInfo.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学号（职工号）"
                                                                                   p:messageText="@{selectedTaInfo.taIDNumber}"/>
@@ -122,30 +121,30 @@
                                                                                   p:label="主讲教师"
                                                                                   p:messageText="@{selectedTaInfo.instructorName}"/>
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="学历" p:messageText="@{selectedTaInfo.taMasterMajorName}"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="教学班号" p:messageText="@{selectedTaInfo.classNumber}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="课程学分"
-                                                                                  p:messageText="@{selectedTaInfo.credit}"/>
-                                                                            <!--<bean parent="Uif-MessageField"-->
-                                                                                  <!--p:label="学生人数"-->
-                                                                                  <!--p:messageText="100"/>-->
+                                                                                  p:label="导师" p:messageText="@{selectedTaInfo.advisorName}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="任课校区" p:messageText="虎溪校区"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="学历" p:messageText="@{selectedTaInfo.taCategory}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="所属学院" p:messageText="数统学院"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="专业"
-                                                                                  p:messageText="数学与应用数学"/>
-                                                                            <!--<bean parent="Uif-MessageField"-->
-                                                                                  <!--p:label="导师" p:messageText="@{selectedTaInfo.advisorName}"/>-->
+                                                                                  p:label="学分"
+                                                                                  p:messageText="5.0"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="电话号码" p:messageText="13592739473"/>
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="学生人数"
+                                                                                  p:messageText="100"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="银行" p:messageText="中国银行"/>
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="所属学院" p:messageText="数统学院"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="银行卡号" p:messageText="372586789276892768927"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="专业"
+                                                                                  p:messageText="数学与应用数学"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="任课校区" p:messageText="虎溪校区"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -153,7 +152,7 @@
                                                                       p:required="true" p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextAreaControl"
-                                                                              p:style="height:300px;resize: none;"/>
+                                                                              p:style="height:200px;resize: none;"/>
                                                                     </property>
                                                                 </bean>
 

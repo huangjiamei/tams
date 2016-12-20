@@ -16,4 +16,6 @@ public interface TAMSTeachCalendarDao {
     TAMSTeachCalendar selectById(String id);
 
     boolean deleteByEntity(TAMSTeachCalendar teachCalendar);
+
+    String countWorkTimeByClassId(String id);
 }

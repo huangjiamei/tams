@@ -91,6 +91,7 @@ public class ClassController extends BaseController {
                                 classInfoService.getAllClassesFilterByUid(user.getCode())
                         )
                 );
+        infoForm.setCheckedClassListAll(false);//刷新页面，全选框不选。
 
             return this.getModelAndView(infoForm, "pageClassList");
 //        } catch (Exception e) {

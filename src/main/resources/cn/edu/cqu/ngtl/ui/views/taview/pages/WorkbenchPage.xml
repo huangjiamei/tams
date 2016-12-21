@@ -208,15 +208,14 @@
                                                                     </property>
                                                                     <property name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection">
+                                                                            <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:actionLabel="申请交通补贴"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getTransAllowancePage"
-                                                                                              p:additionalCssClasses="bg-success tamsbtn" p:render="@{#line.status!=null}"/>
+                                                                                              p:additionalCssClasses="bg-success box-btngroup" p:render="@{#line.status!=null}"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

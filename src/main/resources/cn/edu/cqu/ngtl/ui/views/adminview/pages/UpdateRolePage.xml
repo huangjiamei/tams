@@ -133,6 +133,18 @@
 															</bean>
 														</property>
 													</bean>
+													<bean parent="Uif-HorizontalFieldGroup" p:style="margin:18px 0 0 10px;">
+														<property name="items">
+															<list>
+																<bean parent="Uif-PrimaryActionButton"
+																	  p:actionLabel="保存"
+																	  p:actionImagePlacement="LEFT"
+																	  p:navigateToPageId="saveExmKrimRole"
+																	  p:additionalCssClasses="icon-save bg-success box-btngroup">
+																</bean>
+															</list>
+														</property>
+													</bean>
 												</list>
 											</property>
 										</bean>

@@ -142,9 +142,9 @@
 
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <property name="layoutManager.generateAutoSequence"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <!--打开useServerPaging会报js error？？-->
                                                                     <property name="useServerPaging" value="true"/>
 
@@ -154,7 +154,7 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-DataField" p:label="课程类别"
+                                                                            <bean parent="Uif-DataField" p:label="任务类别"
                                                                                   p:propertyName="typeName"/>
                                                                         </list>
                                                                     </property>

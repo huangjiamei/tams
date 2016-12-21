@@ -133,6 +133,8 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
+
+                                                                <!--没用搜索框-->
                                                                 <bean id="searchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                     <property name="items">
                                                                         <list>
@@ -184,8 +186,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean id="teachCalendarTable" parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="setBgColor('teachCalendarTable');">
+                                                                <bean id="teachCalendarTable" parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar"/>
                                                                     <property name="propertyName" value="allCalendar"/>
@@ -204,17 +205,17 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
+                                                                            <!--<bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
-                                                                            </bean>
+                                                                            </bean>-->
                                                                             <bean parent="Uif-DataField" p:label="编号" p:propertyName="code"/> <!-- id是否可以当做编号? -->
                                                                             <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
                                                                             <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask" p:readOnly="true">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:200px;resize: none;"/>
+                                                                                          p:style="height:auto;width:500px;resize:vertical;"/>
                                                                                 </property>
                                                                               </bean>
                                                                             <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"

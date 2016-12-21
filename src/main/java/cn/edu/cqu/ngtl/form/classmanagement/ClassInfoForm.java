@@ -60,6 +60,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String courseWorkTime;
     private String courseStatus;
     private String courseAppFunds;
+    private String taNumber;
 
 
 
@@ -118,6 +119,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
     private String StudentName;
     private String StudentNumber;
+
+    public String getTaNumber() {
+        return taNumber;
+    }
+
+    public void setTaNumber(String taNumber) {
+        this.taNumber = taNumber;
+    }
 
     public MyTaViewObject getSelectedTa() {
         return selectedTa;

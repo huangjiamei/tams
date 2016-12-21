@@ -286,7 +286,9 @@
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                             </bean>
-
+                                                                            <!--聘用助教数-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="taNumber" p:additionalCssClasses="searchBoxWidth"/>
                                                                             <!--状态-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="courseStatus" p:additionalCssClasses="searchBoxWidth">
@@ -360,6 +362,8 @@
                                                                                   p:propertyName="appFunds"/>
                                                                             <bean parent="Uif-DataField" p:label="学院"
                                                                                   p:propertyName="departmentName"/>
+                                                                            <bean parent="Uif-DataField" p:label="已聘用/已申请"
+                                                                                  p:propertyName="taCount"/>
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"

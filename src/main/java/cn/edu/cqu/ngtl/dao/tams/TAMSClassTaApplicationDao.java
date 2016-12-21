@@ -14,5 +14,5 @@ public interface TAMSClassTaApplicationDao {
 
     TAMSClassTaApplication selectByClassId(String classId);
 
-    Map getAllClassAndHourAndFunds();
+    Map getAllClassAndHourAndFundsAndTaCounts();
 }

@@ -63,6 +63,9 @@ public interface TAMSTaDao {
 
     List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds ,String functionId,String taId);
 
+    Map getAllHiredTaNumberMap();
+
+    String countHiredTa(String classId);
     void deleteOneByEntity(TAMSTa tamsTa);
 
 }

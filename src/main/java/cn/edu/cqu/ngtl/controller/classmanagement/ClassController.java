@@ -1035,8 +1035,24 @@ public class ClassController extends BaseController {
             needToAdd.setCheckBox(false);
             needToAdd.setPayDay("暂未设置");
             needToAdd.setStatus("1");
-            infoForm.getAllMyTa().add(needToAdd);
+            //若助教列表为空，直接添加
+            if(infoForm.getAllMyTa().size() == 0)
+                infoForm.getAllMyTa().add(needToAdd);
+            //若助教列表为一个空对象，则先删除空对象
+            else if(infoForm.getAllMyTa().get(0).getTaName() == null) {
+                infoForm.getAllMyTa().remove(0);
+                infoForm.getAllMyTa().add(needToAdd);
+            }
+            //否则直接添加
+            else
+                infoForm.getAllMyTa().add(needToAdd);
             infoForm.getAllApplication().remove(needToAdd);
+            //聘用之后申请列表为空，往申请列表中添加一个空对象
+            if(infoForm.getAllApplication().size() == 0){
+                List<MyTaViewObject> nullObject = new ArrayList<>();
+                nullObject.add(new MyTaViewObject());
+                infoForm.getAllApplication().addAll(nullObject);
+            }
         }
         if(result)
             return this.getModelAndView(infoForm, "pageTaManagement");
@@ -1243,11 +1259,19 @@ public class ClassController extends BaseController {
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             } else if (code == 4) {
                 //避免延迟刷新
-                if (infoForm.getAllApplication() == null)
-                    infoForm.setAllApplication(needToBeAddToApplication);
+                //if (infoForm.getAllApplication() == null)
+                //    infoForm.setAllApplication(needToBeAddToApplication);
+                //如果为空，即没有对象
+                if(infoForm.getAllApplication().size() == 0)
+                    infoForm.getAllApplication().addAll(needToBeAddToApplication);
+                //如果为一个空对象
+                if(infoForm.getAllApplication().get(0).getTaName() == null) {
+                    infoForm.getAllApplication().remove(0);
+                    infoForm.getAllApplication().addAll(needToBeAddToApplication);
+                }
+                //否则直接添加
                 else
                     infoForm.getAllApplication().addAll(needToBeAddToApplication);
-
                 infoForm.getConditionTAList().remove(curTa);
                 return this.getModelAndView(infoForm, "pageTaManagement");
             } else {

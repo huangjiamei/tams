@@ -82,4 +82,6 @@ public interface ITAService {
 
     List<TAMSWorkflowStatus> appriseStatusAvailable(String uid, String taId);
 
+    String getTamsTaIdByStuIdAndClassId(String stuId,String classId);
+
 }

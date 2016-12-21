@@ -215,9 +215,10 @@ public class TaController extends BaseController {
         );
         if(result)
             return this.getTaListPage(form, request);
-        else
+        else {
             taInfoForm.setErrMsg("撤销助教出现错误");
-            return this.getTaListPage(form, request); //应该返回错误信息
+            return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+        }
     }
 
     /**
@@ -612,8 +613,6 @@ public class TaController extends BaseController {
         );
 
 
-
-
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 
@@ -637,7 +636,13 @@ public class TaController extends BaseController {
         List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,classId);
         taInfoForm.setCurClassId(classId);
         taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
-        taInfoForm.setTaUniqueId(tamsTaTravelSubsidies.get(0).getTamsTaId());
+        String tamstaId = taService.getTamsTaIdByStuIdAndClassId(taId,classId);
+        if(tamstaId!=null)
+            taInfoForm.setTaUniqueId(tamstaId);
+        else{
+            taInfoForm.setErrMsg("您的助教信息有误，请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+        }
         // TODO: 2016/11/27 (首先判断权限) 老师是不是不可进入此页面？
 
         // TODO: 2016/11/27 根据user信息，找到相关的交通补贴历史记录，将记录并放置在某个list中，同时修改TransAllowancePage.xml对应位置的objClass和collection
@@ -650,7 +655,7 @@ public class TaController extends BaseController {
     @RequestMapping(params = "methodToCall=submitTravelRecord")
     public ModelAndView submitTravelRecord(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-        String travelTime = taInfoForm.getTravelTime();
+        String travelTime = taInfoForm.getTravelTimeD();
         String travelNote = taInfoForm.getTravelNote();
         TAMSTaTravelSubsidy tamsTaTravelSubsidy = new TAMSTaTravelSubsidy();
         tamsTaTravelSubsidy.setTravelTime(travelTime);

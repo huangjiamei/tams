@@ -178,7 +178,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
-        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
+        if(!userInfoService.isInstructor(uId)) {
             return null;
         }
         else if (userInfoService.isInstructor(uId)) {
@@ -186,7 +186,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             Set<String> classIdStrings = new HashSet<>();
             for(Object obj : classIds)
                 classIdStrings.add(obj.toString());
-            if(classIdStrings.contains(classId)) {
+            if(classIdStrings.contains(classId)||userInfoService.isSysAdmin(uId)) {
                 teachCalendar.setClassId(classId);
                 return teachCalendarDao.insertByEntity(teachCalendar);
             }

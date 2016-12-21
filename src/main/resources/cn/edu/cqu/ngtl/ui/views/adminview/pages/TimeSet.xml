@@ -209,7 +209,6 @@
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="timeSettingType.typeName"
-
                                                                                   p:readOnly="true"
                                                                                   p:label="类型"/>
                                                                             <bean parent="Uif-InputField"

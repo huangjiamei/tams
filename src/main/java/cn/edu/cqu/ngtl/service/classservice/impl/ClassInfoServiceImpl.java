@@ -243,7 +243,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations) {
+    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations,String totalTime,String totalBudget) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("教师申请助教");
         TimeUtil timeUtil = new TimeUtil();
         if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
@@ -257,6 +257,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             TAMSClassTaApplication entity = new TAMSClassTaApplication();
             //添加申请信息
             //预处理数据
+            entity.setWorkHour(totalTime);
+            entity.setApplicationFunds(totalBudget);
             entity.setApplicantId(instructorId);
             entity.setApplicationClassId(classId);
             entity.setApplicationTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

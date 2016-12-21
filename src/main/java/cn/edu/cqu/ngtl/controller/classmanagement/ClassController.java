@@ -784,7 +784,9 @@ public class ClassController extends BaseController {
         }
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
-        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations);
+        String totalTime = infoForm.getTotalElapsedTime();
+        String totalBudget = infoForm.getTotalBudget();
+        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations,totalTime,totalBudget);
         if(result == 1) {
             infoForm.setErrMsg("不在教师申请助教期间!");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1186,7 +1188,6 @@ public class ClassController extends BaseController {
         MyTaViewObject curTa = infoForm.getSelectedTa();
         curTa.setApplicationClassId(classId);
         List<MyTaViewObject> needToBeAddToApplication = new ArrayList<>();
-        needToBeAddToApplication.add(curTa);
         //如果没有选择任何人
         if (curTa.getTaIdNumber() == null) {
             infoForm.setErrMsg("请选择某位学生！");

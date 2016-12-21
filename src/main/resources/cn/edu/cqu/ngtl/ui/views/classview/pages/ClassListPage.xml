@@ -270,6 +270,9 @@
                                                                             <!--耗费工时-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="courseWorkTime" p:additionalCssClasses="searchBoxWidth"/>
+                                                                            <!--助教经费-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="courseAppFunds" p:additionalCssClasses="searchBoxWidth"/>
 
                                                                             <!--学院-->
                                                                             <bean parent="Uif-InputField"
@@ -352,6 +355,8 @@
                                                                                   p:propertyName="instructorName"/>
                                                                             <bean parent="Uif-DataField" p:label="耗费工时"
                                                                                   p:propertyName="workTime"/>
+                                                                            <bean parent="Uif-DataField" p:label="助教经费"
+                                                                                  p:propertyName="appFunds"/>
                                                                             <bean parent="Uif-DataField" p:label="学院"
                                                                                   p:propertyName="departmentName"/>
                                                                             <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
@@ -519,7 +524,7 @@
                 <bean parent="Uif-InputField"  p:label="选择审批的状态"
                       p:propertyName="approveReasonOptionFinder" >
                     <property name="optionsFinder">
-                        <bean class="cn.edu.cqu.ngtl.optionfinder.ApproveAllStatusOptionFinder" p:blankOption="false"/>
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.ApproveAllStatusOptionFinder" />
                     </property>
                     <property name="control">
                         <bean parent="Uif-DropdownControl"/>

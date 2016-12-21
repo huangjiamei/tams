@@ -10,6 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
@@ -58,5 +62,27 @@ public class TAMSClassTaApplicationDaoJpa implements TAMSClassTaApplicationDao {
                 criteria.build()
         );
         return  qr.getResults().isEmpty() ? null : qr.getResults().get(0);
+    }
+
+    @Override
+    public Map getAllClassAndHourAndFunds(){
+        Map result = new HashMap();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", sessionDao.getCurrentSession().getId())
+                )
+        );
+        QueryResults<TAMSClassTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassTaApplication.class,
+                criteria.build()
+        );
+        List<TAMSClassTaApplication> tamsClassTaApplications = qr.getResults();
+        if(tamsClassTaApplications!=null){
+            for(TAMSClassTaApplication tamsClassTaApplication:tamsClassTaApplications){
+                result.put(tamsClassTaApplication.getApplicationClassId(),tamsClassTaApplication.getApplicationFunds()+","+tamsClassTaApplication.getWorkHour());
+            }
+            return result;
+        }
+        return null;
     }
 }

@@ -26,6 +26,8 @@ public class ClassTeacherViewObject {
 
     private String order;
 
+    private String appFunds;
+
     /**
      * 暂时缺失的参数
      */
@@ -250,5 +252,13 @@ public class ClassTeacherViewObject {
 
     public void setOrder(String order) {
         this.order = order;
+    }
+
+    public String getAppFunds() {
+        return appFunds;
+    }
+
+    public void setAppFunds(String appFunds) {
+        this.appFunds = appFunds;
     }
 }

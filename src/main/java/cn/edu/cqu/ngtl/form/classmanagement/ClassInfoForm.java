@@ -59,6 +59,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String condInstructorName;
     private String courseWorkTime;
     private String courseStatus;
+    private String courseAppFunds;
 
 
 
@@ -463,5 +464,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setIndexClassListPage(String indexClassListPage) {
         this.indexClassListPage = indexClassListPage;
+    }
+
+    public String getCourseAppFunds() {
+        return courseAppFunds;
+    }
+
+    public void setCourseAppFunds(String courseAppFunds) {
+        this.courseAppFunds = courseAppFunds;
     }
 }

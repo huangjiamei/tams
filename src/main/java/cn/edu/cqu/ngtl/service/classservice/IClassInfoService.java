@@ -47,7 +47,7 @@ public interface IClassInfoService {
      *      9 : 未知错误
      * @return
      */
-    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations);
+    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime,String totalBudget);
 
     List<TAMSTa> getAllTaFilteredByClassid(String classId);
 

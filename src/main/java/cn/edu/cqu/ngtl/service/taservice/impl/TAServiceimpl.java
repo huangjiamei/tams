@@ -274,8 +274,6 @@ public class TAServiceimpl implements ITAService {
             newTa.setMonth12("0");
             //newTa.setType("1");
             UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
-            newTa.setEvaluation("未评价");
-            newTa.setStuEva("未评价");
             if(utStudent != null){
                 if(utStudent.getProgram() != null){
                     if(utStudent.getProgram().getDuration() == 3){

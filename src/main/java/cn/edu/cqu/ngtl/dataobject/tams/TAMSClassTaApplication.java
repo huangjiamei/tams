@@ -40,6 +40,12 @@ public class TAMSClassTaApplication extends DataObjectBase implements Serializab
     @Column(name = "SESSION_ID")
     private Integer sessionId;
 
+    @Column(name = "APPLICATION_FUNDS")
+    private String applicationFunds;
+
+    @Column(name = "WORKHOUR")
+    private String workHour;
+
     @ManyToOne
     @JoinColumn(name = "SESSION_ID", insertable = false, updatable = false)
     private UTSession curSession;
@@ -106,6 +112,22 @@ public class TAMSClassTaApplication extends DataObjectBase implements Serializab
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public String getApplicationFunds() {
+        return applicationFunds;
+    }
+
+    public void setApplicationFunds(String applicationFunds) {
+        this.applicationFunds = applicationFunds;
+    }
+
+    public String getWorkHour() {
+        return workHour;
+    }
+
+    public void setWorkHour(String workHour) {
+        this.workHour = workHour;
     }
 }
 

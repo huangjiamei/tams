@@ -118,6 +118,7 @@ public class TAConverterimpl implements ITAConverter {
              * 取出教师ID和姓名的组合
              */
             System.out.println(System.currentTimeMillis());
+            Map timeAndFundsOfApplications = tamsClassTaApplicationDao.getAllClassAndHourAndFunds();
             Map InstructorMap = utInstructorDao.getAllInstructorNameIdMap();
             System.out.println(System.currentTimeMillis());
             /**
@@ -138,6 +139,15 @@ public class TAConverterimpl implements ITAConverter {
 
             for (UTClassInformation information : informationlist) {
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
+                String timeAndFunds = timeAndFundsOfApplications.get(information.getId())==null?null:timeAndFundsOfApplications.get(information.getId()).toString();
+                if(timeAndFunds!=null) {
+                    viewObject.setWorkTime(timeAndFunds.split(",")[1]);
+                    viewObject.setAppFunds(timeAndFunds.split(",")[0]);
+                }
+                else{
+                    viewObject.setWorkTime("");
+                    viewObject.setAppFunds("");
+                }
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());
                 viewObject.setDepartmentName(information.getDeptName());
@@ -164,7 +174,7 @@ public class TAConverterimpl implements ITAConverter {
                     for(UTClassInstructor utClassInstructor :instructorName){
                         instructorname+=utClassInstructor.getUtInstructor().getName()+" ";
                     }
-                String workTime = tamsTeachCalendarDao.countWorkTimeByClassId(information.getId());
+//                String workTime = tamsTeachCalendarDao.countWorkTimeByClassId(information.getId());
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());
@@ -174,7 +184,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setStatus(information.getStatusName());
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName(instructorname);
-                viewObject.setWorkTime(workTime);
+                TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(information.getId());
+                viewObject.setWorkTime(tamsClassTaApplication==null?"":tamsClassTaApplication.getWorkHour());
+                viewObject.setAppFunds(tamsClassTaApplication==null?"":tamsClassTaApplication.getApplicationFunds());
                 viewObjects.add(viewObject);
             }
             return viewObjects;
@@ -303,6 +315,7 @@ public class TAConverterimpl implements ITAConverter {
 
         if (clazz != null) {
             classDetailInfoViewObject.setClassNumber(clazz.getClassNumber());
+            classDetailInfoViewObject.setCourseDepartment(clazz.getCourseOffering().getCourse().getDepartment().getName());
             course = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getCourse() : null;
 
             //classInstructor为空的数据库，无法查询
@@ -489,7 +502,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaId(ta.getTaId());
             viewObject.setClassid(ta.getTaClassId());
             viewObject.setApplicationReason(ta.getApplicationNote());
-            viewObject.setTaCategory(ta.getTamsTaCategory().getName());
+            viewObject.setTaCategory(ta.getTamsTaCategory()==null?" ":ta.getTamsTaCategory().getName() );
             UTCourse course = null;
             List<UTInstructor> instructors = null;
             if(ta.getTaClass() != null) {
@@ -512,7 +525,7 @@ public class TAConverterimpl implements ITAConverter {
             }
             UTStudent taStu = ta.getTa();
             if(taStu != null) {
-                viewObject.setTaMasterMajorName(taStu.getProgram().getName());
+                viewObject.setTaMasterMajorName(taStu.getProgram()==null?"缺失":taStu.getProgram().getName());
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIDNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());

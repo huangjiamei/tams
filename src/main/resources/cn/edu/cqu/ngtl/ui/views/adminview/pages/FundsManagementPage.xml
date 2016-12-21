@@ -1055,6 +1055,12 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="保存"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="ReleaseCourseFunding"
+                                                                                                                      p:render="@{#form.deptManager}"
+                                                                                                                      p:additionalCssClasses="icon-share bg-teal box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="发布"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="ReleaseCourseFunding"

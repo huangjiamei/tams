@@ -65,7 +65,7 @@ public class TAMSClassTaApplicationDaoJpa implements TAMSClassTaApplicationDao {
     }
 
     @Override
-    public Map getAllClassAndHourAndFunds(){
+    public Map getAllClassAndHourAndFundsAndTaCounts(){
         Map result = new HashMap();
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
@@ -79,7 +79,13 @@ public class TAMSClassTaApplicationDaoJpa implements TAMSClassTaApplicationDao {
         List<TAMSClassTaApplication> tamsClassTaApplications = qr.getResults();
         if(tamsClassTaApplications!=null){
             for(TAMSClassTaApplication tamsClassTaApplication:tamsClassTaApplications){
-                result.put(tamsClassTaApplication.getApplicationClassId(),tamsClassTaApplication.getApplicationFunds()+","+tamsClassTaApplication.getWorkHour());
+                result.put(tamsClassTaApplication.getApplicationClassId(),
+                        tamsClassTaApplication.getApplicationFunds() +
+                        "," +
+                        tamsClassTaApplication.getWorkHour() +
+                        "," +
+                        tamsClassTaApplication.getTaNumber()
+                );
             }
             return result;
         }

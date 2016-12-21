@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassTaApplication;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
@@ -747,4 +748,41 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         return false;
     }
 
+    @Override
+    public Map getAllHiredTaNumberMap() {
+        Map result = new HashMap();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", utSessionDao.getCurrentSession().getId())
+                )
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+        List<TAMSTa> tamstas = qr.getResults();
+        if(tamstas!=null){
+            for(TAMSTa tamsTa:tamstas){
+                Integer count = (Integer)result.get(tamsTa.getTaClassId());
+                if(count == null)
+                    count = 1;
+                else
+                    count++;
+                result.put(tamsTa.getTaClassId(),
+                        count
+                );
+            }
+            return result;
+        }
+        return null;
+    }
+
+    @Override
+    public String countHiredTa(String classId) {
+        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        Query query = em.createNativeQuery("SELECT COUNT(*) FROM TAMS_TA t WHERE t.TA_CLASS =" + classId);
+        Object count = query.getSingleResult();
+
+        return count == null ? null : count.toString();
+    }
 }

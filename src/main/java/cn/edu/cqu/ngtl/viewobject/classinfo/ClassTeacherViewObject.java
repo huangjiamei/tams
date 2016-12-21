@@ -28,6 +28,8 @@ public class ClassTeacherViewObject {
 
     private String appFunds;
 
+    private String taCount;
+
     /**
      * 暂时缺失的参数
      */
@@ -84,6 +86,14 @@ public class ClassTeacherViewObject {
         contents[5]=getDepartmentName();
         contents[6]=getStatus();
         return contents;
+    }
+
+    public String getTaCount() {
+        return taCount;
+    }
+
+    public void setTaCount(String taCount) {
+        this.taCount = taCount;
     }
 
     public String getId() {

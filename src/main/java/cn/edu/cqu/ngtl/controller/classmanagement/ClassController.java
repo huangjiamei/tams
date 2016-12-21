@@ -322,6 +322,10 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        if(infoForm.getApplyAssistantViewObject().getStudentId()==null||infoForm.getApplyAssistantViewObject().getUsername()==null){
+            infoForm.setErrMsg("身份信息有误，请联系教务处！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         if(infoForm.getApplicationPhoneNbr()==null){
             infoForm.setErrMsg("请申请人填写本人联系电话！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);

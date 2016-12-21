@@ -258,7 +258,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             //添加申请信息
             //预处理数据
             entity.setWorkHour(totalTime);
-            entity.setApplicationFunds(totalBudget);
+            entity.setApplicationFunds(totalBudget.replace("元",""));
             entity.setApplicantId(instructorId);
             entity.setApplicationClassId(classId);
             entity.setApplicationTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));

@@ -185,7 +185,7 @@
                                                                                   <!--p:actionScript="showDialog('returnDialog');"-->
                                                                                   <!--p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>-->
 
-                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                            <bean id="approveButtonId" parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审批"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="showApproveDialog"
@@ -247,7 +247,8 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
                                                                                   p:messageText="占位"/>
-                                                                            <bean parent="Uif-InputField"
+
+                                                                            <bean id="checkedClassListAllId" parent="Uif-InputField"
                                                                                   p:propertyName="checkedClassListAll" p:onClickScript="checkedAll('checkedClassAllButton');">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
@@ -357,7 +358,7 @@
                                                                                   p:propertyName="instructorName"/>
                                                                             <bean parent="Uif-DataField" p:label="耗费工时"
                                                                                   p:propertyName="workTime"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教经费"
+                                                                            <bean parent="Uif-DataField" p:label="助教经费(元)"
                                                                                   p:propertyName="appFunds"/>
                                                                             <bean parent="Uif-DataField" p:label="学院"
                                                                                   p:propertyName="departmentName"/>
@@ -379,13 +380,12 @@
 
                                                                                     <!--无历史数据时显示，用render来切换-->
                                                                                     <bean parent="Uif-MessageField"
-                                                                                          p:render="false"
+                                                                                          p:render="true"
                                                                                           p:messageText="暂无历史数据"/>
-
 
                                                                                     <!--如何改为纵向列表形式待调整-->
                                                                                     <bean parent="Uif-GridGroup"
-                                                                                          p:layoutManager.renderRowFirstCellHeader="false">
+                                                                                          p:layoutManager.renderRowFirstCellHeader="false" p:render="false">
                                                                                     <property name="layoutManager.numberOfColumns"
                                                                                               value="16"/>
                                                                                         <property name="items">

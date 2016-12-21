@@ -315,12 +315,30 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         return 9;
     }
 
+
+    @Override
+    public boolean deleteTaApplicationByStuIdAndClassId(String stuId, String classId){
+        TAMSTa tamsta = taDao.selectByStudentIdAndClassId(stuId,classId);
+        if(tamsta!=null){
+            taDao.deleteOneByEntity(tamsta);
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+    @Override
     public List<TAMSTa> getAllTaFilteredByClassid(String classId){
 
         return taDao.selectByClassId(classId);
 
     }
 
+    @Override
     public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId){
 
         return tamsTaApplicationDao.selectByClassId(classId);

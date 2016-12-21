@@ -747,4 +747,9 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         return false;
     }
 
+
+    @Override
+    public void deleteOneByEntity(TAMSTa tamsTa){
+        KradDataServiceLocator.getDataObjectService().delete(tamsTa);
+    }
 }

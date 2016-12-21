@@ -33,7 +33,7 @@ public class TAServiceimpl implements ITAService {
 
     private static final Logger logger = Logger.getRootLogger();
 
-    private static final Integer MAX_APPLY_COURSE_NUMBER = 2;
+    private static final Integer MAX_APPLY_COURSE_NUMBER = 2;  //最多同时申请和担任的助教数量（两样之和）
 
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;

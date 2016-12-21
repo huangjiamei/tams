@@ -373,8 +373,14 @@ public class ClassController extends BaseController {
                                             HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+        String classId = infoForm.getCurrClassId();
+        String stuId = infoForm.getApplyAssistantViewObject().getStudentId();
 
-
+        if(classId==null||stuId==null){
+            infoForm.setErrMsg("个人信息有误，无法删除助教申请。请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        classInfoService.deleteTaApplicationByStuIdAndClassId(stuId,classId);
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 

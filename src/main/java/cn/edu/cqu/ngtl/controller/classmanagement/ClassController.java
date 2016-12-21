@@ -1265,4 +1265,18 @@ public class ClassController extends BaseController {
         return this.getClassListPage(form);
     }
 
+    /**
+     * 申请优秀助教页面
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getApplyOutStandingClassPage")
+    public ModelAndView getApplyOutStandingClassPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
+    }
+
 }

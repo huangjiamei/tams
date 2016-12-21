@@ -322,6 +322,8 @@ var filterHintCache = {
        ],
     "courseWorkTime": [
        ],
+    "courseAppFunds":[],
+    "taNumber":[],
 
     //助教课表搜索框
     "taAssitantName": [
@@ -521,12 +523,12 @@ function refreshTableFilter(searchbox,tablebox) {
         //为输入框添加事件
         if (field.children()[0].tagName=='INPUT'){
 
-            //普通的搜索框
-            if (!jQuery(field.children()[0]).hasClass("hasDatepicker")){
-                jQuery(field.children()[0]).autocomplete({
-                    source: eval("filterHintCache."+field.find("input")[0].name)
-                }).attr("class", "form-control input-sm uif-textControl column-filter");
-            }
+            // //普通的搜索框
+            // if (!jQuery(field.children()[0]).hasClass("hasDatepicker")){
+            //     jQuery(field.children()[0]).autocomplete({
+            //         source: eval("filterHintCache."+field.find("input")[0].name)
+            //     }).attr("class", "form-control input-sm uif-textControl column-filter");
+            // }
             jQuery(field.children()[0]).on(
                 {keydown: function(e){
                     var key = e.which;
@@ -918,7 +920,7 @@ function refreshPage(){
 //checkbox全选
 function checkedAll(id) {
         jQuery("#"+id).click();
-        //jQuery("#"+id).parent().parent().siblings().find("tbody").find("td").addClass("selected");//为选中项添加背景颜色
+        //jQuery("#"+id).find("td").addClass("selected");
 }
 
 //助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
@@ -1004,8 +1006,8 @@ function setBgColor(id){
 }
 
 //table上的鼠标滑过显示其他样式
-(function(){
-    jQuery('table').on('mouseover','td', function () {
+function addPointer(id){
+    jQuery("#"+id).on('mouseover','td', function () {
         jQuery(this).addClass("addPointer");
     });
-})();
+}

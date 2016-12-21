@@ -185,7 +185,7 @@
                                                                                   <!--p:actionScript="showDialog('returnDialog');"-->
                                                                                   <!--p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>-->
 
-                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                            <bean id="approveButtonId" parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审批"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="showApproveDialog"
@@ -247,7 +247,8 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:additionalCssClasses="hidden-fields"
                                                                                   p:messageText="占位"/>
-                                                                            <bean parent="Uif-InputField"
+
+                                                                            <bean id="checkedClassListAllId" parent="Uif-InputField"
                                                                                   p:propertyName="checkedClassListAll" p:onClickScript="checkedAll('checkedClassAllButton');">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>

@@ -80,7 +80,6 @@
                     </property>
                 </bean>
 
-
                 <!--row 2-->
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                     <property name="items">
@@ -195,9 +194,12 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="取消申请"
                                                                                   p:render="@{applicationPhoneNbr!=null}"
-                                                                                  p:methodToCall="cancelSubmitTaForm"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup">
+                                                                                <property name="confirmationDialog">
+                                                                                    <ref bean="confirmCancelDialog" />
+                                                                                </property>
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -214,6 +216,22 @@
                         </list>
                     </property>
                 </bean>
+
+            </list>
+        </property>
+    </bean>
+    <bean id="confirmCancelDialog" parent="Uif-DialogGroup"
+          p:headerText="取消" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="确认取消吗？"/>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="cancelSubmitTaForm"  p:dialogDismissOption="REQUEST" />
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
             </list>
         </property>
     </bean>

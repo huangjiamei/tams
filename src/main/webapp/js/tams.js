@@ -1230,13 +1230,13 @@ function clickButton(id){
 table默认每页显示5条记录
  */
 function searchTaApplicantListALengthMenu(){
-    jQuery("#searchTaApplicantList table").dataTable( {
-        "bRetrieve": true,
-        "bPaginate":true,
-        //"bJQueryUI":true,
-        "iDisplayLength":5,//默认每页显示几条数据
-        "aLengthMenu": [[5,10,20, 50], ["5","10", "20", "50"]]  //设置每页显示记录的下拉菜单
-    });
+    // jQuery("#searchTaApplicantList table").dataTable( {
+    //     "bRetrieve": true,
+    //     "bPaginate":true,
+    //     //"bJQueryUI":true,
+    //     "iDisplayLength":5,//默认每页显示几条数据
+    //     "aLengthMenu": [[5,10,20, 50], ["5","10", "20", "50"]]  //设置每页显示记录的下拉菜单
+    // });
 }
 
 
@@ -1402,9 +1402,9 @@ function setBgColor(id){
     }
 }
 
-// (function(){
-//     jQuery('table').on('mouseover','td', function () {
-//         jQuery(this).addClass("addPointer");
-//     } );
-//
-// })();
+//table上的鼠标滑过显示其他样式
+(function(){
+    jQuery('table').on('mouseover','td', function () {
+        jQuery(this).addClass("addPointer");
+    });
+})();

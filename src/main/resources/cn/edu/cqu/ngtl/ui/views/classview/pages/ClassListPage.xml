@@ -375,13 +375,12 @@
 
                                                                                     <!--无历史数据时显示，用render来切换-->
                                                                                     <bean parent="Uif-MessageField"
-                                                                                          p:render="false"
+                                                                                          p:render="true"
                                                                                           p:messageText="暂无历史数据"/>
-
 
                                                                                     <!--如何改为纵向列表形式待调整-->
                                                                                     <bean parent="Uif-GridGroup"
-                                                                                          p:layoutManager.renderRowFirstCellHeader="false">
+                                                                                          p:layoutManager.renderRowFirstCellHeader="false" p:render="false">
                                                                                     <property name="layoutManager.numberOfColumns"
                                                                                               value="16"/>
                                                                                         <property name="items">

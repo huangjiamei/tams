@@ -1,6 +1,5 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 
 import java.util.List;
@@ -16,6 +15,8 @@ public interface TAMSTaApplicationDao {
     List<TAMSTaApplication> selectByClassIds(List<Object> classIds);
 
     List<TAMSTaApplication> selectByClassId(String classId);
+
+    List<TAMSTaApplication> selectByStuId(String classId);
 
     //ßßList<TAMSTaApplication> selectByClassIds(String classIds);
 

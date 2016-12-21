@@ -352,12 +352,31 @@ public class ClassController extends BaseController {
         else if(code == 4) {
             return this.getModelAndView(infoForm, "pageApplyForTaForm");
         }
+        else if(code == 6){
+            infoForm.setErrMsg("您最多可以申请和担任两门课程的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         else {
             infoForm.setErrMsg("未知错误");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 
+    /**
+     * 学生取消助教申请
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=cancelSubmitTaForm")
+    public ModelAndView cancelSubmitTaForm(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+
+        return this.getModelAndView(infoForm, "pageApplyForTaForm");
+    }
 
     /**
      * 获取教学日历页面

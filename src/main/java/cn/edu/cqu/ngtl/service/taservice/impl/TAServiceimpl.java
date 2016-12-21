@@ -147,6 +147,12 @@ public class TAServiceimpl implements ITAService {
         if(taDao.selectByStudentIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null) {
             return 3;
         }
+
+        Integer stuApplications = tamsTaApplicationDao.selectByStuId(application.getApplicationId())==null?0:tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
+        Integer stuTaNumber = taDao.selectByTaId(application.getApplicationId())==null?0:taDao.selectByTaId(application.getApplicationId()).size();
+        if(stuApplications+stuTaNumber>2){
+            return 6;
+        }
         if (tamsTaApplicationDao.insertOne(application))
             return 4;
         else

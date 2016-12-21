@@ -224,7 +224,7 @@
           p:headerText="取消" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="确认取消吗？"/>
+                <bean parent="Uif-MessageField" p:messageText="取消申请会删除您之前填写的信息，确认取消吗？"/>
             </list>
         </property>
         <property name="footer.items">

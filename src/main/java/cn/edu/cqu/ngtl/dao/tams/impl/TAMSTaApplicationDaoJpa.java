@@ -80,6 +80,26 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return tas.isEmpty()?null:tas;
     }
 
+
+    //查询学生的申请数量
+    @Override
+    public List<TAMSTaApplication> selectByStuId(String stuId){
+        List<TAMSTaApplication> tas = new ArrayList<>();
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("applicationId", stuId),
+                        equal("sessionId",curSession.getId())
+                )
+        );
+        QueryResults<TAMSTaApplication> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTaApplication.class,
+                criteria.build()
+        );
+        tas.addAll(qr.getResults());
+        return tas.isEmpty()?null:tas;
+    }
+
     @Override
     public TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId) {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(

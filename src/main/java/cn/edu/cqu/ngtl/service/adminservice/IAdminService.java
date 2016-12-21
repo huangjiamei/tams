@@ -138,9 +138,11 @@ public interface IAdminService {
 
     String getSessionFundingTotalApprove();
 
-    String  getClassTotalPlanFunding();
+    String  getClassTotalAssignedFunding();
 
     String getSessionFundingStatistics(String totalPlan);
 
     String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects);
+
+    boolean releaseClassFunding(List<ClassFundingViewObject> classFundingViewObjects);
 }

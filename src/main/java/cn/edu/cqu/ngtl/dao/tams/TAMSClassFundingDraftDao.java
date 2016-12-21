@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.dao.tams;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFundingDraft;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 
 import java.util.List;
@@ -19,4 +20,7 @@ public interface TAMSClassFundingDraftDao {
     List<ClassFundingViewObject> selectClassFundDraftByCondition(Map<String, String> conditions);
 
     boolean insertOneByEntity(TAMSClassFundingDraft tamsClassFundingDraft);
+
+    TAMSClassFundingDraft selectOneByClassIdAndSessionId(String classId, String sessionId);
+
 }

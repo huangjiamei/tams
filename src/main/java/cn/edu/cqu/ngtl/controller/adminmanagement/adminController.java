@@ -941,7 +941,7 @@ public class adminController extends BaseController {
         infoForm.setClassFundingStatistics(
                 taConverter.countClassFunding(
                         infoForm.getClassFundings(),
-                        adminService.getClassTotalPlanFunding(),
+                        adminService.getClassTotalAssignedFunding(),
                         taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
                 )
         );
@@ -988,12 +988,14 @@ public class adminController extends BaseController {
         infoForm.setSessionFundingStatistics(      //已设置经费/总经费
                 adminService.getSessionFundingStatistics()
         );
+
         infoForm.setSessionFundingTotalApproved(      //已批准经费
                 adminService.getSessionFundingTotalApprove()
         );
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
+
 
     /**
      * 发布课程经费
@@ -1005,11 +1007,32 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         List<ClassFundingViewObject> classFundingViewObjects = infoForm.getClassFundings();
-        adminService.saveClassFunding(classFundingViewObjects);
+        adminService.releaseClassFunding(classFundingViewObjects);
+
         infoForm.setClassFundingStatistics(
                 taConverter.countClassFunding(
                         infoForm.getClassFundings(),
-                        adminService.getClassTotalPlanFunding(),
+                        adminService.getClassTotalAssignedFunding(),
+                        taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
+                )
+        );
+
+        return this.getModelAndView(infoForm, "pageFundsManagement");
+    }
+
+    /**
+     * 保存课程经费
+     */
+    @RequestMapping(params = "methodToCall=SaveClassFunding")
+    public ModelAndView SaveClassFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        List<ClassFundingViewObject> draftClassFunding = infoForm.getClassFundings();
+        adminService.saveClassFunding(draftClassFunding);
+        infoForm.setClassFundingStatistics(
+                taConverter.countClassFunding(
+                        infoForm.getClassFundings(),
+                        adminService.getClassTotalAssignedFunding(),
                         taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
                 )
         );

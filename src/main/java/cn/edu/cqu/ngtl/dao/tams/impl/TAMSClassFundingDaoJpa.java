@@ -206,7 +206,10 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
                 )
         );
         List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();
-        return list==null?null:list.get(0);
+        if(list.size() == 0 || list == null)
+            return null;
+        else
+            return list.get(0);
     }
 
 

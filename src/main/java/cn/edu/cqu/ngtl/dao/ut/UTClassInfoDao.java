@@ -19,4 +19,5 @@ public interface UTClassInfoDao {
     List<UTClassInformation> selectByConditions(Map<String, String> conditions);
 
     //List<UTClassInformation> selectAllCourseInfoByIds(List<Object> ids);
+    UTClassInformation getOneByIdAndDept(Integer id, Integer dept);
 }

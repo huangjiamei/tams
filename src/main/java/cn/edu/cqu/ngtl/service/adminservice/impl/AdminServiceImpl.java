@@ -569,9 +569,10 @@ public class AdminServiceImpl implements IAdminService{
 
         /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
          */
-        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode())){
+        if(userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isSysAdmin(user.getCode()) || userInfoService.isCollegeStaff(user.getCode())){
             return tamsClassFundingDraftDao.selectAll();
         }
+        //如果是老师，待定
         else {
             return tamsClassFundingDao.selectAll(user);
         }
@@ -684,6 +685,39 @@ public class AdminServiceImpl implements IAdminService{
         return true;
     }
 
+    //发布课程经费
+    @Override
+    public boolean releaseClassFunding(List<ClassFundingViewObject> classFundingViewObjects) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(ClassFundingViewObject per : classFundingViewObjects) {
+            TAMSClassFunding exist = tamsClassFundingDao.getOneByClassIdAndSessionId(per.getClassId(), curSession.getId().toString());
+            TAMSClassFundingDraft existDraft = tamsClassFundingDraftDao.selectOneByClassIdAndSessionId(per.getClassId(), curSession.getId().toString());
+            //若为空，则直接将classfundingdraft中的经费添加到classfunding里面去
+            if(exist == null){
+                TAMSClassFunding tamsClassFunding = new TAMSClassFunding();
+                tamsClassFunding.setSessionId(curSession.getId().toString());
+                tamsClassFunding.setClassId(per.getClassId());
+                tamsClassFunding.setApplyFunding(per.getApplyFunding());
+                tamsClassFunding.setAssignedFunding(per.getAssignedFunding());
+                tamsClassFunding.setPhdFunding(per.getPhdFunding());
+                tamsClassFunding.setBonus(per.getBonus());
+                tamsClassFunding.setTravelSubsidy(per.getTravelSubsidy());
+                tamsClassFundingDao.saveOneByEntity(tamsClassFunding);
+            }
+            //若不为空，则修改对应的classfunding
+            else {
+                if(!per.getAssignedFunding().equals(exist.getAssignedFunding())) {
+                    exist.setAssignedFunding(per.getAssignedFunding());
+                    tamsClassFundingDao.saveOneByEntity(exist);
+                }
+            }
+            //保存草稿
+            existDraft.setAssignedFunding(per.getAssignedFunding());
+            tamsClassFundingDraftDao.insertOneByEntity(existDraft);
+        }
+        return true;
+    }
+
     @Override
     public void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects){
         UTSession curSession = sessionDao.getCurrentSession();
@@ -696,6 +730,16 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public void saveClassFunding(List<ClassFundingViewObject> classFundingViewObjects) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(ClassFundingViewObject per : classFundingViewObjects) {
+            TAMSClassFundingDraft existDraft = tamsClassFundingDraftDao.selectOneByClassIdAndSessionId(per.getClassId(), curSession.getId().toString());
+            existDraft.setAssignedFunding(per.getAssignedFunding());
+            tamsClassFundingDraftDao.insertOneByEntity(existDraft);
+        }
+    }
+
+    @Override
     public void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects){
         for(SessionFundingViewObject per:sessionFundingViewObjects){
             TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
@@ -704,6 +748,7 @@ public class AdminServiceImpl implements IAdminService{
         }
     }
 
+    /*
     @Override
     public void saveClassFunding(List<ClassFundingViewObject> classFundingViewObjects){
         UTSession curSession = sessionDao.getCurrentSession();
@@ -715,6 +760,8 @@ public class AdminServiceImpl implements IAdminService{
         }
 
     }
+    */
+
 
     @Override
     public List<TAMSTimeSettingType> getAllTimeCategory() {
@@ -778,17 +825,19 @@ public class AdminServiceImpl implements IAdminService{
         return totalApproved.toString();
     }
 
+    //从学院经费的表查询出各个学院批准的经费，作为课程的总批准经费
     @Override
-    public String getClassTotalPlanFunding() {
+    public String getClassTotalAssignedFunding() {
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
         TAMSDeptFunding deptFunding;
-        if(userInfoService.isSysAdmin(user.getCode()))
+        if(userInfoService.isSysAdmin(user.getCode()) || userInfoService.isAcademicAffairsStaff(user.getCode()))
             return this.getSessionFundingTotalApprove();
+        //二级单位管理员看到该学院的批准经费
         else
             deptFunding = deptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), sessionDao.getCurrentSession().getId());
-        if(deptFunding != null)
-            return deptFunding.getPlanFunding();
+        if(deptFunding == null || deptFunding.getActualFunding().toString().equals("0"))
+            return "经费未分配";  //表明该学院还未分配经费
         else
-            return "数据缺失";
+            return deptFunding.getActualFunding();
     }
 }

@@ -229,14 +229,16 @@
                                                                             name="lineActions">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:ajaxSubmit="false"
                                                                                   p:methodToCall="updateTimeSetting"
                                                                                   p:refreshId="timeSet"
                                                                                   p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:ajaxSubmit="false"
                                                                                   p:methodToCall="deleteTimeSetting"
-                                                                                  p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn"/>
+                                                                                  p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
+                                                                                <property name="confirmationDialog">
+                                                                                    <ref bean="deleteTimeSetDialog" />
+                                                                                </property>
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -250,6 +252,22 @@
                         </list>
                     </property>
                 </bean>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="deleteTimeSetDialog" parent="Uif-DialogGroup"
+          p:headerText="删除时间类型" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除时间类型，如需删除请联系系统维护人员！" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="deleteTimeSetting"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

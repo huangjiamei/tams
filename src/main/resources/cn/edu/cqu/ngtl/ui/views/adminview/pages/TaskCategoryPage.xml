@@ -196,14 +196,14 @@
     </bean>
 
     <bean id="addTaskCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加类别"  p:retrieveViaAjax="true"
+          p:headerText="添加任务类别"  p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#addTaskCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重添加任务类别！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加任务类别，如需添加请联系系统维护人员！"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
@@ -237,7 +237,7 @@
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重修改任务类别！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重修改任务类别，如需修改请联系系统维护人员！！"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
@@ -267,7 +267,7 @@
           p:headerText="删除任务类别" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除任务类别！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除任务类别，如需删除请联系系统维护人员！" />
             </list>
         </property>
         <property name="footer.items">

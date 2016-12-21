@@ -111,13 +111,13 @@
                                                                                   p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
 
                                                                             </bean>
-                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                           <!-- <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="xxxx"
                                                                                   p:additionalCssClasses="icon-file bg-orange box-btngroup">
 
-                                                                            </bean>
+                                                                            </bean>-->
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:methodToCall="selectCurTerm"
@@ -258,19 +258,16 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:methodToCall="selectCurTerm"
                                                                                               p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
 
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="confirmSetCurrentTermDialog" />
                                                                                             </property>
                                                                                         </bean>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="confirmDeleteTermDialog" />
@@ -307,7 +304,7 @@
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需添加请联系系统维护人员！"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>

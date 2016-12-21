@@ -90,7 +90,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-VerticalBoxSection"
-                                                                      p:headerText="同步xx信息">
+                                                                      p:headerText="同步信息1">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-GridGroup"
@@ -141,7 +141,7 @@
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-VerticalBoxSection"
-                                                                                p:style="margin:0 auto;" >
+                                                                                p:style="margin: 20px;float: right!important;" >
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-InputField"
@@ -186,7 +186,7 @@
                                                                     </property>
                                                                 </bean>
                                                                 <bean parent="Uif-VerticalBoxSection"
-                                                                      p:headerText="同步xx信息2">
+                                                                      p:headerText="同步信息2">
                                                                     <property name="items">
                                                                         <list>
                                                                            <!--添加其他内容-->

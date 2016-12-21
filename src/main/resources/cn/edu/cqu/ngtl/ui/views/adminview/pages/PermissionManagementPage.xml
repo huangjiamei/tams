@@ -199,7 +199,7 @@
           p:onDocumentReadyScript="jQuery('#savePermissionDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重添加权限，如需添加请联系系统维护人员！" />
                 <bean parent="Uif-GridGroup">
                     <property name="items">
                         <list>

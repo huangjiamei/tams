@@ -4,11 +4,7 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.impl.CMProgramCourseDaoJpa;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ROLE_MBR_T_DaoJpa;
-import cn.edu.cqu.ngtl.dao.tams.TAMSActivityDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaCategoryDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
+import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
@@ -85,6 +81,9 @@ public class TAConverterimpl implements ITAConverter {
     private TAMSTaCategoryDao taCategoryDao;
 
     @Autowired
+    private TAMSTaDao taDao;
+
+    @Autowired
     private TAMSActivityDao tamsActivityDao;
 
     @Autowired
@@ -118,8 +117,9 @@ public class TAConverterimpl implements ITAConverter {
              * 取出教师ID和姓名的组合
              */
             System.out.println(System.currentTimeMillis());
-            Map timeAndFundsOfApplications = tamsClassTaApplicationDao.getAllClassAndHourAndFunds();
+            Map timeAndFundsAndTaNumberOfApplications = tamsClassTaApplicationDao.getAllClassAndHourAndFundsAndTaCounts();
             Map InstructorMap = utInstructorDao.getAllInstructorNameIdMap();
+            Map hiredTa = taDao.getAllHiredTaNumberMap();
             System.out.println(System.currentTimeMillis());
             /**
              * 取出classID和教师ID的组合
@@ -139,12 +139,15 @@ public class TAConverterimpl implements ITAConverter {
 
             for (UTClassInformation information : informationlist) {
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
-                String timeAndFunds = timeAndFundsOfApplications.get(information.getId())==null?null:timeAndFundsOfApplications.get(information.getId()).toString();
+                String hiredTaNumber = hiredTa.get(information.getId())==null?"0" : hiredTa.get(information.getId()).toString();
+                String timeAndFunds = timeAndFundsAndTaNumberOfApplications.get(information.getId())==null?null:timeAndFundsAndTaNumberOfApplications.get(information.getId()).toString();
                 if(timeAndFunds!=null) {
+                    viewObject.setTaCount(hiredTaNumber + "/" + timeAndFunds.split(",")[2]);
                     viewObject.setWorkTime(timeAndFunds.split(",")[1]);
                     viewObject.setAppFunds(timeAndFunds.split(",")[0]);
                 }
                 else{
+                    viewObject.setTaCount(hiredTaNumber + "/无数据");
                     viewObject.setWorkTime("");
                     viewObject.setAppFunds("");
                 }
@@ -185,6 +188,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName(instructorname);
                 TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(information.getId());
+                String hiredTaNumber = taDao.countHiredTa(information.getId());
+                hiredTaNumber = hiredTaNumber == null ? "0" : hiredTaNumber;
+                viewObject.setTaCount(tamsClassTaApplication==null?hiredTaNumber +"/无数据":hiredTaNumber + "/" + tamsClassTaApplication.getTaNumber().toString());
                 viewObject.setWorkTime(tamsClassTaApplication==null?"":tamsClassTaApplication.getWorkHour());
                 viewObject.setAppFunds(tamsClassTaApplication==null?"":tamsClassTaApplication.getApplicationFunds());
                 viewObjects.add(viewObject);

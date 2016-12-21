@@ -139,9 +139,9 @@
                                                                               value="false"/>
                                                                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
                                                                     <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <property name="layoutManager.generateAutoSequence"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>

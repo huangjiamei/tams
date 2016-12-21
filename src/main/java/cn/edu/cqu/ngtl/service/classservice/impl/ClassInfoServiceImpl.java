@@ -258,7 +258,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             //添加申请信息
             //预处理数据
             entity.setWorkHour(totalTime);
-            entity.setApplicationFunds(totalBudget);
+            entity.setApplicationFunds(totalBudget.replace("元",""));
             entity.setApplicantId(instructorId);
             entity.setApplicationClassId(classId);
             entity.setApplicationTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -315,12 +315,30 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         return 9;
     }
 
+
+    @Override
+    public boolean deleteTaApplicationByStuIdAndClassId(String stuId, String classId){
+        TAMSTa tamsta = taDao.selectByStudentIdAndClassId(stuId,classId);
+        if(tamsta!=null){
+            taDao.deleteOneByEntity(tamsta);
+            return true;
+        }
+        return false;
+    }
+
+
+
+
+
+
+    @Override
     public List<TAMSTa> getAllTaFilteredByClassid(String classId){
 
         return taDao.selectByClassId(classId);
 
     }
 
+    @Override
     public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId){
 
         return tamsTaApplicationDao.selectByClassId(classId);

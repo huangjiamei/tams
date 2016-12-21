@@ -407,7 +407,7 @@
                                                                                                           p:propertyName="feedBacks" p:readOnly="true">
                                                                                                         <property name="control">
                                                                                                             <bean parent="Uif-TextAreaControl"
-                                                                                                                  p:style="height:200px;resize: none;"/>
+                                                                                                                  p:style="height:auto;width:500px;resize:vertical;"/>
                                                                                                         </property>
                                                                                                      </bean>
                                                                                                     <bean parent="Uif-DataField"

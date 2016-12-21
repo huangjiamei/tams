@@ -49,6 +49,11 @@ public interface IClassInfoService {
      */
     short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime,String totalBudget);
 
+    /**
+     * 删除助教请求
+     */
+    boolean deleteTaApplicationByStuIdAndClassId(String stuId,String classId);
+
     List<TAMSTa> getAllTaFilteredByClassid(String classId);
 
     List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId);

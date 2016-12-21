@@ -5,7 +5,10 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
-import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -91,6 +94,7 @@ public class ClassController extends BaseController {
                                 classInfoService.getAllClassesFilterByUid(user.getCode())
                         )
                 );
+        infoForm.setCheckedClassListAll(false);//刷新页面，全选框不选。
 
             return this.getModelAndView(infoForm, "pageClassList");
 //        } catch (Exception e) {
@@ -322,6 +326,10 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        if(infoForm.getApplyAssistantViewObject().getStudentId()==null||infoForm.getApplyAssistantViewObject().getUsername()==null){
+            infoForm.setErrMsg("身份信息有误，请联系教务处！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         if(infoForm.getApplicationPhoneNbr()==null){
             infoForm.setErrMsg("请申请人填写本人联系电话！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -347,12 +355,37 @@ public class ClassController extends BaseController {
         else if(code == 4) {
             return this.getModelAndView(infoForm, "pageApplyForTaForm");
         }
+        else if(code == 6){
+            infoForm.setErrMsg("您最多可以申请和担任两门课程的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         else {
             infoForm.setErrMsg("未知错误");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 
+    /**
+     * 学生取消助教申请
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=cancelSubmitTaForm")
+    public ModelAndView cancelSubmitTaForm(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        String classId = infoForm.getCurrClassId();
+        String stuId = infoForm.getApplyAssistantViewObject().getStudentId();
+
+        if(classId==null||stuId==null){
+            infoForm.setErrMsg("个人信息有误，无法删除助教申请。请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        classInfoService.deleteTaApplicationByStuIdAndClassId(stuId,classId);
+        return this.getModelAndView(infoForm, "pageApplyForTaForm");
+    }
 
     /**
      * 获取教学日历页面

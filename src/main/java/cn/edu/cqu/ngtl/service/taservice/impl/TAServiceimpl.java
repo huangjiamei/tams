@@ -33,6 +33,8 @@ public class TAServiceimpl implements ITAService {
 
     private static final Logger logger = Logger.getRootLogger();
 
+    private static final Integer MAX_APPLY_COURSE_NUMBER = 2;  //最多同时申请和担任的助教数量（两样之和）
+
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
 
@@ -146,6 +148,12 @@ public class TAServiceimpl implements ITAService {
         }
         if(taDao.selectByStudentIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null) {
             return 3;
+        }
+
+        Integer stuApplications = tamsTaApplicationDao.selectByStuId(application.getApplicationId())==null?0:tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
+        Integer stuTaNumber = taDao.selectByTaId(application.getApplicationId())==null?0:taDao.selectByTaId(application.getApplicationId()).size();
+        if(stuApplications+stuTaNumber>MAX_APPLY_COURSE_NUMBER){
+            return 6;
         }
         if (tamsTaApplicationDao.insertOne(application))
             return 4;

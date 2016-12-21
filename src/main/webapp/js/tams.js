@@ -996,71 +996,99 @@ function initRightBtnMenu(targetid) {
     jQuery("#"+targetid+" tbody").contextPopup({
         title: '',
         items: [
-            {
-                label:'添加',
-                icon:'icon-plus',
-                action:function(e) {
-                    var id = e.target.id;
-                    var patt = new RegExp(".*line[0-9]+.*");
-                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                        id = jQuery(e.target).children("*[id*='line']")[0].id;
-                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
-                    alert("添加"+id+', index='+index);
-
-                }
-            },
+            // {
+            //     label:'添加',
+            //     icon:'icon-plus',
+            //     action:function(e) {
+            //         var id = e.target.id;
+            //         var patt = new RegExp(".*line[0-9]+.*");
+            //         if (typeof(id)=="undefined"||id==""||!patt.test(id))
+            //             id = jQuery(e.target).children("*[id*='line']")[0].id;
+            //         var index=id.match("line[0-9]+")[0].match('[0-9]+');
+            //         alert("添加"+id+', index='+index);
+            //
+            //     }
+            // },
             // {label:'查看',     icon:'icon-search',              action:function() { alert('clicked 3') } },
-            null, // divider
-            {
-                label:'选中',
-                icon:'icon-signup',
-                action:function(e) {
-                    var id = e.target.id;
-                    var patt = new RegExp(".*line[0-9]+.*");
-                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                        id = jQuery(e.target).children("*[id*='line']")[0].id;
-                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
-                    alert("选中"+id+', index='+index);
-                }
-            },
-            null, // divider
+            //null, // divider
+            // {
+            //     label:'选中',
+            //     icon:'icon-signup',
+            //     action:function(e) {
+            //         var id = e.target.id;
+            //         var patt = new RegExp(".*line[0-9]+.*");
+            //         if (typeof(id)=="undefined"||id==""||!patt.test(id))
+            //             id = jQuery(e.target).children("*[id*='line']")[0].id;
+            //         var index=id.match("line[0-9]+")[0].match('[0-9]+');
+            //         jQuery('#ClassListPageTable tbody>tr:eq('+index+')').find(":checkbox").attr("checked",true);
+            //     }
+            // },
+            // null, // divider
             {
                 label:'查看',
-                icon:'icon-search',
+                icon:'icon-eye-open',
                 action:function(e) {
                     var id = e.target.id;
                     var patt = new RegExp(".*line[0-9]+.*");
                     if (typeof(id)=="undefined"||id==""||!patt.test(id))
                         id = jQuery(e.target).children("*[id*='line']")[0].id;
                     var index=id.match("line[0-9]+")[0].match('[0-9]+');
-                    alert("查看"+id+', index='+index);
+                    document.getElementById('indexClassList_control').value=index;
+                    jQuery("#classDetailPageId").click();
                 }
             },
+            // null,
+            //  {
+            //      label:'审批',
+            //      icon:'icon-zoom-in',
+            //      action:function(e) {
+            //          var id = e.target.id;
+            //          var patt = new RegExp(".*line[0-9]+.*");
+            //          if (typeof(id)=="undefined"||id==""||!patt.test(id))
+            //              id = jQuery(e.target).children("*[id*='line']")[0].id;
+            //          var index=parseInt(id.match("line[0-9]+")[0].match('[0-9]+'));
+            //          alert("查看"+id+', index='+index);
+            //           jQuery("#ClassListPageTable").on('click','tbody>tr:eq('+index+')',function () {
+            //              jQuery(this).find(":checkbox").attr("checked",true);
+            //          });
+            //            //jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+index+')>td:eq(1)').find(":checkbox").attr("checked",true);
+            //          jQuery("#approveButtonId").click();
+            //      }
+            //  },
+            null,
             {
-                label:'编辑',
-                icon:'icon-pencil2',
+                label:'全选',
+                icon:'icon-check',
                 action:function(e) {
-                    var id = e.target.id;
-                    var patt = new RegExp(".*line[0-9]+.*");
-                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                        id = jQuery(e.target).children("*[id*='line']")[0].id;
-                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
-                    alert("编辑"+id+', index='+index);
+                    jQuery("#checkedClassListAllId").find(":checkbox").attr("checked",true);
+                    jQuery("#checkedClassListAllId").click();
                 }
             },
-            null, // divider
-            {
-                label:'删除',
-                icon:'icon-remove2',
-                action:function(e) {
-                    var id = e.target.id;
-                    var patt = new RegExp(".*line[0-9]+.*");
-                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                        id = jQuery(e.target).children("*[id*='line']")[0].id;
-                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
-                    alert("删除"+id+', index='+index);
-                }
-            },
+            // {
+            //     label:'编辑',
+            //     icon:'icon-pencil2',
+            //     action:function(e) {
+            //         var id = e.target.id;
+            //         var patt = new RegExp(".*line[0-9]+.*");
+            //         if (typeof(id)=="undefined"||id==""||!patt.test(id))
+            //             id = jQuery(e.target).children("*[id*='line']")[0].id;
+            //         var index=id.match("line[0-9]+")[0].match('[0-9]+');
+            //         alert("编辑"+id+', index='+index);
+            //     }
+            // },
+            // null, // divider
+            // {
+            //     label:'删除',
+            //     icon:'icon-remove2',
+            //     action:function(e) {
+            //         var id = e.target.id;
+            //         var patt = new RegExp(".*line[0-9]+.*");
+            //         if (typeof(id)=="undefined"||id==""||!patt.test(id))
+            //             id = jQuery(e.target).children("*[id*='line']")[0].id;
+            //         var index=id.match("line[0-9]+")[0].match('[0-9]+');
+            //         alert("删除"+id+', index='+index);
+            //     }
+            // },
         ]
     });
     // jQuery(document).click(function(e){
@@ -1230,13 +1258,13 @@ function clickButton(id){
 table默认每页显示5条记录
  */
 function searchTaApplicantListALengthMenu(){
-    jQuery("#searchTaApplicantList table").dataTable( {
-        "bRetrieve": true,
-        "bPaginate":true,
-        //"bJQueryUI":true,
-        "iDisplayLength":5,//默认每页显示几条数据
-        "aLengthMenu": [[5,10,20, 50], ["5","10", "20", "50"]]  //设置每页显示记录的下拉菜单
-    });
+    // jQuery("#searchTaApplicantList table").dataTable( {
+    //     "bRetrieve": true,
+    //     "bPaginate":true,
+    //     //"bJQueryUI":true,
+    //     "iDisplayLength":5,//默认每页显示几条数据
+    //     "aLengthMenu": [[5,10,20, 50], ["5","10", "20", "50"]]  //设置每页显示记录的下拉菜单
+    // });
 }
 
 
@@ -1402,9 +1430,9 @@ function setBgColor(id){
     }
 }
 
-// (function(){
-//     jQuery('table').on('mouseover','td', function () {
-//         jQuery(this).addClass("addPointer");
-//     } );
-//
-// })();
+//table上的鼠标滑过显示其他样式
+(function(){
+    jQuery('table').on('mouseover','td', function () {
+        jQuery(this).addClass("addPointer");
+    });
+})();

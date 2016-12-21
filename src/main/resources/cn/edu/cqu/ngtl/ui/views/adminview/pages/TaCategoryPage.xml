@@ -138,11 +138,13 @@
                                                                     <property name="layoutManager.richTable.render"
                                                                               value="false"/>
 
-                                                                    <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
+                                                                    <!--下面第一行打开每列开头的1,2,3...序号，第二行自动生成序列，
+                                                                    如果renderSequenceField为true，generateAutoSequence也得为true，
+                                                                    不然报空指针错误，除非给列自己添加序列-->
                                                                     <property name="layoutManager.renderSequenceField"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <property name="layoutManager.generateAutoSequence"
-                                                                              value="false"/>
+                                                                              value="true"/>
                                                                     <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>

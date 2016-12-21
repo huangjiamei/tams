@@ -263,6 +263,10 @@ public class adminController extends BaseController {
     public ModelAndView saveTimeCategoryPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+        if(infoForm.getTimeSettingType().getTypeName()==null){
+            infoForm.setErrMsg("请设置时间类别名称！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         TAMSTimeSettingType timeSettingType = infoForm.getTimeSettingType();
         adminService.saveTimeCategory(timeSettingType);
         return this.getTimeCategoryPage(infoForm);
@@ -358,6 +362,16 @@ public class adminController extends BaseController {
     public ModelAndView saveWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+        if(infoForm.getWorkfloworder()==null){
+            infoForm.setErrMsg("请设置工作流顺序！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        if(infoForm.getWorkflowstatus()==null){
+            infoForm.setErrMsg("请设置工作流状态！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         TAMSWorkflowStatus tamsWorkflowStatus = new TAMSWorkflowStatus();
         tamsWorkflowStatus.setWorkflowStatus(infoForm.getWorkflowstatus());
         tamsWorkflowStatus.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
@@ -1403,7 +1417,10 @@ public class adminController extends BaseController {
                                              HttpServletResponse response) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
-
+        if(adminInfoForm.getClassification().getName()==null){
+            adminInfoForm.setErrMsg("请填写名称！");
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+        }
         adminService.changeCourseClassificationNameById(adminInfoForm.getClassification().getId(),
                 adminInfoForm.getClassification().getName());
 
@@ -1421,7 +1438,10 @@ public class adminController extends BaseController {
     public ModelAndView addNewCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
-
+        if(adminInfoForm.getClassification().getName()==null){
+            adminInfoForm.setErrMsg("请填写名称！");
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+        }
         // 新添加的term，对应外部的dialog
         adminService.addCourseClassificationOnlyWithName(adminInfoForm.getClassification().getName());
 
@@ -1516,17 +1536,23 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
+        if(adminInfoForm.getOldTaCategory().getName()==null||adminInfoForm.getOldTaCategory().getHourlyWage()==null){
+            adminInfoForm.setErrMsg("请填写名称和时薪!");
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+        }
+
+
         if (adminInfoForm.getTaIndex() != null) {
             if (!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
-                return this.showDialog("adminErrDialog", true, adminInfoForm);
+                adminInfoForm.setErrMsg("编辑助教类别失败!");
+                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
             }
         } else {
             if (!adminService.addTaCategory(adminInfoForm.getOldTaCategory())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("添加助教类别失败(修改为错误提示)");
-                return this.showDialog("adminErrDialog", true, adminInfoForm);
+                adminInfoForm.setErrMsg("添加助教类别失败!");
+                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
             }
         }
         return this.getTaCategoryPage(form);
@@ -1587,7 +1613,6 @@ public class adminController extends BaseController {
     public ModelAndView selectCurTask(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
-
         try {
             //存在index进入edit dialog
             CollectionControllerServiceImpl.CollectionActionParameters params =
@@ -1617,20 +1642,27 @@ public class adminController extends BaseController {
     public ModelAndView saveTaskCategory(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
+        if(adminInfoForm.getIssueType().getTypeName()==null){
+            adminInfoForm.setErrMsg("请填写任务类型名称!");
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
 
-        if (adminInfoForm.getIssueIndex() != null) {
+        }
+
+
+
+            if (adminInfoForm.getIssueIndex() != null) {
             // index不为空说明要调用update
             if (!adminService.changeIssueType(adminInfoForm.getIssueType())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
-                return this.showDialog("adminErrDialog", true, adminInfoForm);
+                adminInfoForm.setErrMsg("编辑失败！");
+                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
             }
         } else {
             // add
             if (!adminService.addTaIssueType(adminInfoForm.getIssueType())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("添加失败(修改为错误提示)");
-                return this.showDialog("adminErrDialog", true, adminInfoForm);
+                adminInfoForm.setErrMsg("添加失败！");
+                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
             }
         }
         return this.getTaskCategoryPage(form);
@@ -1658,8 +1690,8 @@ public class adminController extends BaseController {
             return this.getTaskCategoryPage(form);
         } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
-            return this.showDialog("adminErrDialog", true, adminInfoForm);
+            adminInfoForm.setErrMsg("删除失败！");
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
         }
     }
 
@@ -1705,9 +1737,8 @@ public class adminController extends BaseController {
 
         if (adminInfoForm.getTotalMoney() != null) {
             // FIXME: 2016/11/5 暂不使用这一参数，如需使用需修改
-            adminInfoForm.setErrMsg("这一参数不可用");
-
-            return this.showDialog("adminErrDialog", true, adminInfoForm);
+            adminInfoForm.setErrMsg("这一参数不可用!");
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
         }
 
         // 参数全空，返回原来值
@@ -1719,8 +1750,7 @@ public class adminController extends BaseController {
             // 有参数就不能缺省
             // FIXME: 2016/11/5 错误提示可以修改，条件也许可以变成缺省，也可以增加条件
             adminInfoForm.setErrMsg("缺少条件！");
-
-            return this.showDialog("adminErrDialog", true, adminInfoForm);
+            return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
         } else {
             SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
             Date begin = format.parse(startTime);
@@ -1728,7 +1758,7 @@ public class adminController extends BaseController {
             // 时间颠倒
             if (begin.after(end)) {
                 adminInfoForm.setErrMsg("时间错误，请重新输入!");
-                return this.showDialog("adminErrDialog", true, adminInfoForm);
+                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
             }
 
             // 格式异常处理
@@ -1737,7 +1767,7 @@ public class adminController extends BaseController {
                 String testError = results.get(0).getYear();
                 if (testError.charAt(0) == '1') {
                     adminInfoForm.setErrMsg("批次名称格式错误，应为\"xxxx年x季\"，例如 2014年秋季");
-                    return this.showDialog("adminErrDialog", true, adminInfoForm);
+                    return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
                 }
             }
             adminInfoForm.setAllTerms(

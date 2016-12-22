@@ -762,6 +762,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setCourseCode(classFunding.getClassInformation().getCourseCode());
             viewObject.setDepartment(classFunding.getClassInformation().getDeptName());
             viewObject.setClassNumber(classFunding.getClassInformation().getClassNumber());
+            viewObject.setClassId(classFunding.getClassInformation().getId());
             //设定教师名称
             List<UTClassInstructor> classInstructors = utClassInstructorDao.selectByClassId(classFunding.getClassId());
             if(classInstructors == null || classInstructors.size() == 0) {
@@ -1240,9 +1241,9 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public String countClassFunding(List<ClassFundingViewObject> classFundings, String totalPlanFunding,String totalsetted) {
+    public String countClassFunding(List<ClassFundingViewObject> classFundings, String totalAssignedFunding, String totalsetted) {
         if(classFundings == null || classFundings.size()==0)
-            return "0/" + totalPlanFunding;
+            return "0/" + totalAssignedFunding;
 //        if(classFundings != null && !classFundings.isEmpty()) {
 //            for (ClassFundingViewObject classFunding : classFundings) {
 //                if(classFunding.getApplyFunding() == null)
@@ -1251,7 +1252,7 @@ public class TAConverterimpl implements ITAConverter {
 //                    totalSetted += Long.parseLong(classFunding.getApplyFunding());
 //            }
 //        }
-        return totalsetted + "/" + totalPlanFunding;
+        return totalsetted + "/" + totalAssignedFunding;
     }
 
     @Override

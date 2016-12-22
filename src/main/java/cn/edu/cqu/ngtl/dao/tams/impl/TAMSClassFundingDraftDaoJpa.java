@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassFundingDraftDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInfoDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
@@ -8,11 +9,13 @@ import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFunding;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassFundingDraft;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -46,6 +49,25 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
 
+    @Autowired
+    private IUserInfoService userInfoService;
+
+    @Override
+    public TAMSClassFundingDraft selectOneByClassIdAndSessionId(String classId, String sessionId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("classId", classId),
+                        equal("sessionId", sessionId)
+                )
+        );
+        QueryResults<TAMSClassFundingDraft> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassFundingDraft.class,
+                criteria.build()
+        );
+
+        return (qr.getResults() == null || qr.getResults().size() == 0) ? null : qr.getResults().get(0);
+    }
+
 
     @Override
     public TAMSClassFundingDraft selectOneByClassID(String classId){
@@ -68,6 +90,8 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
 
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
                         equal("sessionId", curSession.getId())
@@ -86,22 +110,32 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
             tamsClassFunding.setApplyFunding(per.getApplyFunding());
             tamsClassFunding.setAssignedFunding(per.getAssignedFunding());
             tamsClassFunding.setBonus(per.getBonus());
-            tamsClassFunding.setClassInformation(
-                    classInfoDao.getOneById(
-                            Integer.parseInt(
-                                    per.getClassId()
-                            )));
+            if(userInfoService.isCollegeStaff(user.getCode()))
+                tamsClassFunding.setClassInformation(
+                        classInfoDao.getOneByIdAndDept(
+                                Integer.parseInt(per.getClassId()), user.getDepartmentId()
+                        )
+                );
+            else
+                tamsClassFunding.setClassInformation(
+                        classInfoDao.getOneById(
+                                Integer.parseInt(
+                                        per.getClassId()
+                                )
+                        )
+                );
+            if(tamsClassFunding.getClassInformation() == null)
+                continue;
             tamsClassFunding.setSession(
-                    sessionDao.getUTSessionById(
-                            tamsClassFunding.getClassInformation().getSessionId()
-                    )
+                    sessionDao.getUTSessionById(tamsClassFunding.getClassInformation().getSessionId())
             );
+
             tamsClassFunding.setClassId(per.getClassId());
             tamsClassFunding.setPhdFunding(per.getPhdFunding());
             tamsClassFunding.setTravelSubsidy(per.getTravelSubsidy());
+
             result.add(tamsClassFunding);
         }
-
 
         return result.size() != 0 ? result : null;
     }

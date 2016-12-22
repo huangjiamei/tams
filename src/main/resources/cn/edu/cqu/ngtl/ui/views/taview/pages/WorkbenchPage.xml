@@ -180,8 +180,7 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript = "">
+                                                                <bean parent="Uif-Disclosure-TableCollectionSection">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject"/>
                                                                     <property name="propertyName" value="workbench"/>
@@ -213,9 +212,10 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:actionLabel="申请交通补贴"
+                                                                                              p:ajaxSubmit="false"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getTransAllowancePage"
-                                                                                              p:additionalCssClasses="bg-success box-btngroup" p:render="@{#line.status!=null}"/>
+                                                                                              p:additionalCssClasses="bg-success box-btngroup" p:render="@{#line.status.equals('1')}"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

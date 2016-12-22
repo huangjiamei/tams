@@ -99,6 +99,7 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String travelTime;
     private String travelNote;
     private String curClassId;
+    private String travelTimeD;
 
 
 
@@ -512,5 +513,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTaCategoryName(String taCategoryName) {
         this.taCategoryName = taCategoryName;
+    }
+
+    public String getTravelTimeD() {
+        return travelTimeD;
+    }
+
+    public void setTravelTimeD(String travelTimeD) {
+        this.travelTimeD = travelTimeD;
     }
 }

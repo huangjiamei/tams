@@ -217,8 +217,8 @@
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-InputField" p:label="交通补贴时间记录"
-                                                          p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12"
-                                                          p:propertyName="travelTime">
+                                                          p:additionalCssClasses="col-xs-12 col-sm-D12 col-md-12 col-lg-12"
+                                                          p:propertyName="travelTimeD">
                                                         <property name="control">
                                                             <bean parent="Uif-TextControl">
                                                                 <property name="datePicker">
@@ -278,7 +278,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="submitTravelRecord" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

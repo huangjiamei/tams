@@ -129,7 +129,7 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageWorkbench" p:title="新建任务">
+                <bean parent="Uif-Page" p:id="pageWorkbench" p:title="工作台">
                     <property name="items">
                         <list>
                             <ref bean="workbenchPage"/>
@@ -137,7 +137,7 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-Page" p:id="pageTransAllowance" p:title="新建任务">
+                <bean parent="Uif-Page" p:id="pageTransAllowance" p:title="申请交通补贴">
                     <property name="items">
                         <list>
                             <ref bean="transAllowancePage"/>

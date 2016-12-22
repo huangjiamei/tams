@@ -90,6 +90,7 @@
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-user" p:actionLabel="助教管理" p:methodToCall="getTaManagementPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaManagementPage')}"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="教师申报助教" p:methodToCall="getRequestTaPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewRequestTaPage')}"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="学生申请助教" p:methodToCall="getApplyTAPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewApplyForTaFormPage')}"/>
+                        <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="申请优秀助教" p:methodToCall="getApplyOutStandingClassPage"/>
                     </list>
                 </property>
             </bean>
@@ -182,6 +183,13 @@
                     <property name="items">
                         <list>
                             <ref bean="ViewTeachingCalendarPage"/>
+                        </list>
+                    </property>
+                </bean>
+                <bean parent="Uif-Page" p:id="pageApplyOutStandingClass" p:title="申请优秀助教">
+                    <property name="items">
+                        <list>
+                            <ref bean="ApplyOutStandingClassPage"/>
                         </list>
                     </property>
                 </bean>

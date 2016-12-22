@@ -29,7 +29,10 @@ public class UTSessionDaoJpa implements UTSessionDao{
     @Override
     public UTSession getUTSessionById(Integer id)
     {
-        return KRADServiceLocator.getDataObjectService().find(UTSession.class, id);
+        if(id == null)
+            return null;
+        else
+            return KRADServiceLocator.getDataObjectService().find(UTSession.class, id);
     }
 
     @Override

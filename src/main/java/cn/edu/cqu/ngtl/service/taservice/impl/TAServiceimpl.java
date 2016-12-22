@@ -491,4 +491,10 @@ public class TAServiceimpl implements ITAService {
 
         return  tamstadao.getTaInfoByConditions(conditions);
     }
+
+    @Override
+    public String getTamsTaIdByStuIdAndClassId(String stuId, String classId){
+        TAMSTa tamsTa = tamstadao.selectByStudentIdAndClassId(stuId, classId);
+        return tamsTa==null?null:tamsTa.getId();
+    }
 }

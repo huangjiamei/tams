@@ -140,8 +140,8 @@
                                                             <list>
                                                                 <bean id="checkedTaAllButton" parent="Uif-PrimaryActionButton"
                                                                       p:actionLabel="全选"
-                                                                      p:onClickScript="deleteCookie();"
-                                                                      p:methodToCall="checkTaListAllButton" p:style="display:none;"/>
+                                                                      p:methodToCall="checkTaListAllButton"
+                                                                      p:style="display:none;"/>
 
                                                                 <bean id="indexTaList" parent="Uif-InputField"
                                                                      p:style="display:none;" p:propertyName="indexTaListPage">
@@ -160,7 +160,7 @@
                                                                 <bean id="searchTaListTable" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-InputField"
+                                                                            <bean id="checkedTaListAllId" parent="Uif-InputField"
                                                                                   p:propertyName="checkedTaListAll" p:onClickScript="checkedAll('checkedTaAllButton');">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
@@ -379,7 +379,7 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="appraiseOutstanding"  p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="appraiseOutstanding" p:successCallback="refreshPage();" p:dialogDismissOption="REQUEST" />
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
             </list>
         </property>

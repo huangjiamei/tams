@@ -20,7 +20,7 @@
         "sInfoFiltered": "",
         "sInfoPostFix": "",
         "sDecimal": "",
-        "sInfoThousands": "",
+        "sThousands": "",
         "sLengthMenu": "每页显示_MENU_",
         "sLoadingRecords": "正在载入...",
         "sProcessing": "正在载入...",
@@ -33,7 +33,7 @@
     jQuery.fn.dataTable.defaults.oLanguage=oLanguage;
     jQuery.extend( jQuery.fn.dataTable.defaults, {
         "bSort": false,
-        "sPaginationType":"full_numbers",
+        "sPaginationType":"full_numbers"
         //"sDom":"&lt;'top't&gt;&lt;'bottom'ilp&gt;" //自定义布局sdom，暂时没有生效
     } );
 })();
@@ -921,7 +921,6 @@ function refreshPage(){
 //checkbox全选
 function checkedAll(id) {
         jQuery("#"+id).click();
-        //jQuery("#"+id).find("td").addClass("selected");
 }
 
 //助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
@@ -1012,3 +1011,14 @@ function addPointer(id){
         jQuery(this).addClass("addPointer");
     });
 }
+
+//checkbox全选后table全部背景添加颜色(暂时未生效)
+// function allTableBgColor(checkId,tableId) {
+//
+//     if(jQuery("#"+checkId).find(":checkbox").attr("checked")){
+//         jQuery("#"+tableId).find("td").addClass("selected");
+//     }else{
+//         jQuery("#"+tableId).find("td").removeClass("selected");
+//     }
+// }
+

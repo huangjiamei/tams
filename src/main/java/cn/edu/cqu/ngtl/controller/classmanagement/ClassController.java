@@ -44,7 +44,7 @@ import java.util.*;
 
 import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
-/**
+/**searchClassByCondition
  * Created by tangjing on 16-10-20.
  * 课程管理相关的view及function
  */
@@ -720,6 +720,12 @@ public class ClassController extends BaseController {
                 )
         );
 
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageClassList");
     }
 
@@ -1194,6 +1200,12 @@ public class ClassController extends BaseController {
                         taService.getConditionTaByNameAndId(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("searchTaApplicantList").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("searchTaApplicantList").setData(map);
 
         return this.getModelAndView(infoForm, "pageTaManagement");
     }

@@ -172,6 +172,7 @@
 																			<bean id="searchUserRoleManagerButton"
 																				  parent="Uif-PrimaryActionButton"
 																				  p:actionLabel="查询"
+																				  p:onClickScript="deleteCookie();"
 																				  p:additionalCssClasses="icon-search hidden-fields search-button"
 																				  p:methodToCall="searchUserByCondition"
 																				  p:refreshId="UserRoleManagerPage"/>

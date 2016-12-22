@@ -115,10 +115,10 @@
                                                         <property name="layoutManager.numberOfColumns" value="2"/>
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-MessageField" p:label="学号"
-                                                                      p:messageText="1"/>
+                                                                <bean parent="Uif-MessageField" p:label="学号（工号）"
+                                                                      p:messageText="@{user.getCode()}"/>
                                                                 <bean parent="Uif-MessageField" p:label="姓名"
-                                                                      p:messageText="牛顿"/>
+                                                                      p:messageText="@{user.getName()}"/>
                                                                 <bean parent="Uif-MessageField" p:label="专业"
                                                                       p:messageText="软件工程"/>
                                                                 <bean parent="Uif-MessageField" p:label="电子邮箱"

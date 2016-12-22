@@ -197,6 +197,7 @@
                                                                                                                 <!--按钮-->
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="查询"
+                                                                                                                      p:onClickScript="deleteCookie();"
                                                                                                                       p:additionalCssClasses="icon-search"
                                                                                                                       p:methodToCall="searchDetailFundingByCondition"/>
                                                                                                             </list>
@@ -685,6 +686,7 @@
                                                                                                                             <!--按钮-->
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="查询"
+                                                                                                                                  p:onClickScript="deleteCookie();"
                                                                                                                                   p:additionalCssClasses="icon-search"
                                                                                                                                   p:methodToCall="searchUTFundingByCondition"
                                                                                                                                   p:style="margin:15px 5px;"
@@ -1026,6 +1028,7 @@
                                                                                                                             <!--按钮-->
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="查询"
+                                                                                                                                  p:onClickScript="deleteCookie();"
                                                                                                                                   p:additionalCssClasses="icon-search"
                                                                                                                                   p:methodToCall="searchCurrDeptFundingByCondition"/>
 
@@ -1196,6 +1199,7 @@
                                                                                                                                         <!--按钮-->
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="查询"
+                                                                                                                                              p:onClickScript="deleteCookie();"
                                                                                                                                               p:additionalCssClasses="icon-search"
                                                                                                                                               p:methodToCall="searchPreDeptFundingByCondition"
                                                                                                                                               p:style="margin:15px 5px;"/>
@@ -1541,6 +1545,7 @@
                                                                                                                 <!--按钮-->
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="查询"
+                                                                                                                      p:onClickScript="deleteCookie();"
                                                                                                                       p:additionalCssClasses="icon-search"
                                                                                                                       p:methodToCall="searchClassFundingByCondition"
                                                                                                                       p:style="margin:15px 5px;"/>
@@ -1941,6 +1946,7 @@
                                                                                                                 <!--按钮-->
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="查询"
+                                                                                                                      p:onClickScript="deleteCookie();"
                                                                                                                       p:additionalCssClasses="icon-search"
                                                                                                                       p:methodToCall="searchTaFundingByCondition"
                                                                                                                       p:style="margin:15px 5px;"/>

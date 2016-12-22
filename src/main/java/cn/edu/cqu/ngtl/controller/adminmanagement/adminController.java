@@ -851,6 +851,13 @@ public class adminController extends BaseController {
                 adminService.getCourseManagerByCondition(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("CourseManagerTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("CourseManagerTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
@@ -1119,6 +1126,13 @@ public class adminController extends BaseController {
                 adminService.getUniFundPreByCondition(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagementSchoolTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagementSchoolTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1152,6 +1166,13 @@ public class adminController extends BaseController {
                         adminService.getDeptFundCurrByCondition(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerDepartmentTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerDepartmentTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1189,6 +1210,13 @@ public class adminController extends BaseController {
                         adminService.getClassFundByCondition(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerCourseTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerCourseTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1241,6 +1269,13 @@ public class adminController extends BaseController {
                         adminService.getTaFundByCondition(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerAssistantTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerAssistantTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1320,6 +1355,13 @@ public class adminController extends BaseController {
                 adminConverter.combineDetailFunding(
                         adminService.getDetailFundByCondition(conditions))
                 );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsDetailsTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsDetailsTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1338,6 +1380,13 @@ public class adminController extends BaseController {
         conditions.put("userCode",infoForm.getUserRoleNumber());
         conditions.put("userAuthId",infoForm.getUserRoleIDNumber());
         infoForm.setURMutInstructors(adminService.getInstructorByconditions(conditions));
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("UserRoleManagerTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("UserRoleManagerTable").setData(map);
+
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
 
@@ -2040,6 +2089,12 @@ public class adminController extends BaseController {
                         adminService.getDepartmentPreFundingByCondition(conditions)
                 )
         );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerDeptTable").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("FundsManagerDeptTable").setData(map);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

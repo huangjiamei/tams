@@ -322,6 +322,7 @@
                                                 <list>
                                                     <bean id="searchTaManager" parent="Uif-PrimaryActionButton"
                                                           p:actionLabel="查询"
+                                                          p:onClickScript="deleteCookie();"
                                                           p:actionImagePlacement="LEFT"
                                                           p:additionalCssClasses="icon-search box-btngroup"
                                                           p:methodToCall="searchTaByCondition"

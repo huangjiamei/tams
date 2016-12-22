@@ -304,6 +304,7 @@
                                                                             <bean id="searchButton"
                                                                                   parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
+                                                                                  p:onClickScript="deleteCookie();"
                                                                                   p:additionalCssClasses="icon-search hidden-fields search-button"
                                                                                   p:methodToCall="searchClassByCondition"
                                                                                   p:refreshId="ClassListPage"/>

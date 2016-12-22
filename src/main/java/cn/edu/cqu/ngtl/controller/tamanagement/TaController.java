@@ -124,6 +124,15 @@ public class TaController extends BaseController {
         conditions.put("taStatus", taInfoForm.getTaStatus());
 
         taInfoForm.setAllTaInfo(taConverter.getTaInfoListByConditions(conditions,uId));
+
+        System.out.println(taConverter.getTaInfoListByConditions(conditions,uId));
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(taInfoForm.getViewPostMetadata().getComponentPostMetadataMap().get("taListTable").getData());
+        map.put("displayStart",0);
+        taInfoForm.getViewPostMetadata().getComponentPostMetadataMap().get("taListTable").setData(map);
+
         return this.getModelAndView(taInfoForm, "pageTaList");
     }
 

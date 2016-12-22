@@ -15,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.List;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 /**
@@ -124,6 +125,25 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
             return true;
         else
             return false;
+    }
+
+    @Override
+    public String getFirstStatusByFunctionId(String functionId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
+                equal("workflowFunctionId", functionId),
+                equal("order",FirstIndex)
+                )
+        );
+
+        QueryResults<TAMSWorkflowStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSWorkflowStatus.class,
+                criteria.build()
+        );
+
+        if(qr.getResults()!=null){
+            return qr.getResults().get(0).getId();
+        }
+        return null;
     }
 
     @Override

@@ -456,7 +456,11 @@
                                                                                                                       p:propertyName="sessionName"/>
                                                                                                                 <bean parent="Uif-InputField" p:propertyName="planFunding"
                                                                                                                       p:readOnly="false" p:label="预算经费"
-                                                                                                                      p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_SCHOOL')"/>
+                                                                                                                      p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_SCHOOL')">
+                                                                                                                    <property name="validCharactersConstraint">
+                                                                                                                        <bean parent="NumericPatternConstraint"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="申报经费"
                                                                                                                       p:propertyName="applyFunding"
@@ -806,7 +810,11 @@
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="planFunding"
                                                                                                                                   p:label="预算经费"
-                                                                                                                                  p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_DEPARTMENT')"/>
+                                                                                                                                  p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_DEPARTMENT')">
+                                                                                                                                <property name="validCharactersConstraint">
+                                                                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
                                                                                                                             <bean parent="Uif-DataField"
                                                                                                                                   p:label="申报经费"
                                                                                                                                   p:propertyName="applyFunding"
@@ -814,7 +822,11 @@
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:label="批准经费"
                                                                                                                                   p:propertyName="actualFunding"
-                                                                                                                                  p:sortAs="numeric" p:additionalCssClasses="searchBoxWidth"/>
+                                                                                                                                  p:sortAs="numeric" p:additionalCssClasses="searchBoxWidth">
+                                                                                                                                <property name="validCharactersConstraint">
+                                                                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                                                                </property>
+                                                                                                                            </bean>
                                                                                                                             <bean parent="Uif-DataField"
                                                                                                                                   p:label="博士经费"
                                                                                                                                   p:propertyName="phdFunding"
@@ -1202,7 +1214,11 @@
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
                                                                                                                       p:propertyName="assignedFunding"
-                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                      p:sortAs="numeric">
+                                                                                                                    <property name="validCharactersConstraint">
+                                                                                                                        <bean parent="NumericPatternConstraint"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="博士津贴"
                                                                                                                       p:propertyName="phdFunding"

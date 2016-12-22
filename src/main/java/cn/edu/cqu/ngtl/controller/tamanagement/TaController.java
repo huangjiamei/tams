@@ -610,10 +610,6 @@ public class TaController extends BaseController {
         taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(
                 taService.getStudentTimetableByUid(uId))
         );
-
-
-
-
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 
@@ -638,9 +634,6 @@ public class TaController extends BaseController {
         taInfoForm.setCurClassId(classId);
         taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
         taInfoForm.setTaUniqueId(tamsTaTravelSubsidies.get(0).getTamsTaId());
-        // TODO: 2016/11/27 (首先判断权限) 老师是不是不可进入此页面？
-
-        // TODO: 2016/11/27 根据user信息，找到相关的交通补贴历史记录，将记录并放置在某个list中，同时修改TransAllowancePage.xml对应位置的objClass和collection
 
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
     }

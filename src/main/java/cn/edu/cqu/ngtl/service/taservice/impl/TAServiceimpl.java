@@ -45,6 +45,9 @@ public class TAServiceimpl implements ITAService {
     private TAMSTaApplicationDao tamsTaApplicationDao;
 
     @Autowired
+    private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
+
+    @Autowired
     private TAMSTaDao taDao;
 
     @Autowired
@@ -280,6 +283,9 @@ public class TAServiceimpl implements ITAService {
             newTa.setMonth10("0");
             newTa.setMonth11("0");
             newTa.setMonth12("0");
+            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
+            String workFlowStatus = tamsWorkflowStatusDao.getFirstStatusByFunctionId(function.getId());
+            newTa.setOutStandingTaWorkflowStatusId(workFlowStatus==null?"":workFlowStatus);
             //newTa.setType("1");
             UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
             if(utStudent != null){
@@ -297,10 +303,9 @@ public class TAServiceimpl implements ITAService {
             //设置未评价
             newTa.setEvaluation("未评价");
             newTa.setStuEva("未评价");
-            TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
-            List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(function.getId());
-            if(allStatus != null && !allStatus.isEmpty())
-                newTa.setOutStandingTaWorkflowStatusId(allStatus.get(0).getOrder().toString());
+//            List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(function.getId());
+//            if(allStatus != null && !allStatus.isEmpty())
+//                newTa.setOutStandingTaWorkflowStatusId(allStatus.get(0).getOrder().toString());
             TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
             newTa.setApplicationNote(readyToRemove.getNote());
             if(taDao.insertByEntity(newTa)) {
@@ -346,6 +351,7 @@ public class TAServiceimpl implements ITAService {
 
     @Override
     public List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId){
+
         return  tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
     }
 

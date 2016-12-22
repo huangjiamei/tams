@@ -28,4 +28,6 @@ public interface TAMSWorkflowStatusDao {
     TAMSWorkflowStatus getOneById(String id);
 
     Integer getMaxOrderByFunctionId(String functionId);
+
+    String getFirstStatusByFunctionId(String functionId);
 }

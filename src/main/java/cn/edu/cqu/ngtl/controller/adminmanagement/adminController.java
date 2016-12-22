@@ -555,7 +555,7 @@ public class adminController extends BaseController {
         if (exist != null) {
             if (exist.getDescription().equals(permissionContent)) {               //名字描述都相同返回错误信息
                 infoForm.setErrMsg("已存在相同权限内容的权限");
-                return this.showDialog("adminErrDialog", true, infoForm);
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
             exist.setDescription(permissionContent);
             new KRIM_PERM_T_DaoJpa().addPermissions(exist);

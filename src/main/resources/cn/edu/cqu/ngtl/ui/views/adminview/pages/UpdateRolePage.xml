@@ -139,7 +139,7 @@
 																<bean parent="Uif-PrimaryActionButton"
 																	  p:actionLabel="保存"
 																	  p:actionImagePlacement="LEFT"
-																	  p:navigateToPageId="saveExmKrimRole"
+																	  p:methodToCall="saveExmKrimRole"
 																	  p:additionalCssClasses="icon-save bg-success box-btngroup">
 																</bean>
 															</list>
@@ -193,7 +193,7 @@
 													<bean parent="Uif-PrimaryActionButton"
 														  p:actionLabel="保存"
 														  p:actionImagePlacement="LEFT"
-														  p:navigateToPageId="saveExmKrimRole"
+														  p:methodToCall="saveExmKrimRole"
 														  p:additionalCssClasses="icon-save bg-success box-btngroup">
 													</bean>
 												</list>

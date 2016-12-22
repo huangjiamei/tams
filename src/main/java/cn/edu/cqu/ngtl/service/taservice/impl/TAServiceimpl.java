@@ -351,8 +351,18 @@ public class TAServiceimpl implements ITAService {
 
     @Override
     public List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId){
-
-        return  tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+        /*
+            复制避免unmodifiableList错误
+         */
+        List<TAMSTaTravelSubsidy>  result =  tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+        List<TAMSTaTravelSubsidy> copy = new ArrayList<>();
+        if(result!=null) {
+            for (TAMSTaTravelSubsidy tamsTaTravelSubsidy : result) {
+                copy.add(tamsTaTravelSubsidy);
+            }
+            return copy;
+        }
+        return null;
     }
 
     @Override
@@ -496,5 +506,10 @@ public class TAServiceimpl implements ITAService {
     public String getTamsTaIdByStuIdAndClassId(String stuId, String classId){
         TAMSTa tamsTa = tamstadao.selectByStudentIdAndClassId(stuId, classId);
         return tamsTa==null?null:tamsTa.getId();
+    }
+
+    @Override
+    public void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+        tamsTaTravelSubsidyDao.deleteOneByEntity(tamsTaTravelSubsidy);
     }
 }

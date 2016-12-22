@@ -13,4 +13,6 @@ public interface TAMSTaTravelSubsidyDao {
     List<TAMSTaTravelSubsidy> getTAMSTaTravelSubsidyByStuIdAndTaId(String taId,String classId);
 
     boolean insertOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+
+    void deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
 }

@@ -649,6 +649,11 @@ public class TaController extends BaseController {
     }
 
 
+    /**
+     * 添加往返记录
+     * @param form
+     * @return
+     */
 
     @RequestMapping(params = "methodToCall=submitTravelRecord")
     public ModelAndView submitTravelRecord(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -665,6 +670,29 @@ public class TaController extends BaseController {
         taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
     }
+
+
+    /**
+     * 删除往返记录
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=deleteTransAllowance")
+    public ModelAndView deleteTransAllowance(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
+        int index = params.getSelectedLineIndex();
+        TAMSTaTravelSubsidy tamsTaTravelSubsidy = taInfoForm.getTravelSubsidies().get(index);
+        taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy);
+        taInfoForm.getTravelSubsidies().remove(index);
+        return this.getModelAndView(taInfoForm, "pageTransAllowance");
+
+    }
+
+
+
+
 
 
     /**

@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
@@ -40,6 +41,11 @@ public class TAMSTaTravelSubsidyDaoJpa implements TAMSTaTravelSubsidyDao {
     public boolean insertOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
 
         return KRADServiceLocator.getDataObjectService().save(tamsTaTravelSubsidy)!=null;
+    }
+
+    @Override
+    public void deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+        KradDataServiceLocator.getDataObjectService().delete(tamsTaTravelSubsidy);
     }
 
 

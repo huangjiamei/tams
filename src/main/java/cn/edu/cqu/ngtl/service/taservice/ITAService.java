@@ -84,4 +84,6 @@ public interface ITAService {
 
     String getTamsTaIdByStuIdAndClassId(String stuId,String classId);
 
+    void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+
 }

@@ -1,6 +1,5 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
-import cn.edu.cqu.ngtl.tools.converter.StringDateConverter;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -26,7 +25,6 @@ public class TAMSTaTravelSubsidy extends DataObjectBase implements Serializable 
 
 
     @Column(name = "TRAVEL_TIME")
-    @Convert(converter = StringDateConverter.class)
     private String travelTime;
 
 

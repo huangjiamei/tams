@@ -481,8 +481,10 @@
                                   p:linkText="时间管理" p:iconClass="icon-time menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTimeSettingsPage')}"/>
                             <bean parent="Uif-Link"
-                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSystemParameterPage&amp;viewId=AdminView"
-                                  p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"/>
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSyncInfoPage&amp;viewId=AdminView"
+                                  p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewSyncInfoPage')}"/>
+
                         </list>
                     </property>
                 </bean>

@@ -1294,13 +1294,13 @@ public class ClassController extends BaseController {
      * @param form
      * @return
      */
-    @RequestMapping(params = "methodToCall=getApplyOutStandingClassPage")
-    public ModelAndView getApplyOutStandingClassPage(@ModelAttribute("KualiForm") UifFormBase form,
+    @RequestMapping(params = "methodToCall=getApplyOutStandingTaPage")
+    public ModelAndView getApplyOutStandingTaPage(@ModelAttribute("KualiForm") UifFormBase form,
                                           HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
+        return this.getModelAndView(infoForm, "pageApplyOutStandingTa");
     }
 
 }

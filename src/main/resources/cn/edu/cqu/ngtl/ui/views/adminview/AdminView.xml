@@ -191,10 +191,10 @@
                     </property>
                 </bean>
 
-                <bean parent="Uif-Page" p:id="pageSystemParameter" p:title="同步信息">
+                <bean parent="Uif-Page" p:id="pageSyncInfo" p:title="同步信息">
                     <property name="items">
                         <list>
-                            <ref bean="SystemParameterPage"/>
+                            <ref bean="SyncInfoPage"/>
                         </list>
                     </property>
                 </bean>

@@ -205,14 +205,14 @@ public class adminController extends BaseController {
     }
 
     /**
-     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getSystemParameterPage&viewId=AdminView
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getSyncInfoPage&viewId=AdminView
      *
      * @param form
      * @return 同步信息页面
      * @throws Exception
      */
-    @RequestMapping(params = "methodToCall=getSystemParameterPage")
-    public ModelAndView getSystemParameterPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    @RequestMapping(params = "methodToCall=getSyncInfoPage")
+    public ModelAndView getSyncInfoPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
         adminInfoForm.setSystemDbName("jwdb");
@@ -221,7 +221,7 @@ public class adminController extends BaseController {
         adminInfoForm.setSystemDbUserName("cetman");
         adminInfoForm.setSystemDbPassword("cet_manager");
 
-        return this.getModelAndView(adminInfoForm, "pageSystemParameter");
+        return this.getModelAndView(adminInfoForm, "pageSyncInfo");
     }
 
     /**
@@ -2227,7 +2227,7 @@ public class adminController extends BaseController {
         } catch (SQLException | ClassNotFoundException e) {
             infoForm.setConnectMessage(e.getMessage());
             e.printStackTrace();
-            return this.getModelAndView(infoForm, "pageSystemParameter");
+            return this.getModelAndView(infoForm, "pageSyncInfo");
         } finally {
             if (con != null)
                 try {
@@ -2235,10 +2235,10 @@ public class adminController extends BaseController {
                 } catch (SQLException e) {
                     infoForm.setConnectMessage(e.getMessage());
                     e.printStackTrace();
-                    return this.getModelAndView(form, "pageSystemParameter");
+                    return this.getModelAndView(form, "pageSyncInfo");
                 }
         }
-        return this.getModelAndView(infoForm, "pageSystemParameter");
+        return this.getModelAndView(infoForm, "pageSyncInfo");
     }
 
     @RequestMapping(params = {"methodToCall=selectCurSession"})

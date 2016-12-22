@@ -33,7 +33,7 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <!--学生应聘助教-->
-    <bean id="ApplyOutStandingClassPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
+    <bean id="ApplyOutStandingTaPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
           p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>

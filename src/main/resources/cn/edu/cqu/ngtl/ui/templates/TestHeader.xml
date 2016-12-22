@@ -156,7 +156,8 @@
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
-                <bean parent="Uif-VerticalBoxSection" >
+                <bean parent="Uif-VerticalBoxSection" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isSysAdmin(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isAcademicAffairsStaff(user.getCode())}">
                     <property name="items">
                         <list>
                             <bean parent="Uif-MessageField"
@@ -181,7 +182,9 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogConfirmButton" p:actionLabel="确认"
-                      p:methodToCall="selectCurSession"  p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="selectCurSession"  p:dialogDismissOption="REQUEST"
+                      p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isSysAdmin(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isAcademicAffairsStaff(user.getCode())}"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
 
             </list>

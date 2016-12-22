@@ -589,8 +589,7 @@
                                                                                                                       p:label="批次"
                                                                                                                       p:propertyName="sessionName"/>
                                                                                                                 <bean parent="Uif-InputField" p:propertyName="planFunding"
-                                                                                                                      p:readOnly="false" p:label="预算经费"
-                                                                                                                      p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_SCHOOL')">
+                                                                                                                      p:readOnly="false" p:label="预算经费">
                                                                                                                     <property name="validCharactersConstraint">
                                                                                                                         <bean parent="NumericPatternConstraint"/>
                                                                                                                     </property>
@@ -1077,8 +1076,7 @@
                                                                                                                                   p:propertyName="department"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="planFunding"
-                                                                                                                                  p:label="预算经费"
-                                                                                                                                  p:onChangeScript="inputFieldOnChange(this,'tabFlagTransfer_control','TAB_FLAG_DEPARTMENT')">
+                                                                                                                                  p:label="预算经费">
                                                                                                                                 <property name="validCharactersConstraint">
                                                                                                                                     <bean parent="NumericPatternConstraint"/>
                                                                                                                                 </property>

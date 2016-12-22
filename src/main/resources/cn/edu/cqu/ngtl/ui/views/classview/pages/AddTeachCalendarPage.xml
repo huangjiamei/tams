@@ -273,7 +273,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="创建并继续"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="copyxxx"
+                                                                                  p:methodToCall="submitThenContinue"
                                                                                   p:additionalCssClasses="icon-arrow-right bg-teal box-btngroup"/>
                                                                         </list>
                                                                     </property>

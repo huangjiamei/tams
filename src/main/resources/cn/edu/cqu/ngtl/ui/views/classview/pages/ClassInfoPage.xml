@@ -138,9 +138,9 @@
                                                                             <!--<bean parent="Uif-MessageField"-->
                                                                                   <!--p:label="选课人数" p:messageText="400"/>-->
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="拟配备的助教数" p:messageText="1"/>
+                                                                                  p:label="拟配备的助教数" p:messageText="@{detailInfoViewObject.taNumber==null?'':detailInfoViewObject.taNumber}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="助教预计工时" p:messageText="40"/>
+                                                                                  p:label="助教预计工时" p:messageText="@{detailInfoViewObject.workHour==null?'':detailInfoViewObject.workHour}"/>
                                                                             <!--<bean parent="Uif-MessageField"-->
                                                                                   <!--p:label="成绩评定方式" p:messageText="??"/>-->
                                                                             <!--<bean parent="Uif-MessageField"-->

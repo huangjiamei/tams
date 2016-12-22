@@ -301,21 +301,23 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public ClassDetailInfoViewObject classInfoToViewObject(UTClass clazz) {
         ClassDetailInfoViewObject classDetailInfoViewObject = new ClassDetailInfoViewObject();
-        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(clazz.getId());
+        TAMSClassTaApplication tamsClassTaApplication = iClassInfoService.getClassApplicationByClassId(clazz.getId());
         if(tamsClassTaApplication!=null){
             classDetailInfoViewObject.setTaNumber(tamsClassTaApplication.getTaNumber().toString());
+            classDetailInfoViewObject.setWorkHour(tamsClassTaApplication.getWorkHour());
         }
         User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
-        List<TAMSTeachCalendar> tamsTeachCalendars = iClassInfoService.getAllTaTeachCalendarFilterByUidAndClassId(user.getCode(),clazz.getId());
-        if(tamsTeachCalendars!=null){
-            Integer workHour = 0;
-            for(TAMSTeachCalendar tamsTeachCalendar : tamsTeachCalendars){
-                workHour+=Integer.valueOf(tamsTeachCalendar.getElapsedTime());
-            }
-            classDetailInfoViewObject.setWorkHour(workHour.toString());
-        }else{
-            classDetailInfoViewObject.setWorkHour("待定");
-        }
+
+//        List<TAMSTeachCalendar> tamsTeachCalendars = iClassInfoService.getAllTaTeachCalendarFilterByUidAndClassId(user.getCode(),clazz.getId());
+//        if(tamsTeachCalendars!=null){
+//            Integer workHour = 0;
+//            for(TAMSTeachCalendar tamsTeachCalendar : tamsTeachCalendars){
+//                workHour+=Integer.valueOf(tamsTeachCalendar.getElapsedTime());
+//            }
+//            classDetailInfoViewObject.setWorkHour(workHour.toString());
+//        }else{
+//            classDetailInfoViewObject.setWorkHour("待定");
+//        }
 
         UTCourse course = new UTCourse();
 

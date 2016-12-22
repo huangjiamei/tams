@@ -508,4 +508,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
         }
     }
+
+    @Override
+    public TAMSClassTaApplication getClassApplicationByClassId(String classId){
+        return classTaApplicationDao.selectByClassId(classId);
+    }
 }

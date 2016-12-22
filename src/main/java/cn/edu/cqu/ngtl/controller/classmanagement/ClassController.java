@@ -21,6 +21,7 @@ import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import com.itextpdf.text.DocumentException;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -430,7 +431,9 @@ public class ClassController extends BaseController {
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-
+        infoForm.setTeachCalendar(new TAMSTeachCalendar());
+        infoForm.setAddTeachCTime(null);
+        infoForm.setFileList(new ArrayList<FileViewObject>());
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
     }
 
@@ -460,12 +463,12 @@ public class ClassController extends BaseController {
 
             String classId = infoForm.getCurrClassId();
             String uId = getUserSession().getPrincipalId();
-            infoForm.setAllActivities(
+           /* infoForm.setAllActivities(
                     taConverter.activitiesToViewObject(
                             classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
                                     uId, classId)
                     )
-            );
+            );*/
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
         catch (IndexOutOfBoundsException e) {
@@ -613,6 +616,90 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
 
+
+
+
+
+    @RequestMapping(params = "methodToCall=submitThenContinue")
+    public ModelAndView submitThenContinue(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        UserSession session = getUserSession();
+        String uId = session.getPrincipalId();
+
+        String classId = infoForm.getCurrClassId();
+        if(infoForm.getAddTeachCTime()==null){
+            infoForm.setErrMsg("请申请人填写时间范围！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        String arr[] = infoForm.getAddTeachCTime().split("~");
+
+        TAMSTeachCalendar added = infoForm.getTeachCalendar();
+        /*
+            控制判断 start
+         */
+        if(added.getElapsedTime()==null){
+            infoForm.setErrMsg("请申请人填写总耗时！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(added.getTheme()==null){
+            infoForm.setErrMsg("请申请人填写教学主题！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(added.getDescription()==null){
+            infoForm.setErrMsg("请申请人填写教学描述！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(added.getTaTask()==null){
+            infoForm.setErrMsg("请申请人填写助教任务！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
+        try {
+            added.setStartTime(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    arr[0]
+                            )
+                    )
+            );
+            added.setEndTime(
+                    outputFormat.format(
+                            inputFormat.parse(
+                                    arr[1]
+                            )
+                    )
+            );
+        } catch (Exception e) {
+            //do nothing
+        }
+        if(infoForm.getFileList() != null && infoForm.getFileList().size() != 0)
+            added.setHasAttachment(true);
+
+        //添加日历信息到数据库
+        added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
+        if(added == null){
+            infoForm.setErrMsg("你不是该门课的主管教师，无法添加");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if (added.getId() != null) { //添加数据库成功
+            //添加附件
+            if(added.isHasAttachment()) {
+                new TamsFileControllerServiceImpl().saveCalendarAttachments(uId, classId, added.getId(), infoForm.getFileList());
+            }
+
+            return this.getAddTeachCalendarPage(infoForm,request);
+        }
+        return this.getAddTeachCalendarPage(infoForm,request);
+    }
+
     /**
      * 删除教学日历
      */
@@ -686,7 +773,6 @@ public class ClassController extends BaseController {
                                            HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-
         return this.getModelAndView(infoForm, "pageAddActivity");
     }
 

@@ -100,6 +100,7 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return tas.isEmpty()?null:tas;
     }
 
+    //查询学生申请某门class的助教的数量
     @Override
     public TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId) {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(

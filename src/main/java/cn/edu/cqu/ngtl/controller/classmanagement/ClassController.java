@@ -1252,12 +1252,20 @@ public class ClassController extends BaseController {
                 infoForm.setErrMsg("非助教申请时间！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             } else if (code == 2) {
-                infoForm.setErrMsg("您的提交已申请，请勿重复提交");
+                infoForm.setErrMsg("您的申请已提交，请勿重复提交");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             } else if (code == 3) {
                 infoForm.setErrMsg("已经被此课程聘用！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
-            } else if (code == 4) {
+            } else if (code == 7) {
+                infoForm.setErrMsg("该学生最多可申请两门课程的助教！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else if (code == 8) {
+                infoForm.setErrMsg("该学生最多可担任两门课程的助教！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else if (code == 4) {
                 //避免延迟刷新
                 //if (infoForm.getAllApplication() == null)
                 //    infoForm.setAllApplication(needToBeAddToApplication);

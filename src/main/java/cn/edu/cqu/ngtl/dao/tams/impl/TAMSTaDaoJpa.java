@@ -64,8 +64,12 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     //根据助教id查询
     @Override
     public List<TAMSTa> selectByTaId(String taId) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
-                equal("taId", taId)
+                and(
+                        equal("taId", taId),
+                        equal("sessionId", curSession.getId())
+                )
         );
         QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                 TAMSTa.class,

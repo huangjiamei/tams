@@ -146,13 +146,27 @@ public class TAServiceimpl implements ITAService {
         if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
             return 1;
         }
+        //判断学生申请同一个class的助教的数量
+        //若已经申请过该课程，则不能再申请
         if(tamsTaApplicationDao.selectByStuIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null){
             return 2;
         }
+        //若已被该课程聘用，则不能再聘请
         if(taDao.selectByStudentIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null) {
             return 3;
         }
-
+        //判断学生申请助教的数量
+        //若已经申请过两门课程的助教，则不能再申请
+        if(tamsTaApplicationDao.selectByStuId(application.getApplicationId()) != null ) {
+            int countTaApplication = tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
+            if (countTaApplication == 2)
+                return 7;
+        }
+        //若该学生已经是两门课程的助教，也不能申请
+        if(taDao.selectByTaId(application.getApplicationId() )!= null ) {
+            if (taDao.selectByTaId(application.getApplicationId()).size() == 2)
+                return 8;
+        }
         Integer stuApplications = tamsTaApplicationDao.selectByStuId(application.getApplicationId())==null?0:tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
         Integer stuTaNumber = taDao.selectByTaId(application.getApplicationId())==null?0:taDao.selectByTaId(application.getApplicationId()).size();
         if(stuApplications+stuTaNumber>MAX_APPLY_COURSE_NUMBER){

@@ -825,10 +825,18 @@ public class adminController extends BaseController {
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
-        infoForm.getInstructorList().get(index);
-        int oldIndex = infoForm.getCourseManagerIndex();
+        UTInstructor selectedInstructor = infoForm.getInstructorList().get(index);
+        int outsideIndex = infoForm.getCourseManagerIndex();
+        boolean result = adminService.addCourseManagerByInsIdAndCourseId(selectedInstructor.getId(),infoForm.getCourseManagerViewObjects().get(outsideIndex).getCourseId());
+        infoForm.getCourseManagerViewObjects().get(outsideIndex).setCourseManager(selectedInstructor.getName());
+        infoForm.getCourseManagerViewObjects().get(outsideIndex).setInstructorCode(selectedInstructor.getCode());
+        if(result)
+            return this.getModelAndView(infoForm, "pageCourseManager");
+        else{
+            infoForm.setErrMsg("添加失败！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
 
-        return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
 

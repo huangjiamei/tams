@@ -47,7 +47,7 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
 
     @Override
     public TAMSCourseManager getCourseManagerByInstructorId(String instructorId){
-        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("utInstructor.id" , instructorId));
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("courseManagerId" , instructorId));
         QueryResults<TAMSCourseManager> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                 TAMSCourseManager.class,
                 criteria.build()
@@ -55,9 +55,22 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
         return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
     }
 
+
     @Override
-    public void saveCourseManager(TAMSCourseManager tamsCourseManager){
-        KRADServiceLocator.getDataObjectService().save(tamsCourseManager);
+    public TAMSCourseManager getCourseManagerByCourseId(String courseId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("courseId" , courseId));
+        QueryResults<TAMSCourseManager> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSCourseManager.class,
+                criteria.build()
+        );
+        return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
+    }
+
+
+
+    @Override
+    public boolean saveCourseManager(TAMSCourseManager tamsCourseManager){
+        return KRADServiceLocator.getDataObjectService().save(tamsCourseManager)!=null;
     }
 
     @Override

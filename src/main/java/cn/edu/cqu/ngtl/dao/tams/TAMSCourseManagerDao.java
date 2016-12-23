@@ -14,10 +14,12 @@ public interface TAMSCourseManagerDao {
 
      TAMSCourseManager getCourseManagerByInstructorId(String instructorId);
 
-     void saveCourseManager(TAMSCourseManager tamsCourseManager);
+     boolean saveCourseManager(TAMSCourseManager tamsCourseManager);
 
      void deleteCourseManager(TAMSCourseManager tamsCourseManager);
 
      List<TAMSCourseManager> selectCourseManagerByCondition(Map<String, String> conditions);
+
+     TAMSCourseManager getCourseManagerByCourseId(String courseId);
 
 }

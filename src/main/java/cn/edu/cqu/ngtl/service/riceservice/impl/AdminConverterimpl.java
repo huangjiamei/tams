@@ -75,13 +75,14 @@ public class AdminConverterimpl implements IAdminConverter {
 //            UTCourse utCourse = new UTCourseDaoJpa().selectOneById(tamsCourseManager.getCourseId());
 //            if(utCourse!=null) {
                 CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
+                courseManagerViewObject.setCourseId(tamsCourseManager.getCourseId().toString());
                 courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
                 courseManagerViewObject.setCourseNm(courseNameIdMap.get(tamsCourseManager.getCourseId().toString())==null?"":(String)courseNameIdMap.get(tamsCourseManager.getCourseId().toString()));
                 courseManagerViewObject.setCourseNmb(courseNbrIdMap.get(tamsCourseManager.getCourseId().toString())==null?"":(String)courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()));
 
                 if(tamsCourseManager.getCourseManagerId()!=null) {
                     courseManagerViewObject.setCourseManager(insNameMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
-                    courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
+                    courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()));
                 }else{
                     courseManagerViewObject.setCourseManager(null);
                     courseManagerViewObject.setInstructorCode(null);

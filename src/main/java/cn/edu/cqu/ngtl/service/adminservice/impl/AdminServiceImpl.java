@@ -874,7 +874,16 @@ public class AdminServiceImpl implements IAdminService{
         if(result==null)
             result.add(new UTInstructor());  //填一个空对象
         return result;
+    }
 
+    @Override
+    public boolean addCourseManagerByInsIdAndCourseId(String instructorId,String courseId){
+        TAMSCourseManager tamsCourseManagerExit = tamsCourseManagerDao.getCourseManagerByCourseId(courseId);
+        if(tamsCourseManagerExit!=null){
+            tamsCourseManagerExit.setCourseManagerId(instructorId);
+            return tamsCourseManagerDao.saveCourseManager(tamsCourseManagerExit);
+        }
+        return false;
     }
 
 }

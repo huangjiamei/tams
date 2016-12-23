@@ -175,7 +175,7 @@ public class ClassController extends BaseController {
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
-            if(newStatusOrder==maxOrder){
+            if(newStatusOrder==maxOrder){ //如果是该条工作流的最后一个状态，那么初始化课程经费
                 classInfoService.validClassFunds(classTeacherViewObject.getId());
             }
             result = classInfoService.classStatusToCertainStatus(

@@ -23,7 +23,7 @@ public class TAMSCourseManager extends DataObjectBase implements Serializable {
     private String id;
 
     @Column(name = "COURSE_ID")
-    private Integer courseId;
+    private String courseId;
 
 
     @Column(name = "COURSE_MANAGER_ID")
@@ -42,11 +42,11 @@ public class TAMSCourseManager extends DataObjectBase implements Serializable {
         this.id = id;
     }
 
-    public Integer getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(Integer courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 

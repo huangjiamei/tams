@@ -869,7 +869,7 @@ public class AdminServiceImpl implements IAdminService{
         if(needManagerCourse!=null){
             for(UTCourse utCourse:needManagerCourse){
                 TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
-                tamsCourseManager.setCourseId(utCourse.getId());
+                tamsCourseManager.setCourseId(utCourse.getId().toString());
                 tamsCourseManager.setCourseManagerId(null);
                 tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
                 System.out.println(i++);

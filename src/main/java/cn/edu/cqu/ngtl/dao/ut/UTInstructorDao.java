@@ -23,6 +23,10 @@ public interface UTInstructorDao {
 
 	Map getAllInstructorNameIdMap();
 
+	Map getAllInstructorCodeIdMap();
+
 	List<UTInstructor> getInstructorByConditions(Map<String,String> conditions);
+
+	List<UTInstructor> getInstructorByCode( String name ,String code);
 
 }

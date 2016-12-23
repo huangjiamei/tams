@@ -100,15 +100,17 @@
                                                                 <property name="items">
                                                                     <list>
                                                                         <!--右上角btnlist-->
-
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="EXCEL"
                                                                               p:methodToCall=""
                                                                               p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                              p:actionLabel="初始化课程负责人"
+                                                                              p:methodToCall="initCourseManager"
+                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
                                                                     </list>
                                                                 </property>
                                                             </bean>
-
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -174,7 +176,7 @@
                                                                         <bean parent="Uif-DataField" p:label="课程负责人"
                                                                               p:propertyName="courseManager"/>
                                                                         <bean parent="Uif-DataField" p:label="职工号"
-                                                                              p:propertyName="InstructorCode"/>
+                                                                              p:propertyName="instructorCode"/>
                                                                     </list>
                                                                 </property>
                                                                 <property name="lineActions">
@@ -217,8 +219,7 @@
 </bean>
 
 <bean id="confirmEditManagerDialog" parent="Uif-DialogGroup"
-      p:headerText="编辑课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
-      p:onDocumentReadyScript="jQuery('#confirmEditManagerDialog').modal({backdrop: 'static', keyboard: false});">
+      p:headerText="编辑课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
     <property name="items">
         <list>
             <bean parent="Uif-HorizontalBoxSection"
@@ -237,7 +238,7 @@
                               p:propertyName="courseManager"
                               p:onDocumentReadyScript="clickButton('courseManagerId','')"/>
                         <bean id="instructorCodeId" parent="Uif-InputField" p:label="职工号"
-                              p:propertyName="InstructorCode"
+                              p:propertyName="instructorCode"
                               p:onDocumentReadyScript="clickButton('instructorCodeId','')"/>
 
                         <bean id="searchCourseManagerButton" parent="Uif-PrimaryActionButton"
@@ -245,8 +246,8 @@
                               p:onClickScript="deleteCookie();"
                               p:actionImagePlacement="LEFT"
                               p:additionalCssClasses="icon-search box-btngroup"
-                              p:methodToCall="xxxx"
-                              p:refreshId="searchTaApplicantList"/>
+                              p:methodToCall="searchInstructorForCourseManager"
+                              p:refreshId="searchCourseManagerList"/>
 
                     </list>
                 </property>
@@ -259,8 +260,8 @@
                         <bean id="searchCourseManagerList"
                               parent="Uif-Disclosure-TableCollectionSection">
                             <property name="collectionObjectClass"
-                                      value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
-                            <property name="propertyName" value="conditionTAList"/>
+                                      value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor"/>
+                            <property name="propertyName" value="instructorList"/>
                             <property name="layoutManager.renderSequenceField"
                                       value="false"/>
                             <property name="layoutManager.richTable.render"
@@ -272,20 +273,20 @@
                             <property name="renderLineActions" value="true"/>
                             <property name="items">
                                 <list>
-                                    <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
+                                    <bean parent="Uif-DataField" p:label="姓名" p:propertyName="name"/>
                                     <bean parent="Uif-DataField" p:label="工号"
-                                          p:propertyName="taIdNumber"/>
+                                          p:propertyName="code"/>
                                     <bean parent="Uif-DataField" p:label="性别"
-                                          p:propertyName="taGender"/>
+                                          p:propertyName="gender"/>
                                     <bean parent="Uif-DataField" p:label="学院"
-                                          p:propertyName="contactPhone"/>
+                                          p:propertyName="department.name"/>
                                 </list>
                             </property>
                             <property name="lineActions">
                                 <list>
                                     <bean parent="Uif-PrimaryActionButton"
                                           p:actionImagePlacement="LEFT"
-                                          p:methodToCall="xxxx"
+                                          p:methodToCall="selectCourseManagerForCourse"
                                           p:refreshId="CourseManagerTable"
                                           p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
                                 </list>
@@ -301,7 +302,7 @@
         <list>
             <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
             <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                  p:ajaxSubmit="true" p:methodToCall="saveUpdateCourseManager" p:successCallback="dismissDialog('confirmEditManagerDialog');" />
+                  p:ajaxSubmit="true" p:methodToCall="saveUpdateCourseManager" p:dialogDismissOption="REQUEST" />
         </list>
     </property>
 </bean>

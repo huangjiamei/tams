@@ -649,7 +649,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String courseNm;
     private String courseNmb;
     private String courseManager;
-    private String InstructorCode;
+    private String instructorCode;
     private List<CourseManagerViewObject> courseManagerViewObjects;
     private String searchCourseNm;
     private String searchCourseNmb;
@@ -657,6 +657,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String searchCourseInsCode;
     private CourseManagerViewObject selectedCourseManagerObject;
     private Integer courseManagerIndex;
+    private List<UTInstructor> instructorList;
 
 
     /**
@@ -1030,11 +1031,11 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     }
 
     public String getInstructorCode() {
-        return InstructorCode;
+        return instructorCode;
     }
 
     public void setInstructorCode(String instructorCode) {
-        InstructorCode = instructorCode;
+        instructorCode = instructorCode;
     }
 
     public List<CourseManagerViewObject> getCourseManagerViewObjects() {
@@ -1595,5 +1596,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setDeptManager(boolean deptManager) {
         this.deptManager = deptManager;
+    }
+
+    public List<UTInstructor> getInstructorList() {
+        return instructorList;
+    }
+
+    public void setInstructorList(List<UTInstructor> instructorList) {
+        this.instructorList = instructorList;
     }
 }

@@ -38,7 +38,10 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
     @Override
     public List<TAMSCourseManager> getAllCourseManager(){
 
-        return KRADServiceLocator.getDataObjectService().findAll(TAMSCourseManager.class).getResults();
+        EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        Query query = em.createNativeQuery("SELECT * FROM TAMS_COURSE_MANAGER",TAMSCourseManager.class);
+//        return KRADServiceLocator.getDataObjectService().findAll(TAMSCourseManager.class).getResults();
+        return query.getResultList();
 
     }
 
@@ -95,8 +98,8 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
                 utInstructor.setName(managers[4].toString());
                 utInstructor.setCode(managers[5].toString());*/
 
-                tamsCourseManager.setCourse(utCourse);
-                tamsCourseManager.setUtInstructor(utInstructor);
+//                tamsCourseManager.setCourse(utCourse);
+//                tamsCourseManager.setUtInstructor(utInstructor);
                 tamsCourseManager.setCourseId(utCourse.getId());
 
                 list.add(tamsCourseManager);

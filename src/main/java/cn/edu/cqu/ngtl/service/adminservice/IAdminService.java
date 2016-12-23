@@ -145,4 +145,8 @@ public interface IAdminService {
     String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
     boolean releaseClassFunding(List<ClassFundingViewObject> classFundingViewObjects);
+
+    boolean initCourseManagerData();
+
+    List<UTInstructor> getInstructorByNameAndCode(String Name,String code);
 }

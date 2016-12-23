@@ -678,17 +678,17 @@ public class adminController extends BaseController {
         KRIM_ROLE_T krimRoleT = infoForm.getRMPkrimRoleT();
         if (krimRoleT == null) {
             infoForm.setErrMsg("角色为空");
-            return this.showDialog("adminErrDialog", true, infoForm);
+             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         if (krimRoleT.getName() == null) {
             infoForm.setErrMsg("角色名称不能为空");
-            return this.showDialog("adminErrDialog", true, infoForm);
+             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         KRIM_ROLE_T checkKrimRoleT = krimRoleTDao.getKrimRoleTByName(krimRoleT.getName());
         if (checkKrimRoleT != null) {
             if (krimRoleT.getId() == null || !krimRoleT.getId().equals(checkKrimRoleT.getId())) {
                 infoForm.setErrMsg("角色名称已存在");
-                return this.showDialog("adminErrDialog", true, infoForm);
+                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
         krimRoleT = krimRoleTDao.saveKrimRoleT(krimRoleT);
@@ -723,7 +723,7 @@ public class adminController extends BaseController {
 
         if (utInstructor.getIdNumber() == null) {
             infoForm.setErrMsg("该同志没有同一认证号呀");
-            return this.showDialog("adminErrDialog", true, infoForm);
+             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
         List<KRIM_ROLE_MBR_T> krimRoleMbrTs = new ArrayList<>(
@@ -776,8 +776,58 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
-                new TAMSCourseManagerDaoJpa().getAllCourseManager()
+                tamsCourseManagerDaoJpa.getAllCourseManager()
         ));
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+
+    /**
+     * 初始化课程负责人数据
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=initCourseManager")
+    public ModelAndView initCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        if(adminService.initCourseManagerData())
+            return this.getCourseManagerPage(infoForm);
+        else {
+            infoForm.setErrMsg("初始化失败，请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
+    /**
+     * 搜索职员表
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=searchInstructorForCourseManager")
+    public ModelAndView searchInstructorForCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        String courseManager = infoForm.getCourseManager();
+        String instructorCode = infoForm.getInstructorCode();
+        infoForm.setInstructorList(adminService.getInstructorByNameAndCode(courseManager,instructorCode));
+
+        return this.getModelAndView(infoForm, "pageCourseManager");
+    }
+
+
+
+    @RequestMapping(params = "methodToCall=selectCourseManagerForCourse")
+    public ModelAndView selectCourseManagerForCourse(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+        infoForm.getInstructorList().get(index);
+        int oldIndex = infoForm.getCourseManagerIndex();
+
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
 

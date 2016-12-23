@@ -1,7 +1,5 @@
 package cn.edu.cqu.ngtl.dataobject.tams;
 
-import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
-import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import org.kuali.rice.krad.bo.DataObjectBase;
 
 import javax.persistence.*;
@@ -20,21 +18,20 @@ public class TAMSCourseManager extends DataObjectBase implements Serializable {
 
     @Id
     @Column(name = "UNIQUEID")
+    @GeneratedValue(generator="tamsCourseManager")
+    @SequenceGenerator(name="tamsCourseManager",sequenceName="TAMS_COURSE_MANAGER_S",allocationSize=1)
     private String id;
 
     @Column(name = "COURSE_ID")
     private Integer courseId;
 
-    @ManyToOne
-    @JoinColumn(name = "COURSE_ID",insertable = false, updatable = false)
-    private UTCourse course;
 
     @Column(name = "COURSE_MANAGER_ID")
     private String courseManagerId;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "COURSE_MANAGER_ID",insertable = false, updatable = false)
-    private UTInstructor utInstructor;
+    private UTInstructor utInstructor;*/
 
 
     public String getId() {
@@ -61,15 +58,12 @@ public class TAMSCourseManager extends DataObjectBase implements Serializable {
         this.courseManagerId = courseManagerId;
     }
 
-    public UTInstructor getUtInstructor() {
-        return utInstructor;
-    }
+//    public UTInstructor getUtInstructor() {
+//        return utInstructor;
+//    }
+//
+//    public void setUtInstructor(UTInstructor utInstructor) {
+//        this.utInstructor = utInstructor;
+//    }
 
-    public void setUtInstructor(UTInstructor utInstructor) {
-        this.utInstructor = utInstructor;
-    }
-
-    public UTCourse getCourse() { return course; }
-
-    public void setCourse(UTCourse course) { this.course = course; }
 }

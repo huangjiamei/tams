@@ -1,8 +1,9 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
+import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
+import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
-import cn.edu.cqu.ngtl.dao.ut.impl.UTCourseDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -34,23 +36,58 @@ public class AdminConverterimpl implements IAdminConverter {
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
 
+    @Autowired
+    private UTInstructorDao utInstructorDao;
+
+    @Autowired
+    private UTCourseDao utCourseDao;
+
 
     private static final Logger logger = Logger.getRootLogger();
 
+    private static Map insNameMap;
+
+    private static Map insCodeMap;
+
+    private static Map courseNameIdMap;
+
+    private static Map courseNbrIdMap;
+
     @Override
     public List<CourseManagerViewObject> getCourseManagerToTableViewObject(List<TAMSCourseManager> tamsCourseManagerList) {
+        if(insNameMap==null) {
+            insNameMap = utInstructorDao.getAllInstructorNameIdMap();
+            System.out.println(System.currentTimeMillis());
+        }
+        if(insCodeMap==null){
+            insCodeMap = utInstructorDao.getAllInstructorCodeIdMap();
+            System.out.println(System.currentTimeMillis());
+        }
+        if(courseNameIdMap==null){
+            List<Map> result= utCourseDao.getCourseNameIdMap();
+            courseNameIdMap = result.get(0);
+            courseNbrIdMap = result.get(1);
+            System.out.println(System.currentTimeMillis());
+        }
+
         List<CourseManagerViewObject> courseManagerViewObjectList = new ArrayList(tamsCourseManagerList.size());
         for (TAMSCourseManager tamsCourseManager : tamsCourseManagerList) {
-            UTCourse utCourse = new UTCourseDaoJpa().selectOneById(tamsCourseManager.getCourseId());
-            if(utCourse!=null) {
+//            UTCourse utCourse = new UTCourseDaoJpa().selectOneById(tamsCourseManager.getCourseId());
+//            if(utCourse!=null) {
                 CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
                 courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
-                courseManagerViewObject.setCourseNm(utCourse.getName());
-                courseManagerViewObject.setCourseNmb(utCourse.getCodeR());
-                courseManagerViewObject.setCourseManager(tamsCourseManager.getUtInstructor().getName());
-                courseManagerViewObject.setInstructorCode(tamsCourseManager.getUtInstructor().getCode());
+                courseManagerViewObject.setCourseNm(courseNameIdMap.get(tamsCourseManager.getCourseId().toString())==null?"":(String)courseNameIdMap.get(tamsCourseManager.getCourseId().toString()));
+                courseManagerViewObject.setCourseNmb(courseNbrIdMap.get(tamsCourseManager.getCourseId().toString())==null?"":(String)courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()));
+
+                if(tamsCourseManager.getCourseManagerId()!=null) {
+                    courseManagerViewObject.setCourseManager(insNameMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
+                    courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
+                }else{
+                    courseManagerViewObject.setCourseManager(null);
+                    courseManagerViewObject.setInstructorCode(null);
+                }
                 courseManagerViewObjectList.add(courseManagerViewObject);
-            }
+//            }
         }
 
         return  courseManagerViewObjectList;

@@ -3,12 +3,14 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.*;
+import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
@@ -23,10 +25,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-25.
@@ -97,6 +96,10 @@ public class AdminServiceImpl implements IAdminService{
 
     @Autowired
     private TAMSUniversityFundingDao tamsUniversityFundingDao;
+
+    @Autowired
+    private UTCourseDao utCourseDao;
+
 
 
     @Override
@@ -839,4 +842,39 @@ public class AdminServiceImpl implements IAdminService{
         else
             return deptFunding.getActualFunding();
     }
+
+
+    @Override
+    public boolean initCourseManagerData(){
+        boolean result = false;
+        int i = 0;
+        List<UTCourse> needManagerCourse = utCourseDao.getAllNeedManagerCourse();
+        if(needManagerCourse!=null){
+            for(UTCourse utCourse:needManagerCourse){
+                TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                tamsCourseManager.setCourseId(utCourse.getId());
+                tamsCourseManager.setCourseManagerId(null);
+                tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                System.out.println(i++);
+            }
+            return true;
+        }
+        return result;
+
+    }
+
+    @Override
+    public List<UTInstructor> getInstructorByNameAndCode(String name, String code){
+        if(name ==null)
+            name = "";
+        if(code ==null)
+            code = "";
+
+        List<UTInstructor> result = utInstructorDao.getInstructorByCode(name, code);
+        if(result==null)
+            result.add(new UTInstructor());  //填一个空对象
+        return result;
+
+    }
+
 }

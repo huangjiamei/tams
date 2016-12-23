@@ -500,7 +500,7 @@ public class TAConverterimpl implements ITAConverter {
     public List<TaInfoViewObject> taCombineDetailInfo(List<TAMSTa> allTa) {
         List<TaInfoViewObject> viewObjects = new ArrayList<>();
         if(allTa == null || allTa.size() == 0) {
-            logger.error("数据为空！");
+            //logger.error("数据为空！");
             viewObjects.add(new TaInfoViewObject());
             return viewObjects;
         }
@@ -561,6 +561,10 @@ public class TAConverterimpl implements ITAConverter {
 
         List<MyTaViewObject> viewObjects = new ArrayList<>(allTaFilteredByUid.size());
 
+        if(allTaFilteredByUid == null || allTaFilteredByUid.size() == 0){
+            viewObjects.add(new MyTaViewObject());
+            return viewObjects;
+        }
         for(TAMSTa ta : allTaFilteredByUid) {
             MyTaViewObject viewObject = new MyTaViewObject();
             UTStudent taStu = ta.getTa();
@@ -685,10 +689,13 @@ public class TAConverterimpl implements ITAConverter {
     //我的助教界面申请人助教列表
     @Override
     public List<MyTaViewObject> applicationToViewObject(List<TAMSTaApplication> allApplicationFilterByUid) {
-        if(allApplicationFilterByUid == null)
-            return null;
         List<MyTaViewObject> viewObjects = new ArrayList<>(allApplicationFilterByUid.size());
 
+        if(allApplicationFilterByUid == null || allApplicationFilterByUid.size() == 0) {
+            //return null;
+            viewObjects.add(new MyTaViewObject());
+            return viewObjects;
+        }
         for(TAMSTaApplication application : allApplicationFilterByUid) {
             MyTaViewObject viewObject = new MyTaViewObject();
             UTStudent applicant = application.getApplicant();

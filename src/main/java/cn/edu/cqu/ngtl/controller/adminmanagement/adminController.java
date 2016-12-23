@@ -875,23 +875,7 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
-        Gson gson = new Gson();
 
-        //学院经费饼状图
-        List<PieChartsNameValuePair> list = new ArrayList<>();
-        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
-        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
-                adminService.getDepartmentCurrFundingBySession()
-        );
-        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
-            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
-                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
-            }
-        }
-        else
-            list.add(new PieChartsNameValuePair(null, null));
-        String json = gson.toJson(list);
-        infoForm.setPieChartsNameValuePairs(json);
 
         /*
         list.add(new PieChartsNameValuePair("高数", 10000));
@@ -905,20 +889,7 @@ public class adminController extends BaseController {
         list.add(new PieChartsNameValuePair("C程", 4000));
         */
 
-        //批次经费柱状图
-        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
-        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
-                adminService.getPreviousFundingBySession()
-        );
-        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
-            for (SessionFundingViewObject per : sessionFundingViewObjects) {
-                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
-            }
-        }
-        else
-            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
-        String histojson = gson.toJson(histogramNameValuePairs);
-        infoForm.setHistogram(histojson);
+
 
         /*
         infoForm.setSessionFundings(
@@ -1024,6 +995,40 @@ public class adminController extends BaseController {
                 )
         );
 
+
+        Gson gson = new Gson();
+
+        //学院经费饼状图
+        List<PieChartsNameValuePair> list = new ArrayList<>();
+        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
+        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
+                adminService.getDepartmentCurrFundingBySession()
+        );
+        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
+            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
+                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
+            }
+        }
+        else
+            list.add(new PieChartsNameValuePair(null, null));
+        String json = gson.toJson(list);
+        infoForm.setPieChartsNameValuePairs(json);
+
+        //批次经费柱状图
+        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
+        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
+                adminService.getPreviousFundingBySession()
+        );
+        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
+            for (SessionFundingViewObject per : sessionFundingViewObjects) {
+                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
+            }
+        }
+        else
+            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
+        String histojson = gson.toJson(histogramNameValuePairs);
+        infoForm.setHistogram(histojson);
+
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1037,18 +1042,25 @@ public class adminController extends BaseController {
     public ModelAndView Release(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
-        adminService.releaseDeptFunding(draftDepartmentFunding);
+        short code = adminService.getWorkTime();
+        if(code == 1) {
+            infoForm.setErrMsg("非学院经费设置时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
+            adminService.releaseDeptFunding(draftDepartmentFunding);
 
-        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
-                adminService.getSessionFundingStatistics()
-        );
+            infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                    adminService.getSessionFundingStatistics()
+            );
 
-        infoForm.setSessionFundingTotalApproved(      //已批准经费
-                adminService.getSessionFundingTotalApprove()
-        );
+            infoForm.setSessionFundingTotalApproved(      //已批准经费
+                    adminService.getSessionFundingTotalApprove()
+            );
 
-        return this.getModelAndView(infoForm, "pageFundsManagement");
+            return this.getModelAndView(infoForm, "pageFundsManagement");
+        }
     }
 
 
@@ -1061,18 +1073,25 @@ public class adminController extends BaseController {
     public ModelAndView ReleaseCourseFunding(@ModelAttribute("KualiForm") UifFormBase form ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        List<ClassFundingViewObject> classFundingViewObjects = infoForm.getClassFundings();
-        adminService.releaseClassFunding(classFundingViewObjects);
+        short code = adminService.getWorkTime();
+        if(code == 2) {
+            infoForm.setErrMsg("非课程经费设置时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<ClassFundingViewObject> classFundingViewObjects = infoForm.getClassFundings();
+            adminService.releaseClassFunding(classFundingViewObjects);
 
-        infoForm.setClassFundingStatistics(
-                taConverter.countClassFunding(
-                        infoForm.getClassFundings(),
-                        adminService.getClassTotalAssignedFunding(),
-                        taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
-                )
-        );
+            infoForm.setClassFundingStatistics(
+                    taConverter.countClassFunding(
+                            infoForm.getClassFundings(),
+                            adminService.getClassTotalAssignedFunding(),
+                            taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
+                    )
+            );
 
-        return this.getModelAndView(infoForm, "pageFundsManagement");
+            return this.getModelAndView(infoForm, "pageFundsManagement");
+        }
     }
 
     /**
@@ -1082,16 +1101,42 @@ public class adminController extends BaseController {
     public ModelAndView SaveClassFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        List<ClassFundingViewObject> draftClassFunding = infoForm.getClassFundings();
-        adminService.saveClassFunding(draftClassFunding);
-        infoForm.setClassFundingStatistics(
-                taConverter.countClassFunding(
-                        infoForm.getClassFundings(),
-                        adminService.getClassTotalAssignedFunding(),
-                        taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
-                )
-        );
-        return this.getModelAndView(infoForm, "pageFundsManagement");
+        short code = adminService.getWorkTime();
+        if(code == 2) {
+            infoForm.setErrMsg("非课程经费设置时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<ClassFundingViewObject> draftClassFunding = infoForm.getClassFundings();
+            adminService.saveClassFunding(draftClassFunding);
+            infoForm.setClassFundingStatistics(
+                    taConverter.countClassFunding(
+                            infoForm.getClassFundings(),
+                            adminService.getClassTotalAssignedFunding(),
+                            taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
+                    )
+            );
+            return this.getModelAndView(infoForm, "pageFundsManagement");
+        }
+    }
+
+    /**
+     *保存助教经费
+     */
+    @RequestMapping(params = "methodToCall=SaveTaFunding")
+    public ModelAndView SaveTaFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        short code = adminService.getWorkTime();
+        if(code == 3) {
+            infoForm.setErrMsg("非助教经费设置时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<TaFundingViewObject> taFundingViewObjects = infoForm.getTaFunding();
+            adminService.saveTaFunding(taFundingViewObjects);
+            return this.getModelAndView(infoForm, "pageFundsManagement");
+        }
     }
 
     /**
@@ -1103,18 +1148,25 @@ public class adminController extends BaseController {
     public ModelAndView SaveDeptFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
-        adminService.saveDeptFunding(draftDepartmentFunding);
+        short code = adminService.getWorkTime();
+        if(code == 1) {
+            infoForm.setErrMsg("非学院经费设置时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
+            adminService.saveDeptFunding(draftDepartmentFunding);
 
-        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
-                adminService.getSessionFundingStatistics()
-        );
+            infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                    adminService.getSessionFundingStatistics()
+            );
 
-        infoForm.setSessionFundingTotalApproved(      //已批准经费
-                adminService.getSessionFundingTotalApprove(draftDepartmentFunding)
-        );
+            infoForm.setSessionFundingTotalApproved(      //已批准经费
+                    adminService.getSessionFundingTotalApprove(draftDepartmentFunding)
+            );
 
-        return this.getModelAndView(infoForm, "pageFundsManagement");
+            return this.getModelAndView(infoForm, "pageFundsManagement");
+        }
     }
 
     /**
@@ -1126,13 +1178,20 @@ public class adminController extends BaseController {
     public ModelAndView SaveSessionFunding(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        List<SessionFundingViewObject> sessionFundingViewObjects = infoForm.getSessionFundings();
-        adminService.saveSessionFunding(sessionFundingViewObjects);
-        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
-                adminService.getSessionFundingStatistics(sessionFundingViewObjects.get(0).getPlanFunding())
-        );
+        short code = adminService.getWorkTime();
+        if(code == 1) {
+            infoForm.setErrMsg("非批次预算经费设置时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<SessionFundingViewObject> sessionFundingViewObjects = infoForm.getSessionFundings();
+            adminService.saveSessionFunding(sessionFundingViewObjects);
+            infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                    adminService.getSessionFundingStatistics(sessionFundingViewObjects.get(0).getPlanFunding())
+            );
 
-        return this.getModelAndView(infoForm, "pageFundsManagement");
+            return this.getModelAndView(infoForm, "pageFundsManagement");
+        }
 
 
     }

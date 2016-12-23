@@ -145,4 +145,8 @@ public interface IAdminService {
     String getSessionFundingTotalApprove(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
     boolean releaseClassFunding(List<ClassFundingViewObject> classFundingViewObjects);
+
+    short getWorkTime();
+
+    void saveTaFunding(List<TaFundingViewObject> taFundingViewObjects);
 }

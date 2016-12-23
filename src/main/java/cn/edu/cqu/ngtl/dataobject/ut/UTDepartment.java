@@ -38,6 +38,10 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="UNIVERSITY_ID", insertable = false, updatable = false)
 	private UTUniversity utUniversity;
+
+
+	@Column(name = "HASCOURSE")
+	private String hasCourse;
 	
 //	@OneToMany(mappedBy="department")
 //	@JsonIgnore
@@ -98,7 +102,19 @@ public class UTDepartment extends DataObjectBase implements Serializable {
 		this.utUniversity = utUniversity;
 	}
 
-//	public List<CMProgram> getPrograms() {
+	public static long getSerialVersionUID() {
+		return serialVersionUID;
+	}
+
+	public String getHasCourse() {
+		return hasCourse;
+	}
+
+	public void setHasCourse(String hasCourse) {
+		this.hasCourse = hasCourse;
+	}
+
+	//	public List<CMProgram> getPrograms() {
 //		return programs;
 //	}
 //

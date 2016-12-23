@@ -129,7 +129,7 @@
                                                         </property>
                                                     </bean>
                                                     <bean parent="Uif-HorizontalBoxSection"
-                                                          p:style="float:right!important;">
+                                                          p:style="float:right!important;display:none;">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-PrimaryActionButton"

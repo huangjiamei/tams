@@ -186,7 +186,7 @@
                                                                                   <!--p:additionalCssClasses="icon-arrow-left bg-grey box-btngroup"/>-->
 
                                                                             <bean id="approveButtonId" parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="审批"
+                                                                                  p:actionLabel="审核"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="showApproveDialog"
                                                                                   p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
@@ -235,8 +235,8 @@
                                                                 <bean id="classDetailPageId" parent="Uif-PrimaryActionButton"
                                                                       p:style="display:none;"
                                                                       p:ajaxSubmit="false"
-                                                                      p:navigateToPageId="pageClassInfo"
-                                                                      p:methodToCall="getClassInfoPage"/>
+                                                                      p:navigateToPageId="pageTeachingCalendar"
+                                                                      p:methodToCall="getTeachingCalendar"/>
 
                                                                 <bean id="searchClassFields"
                                                                       parent="Uif-HorizontalBoxSection"
@@ -249,12 +249,24 @@
                                                                                   p:messageText="占位"/>
 
                                                                             <bean id="checkedClassListAllId" parent="Uif-InputField"
-                                                                                  p:propertyName="checkedClassListAll" p:onClickScript="checkedAll('checkedClassAllButton');">
+                                                                                  p:style="display:@{#line.courseName!=null?'block':'none'}"
+                                                                                  p:propertyName="checkedClassListAll"
+                                                                                  p:onClickScript="checkedAll('checkedClassAllButton');">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
-
+                                                                            <!--状态-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="courseStatus" p:additionalCssClasses="searchBoxWidth">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseName"/>
@@ -289,18 +301,6 @@
                                                                             <!--聘用助教数-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taNumber" p:additionalCssClasses="searchBoxWidth"/>
-                                                                            <!--状态-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="courseStatus" p:additionalCssClasses="searchBoxWidth">
-                                                                                <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveStatusFinder"
-                                                                                          p:blankOption="true"/>
-                                                                                </property>
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-DropdownControl"/>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <!--占位-->
                                                                             <bean id="searchButton"
                                                                                   parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"
@@ -341,11 +341,17 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="checked">
+                                                                                  p:propertyName="checked" p:style="display:@{#line.courseName!=null?'block':'none'}">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
                                                                             </bean>
+
+                                                                            <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
+                                                                            <bean parent="Uif-DataField" p:label="状态"
+                                                                                  p:propertyName="status"
+                                                                                  p:additionalCssClasses="@{#line.courseName == null?' ':(#line.order.equals('1')?'bg-table-success tams-form-label':(#line.order.equals('5')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
+
 
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"
@@ -365,10 +371,6 @@
                                                                                   p:propertyName="departmentName"/>
                                                                             <bean parent="Uif-DataField" p:label="已聘用/已申请"
                                                                                   p:propertyName="taCount"/>
-                                                                            <!--1编辑，2待负责人审核，3待学院审核，4待学校审核，5工作-->
-                                                                            <bean parent="Uif-DataField" p:label="状态"
-                                                                                  p:propertyName="status"
-                                                                                  p:additionalCssClasses="@{#line.courseName == null?' ':(#line.order.equals('1')?'bg-table-success tams-form-label':(#line.order.equals('5')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
 
                                                                         </list>
                                                                     </property>

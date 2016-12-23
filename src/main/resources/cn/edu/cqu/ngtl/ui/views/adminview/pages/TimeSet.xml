@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="timeSetHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('timeSetHeaderTitle','fa fa-tachometer','管理台','时间设置')">
+                                  p:onDocumentReadyScript="initContentHeader('timeSetHeaderTitle','fa fa-tachometer','管理台','时间')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -62,7 +62,12 @@
                                                                   p:location.viewId="PortalView"
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="24" p:value="时间设置"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2"
+                                                                  p:value="管理台"
+                                                                  p:location.viewId="AdminView"
+                                                                  p:location.controllerMapping="/admin"
+                                                                  p:location.methodToCall="getManageStationPage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="时间"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -92,7 +97,7 @@
                                                                 <bean parent="Uif-Icon"
                                                                       p:iconClass="icon-plus"/>
                                                                 <bean parent="Uif-MessageField"
-                                                                      p:messageText="添加时间阶段"
+                                                                      p:messageText="添加时间段"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>

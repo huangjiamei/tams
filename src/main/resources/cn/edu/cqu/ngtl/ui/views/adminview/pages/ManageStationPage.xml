@@ -32,7 +32,7 @@
                            http://www.springframework.org/schema/util
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
-    <bean id="ConsolePage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
+    <bean id="ManageStationPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container">
         <property name="items">
             <list>
                 <bean parent="Uif-HorizontalBoxSection"
@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="consoleHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('consoleHeaderTitle','fa fa-tachometer','管理台','类别')">
+                                  p:onDocumentReadyScript="initContentHeader('consoleHeaderTitle','fa fa-tachometer','管理台','管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -62,12 +62,7 @@
                                                                   p:location.viewId="PortalView"
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2"
-                                                                  p:value="管理台"
-                                                                  p:location.viewId="AdminView"
-                                                                  p:location.controllerMapping="/admin"
-                                                                  p:location.methodToCall="getManageStationPage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="类别"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="2" p:value="管理台"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -95,8 +90,9 @@
                                                 <list>
                                                     <!--第一个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
-                                                          p:style="clear:none!important;">
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewConsolePage')}">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-VerticalBoxSection"
@@ -108,7 +104,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="课程类别"/>
+                                                                                              p:messageText="类别"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -117,13 +113,13 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-VerticalBoxSection"
-                                                                                              p:additionalCssClasses="fa fa-book"/>
+                                                                                              p:additionalCssClasses="fa fa-asterisk"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseCategoryPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getConsolePage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>
@@ -136,8 +132,9 @@
 
                                                     <!--第2个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
-                                                          p:style="clear:none!important;">
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewRoleManagerPage')}">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-VerticalBoxSection"
@@ -149,7 +146,49 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="助教类别"/>
+                                                                                              p:messageText="角色"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-user"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getRoleManagerPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <!--第3个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewUserRoleManagerPage')}">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-yellow">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="用户"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -164,48 +203,7 @@
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaCategoryPage&amp;viewId=AdminView"
-                                                                                  p:style="float:none!important;"
-                                                                                  p:linkText="详情"
-                                                                                  p:additionalCssClasses="small-box-footer"/>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-                                                            </list>
-                                                        </property>
-                                                    </bean>
-
-                                                    <!--第3个方块-->
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
-                                                          p:style="clear:none!important;">
-                                                        <property name="items">
-                                                            <list>
-                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                      p:additionalCssClasses="small-box bg-yellow">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:additionalCssClasses="inner">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-Message"
-                                                                                              p:messageText="任务类别"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                  p:additionalCssClasses="icon">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-VerticalBoxSection"
-                                                                                              p:additionalCssClasses="fa fa-align-left"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-
-                                                                            <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTaskCategoryPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getUserRoleManagerPage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>
@@ -218,8 +216,135 @@
 
                                                     <!--第4个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
-                                                          p:style="clear:none!important;">
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewPermissionManagementPage')}">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-red">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="权限"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-user-secret"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getPermissionManagementPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <!--第5个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewCourseManagerPage')}">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-lime">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="课程负责人"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-users"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getCourseManagerPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <!--第6个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTermManagerPage')}">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-grey">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="批次"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa fa-th-list"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <!--第7个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewWorkFlowManagePage')}">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-VerticalBoxSection"
@@ -231,7 +356,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="工作流类别"/>
+                                                                                              p:messageText="工作流"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -246,7 +371,7 @@
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowCategoryPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>
@@ -257,10 +382,11 @@
                                                         </property>
                                                     </bean>
 
-                                                    <!--第5个方块-->
+                                                    <!--第8个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
-                                                          p:style="clear:none!important;">
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTimeSettingsPage')}">
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-VerticalBoxSection"
@@ -272,7 +398,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-Message"
-                                                                                              p:messageText="时间类别"/>
+                                                                                              p:messageText="时间"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -287,7 +413,49 @@
                                                                             </bean>
 
                                                                             <bean parent="Uif-Link"
-                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeCategoryPage&amp;viewId=AdminView"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTimeSetPage&amp;viewId=AdminView"
+                                                                                  p:style="float:none!important;"
+                                                                                  p:linkText="详情"
+                                                                                  p:additionalCssClasses="small-box-footer"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
+                                                    <!--第9个方块-->
+                                                    <bean parent="Uif-VerticalBoxSection"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
+                                                          p:style="clear:none!important;"
+                                                          p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewSyncInfoPage')}">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:additionalCssClasses="small-box bg-teal">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="inner">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-Message"
+                                                                                              p:messageText="同步信息"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:additionalCssClasses="icon">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="fa icon-retweet"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-Link"
+                                                                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSyncInfoPage&amp;viewId=AdminView"
                                                                                   p:style="float:none!important;"
                                                                                   p:linkText="详情"
                                                                                   p:additionalCssClasses="small-box-footer"/>

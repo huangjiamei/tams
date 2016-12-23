@@ -205,6 +205,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageManageStation" p:title="时间类型管理">
+                    <property name="items">
+                        <list>
+                            <ref bean="ManageStationPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

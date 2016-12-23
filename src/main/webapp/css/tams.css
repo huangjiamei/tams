@@ -947,3 +947,10 @@ td.selected{
 .addPointer {
     cursor:pointer;
 }
+
+/*类别方块中的字体*/
+.small-box p {
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: 15px;
+}

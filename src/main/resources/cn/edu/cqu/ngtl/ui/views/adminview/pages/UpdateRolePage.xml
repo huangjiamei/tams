@@ -41,7 +41,7 @@
 						<list>
 							<!-- 左上角 -->
 							<bean id="UpdateRolePageHeader" parent="Uif-VerticalBoxSection"
-								  p:onDocumentReadyScript="initContentHeader('UpdateRolePageHeader','fa fa-tachometer','管理台','编辑管理员权限')">
+								  p:onDocumentReadyScript="initContentHeader('UpdateRolePageHeader','fa fa-user','角色','权限')">
 							</bean>
 							<!-- 右上角 当前路径 -->
 							<bean parent="Uif-HorizontalBoxSection"
@@ -62,12 +62,17 @@
 																  p:location.controllerMapping="/home"
 																  p:location.methodToCall="getCommonHome"/>
 															<bean parent="Uif-KeyValueLocation" p:key="2"
-																  p:value="管理员角色管理"
+																  p:value="管理台"
+																  p:location.viewId="AdminView"
+																  p:location.controllerMapping="/admin"
+																  p:location.methodToCall="getManageStationPage"/>
+															<bean parent="Uif-KeyValueLocation" p:key="3"
+																  p:value="角色"
 																  p:location.viewId="AdminView"
 																  p:location.controllerMapping="/admin"
 																  p:location.methodToCall="getRoleManagerPage"/>
-															<bean parent="Uif-KeyLabelPair" p:key="3"
-																  p:value="管理员权限管理"/>
+															<bean parent="Uif-KeyLabelPair" p:key="4"
+																  p:value="权限"/>
 														</list>
 													</property>
 												</bean>

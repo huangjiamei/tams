@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="termMaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('termMaHeaderTitle','fa fa-tachometer','管理台','教学批次')">
+                                  p:onDocumentReadyScript="initContentHeader('termMaHeaderTitle','fa fa-tachometer','管理台','批次')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -67,8 +67,8 @@
                                                                   p:value="管理台"
                                                                   p:location.viewId="AdminView"
                                                                   p:location.controllerMapping="/admin"
-                                                                  p:location.methodToCall="getConsolePage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="批次管理"/>
+                                                                  p:location.methodToCall="getManageStationPage"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3" p:value="批次"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -97,20 +97,13 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="fa fa-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="教学批次列表"
+                                                                <bean parent="Uif-MessageField" p:messageText="批次列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--右上角btnlist-->
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="返回"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="pageConsole"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
-
-                                                                            </bean>
                                                                            <!-- <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"

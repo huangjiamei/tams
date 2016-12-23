@@ -90,6 +90,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSTimeSettingTypeDao tamsTimeSettingTypeDao;
 
+    @Autowired
+    private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
@@ -496,16 +499,20 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public void validClassFunds(String classId){  //初始化课程经费
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
+        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);
         if(tamsClassFundingDraftExist==null){
             TAMSClassFundingDraft tamsClassFundingDraft = new TAMSClassFundingDraft();
             tamsClassFundingDraft.setClassId(classId);
-            tamsClassFundingDraft.setApplyFunding("0");
+            tamsClassFundingDraft.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
             tamsClassFundingDraft.setAssignedFunding("0");
             tamsClassFundingDraft.setPhdFunding("0");
             tamsClassFundingDraft.setBonus("0");
             tamsClassFundingDraft.setTravelSubsidy("0");
             tamsClassFundingDraft.setSessionId(sessionDao.getCurrentSession().getId().toString());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
+        }else{
+            tamsClassFundingDraftExist.setApplyFunding(tamsClassTaApplication.getApplicationFunds());
+            tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraftExist);
         }
     }
 

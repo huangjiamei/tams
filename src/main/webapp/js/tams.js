@@ -947,17 +947,18 @@ function getTaDetailPage(){
             }
         });
 
-        jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:not(:first)',function (e) {
-            var targetid=taListTable;
-            var id = e.target.id;
-            var patt = new RegExp(".*line[0-9]+.*");
-            if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                id = jQuery(e.target).children("*[id*='line']")[0].id;
-            var index=id.match("line[0-9]+")[0].match('[0-9]+');
-            document.getElementById('indexTaList_control').value=index;
-            //alert(document.getElementById('indexTaList_control').value);
-            jQuery("#taDetailPageId").click();
-        });
+        if(jQuery('#checkedTaListAllId').css('display')!="none"){
+            jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:not(:first)',function (e) {
+                var targetid=taListTable;
+                var id = e.target.id;
+                var patt = new RegExp(".*line[0-9]+.*");
+                if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                    id = jQuery(e.target).children("*[id*='line']")[0].id;
+                var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                document.getElementById('indexTaList_control').value=index;
+                jQuery("#taDetailPageId").click();
+            });
+        }
     }
 }
 //课程页面点击整行进入详细页面
@@ -978,17 +979,18 @@ function getClassDetailPage(){
             }
         });
 
-        jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:not(:eq(0),:eq(1))',function (e) {
-            var targetid=ClassListPageTable;
-            var id = e.target.id;
-            var patt = new RegExp(".*line[0-9]+.*");
-            if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                id = jQuery(e.target).children("*[id*='line']")[0].id;
-            var index=id.match("line[0-9]+")[0].match('[0-9]+');
-            document.getElementById('indexClassList_control').value=index;
-            //alert(document.getElementById('indexClassList_control').value);
-            jQuery("#classDetailPageId").click();
-        });
+        if(jQuery('#checkedClassListAllId').css('display')!="none") {
+            jQuery('#ClassListPageTable').on('click', 'tbody>tr:eq(' + i + ')>td:not(:eq(0),:eq(1))', function (e) {
+                var targetid = ClassListPageTable;
+                var id = e.target.id;
+                var patt = new RegExp(".*line[0-9]+.*");
+                if (typeof(id) == "undefined" || id == "" || !patt.test(id))
+                    id = jQuery(e.target).children("*[id*='line']")[0].id;
+                var index = id.match("line[0-9]+")[0].match('[0-9]+');
+                document.getElementById('indexClassList_control').value = index;
+                jQuery("#classDetailPageId").click();
+            });
+        }
     }
 }
 

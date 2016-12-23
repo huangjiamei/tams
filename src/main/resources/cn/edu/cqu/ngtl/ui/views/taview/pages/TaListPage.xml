@@ -161,7 +161,9 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean id="checkedTaListAllId" parent="Uif-InputField"
-                                                                                  p:propertyName="checkedTaListAll" p:onClickScript="checkedAll('checkedTaAllButton');">
+                                                                                  p:style="display:@{#line.taName!=null?'block':'none'}"
+                                                                                  p:propertyName="checkedTaListAll"
+                                                                                  p:onClickScript="checkedAll('checkedTaAllButton');">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
@@ -265,7 +267,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="checkBox" >
+                                                                                  p:propertyName="checkBox" p:style="display:@{#line.taName!=null?'block':'none'}">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

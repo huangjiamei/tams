@@ -249,7 +249,9 @@
                                                                                   p:messageText="占位"/>
 
                                                                             <bean id="checkedClassListAllId" parent="Uif-InputField"
-                                                                                  p:propertyName="checkedClassListAll" p:onClickScript="checkedAll('checkedClassAllButton');">
+                                                                                  p:style="display:@{#line.courseName!=null?'block':'none'}"
+                                                                                  p:propertyName="checkedClassListAll"
+                                                                                  p:onClickScript="checkedAll('checkedClassAllButton');">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
@@ -339,7 +341,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="checked">
+                                                                                  p:propertyName="checked" p:style="display:@{#line.courseName!=null?'block':'none'}">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

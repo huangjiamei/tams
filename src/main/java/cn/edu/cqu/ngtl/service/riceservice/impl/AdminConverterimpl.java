@@ -59,8 +59,11 @@ public class AdminConverterimpl implements IAdminConverter {
     @Override
     public List<TaFundingViewObject> taFundingToViewObject(List<TAMSTa> tamsTas){
         if(tamsTas == null || tamsTas.size() == 0) {
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<TaFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new TaFundingViewObject());
+            return nullObject;
         }
         List<TaFundingViewObject> taFundingViewObjects = new ArrayList<>(tamsTas.size());
         for(TAMSTa ta : tamsTas) {
@@ -110,8 +113,11 @@ public class AdminConverterimpl implements IAdminConverter {
     @Override
     public List<DetailFundingViewObject> detailFundingToViewObject(List<TAMSTa> tamsTas){
         if(tamsTas == null || tamsTas.size() == 0) {
-            logger.error("数据为空！");
-            return null;
+            //logger.error("数据为空！");
+            //return null;
+            List<DetailFundingViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new DetailFundingViewObject());
+            return nullObject;
         }
 
         UTSession curSession = utSessionDao.getCurrentSession();

@@ -875,15 +875,51 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
+        Gson gson = new Gson();
+
+        //学院经费饼状图
         List<PieChartsNameValuePair> list = new ArrayList<>();
+        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
+        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
+                adminService.getDepartmentCurrFundingBySession()
+        );
+        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
+            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
+                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
+            }
+        }
+        else
+            list.add(new PieChartsNameValuePair(null, null));
+        String json = gson.toJson(list);
+        infoForm.setPieChartsNameValuePairs(json);
+
+        /*
         list.add(new PieChartsNameValuePair("高数", 10000));
         list.add(new PieChartsNameValuePair("线代", 5000));
         list.add(new PieChartsNameValuePair("离散", 4000));
         list.add(new PieChartsNameValuePair("数值", 2000));
         list.add(new PieChartsNameValuePair("C程", 4000));
-        Gson gson = new Gson();
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        list.add(new PieChartsNameValuePair("C程", 4000));
+        */
 
-        String json = gson.toJson(list);
+        //批次经费柱状图
+        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
+        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
+                adminService.getPreviousFundingBySession()
+        );
+        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
+            for (SessionFundingViewObject per : sessionFundingViewObjects) {
+                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
+            }
+        }
+        else
+            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
+        String histojson = gson.toJson(histogramNameValuePairs);
+        infoForm.setHistogram(histojson);
+
         /*
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
@@ -988,8 +1024,6 @@ public class adminController extends BaseController {
                 )
         );
 
-
-        infoForm.setPieChartsNameValuePairs(json);
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
@@ -1191,15 +1225,21 @@ public class adminController extends BaseController {
         String uId = user.getCode();
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
             conditions.put("dept", infoForm.getcDept());
+            conditions.put("teacher", infoForm.getcTeacher());
         }
         else if(userInfoService.isCollegeStaff(uId)){
             conditions.put("dept", user.getDepartmentId().toString());
+            conditions.put("teacher", infoForm.getcTeacher());
+        }
+        else if (userInfoService.isInstructor(uId)) {
+            conditions.put("dept", infoForm.getcDept());
+            conditions.put("teacher", user.getName());
         }
 
         conditions.put("className", infoForm.getcName());
         conditions.put("classCode", infoForm.getcCode());
         conditions.put("classNbr", infoForm.getcNbr());
-        conditions.put("teacher", infoForm.getcTeacher());
+        //conditions.put("teacher", infoForm.getcTeacher());
         conditions.put("applyFunding", infoForm.getcApplyFunds());
         conditions.put("actualFunding", infoForm.getcActualFunds());
         conditions.put("phdFunding", infoForm.getcPhdFunds());

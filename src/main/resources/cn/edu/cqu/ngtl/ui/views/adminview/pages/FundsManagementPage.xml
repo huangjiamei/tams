@@ -480,7 +480,7 @@
                                                                                                                                         <bean id="testBarChart" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChart','经费明细柱状图','@{errMsg}');"/>
+                                                                                                                                                      value="getBarChart('testBarChart','经费明细柱状图','@{histogram}');"/>
                                                                                                                                         </bean>
                                                                                                                                     </list>
                                                                                                                                 </property>
@@ -893,7 +893,7 @@
                                                                                                                                         <bean id="testBarChartTwo" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartTwo','学校批次经费柱状图','@{errMsg}');"/>
+                                                                                                                                                      value="getBarChart('testBarChartTwo','学校批次经费柱状图','@{histogram}');"/>
                                                                                                                                         </bean>
                                                                                                                                     </list>
                                                                                                                                 </property>
@@ -1411,7 +1411,7 @@
                                                                                                                                         <bean id="testBarChartThree" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartThree','学院经费柱状图','@{errMsg}');"/>
+                                                                                                                                                      value="getBarChart('testBarChartThree','历史批次经费柱状图','@{histogram}');"/>
                                                                                                                                         </bean>
                                                                                                                                     </list>
                                                                                                                                 </property>
@@ -1861,7 +1861,7 @@
                                                                                                                                         <bean id="testBarChartFour" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartFour','课程经费柱状图','@{errMsg}');"/>
+                                                                                                                                                      value="getBarChart('testBarChartFour','历史批次经费柱状图','@{histogram}');"/>
                                                                                                                                         </bean>
                                                                                                                                     </list>
                                                                                                                                 </property>
@@ -2156,7 +2156,7 @@
                                                                                                                                         <bean id="testBarChartFive" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartFive','助教经费柱状图','@{errMsg}');"/>
+                                                                                                                                                      value="getBarChart('testBarChartFive','助教经费柱状图','@{histogram}');"/>
                                                                                                                                         </bean>
                                                                                                                                     </list>
                                                                                                                                 </property>

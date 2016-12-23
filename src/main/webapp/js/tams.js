@@ -198,7 +198,7 @@ function getPieChart(chartId,title,data) {
         },
         tooltip: {
             // 除了此项占比，还需要加一个此项具体数值
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> >'
         },
         plotOptions: {
             pie: {
@@ -251,6 +251,7 @@ function getBarChart(chartId,title,data) {
         },
         xAxis: {
             // objlist.name
+            /*
             categories: [
                 '高等数学',
                 '概率论',
@@ -260,6 +261,8 @@ function getBarChart(chartId,title,data) {
                 '计算数学',
                 '运筹学与控制论',
                 '数学分析']
+             */
+            categories : [data]
         },
         yAxis: [
             {
@@ -268,24 +271,27 @@ function getBarChart(chartId,title,data) {
                 labels: {
                     format: '{y} 元'
                 }
-            },
-            {
+            }
+           /*, {
                 title: {text: '助教优秀率'},
                 opposite: true,
                 labels: {
                     format: '{y} %'
                 }
             }
+            */
         ],
         series: [{
             name: '经费',
-            color: '#ff4d4d',
+            //color: '#ff4d4d',
+            color: '#66a3ff',
             // objlist.y
-            data: [1200, 1000, 600, 900, 800, 500, 500, 900],
+            //data: [1200, 1000, 600, 900, 800, 500, 500, 900],
+            data: data,
             tooltip: {ySuffix: '元'},
             pointPadding: 0.15,
             pointPlacement: -0.03
-        }, {
+        }/*, {
             name: '助教优秀率',
             color: '#66a3ff',
             data: [60, 90, 85, 70, 80, 85, 80, 75],
@@ -293,7 +299,7 @@ function getBarChart(chartId,title,data) {
             yAxis: 1, // 双y轴的关键
             pointPadding: 0.15,
             pointPlacement: 0.03
-        }],
+        }*/],
         tooltip: {shared: true}
     });
 

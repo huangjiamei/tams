@@ -100,7 +100,19 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private String sessionFundingTotalApproved;
 
+    //学院当前学期经费饼状图
     private String pieChartsNameValuePairs;
+
+    //批次历史经费柱状图
+    private String histogram;
+
+    public String getHistogram() {
+        return histogram;
+    }
+
+    public void setHistogram(String histogram) {
+        this.histogram = histogram;
+    }
 
     private List<SessionFundingViewObject> sessionFundings;
 

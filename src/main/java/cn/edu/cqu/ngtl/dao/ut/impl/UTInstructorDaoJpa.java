@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.like;
 
@@ -72,6 +73,18 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 	return instructorMap;
 	}
 
+	@Override
+	public Map getAllInstructorCodeIdMap(){
+		Map instructorMap = new HashMap();
+		Query query = em.createNativeQuery("SELECT t.CODE,t.UNIQUEID FROM UNITIME_INSTRUCTOR t");
+		List<Object> columns = query.getResultList();
+		for (Object column : columns) {
+			Object[] instructors = (Object[]) column;
+			instructorMap.put(instructors[1].toString(),instructors[0].toString());
+		}
+		return instructorMap;
+	}
+
 
 	@Override
 	public List<UTInstructor> getInstructorByConditions(Map<String,String> conditions){
@@ -123,6 +136,19 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 				UTInstructor.class, criteria.build());
 
 		return qr.getResults().isEmpty()?null:qr.getResults().get(0);
+	}
+
+	@Override
+	public List<UTInstructor> getInstructorByCode( String name ,String code) {
+
+		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
+				(like("code" , "%"+ code + '%')),
+				(like("name" , "%"+ name + '%'))));
+		QueryResults<UTInstructor> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+				UTInstructor.class, criteria.build());
+
+		return qr.getResults().isEmpty()?null:qr.getResults();
+
 	}
 
 	@Override

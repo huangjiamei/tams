@@ -38,13 +38,16 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
     @Override
     public List<TAMSCourseManager> getAllCourseManager(){
 
-        return KRADServiceLocator.getDataObjectService().findAll(TAMSCourseManager.class).getResults();
+        EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        Query query = em.createNativeQuery("SELECT * FROM TAMS_COURSE_MANAGER",TAMSCourseManager.class);
+//        return KRADServiceLocator.getDataObjectService().findAll(TAMSCourseManager.class).getResults();
+        return query.getResultList();
 
     }
 
     @Override
     public TAMSCourseManager getCourseManagerByInstructorId(String instructorId){
-        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("utInstructor.id" , instructorId));
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("courseManagerId" , instructorId));
         QueryResults<TAMSCourseManager> qr = KradDataServiceLocator.getDataObjectService().findMatching(
                 TAMSCourseManager.class,
                 criteria.build()
@@ -52,9 +55,22 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
         return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
     }
 
+
     @Override
-    public void saveCourseManager(TAMSCourseManager tamsCourseManager){
-        KRADServiceLocator.getDataObjectService().save(tamsCourseManager);
+    public TAMSCourseManager getCourseManagerByCourseId(String courseId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("courseId" , courseId));
+        QueryResults<TAMSCourseManager> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSCourseManager.class,
+                criteria.build()
+        );
+        return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
+    }
+
+
+
+    @Override
+    public boolean saveCourseManager(TAMSCourseManager tamsCourseManager){
+        return KRADServiceLocator.getDataObjectService().save(tamsCourseManager)!=null;
     }
 
     @Override
@@ -95,8 +111,8 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
                 utInstructor.setName(managers[4].toString());
                 utInstructor.setCode(managers[5].toString());*/
 
-                tamsCourseManager.setCourse(utCourse);
-                tamsCourseManager.setUtInstructor(utInstructor);
+//                tamsCourseManager.setCourse(utCourse);
+//                tamsCourseManager.setUtInstructor(utInstructor);
                 tamsCourseManager.setCourseId(utCourse.getId());
 
                 list.add(tamsCourseManager);

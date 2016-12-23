@@ -10,6 +10,7 @@ public class CourseManagerViewObject {
     private String courseNmb;
     private String courseManager;
     private String InstructorCode;
+    private String courseId;
 
     public String getCourseNm() {
         return courseNm;
@@ -49,5 +50,13 @@ public class CourseManagerViewObject {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCourseId() {
+        return courseId;
+    }
+
+    public void setCourseId(String courseId) {
+        this.courseId = courseId;
     }
 }

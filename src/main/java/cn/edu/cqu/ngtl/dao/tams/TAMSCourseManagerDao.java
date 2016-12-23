@@ -10,14 +10,16 @@ import java.util.Map;
 public interface TAMSCourseManagerDao {
 
 
-    public List<TAMSCourseManager> getAllCourseManager();
+     List<TAMSCourseManager> getAllCourseManager();
 
-    public TAMSCourseManager getCourseManagerByInstructorId(String instructorId);
+     TAMSCourseManager getCourseManagerByInstructorId(String instructorId);
 
-    public void saveCourseManager(TAMSCourseManager tamsCourseManager);
+     boolean saveCourseManager(TAMSCourseManager tamsCourseManager);
 
-    public void deleteCourseManager(TAMSCourseManager tamsCourseManager);
+     void deleteCourseManager(TAMSCourseManager tamsCourseManager);
 
-    public List<TAMSCourseManager> selectCourseManagerByCondition(Map<String, String> conditions);
+     List<TAMSCourseManager> selectCourseManagerByCondition(Map<String, String> conditions);
+
+     TAMSCourseManager getCourseManagerByCourseId(String courseId);
 
 }

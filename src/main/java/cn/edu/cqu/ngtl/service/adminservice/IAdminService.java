@@ -149,4 +149,10 @@ public interface IAdminService {
     short getWorkTime();
 
     void saveTaFunding(List<TaFundingViewObject> taFundingViewObjects);
+
+    boolean initCourseManagerData();
+
+    boolean addCourseManagerByInsIdAndCourseId(String courseId,String instructorId);
+
+    List<UTInstructor> getInstructorByNameAndCode(String Name,String code);
 }

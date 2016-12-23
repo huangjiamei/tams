@@ -3,7 +3,12 @@ package cn.edu.cqu.ngtl.dao.krim.impl;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ENTITY_T_Dao;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ENTITY_T;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
+
+@Repository
+@Component("KRIM_ENTITY_T_DaoJpa")
 public class KRIM_ENTITY_T_DaoJpa implements KRIM_ENTITY_T_Dao {
 
 	@Override

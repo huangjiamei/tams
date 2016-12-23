@@ -2,6 +2,9 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
+import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_MBR_T_Dao;
+import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_PRNCPL_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
@@ -9,6 +12,8 @@ import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
@@ -25,7 +30,10 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tangjing on 16-10-25.
@@ -100,7 +108,16 @@ public class AdminServiceImpl implements IAdminService{
     @Autowired
     private UTCourseDao utCourseDao;
 
+    @Autowired
+    private KRIM_ROLE_MBR_T_Dao krim_role_mbr_t_dao;
 
+    @Autowired
+    private KRIM_ROLE_T_Dao krim_role_t_dao;
+
+    @Autowired
+    private KRIM_PRNCPL_T_DaoJpa krim_prncpl_t_dao;
+
+    private static final String COURSE_MANAGER_ROLE_NAME = "课程负责人";
 
     @Override
     public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions){
@@ -880,8 +897,19 @@ public class AdminServiceImpl implements IAdminService{
     public boolean addCourseManagerByInsIdAndCourseId(String instructorId,String courseId){
         TAMSCourseManager tamsCourseManagerExit = tamsCourseManagerDao.getCourseManagerByCourseId(courseId);
         if(tamsCourseManagerExit!=null){
-            tamsCourseManagerExit.setCourseManagerId(instructorId);
-            return tamsCourseManagerDao.saveCourseManager(tamsCourseManagerExit);
+            /**
+             * 将该人添加为课程负责人角色
+             */
+            KRIM_ROLE_T krim_role_t = krim_role_t_dao.getKrimRoleTByName(COURSE_MANAGER_ROLE_NAME);
+            krim_role_t.setChecked(true);
+            List<KRIM_ROLE_T> needToAddRoleList = new ArrayList<>();
+            needToAddRoleList.add(krim_role_t);
+            KRIM_PRNCPL_T currentEntity = krim_prncpl_t_dao.getKrimEntityEntTypTByPrncplId(instructorId);
+            if(krim_role_t!=null&&currentEntity!=null) {
+                krim_role_mbr_t_dao.saveKrimRoleMbrTByPrncpltAndRoles(currentEntity, needToAddRoleList);
+                tamsCourseManagerExit.setCourseManagerId(instructorId);
+                return tamsCourseManagerDao.saveCourseManager(tamsCourseManagerExit);   //将该用户保存到对应的course上
+            }
         }
         return false;
     }

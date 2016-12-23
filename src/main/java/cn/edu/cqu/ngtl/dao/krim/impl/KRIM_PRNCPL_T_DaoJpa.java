@@ -5,11 +5,13 @@ import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 @Repository
+@Component("KRIM_PRNCPL_T_DaoJpa")
 public class KRIM_PRNCPL_T_DaoJpa implements KRIM_PRNCPL_T_Dao {
 
 	@Override

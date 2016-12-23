@@ -843,6 +843,7 @@ public class adminController extends BaseController {
     /**
      * 编辑课程负责人信息
      */
+    @Deprecated
     @RequestMapping(params = {"methodToCall=updateCourseManager"})
     public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -867,6 +868,7 @@ public class adminController extends BaseController {
      * @param form
      * @return
      */
+    @Deprecated
     @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;

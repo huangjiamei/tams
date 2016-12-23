@@ -221,7 +221,7 @@
                                                                                                         <property name="disclosure.render" value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"/>
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" /><!--p:style="display:@{#line.department!=null?'block':'none'}"-->
                                                                                                         </property>
 
                                                                                                         <property
@@ -711,7 +711,7 @@
                                                                                                                             value="false"/>
                                                                                                                     <property
                                                                                                                             name="layoutManager.richTable.render"
-                                                                                                                            value="false"/>
+                                                                                                                            value="true"/>
 
                                                                                                                     <property
                                                                                                                             name="useServerPaging"
@@ -1048,7 +1048,7 @@
                                                                                                                             value="false"/>
                                                                                                                     <property
                                                                                                                             name="layoutManager.richTable.render"
-                                                                                                                            value="false"/>
+                                                                                                                            value="true"/>
 
                                                                                                                     <property
                                                                                                                             name="useServerPaging"
@@ -1223,7 +1223,7 @@
                                                                                                                                         value="false"/>
                                                                                                                                 <property
                                                                                                                                         name="layoutManager.richTable.render"
-                                                                                                                                        value="false"/>
+                                                                                                                                        value="true"/>
 
                                                                                                                                 <property
                                                                                                                                         name="useServerPaging"
@@ -1590,8 +1590,10 @@
 
                                                                                                         <property name="layoutManager.showToggleAllDetails" value="false"/>
                                                                                                         <!--在这里后期更改rowDetails的图标-->
-                                                                                                        <property name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"/>
+                                                                                                        <property
+                                                                                                                name="layoutManager.expandDetailsActionPrototype">
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"
+                                                                                                                  p:style="display:@{#line.department!=null?'block':'none'}"/>
                                                                                                         </property>
 
                                                                                                         <property

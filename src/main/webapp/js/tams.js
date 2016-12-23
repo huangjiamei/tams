@@ -817,14 +817,14 @@ jQuery(function($){
 /*
 添加联系人时，回车查询
  */
-function clickButton(id){
+function clickButton(id,buttonId){
     jQuery("#"+id).on(
         {keydown: function(e){
             var key = e.which;
             if(key == 13){
                 e.preventDefault();
                 localStorage.clear();
-                jQuery("#searchTaManager").click();
+                jQuery("#"+buttonId).click();
             }
         }
         });

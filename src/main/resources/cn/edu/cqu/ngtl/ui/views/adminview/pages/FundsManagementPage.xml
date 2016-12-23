@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="fundsHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('fundsHeaderTitle','fa fa-tachometer','管理台','经费管理')">
+                                  p:onDocumentReadyScript="initContentHeader('fundsHeaderTitle','fa fa-money','经费','经费管理')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -62,13 +62,8 @@
                                                                   p:location.viewId="PortalView"
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="2"
-                                                                  p:value="管理台"
-                                                                  p:location.viewId="AdminView"
-                                                                  p:location.controllerMapping="/admin"
-                                                                  p:location.methodToCall="getConsolePage"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="3"
-                                                                  p:value="经费管理"/>
+                                                            <bean parent="Uif-KeyLabelPair" p:key="2"
+                                                                  p:value="经费"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -1497,6 +1492,19 @@
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:messageText="助教经费"
                                                                                                           p:additionalCssClasses="boxheaderTitle"/>
+                                                                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                                                                          p:style="float: right!important;">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="保存"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="xxxx"
+                                                                                                                      p:render="true"
+                                                                                                                      p:additionalCssClasses="icon-save bg-success box-btngroup"/><!--@{#form.academicAffairManager}-->
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -1506,6 +1514,8 @@
                                                                                               p:style="">
                                                                                             <property name="items">
                                                                                                 <list>
+
+
                                                                                                     <bean id="FundsManagerAssistantSearchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                                                         <property name="items">
                                                                                                             <list>
@@ -1612,10 +1622,14 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程编号"
                                                                                                                       p:propertyName="courseCode"/>
-                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                <bean parent="Uif-InputField"
                                                                                                                       p:label="分配经费"
                                                                                                                       p:propertyName="assignedFunding"
-                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                      p:sortAs="numeric">
+                                                                                                                    <property name="validCharactersConstraint">
+                                                                                                                        <bean parent="NumericPatternConstraint"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="博士津贴"
                                                                                                                       p:propertyName="phdFunding"

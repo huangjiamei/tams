@@ -22,7 +22,6 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -139,6 +138,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
         /**
          * 如果是二级单位管理员
          */
+/*
         if(iUserInfoService.isCollegeStaff(user.getCode())) {
             QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                     and(
@@ -168,12 +168,13 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
             }
             return copyList.size() != 0 ? copyList : null;
         }
+*/
 
 
         /**
          * 如果是教师  暂定教师没有权限查看此页面   根据教师取课程可以参照此方法
          */
-/*        else if(iUserInfoService.isInstructor(user.getCode())){
+         if(iUserInfoService.isInstructor(user.getCode())){
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(user.getCode());
             String conditions = "";
             for(Object classid : classIds){
@@ -193,7 +194,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
                 );
             }
             return list;
-        }*/
+        }
         return null;
     }
 

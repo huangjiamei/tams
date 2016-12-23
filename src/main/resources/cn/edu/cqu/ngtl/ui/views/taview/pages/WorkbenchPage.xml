@@ -43,12 +43,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-laptop','助教','工作台')">
-                                <property name="items">
-                                    <list>
-                                        <bean parent="Uif-HeaderTwo" p:headerText="工作台"/>
-                                    </list>
-                                </property>
+                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-laptop','工作台','我的助教')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -215,7 +210,7 @@
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="getTransAllowancePage"
-                                                                                              p:additionalCssClasses="bg-success box-btngroup" p:render="@{#line.status==null?'false':line.statue.equals('1')}"/>
+                                                                                              p:additionalCssClasses="icon-money bg-success box-btngroup" p:render="@{#line.dept==null?false:(#line.status.equals('1')?true:false)}"/>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

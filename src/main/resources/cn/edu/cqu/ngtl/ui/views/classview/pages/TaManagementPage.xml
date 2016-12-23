@@ -310,12 +310,12 @@
 
                                         <bean id="nameTaM" parent="Uif-InputField" p:label="姓名"
                                               p:propertyName="StudentName"
-                                              p:additionalCssClasses="col-md-6 col-lg-6"
-                                              p:onDocumentReadyScript="clickButton('nameTaM')"/>
+                                              p:additionalCssClasses="col-sm-12 col-md-6 col-lg-6"
+                                              p:onDocumentReadyScript="clickButton('nameTaM','searchTaManager')"/>
                                         <bean id="studentNumTaM" parent="Uif-InputField" p:label="学号"
                                               p:propertyName="StudentNumber"
-                                              p:additionalCssClasses="col-md-6 col-lg-6"
-                                              p:onDocumentReadyScript="clickButton('studentNumTaM')"/>
+                                              p:additionalCssClasses="col-sm-12 col-md-6 col-lg-6"
+                                              p:onDocumentReadyScript="clickButton('studentNumTaM','searchTaManager')"/>
 
                                         <bean parent="Uif-HorizontalBoxSection">
                                             <property name="items">
@@ -385,7 +385,7 @@
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
                                             <property name="layoutManager.richTable.render"
-                                                      value="false"/>
+                                                      value="true"/>
 
                                             <property name="useServerPaging" value="true"/>
 

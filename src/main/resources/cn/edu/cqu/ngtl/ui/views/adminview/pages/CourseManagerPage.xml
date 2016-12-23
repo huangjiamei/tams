@@ -221,15 +221,80 @@
       p:onDocumentReadyScript="jQuery('#confirmEditManagerDialog').modal({backdrop: 'static', keyboard: false});">
     <property name="items">
         <list>
-            <bean parent="Uif-MessageField" p:messageText="请慎重编辑课程负责人，如需编辑请联系系统维护人员！" />
-            <bean parent="Uif-InputField" p:label="课程名" p:readOnly="true"
-                  p:propertyName="courseNm"/>
-            <bean parent="Uif-InputField" p:label="课程编号" p:readOnly="true"
-                  p:propertyName="courseNmb"/>
-            <bean parent="Uif-InputField" p:label="现任课程负责人" p:readOnly="true"
-                  p:propertyName="courseManager"/>
-            <bean parent="Uif-InputField" p:label="新任课程负责人职工号"
-                  p:propertyName="InstructorCode"/>
+            <bean parent="Uif-HorizontalBoxSection"
+                  p:additionalCssClasses="col-md-12 col-lg-12">
+                <property name="items">
+                    <list>
+                        <!--<bean parent="Uif-InputField" p:label="课程名" p:readOnly="true"
+                              p:propertyName="courseNm"/>
+                        <bean parent="Uif-InputField" p:label="课程编号" p:readOnly="true"
+                              p:propertyName="courseNmb"/>
+                        <bean parent="Uif-InputField" p:label="现任课程负责人" p:readOnly="true"
+                              p:propertyName="courseManager"/>
+                        <bean parent="Uif-InputField" p:label="新任课程负责人职工号"
+                              p:propertyName="InstructorCode"/>-->
+                        <bean id="courseManagerId" parent="Uif-InputField" p:label="姓名"
+                              p:propertyName="courseManager"
+                              p:onDocumentReadyScript="clickButton('courseManagerId','')"/>
+                        <bean id="instructorCodeId" parent="Uif-InputField" p:label="职工号"
+                              p:propertyName="InstructorCode"
+                              p:onDocumentReadyScript="clickButton('instructorCodeId','')"/>
+
+                        <bean id="searchCourseManagerButton" parent="Uif-PrimaryActionButton"
+                              p:actionLabel="查询"
+                              p:onClickScript="deleteCookie();"
+                              p:actionImagePlacement="LEFT"
+                              p:additionalCssClasses="icon-search box-btngroup"
+                              p:methodToCall="xxxx"
+                              p:refreshId="searchTaApplicantList"/>
+
+                    </list>
+                </property>
+            </bean>
+            <!--查询老师-->
+            <bean parent="Uif-VerticalBoxSection"
+                  p:additionalCssClasses="col-md-12 col-lg-12">
+                <property name="items">
+                    <list>
+                        <bean id="searchCourseManagerList"
+                              parent="Uif-Disclosure-TableCollectionSection">
+                            <property name="collectionObjectClass"
+                                      value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                            <property name="propertyName" value="conditionTAList"/>
+                            <property name="layoutManager.renderSequenceField"
+                                      value="false"/>
+                            <property name="layoutManager.richTable.render"
+                                      value="true"/>
+
+                            <property name="useServerPaging" value="true"/>
+
+                            <property name="renderAddLine" value="false"/>
+                            <property name="renderLineActions" value="true"/>
+                            <property name="items">
+                                <list>
+                                    <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
+                                    <bean parent="Uif-DataField" p:label="工号"
+                                          p:propertyName="taIdNumber"/>
+                                    <bean parent="Uif-DataField" p:label="性别"
+                                          p:propertyName="taGender"/>
+                                    <bean parent="Uif-DataField" p:label="学院"
+                                          p:propertyName="contactPhone"/>
+                                </list>
+                            </property>
+                            <property name="lineActions">
+                                <list>
+                                    <bean parent="Uif-PrimaryActionButton"
+                                          p:actionImagePlacement="LEFT"
+                                          p:methodToCall="xxxx"
+                                          p:refreshId="CourseManagerTable"
+                                          p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
+                                </list>
+                            </property>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+
         </list>
     </property>
     <property name="footer.items">

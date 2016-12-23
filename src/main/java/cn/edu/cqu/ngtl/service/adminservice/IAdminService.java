@@ -146,6 +146,10 @@ public interface IAdminService {
 
     boolean releaseClassFunding(List<ClassFundingViewObject> classFundingViewObjects);
 
+    short getWorkTime();
+
+    void saveTaFunding(List<TaFundingViewObject> taFundingViewObjects);
+
     boolean initCourseManagerData();
 
     boolean addCourseManagerByInsIdAndCourseId(String courseId,String instructorId);

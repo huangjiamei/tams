@@ -21,6 +21,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
+import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import org.apache.log4j.Logger;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -759,12 +760,38 @@ public class AdminServiceImpl implements IAdminService{
     }
 
     @Override
+    public void saveTaFunding(List<TaFundingViewObject> taFundingViewObjects) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        for(TaFundingViewObject per : taFundingViewObjects) {
+            TAMSTa exist = tamsTaDao.selectByClassIdAndSessionId(per.getClassNbr(), curSession.getId().toString());
+            exist.setAssignedFunding(per.getAssignedFunding());
+            tamsTaDao.insertByEntity(exist);
+        }
+    }
+    @Override
     public void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects){
         for(SessionFundingViewObject per:sessionFundingViewObjects){
             TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
             existFunding.setPlanFunding(per.getPlanFunding());
             tamsUniversityFundingDao.insertOneByEntity(existFunding);
         }
+    }
+
+    //获取工作时间
+    @Override
+    public short getWorkTime() {
+        TAMSTimeSettingType timeSettingType = timeSettingTypeDao.selectByName("批次经费和学院经费设置");
+        TAMSTimeSettingType tamsTimeSettingType = timeSettingTypeDao.selectByName("课程经费设置");
+        TAMSTimeSettingType timeSettingType1 = timeSettingTypeDao.selectByName("助教经费设置");
+        TimeUtil timeUtil = new TimeUtil();
+        if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString()))
+            return 1;
+        if(!timeUtil.isBetweenPeriod(tamsTimeSettingType.getId(), sessionDao.getCurrentSession().getId().toString()))
+            return 2;
+        if(!timeUtil.isBetweenPeriod(timeSettingType1.getId(), sessionDao.getCurrentSession().getId().toString()))
+            return 3;
+        else
+            return 0;
     }
 
     /*

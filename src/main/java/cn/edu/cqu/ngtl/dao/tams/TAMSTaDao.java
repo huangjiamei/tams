@@ -67,5 +67,5 @@ public interface TAMSTaDao {
 
     String countHiredTa(String classId);
     void deleteOneByEntity(TAMSTa tamsTa);
-
+    TAMSTa selectByClassIdAndSessionId(String classId, String sessionId);
 }

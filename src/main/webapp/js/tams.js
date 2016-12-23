@@ -198,7 +198,7 @@ function getPieChart(chartId,title,data) {
         },
         tooltip: {
             // 除了此项占比，还需要加一个此项具体数值
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> >'
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> '
         },
         plotOptions: {
             pie: {
@@ -226,7 +226,6 @@ function getPieChart(chartId,title,data) {
  */
 function getBarChart(chartId,title,data) {
     data = eval(data);
-
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -262,7 +261,7 @@ function getBarChart(chartId,title,data) {
                 '运筹学与控制论',
                 '数学分析']
              */
-            categories : [data]
+            categories : data.x
         },
         yAxis: [
             {
@@ -287,7 +286,7 @@ function getBarChart(chartId,title,data) {
             color: '#66a3ff',
             // objlist.y
             //data: [1200, 1000, 600, 900, 800, 500, 500, 900],
-            data: data,
+            data: data.y,
             tooltip: {ySuffix: '元'},
             pointPadding: 0.15,
             pointPlacement: -0.03

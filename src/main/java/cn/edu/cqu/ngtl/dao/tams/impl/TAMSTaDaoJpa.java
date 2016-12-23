@@ -299,6 +299,25 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
 
     }
 
+    @Override
+    public TAMSTa selectByClassIdAndSessionId(String classId, String sessionId){
+
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("taClassId", classId),
+                        equal("sessionId", sessionId)
+                )
+        );
+        QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+
+        return qr.getResults().size() == 0 ? null : qr.getResults().get(0);
+
+
+    }
+
     //根据条件查询助教列表  //TODO 效率改进,特别是教师姓名的查询部分
     public List<TaInfoViewObject> getTaInfoByConditions(Map<String, String> conditions){
         List<TaInfoViewObject> taInfoViewObjects = new ArrayList<>();

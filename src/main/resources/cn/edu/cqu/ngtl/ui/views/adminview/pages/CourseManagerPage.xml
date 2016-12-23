@@ -62,8 +62,13 @@
                                                               p:location.viewId="PortalView"
                                                               p:location.controllerMapping="/home"
                                                               p:location.methodToCall="getCommonHome"/>
-                                                        <bean parent="Uif-KeyLabelPair" p:key="2"
-                                                              p:value="课程负责人管理"/>
+                                                        <bean parent="Uif-KeyValueLocation" p:key="2"
+                                                              p:value="管理台"
+                                                              p:location.viewId="AdminView"
+                                                              p:location.controllerMapping="/admin"
+                                                              p:location.methodToCall="getManageStationPage"/>
+                                                        <bean parent="Uif-KeyLabelPair" p:key="3"
+                                                              p:value="课程负责人"/>
                                                     </list>
                                                 </property>
                                             </bean>

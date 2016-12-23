@@ -41,7 +41,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="courseCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('courseCaHeaderTitle','fa fa-tachometer','管理台','课程类别管理')">
+                                  p:onDocumentReadyScript="initContentHeader('courseCaHeaderTitle','fa icon-asterisk','类别','课程类别')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -62,13 +62,18 @@
                                                                   p:location.viewId="PortalView"
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
+                                                            <bean parent="Uif-KeyValueLocation" p:key="2"
+                                                                  p:value="管理台"
+                                                                  p:location.viewId="AdminView"
+                                                                  p:location.controllerMapping="/admin"
+                                                                  p:location.methodToCall="getManageStationPage"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="3"
-                                                                  p:value="类别管理"
+                                                                  p:value="类别"
                                                                   p:location.viewId="AdminView"
                                                                   p:location.controllerMapping="/admin"
                                                                   p:location.methodToCall="getConsolePage"/>
                                                             <bean parent="Uif-KeyLabelPair" p:key="4"
-                                                                  p:value="课程类别管理"/>
+                                                                  p:value="课程类别"/>
                                                         </list>
                                                     </property>
                                                 </bean>
@@ -98,7 +103,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="课程类别"
+                                                                <bean parent="Uif-MessageField" p:messageText="课程类别列表"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">

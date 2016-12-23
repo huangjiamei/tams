@@ -2350,4 +2350,19 @@ public class adminController extends BaseController {
 
         return new AdminInfoForm();
     }
+
+    /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getManageStationPage&viewId=AdminView
+     *
+     * @param form
+     * @return 管理台页面
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getManageStationPage")
+    public ModelAndView getManageStationPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
+        return this.getModelAndView(adminInfoForm, "pageManageStation");
+    }
 }

@@ -13,4 +13,6 @@ public interface UTDepartmentDao {
 	List<UTDepartment> getAllUTDepartments();
 	
 	void deleteEXMDepartment(UTDepartment exmDepartment);
+
+	List<UTDepartment> getAllHasCourseDepartment();
 }

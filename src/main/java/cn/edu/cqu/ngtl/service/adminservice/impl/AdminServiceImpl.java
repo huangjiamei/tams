@@ -3,7 +3,6 @@ package cn.edu.cqu.ngtl.service.adminservice.impl;
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.cm.CMCourseClassificationDao;
 import cn.edu.cqu.ngtl.dao.tams.*;
-import cn.edu.cqu.ngtl.dao.tams.impl.TAMSDeptFundingDraftDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -341,7 +340,7 @@ public class AdminServiceImpl implements IAdminService{
             tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
             //学院经费初始化
             List<TAMSDeptFundingDraft> tamsDeptFundingDrafts = new ArrayList<>();
-            List<UTDepartment> departments = utDepartmentDao.getAllUTDepartments();
+            List<UTDepartment> departments = utDepartmentDao.getAllHasCourseDepartment(); //只初始化有课程的学院
             for(int i=0; i<departments.size(); i++){
                 TAMSDeptFundingDraft tamsDeptFundingDraft = new TAMSDeptFundingDraft();
                 tamsDeptFundingDraft.setSessionId(sessionId);

@@ -242,6 +242,7 @@
 
                         <bean id="searchCourseManagerButton" parent="Uif-PrimaryActionButton"
                               p:actionLabel="查询"
+                              p:style="margin-top:18px;"
                               p:onClickScript="deleteCookie();"
                               p:actionImagePlacement="LEFT"
                               p:additionalCssClasses="icon-search box-btngroup"

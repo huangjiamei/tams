@@ -221,7 +221,7 @@
                                                                                                         <property name="disclosure.render" value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" /><!--p:style="display:@{#line.department!=null?'block':'none'}"-->
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" p:style="display:@{#line.taName!=null?'block':'none'}"/>
                                                                                                         </property>
 
                                                                                                         <property
@@ -366,7 +366,7 @@
                                                                                         <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:style="margin-top:50px;">
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
+                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-VerticalBoxSection"
@@ -431,7 +431,9 @@
                                                                                                         </property>
                                                                                                     </bean>
 
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
+
+                                                                                                    <!--柱状图-->
+                                                                                                   <!-- <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-VerticalBoxSection"
@@ -449,7 +451,7 @@
                                                                                                                                               p:style="float: right!important;">
                                                                                                                                             <property name="items">
                                                                                                                                                 <list>
-                                                                                                                                                    <!--右上角btnlist-->
+
                                                                                                                                                 </list>
                                                                                                                                             </property>
                                                                                                                                         </bean>
@@ -464,7 +466,7 @@
                                                                                                                                               p:style="float: left!important;">
                                                                                                                                             <property name="items">
                                                                                                                                                 <list>
-                                                                                                                                                    <!--左上角btnlist-->
+
                                                                                                                                                 </list>
                                                                                                                                             </property>
                                                                                                                                         </bean>
@@ -476,7 +478,7 @@
                                                                                                                                   p:additionalCssClasses="box-body">
                                                                                                                                 <property name="items">
                                                                                                                                     <list>
-                                                                                                                                        <!--柱状图实体，通过js加载内容-->
+
                                                                                                                                         <bean id="testBarChart" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
@@ -490,7 +492,7 @@
                                                                                                                 </bean>
                                                                                                             </list>
                                                                                                         </property>
-                                                                                                    </bean>
+                                                                                                    </bean>-->
 
                                                                                                 </list>
                                                                                             </property>
@@ -771,140 +773,6 @@
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-
-                                                                                        <!--经费图表-->
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:style="margin-top:50px;">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-success">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-pie"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="饼状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-
-                                                                                                                            <!--display:none!important-->
-                                                                                                                            <!--隐藏charts data中转站 getChart的时候从这里获取data-->
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--table-->
-                                                                                                                                        <!--饼状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testPieChartTwo" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getPieChart('testPieChartTwo','学校批次经费饼状图','@{pieChartsNameValuePairs}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-info">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-bars"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="柱状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--柱状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testBarChartTwo" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartTwo','学校批次经费柱状图','@{histogram}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -1293,139 +1161,6 @@
                                                                                             </property>
                                                                                         </bean>
 
-                                                                                        <!--经费图表-->
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:style="margin-top:50px;">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-success">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-pie"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="饼状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-
-                                                                                                                            <!--display:none!important-->
-                                                                                                                            <!--隐藏charts data中转站 getChart的时候从这里获取data-->
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--table-->
-                                                                                                                                        <!--饼状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testPieChartThree" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getPieChart('testPieChartThree','学院经费饼状图','@{pieChartsNameValuePairs}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-info">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-bars"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="柱状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--柱状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testBarChartThree" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartThree','历史批次经费柱状图','@{histogram}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -1742,140 +1477,6 @@
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-
-                                                                                        <!--经费图表-->
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:style="margin-top:50px;">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-success">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-pie"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="饼状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-
-                                                                                                                            <!--display:none!important-->
-                                                                                                                            <!--隐藏charts data中转站 getChart的时候从这里获取data-->
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--table-->
-                                                                                                                                        <!--饼状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testPieChartFour" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getPieChart('testPieChartFour','课程经费饼状图','@{pieChartsNameValuePairs}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-info">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-bars"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="柱状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--柱状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testBarChartFour" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartFour','历史批次经费柱状图','@{histogram}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
@@ -2038,139 +1639,6 @@
                                                                                             </property>
                                                                                         </bean>
 
-                                                                                        <!--经费图表-->
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:style="margin-top:50px;">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-success">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-pie"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="饼状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-
-                                                                                                                            <!--display:none!important-->
-                                                                                                                            <!--隐藏charts data中转站 getChart的时候从这里获取data-->
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--table-->
-                                                                                                                                        <!--饼状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testPieChartFive" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getPieChart('testPieChartFive','助教经费饼状图','@{pieChartsNameValuePairs}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                    <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-6 col-md-6">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                                                                      p:additionalCssClasses="box box-info">
-                                                                                                                    <property name="items">
-                                                                                                                        <list>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-Icon" p:iconClass="icon-bars"/>
-                                                                                                                                        <bean parent="Uif-MessageField" p:messageText="柱状图"
-                                                                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: right!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--右上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-header">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                                                                              p:style="float: left!important;">
-                                                                                                                                            <property name="items">
-                                                                                                                                                <list>
-                                                                                                                                                    <!--左上角btnlist-->
-                                                                                                                                                </list>
-                                                                                                                                            </property>
-                                                                                                                                        </bean>
-
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                                                                  p:additionalCssClasses="box-body">
-                                                                                                                                <property name="items">
-                                                                                                                                    <list>
-                                                                                                                                        <!--柱状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testBarChartFive" parent="Uif-VerticalBoxSection"
-                                                                                                                                              p:additionalCssClasses="">
-                                                                                                                                            <property name="onDocumentReadyScript"
-                                                                                                                                                      value="getBarChart('testBarChartFive','助教经费柱状图','@{histogram}');"/>
-                                                                                                                                        </bean>
-                                                                                                                                    </list>
-                                                                                                                                </property>
-                                                                                                                            </bean>
-                                                                                                                        </list>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

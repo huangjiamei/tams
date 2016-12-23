@@ -428,7 +428,16 @@
                     </property>
                 </bean>
 
-
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="menuHeader">
+                    <property name="items">
+                        <list>
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
+                                  p:linkText="经费管理" p:iconClass="fa fa-money menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewFundsManagementPage')}"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>
@@ -471,10 +480,6 @@
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getTermManagePage&amp;viewId=AdminView"
                                   p:linkText="批次管理" p:iconClass="icon-th-list menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTermManagerPage')}"/>
-                            <bean parent="Uif-Link"
-                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getFundsPage&amp;viewId=AdminView"
-                                  p:linkText="经费管理" p:iconClass="icon-money menuIcon"
-                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewFundsManagementPage')}"/>
                             <bean parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getWorkFlowManagePage&amp;viewId=AdminView"
                                   p:linkText="工作流管理" p:iconClass="icon-random menuIcon"

@@ -360,9 +360,9 @@ public class TAServiceimpl implements ITAService {
             if (taDao.insertByEntity(newTa)) {
                 //全局增加博士津贴 start
                 TAMSClassTaApplication currentClass = tamsClassTaApplicationDao.selectByClassId(per.getClassId());
-                Double workHour = Double.valueOf(currentClass.getWorkHour());
-                Double phdSalary = Double.valueOf(phdTA.getHourlyWage());
-                Double masterSalary = Double.valueOf(masterTA.getHourlyWage());
+                Long workHour = Long.valueOf(currentClass.getWorkHour());
+                Long phdSalary = Long.valueOf(phdTA.getHourlyWage());
+                Long masterSalary = Long.valueOf(masterTA.getHourlyWage());
                 String phdFunds = String.valueOf(workHour * (phdSalary-masterSalary));
                 newTa.setPhdFunding(phdFunds); //给助教经费添加phd经费
                 this.addPhdFunds(phdFunds, per.getClassId());  //全局增加phd经费
@@ -581,31 +581,31 @@ public class TAServiceimpl implements ITAService {
 
             if (existClassFunding != null) { //保存课程经费表
                 String oldPhdFunding = existClassFunding.getPhdFunding();
-                existClassFunding.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                existClassFunding.setPhdFunding(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdFundsNumber)));
                 tamsClassFundingDao.saveOneByEntity(existClassFunding);
             }
 
             if (existClassFundingDraft != null) {  //保存课程经费草稿表
                 String oldPhdFunding = existClassFundingDraft.getPhdFunding();
-                existClassFundingDraft.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                existClassFundingDraft.setPhdFunding(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdFundsNumber)));
                 tamsClassFundingDraftDao.insertOneByEntity(existClassFundingDraft);
             }
 
             if (existDeptFunding != null) {  //保存部门经费
                 String oldPhdFunding = existDeptFunding.getPhdFunding();
-                existDeptFunding.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                existDeptFunding.setPhdFunding(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdFundsNumber)));
                 tamsDeptFundingDao.saveOneByEntity(existDeptFunding);
             }
 
             if (existDeptFundingDraft != null) {  //保存部门经费草稿
                 String oldPhdFunding = existDeptFundingDraft.getPhdFunding();
-                existDeptFundingDraft.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                existDeptFundingDraft.setPhdFunding(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdFundsNumber)));
                 tamsDeptFundingDraftDao.saveOneByEntity(existDeptFundingDraft);
             }
 
             if(existUniFunding!=null) {  //保存学校经费
                 String oldPhdFunding = existUniFunding.getPhdFunding();
-                existUniFunding.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                existUniFunding.setPhdFunding(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdFundsNumber)));
                 tamsUniversityFundingDao.insertOneByEntity(existUniFunding);
             }
 

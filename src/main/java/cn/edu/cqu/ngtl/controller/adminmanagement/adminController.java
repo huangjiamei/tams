@@ -23,6 +23,8 @@ import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import net.sf.json.JSONArray;
+import org.eclipse.jetty.util.ajax.JSONObjectConvertor;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
@@ -44,7 +46,6 @@ import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-
 /**
  * Created by awake on 2016-10-21.
  */
@@ -1087,7 +1088,8 @@ public class adminController extends BaseController {
         else
             histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
         String histojson = gson.toJson(histogramNameValuePairs);
-        infoForm.setHistogram(histojson);
+
+infoForm.setHistogram(histojson);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

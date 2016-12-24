@@ -108,7 +108,7 @@ public class TAServiceimpl implements ITAService {
     //根据studentid查询担任助教的classids
     public List<Object> getClassIdsByUid(){
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
-        return taDao.selectClassIdsByStudentId(user.getTag());
+        return taDao.selectClassIdsByStudentId(user.getCode());
     }
 
 

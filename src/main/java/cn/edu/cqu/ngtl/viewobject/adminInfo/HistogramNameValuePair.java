@@ -12,6 +12,10 @@ public class HistogramNameValuePair {
             this.x = x;
             this.y = y;
         }
+        else {
+            this.x = null;
+            this.y = null;
+        }
     }
 
     public Integer getY() {

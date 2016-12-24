@@ -273,8 +273,9 @@ public class TAServiceimpl implements ITAService {
                 TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
                 applicationDao.deleteByEntity(readyToRemove);
                 continue;
-                //TODO 应该警告并删除重复的申请信息
             }
+
+
             TAMSTa newTa = new TAMSTa();
             //录入基本信息
             newTa.setTaId(per.getStuId());

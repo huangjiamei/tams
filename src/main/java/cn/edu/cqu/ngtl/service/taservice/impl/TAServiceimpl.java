@@ -274,9 +274,8 @@ public class TAServiceimpl implements ITAService {
                 applicationDao.deleteByEntity(readyToRemove);
                 continue;
             }
-
-
             TAMSTa newTa = new TAMSTa();
+
             //录入基本信息
             newTa.setTaId(per.getStuId());
             newTa.setTaClassId(per.getClassId());
@@ -311,11 +310,19 @@ public class TAServiceimpl implements ITAService {
                     if(utStudent.getProgram().getDuration() == 3){
                         newTa.setType("1");
                     }
-                    newTa.setType("2"); //TODO
                 }
                 else
-                    newTa.setType("缺失");
+                    newTa.setType("0");
             }
+            /**
+             * 判断被聘人学历
+             */
+            if(per.getStuId().length()>8) {  //不是本科生
+                if(per.getStuId().substring(6,6+2).equals("01")){ //是博士
+                    newTa.setType("2");
+                }
+            }
+
             //初始状态设为已聘请
             newTa.setStatus("1");
             //设置未评价

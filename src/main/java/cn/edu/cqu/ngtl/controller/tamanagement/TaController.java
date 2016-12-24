@@ -618,7 +618,7 @@ public class TaController extends BaseController {
         String uId = userSession.getLoggedInUserPrincipalId();
         //我的课程
         taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(
-                taService.getStudentTimetableByUid(uId))
+                taService.getMycourseByUid(uId))
         );
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }

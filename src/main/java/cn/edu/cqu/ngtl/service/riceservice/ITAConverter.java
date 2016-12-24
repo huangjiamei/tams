@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
-import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
@@ -89,7 +88,7 @@ public interface ITAConverter {
 
     List<TaInfoViewObject> getTaInfoListByConditions(Map<String, String> conditions, String uId);
 
-    List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables);
+    List<MyClassViewObject> MyClassViewObject(List<Object> myClassIdList);
 
     String countClassFunding(List<ClassFundingViewObject> classFundings, String totalAssignedFunding, String totalsetted);
 

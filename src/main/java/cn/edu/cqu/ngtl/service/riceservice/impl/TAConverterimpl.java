@@ -1207,18 +1207,14 @@ public class TAConverterimpl implements ITAConverter {
 
 
     @Override
-    public List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables) {
+    public List<MyClassViewObject> MyClassViewObject(List<Object> myClassIdList) {
         List<MyClassViewObject> myClassViewObjects = new ArrayList<>();
-        if (utStudentTimetables == null || utStudentTimetables.size() == 0) {
+        if (myClassIdList == null || myClassIdList.size() == 0) {
             myClassViewObjects.add(new MyClassViewObject());
             return myClassViewObjects;
         }
-        List<Object> classIdList = new ArrayList<>();
-        for (UTStudentTimetable utStudentTimetable : utStudentTimetables) {
-            classIdList.add(utStudentTimetable.getClassId());
-        }
 
-        List<UTClassInformation> utClassInformations = utClassInfoDao.selectBatchByIds(classIdList);
+        List<UTClassInformation> utClassInformations = utClassInfoDao.selectBatchByIds(myClassIdList);
 
         for (UTClassInformation utClassInformation : utClassInformations) {
             MyClassViewObject myClassViewObject = new MyClassViewObject();

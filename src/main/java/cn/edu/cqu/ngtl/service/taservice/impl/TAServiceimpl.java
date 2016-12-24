@@ -254,10 +254,22 @@ public class TAServiceimpl implements ITAService {
 
 
     @Override
-    public List<UTStudentTimetable> getStudentTimetableByUid(String uId) {
+    public List<Object> getMycourseByUid(String uId) {
+        //如果是教师
+        if(userInfoService.isInstructor(uId)){
+            return classInstructorDao.selectClassIdsByInstructorId(uId);
+        }
 
-        return utStudentTimetableDao.getStudentTimetableByUid(uId);
-
+        //如果是学生
+        if(userInfoService.isStudent(uId)) {
+            List<Object> result = new ArrayList<>();
+            List<UTStudentTimetable> studentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
+            for(UTStudentTimetable utStudentTimetable:studentTimetables){
+                result.add(utStudentTimetable.getClassId());
+            }
+            return result;
+        }
+        return  null;
     }
 
 

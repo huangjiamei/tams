@@ -4,7 +4,6 @@ import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
-import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 
@@ -57,7 +56,7 @@ public interface ITAService {
     //根据uid查看申请者列表
     List<TAMSTaApplication> getAllApplicationFilterByUid(String uId);
 
-    List<UTStudentTimetable> getStudentTimetableByUid(String uId);
+    List<Object> getMycourseByUid(String uId);
 
     boolean changeStatusBatchByIds(List<String> ids, String status);
 

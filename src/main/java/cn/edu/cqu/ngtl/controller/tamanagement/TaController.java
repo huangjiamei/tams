@@ -617,7 +617,7 @@ public class TaController extends BaseController {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
         //我的课程
-        taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(
+        taInfoForm.setMyClassViewObjects(taConverter.MyClassViewObject(
                 taService.getMycourseByUid(uId))
         );
         return this.getModelAndView(taInfoForm, "pageWorkbench");
@@ -673,8 +673,13 @@ public class TaController extends BaseController {
         tamsTaTravelSubsidy.setTravelTime(travelTime);
         tamsTaTravelSubsidy.setDescription(travelNote);
         tamsTaTravelSubsidy.setTamsTaId(taInfoForm.getTaUniqueId());
-        taService.saveTravelSubsidy(tamsTaTravelSubsidy);
+
         String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+
+        if(taService.saveTravelSubsidy(tamsTaTravelSubsidy)){
+            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "add");
+        }
+
         List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,taInfoForm.getCurClassId());
         taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
@@ -693,7 +698,13 @@ public class TaController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
         int index = params.getSelectedLineIndex();
         TAMSTaTravelSubsidy tamsTaTravelSubsidy = taInfoForm.getTravelSubsidies().get(index);
-        taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy);
+
+        String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+
+        if(taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy)) {
+            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "sub");
+        }
+
         taInfoForm.getTravelSubsidies().remove(index);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
 

@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
@@ -25,6 +26,7 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 /**
@@ -88,6 +90,7 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private TAMSTaCategoryDao tamsTaCategoryDao;
 
+    /*
     @Autowired
     private UTClassInfoDao utClassInfoDao;
 
@@ -102,12 +105,34 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private TAMSDeptFundingDao tamsDeptFundingDao;
+    */
 
     @Autowired
     private TAMSUniversityFundingDao tamsUniversityFundingDao;
     //根据classids查询classinfo的信息
+
+    /*
     @Autowired
     private TAMSTeachCalendarDao tamsTeachCalendarDao;
+    */
+
+    @Autowired
+    private TAMSClassFundingDao tamsClassFundingDao;
+
+    @Autowired
+    private TAMSClassFundingDraftDao tamsClassFundingDraftDao;
+
+    @Autowired
+    private TAMSDeptFundingDao tamsDeptFundingDao;
+
+    @Autowired
+    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
+    @Autowired
+    private UTClassInfoDao utClassInfoDao;
+
+    @Autowired
+    private TAMSUniversityFundingDao universityFundingDao;
 
     @Override
     public String getApplicationPhoneNbr(String stuId, String classId) {
@@ -138,6 +163,11 @@ public class TAServiceimpl implements ITAService {
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
         return taDao.selectClassIdsByStudentId(user.getCode());
     }
+
+
+    //根据classids查询classinfo的信息
+    @Autowired
+    private TAMSTeachCalendarDao tamsTeachCalendarDao;
 
     @Override
     public List<WorkBenchViewObject> getClassInfoByIds(List<Object> ids) {
@@ -574,8 +604,100 @@ public class TAServiceimpl implements ITAService {
     }
 
     @Override
-    public void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy) {
+    public boolean deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy) {
         tamsTaTravelSubsidyDao.deleteOneByEntity(tamsTaTravelSubsidy);
+        return true;
+    }
+
+    //交通补贴
+    @Override
+    public void countTravelSubsidy(String stuId, String classId, String option){
+        //当前学期
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+
+        Integer change = 0;
+        if(option == "add") {
+            change = 10;
+        }
+        if(option == "sub"){
+            change = -10;
+        }
+        //添加助教交通补贴
+        TAMSTa tamsTa = tamstadao.selectByStudentIdAndClassId(stuId, classId);
+        if(tamsTa != null) {
+            String travelSubsidyTa = tamsTa.getTravelSubsidy();
+            Integer sumTa = Integer.parseInt(travelSubsidyTa);
+            sumTa = sumTa + change;
+            tamsTa.setTravelSubsidy(sumTa.toString());
+            tamstadao.insertByEntity(tamsTa);
+        }
+
+        //改变课程交通补贴
+        TAMSClassFunding tamsClassFunding = tamsClassFundingDao.getOneByClassIdAndSessionId(classId, curSession.getId().toString());
+        if(tamsClassFunding != null) {
+            String travelSubsidyClass = tamsClassFunding.getTravelSubsidy();
+            Integer sumClass = Integer.parseInt(travelSubsidyClass);
+
+            sumClass = sumClass + change;
+            tamsClassFunding.setTravelSubsidy(sumClass.toString());
+            tamsClassFundingDao.saveOneByEntity(tamsClassFunding);
+        }
+
+        TAMSClassFundingDraft tamsClassFundingDraft = tamsClassFundingDraftDao.selectOneByClassIdAndSessionId(classId, curSession.getId().toString());
+        if(tamsClassFundingDraft != null) {
+            String travelSubsidyClassDraft = tamsClassFundingDraft.getTravelSubsidy();
+            Integer sumClassDraft = Integer.parseInt(travelSubsidyClassDraft);
+
+            sumClassDraft = sumClassDraft + change;
+            tamsClassFundingDraft.setTravelSubsidy(sumClassDraft.toString());
+            tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
+        }
+        /*List<TAMSTa> tamsTas = tamstadao.selectByClassId(classId);
+        for(TAMSTa per : tamsTas) {
+            sumClass = sumClass + Integer.parseInt(per.getTravelSubsidy());
+            sumClassDraft = sumClassDraft + Integer.parseInt(per.getTravelSubsidy());
+        }
+        */
+
+        //改变学院交通补贴
+        TAMSDeptFunding tamsDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(
+                utClassInfoDao.getOneById(classId).getDepartmentId(),
+                curSession.getId()
+        );
+        if(tamsDeptFunding != null) {
+            String travelSubsidyDept = tamsDeptFunding.getTravelSubsidy();
+            Integer sumDept = Integer.parseInt(travelSubsidyDept);
+
+            sumDept = sumDept + change;
+            tamsDeptFunding.setTravelSubsidy(sumDept.toString());
+            tamsDeptFundingDao.saveOneByEntity(tamsDeptFunding);
+        }
+
+        TAMSDeptFundingDraft tamsDeptFundingDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(
+                utClassInfoDao.getOneById(classId).getDepartmentId(),
+                curSession.getId()
+        );
+        if(tamsClassFundingDraft != null) {
+            String travelSubsidyDeptDraft = tamsDeptFundingDraft.getTravelSubsidy();
+            Integer sumDeptDraft = Integer.parseInt(travelSubsidyDeptDraft);
+
+            sumDeptDraft = sumDeptDraft + change;
+            tamsDeptFundingDraft.setTravelSubsidy(sumDeptDraft.toString());
+            tamsDeptFundingDraftDao.saveOneByEntity(tamsDeptFundingDraft);
+        }
+
+
+        //改变批次交通补贴
+        TAMSUniversityFunding universityFunding = universityFundingDao.getOneBySessionId(curSession.getId());
+        if(universityFunding != null){
+            String travelSubsidyUniversity = universityFunding.getTravelSubsidy();
+            Integer sumUniversity = Integer.parseInt(travelSubsidyUniversity);
+
+            sumUniversity = sumUniversity + change;
+            universityFunding.setTravelSubsidy(sumUniversity.toString());
+            universityFundingDao.insertOneByEntity(universityFunding);
+        }
+
     }
 
     @Override

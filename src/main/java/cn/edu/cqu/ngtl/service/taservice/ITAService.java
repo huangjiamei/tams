@@ -84,7 +84,9 @@ public interface ITAService {
 
     String getTamsTaIdByStuIdAndClassId(String stuId, String classId);
 
-    void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+    boolean deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+
+    void countTravelSubsidy(String stuId, String classId, String option);
 
     boolean addPhdFunds(String phdFundsNumber, String classId);
 

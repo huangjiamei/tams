@@ -600,8 +600,10 @@ public class TAConverterimpl implements ITAConverter {
             nullObject.add(new WorkBenchViewObject());
             return nullObject;
         }
-        for (WorkBenchViewObject per : list) {
-            per.setStatus(tamsTaDao.selectByClassId(per.getClassId()).get(0).getStatus());
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+
+        for(WorkBenchViewObject per : list) {
+            per.setStatus(tamsTaDao.selectByStudentIdAndClassId(user.getCode(), per.getClassId()).getStatus());
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -1213,6 +1215,12 @@ public class TAConverterimpl implements ITAConverter {
             myClassViewObjects.add(new MyClassViewObject());
             return myClassViewObjects;
         }
+        /*
+        List<Object> classIdList = new ArrayList<>();
+        for(UTStudentTimetable utStudentTimetable : utStudentTimetables){
+            classIdList.add(utStudentTimetable.getClassId());
+        }
+        */
 
         List<UTClassInformation> utClassInformations = utClassInfoDao.selectBatchByIds(myClassIdList);
 

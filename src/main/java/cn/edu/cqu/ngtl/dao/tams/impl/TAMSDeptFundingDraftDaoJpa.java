@@ -135,6 +135,17 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
         return qr.getResults().get(0);
     }
 
+    @Override
+    public TAMSDeptFundingDraft selectDeptDraftFundsByDeptId(Integer deptId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("departmentId", deptId)
+                )
+        );
+        QueryResults<TAMSDeptFundingDraft> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFundingDraft.class,criteria.build());
+        return qr.getResults().get(0);
+    }
+
 
     @Override
     public boolean saveOneByEntity(TAMSDeptFundingDraft tamsDeptDraftFunding){

@@ -340,6 +340,19 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
             return null;
     }
 
+    public TAMSDeptFunding selectDeptFundsByDeptId(Integer deptId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("departmentId", deptId)
+                )
+        );
+        QueryResults<TAMSDeptFunding> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFunding.class,criteria.build());
+        if(qr.getResults() != null && !qr.getResults().isEmpty())
+            return qr.getResults().get(0);
+        else
+            return null;
+    }
+
 
     public boolean saveOneByEntity(TAMSDeptFunding tamsDeptFunding){
 

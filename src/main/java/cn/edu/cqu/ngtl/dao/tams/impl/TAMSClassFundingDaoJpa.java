@@ -216,4 +216,15 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
     public boolean saveOneByEntity(TAMSClassFunding tamsClassFunding){
         return KRADServiceLocator.getDataObjectService().save(tamsClassFunding)==null;
     }
+
+    @Override
+    public TAMSClassFunding getOneByClassId(String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("classId", classId)
+                )
+        );
+        List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();
+        return list==null?null:(list.size()==0?null:list.get(0));
+    }
 }

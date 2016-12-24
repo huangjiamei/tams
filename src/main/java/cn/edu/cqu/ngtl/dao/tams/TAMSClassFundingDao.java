@@ -18,4 +18,6 @@ public interface TAMSClassFundingDao {
     TAMSClassFunding getOneByClassIdAndSessionId(String classId,String SessionId);
 
     boolean saveOneByEntity(TAMSClassFunding tamsClassFunding);
+
+    TAMSClassFunding getOneByClassId(String classId);
 }

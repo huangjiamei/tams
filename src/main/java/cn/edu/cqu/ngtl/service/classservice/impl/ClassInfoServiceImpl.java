@@ -93,6 +93,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
+    @Autowired
+    private TAMSClassFundingDao tamsClassFundingDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
@@ -520,6 +523,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public void validClassFunds(String classId) {  //初始化课程经费 //TODO LIUXIAO
+        //草稿课程经费表
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
         TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);
         if (tamsClassFundingDraftExist == null) {
@@ -536,6 +540,24 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             tamsClassFundingDraftExist.setApplyFunding(tamsClassTaApplication.getApplicationFunds());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraftExist);
         }
+
+        //课程经费表
+        TAMSClassFunding tamsClassFundingExist = tamsClassFundingDao.getOneByClassId(classId);
+        if (tamsClassFundingExist == null) {
+            TAMSClassFunding tamsClassFunding = new TAMSClassFunding();
+            tamsClassFunding.setClassId(classId);
+            tamsClassFunding.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
+            tamsClassFunding.setAssignedFunding("0");
+            tamsClassFunding.setPhdFunding("0");
+            tamsClassFunding.setBonus("0");
+            tamsClassFunding.setTravelSubsidy("0");
+            tamsClassFunding.setSessionId(sessionDao.getCurrentSession().getId().toString());
+            tamsClassFundingDao.saveOneByEntity(tamsClassFunding);
+        }else{
+            tamsClassFundingExist.setApplyFunding(tamsClassTaApplication.getApplicationFunds());
+            tamsClassFundingDao.saveOneByEntity(tamsClassFundingExist);
+        }
+
     }
 
     @Override

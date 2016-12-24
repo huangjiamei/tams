@@ -125,6 +125,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         if(userInfoService.isSysAdmin(uId) ||userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
+        else if(userInfoService.isCourseManager(uId)){  //默认是课程负责人一定是教师
+            //担任课程负责人的课程
+            List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);
+            //自己的课程
+            List<Object> ownClassIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            for(Object classId:ownClassIds){
+                if(!classIds.contains(classId)){
+                    classIds.add(classId);
+                }
+            }
+            return classInfoDao.selectBatchByIds(classIds);
+        }
         else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
@@ -328,9 +340,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         return false;
     }
-
-
-
 
 
 

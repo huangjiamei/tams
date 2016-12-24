@@ -20,4 +20,6 @@ public interface UTClassInstructorDao {
 
     Map getAllClassIdAndInstructorId(Map InstructorMap);
 
+    List<Object> selectCourseManagerClassIdsByInstructorId(String uId);
+
 }

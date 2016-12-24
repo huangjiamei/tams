@@ -1,16 +1,19 @@
 package cn.edu.cqu.ngtl.dao.ut.impl;
 
+import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +28,9 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
 
     EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+
+    @Autowired
+    private TAMSCourseManagerDao tamsCourseManagerDao;
 
     @Override
     public List<UTClassInstructor> selectByClassId(String classId) {
@@ -74,4 +80,14 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         return classInstructorMap;
     }
 
+    public List<Object> selectCourseManagerClassIdsByInstructorId(String uId){
+        Query query = em.createNativeQuery("SELECT t.COURSE_ID FROM TAMS_COURSE_MANAGER t WHERE t.COURSE_MANAGER_ID ='"+uId+"'");
+        List<Object> courseIdList = query.getResultList();
+        List<Object> result  = new ArrayList();
+        for (Object courseId : courseIdList) {
+            query = em.createNativeQuery("SELECT t.UNIQUEID FROM UNITIME_CLASS_INFORMATION t WHERE t.COURSE_ID = '" + courseId.toString()+"'");
+            result.addAll(query.getResultList());
+        }
+        return result;
+    }
 }

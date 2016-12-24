@@ -259,7 +259,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
         List<WorkBenchViewObject> list = new ArrayList<>(ids.size());
         em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         for(Object id : ids){
-            Query qr = em.createNativeQuery("SELECT c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, SUM(t.ELAPSED_TIME) AS ELAPSED_TIME, p.NAME, ta.STATUS, c.UNIQUEID FROM UNITIME_CLASS_INFORMATION c JOIN UNITIME_CLASS_INSTRUCTOR uci ON c.UNIQUEID=uci.CLASS_ID AND c.UNIQUEID='"+ id +"' AND c.SESSION_ID = '"+curSession.getId()+"' JOIN UNITIME_INSTRUCTOR i ON uci.INSTRUCTOR_ID = i.UNIQUEID JOIN TAMS_TEACH_CALENDAR t ON t.CLASS_ID = c.UNIQUEID JOIN CM_PROGRAM_COURSE cp ON c.COURSE_ID = cp.COURSE_ID JOIN CM_PROGRAM p ON cp.PROGRAM_ID = p.UNIQUEID JOIN TAMS_TA ta ON c.UNIQUEID = ta.TA_CLASS GROUP BY c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, p.NAME, ta.STATUS, c.UNIQUEID");
+            Query qr = em.createNativeQuery("SELECT c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, SUM(t.ELAPSED_TIME) AS ELAPSED_TIME, p.NAME, c.UNIQUEID FROM UNITIME_CLASS_INFORMATION c JOIN UNITIME_CLASS_INSTRUCTOR uci ON c.UNIQUEID=uci.CLASS_ID AND c.UNIQUEID='"+ id +"' AND c.SESSION_ID = '"+curSession.getId()+"' JOIN UNITIME_INSTRUCTOR i ON uci.INSTRUCTOR_ID = i.UNIQUEID JOIN TAMS_TEACH_CALENDAR t ON t.CLASS_ID = c.UNIQUEID JOIN CM_PROGRAM_COURSE cp ON c.COURSE_ID = cp.COURSE_ID JOIN CM_PROGRAM p ON cp.PROGRAM_ID = p.UNIQUEID  GROUP BY c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, p.NAME,  c.UNIQUEID");
             List<Object> columns = qr.getResultList();
             for(Object column : columns) {
                 Object[] informations = (Object[]) column;
@@ -271,12 +271,12 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 workbenchviewobject.setTeacher(informations[4].toString());
                 workbenchviewobject.setHours(informations[5].toString());
                 workbenchviewobject.setMajor(informations[6].toString());
-                workbenchviewobject.setStatus(informations[7].toString());
-                workbenchviewobject.setClassId(informations[8].toString());
+                //workbenchviewobject.setStatus(informations[7].toString());
+                workbenchviewobject.setClassId(informations[7].toString());
                 list.add(workbenchviewobject);
             }
         }
-        return list;
+        return list.size() != 0 ? list : null;
     }
 
 

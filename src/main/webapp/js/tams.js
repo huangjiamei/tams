@@ -234,7 +234,7 @@ function getPieChart(chartId,title,data) {
 function getBarChart(chartId,title,data) {
     //data = eval(data);
     data = JSON.parse(data);
-/*
+
     data = {
 
         x: [
@@ -257,7 +257,7 @@ function getBarChart(chartId,title,data) {
 
         y: [1200, 1000, 600, 900, 800, 500, 500, 900]
 
-    }*/
+    }
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -271,6 +271,9 @@ function getBarChart(chartId,title,data) {
     });
 
     jQuery('#' + chartId).highcharts({
+        legend:{
+            enabled:false
+        },
         credits:{
             enabled:false   // 去除highcharts的水印
         },
@@ -293,25 +296,24 @@ function getBarChart(chartId,title,data) {
                 '运筹学与控制论',
                 '数学分析']
              */
+            title:{
+                text:"课程"
+            },
             categories : data.x
         },
         yAxis: [
             {
+                title:{
+                  text:"经费"
+                },
                 allowDecimals: false, // 坐标轴刻度不为小数
-                title: {text: '经费'},
+
                 labels: {
-                    format: '{y} 元'
-                    //format : '{series.y}'
+                    format: '{value} 元',
+                    // format : '{series.y}'
                 }
             }
-           /*, {
-                title: {text: '助教优秀率'},
-                opposite: true,
-                labels: {
-                    format: '{y} %'
-                }
-            }
-            */
+
         ],
         series: [{
             name: '经费',
@@ -320,7 +322,11 @@ function getBarChart(chartId,title,data) {
             // objlist.y
             //data: [1200, 1000, 600, 900, 800, 500, 500, 900],
             data: data.y,
-            tooltip: {ySuffix: '元'},
+            tooltip: {
+                ySuffix: '元',
+                pointFormat:'<b>{point.y}</b> ',
+                headerFormat:'<span style="font-size: 10px">{point.key}: </span>',
+            },
             pointPadding: 0.15,
             pointPlacement: -0.03
         }/*, {

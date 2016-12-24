@@ -125,6 +125,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         if(userInfoService.isSysAdmin(uId) ||userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
+        else if(userInfoService.isCourseManager(uId)){  //默认是课程负责人一定是教师
+            //担任课程负责人的课程
+            List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);
+            //自己的课程
+            List<Object> ownClassIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            for(Object classId:ownClassIds){
+                if(!classIds.contains(classId)){
+                    classIds.add(classId);
+                }
+            }
+            return classInfoDao.selectBatchByIds(classIds);
+        }
         else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
@@ -151,13 +163,36 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
         if(userInfoService.isSysAdmin(uId)||userInfoService.isAcademicAffairsStaff(uId)) {
-            /** Access DataBase */
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
         }else if(userInfoService.isCollegeStaff(uId)){ //如果是二级单位管理员则固定学院id
             conditions.put("DepartmentId",((User)GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
+        } else if (userInfoService.isCourseManager(uId)) {
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);
+            //自己的课程
+            List<Object> ownClassIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            for(Object classId:ownClassIds){
+                if(!classIds.contains(classId)){
+                    classIds.add(classId);
+                }
+            }
+            List<String> strClassIds = (List<String>)(List)classIds; //强制转化为String List
+            /*
+                在结果中只显示负责人能看的课程
+             */
+            List<UTClassInformation> result = new ArrayList<>();
+            for(UTClassInformation utClassInformation:classInformations){
+                System.out.println(strClassIds.get(0).equals(utClassInformation.getId()));
+                System.out.println(strClassIds.get(1).equals(utClassInformation.getId()));
+                System.out.println(strClassIds.get(2).equals(utClassInformation.getId()));
+                System.out.println(strClassIds.get(3).equals(utClassInformation.getId()));
+                if(strClassIds.contains(utClassInformation.getId()))
+                    result.add(utClassInformation);
+            }
+            return result;
         } else if (userInfoService.isInstructor(uId)) {
             conditions.put("InstructorName",((User)GlobalVariables.getUserSession().retrieveObject("user")).getName());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
@@ -180,7 +215,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
-        //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
         if(!userInfoService.isInstructor(uId)) {
             return null;
         }
@@ -328,9 +362,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         return false;
     }
-
-
-
 
 
 

@@ -38,6 +38,13 @@
     } );
 })();
 
+//取消离开页面时的询问弹框
+(function(){
+    window.onbeforeunload = function(){
+        return;
+    }
+})();
+
 /**
  * 每次点击btn都会提交两次，
  * 所有首先判断transfer和editor中内容是否有区别，内容不同时才会提交
@@ -225,7 +232,32 @@ function getPieChart(chartId,title,data) {
  * @param dataTransferId
  */
 function getBarChart(chartId,title,data) {
-    data = eval(data);
+    //data = eval(data);
+    data = JSON.parse(data);
+/*
+    data = {
+
+        x: [
+
+            '高等数学',
+
+            '概率论',
+
+            '应用数学',
+
+            '离散数学',
+
+            '统计学',
+
+            '计算数学',
+
+            '运筹学与控制论',
+
+            '数学分析'],
+
+        y: [1200, 1000, 600, 900, 800, 500, 500, 900]
+
+    }*/
     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
     Highcharts.setOptions({
         lang: {
@@ -269,6 +301,7 @@ function getBarChart(chartId,title,data) {
                 title: {text: '经费'},
                 labels: {
                     format: '{y} 元'
+                    //format : '{series.y}'
                 }
             }
            /*, {

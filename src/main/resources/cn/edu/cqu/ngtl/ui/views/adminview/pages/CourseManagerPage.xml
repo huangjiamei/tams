@@ -156,7 +156,6 @@
                                                             <bean id="CourseManagerTable"  parent="Uif-Disclosure-TableCollectionSection"
                                                                   p:onDocumentReadyScript = "refreshTableFilter(searchCourseManager,CourseManagerTable);"
                                                                   p:layoutManager.numberOfColumns="4">
-                                                                <!--<property name="onDocumentReadyScript" value="readyApplicantPageTable();" />-->
                                                                 <property name="collectionObjectClass"
                                                                           value="cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject"/>
                                                                 <property name="propertyName" value="courseManagerViewObjects"/>

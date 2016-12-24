@@ -106,7 +106,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="showDialog('AddTransAllowanceDialog');"
+                                                                                  p:methodToCall="showAddTransAllowanceDialog"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"

@@ -954,3 +954,11 @@ td.selected{
     font-weight: bold;
     margin-top: 15px;
 }
+
+/*饼状图、柱状图置中*/
+#testPieChart>div{
+    margin: auto;
+}
+#testBarChart>div{
+    margin: auto;
+}

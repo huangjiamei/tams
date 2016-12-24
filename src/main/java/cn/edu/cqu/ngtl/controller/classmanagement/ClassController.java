@@ -247,14 +247,7 @@ public class ClassController extends BaseController {
 //            CollectionControllerServiceImpl.CollectionActionParameters params =
 //                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
 //            int index = params.getSelectedLineIndex();
-            int index=Integer.parseInt(infoForm.getIndexClassListPage());
-            ClassTeacherViewObject classObject = infoForm.getClassList().get(index);
-            /**
-             * param in end
-             */
-            String classId = classObject.getId();
-            infoForm.setCurrClassId(classId);
-
+            String classId = infoForm.getCurrClassId();
             UTClass utClass = classInfoService.getClassInfoById(classId);
 
             ClassDetailInfoViewObject detailInfoViewObject = taConverter.classInfoToViewObject(
@@ -398,10 +391,18 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        int index=Integer.parseInt(infoForm.getIndexClassListPage());
+        ClassTeacherViewObject classObject = infoForm.getClassList().get(index);
+        /**
+         * param in end
+         */
+        String classId = classObject.getId();
+        infoForm.setCurrClassId(classId);
+
+
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
-        String classId = infoForm.getCurrClassId();
         if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
             return this.getModelAndView(infoForm, "pageTeachingCalendar");
 
@@ -1083,9 +1084,6 @@ public class ClassController extends BaseController {
                                             HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
-
-        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
 
         String classId = infoForm.getCurrClassId();
 

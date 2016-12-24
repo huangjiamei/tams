@@ -95,6 +95,20 @@ public class UserInfoServiceImpl implements IUserInfoService {
 		return isInstructor;
 	}
 
+	/**
+	 * 是否是课程负责人
+	 * @param principalId
+	 * @return
+	 */
+	@Override
+	public boolean isCourseManager(String principalId){
+		List <String>roleIds = new ArrayList<String>();
+		roleIds.add("10047");
+		boolean isCourseManager= KimApiServiceLocator.getRoleService().principalHasRole(principalId, roleIds, Collections.<String, String>emptyMap());
+		return isCourseManager;
+	}
+
+
 	@Override
 	public User getUserByUserSession(UserSession userSession) {
 		// TODO Auto-generated method stub

@@ -843,6 +843,7 @@ public class adminController extends BaseController {
     /**
      * 编辑课程负责人信息
      */
+    @Deprecated
     @RequestMapping(params = {"methodToCall=updateCourseManager"})
     public ModelAndView updateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -854,19 +855,19 @@ public class adminController extends BaseController {
         CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
         infoForm.setCourseManagerIndex(index);
         infoForm.setSelectedCourseManagerObject(selectedObject);
-        infoForm.setCourseNm(selectedObject.getCourseNm());
-        infoForm.setCourseNmb(selectedObject.getCourseNmb());
-        infoForm.setCourseManager(selectedObject.getCourseManager());
-        infoForm.setInstructorCode(selectedObject.getInstructorCode());
+        infoForm.setCourseManager(null);  //清空之前的数据
+        infoForm.setInstructorCode(null);
         return this.showDialog("confirmEditManagerDialog", true, infoForm);
     }
 
-    /**
+/**
      * 更新课程负责人
      *
      * @param form
      * @return
      */
+/*
+    @Deprecated
     @RequestMapping(params = {"methodToCall=saveUpdateCourseManager"})
     public ModelAndView saveUpdateCourseManager(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
@@ -888,6 +889,7 @@ public class adminController extends BaseController {
         //TODO 报错页面待做
         return null;
     }
+*/
 
 
     /**

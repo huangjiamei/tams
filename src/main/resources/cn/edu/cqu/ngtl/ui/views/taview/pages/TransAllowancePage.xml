@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="taCourseCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','fa fa-reorder','助教','交通补贴申请')">
+                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','fa fa-reorder','工作台','申请')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -104,15 +104,15 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="添加记录"
+                                                                                  p:actionLabel="添加"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:actionScript="showDialog('AddTransAllowanceDialog');"
-                                                                                  p:additionalCssClasses="icon-plus bg-success tamsbtn">
+                                                                                  p:methodToCall="showAddTransAllowanceDialog"
+                                                                                  p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="Excel"
+                                                                                  p:actionLabel="EXCEL"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-table bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-table bg-orange box-btngroup">
                                                                             </bean>
 
                                                                         </list>
@@ -155,13 +155,10 @@
                                                                             <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-ActionImage">
+                                                                                        <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteTransAllowanceDialog" />
-                                                                                            </property>
-                                                                                            <property name="actionImage">
-                                                                                                <bean parent="Uif-Image"
-                                                                                                      p:source="@{#ConfigProperties['application.url']}/images/delete_enabled.png" />
                                                                                             </property>
                                                                                         </bean>
                                                                                     </list>
@@ -187,10 +184,10 @@
     </bean>
 
     <bean id="deleteTransAllowanceDialog" parent="Uif-DialogGroup"
-          p:headerText="删除此条往返记录" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="删除记录" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="删除往返记录后将无法恢复，请小心处理！" />
+                <bean parent="Uif-MessageField" p:messageText="删除往返记录后将无法恢复，请谨慎处理！" />
             </list>
         </property>
         <property name="footer.items">
@@ -203,7 +200,7 @@
     </bean>
 
     <bean id="AddTransAllowanceDialog" parent="Uif-DialogGroup"
-          p:headerText="添加往返记录">
+          p:headerText="添加">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
@@ -216,7 +213,7 @@
                                               p:additionalCssClasses="box-body">
                                             <property name="items">
                                                 <list>
-                                                    <bean parent="Uif-InputField" p:label="交通补贴时间记录"
+                                                    <bean parent="Uif-InputField" p:label="交通补贴时间"
                                                           p:additionalCssClasses="col-xs-12 col-sm-D12 col-md-12 col-lg-12"
                                                           p:propertyName="travelTimeD">
                                                         <property name="control">

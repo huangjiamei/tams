@@ -625,7 +625,7 @@ public class TaController extends BaseController {
 
     /**
      * 工作台页面点击'申请交通补贴'，通过此方法跳转到对应某学生的交通补贴页面
-     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getTransAllowancePage&viewId=TaView
+     * 127.0.0.1:8080/tams/portal/ta?methodToCall=getGowancePage&viewId=TaView
      * @param form
      * @return
      */
@@ -699,9 +699,19 @@ public class TaController extends BaseController {
 
     }
 
+    /**
+     * 弹出添加交通补贴的dialog
+     * @param form
+     * @return
+     */
 
-
-
+    @RequestMapping(params = "methodToCall=showAddTransAllowanceDialog")
+    public ModelAndView showAddTransAllowanceDialog(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        taInfoForm.setTravelTimeD(null);
+        taInfoForm.setTravelNote(null);
+        return this.showDialog("AddTransAllowanceDialog",true,taInfoForm);
+    }
 
 
     /**

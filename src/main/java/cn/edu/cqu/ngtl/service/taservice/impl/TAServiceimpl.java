@@ -143,6 +143,9 @@ public class TAServiceimpl implements ITAService {
     public short submitApplicationAssistant(TAMSTaApplication application) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
         TimeUtil timeUtil = new TimeUtil();
+        if(timeSettingType==null){
+            return 10;
+        }
         if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
             return 1;
         }

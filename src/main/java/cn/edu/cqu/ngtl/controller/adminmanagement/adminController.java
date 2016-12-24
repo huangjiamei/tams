@@ -1103,7 +1103,10 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         short code = adminService.getWorkTime();
-        if(code == 1) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(code == 1) {
             infoForm.setErrMsg("非学院经费设置时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
@@ -1134,7 +1137,10 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         short code = adminService.getWorkTime();
-        if(code == 2) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(code == 2) {
             infoForm.setErrMsg("非课程经费设置时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
@@ -1162,7 +1168,10 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         short code = adminService.getWorkTime();
-        if(code == 2) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(code == 2) {
             infoForm.setErrMsg("非课程经费设置时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
@@ -1188,7 +1197,10 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         short code = adminService.getWorkTime();
-        if(code == 3) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(code == 3) {
             infoForm.setErrMsg("非助教经费设置时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
@@ -1209,7 +1221,10 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         short code = adminService.getWorkTime();
-        if(code == 1) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(code == 1) {
             infoForm.setErrMsg("非学院经费设置时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
@@ -1239,7 +1254,10 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
         short code = adminService.getWorkTime();
-        if(code == 1) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的时间！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(code == 1) {
             infoForm.setErrMsg("非批次预算经费设置时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }

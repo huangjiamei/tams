@@ -105,7 +105,6 @@ public class ClassController extends BaseController {
 //            return this.showDialog("refreshPageViewDialog", true, infoForm);
 //
 //        }
-
     }
     /**
       * 课程页面checkbox全选
@@ -334,7 +333,10 @@ public class ClassController extends BaseController {
         }
 
         short code = taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
-        if(code == 1) {
+        if(code == 10){
+            infoForm.setErrMsg("管理员未设置相应的添加时间！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }else if(code == 1) {
             infoForm.setErrMsg("非助教申请时间！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
@@ -423,6 +425,7 @@ public class ClassController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
+
 
     /**
      * 获取新建教学日历页面
@@ -943,6 +946,10 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
+        else if(result == 10) {
+            infoForm.setErrMsg("管理员未设置提交申请时间，无法提交！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
         else {
             infoForm.setErrMsg("未知错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1344,7 +1351,10 @@ public class ClassController extends BaseController {
             short code = taService.submitApplicationAssistant(
                     classConverter.TaViewObjectToTaApplication(curTa, classId)
             );
-            if (code == 1) {
+            if (code == 10) {
+                infoForm.setErrMsg("管理员未设置申请时间！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }else if (code == 1) {
                 infoForm.setErrMsg("非助教申请时间！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             } else if (code == 2) {

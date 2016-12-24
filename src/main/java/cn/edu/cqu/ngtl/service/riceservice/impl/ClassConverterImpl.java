@@ -63,10 +63,9 @@ public class ClassConverterImpl implements IClassConverter {
             //点击查看详细信息会用到的
             CMProgram program = listone.getProgram();
             if(program == null)
-                viewObject.setTaBachelorMajorName("缺失");
+                viewObject.setTaMajorName("缺失");
             else
-                viewObject.setTaBachelorMajorName(listone.getProgram().getName().toString());
-            viewObject.setTaMasterMajorName("缺失");
+                viewObject.setTaMajorName(listone.getProgram().getName().toString());
             viewObject.setAdvisorName("缺失");
             viewObjects.add(viewObject);
         }

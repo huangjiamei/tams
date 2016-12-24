@@ -126,7 +126,7 @@
                                                                                   p:messageText="@{selectedTaInfo.credit}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="专业"
-                                                                                  p:messageText="@{selectedTaInfo.taMasterMajorName}"/>
+                                                                                  p:messageText="@{selectedTaInfo.taMajorName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="主讲教师"
                                                                                   p:messageText="@{selectedTaInfo.instructorName}"/>

@@ -144,6 +144,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         else if (userInfoService.isStudent(uId)) {
             TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
+            if(timeSettingType==null){
+                return null;
+            }
             TimeUtil timeUtil = new TimeUtil();
             if(timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
                 return this.getAllCurSessionClasses();
@@ -283,7 +286,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations,String totalTime,String totalBudget) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("教师申请助教");
         TimeUtil timeUtil = new TimeUtil();
-        if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+        if(timeSettingType == null) {
+            return 10;
+        }
+        if (!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
             return 1;
         }
         TAMSClassTaApplication isExist = classTaApplicationDao.selectByInstructorIdAndClassId(instructorId, classId);

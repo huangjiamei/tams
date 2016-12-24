@@ -15,9 +15,7 @@ public class MyTaViewObject {
 
     private String taGender;
 
-    private String taBachelorMajorName;
-
-    private String taMasterMajorName;
+    private String taMajorName;
 
     private String advisorName;
 
@@ -67,20 +65,12 @@ public class MyTaViewObject {
         this.taGender = taGender;
     }
 
-    public String getTaBachelorMajorName() {
-        return taBachelorMajorName;
+    public String getTaMajorName() {
+        return taMajorName;
     }
 
-    public void setTaBachelorMajorName(String taBachelorMajorName) {
-        this.taBachelorMajorName = taBachelorMajorName;
-    }
-
-    public String getTaMasterMajorName() {
-        return taMasterMajorName;
-    }
-
-    public void setTaMasterMajorName(String taMasterMajorName) {
-        this.taMasterMajorName = taMasterMajorName;
+    public void setTaMajorName(String taMajorName) {
+        this.taMajorName = taMajorName;
     }
 
     public String getAdvisorName() {

@@ -572,12 +572,11 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIdNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());
-                viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
+                viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
             }
 
             viewObject.setStatus(ta.getStatus());
             //暂时缺失的属性
-            viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
@@ -636,11 +635,10 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIdNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());
-                viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
+                viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() : null);
             }
             viewObject.setStatus(ta.getStatus());
             //暂时缺失的属性
-            viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
@@ -669,13 +667,12 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaName(applicant.getName());
                 viewObject.setTaIdNumber(applicant.getId());
                 viewObject.setTaGender(applicant.getGender());
-                viewObject.setTaBachelorMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
+                viewObject.setTaMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
             }
 
             viewObject.setApplicationClassId(application.getApplicationClassId());
 
             //暂时缺失的属性
-            viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
 
@@ -703,13 +700,12 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaName(applicant.getName());
                 viewObject.setTaIdNumber(applicant.getId());
                 viewObject.setTaGender(applicant.getGender());
-                viewObject.setTaBachelorMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
+                viewObject.setTaMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() : null);
             }
 
             viewObject.setApplicationClassId(application.getApplicationClassId());
 
             //暂时缺失的属性
-            viewObject.setTaMasterMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
 
@@ -736,10 +732,9 @@ public class TAConverterimpl implements ITAConverter {
             //点击查看详细信息会用到的
             CMProgram program = listone.getProgram();
             if(program == null)
-                viewObject.setTaBachelorMajorName("缺失");
+                viewObject.setTaMajorName("缺失");
             else
-                viewObject.setTaBachelorMajorName(listone.getProgram().getName().toString());
-            viewObject.setTaMasterMajorName("缺失");
+                viewObject.setTaMajorName(listone.getProgram().getName().toString());
             viewObject.setAdvisorName("缺失");
             viewObjects.add(viewObject);
         }

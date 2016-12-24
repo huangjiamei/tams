@@ -782,13 +782,16 @@ public class AdminServiceImpl implements IAdminService{
     public short getWorkTime() {
         TAMSTimeSettingType timeSettingType = timeSettingTypeDao.selectByName("批次经费和学院经费设置");
         TAMSTimeSettingType tamsTimeSettingType = timeSettingTypeDao.selectByName("课程经费设置");
-        TAMSTimeSettingType timeSettingType1 = timeSettingTypeDao.selectByName("助教经费设置");
+        TAMSTimeSettingType timeSettingTypeTaFunds = timeSettingTypeDao.selectByName("助教经费设置");
         TimeUtil timeUtil = new TimeUtil();
+        if(timeSettingType==null||tamsTimeSettingType==null||timeSettingTypeTaFunds==null){
+            return 10;
+        }
         if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString()))
             return 1;
         if(!timeUtil.isBetweenPeriod(tamsTimeSettingType.getId(), sessionDao.getCurrentSession().getId().toString()))
             return 2;
-        if(!timeUtil.isBetweenPeriod(timeSettingType1.getId(), sessionDao.getCurrentSession().getId().toString()))
+        if(!timeUtil.isBetweenPeriod(timeSettingTypeTaFunds.getId(), sessionDao.getCurrentSession().getId().toString()))
             return 3;
         else
             return 0;

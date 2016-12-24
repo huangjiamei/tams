@@ -160,10 +160,8 @@
                                                                                   p:propertyName="taIdNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
                                                                                   p:propertyName="taGender"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业"
-                                                                                  p:propertyName="taBachelorMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业"
-                                                                                  p:propertyName="taMasterMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="专业"
+                                                                                  p:propertyName="taMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
                                                                                   p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
@@ -265,10 +263,8 @@
                                                                                   p:propertyName="taIdNumber"/>
                                                                             <bean parent="Uif-DataField" p:label="性别"
                                                                                   p:propertyName="taGender"/>
-                                                                            <bean parent="Uif-DataField" p:label="本科专业"
-                                                                                  p:propertyName="taBachelorMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="研究生专业"
-                                                                                  p:propertyName="taMasterMajorName"/>
+                                                                            <bean parent="Uif-DataField" p:label="专业"
+                                                                                  p:propertyName="taMajorName"/>
                                                                             <bean parent="Uif-DataField" p:label="导师"
                                                                                   p:propertyName="advisorName"/>
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
@@ -349,11 +345,8 @@
                                                           p:label="性别"
                                                           p:messageText="@{selectedTa.taGender}"/>
                                                     <bean parent="Uif-MessageField"
-                                                          p:label="本科专业"
-                                                          p:messageText="@{selectedTa.taBachelorMajorName}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="研究生专业"
-                                                          p:messageText="@{selectedTa.taMasterMajorName}"/>
+                                                          p:label="专业"
+                                                          p:messageText="@{selectedTa.taMajorName}"/>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="导师"
                                                           p:messageText="@{selectedTa.advisorName}"/>

@@ -11,8 +11,10 @@ import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
@@ -72,6 +74,9 @@ public class TAServiceimpl implements ITAService {
     private TAMSWorkflowFunctionsDao workflowFunctionsDao;
 
     @Autowired
+    private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
+
+    @Autowired
     private TAMSTaDao tamstadao;
 
     @Autowired
@@ -80,41 +85,59 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private TAMSTimeSettingTypeDao tamsTimeSettingTypeDao;
 
+    @Autowired
+    private TAMSTaCategoryDao tamsTaCategoryDao;
+
+    @Autowired
+    private UTClassInfoDao utClassInfoDao;
+
+    @Autowired
+    private TAMSClassFundingDao tamsClassFundingDao;
+
+    @Autowired
+    private TAMSClassFundingDraftDao tamsClassFundingDraftDao;
+
+    @Autowired
+    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
+    @Autowired
+    private TAMSDeptFundingDao tamsDeptFundingDao;
+
+    @Autowired
+    private TAMSUniversityFundingDao tamsUniversityFundingDao;
+    //根据classids查询classinfo的信息
+    @Autowired
+    private TAMSTeachCalendarDao tamsTeachCalendarDao;
 
     @Override
-    public String getApplicationPhoneNbr(String stuId, String classId){
-        TAMSTaApplication tamsTaApplication =  tamsTaApplicationDao.selectByStuIdAndClassId(stuId,classId);
-        if(tamsTaApplication!=null) {
+    public String getApplicationPhoneNbr(String stuId, String classId) {
+        TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
+        if (tamsTaApplication != null) {
             return tamsTaApplication.getPhoneNbr();
         }
         return null;
     }
 
     @Override
-    public String getApplicationReason(String stuId, String classId){
-        TAMSTaApplication tamsTaApplication =  tamsTaApplicationDao.selectByStuIdAndClassId(stuId,classId);
-        if(tamsTaApplication!=null) {
+    public String getApplicationReason(String stuId, String classId) {
+        TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
+        if (tamsTaApplication != null) {
             return tamsTaApplication.getNote();
         }
         return null;
     }
 
     //根据姓名和学号查找候选人
-    public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions){
+    public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions) {
         List<UTStudent> studentInfo = studentDao.selectStudentByNameAndId(conditions);
         return studentInfo;
     }
 
     //根据studentid查询担任助教的classids
-    public List<Object> getClassIdsByUid(){
+    public List<Object> getClassIdsByUid() {
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
         return taDao.selectClassIdsByStudentId(user.getCode());
     }
-
-
-    //根据classids查询classinfo的信息
-    @Autowired
-    private TAMSTeachCalendarDao tamsTeachCalendarDao;
 
     @Override
     public List<WorkBenchViewObject> getClassInfoByIds(List<Object> ids) {
@@ -143,36 +166,36 @@ public class TAServiceimpl implements ITAService {
     public short submitApplicationAssistant(TAMSTaApplication application) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
         TimeUtil timeUtil = new TimeUtil();
-        if(timeSettingType==null){
+        if (timeSettingType == null) {
             return 10;
         }
-        if(!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+        if (!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
             return 1;
         }
         //判断学生申请同一个class的助教的数量
         //若已经申请过该课程，则不能再申请
-        if(tamsTaApplicationDao.selectByStuIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null){
+        if (tamsTaApplicationDao.selectByStuIdAndClassId(application.getApplicationId(), application.getApplicationClassId()) != null) {
             return 2;
         }
         //若已被该课程聘用，则不能再聘请
-        if(taDao.selectByStudentIdAndClassId(application.getApplicationId(),application.getApplicationClassId())!=null) {
+        if (taDao.selectByStudentIdAndClassId(application.getApplicationId(), application.getApplicationClassId()) != null) {
             return 3;
         }
         //判断学生申请助教的数量
         //若已经申请过两门课程的助教，则不能再申请
-        if(tamsTaApplicationDao.selectByStuId(application.getApplicationId()) != null ) {
+        if (tamsTaApplicationDao.selectByStuId(application.getApplicationId()) != null) {
             int countTaApplication = tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
             if (countTaApplication == 2)
                 return 7;
         }
         //若该学生已经是两门课程的助教，也不能申请
-        if(taDao.selectByTaId(application.getApplicationId() )!= null ) {
+        if (taDao.selectByTaId(application.getApplicationId()) != null) {
             if (taDao.selectByTaId(application.getApplicationId()).size() == 2)
                 return 8;
         }
-        Integer stuApplications = tamsTaApplicationDao.selectByStuId(application.getApplicationId())==null?0:tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
-        Integer stuTaNumber = taDao.selectByTaId(application.getApplicationId())==null?0:taDao.selectByTaId(application.getApplicationId()).size();
-        if(stuApplications+stuTaNumber>MAX_APPLY_COURSE_NUMBER){
+        Integer stuApplications = tamsTaApplicationDao.selectByStuId(application.getApplicationId()) == null ? 0 :tamsTaApplicationDao.selectByStuId(application.getApplicationId()).size();
+        Integer stuTaNumber = taDao.selectByTaId(application.getApplicationId()) == null ? 0 :taDao.selectByTaId(application.getApplicationId()).size();
+        if (stuApplications+stuTaNumber > MAX_APPLY_COURSE_NUMBER) {
             return 6;
         }
         if (tamsTaApplicationDao.insertOne(application))
@@ -194,31 +217,30 @@ public class TAServiceimpl implements ITAService {
 
             //教务处管理员，查看全校所有助教
             //测试:02015508
-            else if (userInfoService.isAcademicAffairsStaff(uId))
-                return taDao.selectAll();
+        else if (userInfoService.isAcademicAffairsStaff(uId))
+            return taDao.selectAll();
 
             //学院管理员(二级单位管理员)，查看本学院课程的助教
             //测试：02015402光电学院
-        else if(userInfoService.isCollegeStaff(uId)){//先根据uId查询对应的学院id
+        else if (userInfoService.isCollegeStaff(uId)) {//先根据uId查询对应的学院id
             User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
             return taDao.selectByDeptId(user.getDepartmentId().toString());
         }
 
-                //教师，查看自己课程的助教
-                //测试：01012657
-                else if(userInfoService.isInstructor(uId)){
-                     //先根据教师id查到该教师所教授的批量课程id，然后再根据批量的课程id查出所有的助教
-                     List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
-                     return taDao.selectByClassIds(classIds);
-                }
+        //教师，查看自己课程的助教
+        //测试：01012657
+        else if (userInfoService.isInstructor(uId)) {
+            //先根据教师id查到该教师所教授的批量课程id，然后再根据批量的课程id查出所有的助教
+            List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
+            return taDao.selectByClassIds(classIds);
+        }
 
-                //助教，查询自己担任的课程
-                else {
+        //助教，查询自己担任的课程
+        else {
             return taDao.selectByTaId(uId);
         }
 
     }
-
 
 
     //根据uid查看申请者列表
@@ -232,12 +254,11 @@ public class TAServiceimpl implements ITAService {
 
 
     @Override
-    public List<UTStudentTimetable> getStudentTimetableByUid(String uId){
+    public List<UTStudentTimetable> getStudentTimetableByUid(String uId) {
 
         return utStudentTimetableDao.getStudentTimetableByUid(uId);
 
     }
-
 
 
     //根据classId查看申请者列表
@@ -249,15 +270,15 @@ public class TAServiceimpl implements ITAService {
 
     @Override
     public boolean changeStatusBatchByIds(List<String> ids, String status) {
-        if(ids == null || ids.size() == 0)
+        if (ids == null || ids.size() == 0)
             return true;
 
         List<TAMSTa> tas = taDao.selectBatchByIds(ids);
 
-        for(TAMSTa ta : tas) {
+        for (TAMSTa ta : tas) {
             ta.setStatus(status);
             //出现错误，跳出循环
-            if(!taDao.updateByEntity(ta))
+            if (!taDao.updateByEntity(ta))
                 return false;
         }
         return true;
@@ -266,10 +287,10 @@ public class TAServiceimpl implements ITAService {
     //聘用助教
     @Override
     public boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs) {
-        for(StuIdClassIdPair per : stuIdClassIdPairs) {
-            TAMSTa isExist = taDao.selectByStudentIdAndClassId(per.getStuId(),per.getClassId());
+        for (StuIdClassIdPair per : stuIdClassIdPairs) {
+            TAMSTa isExist = taDao.selectByStudentIdAndClassId(per.getStuId(), per.getClassId());
 
-            if(isExist != null) {  //数据库中已存在数据
+            if (isExist != null) {  //数据库中已存在数据
                 TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
                 applicationDao.deleteByEntity(readyToRemove);
                 continue;
@@ -285,7 +306,7 @@ public class TAServiceimpl implements ITAService {
             //新添默认数据
             newTa.setAssignedFunding("0");
             newTa.setApplicationNote("0");
-            newTa.setPhdFunding("0");
+
             newTa.setTravelSubsidy("0");
             newTa.setBonus("0");
             newTa.setMonth1("0");
@@ -302,27 +323,25 @@ public class TAServiceimpl implements ITAService {
             newTa.setMonth12("0");
             TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
             String workFlowStatus = tamsWorkflowStatusDao.getFirstStatusByFunctionId(function.getId());
-            newTa.setOutStandingTaWorkflowStatusId(workFlowStatus==null?"":workFlowStatus);
-            //newTa.setType("1");
+            newTa.setOutStandingTaWorkflowStatusId(workFlowStatus == null ? "" :workFlowStatus);
             UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
-            if(utStudent != null){
-                if(utStudent.getProgram() != null){
-                    if(utStudent.getProgram().getDuration() == 3){
+            if (utStudent != null) {
+                if (utStudent.getProgram() != null) {
+                    if (utStudent.getProgram().getDuration() == 3) {
                         newTa.setType("1");
                     }
-                }
-                else
+                } else
                     newTa.setType("0");
             }
             /**
              * 判断被聘人学历
              */
-            if(per.getStuId().length()>8) {  //不是本科生
-                if(per.getStuId().substring(6,6+2).equals("01")){ //是博士
+            if (per.getStuId().length() > 8) {  //不是本科生
+                if (per.getStuId().substring(6, 6+2).equals("01")) { //是博士
                     newTa.setType("2");
                 }
             }
-
+            newTa.setPhdFunding("0");
             //初始状态设为已聘请
             newTa.setStatus("1");
             //设置未评价
@@ -333,15 +352,28 @@ public class TAServiceimpl implements ITAService {
 //                newTa.setOutStandingTaWorkflowStatusId(allStatus.get(0).getOrder().toString());
             TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
             newTa.setApplicationNote(readyToRemove.getNote());
-            if(taDao.insertByEntity(newTa)) {
-                if(applicationDao.deleteByEntity(readyToRemove)) {
+            TAMSTaCategory masterTA = tamsTaCategoryDao.selectOneByName("博士");
+            TAMSTaCategory phdTA = tamsTaCategoryDao.selectOneByName("硕士");
+            if (masterTA == null || phdTA == null) {
+                return false;
+            }
+            if (taDao.insertByEntity(newTa)) {
+                //全局增加博士津贴 start
+                TAMSClassTaApplication currentClass = tamsClassTaApplicationDao.selectByClassId(per.getClassId());
+                Double workHour = Double.valueOf(currentClass.getWorkHour());
+                Double phdSalary = Double.valueOf(phdTA.getHourlyWage());
+                Double masterSalary = Double.valueOf(masterTA.getHourlyWage());
+                String phdFunds = String.valueOf(workHour * (phdSalary-masterSalary));
+                newTa.setPhdFunding(phdFunds); //给助教经费添加phd经费
+                this.addPhdFunds(phdFunds, per.getClassId());  //全局增加phd经费
+                //全局增加博士津贴 end
+
+                if (applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
-                }
-                else
+                } else
                     //删除申请信息失败
                     return false;
-            }
-            else
+            } else
                 //新建信息失败
                 return false;
         }
@@ -355,7 +387,7 @@ public class TAServiceimpl implements ITAService {
 
         for (TAMSTa ta : tas) {
             ta.setStatus(status);
-            if(!taDao.updateByEntity(ta))
+            if (!taDao.updateByEntity(ta))
                 return false;
         }
 
@@ -364,24 +396,24 @@ public class TAServiceimpl implements ITAService {
 
 
     @Override
-    public List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId){
+    public List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId) {
         return tamsTeachCalendarDao.selectAllByClassId(classId);
     }
 
 
     @Override
-    public TAMSTa getTaByTaId(String taId,String classId){
-        return taDao.selectByStudentIdAndClassId(taId,classId);
+    public TAMSTa getTaByTaId(String taId, String classId) {
+        return taDao.selectByStudentIdAndClassId(taId, classId);
     }
 
     @Override
-    public List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId){
+    public List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId) {
         /*
             复制避免unmodifiableList错误
          */
-        List<TAMSTaTravelSubsidy>  result =  tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+        List<TAMSTaTravelSubsidy> result = tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId, classId);
         List<TAMSTaTravelSubsidy> copy = new ArrayList<>();
-        if(result!=null) {
+        if (result != null) {
             for (TAMSTaTravelSubsidy tamsTaTravelSubsidy : result) {
                 copy.add(tamsTaTravelSubsidy);
             }
@@ -391,7 +423,7 @@ public class TAServiceimpl implements ITAService {
     }
 
     @Override
-    public boolean saveTravelSubsidy(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+    public boolean saveTravelSubsidy(TAMSTaTravelSubsidy tamsTaTravelSubsidy) {
 
         return tamsTaTravelSubsidyDao.insertOneByEntity(tamsTaTravelSubsidy);
 
@@ -400,7 +432,7 @@ public class TAServiceimpl implements ITAService {
     @Override
     public boolean appraiseOutstanding(List<String> taIds, String uId) {
         try {
-            if(taIds == null || taIds.size() == 0 || uId == null)
+            if (taIds == null || taIds.size() == 0 || uId == null)
                 return false;
             //更改课程申请状态
             //默认工作方法为“评优”
@@ -418,12 +450,11 @@ public class TAServiceimpl implements ITAService {
                 logger.error("未能找到'评优'的Function");
                 return false;
             }
-            for(String id : taIds)
-                if(taDao.changeStatusAvailableForUser(roleIds, function.getId(), id)) {
+            for (String id : taIds)
+                if (taDao.changeStatusAvailableForUser(roleIds, function.getId(), id)) {
                     boolean result = taDao.toNextStatus(roleIds, function.getId(), id);
                 }
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return false;
         }
@@ -433,7 +464,7 @@ public class TAServiceimpl implements ITAService {
     @Override
     public boolean revocationOutstanding(List<String> taIds, String uId) {
         try {
-            if(taIds == null || taIds.size() == 0 || uId == null)
+            if (taIds == null || taIds.size() == 0 || uId == null)
                 return false;
             //更改课程申请状态
             //默认工作方法为“评优”
@@ -451,12 +482,11 @@ public class TAServiceimpl implements ITAService {
                 logger.error("未能找到'评优'的Function");
                 return false;
             }
-            for(String id : taIds)
-                if(taDao.changeStatusAvailableForUser(roleIds, function.getId(), id)) {
+            for (String id : taIds)
+                if (taDao.changeStatusAvailableForUser(roleIds, function.getId(), id)) {
                     boolean result = taDao.toPreviousStatus(roleIds, function.getId(), id);
                 }
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return false;
         }
@@ -464,36 +494,35 @@ public class TAServiceimpl implements ITAService {
     }
 
 
-
-    public boolean appraiseOutstandingToSpecifiedStatus(List<String> taIds, String uId, String workFlowStatusId){
+    public boolean appraiseOutstandingToSpecifiedStatus(List<String> taIds, String uId, String workFlowStatusId) {
         Set availableStat = new HashSet();
-        if(uId == null)
+        if (uId == null)
             return false;
-        for(String taid : taIds) {
+        for (String taid : taIds) {
             List<TAMSWorkflowStatus> availableStatus = this.appriseStatusAvailable(uId, taid);
-            for(TAMSWorkflowStatus tamsWorkflowStatus:availableStatus) {
+            for (TAMSWorkflowStatus tamsWorkflowStatus : availableStatus) {
                 availableStat.add(tamsWorkflowStatus);
             }
         }
         boolean flag = false;
 
         Iterator it = availableStat.iterator();
-        while(it.hasNext()){
-            TAMSWorkflowStatus tamsWorkflowStatus = (TAMSWorkflowStatus)it.next();
-            if(tamsWorkflowStatus.getId().equals(workFlowStatusId))
+        while (it.hasNext()) {
+            TAMSWorkflowStatus tamsWorkflowStatus = (TAMSWorkflowStatus) it.next();
+            if (tamsWorkflowStatus.getId().equals(workFlowStatusId))
                 flag = true;
         }
 
-        if(!flag)  //此用户并不拥有改变为此状态的权力
+        if (!flag)  //此用户并不拥有改变为此状态的权力
             return false;
 
-        for(String taid :taIds) {
-             tamstadao.changeStatusToSpecifiedStatus(taid, workFlowStatusId);
+        for (String taid : taIds) {
+            tamstadao.changeStatusToSpecifiedStatus(taid, workFlowStatusId);
         }
         return true;
     }
 
-    public List<TAMSWorkflowStatus> appriseStatusAvailable(String uid, String taId){
+    public List<TAMSWorkflowStatus> appriseStatusAvailable(String uid, String taId) {
         try {
             //更改课程申请状态
             //默认工作方法为“审批”
@@ -514,27 +543,75 @@ public class TAServiceimpl implements ITAService {
             List<TAMSWorkflowStatus> result = new TAMSTaDaoJpa().getAvailableStatus(roleIds, function.getId(), taId);
             Collections.sort(result);
             return result;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return null;
         }
     }
 
     @Override
-    public List<TaInfoViewObject> seachTainfoListByConditions(Map<String, String> conditions){
+    public List<TaInfoViewObject> seachTainfoListByConditions(Map<String, String> conditions) {
 
-        return  tamstadao.getTaInfoByConditions(conditions);
+        return tamstadao.getTaInfoByConditions(conditions);
     }
 
     @Override
-    public String getTamsTaIdByStuIdAndClassId(String stuId, String classId){
+    public String getTamsTaIdByStuIdAndClassId(String stuId, String classId) {
         TAMSTa tamsTa = tamstadao.selectByStudentIdAndClassId(stuId, classId);
-        return tamsTa==null?null:tamsTa.getId();
+        return tamsTa == null ? null :tamsTa.getId();
     }
 
     @Override
-    public void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+    public void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy) {
         tamsTaTravelSubsidyDao.deleteOneByEntity(tamsTaTravelSubsidy);
     }
+
+    @Override
+    public boolean addPhdFunds(String phdFundsNumber, String classId) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        UTClassInformation utClassInformation = utClassInfoDao.getOneById(classId); //获取课程信息
+        if (utClassInformation != null) {
+            Integer deptId = utClassInformation.getDepartmentId(); //课程所属学院
+            TAMSClassFunding existClassFunding = tamsClassFundingDao.getOneByClassIdAndSessionId(classId, curSession.getId().toString());
+            TAMSClassFundingDraft existClassFundingDraft = tamsClassFundingDraftDao.selectOneByClassIdAndSessionId(classId, curSession.getId().toString());
+            TAMSDeptFunding existDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(deptId, curSession.getId());
+            TAMSDeptFundingDraft existDeptFundingDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(deptId, curSession.getId());
+            TAMSUniversityFunding existUniFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
+
+
+            if (existClassFunding != null) { //保存课程经费表
+                String oldPhdFunding = existClassFunding.getPhdFunding();
+                existClassFunding.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                tamsClassFundingDao.saveOneByEntity(existClassFunding);
+            }
+
+            if (existClassFundingDraft != null) {  //保存课程经费草稿表
+                String oldPhdFunding = existClassFundingDraft.getPhdFunding();
+                existClassFundingDraft.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                tamsClassFundingDraftDao.insertOneByEntity(existClassFundingDraft);
+            }
+
+            if (existDeptFunding != null) {  //保存部门经费
+                String oldPhdFunding = existDeptFunding.getPhdFunding();
+                existDeptFunding.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                tamsDeptFundingDao.saveOneByEntity(existDeptFunding);
+            }
+
+            if (existDeptFundingDraft != null) {  //保存部门经费草稿
+                String oldPhdFunding = existDeptFundingDraft.getPhdFunding();
+                existDeptFundingDraft.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                tamsDeptFundingDraftDao.saveOneByEntity(existDeptFundingDraft);
+            }
+
+            if(existUniFunding!=null) {  //保存学校经费
+                String oldPhdFunding = existUniFunding.getPhdFunding();
+                existUniFunding.setPhdFunding(String.valueOf(Double.valueOf(oldPhdFunding)+Double.valueOf(phdFundsNumber)));
+                tamsUniversityFundingDao.insertOneByEntity(existUniFunding);
+            }
+
+            return true;
+        }
+        return false;
+    }
+
 }

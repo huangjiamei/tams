@@ -12,12 +12,12 @@ public interface UTClassInfoDao {
 
     List<UTClassInformation> getAllCurrentClassInformation();
 
-    UTClassInformation getOneById(Integer id);
+    UTClassInformation getOneById(String id);
 
     List<UTClassInformation> selectBatchByIds(List<Object> classIds);
 
     List<UTClassInformation> selectByConditions(Map<String, String> conditions);
 
     //List<UTClassInformation> selectAllCourseInfoByIds(List<Object> ids);
-    UTClassInformation getOneByIdAndDept(Integer id, Integer dept);
+    UTClassInformation getOneByIdAndDept(String id, Integer dept);
 }

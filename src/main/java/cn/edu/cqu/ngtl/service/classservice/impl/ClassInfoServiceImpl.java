@@ -120,40 +120,38 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
 
         //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
-         if(uId.equalsIgnoreCase("admin")){
+        if (uId.equalsIgnoreCase("admin")) {
             return this.getAllCurSessionClasses();   //FIXME 测试代码。需要删除
         }
-        if(userInfoService.isSysAdmin(uId) ||userInfoService.isAcademicAffairsStaff(uId))
+        if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
-        else if(userInfoService.isCourseManager(uId)){  //默认是课程负责人一定是教师
+        else if (userInfoService.isCourseManager(uId)) {  //默认是课程负责人一定是教师
             //担任课程负责人的课程
             List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);
             //自己的课程
             List<Object> ownClassIds = classInstructorDao.selectClassIdsByInstructorId(uId);
-            for(Object classId:ownClassIds){
-                if(!classIds.contains(classId)){
+            for (Object classId : ownClassIds) {
+                if (!classIds.contains(classId)) {
                     classIds.add(classId);
                 }
             }
             return classInfoDao.selectBatchByIds(classIds);
-        }
-        else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
             return classInfoDao.selectBatchByIds(classIds);
-        }
-        else if (userInfoService.isStudent(uId)) {
+        } else if (userInfoService.isStudent(uId)) {
             TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
-            if(timeSettingType==null){
+            if (timeSettingType == null) {
                 return null;
             }
             TimeUtil timeUtil = new TimeUtil();
-            if(timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
                 return this.getAllCurSessionClasses();
             }
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
             List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
-            if(utStudentTimetables!=null&&utStudentTimetables.size()!=0) {
+            if (utStudentTimetables != null && utStudentTimetables.size() != 0) {
                 for (UTStudentTimetable utStudentTimetable : utStudentTimetables) {
                     classIds.add(utStudentTimetable.getClassId());
                 }
@@ -165,11 +163,11 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions) {
-        if(userInfoService.isSysAdmin(uId)||userInfoService.isAcademicAffairsStaff(uId)) {
+        if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
-        }else if(userInfoService.isCollegeStaff(uId)){ //如果是二级单位管理员则固定学院id
-            conditions.put("DepartmentId",((User)GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+        } else if (userInfoService.isCollegeStaff(uId)) { //如果是二级单位管理员则固定学院id
+            conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
         } else if (userInfoService.isCourseManager(uId)) {
@@ -177,27 +175,27 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);
             //自己的课程
             List<Object> ownClassIds = classInstructorDao.selectClassIdsByInstructorId(uId);
-            for(Object classId:ownClassIds){
-                if(!classIds.contains(classId)){
+            for (Object classId : ownClassIds) {
+                if (!classIds.contains(classId)) {
                     classIds.add(classId);
                 }
             }
-            List<String> strClassIds = (List<String>)(List)classIds; //强制转化为String List
+            List<String> strClassIds = (List<String>) (List) classIds; //强制转化为String List
             /*
                 在结果中只显示负责人能看的课程
              */
             List<UTClassInformation> result = new ArrayList<>();
-            for(UTClassInformation utClassInformation:classInformations){
+            for (UTClassInformation utClassInformation : classInformations) {
                 System.out.println(strClassIds.get(0).equals(utClassInformation.getId()));
                 System.out.println(strClassIds.get(1).equals(utClassInformation.getId()));
                 System.out.println(strClassIds.get(2).equals(utClassInformation.getId()));
                 System.out.println(strClassIds.get(3).equals(utClassInformation.getId()));
-                if(strClassIds.contains(utClassInformation.getId()))
+                if (strClassIds.contains(utClassInformation.getId()))
                     result.add(utClassInformation);
             }
             return result;
         } else if (userInfoService.isInstructor(uId)) {
-            conditions.put("InstructorName",((User)GlobalVariables.getUserSession().retrieveObject("user")).getName());
+            conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
         }
@@ -206,11 +204,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
-        if(userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+        if (userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
             List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
             return teachCalendar;
-        }
-        else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)) {
             return teachCalendarDao.selectAllByClassId(classId);
         }
         return null;
@@ -218,19 +215,17 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
-        if(!userInfoService.isInstructor(uId)) {
+        if (!userInfoService.isInstructor(uId)) {
             return null;
-        }
-        else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
-            for(Object obj : classIds)
+            for (Object obj : classIds)
                 classIdStrings.add(obj.toString());
-            if(classIdStrings.contains(classId)||userInfoService.isSysAdmin(uId)) {
+            if (classIdStrings.contains(classId) || userInfoService.isSysAdmin(uId)) {
                 teachCalendar.setClassId(classId);
                 return teachCalendarDao.insertByEntity(teachCalendar);
-            }
-            else
+            } else
                 return null;
         }
         return null;
@@ -239,19 +234,17 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
-        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
+        if (userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
             return true;
-        }
-        else if (userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
+        } else if (userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
-            for(Object obj : classIds)
+            for (Object obj : classIds)
                 classIdStrings.add(obj.toString());
-            if(classIdStrings.contains(classId)) {
+            if (classIdStrings.contains(classId)) {
                 TAMSTeachCalendar teachCalendar = teachCalendarDao.selectById(teachCalendarId);
                 return teachCalendarDao.deleteByEntity(teachCalendar);
-            }
-            else
+            } else
                 return false;
         }
         return false;
@@ -259,21 +252,20 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachActivityAsCalendarFilterByUidAndClassId(String uId, String classId) {
-        if(userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+        if (userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
             List<TAMSTeachCalendar> calendars = teachCalendarDao.selectAllByClassId(classId);
-            for(TAMSTeachCalendar calendar : calendars) {
+            for (TAMSTeachCalendar calendar : calendars) {
                 List<TAMSActivity> activities = activityDao.selectAllByCalendarId(calendar.getId());
                 calendar.setActivityList(activities);
             }
             return calendars;
-        }
-        else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)) {
             List<TAMSTeachCalendar> calendars = teachCalendarDao.selectAllByClassId(classId);
-            for(TAMSTeachCalendar calendar : calendars) {
+            for (TAMSTeachCalendar calendar : calendars) {
                 List<TAMSActivity> activities = activityDao.selectAllByClassId(classId);
-                if(calendar.getActivityList()!=null) {
+                if (calendar.getActivityList() != null) {
                     calendar.getActivityList().addAll(activities);
-                }else{
+                } else {
                     calendar.setActivityList(activities);
                 }
             }
@@ -283,25 +275,24 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations,String totalTime,String totalBudget) {
+    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime, String totalBudget) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("教师申请助教");
         TimeUtil timeUtil = new TimeUtil();
-        if(timeSettingType == null) {
+        if (timeSettingType == null) {
             return 10;
         }
         if (!timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
             return 1;
         }
         TAMSClassTaApplication isExist = classTaApplicationDao.selectByInstructorIdAndClassId(instructorId, classId);
-        if(isExist != null) {
+        if (isExist != null) {
             logger.warn("已存在数据！");
-        }
-        else {
+        } else {
             TAMSClassTaApplication entity = new TAMSClassTaApplication();
             //添加申请信息
             //预处理数据
             entity.setWorkHour(totalTime);
-            entity.setApplicationFunds(totalBudget.replace("元",""));
+            entity.setApplicationFunds(totalBudget.replace("元", ""));
             entity.setApplicantId(instructorId);
             entity.setApplicationClassId(classId);
             entity.setApplicationTime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()));
@@ -340,19 +331,17 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 logger.error("未能找到'审核'的Function");
                 return 6;
             }
-            if(classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
+            if (classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
                 classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
-                if(isExist != null)
+                if (isExist != null)
                     return 2;
                 //执行到这里既是成功
                 //如果新提交的课程的状态并非初始状态，则返回true，表示已经通过了提交
                 return 7;
-            }
-            else {
+            } else {
                 return 8;
             }
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
         }
         return 9;
@@ -360,9 +349,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
 
     @Override
-    public boolean deleteTaApplicationByStuIdAndClassId(String stuId, String classId){
-        TAMSTa tamsta = taDao.selectByStudentIdAndClassId(stuId,classId);
-        if(tamsta!=null){
+    public boolean deleteTaApplicationByStuIdAndClassId(String stuId, String classId) {
+        TAMSTa tamsta = taDao.selectByStudentIdAndClassId(stuId, classId);
+        if (tamsta != null) {
             taDao.deleteOneByEntity(tamsta);
             return true;
         }
@@ -370,29 +359,28 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
 
-
     @Override
-    public List<TAMSTa> getAllTaFilteredByClassid(String classId){
+    public List<TAMSTa> getAllTaFilteredByClassid(String classId) {
 
         return taDao.selectByClassId(classId);
 
     }
 
     @Override
-    public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId){
+    public List<TAMSTaApplication> getAllApplicationFilterByClassid(String classId) {
 
         return tamsTaApplicationDao.selectByClassId(classId);
     }
 
     @Override
     public boolean removeCalendarFileById(String classId, String attachmentId) {
-        if(attachmentId == null)
+        if (attachmentId == null)
             return false;
         TAMSAttachments isExist = attachmentsDao.selectById(attachmentId);
-        if(isExist == null)
+        if (isExist == null)
             return false;
         String uId = GlobalVariables.getUserSession().getPrincipalId();
-        if(uId.equals(isExist.getAuthorId()) || userInfoService.isInstructor(uId))
+        if (uId.equals(isExist.getAuthorId()) || userInfoService.isInstructor(uId))
             return new TamsFileControllerServiceImpl().deleteOneAttachment(classId, isExist);
         else
             return false;
@@ -402,7 +390,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public boolean removeAllCalendarFilesByClassIdAndCalendarId(String classId, String calendarId) {
         List<TAMSAttachments> attachments = attachmentsDao.selectCalendarFilesByCalendarId(calendarId);
         boolean flag;
-        for(TAMSAttachments attachment : attachments) {
+        for (TAMSAttachments attachment : attachments) {
             flag = new TamsFileControllerServiceImpl().deleteOneAttachment(classId, attachment);
         }
         return true;
@@ -427,13 +415,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 logger.error("未能找到'审核'的Function");
                 return false;
             }
-            for(String classId : classIds)
-                if(!classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
+            for (String classId : classIds)
+                if (!classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
                     boolean result = classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
                 }
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return false;
         }
@@ -458,13 +445,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 logger.error("未能找到'审核'的Function");
                 return false;
             }
-            for(String classId : classIds)
-                if(!classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
+            for (String classId : classIds)
+                if (!classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
                     boolean result = classApplyStatusDao.toPreviousStatus(roleIds, function.getId(), classId);
                 }
             return true;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return false;
         }
@@ -492,8 +478,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             List<TAMSWorkflowStatus> result = new TAMSClassApplyStatusDaoJpa().getAvailableStatus(roleIds, function.getId(), classId);
             Collections.sort(result);
             return result;
-        }
-        catch (RuntimeException e) {
+        } catch (RuntimeException e) {
             e.printStackTrace();
             return null;
         }
@@ -501,22 +486,22 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public boolean classStatusToCertainStatus(String uid, String classId, String workflowStatusId) {
-        if(uid == null)
+        if (uid == null)
             return false;
         List<TAMSWorkflowStatus> availableStatus = this.classStatusAvailable(uid, classId);
         boolean flag = false;
-        for(TAMSWorkflowStatus status : availableStatus) {
-            if(status.getId().equals(workflowStatusId))
+        for (TAMSWorkflowStatus status : availableStatus) {
+            if (status.getId().equals(workflowStatusId))
                 flag = true;
         }
-        if(!flag)  //此用户并不拥有改变为此状态的权力
+        if (!flag)  //此用户并不拥有改变为此状态的权力
             return false;
 
         return classApplyStatusDao.changeStatusToCertainStatus(classId, workflowStatusId);
     }
 
     @Override
-    public boolean insertFeedBack(String classId, String uId, String reasons,String oldStatus,String newStatus){
+    public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatus) {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
         tamsClassApplyFeedback.setClassId(classId);
@@ -529,15 +514,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId){
-            return tamsClassApplyFeedbackDao.getFbByClassId(classId);
+    public List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId) {
+        return tamsClassApplyFeedbackDao.getFbByClassId(classId);
     }
 
     @Override
-    public void validClassFunds(String classId){  //初始化课程经费
+    public void validClassFunds(String classId) {  //初始化课程经费 //TODO LIUXIAO
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
         TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);
-        if(tamsClassFundingDraftExist==null){
+        if (tamsClassFundingDraftExist == null) {
             TAMSClassFundingDraft tamsClassFundingDraft = new TAMSClassFundingDraft();
             tamsClassFundingDraft.setClassId(classId);
             tamsClassFundingDraft.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
@@ -547,14 +532,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             tamsClassFundingDraft.setTravelSubsidy("0");
             tamsClassFundingDraft.setSessionId(sessionDao.getCurrentSession().getId().toString());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
-        }else{
+        } else {
             tamsClassFundingDraftExist.setApplyFunding(tamsClassTaApplication.getApplicationFunds());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraftExist);
         }
     }
 
     @Override
-    public TAMSClassTaApplication getClassApplicationByClassId(String classId){
+    public TAMSClassTaApplication getClassApplicationByClassId(String classId) {
         return classTaApplicationDao.selectByClassId(classId);
     }
 }

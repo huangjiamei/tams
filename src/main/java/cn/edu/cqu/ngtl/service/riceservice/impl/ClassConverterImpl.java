@@ -24,15 +24,15 @@ public class ClassConverterImpl implements IClassConverter {
     private static final Logger logger = Logger.getRootLogger();
 
     @Override
-    public  List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList){
+    public List<StuIdClassIdPair> extractIdsFromApplication(List<MyTaViewObject> checkedList) {
 
-            List<StuIdClassIdPair> pairs = new ArrayList<>(checkedList.size());
+        List<StuIdClassIdPair> pairs = new ArrayList<>(checkedList.size());
 
-            for(MyTaViewObject per : checkedList) {
-                pairs.add(new StuIdClassIdPair(per.getTaIdNumber(), per.getApplicationClassId()));
-            }
+        for (MyTaViewObject per : checkedList) {
+            pairs.add(new StuIdClassIdPair(per.getTaIdNumber(), per.getApplicationClassId()));
+        }
 
-            return pairs;
+        return pairs;
     }
 
     @Override
@@ -49,12 +49,12 @@ public class ClassConverterImpl implements IClassConverter {
 
     @Override
     public List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList) {
-        if(studentList == null || studentList.size() == 0) {
+        if (studentList == null || studentList.size() == 0) {
             logger.error("数据为空！");
             return null;
         }
         List<MyTaViewObject> viewObjects = new ArrayList<>();
-        for(UTStudent listone : studentList){
+        for (UTStudent listone : studentList) {
             MyTaViewObject viewObject = new MyTaViewObject();
             viewObject.setTaName(listone.getName());
             viewObject.setTaIdNumber(listone.getId());
@@ -62,7 +62,7 @@ public class ClassConverterImpl implements IClassConverter {
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             //点击查看详细信息会用到的
             CMProgram program = listone.getProgram();
-            if(program == null)
+            if (program == null)
                 viewObject.setTaMajorName("缺失");
             else
                 viewObject.setTaMajorName(listone.getProgram().getName().toString());
@@ -74,7 +74,7 @@ public class ClassConverterImpl implements IClassConverter {
 
     //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
     @Override
-    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid){
+    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid) {
 
         TAMSTaApplication tamsTaApplication = new TAMSTaApplication();
         tamsTaApplication.setApplicationClassId(classid);
@@ -88,7 +88,7 @@ public class ClassConverterImpl implements IClassConverter {
     public List<String> extractIdsFromClassList(List<ClassTeacherViewObject> checkedList) {
         List<String> ids = new ArrayList<>();
 
-        for(ClassTeacherViewObject per : checkedList) {
+        for (ClassTeacherViewObject per : checkedList) {
             ids.add(per.getId().toString());
         }
 

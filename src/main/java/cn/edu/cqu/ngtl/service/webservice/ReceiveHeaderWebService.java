@@ -5,7 +5,7 @@ package cn.edu.cqu.ngtl.service.webservice;
  */
 public interface ReceiveHeaderWebService {
 
-    boolean getResultFromHeaderWebService(String principalId,String permName) throws Exception;
+    boolean getResultFromHeaderWebService(String principalId, String permName) throws Exception;
 
 
 }

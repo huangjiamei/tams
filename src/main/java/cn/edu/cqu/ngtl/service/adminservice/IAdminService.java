@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
+
 /**
  * Created by tangjing on 16-10-25.
  */
@@ -51,7 +52,7 @@ public interface IAdminService {
 
     boolean removeTermByYearAndTerm(String termYear, String termTerm);
 
-    boolean setCurrentSession (String termYear, String termTerm);
+    boolean setCurrentSession(String termYear, String termTerm);
 
     List<UTInstructor> getInstructorByconditions(Map<String, String> conditions);
 
@@ -85,7 +86,7 @@ public interface IAdminService {
     //学校经费过滤
     List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions);
 
-    List<TAMSDeptFunding> getDepartmentPreFundingByCondition( Map<String, String> conditions);
+    List<TAMSDeptFunding> getDepartmentPreFundingByCondition(Map<String, String> conditions);
 
     //发布学院经费
     boolean releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
@@ -138,7 +139,7 @@ public interface IAdminService {
 
     String getSessionFundingTotalApprove();
 
-    String  getClassTotalAssignedFunding();
+    String getClassTotalAssignedFunding();
 
     String getSessionFundingStatistics(String totalPlan);
 
@@ -152,7 +153,7 @@ public interface IAdminService {
 
     boolean initCourseManagerData();
 
-    boolean addCourseManagerByInsIdAndCourseId(String courseId,String instructorId);
+    boolean addCourseManagerByInsIdAndCourseId(String courseId, String instructorId);
 
-    List<UTInstructor> getInstructorByNameAndCode(String Name,String code);
+    List<UTInstructor> getInstructorByNameAndCode(String Name, String code);
 }

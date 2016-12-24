@@ -41,14 +41,14 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
     @Override
     public boolean saveCalendarAttachments(String uId, String classId, String calendarId, List<FileViewObject> fileList) {
         String calendarRootPath;
-        try{
+        try {
             String _Module_Name = "CalendarFiles";
-            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId + calendarId, "utf-8", false);
+            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId+calendarId, "utf-8", false);
             //创建文件夹
-            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
-                    File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME+File.separator+PROJECT_CONTEXT_PATH+
+                    File.separator+_Module_Name+File.separator+_Calendar_Folder_Name;
             FileUtils.createFolder(calendarRootPath);
-            for(FileViewObject file : fileList) {
+            for (FileViewObject file : fileList) {
                 TAMSAttachments attachment = new TAMSAttachments();
                 //基本信息
                 attachment.setAuthorId(uId);
@@ -62,7 +62,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
                 Long size = file.getSize();
                 attachment.setFileSize(size.toString());
                 Blob blob = file.getBlob();
-                String absoluteFilePath = calendarRootPath + File.separator + fileName;
+                String absoluteFilePath = calendarRootPath+File.separator+fileName;
                 //写入磁盘
                 FileUtils.saveFile(absoluteFilePath, blob.getBinaryStream());
                 /** 暂不保存磁盘路径到数据库 **/
@@ -72,11 +72,9 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
                 new TAMSAttachmentsDaoJpa().insertOneByEntity(attachment);
             }
             return true;
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
 
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
         }
         // catch了异常
@@ -86,28 +84,27 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
     @Override
     public boolean deleteOneAttachment(String classId, TAMSAttachments attachment) {
         String calendarRootPath;
-        try{
+        try {
             String _Module_Name = attachment.getContainerType(); //保存时候的_Module_Name
             String _Container_Id = attachment.getContainerId();  //保存时候的_Container_Id
-            String _Attachment_Folder_Name = MD5Encryption.MD5Encode(classId + _Container_Id, "utf-8", false);
+            String _Attachment_Folder_Name = MD5Encryption.MD5Encode(classId+_Container_Id, "utf-8", false);
             //合成文件夹路径
-            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
-                    File.separator + _Module_Name + File.separator + _Attachment_Folder_Name;
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME+File.separator+PROJECT_CONTEXT_PATH+
+                    File.separator+_Module_Name+File.separator+_Attachment_Folder_Name;
 
             String fileName = attachment.getFileName();
-            String absoluteFilePath = calendarRootPath + File.separator + fileName;
+            String absoluteFilePath = calendarRootPath+File.separator+fileName;
 
             //从数据库删除
             boolean result = new TAMSAttachmentsDaoJpa().deleteOneByEntity(attachment);
 
-            if(result) {
+            if (result) {
                 //从磁盘删除
                 return FileUtils.removeFile(absoluteFilePath);
             }
 
             return false;
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
         }
         // catch了异常
@@ -125,42 +122,40 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
         String calendarRootPath;
         try {
             String _Module_Name = "CalendarFiles";
-            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId + calendarId, "utf-8", false);
+            String _Calendar_Folder_Name = MD5Encryption.MD5Encode(classId+calendarId, "utf-8", false);
             //合成文件夹路径
-            calendarRootPath = OPERATION_SYSTEM_USER_HOME + File.separator + PROJECT_CONTEXT_PATH +
-                    File.separator + _Module_Name + File.separator + _Calendar_Folder_Name;
+            calendarRootPath = OPERATION_SYSTEM_USER_HOME+File.separator+PROJECT_CONTEXT_PATH+
+                    File.separator+_Module_Name+File.separator+_Calendar_Folder_Name;
 
             TAMSAttachments attachments = new TAMSAttachmentsDaoJpa().selectById(attachmentId);
             Integer downloadTimes;
             try {
                 downloadTimes = Integer.parseInt(attachments.getDownloadTimes());
-            }
-            catch (NumberFormatException e) {
+            } catch (NumberFormatException e) {
                 downloadTimes = 0;
             }
             downloadTimes++;
             attachments.setDownloadTimes(downloadTimes.toString());
             new TAMSAttachmentsDaoJpa().updateByEntity(attachments);
             String fileName = attachments.getFileName();
-            String absoluteFilePath = calendarRootPath + File.separator + fileName;
+            String absoluteFilePath = calendarRootPath+File.separator+fileName;
             File file = new File(absoluteFilePath);
 
             response.setCharacterEncoding("UTF-8");
             response.setContentType("application/octet-stream;charset=utf-8");
-            if(!file.exists()) {
+            if (!file.exists()) {
                 response.setStatus(HttpServletResponse.SC_NOT_FOUND);
                 return;
             }
             InputStream is = new FileInputStream(file);
             fileName = new String(fileName.getBytes("UTF-8"), "ISO8859-1");
-            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+            response.setHeader("Content-Disposition", "attachment; filename="+fileName);
 
             FileCopyUtils.copy(is, response.getOutputStream());
             response.flushBuffer();
             is.close();
             response.getOutputStream().close();
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
 
         }
     }
@@ -199,17 +194,17 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
             } catch (UnsupportedEncodingException e) {
                 e.printStackTrace();
             }
-            String id = UUID.randomUUID().toString() + "_" + uploadedFile.getName();
+            String id = UUID.randomUUID().toString()+"_"+uploadedFile.getName();
             fileObject.setId(id);
 
             fileObject.setDateUploaded(new Date());
 
             fileObject.setUrl("?methodToCall=getFileFromLine&formKey="
-                    + form.getFormKey()
-                    + "&fileName="
-                    + fileObject.getName()
-                    + "&propertyPath="
-                    + propertyPath);
+                    +form.getFormKey()
+                    +"&fileName="
+                    +fileObject.getName()
+                    +"&propertyPath="
+                    +propertyPath);
 
             ViewLifecycle.encapsulateLifecycle(form.getView(), form, form.getViewPostMetadata(), null, request,
                     new Runnable() {
@@ -253,7 +248,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
             // 经测试，下面这句话可以适应ie、Firefox、chrome，上面那一大段反而不行
             String fileName = new String(fileLine.getName().getBytes("UTF-8"), "ISO8859-1");
 
-            response.setHeader("Content-Disposition", "attachment; filename=" + fileName);
+            response.setHeader("Content-Disposition", "attachment; filename="+fileName);
 
             // copy it to response's OutputStream
             FileCopyUtils.copy(is, response.getOutputStream());

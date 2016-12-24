@@ -113,15 +113,14 @@ public class TAMSClassFundingDraftDaoJpa implements TAMSClassFundingDraftDao {
             if(userInfoService.isCollegeStaff(user.getCode()))
                 tamsClassFunding.setClassInformation(
                         classInfoDao.getOneByIdAndDept(
-                                Integer.parseInt(per.getClassId()), user.getDepartmentId()
+                                per.getClassId(), user.getDepartmentId()
                         )
                 );
             else
                 tamsClassFunding.setClassInformation(
                         classInfoDao.getOneById(
-                                Integer.parseInt(
                                         per.getClassId()
-                                )
+
                         )
                 );
             if(tamsClassFunding.getClassInformation() == null)

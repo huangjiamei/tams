@@ -8,21 +8,19 @@ import java.sql.SQLException;
  */
 public interface SyncInfoService {
 
-     Connection getConnection(String hostType,
-                                    String hostIp,
-                                    String hostPort,
-                                    String dbName,
-                                    String dbUserName,
-                                    String dbPassWd,
-                                    String[] syncInfo) throws SQLException,ClassNotFoundException;
+    Connection getConnection(String hostType,
+                             String hostIp,
+                             String hostPort,
+                             String dbName,
+                             String dbUserName,
+                             String dbPassWd,
+                             String[] syncInfo) throws SQLException, ClassNotFoundException;
 
-     void closeConnection(Connection connection) throws SQLException;
+    void closeConnection(Connection connection) throws SQLException;
 
-     void syncCourseInfo(Connection connection) throws SQLException;
+    void syncCourseInfo(Connection connection) throws SQLException;
 
-     void syncClassInfo(Connection connection) throws  SQLException;
-
-
+    void syncClassInfo(Connection connection) throws SQLException;
 
 
 }

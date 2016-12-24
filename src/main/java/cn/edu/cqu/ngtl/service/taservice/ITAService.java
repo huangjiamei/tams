@@ -17,10 +17,10 @@ import java.util.Map;
 public interface ITAService {
 
     //查询申请人电话
-    String getApplicationPhoneNbr(String stuId,String classId);
+    String getApplicationPhoneNbr(String stuId, String classId);
 
     //查询申请人理由
-    String getApplicationReason(String stuId,String classId);
+    String getApplicationReason(String stuId, String classId);
 
     //根据姓名和学号查找候选人
     List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions);
@@ -38,11 +38,12 @@ public interface ITAService {
     /**
      * 助教提交申请的函数<br>
      * return : 状态码<br>
-     *      1 : 不在学生申请助教期间<br>
-     *      2 : 重复申请
-     *      3 : 已经被此课程聘用
-     *      4 : 成功
-     *      5 : 未知错误
+     * 1 : 不在学生申请助教期间<br>
+     * 2 : 重复申请
+     * 3 : 已经被此课程聘用
+     * 4 : 成功
+     * 5 : 未知错误
+     *
      * @param application
      * @return
      */
@@ -68,9 +69,9 @@ public interface ITAService {
 
     List<TAMSTeachCalendar> getTeachCalendarByClassId(String classId);
 
-    TAMSTa getTaByTaId(String taId,String classId);
+    TAMSTa getTaByTaId(String taId, String classId);
 
-    List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId,String classId);
+    List<TAMSTaTravelSubsidy> getTaTravelByStuIdAndClassId(String taId, String classId);
 
     boolean saveTravelSubsidy(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
 
@@ -78,12 +79,14 @@ public interface ITAService {
 
     boolean revocationOutstanding(List<String> taIds, String uid);
 
-    List<TaInfoViewObject> seachTainfoListByConditions(Map<String,String> conditions);
+    List<TaInfoViewObject> seachTainfoListByConditions(Map<String, String> conditions);
 
     List<TAMSWorkflowStatus> appriseStatusAvailable(String uid, String taId);
 
-    String getTamsTaIdByStuIdAndClassId(String stuId,String classId);
+    String getTamsTaIdByStuIdAndClassId(String stuId, String classId);
 
     void deleteTravelSubsidyByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+
+    boolean addPhdFunds(String phdFundsNumber, String classId);
 
 }

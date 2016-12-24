@@ -11,7 +11,7 @@ import org.apache.cxf.jaxws.endpoint.dynamic.JaxWsDynamicClientFactory;
 public class ReceiveHeaderWebServiceImpl implements ReceiveHeaderWebService {
 
     @Override
-    public boolean getResultFromHeaderWebService(String principalId,String permName) throws Exception {
+    public boolean getResultFromHeaderWebService(String principalId, String permName) throws Exception {
         Boolean bool = false;
         ClassLoader originalClassLoader = Thread.currentThread().getContextClassLoader();
         try {
@@ -19,10 +19,9 @@ public class ReceiveHeaderWebServiceImpl implements ReceiveHeaderWebService {
             org.apache.cxf.endpoint.Client client = dcf.createClient("http://isse.cqu.edu.cn:80/exam/remoting/HeaderWebService?wsdl");
             client.getInInterceptors().add(new LoggingInInterceptor());
             client.getOutInterceptors().add(new LoggingOutInterceptor());
-            Object[] objects = client.invoke("hasPermission",principalId,permName);
+            Object[] objects = client.invoke("hasPermission", principalId, permName);
             bool = Boolean.parseBoolean(objects[0].toString());
-        }
-        finally {
+        } finally {
             Thread.currentThread().setContextClassLoader(originalClassLoader);
         }
         return bool;

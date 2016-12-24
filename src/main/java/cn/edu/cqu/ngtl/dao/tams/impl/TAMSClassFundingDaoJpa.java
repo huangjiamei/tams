@@ -187,9 +187,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
             for (TAMSClassFunding per : list) {
                 per.setClassInformation(
                         classInfoDao.getOneById(
-                                Integer.parseInt(
                                         per.getClassId()
-                                )
                         )
                 );
             }

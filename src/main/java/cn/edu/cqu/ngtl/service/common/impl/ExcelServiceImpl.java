@@ -26,11 +26,64 @@ import static org.kuali.rice.krad.uif.freemarker.FreeMarkerInlineRenderBootstrap
 public class ExcelServiceImpl implements ExcelService {
     static Logger logger = Logger.getLogger(ExcelServiceImpl.class);
 
+    //单元格格式
+    private static Map<String, CellStyle> createStyles(Workbook wb) {
+        Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
+
+        CellStyle style;
+        Font titleFont = wb.createFont();
+        titleFont.setFontHeightInPoints((short) 10);
+        titleFont.setBold(true);
+        titleFont.setFontName("宋体");
+
+        style = wb.createCellStyle();
+        style.setFont(titleFont);
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setLocked(false);
+        styles.put("title", style);
+
+        style = wb.createCellStyle();
+        style.setFont(titleFont);
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setLocked(true);
+        styles.put("constTitle", style);
+
+        style = wb.createCellStyle();
+        Font contentFont = wb.createFont();
+        contentFont.setFontHeightInPoints((short) 9);
+
+        style.setFont(contentFont);
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setLocked(false);
+        styles.put("content", style);
+
+        style = wb.createCellStyle();
+        style.setFont(contentFont);
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setWrapText(true);
+        style.setLocked(false);
+        styles.put("titleInfo", style);
+
+        style.setFont(contentFont);
+        style.setAlignment(CellStyle.ALIGN_CENTER);
+        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
+        style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
+        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
+        style.setLocked(true);
+        styles.put("constContent", style);
+
+        return styles;
+    }
 
     /**
      * print Excel到basepath+/folderPath+/filename
      * 最后返回folderPath+/filename
      * controller通过applicationUrl+/folderPath+/filename下载文件
+     *
      * @param classlist
      * @param folderPath
      * @param filename
@@ -135,14 +188,14 @@ public class ExcelServiceImpl implements ExcelService {
 //        String rootPath = System.getProperty("catalina.home");
         String rootPath = getServletContext().getRealPath("/");
 
-        File folder = new File(rootPath+ folderPath);
+        File folder = new File(rootPath+folderPath);
         if (!folder.exists() || !folder.isDirectory()) {
             folder.mkdir();
         }
 
-        String filePath= folderPath + File.separator + filename;
+        String filePath = folderPath+File.separator+filename;
 
-        FileOutputStream out = new FileOutputStream(rootPath + File.separator + filePath);
+        FileOutputStream out = new FileOutputStream(rootPath+File.separator+filePath);
         wb.write(out);
         out.close();
 
@@ -208,71 +261,18 @@ public class ExcelServiceImpl implements ExcelService {
 //        String rootPath = System.getProperty("catalina.home");
         String rootPath = getServletContext().getRealPath("/");
 
-        File folder = new File(rootPath + File.separator + folderPath);
+        File folder = new File(rootPath+File.separator+folderPath);
         if (!folder.exists() || !folder.isDirectory()) {
             folder.mkdir();
         }
 
-        String filePath= folderPath + File.separator + filename;
+        String filePath = folderPath+File.separator+filename;
 
-        FileOutputStream out = new FileOutputStream(rootPath + File.separator + filePath);
+        FileOutputStream out = new FileOutputStream(rootPath+File.separator+filePath);
         wb.write(out);
         out.close();
 
         return filePath;
-    }
-
-    //单元格格式
-    private static Map<String, CellStyle> createStyles(Workbook wb) {
-        Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
-
-        CellStyle style;
-        Font titleFont = wb.createFont();
-        titleFont.setFontHeightInPoints((short) 10);
-        titleFont.setBold(true);
-        titleFont.setFontName("宋体");
-
-        style = wb.createCellStyle();
-        style.setFont(titleFont);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
-        style.setLocked(false);
-        styles.put("title", style);
-
-        style = wb.createCellStyle();
-        style.setFont(titleFont);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
-        style.setLocked(true);
-        styles.put("constTitle", style);
-
-        style = wb.createCellStyle();
-        Font contentFont = wb.createFont();
-        contentFont.setFontHeightInPoints((short) 9);
-
-        style.setFont(contentFont);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
-        style.setLocked(false);
-        styles.put("content", style);
-
-        style = wb.createCellStyle();
-        style.setFont(contentFont);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
-        style.setWrapText(true);
-        style.setLocked(false);
-        styles.put("titleInfo", style);
-
-        style.setFont(contentFont);
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.ALIGN_CENTER);
-        style.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.index);
-        style.setFillPattern(CellStyle.SOLID_FOREGROUND);
-        style.setLocked(true);
-        styles.put("constContent", style);
-
-        return styles;
     }
 
 }

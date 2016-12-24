@@ -87,11 +87,11 @@ public interface ITAConverter {
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid);
 
-    List<TaInfoViewObject> getTaInfoListByConditions(Map<String,String> conditions,String uId);
+    List<TaInfoViewObject> getTaInfoListByConditions(Map<String, String> conditions, String uId);
 
     List<MyClassViewObject> studentTimetableToMyClassViewObject(List<UTStudentTimetable> utStudentTimetables);
 
-    String countClassFunding(List<ClassFundingViewObject> classFundings, String totalAssignedFunding,String totalsetted);
+    String countClassFunding(List<ClassFundingViewObject> classFundings, String totalAssignedFunding, String totalsetted);
 
     String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings);
 

@@ -30,41 +30,32 @@ import java.util.Map;
 @Service
 public class AdminConverterimpl implements IAdminConverter {
 
+    private static final Logger logger = Logger.getRootLogger();
+    private static Map insNameMap;
+    private static Map insCodeMap;
+    private static Map courseNameIdMap;
+    private static Map courseNbrIdMap;
     @Autowired
     private UTSessionDao utSessionDao;
-
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
-
     @Autowired
     private UTInstructorDao utInstructorDao;
-
     @Autowired
     private UTCourseDao utCourseDao;
 
-
-    private static final Logger logger = Logger.getRootLogger();
-
-    private static Map insNameMap;
-
-    private static Map insCodeMap;
-
-    private static Map courseNameIdMap;
-
-    private static Map courseNbrIdMap;
-
     @Override
     public List<CourseManagerViewObject> getCourseManagerToTableViewObject(List<TAMSCourseManager> tamsCourseManagerList) {
-        if(insNameMap==null) {
+        if (insNameMap == null) {
             insNameMap = utInstructorDao.getAllInstructorNameIdMap();
             System.out.println(System.currentTimeMillis());
         }
-        if(insCodeMap==null){
+        if (insCodeMap == null) {
             insCodeMap = utInstructorDao.getAllInstructorCodeIdMap();
             System.out.println(System.currentTimeMillis());
         }
-        if(courseNameIdMap==null){
-            List<Map> result= utCourseDao.getCourseNameIdMap();
+        if (courseNameIdMap == null) {
+            List<Map> result = utCourseDao.getCourseNameIdMap();
             courseNameIdMap = result.get(0);
             courseNbrIdMap = result.get(1);
             System.out.println(System.currentTimeMillis());
@@ -74,29 +65,29 @@ public class AdminConverterimpl implements IAdminConverter {
         for (TAMSCourseManager tamsCourseManager : tamsCourseManagerList) {
 //            UTCourse utCourse = new UTCourseDaoJpa().selectOneById(tamsCourseManager.getCourseId());
 //            if(utCourse!=null) {
-                CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
-                courseManagerViewObject.setCourseId(tamsCourseManager.getCourseId().toString());
-                courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
-                courseManagerViewObject.setCourseNm(courseNameIdMap.get(tamsCourseManager.getCourseId().toString())==null?"":(String)courseNameIdMap.get(tamsCourseManager.getCourseId().toString()));
-                courseManagerViewObject.setCourseNmb(courseNbrIdMap.get(tamsCourseManager.getCourseId().toString())==null?"":(String)courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()));
+            CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
+            courseManagerViewObject.setCourseId(tamsCourseManager.getCourseId().toString());
+            courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
+            courseManagerViewObject.setCourseNm(courseNameIdMap.get(tamsCourseManager.getCourseId().toString()) == null ? "" :(String) courseNameIdMap.get(tamsCourseManager.getCourseId().toString()));
+            courseManagerViewObject.setCourseNmb(courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()) == null ? "" :(String) courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()));
 
-                if(tamsCourseManager.getCourseManagerId()!=null) {
-                    courseManagerViewObject.setCourseManager(insNameMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
-                    courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()));
-                }else{
-                    courseManagerViewObject.setCourseManager(null);
-                    courseManagerViewObject.setInstructorCode(null);
-                }
-                courseManagerViewObjectList.add(courseManagerViewObject);
+            if (tamsCourseManager.getCourseManagerId() != null) {
+                courseManagerViewObject.setCourseManager(insNameMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
+                courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()));
+            } else {
+                courseManagerViewObject.setCourseManager(null);
+                courseManagerViewObject.setInstructorCode(null);
+            }
+            courseManagerViewObjectList.add(courseManagerViewObject);
 //            }
         }
 
-        return  courseManagerViewObjectList;
+        return courseManagerViewObjectList;
     }
 
     @Override
-    public List<TaFundingViewObject> taFundingToViewObject(List<TAMSTa> tamsTas){
-        if(tamsTas == null || tamsTas.size() == 0) {
+    public List<TaFundingViewObject> taFundingToViewObject(List<TAMSTa> tamsTas) {
+        if (tamsTas == null || tamsTas.size() == 0) {
             //logger.error("数据为空！");
             //return null;
             List<TaFundingViewObject> nullObject = new ArrayList<>();
@@ -104,13 +95,13 @@ public class AdminConverterimpl implements IAdminConverter {
             return nullObject;
         }
         List<TaFundingViewObject> taFundingViewObjects = new ArrayList<>(tamsTas.size());
-        for(TAMSTa ta : tamsTas) {
+        for (TAMSTa ta : tamsTas) {
             TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
 
-            if(ta.getTaClass() != null) {
+            if (ta.getTaClass() != null) {
                 if (ta.getTaClass().getCourseOffering() != null) {
                     UTCourse course = ta.getTaClass().getCourseOffering().getCourse();
-                    if(course != null) {
+                    if (course != null) {
                         taFundingViewObject.setCourseName(course.getName());
                         taFundingViewObject.setCourseCode(course.getCodeR());
                         taFundingViewObject.setDepartmentName(course.getDepartment().getName());
@@ -118,27 +109,26 @@ public class AdminConverterimpl implements IAdminConverter {
                 }
             }
             UTStudent taStu = ta.getTa();
-            if(taStu != null) {
+            if (taStu != null) {
                 taFundingViewObject.setTaName(taStu.getName());
                 //taFundingViewObject.setDepartmentName(taStu.getDepartment().getName());
             }
 
-            if (ta.getCurSession() != null ){
-                taFundingViewObject.setSessionName(ta.getCurSession().getYear() + "年" +
-                        ta.getCurSession().getTerm() + "季");
+            if (ta.getCurSession() != null) {
+                taFundingViewObject.setSessionName(ta.getCurSession().getYear()+"年"+
+                        ta.getCurSession().getTerm()+"季");
             }
             taFundingViewObject.setStuId(ta.getTaId());
             //暂时缺失的属性
-            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding()==null?"0":ta.getAssignedFunding());
-            taFundingViewObject.setBonus(ta.getBonus()==null?"0":ta.getBonus());
-            taFundingViewObject.setPhdFunding(ta.getPhdFunding()==null?"0":ta.getPhdFunding());
-            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy()==null?"0":ta.getTravelSubsidy());
-            if(ta.getTamsTaCategory() != null){
+            taFundingViewObject.setAssignedFunding(ta.getAssignedFunding() == null ? "0" :ta.getAssignedFunding());
+            taFundingViewObject.setBonus(ta.getBonus() == null ? "0" :ta.getBonus());
+            taFundingViewObject.setPhdFunding(ta.getPhdFunding() == null ? "0" :ta.getPhdFunding());
+            taFundingViewObject.setTravelSubsidy(ta.getTravelSubsidy() == null ? "0" :ta.getTravelSubsidy());
+            if (ta.getTamsTaCategory() != null) {
                 taFundingViewObject.setTaType(ta.getTamsTaCategory().getName());
-            }
-            else
+            } else
                 taFundingViewObject.setTaType("缺失");
-            Integer total =  (Integer.parseInt(taFundingViewObject.getAssignedFunding())+
+            Integer total = (Integer.parseInt(taFundingViewObject.getAssignedFunding())+
                     Integer.parseInt(taFundingViewObject.getBonus())+
                     Integer.parseInt(taFundingViewObject.getPhdFunding())+
                     Integer.parseInt(taFundingViewObject.getTravelSubsidy()));
@@ -149,8 +139,8 @@ public class AdminConverterimpl implements IAdminConverter {
     }
 
     @Override
-    public List<DetailFundingViewObject> detailFundingToViewObject(List<TAMSTa> tamsTas){
-        if(tamsTas == null || tamsTas.size() == 0) {
+    public List<DetailFundingViewObject> detailFundingToViewObject(List<TAMSTa> tamsTas) {
+        if (tamsTas == null || tamsTas.size() == 0) {
             //logger.error("数据为空！");
             //return null;
             List<DetailFundingViewObject> nullObject = new ArrayList<>();
@@ -160,20 +150,20 @@ public class AdminConverterimpl implements IAdminConverter {
 
         UTSession curSession = utSessionDao.getCurrentSession();
         List<DetailFundingViewObject> detailFundingViewObjects = new ArrayList<>(tamsTas.size());
-        for(TAMSTa ta : tamsTas) {
+        for (TAMSTa ta : tamsTas) {
             DetailFundingViewObject detailFundingViewObject = new DetailFundingViewObject();
             UTCourse course = null;
-            if(ta.getTaClass() != null) {
+            if (ta.getTaClass() != null) {
                 if (ta.getTaClass().getCourseOffering() != null) {
                     course = ta.getTaClass().getCourseOffering().getCourse();
-                    if(course != null) {
+                    if (course != null) {
                         detailFundingViewObject.setCourseName(course.getName());
                         detailFundingViewObject.setCourseCode(course.getCodeR());
                     }
                 }
             }
             UTStudent taStu = ta.getTa();
-            if(taStu != null) {
+            if (taStu != null) {
                 detailFundingViewObject.setTaName(taStu.getName());
                 detailFundingViewObject.setStuId(taStu.getId());
             }
@@ -181,41 +171,41 @@ public class AdminConverterimpl implements IAdminConverter {
             detailFundingViewObject.setBankId("缺失");
             detailFundingViewObject.setBankName("缺失");
             detailFundingViewObject.setIdentity(ta.getTa().getIdNumber());
-            detailFundingViewObject.setMonthlySalary1(ta.getMonth1()==null ? "0" : ta.getMonth1());
-            detailFundingViewObject.setMonthlySalary2(ta.getMonth2()==null ? "0" : ta.getMonth2());
-            detailFundingViewObject.setMonthlySalary3(ta.getMonth3()==null ? "0" : ta.getMonth3());
-            detailFundingViewObject.setMonthlySalary4(ta.getMonth4()==null ? "0" : ta.getMonth4());
-            detailFundingViewObject.setMonthlySalary5(ta.getMonth5()==null ? "0" : ta.getMonth5());
-            detailFundingViewObject.setMonthlySalary6(ta.getMonth6()==null ? "0" : ta.getMonth6());
-            detailFundingViewObject.setMonthlySalary7(ta.getMonth7()==null ? "0" : ta.getMonth7());
-            detailFundingViewObject.setMonthlySalary8(ta.getMonth8()==null ? "0" : ta.getMonth8());
-            detailFundingViewObject.setMonthlySalary9(ta.getMonth9()==null ? "0" : ta.getMonth9());
-            detailFundingViewObject.setMonthlySalary10(ta.getMonth10()==null ? "0" : ta.getMonth10());
-            detailFundingViewObject.setMonthlySalary11(ta.getMonth11()==null ? "0" : ta.getMonth11());
-            detailFundingViewObject.setMonthlySalary12(ta.getMonth12()==null ? "0" : ta.getMonth12());
+            detailFundingViewObject.setMonthlySalary1(ta.getMonth1() == null ? "0" :ta.getMonth1());
+            detailFundingViewObject.setMonthlySalary2(ta.getMonth2() == null ? "0" :ta.getMonth2());
+            detailFundingViewObject.setMonthlySalary3(ta.getMonth3() == null ? "0" :ta.getMonth3());
+            detailFundingViewObject.setMonthlySalary4(ta.getMonth4() == null ? "0" :ta.getMonth4());
+            detailFundingViewObject.setMonthlySalary5(ta.getMonth5() == null ? "0" :ta.getMonth5());
+            detailFundingViewObject.setMonthlySalary6(ta.getMonth6() == null ? "0" :ta.getMonth6());
+            detailFundingViewObject.setMonthlySalary7(ta.getMonth7() == null ? "0" :ta.getMonth7());
+            detailFundingViewObject.setMonthlySalary8(ta.getMonth8() == null ? "0" :ta.getMonth8());
+            detailFundingViewObject.setMonthlySalary9(ta.getMonth9() == null ? "0" :ta.getMonth9());
+            detailFundingViewObject.setMonthlySalary10(ta.getMonth10() == null ? "0" :ta.getMonth10());
+            detailFundingViewObject.setMonthlySalary11(ta.getMonth11() == null ? "0" :ta.getMonth11());
+            detailFundingViewObject.setMonthlySalary12(ta.getMonth12() == null ? "0" :ta.getMonth12());
             Integer total = 0;
 
 
-            if(curSession.getTerm().equals("春")) {
-                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary3()==null?"0":detailFundingViewObject.getMonthlySalary3()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary4()==null?"0":detailFundingViewObject.getMonthlySalary4()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary5()==null?"0":detailFundingViewObject.getMonthlySalary5()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary6()==null?"0":detailFundingViewObject.getMonthlySalary6()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary7()==null?"0":detailFundingViewObject.getMonthlySalary7()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary8()==null?"0":detailFundingViewObject.getMonthlySalary8()));
-            }else if(curSession.getTerm().equals("秋")){
-                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1()==null?"0":detailFundingViewObject.getMonthlySalary1()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary2()==null?"0":detailFundingViewObject.getMonthlySalary2()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary9()==null?"0":detailFundingViewObject.getMonthlySalary9()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary10()==null?"0":detailFundingViewObject.getMonthlySalary10()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary11()==null?"0":detailFundingViewObject.getMonthlySalary11()) +
-                        Integer.parseInt(detailFundingViewObject.getMonthlySalary12()==null?"0":detailFundingViewObject.getMonthlySalary12()));
+            if (curSession.getTerm().equals("春")) {
+                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary3() == null ? "0" :detailFundingViewObject.getMonthlySalary3())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary4() == null ? "0" :detailFundingViewObject.getMonthlySalary4())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary5() == null ? "0" :detailFundingViewObject.getMonthlySalary5())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary6() == null ? "0" :detailFundingViewObject.getMonthlySalary6())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary7() == null ? "0" :detailFundingViewObject.getMonthlySalary7())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary8() == null ? "0" :detailFundingViewObject.getMonthlySalary8()));
+            } else if (curSession.getTerm().equals("秋")) {
+                total = (Integer.parseInt(detailFundingViewObject.getMonthlySalary1() == null ? "0" :detailFundingViewObject.getMonthlySalary1())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary2() == null ? "0" :detailFundingViewObject.getMonthlySalary2())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary9() == null ? "0" :detailFundingViewObject.getMonthlySalary9())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary10() == null ? "0" :detailFundingViewObject.getMonthlySalary10())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary11() == null ? "0" :detailFundingViewObject.getMonthlySalary11())+
+                        Integer.parseInt(detailFundingViewObject.getMonthlySalary12() == null ? "0" :detailFundingViewObject.getMonthlySalary12()));
             }
             detailFundingViewObject.setTotal(total.toString());
             detailFundingViewObjects.add(detailFundingViewObject);
         }
 
-    return  detailFundingViewObjects;
+        return detailFundingViewObjects;
     }
 
     //转换课程经费
@@ -228,7 +218,7 @@ public class AdminConverterimpl implements IAdminConverter {
             return nullObject;
         } else {
             for (ClassFundingViewObject listone : list) {
-                Integer total =  Integer.parseInt(listone.getAssignedFunding()) + Integer.parseInt(listone.getPhdFunding()) + Integer.parseInt(listone.getBonus()) + Integer.parseInt(listone.getTravelSubsidy());
+                Integer total = Integer.parseInt(listone.getAssignedFunding())+Integer.parseInt(listone.getPhdFunding())+Integer.parseInt(listone.getBonus())+Integer.parseInt(listone.getTravelSubsidy());
                 listone.setTotal(total.toString());
                 List<UTClassInstructor> utClassInstructors = utClassInstructorDao.selectByClassId(listone.getClassId());
                 if (utClassInstructors == null || utClassInstructors.size() == 0) {
@@ -237,9 +227,9 @@ public class AdminConverterimpl implements IAdminConverter {
                     listone.setInstructorName(utClassInstructors.get(0).getUtInstructor().getName());
                 } else {
                     for (int i = 0; i < utClassInstructors.size(); i++) {
-                        for (int j = i + 1; j < utClassInstructors.size(); j++) {
+                        for (int j = i+1; j < utClassInstructors.size(); j++) {
                             if (utClassInstructors.get(i).getClassId().toString().equals(utClassInstructors.get(j).getClassId().toString())) {
-                                String name = utClassInstructors.get(i).getUtInstructor().getName() + ',' +
+                                String name = utClassInstructors.get(i).getUtInstructor().getName()+','+
                                         utClassInstructors.get(j).getUtInstructor().getName();
                                 listone.setInstructorName(name);
                             }
@@ -280,21 +270,20 @@ public class AdminConverterimpl implements IAdminConverter {
     //转换助教经费
     @Override
     public List<TaFundingViewObject> combineTaFunding(List<TaFundingViewObject> list) {
-        if(list == null || list.size() ==0) {
+        if (list == null || list.size() == 0) {
             //logger.error("数据为空！");
             //return null;
             List<TaFundingViewObject> nullObject = new ArrayList<>();
             nullObject.add(new TaFundingViewObject());
             return nullObject;
         }
-        if(list.size() == 1){
-            Integer total = Integer.parseInt(list.get(0).getAssignedFunding()) + Integer.parseInt(list.get(0).getPhdFunding()) + Integer.parseInt(list.get(0).getBonus()) + Integer.parseInt(list.get(0).getTravelSubsidy());
+        if (list.size() == 1) {
+            Integer total = Integer.parseInt(list.get(0).getAssignedFunding())+Integer.parseInt(list.get(0).getPhdFunding())+Integer.parseInt(list.get(0).getBonus())+Integer.parseInt(list.get(0).getTravelSubsidy());
             list.get(0).setTotal(total.toString());
             return list;
-        }
-        else{
+        } else {
             for (int i = 0; i < list.size(); i++) {
-                Integer total = Integer.parseInt(list.get(i).getAssignedFunding()) + Integer.parseInt(list.get(i).getPhdFunding()) + Integer.parseInt(list.get(i).getBonus()) + Integer.parseInt(list.get(i).getTravelSubsidy());
+                Integer total = Integer.parseInt(list.get(i).getAssignedFunding())+Integer.parseInt(list.get(i).getPhdFunding())+Integer.parseInt(list.get(i).getBonus())+Integer.parseInt(list.get(i).getTravelSubsidy());
                 list.get(i).setTotal(total.toString());
                 for (int j = i+1; j < list.size(); j++) {
                     if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString()) &&
@@ -310,7 +299,7 @@ public class AdminConverterimpl implements IAdminConverter {
     //转换经费明细
     @Override
     public List<DetailFundingViewObject> combineDetailFunding(List<DetailFundingViewObject> list) {
-        if(list == null || list.size() == 0){
+        if (list == null || list.size() == 0) {
             //logger.error("数据为空！");
             //return null;
             List<DetailFundingViewObject> nullObject = new ArrayList<>();

@@ -52,33 +52,33 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
     @Override
     public Connection getConnection(String hostType, String hostIp, String hostPort, String dbName, String dbUserName,
-                                    String dbPassWd,String[] syncInfo) throws SQLException, ClassNotFoundException {
+                                    String dbPassWd, String[] syncInfo) throws SQLException, ClassNotFoundException {
         String url = "";
         Connection con = null;
         switch (hostType) {
             case "0":
                 Class.forName("oracle.jdbc.driver.OracleDriver");
-                url += "jdbc:oracle:thin:@" + hostIp + ":" + hostPort + "/" + dbName;
+                url += "jdbc:oracle:thin:@"+hostIp+":"+hostPort+"/"+dbName;
                 break;
             case "1":
                 //暂未测试
                 Class.forName("com.mysql.jdbc.Driver");
-                url += "jdbc:mysql://" + hostIp + ":" + hostPort + "/" + dbName;
+                url += "jdbc:mysql://"+hostIp+":"+hostPort+"/"+dbName;
                 break;
             case "2":
                 //暂未测试
                 Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver");
-                url += "jdbc:sqlserver://" + hostIp + ":" + hostPort + ";DatabaseName=" + dbName;
+                url += "jdbc:sqlserver://"+hostIp+":"+hostPort+";DatabaseName="+dbName;
                 break;
         }
         con = DriverManager.getConnection(url, dbUserName, dbPassWd);
         List<String> needToSync = Arrays.asList(syncInfo);
 
-        if(needToSync.contains("1"))
+        if (needToSync.contains("1"))
             this.syncCourseInfo(con);  //导入课程信息
-        if(needToSync.contains("2"))
+        if (needToSync.contains("2"))
             this.syncClassInfo(con);   //导入班次信息
-        if(needToSync.contains("3"))
+        if (needToSync.contains("3"))
             this.syncStudentTimetableInfo(con);  //导入学生课表
         return con;
     }
@@ -126,7 +126,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 utCourse.setCodeR(courseCode);
                 utCourse.setName(coureseName);
                 utCourse.setCredit(credit);
-                utCourse.setId(Integer.parseInt("2016" + kcId));
+                utCourse.setId(Integer.parseInt("2016"+kcId));
                 utCourseDao.InsertOneByEntity(utCourse);
                 System.out.println(i++);
             }
@@ -191,14 +191,14 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                     UTClass utClass = new UTClass();
                     utClass.setClassNumber(classNbr);
-                    utClass.setId(sessionPrefix + editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
-                    utClass.setCourseOfferingId(sessionPrefix + editClassNbr);
+                    utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
+                    utClass.setCourseOfferingId(sessionPrefix+editClassNbr);
                     utClasses.add(utClass);
                     /**
                      * CourseOffering对象
                      */
                     UTCourseOffering utCourseOffering = new UTCourseOffering();
-                    utCourseOffering.setId(sessionPrefix + editClassNbr);
+                    utCourseOffering.setId(sessionPrefix+editClassNbr);
                     utCourseOffering.setCourseId((Integer) courseMap.get(courseCode));
                     utCourseOffering.setSessionId(curSession.getId());
                     utCourseOfferings.add(utCourseOffering);
@@ -206,34 +206,34 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                      * offeringConfig对象
                      */
                     UTCourseOfferingConfig utCourseOfferingConfig = new UTCourseOfferingConfig();
-                    utCourseOfferingConfig.setId(sessionPrefix + editClassNbr);
-                    utCourseOfferingConfig.setCourseOfferingId(sessionPrefix + editClassNbr);
+                    utCourseOfferingConfig.setId(sessionPrefix+editClassNbr);
+                    utCourseOfferingConfig.setCourseOfferingId(sessionPrefix+editClassNbr);
                     utCourseOfferingConfig.setConfigName("1");
                     utCourseOfferingConfigs.add(utCourseOfferingConfig);
                     /**
                      * configDetail对象
                      */
                     UTConfigDetail utConfigDetail = new UTConfigDetail();
-                    utConfigDetail.setId(sessionPrefix + editClassNbr);
-                    utConfigDetail.setConfigId(sessionPrefix + editClassNbr);
-                    utConfigDetail.setKlassId(sessionPrefix + editClassNbr);
+                    utConfigDetail.setId(sessionPrefix+editClassNbr);
+                    utConfigDetail.setConfigId(sessionPrefix+editClassNbr);
+                    utConfigDetail.setKlassId(sessionPrefix+editClassNbr);
                     utConfigDetails.add(utConfigDetail);
 
                     /**
                      * ApplyStatus对象
                      */
                     TAMSClassApplyStatus tamsClassApplyStatus = new TAMSClassApplyStatus();
-                    tamsClassApplyStatus.setClassId(sessionPrefix + editClassNbr);
+                    tamsClassApplyStatus.setClassId(sessionPrefix+editClassNbr);
                     tamsClassApplyStatus.setWorkflowStatusId("1");
-                    tamsClassApplyStatus.setId(sessionPrefix + editClassNbr);
+                    tamsClassApplyStatus.setId(sessionPrefix+editClassNbr);
                     tamsClassApplyStatuses.add(tamsClassApplyStatus);
                 }
                 //教学班号和身份认证号的关系
 //                classInstructorMap.put(classNbr,auId);
 
                 UTClassInstructor utClassInstructor = new UTClassInstructor();
-                utClassInstructor.setId(sessionPrefix + editClassNbr);
-                utClassInstructor.setClassId(sessionPrefix + editClassNbr);
+                utClassInstructor.setId(sessionPrefix+editClassNbr);
+                utClassInstructor.setClassId(sessionPrefix+editClassNbr);
                 utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
                 utClassInstructors.add(utClassInstructor);
 
@@ -242,7 +242,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             /**
              * 开始按顺序存储
              */
-           System.out.println("开始导入CO");
+            System.out.println("开始导入CO");
             utCourseOfferingDao.saveCourseOfferingByList(utCourseOfferings);
 
             System.out.println("开始导入COC");
@@ -261,7 +261,6 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             tamsClassApplyStatusDao.saveApplyStatueByList(tamsClassApplyStatuses);
 
 
-
         } finally {
             if (pre != null)
                 pre.close();
@@ -270,6 +269,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
     /**
      * 导入学生课表
+     *
      * @param connection
      * @throws SQLException
      */
@@ -284,7 +284,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         } else if (curSession.getTerm().equals("秋")) {
             sessionPrefix += "02";
         }
-        int i =0;
+        int i = 0;
         String queryCourse = "SELECT * FROM XSKB t WHERE  t.XH LIKE '2016%'";
         PreparedStatement pre = connection.prepareStatement(queryCourse);
         try {

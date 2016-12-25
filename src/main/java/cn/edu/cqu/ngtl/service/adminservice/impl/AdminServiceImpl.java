@@ -657,11 +657,37 @@ public class AdminServiceImpl implements IAdminService {
                 tamsDeptFunding.setPlanFunding(per.getPlanFunding());
                 tamsDeptFunding.setTravelSubsidy(per.getTrafficFunding());
                 deptFundingDao.saveOneByEntity(tamsDeptFunding);
+
+                //保存批准经费变更到批次经费 如果之前没有发布过，那么直接将金额加到现有的批准经费上面
+                List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectCurrBySession();
+                if(tamsUniversityFundings!=null){
+                    if(tamsUniversityFundings.get(0)!=null){
+                        TAMSUniversityFunding tamsUniversityFundingExist = tamsUniversityFundings.get(0);
+                        Long oldActualFunds = Long.valueOf(tamsUniversityFundingExist.getActualFunding());
+                        Long newActualFunds = oldActualFunds + Long.valueOf(per.getActualFunding());
+                        tamsUniversityFundingExist.setActualFunding(newActualFunds.toString());
+                        tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFundingExist);
+                    }
+                }
+
             } else {
-                if (!per.getActualFunding().equals(exist.getActualFunding()) || !per.getPlanFunding().equals(exist.getPlanFunding())) {
+                if (!per.getActualFunding().equals(exist.getActualFunding()) || !per.getPlanFunding().equals(exist.getPlanFunding())) { //如果金额有变化
                     exist.setActualFunding(per.getActualFunding()); //保存批准经费
                     exist.setPlanFunding(per.getPlanFunding());//保存计划经费
                     deptFundingDao.saveOneByEntity(exist);
+
+                    //保存批准经费变更到批次经费 如果之前发布过，那么是加上变化的额度
+                    List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectCurrBySession();
+                    if(tamsUniversityFundings!=null){
+                        if(tamsUniversityFundings.get(0)!=null){
+                            TAMSUniversityFunding tamsUniversityFundingExist = tamsUniversityFundings.get(0);
+                            Long oldActualFunds = Long.valueOf(tamsUniversityFundingExist.getActualFunding());
+                            Long changedFunds = Long.valueOf(per.getActualFunding())-Long.valueOf(exist.getActualFunding()); //变化额度等于新设置的金额减去旧金额
+                            Long newActualFunds = oldActualFunds + changedFunds;
+                            tamsUniversityFundingExist.setActualFunding(newActualFunds.toString());
+                            tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFundingExist);
+                        }
+                    }
                 }
             }
             //保存草稿表

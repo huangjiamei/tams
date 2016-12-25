@@ -110,16 +110,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
 
     @Override
-    public boolean isMaxOrderOfThisStatue(String statusId,String functionId){
-        TAMSWorkflowStatus newStatus = tamsWorkflowStatusDao.getOneById(statusId);
-        Integer newStatusOrder = newStatus.getOrder();
-        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
-        if(newStatusOrder==maxOrder)
-            return true;
-        return false;
-    }
-
-    @Override
     public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
         Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(maxOrder.toString());

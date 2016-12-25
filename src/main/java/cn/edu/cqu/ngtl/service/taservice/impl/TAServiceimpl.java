@@ -16,6 +16,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.service.common.WorkFlowService;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
@@ -38,9 +39,7 @@ public class TAServiceimpl implements ITAService {
 
     private static final Integer MAX_APPLY_COURSE_NUMBER = 2;  //最多同时申请和担任的助教数量（两样之和）
 
-    @Autowired
-    private TAMSWorkflowStatusDao workflowStatusDao;
-
+    private static final String BONUS_NUMBER = "500";  //优秀助教的奖励
     @Autowired
     private UTClassDao classDao;
 
@@ -49,6 +48,9 @@ public class TAServiceimpl implements ITAService {
 
     @Autowired
     private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
+
+    @Autowired
+    private WorkFlowService workFlowService;
 
     @Autowired
     private TAMSTaDao taDao;
@@ -561,6 +563,18 @@ public class TAServiceimpl implements ITAService {
 
         for (String taid : taIds) {
             tamstadao.changeStatusToSpecifiedStatus(taid, workFlowStatusId);
+
+            //如果是评优流程的最终步骤 就增加奖励经费
+            boolean isMaxOrder = workFlowService.isMaxOrderOfThisStatue(workFlowStatusId,"2");
+            if(isMaxOrder){
+                TAMSTa tamsTa = tamstadao.selectById(taid);
+                if(tamsTa!=null){
+                    tamsTa.setBonus(BONUS_NUMBER);  //将奖励金额设置为优秀助教的金额
+                    tamstadao.insertByEntity(tamsTa);
+                    //将变化体现到其他经费表
+                    this.addBonus(BONUS_NUMBER,tamsTa.getTaClassId());
+                }
+            }
         }
         return true;
     }
@@ -701,6 +715,13 @@ public class TAServiceimpl implements ITAService {
 
     }
 
+    /**
+     * 各表体现博士津贴的变化
+     * @param phdFundsNumber
+     * @param classId
+     * @return
+     */
+
     @Override
     public boolean addPhdFunds(String phdFundsNumber, String classId) {
         UTSession curSession = sessionDao.getCurrentSession();
@@ -748,5 +769,58 @@ public class TAServiceimpl implements ITAService {
         }
         return false;
     }
+
+    /**
+     * 各表体现奖励经费的变化
+     * @param phdBonus
+     * @param classId
+     * @return
+     */
+
+    @Override
+    public boolean addBonus(String phdBonus, String classId){
+        UTSession curSession = sessionDao.getCurrentSession();
+        UTClassInformation utClassInformation = utClassInfoDao.getOneById(classId); //获取课程信息
+        if (utClassInformation != null) {
+            Integer deptId = utClassInformation.getDepartmentId(); //课程所属学院
+            TAMSClassFunding existClassFunding = tamsClassFundingDao.getOneByClassIdAndSessionId(classId, curSession.getId().toString());
+            TAMSClassFundingDraft existClassFundingDraft = tamsClassFundingDraftDao.selectOneByClassIdAndSessionId(classId, curSession.getId().toString());
+            TAMSDeptFunding existDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(deptId, curSession.getId());
+            TAMSDeptFundingDraft existDeptFundingDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(deptId, curSession.getId());
+            TAMSUniversityFunding existUniFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
+
+            if (existClassFunding != null) { //保存课程经费表
+                String oldPhdFunding = existClassFunding.getBonus();
+                existClassFunding.setBonus(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdBonus)));
+                tamsClassFundingDao.saveOneByEntity(existClassFunding);
+            }
+
+            if (existClassFundingDraft != null) {  //保存课程经费草稿表
+                String oldPhdFunding = existClassFundingDraft.getBonus();
+                existClassFundingDraft.setBonus(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdBonus)));
+                tamsClassFundingDraftDao.insertOneByEntity(existClassFundingDraft);
+            }
+
+            if (existDeptFunding != null) {  //保存部门经费
+                String oldPhdFunding = existDeptFunding.getBonus();
+                existDeptFunding.setBonus(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdBonus)));
+                tamsDeptFundingDao.saveOneByEntity(existDeptFunding);
+            }
+
+            if (existDeptFundingDraft != null) {  //保存部门经费草稿
+                String oldPhdFunding = existDeptFundingDraft.getBonus();
+                existDeptFundingDraft.setBonus(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdBonus)));
+                tamsDeptFundingDraftDao.saveOneByEntity(existDeptFundingDraft);
+            }
+
+            if(existUniFunding!=null) {  //保存学校经费
+                String oldPhdFunding = existUniFunding.getBonus();
+                existUniFunding.setBonus(String.valueOf(Long.valueOf(oldPhdFunding)+Long.valueOf(phdBonus)));
+                tamsUniversityFundingDao.insertOneByEntity(existUniFunding);
+            }
+            return true;
+        }
+        return false;
+        }
 
 }

@@ -2,7 +2,6 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
-import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
@@ -13,6 +12,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.service.common.WorkFlowService;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
@@ -75,7 +75,7 @@ public class ClassController extends BaseController {
     private IPDFService PDFService;
 
     @Autowired
-    private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
+    private WorkFlowService workFlowService;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -170,7 +170,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        boolean isMax = classInfoService.isMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
+        boolean isMax = workFlowService.isMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {

@@ -90,4 +90,6 @@ public interface ITAService {
 
     boolean addPhdFunds(String phdFundsNumber, String classId);
 
+    boolean addBonus(String phdBonus, String classId);
+
 }

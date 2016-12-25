@@ -657,7 +657,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId){
-
-        return tamsClassEvaluationDao.getAllByClassId(classId);
+        List<TAMSClassEvaluation> result = tamsClassEvaluationDao.getAllByClassId(classId);
+        List<TAMSClassEvaluation> copy = new ArrayList<>();
+        if(result!=null) {
+            for (TAMSClassEvaluation tamsClassEvaluation : result) {
+                copy.add(tamsClassEvaluation);
+            }
+            return copy;
+        }
+        return result;
     }
 }

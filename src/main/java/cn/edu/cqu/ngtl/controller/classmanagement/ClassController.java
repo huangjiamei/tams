@@ -919,6 +919,11 @@ public class ClassController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
 
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         infoForm.getClassEvaluations().remove(index);
 
         return this.getModelAndView(infoForm, "pageRequestTa");

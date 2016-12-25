@@ -535,11 +535,11 @@ public class TAConverterimpl implements ITAConverter {
             }
             UTStudent taStu = ta.getTa();
             if (taStu != null) {
-                viewObject.setTaMasterMajorName(taStu.getProgram() == null ? "缺失" :taStu.getProgram().getName());
+                viewObject.setTaMajorName(taStu.getProgram() == null ? "缺失" :taStu.getProgram().getName());
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIDNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());
-                viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
+                viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
 
             viewObject.setId(ta.getId());
@@ -548,7 +548,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTeacherAppraise(ta.getEvaluation());
             viewObject.setStuAppraise(ta.getStuEva());
             //暂时缺失的属性
-            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setTaMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
             viewObject.setVitality("缺失");

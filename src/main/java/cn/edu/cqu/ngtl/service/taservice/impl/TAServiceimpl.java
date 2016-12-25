@@ -26,7 +26,6 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.*;
 
 /**
@@ -394,8 +393,8 @@ public class TAServiceimpl implements ITAService {
 //                newTa.setOutStandingTaWorkflowStatusId(allStatus.get(0).getOrder().toString());
             TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
             newTa.setApplicationNote(readyToRemove.getNote());
-            TAMSTaCategory masterTA = tamsTaCategoryDao.selectOneByName("博士");
-            TAMSTaCategory phdTA = tamsTaCategoryDao.selectOneByName("硕士");
+            TAMSTaCategory masterTA = tamsTaCategoryDao.selectOneByName("硕士");
+            TAMSTaCategory phdTA = tamsTaCategoryDao.selectOneByName("博士");
             if (masterTA == null || phdTA == null) {
                 return false;
             }

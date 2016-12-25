@@ -851,7 +851,7 @@ public class TaController extends BaseController {
             for(TaInfoViewObject ta : taList) {
                 String name = ta.getTaName() == null ? "" : ta.getTaName();
                 String stuNumber = ta.getTaIDNumber() == null ? "" : ta.getTaIDNumber();
-                String masterMajor = ta.getTaMasterMajorName() == null ? "" : ta.getTaMasterMajorName();
+                String masterMajor = ta.getTaMajorName() == null ? "" : ta.getTaMajorName();
                 String courseName = ta.getCourseName() == null ? "" : ta.getCourseName();
                 String courseCode = ta.getCourseCode() == null ? "" : ta.getCourseCode();
                 String clazzCode = ta.getClassNumber() == null ? "" : ta.getClassNumber();

@@ -522,7 +522,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public void validClassFunds(String classId) {  //初始化课程经费 //TODO LIUXIAO
+    public void validClassFunds(String classId) {  //初始化课程经费
         //草稿课程经费表
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
         TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);

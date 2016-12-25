@@ -202,16 +202,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                     classIds.add(classId);
                 }
             }
-            List<String> strClassIds = (List<String>) (List) classIds; //强制转化为String List
+            List<String> strClassIds = new ArrayList<>();
+            for(Object classid:classIds){
+                strClassIds.add(classid.toString());
+            }
             /*
                 在结果中只显示负责人能看的课程
              */
             List<UTClassInformation> result = new ArrayList<>();
             for (UTClassInformation utClassInformation : classInformations) {
-                System.out.println(strClassIds.get(0).equals(utClassInformation.getId()));
-                System.out.println(strClassIds.get(1).equals(utClassInformation.getId()));
-                System.out.println(strClassIds.get(2).equals(utClassInformation.getId()));
-                System.out.println(strClassIds.get(3).equals(utClassInformation.getId()));
                 if (strClassIds.contains(utClassInformation.getId()))
                     result.add(utClassInformation);
             }
@@ -220,13 +219,41 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
+        }else if (userInfoService.isStudent(uId)){
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            List<UTClassInformation> result = new ArrayList<>();
+            TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
+            if (timeSettingType == null) {
+                return null;
+            }
+            TimeUtil timeUtil = new TimeUtil();
+            //整理学生能看到的classID;
+            List<String> stuCanSeeClassId = new ArrayList<>();
+            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+                List<UTClassInformation> classInformationList = this.getAllCurSessionClassesWithFinalStatus("1"); //在选课时间可以看到的课程
+                for(UTClassInformation utClassInformation:classInformationList){
+                    stuCanSeeClassId.add(utClassInformation.getId());
+                }
+            }else{
+                List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
+                for(Object classid :classIds){
+                    stuCanSeeClassId.add(classid.toString());
+                }
+            }
+            //将不能看到的课程过滤掉
+            for(UTClassInformation utClassInformation:classInformations){
+                if(stuCanSeeClassId.contains(utClassInformation.getId())){
+                    result.add(utClassInformation);
+                }
+            }
+            return result;
         }
         return null;
     }
 
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
-        if (userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+        if (userInfoService.isSysAdmin(uId)) {
             List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
             return teachCalendar;
         } else if (userInfoService.isInstructor(uId)) {

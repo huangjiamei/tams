@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.service.common.WorkFlowService;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -56,6 +57,10 @@ public class TaController extends BaseController {
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private WorkFlowService workFlowService;
+
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -197,11 +202,14 @@ public class TaController extends BaseController {
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 
-    /**
+/*
+    */
+/**
      * 助教撤销优秀
      * @param form
      * @return
-     */
+     *//*
+
     @RequestMapping(params = "methodToCall=revocationOutstanding")
     public ModelAndView revocationOutstanding(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
@@ -209,12 +217,15 @@ public class TaController extends BaseController {
         super.baseStart(taInfoForm);
 
         List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
+        List<Integer> checkListIndex = new ArrayList<>();
 
         //遍历所有list，找到选中的行
         List<TaInfoViewObject> checkedList = new ArrayList<>();
-        for(TaInfoViewObject per : taList) {
-            if(per.isCheckBox())
-                checkedList.add(per);
+        for(int i = 0 ;i<taList.size() ; i++) {
+            if(taList.get(i).isCheckBox()) {
+                checkedList.add(taList.get(i));
+                checkListIndex.add(i);
+            }
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
@@ -222,13 +233,20 @@ public class TaController extends BaseController {
                 taConverter.extractIdsFromTaInfo(checkedList),
                 uid,taInfoForm.getRevocationReasonOptionFinder()
         );
+
+
+        for(Integer i:checkListIndex){
+            taInfoForm.getAllTaInfo().get(i).setStatusId(taInfoForm.getRevocationReasonOptionFinder());
+        }
+
         if(result)
-            return this.getTaListPage(form, request);
+            return this.getModelAndView(taInfoForm, "pageTaList")
         else {
             taInfoForm.setErrMsg("撤销助教出现错误");
             return this.showDialog("refreshPageViewDialog", true, taInfoForm);
         }
     }
+*/
 
     /**
      * 助教评优
@@ -248,11 +266,16 @@ public class TaController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,taInfoForm);
         }
 
+
+        List<Integer> checkListIndex = new ArrayList<>();
+
         //遍历所有list，找到选中的行
         List<TaInfoViewObject> checkedList = new ArrayList<>();
-        for(TaInfoViewObject per : taList) {
-            if(per.isCheckBox())
-                checkedList.add(per);
+        for(int i = 0 ;i<taList.size() ; i++) {
+            if(taList.get(i).isCheckBox()) {
+                checkedList.add(taList.get(i));
+                checkListIndex.add(i);
+            }
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
@@ -263,14 +286,16 @@ public class TaController extends BaseController {
                         taInfoForm.getAppraiseReasonOptionFinder()
         );
 
-
-
-
+        for(Integer i:checkListIndex){
+            taInfoForm.getAllTaInfo().get(i).setStatus(workFlowService.getWorkFlowStatusName(taInfoForm.getAppraiseReasonOptionFinder()));
+        }
 
         if(result)
-            return this.getTaListPage(taInfoForm, request);
-        else
-            return this.getTaListPage(taInfoForm, request); //应该返回错误信息
+            return this.getModelAndView(taInfoForm, "pageTaList");
+        else {
+            taInfoForm.setErrMsg("评优失败！");
+            return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+        }
     }
 
     //我的助教（教师用户看到的）(管理助教)界面

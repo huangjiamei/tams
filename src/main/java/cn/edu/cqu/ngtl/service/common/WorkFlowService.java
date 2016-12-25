@@ -12,4 +12,6 @@ public interface WorkFlowService {
      * @return
      */
     boolean isMaxOrderOfThisStatue(String statusId,String functionId);
+
+    String getWorkFlowStatusName(String statusId);
 }

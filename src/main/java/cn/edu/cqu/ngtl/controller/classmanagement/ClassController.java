@@ -157,11 +157,16 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         List<ClassTeacherViewObject> classList = infoForm.getClassList();
+        List<Integer> checkListIndex = new ArrayList<>();
+
         //遍历所有list，找到选中的行
         List<ClassTeacherViewObject> checkedList = new ArrayList<>();
-        for(ClassTeacherViewObject per : classList) {
-            if(per.isChecked())
-                checkedList.add(per);
+
+        for(int i = 0 ;i<classList.size() ; i++) {
+            if(classList.get(i).isChecked()) {
+                checkedList.add(classList.get(i));
+                checkListIndex.add(i);
+            }
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
@@ -184,10 +189,16 @@ public class ClassController extends BaseController {
             );
             classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),infoForm.getApproveReasonOptionFinder());
         }
+
+        for(Integer i:checkListIndex){
+            infoForm.getClassList().get(i).setStatus(workFlowService.getWorkFlowStatusName(infoForm.getApproveReasonOptionFinder()));
+        }
+
         if(result)
-            return this.getClassListPage(infoForm);
+            return this.getModelAndView(infoForm, "pageClassList");
         else  //应当返回错误信息
-            return this.getClassListPage(infoForm);
+            infoForm.setErrMsg("审核失败！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
     }
 
     /**

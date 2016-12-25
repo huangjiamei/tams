@@ -25,4 +25,14 @@ public class WorkFlowServiceImpl implements WorkFlowService {
             return true;
         return false;
     }
+
+
+    @Override
+    public String getWorkFlowStatusName(String statusId){
+        TAMSWorkflowStatus status = tamsWorkflowStatusDao.getOneById(statusId);
+        if(status!=null){
+            return status.getWorkflowStatus();
+        }
+        return "";
+    }
 }

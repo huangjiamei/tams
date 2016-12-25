@@ -96,13 +96,33 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSClassFundingDao tamsClassFundingDao;
 
+    @Autowired
+    private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
-        /** Access DataBase */
         System.out.println(System.currentTimeMillis());
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
         System.out.println(System.currentTimeMillis());
+        return classInformations;
+    }
+
+
+    @Override
+    public boolean isMaxOrderOfThisStatue(String statusId,String functionId){
+        TAMSWorkflowStatus newStatus = tamsWorkflowStatusDao.getOneById(statusId);
+        Integer newStatusOrder = newStatus.getOrder();
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
+        if(newStatusOrder==maxOrder)
+            return true;
+        return false;
+    }
+
+    @Override
+    public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(maxOrder.toString());
         return classInformations;
     }
 
@@ -122,9 +142,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
 
-        //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
         if (uId.equalsIgnoreCase("admin")) {
-            return this.getAllCurSessionClasses();   //FIXME 测试代码。需要删除
+            return this.getAllCurSessionClasses();
         }
         if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
@@ -139,18 +158,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 }
             }
             return classInfoDao.selectBatchByIds(classIds);
-        } else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)) {  //如果是教师
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
             return classInfoDao.selectBatchByIds(classIds);
-        } else if (userInfoService.isStudent(uId)) {
+        } else if (userInfoService.isStudent(uId)) {  //如果是学生
             TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
             if (timeSettingType == null) {
                 return null;
             }
             TimeUtil timeUtil = new TimeUtil();
             if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
-                return this.getAllCurSessionClasses();
+                return this.getAllCurSessionClassesWithFinalStatus("1"); //工作流是审批
             }
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
             List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
@@ -504,13 +523,13 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatus) {
+    public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatusId) {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
         tamsClassApplyFeedback.setClassId(classId);
         tamsClassApplyFeedback.setFeedbackUid(uId);
         tamsClassApplyFeedback.setFeedback(reasons);
-        tamsClassApplyFeedback.setNewStatus(newStatus);
+        tamsClassApplyFeedback.setNewStatus(tamsWorkflowStatusDao.getOneById(newStatusId).getWorkflowStatus());
         tamsClassApplyFeedback.setOldStatus(oldStatus);
         tamsClassApplyFeedback.setFeedbackTime(df1.format(new Date()));
         return tamsClassApplyFeedbackDao.saveFbByEntity(tamsClassApplyFeedback);

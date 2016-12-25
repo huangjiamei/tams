@@ -2,13 +2,13 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dao.tams.TAMSWorkflowStatusDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -73,6 +73,9 @@ public class ClassController extends BaseController {
 
     @Autowired
     private IPDFService PDFService;
+
+    @Autowired
+    private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
@@ -166,15 +169,12 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请选择审批的状态！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
-        TAMSWorkflowStatus newStatus = new TAMSWorkflowStatusDaoJpa().getOneById(infoForm.getApproveReasonOptionFinder());
-        String newStatusName = newStatus.getWorkflowStatus();
-        Integer newStatusOrder = newStatus.getOrder();
-        Integer maxOrder = new TAMSWorkflowStatusDaoJpa().getMaxOrderByFunctionId("1");
 
+        boolean isMax = classInfoService.isMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
-            if(newStatusOrder==maxOrder){ //如果是该条工作流的最后一个状态，那么初始化课程经费
+            if(isMax){ //如果是该条工作流的最后一个状态，那么初始化课程经费
                 classInfoService.validClassFunds(classTeacherViewObject.getId());
             }
             result = classInfoService.classStatusToCertainStatus(
@@ -182,7 +182,7 @@ public class ClassController extends BaseController {
                     classTeacherViewObject.getId(),
                     infoForm.getApproveReasonOptionFinder()
             );
-            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatusName);
+            classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),infoForm.getApproveReasonOptionFinder());
         }
         if(result)
             return this.getClassListPage(infoForm);

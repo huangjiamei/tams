@@ -9,6 +9,7 @@ import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -102,9 +103,19 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSClassEvaluationDao tamsClassEvaluationDao;
 
+    @Autowired
+    private TAMSDeptFundingDao tamsDeptFundingDao;
+
+    @Autowired
+    private TAMSUniversityFundingDao tamsUniversityFundingDao;
+
+    @Autowired
+    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
+        /** Access DataBase */
         System.out.println(System.currentTimeMillis());
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
         System.out.println(System.currentTimeMillis());
@@ -561,6 +572,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public void validClassFunds(String classId) {  //初始化课程经费
+        UTSession curSession = sessionDao.getCurrentSession();
         //草稿课程经费表
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
         TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);
@@ -568,6 +580,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             TAMSClassFundingDraft tamsClassFundingDraft = new TAMSClassFundingDraft();
             tamsClassFundingDraft.setClassId(classId);
             tamsClassFundingDraft.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
+
+
+
             tamsClassFundingDraft.setAssignedFunding("0");
             tamsClassFundingDraft.setPhdFunding("0");
             tamsClassFundingDraft.setBonus("0");
@@ -585,6 +600,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             TAMSClassFunding tamsClassFunding = new TAMSClassFunding();
             tamsClassFunding.setClassId(classId);
             tamsClassFunding.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
+
+
+
             tamsClassFunding.setAssignedFunding("0");
             tamsClassFunding.setPhdFunding("0");
             tamsClassFunding.setBonus("0");
@@ -594,6 +612,37 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }else{
             tamsClassFundingExist.setApplyFunding(tamsClassTaApplication.getApplicationFunds());
             tamsClassFundingDao.saveOneByEntity(tamsClassFundingExist);
+        }
+
+        //更新学院草稿经费
+        TAMSDeptFundingDraft tamsDeptFundingDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(
+                tamsClassFundingDraftExist.getClassInformation().getDepartmentId(), curSession.getId()
+        );
+        if(tamsDeptFundingDraft != null) {
+            Integer sumApplyDeptDraft = Integer.parseInt(tamsDeptFundingDraft.getApplyFunding());
+            sumApplyDeptDraft = sumApplyDeptDraft + Integer.parseInt(tamsClassTaApplication.getApplicationFunds());
+            tamsDeptFundingDraft.setApplyFunding(sumApplyDeptDraft.toString());
+            tamsDeptFundingDraftDao.saveOneByEntity(tamsDeptFundingDraft);
+        }
+
+        //更新学院的申请经费
+        TAMSDeptFunding tamsDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(
+                tamsClassFundingExist.getClassInformation().getDepartmentId(), curSession.getId()
+        );
+        if(tamsDeptFunding != null) {
+            Integer sumApplyDept = Integer.parseInt(tamsDeptFunding.getApplyFunding());
+            sumApplyDept = sumApplyDept + Integer.parseInt(tamsClassTaApplication.getApplicationFunds());
+            tamsDeptFunding.setApplyFunding(sumApplyDept.toString());
+            tamsDeptFundingDao.saveOneByEntity(tamsDeptFunding);
+        }
+
+        //更新批次的申请经费
+        TAMSUniversityFunding tamsUniversityFunding = tamsUniversityFundingDao.getOneBySessionId(curSession.getId());
+        if(tamsUniversityFunding != null) {
+            Integer sumApplyUni = Integer.parseInt(tamsUniversityFunding.getApplyFunding());
+            sumApplyUni = sumApplyUni + Integer.parseInt(tamsClassTaApplication.getApplicationFunds());
+            tamsUniversityFunding.setApplyFunding(sumApplyUni.toString());
+            tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
         }
 
     }

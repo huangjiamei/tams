@@ -20,4 +20,6 @@ public interface TAMSClassFundingDao {
     boolean saveOneByEntity(TAMSClassFunding tamsClassFunding);
 
     TAMSClassFunding getOneByClassId(String classId);
+
+    List<TAMSClassFunding> selectByClassIds(List<String> classids);
 }

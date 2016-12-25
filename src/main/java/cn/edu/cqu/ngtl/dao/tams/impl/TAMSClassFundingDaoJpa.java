@@ -233,4 +233,21 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
         else
             return list.get(0);
     }
+
+    public List<TAMSClassFunding> selectByClassIds(List<String> classids) {
+        List<TAMSClassFunding> tamsClassFunding = new ArrayList<>();
+        for(String classid : classids) {
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                    and(
+                            equal("classId", classid)
+                    )
+            );
+            List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();
+            if(list.size() == 0 || list == null)
+                tamsClassFunding.add(null);
+            else
+                tamsClassFunding.add(list.get(0));
+        }
+        return tamsClassFunding;
+    }
 }

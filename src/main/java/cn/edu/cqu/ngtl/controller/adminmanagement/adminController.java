@@ -1148,7 +1148,15 @@ infoForm.setHistogram(histojson);
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else {
+
             List<ClassFundingViewObject> classFundingViewObjects = infoForm.getClassFundings();
+            /*
+            List<String> classids= new ArrayList<>();
+            for(ClassFundingViewObject per: classFundingViewObjects) {
+                String classid = per.getClassId();
+                classids.add(classid);
+            }
+            */
             adminService.releaseClassFunding(classFundingViewObjects);
 
             infoForm.setClassFundingStatistics(

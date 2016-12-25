@@ -690,7 +690,7 @@ public class TAServiceimpl implements ITAService {
                 utClassInfoDao.getOneById(classId).getDepartmentId(),
                 curSession.getId()
         );
-        if (tamsClassFundingDraft != null) {
+        if (tamsDeptFundingDraft != null) {
             String travelSubsidyDeptDraft = tamsDeptFundingDraft.getTravelSubsidy();
             Integer sumDeptDraft = Integer.parseInt(travelSubsidyDeptDraft);
 

@@ -175,7 +175,7 @@
                                                                     <list>
                                                                         <bean parent="Uif-DataField" p:label="课程"
                                                                               p:propertyName="courseNm"/>
-                                                                        <bean parent="Uif-DataField" p:label="课程号"
+                                                                        <bean parent="Uif-DataField" p:label="课程代码"
                                                                               p:propertyName="courseNmb"/>
                                                                         <bean parent="Uif-DataField" p:label="课程负责人"
                                                                               p:propertyName="courseManager"/>
@@ -232,7 +232,7 @@
                     <list>
                         <!--<bean parent="Uif-InputField" p:label="课程名" p:readOnly="true"
                               p:propertyName="courseNm"/>
-                        <bean parent="Uif-InputField" p:label="课程编号" p:readOnly="true"
+                        <bean parent="Uif-InputField" p:label="课程代码" p:readOnly="true"
                               p:propertyName="courseNmb"/>
                         <bean parent="Uif-InputField" p:label="现任课程负责人" p:readOnly="true"
                               p:propertyName="courseManager"/>

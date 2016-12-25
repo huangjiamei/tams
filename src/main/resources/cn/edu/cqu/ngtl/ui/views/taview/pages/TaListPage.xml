@@ -191,7 +191,7 @@
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taCourseName"/>
-                                                                            <!--课程编号-->
+                                                                            <!--课程代码-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taCourseCode"/>
                                                                             <!--教学班-->
@@ -282,7 +282,7 @@
 
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号"
+                                                                            <bean parent="Uif-DataField" p:label="课程代码"
                                                                                   p:propertyName="courseCode"/>
                                                                             <bean parent="Uif-DataField" p:label="教学班"
                                                                                   p:propertyName="classNumber"/>

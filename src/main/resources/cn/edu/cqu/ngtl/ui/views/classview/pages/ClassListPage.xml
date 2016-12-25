@@ -270,7 +270,7 @@
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseName"/>
-                                                                            <!--课程编号-->
+                                                                            <!--课程代码-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseCode"/>
                                                                             <!--教学班-->
@@ -356,7 +356,7 @@
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"
                                                                                   p:sortAs="numeric"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号"
+                                                                            <bean parent="Uif-DataField" p:label="课程代码"
                                                                                   p:propertyName="courseCode"/>
                                                                             <bean parent="Uif-DataField" p:label="教学班"
                                                                                   p:propertyName="classNumber"
@@ -404,7 +404,7 @@
                                                                                                       p:fieldLabel.colSpan="1"
                                                                                                       p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseName}"/>
                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                      p:label="课程编号" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:label="课程代码" p:colSpan="1" p:rowSpan="1"
                                                                                                       p:fieldLabel.colSpan="1"
                                                                                                       p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseCode}"/>
                                                                                                 <bean parent="Uif-MessageField"

@@ -130,7 +130,7 @@
                                                                                                           p:label="职工号"
                                                                                                           p:messageText="@{applyViewObject.teacherType}"/>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:label="课程编号"
+                                                                                                          p:label="课程代码"
                                                                                                           p:messageText="@{applyViewObject.courseNumber}"/>
                                                                                                     <!--<bean parent="Uif-MessageField"-->
                                                                                                           <!--p:label="课程类别"-->

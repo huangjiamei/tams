@@ -121,7 +121,7 @@
                                                                                                           p:label="职工号"
                                                                                                           p:messageText="XXXXXXXXXX"/>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:label="课程编号"
+                                                                                                          p:label="课程代码"
                                                                                                           p:messageText="MATH12"/>
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="课程类别"

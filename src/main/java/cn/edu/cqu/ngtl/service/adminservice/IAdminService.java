@@ -89,7 +89,7 @@ public interface IAdminService {
     List<TAMSDeptFunding> getDepartmentPreFundingByCondition(Map<String, String> conditions);
 
     //发布学院经费
-    boolean releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
+    Long releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
     //保存学院经费
     void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);

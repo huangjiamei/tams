@@ -1112,7 +1112,7 @@ infoForm.setHistogram(histojson);
         }
         else {
             List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
-            adminService.releaseDeptFunding(draftDepartmentFunding);
+            Long needToChange = adminService.releaseDeptFunding(draftDepartmentFunding);
 
             infoForm.setSessionFundingStatistics(      //已设置经费/总经费
                     adminService.getSessionFundingStatistics()
@@ -1121,6 +1121,9 @@ infoForm.setHistogram(histojson);
             infoForm.setSessionFundingTotalApproved(      //已批准经费
                     adminService.getSessionFundingTotalApprove()
             );
+
+            //将变化体现到批次经费
+            infoForm.getSessionFundings().get(0).setActualFunding(String.valueOf(Long.valueOf(infoForm.getSessionFundings().get(0).getActualFunding()) + needToChange));
 
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }

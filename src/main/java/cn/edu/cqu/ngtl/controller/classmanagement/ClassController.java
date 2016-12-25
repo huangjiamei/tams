@@ -889,8 +889,10 @@ public class ClassController extends BaseController {
         TAMSClassTaApplication tamsClassTaApplication =classInfoService.getClassApplicationByClassId(classId);
         if(tamsClassTaApplication!=null){
             infoForm.getApplyViewObject().setAssistantNumber(tamsClassTaApplication.getTaNumber().toString());
+            infoForm.setSubmitted(true);
+        }else {
+            infoForm.setSubmitted(false);
         }
-
         //设置成绩评定方式
         List<TAMSClassEvaluation> tamsClassEvaluation = classInfoService.getClassEvaluationByClassId(classId);
         if(tamsClassEvaluation!=null){
@@ -988,8 +990,10 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("未找到\"审核方法\"！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
-        else if(result == 7)
+        else if(result == 7) {
+            infoForm.setSubmitted(true);
             return this.getModelAndView(infoForm, "pageRequestTa");
+        }
         else if(result == 8) {
             infoForm.setErrMsg("您已经提交过申请，请等待审批结果！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);

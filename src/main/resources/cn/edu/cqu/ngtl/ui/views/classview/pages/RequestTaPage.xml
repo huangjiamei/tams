@@ -348,13 +348,13 @@
                                                                                                                       p:actionLabel="提交"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="submitRequestTaPage"
-                                                                                                                      p:render="@{applyViewObject.assistantNumber==null}"
+                                                                                                                      p:render="@{!#form.submitted}"
                                                                                                                       p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="已提交"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:disabled = "true"
-                                                                                                                      p:render="@{applyViewObject.assistantNumber!=null}"
+                                                                                                                      p:render="@{#form.submitted}"
                                                                                                                       p:additionalCssClasses="icon-arrow-up bg-success box-btngroup"/>
                                                                                                             </list>
                                                                                                         </property>

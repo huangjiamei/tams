@@ -46,6 +46,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private List<ClassApplyFeedBackViewObject> feedbacks;
 
+    private boolean Submitted;
+
 
     /**
      * 班级管理隐藏搜索框
@@ -481,5 +483,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCourseAppFunds(String courseAppFunds) {
         this.courseAppFunds = courseAppFunds;
+    }
+
+    public boolean isSubmitted() {
+        return Submitted;
+    }
+
+    public void setSubmitted(boolean submitted) {
+        Submitted = submitted;
     }
 }

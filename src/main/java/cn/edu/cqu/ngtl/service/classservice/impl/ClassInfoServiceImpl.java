@@ -614,24 +614,26 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             tamsClassFundingDao.saveOneByEntity(tamsClassFundingExist);
         }
 
+
+        UTClassInformation currentClassInfo = classInfoDao.getOneById(classId);
         //更新学院草稿经费
         TAMSDeptFundingDraft tamsDeptFundingDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(
-                tamsClassFundingDraftExist.getClassInformation().getDepartmentId(), curSession.getId()
+                currentClassInfo.getDepartmentId() , curSession.getId()
         );
         if(tamsDeptFundingDraft != null) {
             Integer sumApplyDeptDraft = Integer.parseInt(tamsDeptFundingDraft.getApplyFunding());
-            sumApplyDeptDraft = sumApplyDeptDraft + Integer.parseInt(tamsClassTaApplication.getApplicationFunds());
+            sumApplyDeptDraft = sumApplyDeptDraft + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
             tamsDeptFundingDraft.setApplyFunding(sumApplyDeptDraft.toString());
             tamsDeptFundingDraftDao.saveOneByEntity(tamsDeptFundingDraft);
         }
 
         //更新学院的申请经费
         TAMSDeptFunding tamsDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(
-                tamsClassFundingExist.getClassInformation().getDepartmentId(), curSession.getId()
+                currentClassInfo.getDepartmentId(), curSession.getId()
         );
         if(tamsDeptFunding != null) {
             Integer sumApplyDept = Integer.parseInt(tamsDeptFunding.getApplyFunding());
-            sumApplyDept = sumApplyDept + Integer.parseInt(tamsClassTaApplication.getApplicationFunds());
+            sumApplyDept = sumApplyDept + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
             tamsDeptFunding.setApplyFunding(sumApplyDept.toString());
             tamsDeptFundingDao.saveOneByEntity(tamsDeptFunding);
         }
@@ -640,7 +642,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         TAMSUniversityFunding tamsUniversityFunding = tamsUniversityFundingDao.getOneBySessionId(curSession.getId());
         if(tamsUniversityFunding != null) {
             Integer sumApplyUni = Integer.parseInt(tamsUniversityFunding.getApplyFunding());
-            sumApplyUni = sumApplyUni + Integer.parseInt(tamsClassTaApplication.getApplicationFunds());
+            sumApplyUni = sumApplyUni + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
             tamsUniversityFunding.setApplyFunding(sumApplyUni.toString());
             tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
         }

@@ -355,7 +355,7 @@
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:disabled = "true"
                                                                                                                       p:render="@{applyViewObject.assistantNumber!=null}"
-                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
+                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success box-btngroup"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>

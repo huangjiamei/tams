@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="taCourseCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','fa fa-reorder','工作台','申请')">
+                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','icon-laptop','工作台','申请')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

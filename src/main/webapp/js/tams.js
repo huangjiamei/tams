@@ -1003,10 +1003,6 @@ function getTaDetailPage(){
 function getClassDetailPage(){
     var listLength=jQuery('#ClassListPageTable tbody>tr').length;
     for(var i=0;i<listLength;i++){
-        jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:eq(1)',function (e) {
-            jQuery(this).parent().find("td").addClass("selected");//为选中项添加背景颜色
-        });
-
         jQuery('#ClassListPageTable').on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
             if(jQuery(this).find(":checkbox").attr("checked")){
                 jQuery(this).find("td").removeClass("selected")
@@ -1034,21 +1030,15 @@ function getClassDetailPage(){
 
 //统一的点击整行变色
 function setBgColor(id){
-    var lengthTable=jQuery("#"+id).find("tbody").find("tr").length;
-    for(var i=0;i<lengthTable;i++) {
-        jQuery("#"+id).on('click','tbody>tr:eq('+i+')>td',function (e) {
-            jQuery(this).find("td").addClass("selected");//为选中项添加背景颜色
-        });
-        jQuery("#"+id).on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
-            if(jQuery(this).find(":checkbox").attr("checked")){
-                jQuery(this).find("td").removeClass("selected")
-                    .end().find(":checkbox").attr("checked",false);
-            }else{
-                jQuery(this).find("td").addClass("selected")
-                    .end().find(":checkbox").attr("checked",true);
-            }
-        });
-    }
+    jQuery("#"+id).on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
+        if(jQuery(this).find(":checkbox").attr("checked")){
+            jQuery(this).find("td").removeClass("selected")
+                .end().find(":checkbox").attr("checked",false);
+        }else{
+            jQuery(this).find("td").addClass("selected")
+                .end().find(":checkbox").attr("checked",true);
+        }
+    });
 }
 
 //table上的鼠标滑过显示其他样式

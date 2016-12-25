@@ -214,9 +214,12 @@
                                                                                                         <property name="readOnly" value="false"/>
 
                                                                                                         <property name="disclosure.render" value="false"/>
+
+                                                                                                        <property name="layoutManager.showToggleAllDetails"
+                                                                                                                  value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" p:style="display:@{#line.taName!=null?'block':'none'}"/>
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"/><!--p:style="display:@{#line.taName!=null?'block':'none'}"-->
                                                                                                         </property>
 
                                                                                                         <property
@@ -1363,7 +1366,6 @@
 
                                                                                                     <bean id="FundsManagerCourseTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                                                           p:additionalCssClasses="table-striped table-bordered table-hover"
-                                                                                                          p:layoutManager.numberOfColumns="20"
                                                                                                           p:onDocumentReadyScript="refreshTableFilter(FundsManagerCourseSearchFields,FundsManagerCourseTable);">
                                                                                                         <property
                                                                                                                 name="collectionObjectClass"

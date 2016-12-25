@@ -99,6 +99,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
 
+    @Autowired
+    private TAMSClassEvaluationDao tamsClassEvaluationDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
@@ -342,7 +345,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return 3;
         }
         try {
-
             //添加课程考核信息
             classEvaluationDao.deleteAllByClassId(classId);
             boolean flag;
@@ -599,5 +601,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public TAMSClassTaApplication getClassApplicationByClassId(String classId) {
         return classTaApplicationDao.selectByClassId(classId);
+    }
+
+
+    @Override
+    public List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId){
+
+        return tamsClassEvaluationDao.getAllByClassId(classId);
     }
 }

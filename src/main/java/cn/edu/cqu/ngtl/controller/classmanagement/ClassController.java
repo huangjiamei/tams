@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassTaApplication;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
@@ -416,8 +417,9 @@ public class ClassController extends BaseController {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
-        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
-            return this.getModelAndView(infoForm, "pageTeachingCalendar");
+        if (classId == null) {
+
+        }
 
         infoForm.setAllCalendar(
                 taConverter.TeachCalendarToViewObject(
@@ -433,7 +435,6 @@ public class ClassController extends BaseController {
                         infoForm.getAllCalendar()
                 )
         );
-
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
 
@@ -446,6 +447,12 @@ public class ClassController extends BaseController {
                                                 HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            infoForm.setErrMsg("您已提交申请，无法新增教学日历！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         infoForm.setTeachCalendar(new TAMSTeachCalendar());
         infoForm.setAddTeachCTime(null);
         infoForm.setFileList(new ArrayList<FileViewObject>());
@@ -503,8 +510,10 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
         String calendarId = infoForm.getCurrentCalendarInfo() != null ? infoForm.getCurrentCalendarInfo().getCode() : null;
-        if (classId == null || calendarId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
-            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        if (classId == null || calendarId == null) {
+            infoForm.setErrMsg("无法进入,请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
 
         CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -532,8 +541,10 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         String classId = infoForm.getCurrClassId();
-        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
-            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        if (classId == null) {
+            infoForm.setErrMsg("无法进入,请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
 
         CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -701,7 +712,7 @@ public class ClassController extends BaseController {
         //添加日历信息到数据库
         added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
         if(added == null){
-            infoForm.setErrMsg("你不是该门课的主管教师，无法添加");
+            infoForm.setErrMsg("你不是该门课的主管教师，无法添加教学日历！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         if (added.getId() != null) { //添加数据库成功
@@ -738,6 +749,11 @@ public class ClassController extends BaseController {
         /** calendarid **/
         String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
 
+        if(classInfoService.getClassApplicationByClassId(classId)!=null){
+            infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId)) {
             //删除教学日历的附件信息
             boolean result = classInfoService.removeAllCalendarFilesByClassIdAndCalendarId(
@@ -745,9 +761,10 @@ public class ClassController extends BaseController {
 
             return this.getTeachingCalendar(infoForm, request);
         }
-        else //// FIXME: 16-11-18 应当返回错误页面
+        else {
             infoForm.setErrMsg("删除失败！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
     /**
@@ -764,8 +781,10 @@ public class ClassController extends BaseController {
         String uId = userSession.getLoggedInUserPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-        if (classId == null) //// FIXME: 16-11-18 不是跳转过来应该跳转到报错页面
-            return this.getModelAndView(infoForm, "pageTeachingCalendar");
+        if (classId == null) {
+            infoForm.setErrMsg("无法进入,请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
 
         infoForm.setAllActivities(
                 taConverter.activitiesToViewObject(
@@ -866,9 +885,22 @@ public class ClassController extends BaseController {
                 )
         );
 
+        //设置助教人数
+        TAMSClassTaApplication tamsClassTaApplication =classInfoService.getClassApplicationByClassId(classId);
+        if(tamsClassTaApplication!=null){
+            infoForm.getApplyViewObject().setAssistantNumber(tamsClassTaApplication.getTaNumber().toString());
+        }
+
+        //设置成绩评定方式
+        List<TAMSClassEvaluation> tamsClassEvaluation = classInfoService.getClassEvaluationByClassId(classId);
+        if(tamsClassEvaluation!=null){
+            infoForm.setClassEvaluations(tamsClassEvaluation);
+        }else{
+            infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
+        }
+
         infoForm.setFeedbacks(taConverter.feedBackToViewObject(classInfoService.getFeedBackByClassId(classId)));
 
-        infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
 
         return this.getModelAndView(infoForm, "pageRequestTa");
     }

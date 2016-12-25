@@ -1094,6 +1094,7 @@ public class TAConverterimpl implements ITAConverter {
         viewObject.setTeacherType(instructorCode);
         if (classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() :null;
+            viewObject.setCredit(classInfo.getCourseOffering().getCourse().getCredit());
             viewObject.setCourseHour(course.getHour());
             viewObject.setClassNumber(classInfo.getClassNumber());
             viewObject.setStudentNumber(classInfo.getMinPerWeek() == null ? " " :classInfo.getMinPerWeek().toString());

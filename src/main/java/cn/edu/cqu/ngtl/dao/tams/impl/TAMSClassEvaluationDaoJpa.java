@@ -3,9 +3,12 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassEvaluationDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
@@ -37,5 +40,21 @@ public class TAMSClassEvaluationDaoJpa implements TAMSClassEvaluationDao {
             e.printStackTrace();
             return false;
         }
+    }
+
+
+    @Override
+    public List<TAMSClassEvaluation> getAllByClassId(String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("classId", classId)
+                )
+        );
+        QueryResults<TAMSClassEvaluation> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSClassEvaluation.class,
+                criteria.build()
+        );
+        return qr.getResults()==null?null:(qr.getResults().size()==0?null:qr.getResults());
+
     }
 }

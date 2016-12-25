@@ -666,7 +666,7 @@ public class AdminServiceImpl implements IAdminService {
                         TAMSUniversityFunding tamsUniversityFundingExist = tamsUniversityFundings.get(0);
                         Long oldActualFunds = Long.valueOf(tamsUniversityFundingExist.getActualFunding());
                         Long newActualFunds = oldActualFunds + Long.valueOf(per.getActualFunding());
-                        result = Long.valueOf(per.getActualFunding());
+                        result += Long.valueOf(per.getActualFunding());
                         tamsUniversityFundingExist.setActualFunding(newActualFunds.toString());
                         tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFundingExist);
                     }
@@ -675,7 +675,7 @@ public class AdminServiceImpl implements IAdminService {
             } else {
                 if (!per.getActualFunding().equals(exist.getActualFunding()) || !per.getPlanFunding().equals(exist.getPlanFunding())) { //如果金额有变化
                     Long changedFunds = Long.valueOf(per.getActualFunding())-Long.valueOf(exist.getActualFunding()); //变化额度等于新设置的金额减去旧金额
-                    result = changedFunds;
+                    result += changedFunds;
                     exist.setActualFunding(per.getActualFunding()); //保存批准经费
                     exist.setPlanFunding(per.getPlanFunding());//保存计划经费
                     deptFundingDao.saveOneByEntity(exist);

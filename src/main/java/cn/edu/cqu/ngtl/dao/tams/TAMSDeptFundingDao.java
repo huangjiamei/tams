@@ -30,4 +30,6 @@ public interface TAMSDeptFundingDao {
     List<TAMSDeptFunding> selectDeptFundCurrByCondition(Map<String, String> conditions);
 
     TAMSDeptFunding selectDeptFundsByDeptId(Integer deptId);
+
+    List<TAMSDeptFunding> selectByDeptAndSessionId (List<Integer> depts, Integer sessionId);
 }

@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
@@ -29,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -940,5 +942,45 @@ public class AdminServiceImpl implements IAdminService {
         }
         return false;
     }
+
+    /*
+    @Override
+    public void countAssignedFunding (List<String> classids) {
+        //当前学期
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<TAMSClassFunding> tamsClassFunding = tamsClassFundingDao.selectByClassIds(classids);
+        List<Integer> assignedFundingClass = new ArrayList<>();
+        List<Integer> depts = new ArrayList<>();
+        for(TAMSClassFunding per : tamsClassFunding) {
+            Integer assigned = Integer.parseInt(per.getAssignedFunding());
+            assignedFundingClass.add(assigned);
+            Integer dept = per.getClassInformation().getDepartmentId();
+            depts.add(dept);
+        }
+
+        for(int i=0; i<tamsClassFunding.size(); i++) {
+            for(int j=i+1; j<tamsClassFunding.size(); j++) {
+                if(tamsClassFunding.get(i).getClassInformation().getDepartmentId().toString().equals(
+                        tamsClassFunding.get(j).getClassInformation().getDepartmentId().toString())
+                        ) {
+                    Integer sum = Integer.parseInt(tamsClassFunding.get(i).getAssignedFunding())
+                            + Integer.parseInt(tamsClassFunding.get(j).getAssignedFunding());
+                    tamsClassFunding.get(i).setAssignedFunding(sum.toString());
+                    tamsClassFunding.remove(j);
+                }
+            }
+        }
+
+        List<TAMSDeptFunding> tamsDeptFundings = tamsDeptFundingDao.selectByDeptAndSessionId(
+                depts, curSession.getId()
+        );
+
+        List<Integer> assignedFundingDept = new ArrayList<>();
+            for (TAMSDeptFunding per : tamsDeptFundings) {
+                Integer assigned = Integer.parseInt(per.getActualFunding());
+                for(TAMSClassFunding)
+            }
+        }
+*/
 
 }

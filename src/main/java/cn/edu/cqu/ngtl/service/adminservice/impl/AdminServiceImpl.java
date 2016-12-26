@@ -983,4 +983,20 @@ public class AdminServiceImpl implements IAdminService {
         }
 */
 
+    @Override
+    public List<TAMSCourseManager> getCourseManagerByUid(String uId){
+        if(iUserInfoService.isSysAdmin(uId)||iUserInfoService.isAcademicAffairsStaff(uId)){
+            return tamsCourseManagerDao.getAllCourseManager();
+        }
+        if(iUserInfoService.isCollegeStaff(uId)){
+            UTInstructor utInstructor = utInstructorDao.getInstructorByIdWithoutCache(uId);
+            if(utInstructor!=null){
+                String departmentId = utInstructor.getDepartmentId().toString();
+                return tamsCourseManagerDao.getCourseManagerByDeptId(departmentId);
+            }
+            return null;
+        }
+        return null;
+    }
+
 }

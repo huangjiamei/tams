@@ -44,6 +44,20 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
     }
 
     @Override
+    public List<TAMSCourseManager> getCourseManagerByDeptId(String departmentId){
+        EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+        Query query = em.createNativeQuery("SELECT T.UNIQUEID," +
+                "T.COURSE_ID," +
+                "T.COURSE_MANAGER_ID," +
+                "T.OBJ_ID," +
+                "T.VER_NBR" +
+                "FROM" +
+                "RICE.TAMS_COURSE_MANAGER T JOIN RICE.UNITIME_COURSE c ON c.UNIQUEID = t.COURSE_ID" +
+                "where c.DEPARTMENT_ID ='"+departmentId+"'",TAMSCourseManager.class);
+        return query.getResultList();
+    }
+
+    @Override
     public TAMSCourseManager getCourseManagerByInstructorId(String instructorId){
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(equal("courseManagerId" , instructorId));
         QueryResults<TAMSCourseManager> qr = KradDataServiceLocator.getDataObjectService().findMatching(

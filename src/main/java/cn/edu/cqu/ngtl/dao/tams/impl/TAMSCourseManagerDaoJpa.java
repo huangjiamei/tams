@@ -50,10 +50,7 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
                 "T.COURSE_ID," +
                 "T.COURSE_MANAGER_ID," +
                 "T.OBJ_ID," +
-                "T.VER_NBR" +
-                "FROM" +
-                "RICE.TAMS_COURSE_MANAGER T JOIN RICE.UNITIME_COURSE c ON c.UNIQUEID = t.COURSE_ID" +
-                "where c.DEPARTMENT_ID ='"+departmentId+"'",TAMSCourseManager.class);
+                "T.VER_NBR FROM RICE.TAMS_COURSE_MANAGER T JOIN RICE.UNITIME_COURSE c ON c.UNIQUEID = t.COURSE_ID WHERE c.DEPARTMENT_ID ='"+departmentId+"'",TAMSCourseManager.class);
         return query.getResultList();
     }
 

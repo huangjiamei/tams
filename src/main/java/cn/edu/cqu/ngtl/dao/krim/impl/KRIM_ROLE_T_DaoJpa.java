@@ -12,22 +12,28 @@ import java.util.List;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.or;
 
 
 @Repository
 @Component("KRIM_ROLE_T_DaoJpa")
 public class KRIM_ROLE_T_DaoJpa implements KRIM_ROLE_T_Dao {
 
-	private static final String nameSpace = "KR_EXM";
+	private static final String nameSpace = "KR_TAMS";
 	private static final String YES = "Y";
 	@Override
 	public List<KRIM_ROLE_T> getAllKrimRoleTs() {
 		// TODO Auto-generated method stub
 		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
-				and(
+				or(and(
 						equal("namespaceCode" , nameSpace),
 						equal("active", YES)
+				),
+						equal("name" , "学生"),
+						equal("name" , "在编人员"),
+						equal("name" , "系统管理员")
 				)
+
 		);
 		QueryResults<KRIM_ROLE_T> qr = KradDataServiceLocator.getDataObjectService().findMatching(
 				KRIM_ROLE_T.class, criteria.build());

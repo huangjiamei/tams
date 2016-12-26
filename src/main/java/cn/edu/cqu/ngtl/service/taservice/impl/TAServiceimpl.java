@@ -332,14 +332,13 @@ public class TAServiceimpl implements ITAService {
     public boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs) {
         for (StuIdClassIdPair per : stuIdClassIdPairs) {
             TAMSTa isExist = taDao.selectByStudentIdAndClassId(per.getStuId(), per.getClassId());
-
+            TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
             if (isExist != null) {  //数据库中已存在数据
-                TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
                 applicationDao.deleteByEntity(readyToRemove);
                 continue;
             }
             TAMSTa newTa = new TAMSTa();
-
+            newTa.setPhdFunding(readyToRemove.getPhoneNbr());
             //录入基本信息
             newTa.setTaId(per.getStuId());
             newTa.setTaClassId(per.getClassId());
@@ -393,7 +392,6 @@ public class TAServiceimpl implements ITAService {
 //            List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(function.getId());
 //            if(allStatus != null && !allStatus.isEmpty())
 //                newTa.setOutStandingTaWorkflowStatusId(allStatus.get(0).getOrder().toString());
-            TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
             newTa.setApplicationNote(readyToRemove.getNote());
             TAMSTaCategory masterTA = tamsTaCategoryDao.selectOneByName("硕士");
             TAMSTaCategory phdTA = tamsTaCategoryDao.selectOneByName("博士");

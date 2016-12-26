@@ -646,8 +646,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
             viewObject.setStatus(ta.getStatus());
+            viewObject.setContactPhone(ta.getPhoneNbr());
             //暂时缺失的属性
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
 
@@ -679,9 +680,9 @@ public class TAConverterimpl implements ITAConverter {
             }
 
             viewObject.setApplicationClassId(application.getApplicationClassId());
-
+            viewObject.setContactPhone(application.getPhoneNbr()==null?null:application.getPhoneNbr());
             //暂时缺失的属性
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+
             viewObject.setAdvisorName("缺失");
 
             viewObjects.add(viewObject);

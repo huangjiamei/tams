@@ -3,10 +3,10 @@ package cn.edu.cqu.ngtl.controller.homemanagement;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.form.commonhome.CommonHomePage;
+import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
 import org.kuali.rice.krad.util.GlobalVariables;
-import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.web.form.UifFormBase;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -49,11 +49,13 @@ public class HomeController extends BaseController {
         }
 
         request.getSession().invalidate();
-
-        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
-        redirectUrl.append(String.format("/%s/%s?methodToCall=%s&viewId=%s",
-                KRAD_PATH,CONTROLLER_PATH,HOMEPAGE_METHOD,VIEW_ID));
-        return this.performRedirect(form, redirectUrl.toString());
+        String ifUseIdstar = ConfigContext.getCurrentContextConfig().getProperty("filter.login.class");
+        if (ifUseIdstar.contains("IdstarLoginFilter")) {
+            // 将用户从重庆大学统一认证平台注销
+            return this.performRedirect(form, new IdstarIdentityManagerServiceImpl().getLogoutUrl());
+        } else {
+            return this.returnToHub(form);
+        }
     }
 
 

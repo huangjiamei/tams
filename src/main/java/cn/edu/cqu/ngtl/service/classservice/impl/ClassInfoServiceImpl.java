@@ -9,6 +9,7 @@ import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
@@ -96,6 +97,21 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Autowired
     private TAMSClassFundingDao tamsClassFundingDao;
 
+    @Autowired
+    private TAMSWorkflowStatusDao tamsWorkflowStatusDao;
+
+    @Autowired
+    private TAMSClassEvaluationDao tamsClassEvaluationDao;
+
+    @Autowired
+    private TAMSDeptFundingDao tamsDeptFundingDao;
+
+    @Autowired
+    private TAMSUniversityFundingDao tamsUniversityFundingDao;
+
+    @Autowired
+    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
 
@@ -103,6 +119,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         System.out.println(System.currentTimeMillis());
         List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformation();
         System.out.println(System.currentTimeMillis());
+        return classInformations;
+    }
+
+
+    @Override
+    public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(maxOrder.toString());
         return classInformations;
     }
 
@@ -122,9 +146,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
 
-        //// FIXME: 16-11-4 因为测试加上了非 '!'，正式使用需要去掉
         if (uId.equalsIgnoreCase("admin")) {
-            return this.getAllCurSessionClasses();   //FIXME 测试代码。需要删除
+            return this.getAllCurSessionClasses();
         }
         if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
@@ -139,18 +162,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 }
             }
             return classInfoDao.selectBatchByIds(classIds);
-        } else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)) {  //如果是教师
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
 
             return classInfoDao.selectBatchByIds(classIds);
-        } else if (userInfoService.isStudent(uId)) {
+        } else if (userInfoService.isStudent(uId)) {  //如果是学生
             TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
             if (timeSettingType == null) {
                 return null;
             }
             TimeUtil timeUtil = new TimeUtil();
             if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
-                return this.getAllCurSessionClasses();
+                return this.getAllCurSessionClassesWithFinalStatus("1"); //工作流是审批
             }
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
             List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
@@ -183,16 +206,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                     classIds.add(classId);
                 }
             }
-            List<String> strClassIds = (List<String>) (List) classIds; //强制转化为String List
+            List<String> strClassIds = new ArrayList<>();
+            for(Object classid:classIds){
+                strClassIds.add(classid.toString());
+            }
             /*
                 在结果中只显示负责人能看的课程
              */
             List<UTClassInformation> result = new ArrayList<>();
             for (UTClassInformation utClassInformation : classInformations) {
-                System.out.println(strClassIds.get(0).equals(utClassInformation.getId()));
-                System.out.println(strClassIds.get(1).equals(utClassInformation.getId()));
-                System.out.println(strClassIds.get(2).equals(utClassInformation.getId()));
-                System.out.println(strClassIds.get(3).equals(utClassInformation.getId()));
                 if (strClassIds.contains(utClassInformation.getId()))
                     result.add(utClassInformation);
             }
@@ -201,13 +223,41 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
+        }else if (userInfoService.isStudent(uId)){
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            List<UTClassInformation> result = new ArrayList<>();
+            TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("学生申请助教");
+            if (timeSettingType == null) {
+                return null;
+            }
+            TimeUtil timeUtil = new TimeUtil();
+            //整理学生能看到的classID;
+            List<String> stuCanSeeClassId = new ArrayList<>();
+            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+                List<UTClassInformation> classInformationList = this.getAllCurSessionClassesWithFinalStatus("1"); //在选课时间可以看到的课程
+                for(UTClassInformation utClassInformation:classInformationList){
+                    stuCanSeeClassId.add(utClassInformation.getId());
+                }
+            }else{
+                List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
+                for(Object classid :classIds){
+                    stuCanSeeClassId.add(classid.toString());
+                }
+            }
+            //将不能看到的课程过滤掉
+            for(UTClassInformation utClassInformation:classInformations){
+                if(stuCanSeeClassId.contains(utClassInformation.getId())){
+                    result.add(utClassInformation);
+                }
+            }
+            return result;
         }
         return null;
     }
 
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
-        if (userInfoService.isSysAdmin(uId)) {//// FIXME: 16-11-18 无区别 ask for 唐靖
+        if (userInfoService.isSysAdmin(uId)) {
             List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
             return teachCalendar;
         } else if (userInfoService.isInstructor(uId)) {
@@ -306,7 +356,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return 3;
         }
         try {
-
             //添加课程考核信息
             classEvaluationDao.deleteAllByClassId(classId);
             boolean flag;
@@ -504,13 +553,13 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatus) {
+    public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatusId) {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
         tamsClassApplyFeedback.setClassId(classId);
         tamsClassApplyFeedback.setFeedbackUid(uId);
         tamsClassApplyFeedback.setFeedback(reasons);
-        tamsClassApplyFeedback.setNewStatus(newStatus);
+        tamsClassApplyFeedback.setNewStatus(tamsWorkflowStatusDao.getOneById(newStatusId).getWorkflowStatus());
         tamsClassApplyFeedback.setOldStatus(oldStatus);
         tamsClassApplyFeedback.setFeedbackTime(df1.format(new Date()));
         return tamsClassApplyFeedbackDao.saveFbByEntity(tamsClassApplyFeedback);
@@ -522,7 +571,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public void validClassFunds(String classId) {  //初始化课程经费 //TODO LIUXIAO
+    public void validClassFunds(String classId) {  //初始化课程经费
+        UTSession curSession = sessionDao.getCurrentSession();
         //草稿课程经费表
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
         TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);
@@ -530,6 +580,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             TAMSClassFundingDraft tamsClassFundingDraft = new TAMSClassFundingDraft();
             tamsClassFundingDraft.setClassId(classId);
             tamsClassFundingDraft.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
+
+
+
             tamsClassFundingDraft.setAssignedFunding("0");
             tamsClassFundingDraft.setPhdFunding("0");
             tamsClassFundingDraft.setBonus("0");
@@ -547,6 +600,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             TAMSClassFunding tamsClassFunding = new TAMSClassFunding();
             tamsClassFunding.setClassId(classId);
             tamsClassFunding.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
+
+
+
             tamsClassFunding.setAssignedFunding("0");
             tamsClassFunding.setPhdFunding("0");
             tamsClassFunding.setBonus("0");
@@ -558,10 +614,57 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             tamsClassFundingDao.saveOneByEntity(tamsClassFundingExist);
         }
 
+
+        UTClassInformation currentClassInfo = classInfoDao.getOneById(classId);
+        //更新学院草稿经费
+        TAMSDeptFundingDraft tamsDeptFundingDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(
+                currentClassInfo.getDepartmentId() , curSession.getId()
+        );
+        if(tamsDeptFundingDraft != null) {
+            Integer sumApplyDeptDraft = Integer.parseInt(tamsDeptFundingDraft.getApplyFunding());
+            sumApplyDeptDraft = sumApplyDeptDraft + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
+            tamsDeptFundingDraft.setApplyFunding(sumApplyDeptDraft.toString());
+            tamsDeptFundingDraftDao.saveOneByEntity(tamsDeptFundingDraft);
+        }
+
+        //更新学院的申请经费
+        TAMSDeptFunding tamsDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(
+                currentClassInfo.getDepartmentId(), curSession.getId()
+        );
+        if(tamsDeptFunding != null) {
+            Integer sumApplyDept = Integer.parseInt(tamsDeptFunding.getApplyFunding());
+            sumApplyDept = sumApplyDept + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
+            tamsDeptFunding.setApplyFunding(sumApplyDept.toString());
+            tamsDeptFundingDao.saveOneByEntity(tamsDeptFunding);
+        }
+
+        //更新批次的申请经费
+        TAMSUniversityFunding tamsUniversityFunding = tamsUniversityFundingDao.getOneBySessionId(curSession.getId());
+        if(tamsUniversityFunding != null) {
+            Integer sumApplyUni = Integer.parseInt(tamsUniversityFunding.getApplyFunding());
+            sumApplyUni = sumApplyUni + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
+            tamsUniversityFunding.setApplyFunding(sumApplyUni.toString());
+            tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
+        }
+
     }
 
     @Override
     public TAMSClassTaApplication getClassApplicationByClassId(String classId) {
         return classTaApplicationDao.selectByClassId(classId);
+    }
+
+
+    @Override
+    public List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId){
+        List<TAMSClassEvaluation> result = tamsClassEvaluationDao.getAllByClassId(classId);
+        List<TAMSClassEvaluation> copy = new ArrayList<>();
+        if(result!=null) {
+            for (TAMSClassEvaluation tamsClassEvaluation : result) {
+                copy.add(tamsClassEvaluation);
+            }
+            return copy;
+        }
+        return result;
     }
 }

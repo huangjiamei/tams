@@ -21,5 +21,7 @@ public interface TAMSDeptFundingDraftDao {
 
     boolean saveBatchByEntities(List<TAMSDeptFundingDraft> tamsDeptFundingDrafts);
 
+    TAMSDeptFundingDraft selectDeptDraftFundsByDeptId(Integer deptId);
+
 
 }

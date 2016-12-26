@@ -340,12 +340,43 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
             return null;
     }
 
+    public TAMSDeptFunding selectDeptFundsByDeptId(Integer deptId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("departmentId", deptId)
+                )
+        );
+        QueryResults<TAMSDeptFunding> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFunding.class,criteria.build());
+        if(qr.getResults() != null && !qr.getResults().isEmpty())
+            return qr.getResults().get(0);
+        else
+            return null;
+    }
+
 
     public boolean saveOneByEntity(TAMSDeptFunding tamsDeptFunding){
 
         return KradDataServiceLocator.getDataObjectService().save(tamsDeptFunding)!=null;
     }
 
+
+    public List<TAMSDeptFunding> selectByDeptAndSessionId (List<Integer> depts, Integer sessionId) {
+        List<TAMSDeptFunding> tamsDeptFundings = new ArrayList<>();
+        for(Integer deptId : depts) {
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                    and(
+                            equal("departmentId", deptId),
+                            equal("sessionId", sessionId)
+                    )
+            );
+            QueryResults<TAMSDeptFunding> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFunding.class, criteria.build());
+            if (qr.getResults() != null && !qr.getResults().isEmpty())
+                tamsDeptFundings.add(qr.getResults().get(0));
+            else
+                tamsDeptFundings.add(null);
+        }
+        return tamsDeptFundings;
+    }
 
 
 

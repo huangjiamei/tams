@@ -62,7 +62,6 @@ public class LoginFilter implements Filter {
             return;
         } else {
             if (!StringUtils.equals("admin", session.getLoggedInUserPrincipalName())) {
-                // TODO: 2016/10/17 作用未知，不知道怎么进入这个if
                 if (StringUtils.equals(httpRequest.getServletPath(), "/portal.do")) {
                     this.autoLoginWhileSession(httpRequest, httpResponse);
                     return;
@@ -171,8 +170,7 @@ public class LoginFilter implements Filter {
         } else if (StringUtils.equals(userSession.getPrincipalId(), "admin")) {
             // FIXME: 暂时append和普通用户一样的路径,/xxx & viiewid正式使用时都需要修改
 //            redirectUrl.append("/portal.do");
-            redirectUrl.append(String.format("/%s/%s?methodToCall=%s&viewId=%s",
-                    KRAD_PATH,CONTROLLER_PATH,HOMEPAGE_METHOD,VIEW_ID));
+            redirectUrl.append("/portal.do");
             httpResponse.sendRedirect(redirectUrl.toString());
         } else {
             redirectUrl.append(String.format("/%s/%s?methodToCall=%s&viewId=%s",

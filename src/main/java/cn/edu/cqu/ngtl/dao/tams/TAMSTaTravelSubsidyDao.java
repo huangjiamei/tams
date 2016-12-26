@@ -14,5 +14,5 @@ public interface TAMSTaTravelSubsidyDao {
 
     boolean insertOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
 
-    void deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+    boolean deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
 }

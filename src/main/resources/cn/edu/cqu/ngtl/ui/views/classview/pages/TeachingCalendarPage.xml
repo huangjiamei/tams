@@ -157,7 +157,7 @@
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseName" />
-                                                                            <!--课程编号-->
+                                                                            <!--课程代码-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseCode" />
                                                                             <!--教学班-->

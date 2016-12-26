@@ -7,6 +7,8 @@ import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import cn.edu.cqu.ngtl.form.tamanagement.TaInfoForm;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.service.common.WorkFlowService;
+import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -57,10 +59,26 @@ public class TaController extends BaseController {
     @Autowired
     private ExcelService excelService;
 
+    @Autowired
+    private WorkFlowService workFlowService;
+
+
     @RequestMapping(params = "methodToCall=logout")
-    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
-        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
-        return this.performRedirect(form, redirctURL);
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
+        UserSession userSession = GlobalVariables.getUserSession();
+        if (userSession.isBackdoorInUse()) {
+            userSession.clearBackdoorUser();
+        }
+
+        request.getSession().invalidate();
+        String ifUseIdstar = ConfigContext.getCurrentContextConfig().getProperty("filter.login.class");
+        if (ifUseIdstar.contains("IdstarLoginFilter")) {
+            // 将用户从重庆大学统一认证平台注销
+            return this.performRedirect(form, new IdstarIdentityManagerServiceImpl().getLogoutUrl());
+        } else {
+            return this.returnToHub(form);
+        }
+
     }
 
     /**
@@ -197,11 +215,14 @@ public class TaController extends BaseController {
             return this.getTaListPage(form, request); //应该返回错误信息
     }
 
-    /**
+/*
+    */
+/**
      * 助教撤销优秀
      * @param form
      * @return
-     */
+     *//*
+
     @RequestMapping(params = "methodToCall=revocationOutstanding")
     public ModelAndView revocationOutstanding(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {
@@ -209,12 +230,15 @@ public class TaController extends BaseController {
         super.baseStart(taInfoForm);
 
         List<TaInfoViewObject> taList = taInfoForm.getAllTaInfo();
+        List<Integer> checkListIndex = new ArrayList<>();
 
         //遍历所有list，找到选中的行
         List<TaInfoViewObject> checkedList = new ArrayList<>();
-        for(TaInfoViewObject per : taList) {
-            if(per.isCheckBox())
-                checkedList.add(per);
+        for(int i = 0 ;i<taList.size() ; i++) {
+            if(taList.get(i).isCheckBox()) {
+                checkedList.add(taList.get(i));
+                checkListIndex.add(i);
+            }
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
@@ -222,13 +246,20 @@ public class TaController extends BaseController {
                 taConverter.extractIdsFromTaInfo(checkedList),
                 uid,taInfoForm.getRevocationReasonOptionFinder()
         );
+
+
+        for(Integer i:checkListIndex){
+            taInfoForm.getAllTaInfo().get(i).setStatusId(taInfoForm.getRevocationReasonOptionFinder());
+        }
+
         if(result)
-            return this.getTaListPage(form, request);
+            return this.getModelAndView(taInfoForm, "pageTaList")
         else {
             taInfoForm.setErrMsg("撤销助教出现错误");
             return this.showDialog("refreshPageViewDialog", true, taInfoForm);
         }
     }
+*/
 
     /**
      * 助教评优
@@ -248,11 +279,16 @@ public class TaController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,taInfoForm);
         }
 
+
+        List<Integer> checkListIndex = new ArrayList<>();
+
         //遍历所有list，找到选中的行
         List<TaInfoViewObject> checkedList = new ArrayList<>();
-        for(TaInfoViewObject per : taList) {
-            if(per.isCheckBox())
-                checkedList.add(per);
+        for(int i = 0 ;i<taList.size() ; i++) {
+            if(taList.get(i).isCheckBox()) {
+                checkedList.add(taList.get(i));
+                checkListIndex.add(i);
+            }
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
@@ -262,10 +298,17 @@ public class TaController extends BaseController {
                         uid,
                         taInfoForm.getAppraiseReasonOptionFinder()
         );
+
+        for(Integer i:checkListIndex){
+            taInfoForm.getAllTaInfo().get(i).setStatus(workFlowService.getWorkFlowStatusName(taInfoForm.getAppraiseReasonOptionFinder()));
+        }
+
         if(result)
-            return this.getTaListPage(taInfoForm, request);
-        else
-            return this.getTaListPage(taInfoForm, request); //应该返回错误信息
+            return this.getModelAndView(taInfoForm, "pageTaList");
+        else {
+            taInfoForm.setErrMsg("评优失败！");
+            return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+        }
     }
 
     //我的助教（教师用户看到的）(管理助教)界面
@@ -617,7 +660,7 @@ public class TaController extends BaseController {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
         //我的课程
-        taInfoForm.setMyClassViewObjects(taConverter.studentTimetableToMyClassViewObject(
+        taInfoForm.setMyClassViewObjects(taConverter.MyClassViewObject(
                 taService.getMycourseByUid(uId))
         );
         return this.getModelAndView(taInfoForm, "pageWorkbench");
@@ -673,8 +716,13 @@ public class TaController extends BaseController {
         tamsTaTravelSubsidy.setTravelTime(travelTime);
         tamsTaTravelSubsidy.setDescription(travelNote);
         tamsTaTravelSubsidy.setTamsTaId(taInfoForm.getTaUniqueId());
-        taService.saveTravelSubsidy(tamsTaTravelSubsidy);
+
         String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+
+        if(taService.saveTravelSubsidy(tamsTaTravelSubsidy)){
+            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "add");
+        }
+
         List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,taInfoForm.getCurClassId());
         taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
@@ -693,7 +741,13 @@ public class TaController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
         int index = params.getSelectedLineIndex();
         TAMSTaTravelSubsidy tamsTaTravelSubsidy = taInfoForm.getTravelSubsidies().get(index);
-        taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy);
+
+        String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+
+        if(taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy)) {
+            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "sub");
+        }
+
         taInfoForm.getTravelSubsidies().remove(index);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
 
@@ -840,7 +894,7 @@ public class TaController extends BaseController {
             for(TaInfoViewObject ta : taList) {
                 String name = ta.getTaName() == null ? "" : ta.getTaName();
                 String stuNumber = ta.getTaIDNumber() == null ? "" : ta.getTaIDNumber();
-                String masterMajor = ta.getTaMasterMajorName() == null ? "" : ta.getTaMasterMajorName();
+                String masterMajor = ta.getTaMajorName() == null ? "" : ta.getTaMajorName();
                 String courseName = ta.getCourseName() == null ? "" : ta.getCourseName();
                 String courseCode = ta.getCourseCode() == null ? "" : ta.getCourseCode();
                 String clazzCode = ta.getClassNumber() == null ? "" : ta.getClassNumber();

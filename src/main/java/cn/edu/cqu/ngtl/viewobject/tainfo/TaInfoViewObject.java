@@ -28,9 +28,7 @@ public class TaInfoViewObject {
 
     private String taGender;
 
-    private String taBachelorMajorName;
-
-    private String taMasterMajorName;
+    private String taMajorName;
 
     private String taCategory;
 
@@ -78,7 +76,7 @@ public class TaInfoViewObject {
         String[] contents=new String[11];
         contents[0]=getTaName();
         contents[1]=getTaIDNumber();
-        contents[2]=getTaMasterMajorName();
+        contents[2]=getTaMajorName();
         contents[3]=getCourseName();
         contents[4]=getCourseCode();
         contents[5]=getClassNumber();
@@ -170,20 +168,12 @@ public class TaInfoViewObject {
         this.taGender = taGender;
     }
 
-    public String getTaBachelorMajorName() {
-        return taBachelorMajorName;
+    public String getTaMajorName() {
+        return taMajorName;
     }
 
-    public void setTaBachelorMajorName(String taBachelorMajorName) {
-        this.taBachelorMajorName = taBachelorMajorName;
-    }
-
-    public String getTaMasterMajorName() {
-        return taMasterMajorName;
-    }
-
-    public void setTaMasterMajorName(String taMasterMajorName) {
-        this.taMasterMajorName = taMasterMajorName;
+    public void setTaMajorName(String taMajorName) {
+        this.taMajorName = taMajorName;
     }
 
     public String getAdvisorName() {

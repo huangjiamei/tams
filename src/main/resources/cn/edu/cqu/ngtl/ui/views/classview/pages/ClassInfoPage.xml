@@ -116,7 +116,7 @@
                                                                                   p:label="课程名称"
                                                                                   p:messageText="@{detailInfoViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
-                                                                                  p:label="课程编号" p:messageText="@{detailInfoViewObject.courseId}"/>
+                                                                                  p:label="课程代码" p:messageText="@{detailInfoViewObject.courseId}"/>
                                                                             <!--<bean parent="Uif-MessageField"-->
                                                                                   <!--p:label="课程类别" p:messageText="@{detailInfoViewObject.courseClassification}"/>-->
                                                                             <bean parent="Uif-MessageField"

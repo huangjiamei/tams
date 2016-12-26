@@ -15,4 +15,6 @@ public interface TAMSUniversityFundingDao {
     List<TAMSUniversityFunding> selectUniFundPreByCondition(Map<String, String> conditions);
 
     boolean insertOneByEntity(TAMSUniversityFunding tamsUniversityFunding);
+
+    TAMSUniversityFunding getOneBySessionId(Integer sessionId);
 }

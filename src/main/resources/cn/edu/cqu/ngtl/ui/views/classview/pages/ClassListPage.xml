@@ -270,7 +270,7 @@
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseName"/>
-                                                                            <!--课程编号-->
+                                                                            <!--课程代码-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseCode"/>
                                                                             <!--教学班-->
@@ -323,9 +323,7 @@
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render" value="true"/>
-
                                                                     <property name="useServerPaging" value="true" />
-
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="false"/>
                                                                     <property name="disclosure.render" value="false"/>
@@ -351,12 +349,10 @@
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
                                                                                   p:additionalCssClasses="@{#line.courseName == null?' ':(#line.order.equals('1')?'bg-table-success tams-form-label':(#line.order.equals('5')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
-
-
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"
                                                                                   p:sortAs="numeric"/>
-                                                                            <bean parent="Uif-DataField" p:label="课程编号"
+                                                                            <bean parent="Uif-DataField" p:label="课程代码"
                                                                                   p:propertyName="courseCode"/>
                                                                             <bean parent="Uif-DataField" p:label="教学班"
                                                                                   p:propertyName="classNumber"
@@ -404,7 +400,7 @@
                                                                                                       p:fieldLabel.colSpan="1"
                                                                                                       p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseName}"/>
                                                                                                 <bean parent="Uif-MessageField"
-                                                                                                      p:label="课程编号" p:colSpan="1" p:rowSpan="1"
+                                                                                                      p:label="课程代码" p:colSpan="1" p:rowSpan="1"
                                                                                                       p:fieldLabel.colSpan="1"
                                                                                                       p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseCode}"/>
                                                                                                 <bean parent="Uif-MessageField"
@@ -524,11 +520,11 @@
         </property>
     </bean>
     <bean id="approveDialog" parent="Uif-DialogGroup" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
-        <property name="headerText" value="审批"/>
+        <property name="headerText" value="审核"/>
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
-                <bean parent="Uif-InputField"  p:label="选择审批的状态"
+                <bean parent="Uif-InputField"  p:label="选择审核的状态"
                       p:propertyName="approveReasonOptionFinder" >
                     <property name="optionsFinder">
                         <bean class="cn.edu.cqu.ngtl.optionfinder.ApproveAllStatusOptionFinder" />
@@ -537,7 +533,7 @@
                         <bean parent="Uif-DropdownControl"/>
                     </property>
                 </bean>
-                <bean parent="Uif-InputField" p:label="请填写审批理由"
+                <bean parent="Uif-InputField" p:label="请填写审核理由"
                       p:propertyName="approveReason">
                     <property name="control">
                         <bean parent="Uif-TextAreaControl"

@@ -138,7 +138,7 @@
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="false"/>
+                                                                              value="true"/>
 
                                                                     <property name="useServerPaging" value="true"/>
 
@@ -149,7 +149,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label=""
-                                                                                  p:propertyName="checkBox">
+                                                                                  p:propertyName="checkBox" p:style="display:@{#line.taName!=null?'block':'none'}">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>
@@ -239,20 +239,18 @@
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>
                                                                     <property name="layoutManager.richTable.render"
-                                                                              value="false"/>
+                                                                              value="true"/>
 
                                                                     <property name="useServerPaging" value="true"/>
 
                                                                     <property name="renderAddLine" value="false"/>
                                                                     <property name="renderLineActions" value="false"/>
-
                                                                     <property name="disclosure.render" value="false"/>
-
 
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField" p:label=""
-                                                                                  p:propertyName="checkBox">
+                                                                                  p:propertyName="checkBox" p:style="display:@{#line.taName!=null?'block':'none'}">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

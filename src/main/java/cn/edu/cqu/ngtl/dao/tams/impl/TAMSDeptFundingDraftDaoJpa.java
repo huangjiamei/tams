@@ -24,7 +24,6 @@ import java.util.Map;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-import static org.kuali.rice.core.api.criteria.PredicateFactory.isNotNull;
 
 /**
  * Created by awake on 2016/11/25.
@@ -129,6 +128,17 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
                 and(
                         equal("departmentId", deptId),
                         equal("sessionId", sessionId)
+                )
+        );
+        QueryResults<TAMSDeptFundingDraft> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFundingDraft.class,criteria.build());
+        return qr.getResults()==null?null:(qr.getResults().size()==0?null:qr.getResults().get(0));
+    }
+
+    @Override
+    public TAMSDeptFundingDraft selectDeptDraftFundsByDeptId(Integer deptId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("departmentId", deptId)
                 )
         );
         QueryResults<TAMSDeptFundingDraft> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFundingDraft.class,criteria.build());

@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
@@ -29,6 +30,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -640,8 +642,9 @@ public class AdminServiceImpl implements IAdminService {
 
 
     @Override
-    public boolean releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
+    public Long releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
+        Long result = 0l;
         for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
             TAMSDeptFunding exist = deptFundingDao.selectDeptFundsByDeptIdAndSession(per.getDepartmentId(), curSession.getId());
             TAMSDeptFundingDraft existDraft = tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(per.getDepartmentId(), curSession.getId());
@@ -657,11 +660,39 @@ public class AdminServiceImpl implements IAdminService {
                 tamsDeptFunding.setPlanFunding(per.getPlanFunding());
                 tamsDeptFunding.setTravelSubsidy(per.getTrafficFunding());
                 deptFundingDao.saveOneByEntity(tamsDeptFunding);
+
+                //保存批准经费变更到批次经费 如果之前没有发布过，那么直接将金额加到现有的批准经费上面
+                List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectCurrBySession();
+                if(tamsUniversityFundings!=null){
+                    if(tamsUniversityFundings.get(0)!=null){
+                        TAMSUniversityFunding tamsUniversityFundingExist = tamsUniversityFundings.get(0);
+                        Long oldActualFunds = Long.valueOf(tamsUniversityFundingExist.getActualFunding());
+                        Long newActualFunds = oldActualFunds + Long.valueOf(per.getActualFunding());
+                        result += Long.valueOf(per.getActualFunding());
+                        tamsUniversityFundingExist.setActualFunding(newActualFunds.toString());
+                        tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFundingExist);
+                    }
+                }
+
             } else {
-                if (!per.getActualFunding().equals(exist.getActualFunding()) || !per.getPlanFunding().equals(exist.getPlanFunding())) {
+                if (!per.getActualFunding().equals(exist.getActualFunding()) || !per.getPlanFunding().equals(exist.getPlanFunding())) { //如果金额有变化
+                    Long changedFunds = Long.valueOf(per.getActualFunding())-Long.valueOf(exist.getActualFunding()); //变化额度等于新设置的金额减去旧金额
+                    result += changedFunds;
                     exist.setActualFunding(per.getActualFunding()); //保存批准经费
                     exist.setPlanFunding(per.getPlanFunding());//保存计划经费
                     deptFundingDao.saveOneByEntity(exist);
+
+                    //保存批准经费变更到批次经费 如果之前发布过，那么是加上变化的额度
+                    List<TAMSUniversityFunding> tamsUniversityFundings = tamsUniversityFundingDao.selectCurrBySession();
+                    if(tamsUniversityFundings!=null){
+                        if(tamsUniversityFundings.get(0)!=null){
+                            TAMSUniversityFunding tamsUniversityFundingExist = tamsUniversityFundings.get(0);
+                            Long oldActualFunds = Long.valueOf(tamsUniversityFundingExist.getActualFunding());
+                            Long newActualFunds = oldActualFunds + changedFunds;
+                            tamsUniversityFundingExist.setActualFunding(newActualFunds.toString());
+                            tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFundingExist);
+                        }
+                    }
                 }
             }
             //保存草稿表
@@ -669,7 +700,7 @@ public class AdminServiceImpl implements IAdminService {
             existDraft.setPlanFunding(per.getPlanFunding());//保存计划经费
             tamsDeptFundingDraftDao.saveOneByEntity(existDraft);
         }
-        return true;
+        return result;
     }
 
     //发布课程经费
@@ -911,6 +942,46 @@ public class AdminServiceImpl implements IAdminService {
         }
         return false;
     }
+
+    /*
+    @Override
+    public void countAssignedFunding (List<String> classids) {
+        //当前学期
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        List<TAMSClassFunding> tamsClassFunding = tamsClassFundingDao.selectByClassIds(classids);
+        List<Integer> assignedFundingClass = new ArrayList<>();
+        List<Integer> depts = new ArrayList<>();
+        for(TAMSClassFunding per : tamsClassFunding) {
+            Integer assigned = Integer.parseInt(per.getAssignedFunding());
+            assignedFundingClass.add(assigned);
+            Integer dept = per.getClassInformation().getDepartmentId();
+            depts.add(dept);
+        }
+
+        for(int i=0; i<tamsClassFunding.size(); i++) {
+            for(int j=i+1; j<tamsClassFunding.size(); j++) {
+                if(tamsClassFunding.get(i).getClassInformation().getDepartmentId().toString().equals(
+                        tamsClassFunding.get(j).getClassInformation().getDepartmentId().toString())
+                        ) {
+                    Integer sum = Integer.parseInt(tamsClassFunding.get(i).getAssignedFunding())
+                            + Integer.parseInt(tamsClassFunding.get(j).getAssignedFunding());
+                    tamsClassFunding.get(i).setAssignedFunding(sum.toString());
+                    tamsClassFunding.remove(j);
+                }
+            }
+        }
+
+        List<TAMSDeptFunding> tamsDeptFundings = tamsDeptFundingDao.selectByDeptAndSessionId(
+                depts, curSession.getId()
+        );
+
+        List<Integer> assignedFundingDept = new ArrayList<>();
+            for (TAMSDeptFunding per : tamsDeptFundings) {
+                Integer assigned = Integer.parseInt(per.getActualFunding());
+                for(TAMSClassFunding)
+            }
+        }
+*/
 
     @Override
     public List<TAMSCourseManager> getCourseManagerByUid(String uId){

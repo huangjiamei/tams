@@ -535,11 +535,11 @@ public class TAConverterimpl implements ITAConverter {
             }
             UTStudent taStu = ta.getTa();
             if (taStu != null) {
-                viewObject.setTaMasterMajorName(taStu.getProgram() == null ? "缺失" :taStu.getProgram().getName());
+                viewObject.setTaMajorName(taStu.getProgram() == null ? "缺失" :taStu.getProgram().getName());
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIDNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());
-                viewObject.setTaBachelorMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
+                viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
 
             viewObject.setId(ta.getId());
@@ -548,7 +548,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTeacherAppraise(ta.getEvaluation());
             viewObject.setStuAppraise(ta.getStuEva());
             //暂时缺失的属性
-            viewObject.setTaMasterMajorName("缺失");
+            viewObject.setTaMajorName("缺失");
             viewObject.setContactPhone("玖洞玖洞玖扒洞");
             viewObject.setAdvisorName("缺失");
             viewObject.setVitality("缺失");
@@ -600,8 +600,10 @@ public class TAConverterimpl implements ITAConverter {
             nullObject.add(new WorkBenchViewObject());
             return nullObject;
         }
-        for (WorkBenchViewObject per : list) {
-            per.setStatus(tamsTaDao.selectByClassId(per.getClassId()).get(0).getStatus());
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+
+        for(WorkBenchViewObject per : list) {
+            per.setStatus(tamsTaDao.selectByStudentIdAndClassId(user.getCode(), per.getClassId()).getStatus());
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -644,8 +646,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
             viewObject.setStatus(ta.getStatus());
+            viewObject.setContactPhone(ta.getPhoneNbr());
             //暂时缺失的属性
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
 
@@ -677,9 +680,9 @@ public class TAConverterimpl implements ITAConverter {
             }
 
             viewObject.setApplicationClassId(application.getApplicationClassId());
-
+            viewObject.setContactPhone(application.getPhoneNbr()==null?null:application.getPhoneNbr());
             //暂时缺失的属性
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+
             viewObject.setAdvisorName("缺失");
 
             viewObjects.add(viewObject);
@@ -1092,6 +1095,7 @@ public class TAConverterimpl implements ITAConverter {
         viewObject.setTeacherType(instructorCode);
         if (classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() :null;
+            viewObject.setCredit(classInfo.getCourseOffering().getCourse().getCredit());
             viewObject.setCourseHour(course.getHour());
             viewObject.setClassNumber(classInfo.getClassNumber());
             viewObject.setStudentNumber(classInfo.getMinPerWeek() == null ? " " :classInfo.getMinPerWeek().toString());
@@ -1213,6 +1217,12 @@ public class TAConverterimpl implements ITAConverter {
             myClassViewObjects.add(new MyClassViewObject());
             return myClassViewObjects;
         }
+        /*
+        List<Object> classIdList = new ArrayList<>();
+        for(UTStudentTimetable utStudentTimetable : utStudentTimetables){
+            classIdList.add(utStudentTimetable.getClassId());
+        }
+        */
 
         List<UTClassInformation> utClassInformations = utClassInfoDao.selectBatchByIds(myClassIdList);
 

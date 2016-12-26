@@ -44,8 +44,9 @@ public class TAMSTaTravelSubsidyDaoJpa implements TAMSTaTravelSubsidyDao {
     }
 
     @Override
-    public void deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
+    public boolean deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy){
         KradDataServiceLocator.getDataObjectService().delete(tamsTaTravelSubsidy);
+        return true;
     }
 
 

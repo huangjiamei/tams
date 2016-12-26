@@ -130,7 +130,7 @@
                                                                                                           p:label="职工号"
                                                                                                           p:messageText="@{applyViewObject.teacherType}"/>
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:label="课程编号"
+                                                                                                          p:label="课程代码"
                                                                                                           p:messageText="@{applyViewObject.courseNumber}"/>
                                                                                                     <!--<bean parent="Uif-MessageField"-->
                                                                                                           <!--p:label="课程类别"-->
@@ -348,7 +348,14 @@
                                                                                                                       p:actionLabel="提交"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="submitRequestTaPage"
+                                                                                                                      p:render="@{!#form.submitted}"
                                                                                                                       p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="已提交"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:disabled = "true"
+                                                                                                                      p:render="@{#form.submitted}"
+                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success box-btngroup"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>

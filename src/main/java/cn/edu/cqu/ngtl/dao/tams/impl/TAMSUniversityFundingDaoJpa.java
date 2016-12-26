@@ -3,8 +3,12 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSUniversityFundingDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFundingDraft;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSUniversityFunding;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
+import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,6 +19,10 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Map;
 import java.util.ArrayList;
+
+import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
+
 /**
  * Created by damei on 16/11/20.
  */
@@ -29,6 +37,17 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
     @Autowired
     private UTSessionDao sessionDao;
 
+    @Override
+    public TAMSUniversityFunding getOneBySessionId(Integer sessionId) {
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", sessionId)
+                )
+        );
+        QueryResults<TAMSUniversityFunding> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSUniversityFunding.class,criteria.build());
+        return qr.getResults().get(0);
+    }
+
     //显示当前学期学校经费
     @Override
     public List<TAMSUniversityFunding> selectCurrBySession() {
@@ -39,7 +58,7 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
 
         Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING t WHERE t.SESSION_ID = '"+curSession.getId()+"'",TAMSUniversityFunding.class);
         list = qr.getResultList();
-        return list;
+        return list.size() != 0 ? list : null;
     }
 
     //显示历史学校经费
@@ -49,7 +68,7 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING t JOIN UNITIME_SESSION s ON s.UNIQUEID = t.SESSION_ID AND t.SESSION_ID != '"+curSession.getId()+"' ORDER BY s.YEAR DESC, s.TERM DESC ",TAMSUniversityFunding.class);
         list = qr.getResultList();
-        return list;
+        return list.size() != 0 ? list : null;
     }
 
     //批次经费查询

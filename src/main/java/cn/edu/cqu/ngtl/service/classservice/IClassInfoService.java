@@ -15,6 +15,12 @@ public interface IClassInfoService {
 
     void validClassFunds(String classId);
 
+    /**
+     * 找出所有是工作状态的课程
+     * @return
+     */
+    List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId);
+
     TAMSClassTaApplication getClassApplicationByClassId(String classId);
 
     List<UTClassInformation> getAllCurSessionClasses();
@@ -76,4 +82,7 @@ public interface IClassInfoService {
     boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatus);
 
     List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId);
+
+    List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId);
+
 }

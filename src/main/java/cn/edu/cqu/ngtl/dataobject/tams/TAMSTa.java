@@ -134,6 +134,9 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "OUTSTANDING_NOTE")
     private String osNote;
 
+    @Column(name = "PHONE_NUMBER")
+    private String phoneNbr;
+
     @ManyToOne(cascade = CascadeType.ALL) //更新级联
     @JoinColumn(name = "OUTSTANDING_TA", insertable = false, updatable = false)
     private TAMSWorkflowStatus outStandingTaWorkflowStatus;
@@ -424,5 +427,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setTamsTaCategory(TAMSTaCategory tamsTaCategory) {
         this.tamsTaCategory = tamsTaCategory;
+    }
+
+    public String getPhoneNbr() {
+        return phoneNbr;
+    }
+
+    public void setPhoneNbr(String phoneNbr) {
+        this.phoneNbr = phoneNbr;
     }
 }

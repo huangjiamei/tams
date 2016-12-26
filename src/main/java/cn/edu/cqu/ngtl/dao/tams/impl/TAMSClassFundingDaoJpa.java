@@ -12,6 +12,7 @@ import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
+import org.apache.poi.ss.formula.functions.T;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
@@ -187,7 +188,9 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
             for (TAMSClassFunding per : list) {
                 per.setClassInformation(
                         classInfoDao.getOneById(
+                                //Integer.parseInt(
                                         per.getClassId()
+                                //)
                         )
                 );
             }
@@ -197,7 +200,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
     }
 
     @Override
-    public TAMSClassFunding getOneByClassIdAndSessionId(String classId,String sessionId){
+    public TAMSClassFunding getOneByClassIdAndSessionId(String classId, String sessionId){
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
                         equal("classId", classId),
@@ -218,13 +221,33 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
     }
 
     @Override
-    public TAMSClassFunding getOneByClassId(String classId){
+    public TAMSClassFunding getOneByClassId(String classId) {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
                         equal("classId", classId)
                 )
         );
         List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();
-        return list==null?null:(list.size()==0?null:list.get(0));
+        if(list.size() == 0 || list == null)
+            return null;
+        else
+            return list.get(0);
+    }
+
+    public List<TAMSClassFunding> selectByClassIds(List<String> classids) {
+        List<TAMSClassFunding> tamsClassFunding = new ArrayList<>();
+        for(String classid : classids) {
+            QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                    and(
+                            equal("classId", classid)
+                    )
+            );
+            List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();
+            if(list.size() == 0 || list == null)
+                tamsClassFunding.add(null);
+            else
+                tamsClassFunding.add(list.get(0));
+        }
+        return tamsClassFunding;
     }
 }

@@ -214,9 +214,12 @@
                                                                                                         <property name="readOnly" value="false"/>
 
                                                                                                         <property name="disclosure.render" value="false"/>
+
+                                                                                                        <property name="layoutManager.showToggleAllDetails"
+                                                                                                                  value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" p:style="display:@{#line.taName!=null?'block':'none'}"/>
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"/><!--p:style="display:@{#line.taName!=null?'block':'none'}"-->
                                                                                                         </property>
 
                                                                                                         <property
@@ -241,7 +244,7 @@
                                                                                                                       p:label="课程"
                                                                                                                       p:propertyName="courseName"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="课程编号"
+                                                                                                                      p:label="课程代码"
                                                                                                                       p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="1月实发"
@@ -1363,7 +1366,6 @@
 
                                                                                                     <bean id="FundsManagerCourseTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                                                           p:additionalCssClasses="table-striped table-bordered table-hover"
-                                                                                                          p:layoutManager.numberOfColumns="20"
                                                                                                           p:onDocumentReadyScript="refreshTableFilter(FundsManagerCourseSearchFields,FundsManagerCourseTable);">
                                                                                                         <property
                                                                                                                 name="collectionObjectClass"
@@ -1413,7 +1415,7 @@
                                                                                                                       p:label="课程"
                                                                                                                       p:propertyName="courseName"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="课程编号"
+                                                                                                                      p:label="课程代码"
                                                                                                                       p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="教学班号"
@@ -1481,7 +1483,7 @@
                                                                                                                                           p:fieldLabel.colSpan="1"
                                                                                                                                           p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseName}"/>
                                                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                                                          p:label="课程编号" p:colSpan="1" p:rowSpan="1"
+                                                                                                                                          p:label="课程代码" p:colSpan="1" p:rowSpan="1"
                                                                                                                                           p:fieldLabel.colSpan="1"
                                                                                                                                           p:fieldLabel.rowSpan="1" p:messageText="@{#line.courseCode}"/>
                                                                                                                                     <bean parent="Uif-MessageField"
@@ -1697,7 +1699,7 @@
                                                                                                                       p:label="课程"
                                                                                                                       p:propertyName="courseName"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="课程编号"
+                                                                                                                      p:label="课程代码"
                                                                                                                       p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="分配经费"

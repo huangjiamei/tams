@@ -16,6 +16,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
+import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -79,9 +80,21 @@ public class adminController extends BaseController {
 
 
     @RequestMapping(params = "methodToCall=logout")
-    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form) throws Exception {
-        String redirctURL = ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY) + "/portal/home?methodToCall=logout&viewId=PortalView";
-        return this.performRedirect(form, redirctURL);
+    public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
+        UserSession userSession = GlobalVariables.getUserSession();
+        if (userSession.isBackdoorInUse()) {
+            userSession.clearBackdoorUser();
+        }
+
+        request.getSession().invalidate();
+        String ifUseIdstar = ConfigContext.getCurrentContextConfig().getProperty("filter.login.class");
+        if (ifUseIdstar.contains("IdstarLoginFilter")) {
+            // 将用户从重庆大学统一认证平台注销
+            return this.performRedirect(form, new IdstarIdentityManagerServiceImpl().getLogoutUrl());
+        } else {
+            return this.returnToHub(form);
+        }
+
     }
 
     /**

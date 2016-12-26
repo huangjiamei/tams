@@ -156,4 +156,6 @@ public interface IAdminService {
     boolean addCourseManagerByInsIdAndCourseId(String courseId, String instructorId);
 
     List<UTInstructor> getInstructorByNameAndCode(String Name, String code);
+
+    List<TAMSCourseManager> getCourseManagerByUid(String uId);
 }

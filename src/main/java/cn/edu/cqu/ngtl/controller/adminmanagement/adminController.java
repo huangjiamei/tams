@@ -4,7 +4,7 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
-import cn.edu.cqu.ngtl.dao.tams.impl.TAMSCourseManagerDaoJpa;
+import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
@@ -55,7 +55,7 @@ public class adminController extends BaseController {
     private IAdminService adminService;
 
     @Autowired
-    private TAMSCourseManagerDaoJpa tamsCourseManagerDaoJpa;
+    private TAMSCourseManagerDao tamsCourseManagerDao;
 
     @Autowired
     private ITAConverter taConverter;
@@ -774,8 +774,12 @@ public class adminController extends BaseController {
     public ModelAndView getCourseManagerPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+
+        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+
         infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
-                tamsCourseManagerDaoJpa.getAllCourseManager()
+                adminService.getCourseManagerByUid(uId)
         ));
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
@@ -1580,7 +1584,7 @@ infoForm.setHistogram(histojson);
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
-        tamsCourseManagerDaoJpa.deleteCourseManager(tamsCourseManagerDaoJpa.getCourseManagerByInstructorId(selectedObject.getId()));
+        tamsCourseManagerDao.deleteCourseManager(tamsCourseManagerDao.getCourseManagerByInstructorId(selectedObject.getId()));
         infoForm.getCourseManagerViewObjects().remove(index);
         return this.getModelAndView(infoForm, "pageCourseManager");
     }

@@ -634,6 +634,17 @@
       <version>1</version>
     </dependency>
 
+    <dependency>
+      <groupId>com.wiscom</groupId>
+      <artifactId>ice</artifactId>
+      <version>1.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.wiscom</groupId>
+      <artifactId>is</artifactId>
+      <version>1.0</version>
+    </dependency>
 
   </dependencies>
 </project>

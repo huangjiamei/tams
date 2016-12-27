@@ -87,4 +87,6 @@ public interface IClassInfoService {
 
     List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId);
 
+    boolean canEmployByClassId(String classId);
+
 }

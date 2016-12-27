@@ -1179,6 +1179,8 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
+        infoForm.setCanEmploy(classInfoService.canEmployByClassId(classId));
+
         infoForm.setAllMyTa(taConverter.myTaCombinePayDayClass(
                 classInfoService.getAllTaFilteredByClassid(classId)
         ));

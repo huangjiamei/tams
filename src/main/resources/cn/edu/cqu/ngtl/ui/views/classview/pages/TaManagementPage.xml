@@ -212,10 +212,11 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="聘用"
                                                                                   p:methodToCall="employ"
+                                                                                  p:render = "@{#form.canEmploy}"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
-
+                                                                                  p:render = "@{#form.canEmploy}"
                                                                                   p:actionScript="showDialog('addApplicantDialog');"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                         </list>

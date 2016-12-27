@@ -116,6 +116,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /*
     助教管理页面
      */
+
+    private boolean canEmploy;
     private List<MyTaViewObject> allMyTa;
     private List<MyTaViewObject> allApplication;
 
@@ -501,5 +503,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCanApprove(boolean canApprove) {
         this.canApprove = canApprove;
+    }
+
+    public boolean isCanEmploy() {
+        return canEmploy;
+    }
+
+    public void setCanEmploy(boolean canEmploy) {
+        this.canEmploy = canEmploy;
     }
 }

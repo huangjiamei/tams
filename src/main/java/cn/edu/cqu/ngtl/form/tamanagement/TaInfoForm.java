@@ -14,60 +14,27 @@ import java.util.List;
 public class TaInfoForm extends BaseForm implements Serializable {
 
     private static final long serialVersionUID = 8220820300868876320L;
-
+    Boolean checkedTaListAll;
     /**
      * 教师评价相关
      */
 
     private List<AppraisalDetailViewObject> appraisalDetail;
-
     private List<IssueViewObject> allIssues;
-
     private String evaluateDetail;
-
     private String evaluate;
-
     /**
      * '我的助教'管理相关
      */
 
     private List<MyTaViewObject> allMyTa;
-
     private List<MyTaViewObject> allApplication;
-
-    private MyTaViewObject selectedTa=new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
-
-    private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
-
-    Boolean checkedTaListAll;
-
+    private MyTaViewObject selectedTa = new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
+    private List<MyTaViewObject> conditionTAList = new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
     private String indexTaListPage;//页面table的index
-
-
-    {
-        // 赋初始空值测试
-        conditionTAList.add(new MyTaViewObject());
-    }
-
     //添加申请人时的输入
     private String StudentName;
     private String StudentNumber;
-
-    public String getStudentName() {return StudentName;}
-
-    public void setStudentName(String studentName) {
-        StudentName = studentName;
-    }
-
-    public String getStudentNumber() {
-        return StudentNumber;
-    }
-
-    public void setStudentNumber(String studentNumber) {
-        StudentNumber = studentNumber;
-    }
-
-
     /**
      * 助教列表页面相关
      */
@@ -78,54 +45,34 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String classIdForDetailPage;
     private TaInfoViewObject selectedTaInfo;
     private String taCategoryName;
-
-
+    private boolean canApprise;
     private String revocationReason;//撤销
     private String appraiseReason;//评优
     private String revocationReasonOptionFinder;//撤销optionfinder
     private String appraiseReasonOptionFinder;//评优optionfinder
-
-
-
-
     /**
      * 工作台相关
      */
     private List<WorkBenchViewObject> workbench;
     private List<TAMSTaTravelSubsidy> travelSubsidies;
     private List<MyClassViewObject> myClassViewObjects;
-
     private String taUniqueId;
     private String travelTime;
     private String travelNote;
     private String curClassId;
     private String travelTimeD;
-
-
-
-
     /**
      * 任务相关
      */
     private String taskCategory;
-
     private String theme;
-
     private String assignment;
-
     private String descriptionAndAttachement;
-
     private String startTime;
-
     private String endTime;
-
     private String completionDegree;
-
     private String singleTimeConsume;
-
     private String totalTimeConsume;
-
-
     /*
     助教页面搜索框
      */
@@ -140,7 +87,34 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String taScore;
     private String taStatus;
 
-    /** Getter and Setter **/
+    {
+        // 赋初始空值测试
+        conditionTAList.add(new MyTaViewObject());
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
+    }
+
+    public String getStudentName() {
+        return StudentName;
+    }
+
+    public void setStudentName(String studentName) {
+        StudentName = studentName;
+    }
+
+    public String getStudentNumber() {
+        return StudentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        StudentNumber = studentNumber;
+    }
+
+    /**
+     * Getter and Setter
+     **/
 
     public List<IssueViewObject> getAllIssues() {
         return allIssues;
@@ -170,8 +144,16 @@ public class TaInfoForm extends BaseForm implements Serializable {
         return allApplication;
     }
 
+    public void setAllApplication(List<MyTaViewObject> allApplication) {
+        this.allApplication = allApplication;
+    }
+
     public MyTaViewObject getSelectedTa() {
         return selectedTa;
+    }
+
+    public void setSelectedTa(MyTaViewObject selectedTa) {
+        this.selectedTa = selectedTa;
     }
 
     public List<MyTaViewObject> getConditionTAList() {
@@ -180,14 +162,6 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setConditionTAList(List<MyTaViewObject> conditionTAList) {
         this.conditionTAList = conditionTAList;
-    }
-
-    public void setSelectedTa(MyTaViewObject selectedTa) {
-        this.selectedTa = selectedTa;
-    }
-
-    public void setAllApplication(List<MyTaViewObject> allApplication) {
-        this.allApplication = allApplication;
     }
 
     public List<TaInfoViewObject> getAllTaInfo() {
@@ -366,10 +340,6 @@ public class TaInfoForm extends BaseForm implements Serializable {
         this.curClassId = curClassId;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public String getTaCourseName() {
         return taCourseName;
     }
@@ -521,5 +491,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setTravelTimeD(String travelTimeD) {
         this.travelTimeD = travelTimeD;
+    }
+
+    public boolean isCanApprise() {
+        return canApprise;
+    }
+
+    public void setCanApprise(boolean canApprise) {
+        this.canApprise = canApprise;
     }
 }

@@ -12,6 +12,7 @@ import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.tainfo.IssueViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
@@ -62,6 +63,9 @@ public class TaController extends BaseController {
     @Autowired
     private WorkFlowService workFlowService;
 
+    @Autowired
+    private IUserInfoService userInfoService;
+
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
@@ -94,6 +98,13 @@ public class TaController extends BaseController {
 
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
+
+        if(userInfoService.isSysAdmin(uId)||userInfoService.isAcademicAffairsStaff(uId)||userInfoService.isCollegeStaff(uId)||userInfoService.isCourseManager(uId)){
+            taInfoForm.setCanApprise(true);
+        }else{
+            taInfoForm.setCanApprise(false);
+        }
+
         taInfoForm.setUser((User)GlobalVariables.getUserSession().retrieveObject("user"));
         taInfoForm.setAllTaInfo(taConverter.taCombineDetailInfo(
                 taService.getAllTaFilteredByUid(uId)

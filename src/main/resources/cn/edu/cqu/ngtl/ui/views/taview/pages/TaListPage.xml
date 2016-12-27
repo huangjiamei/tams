@@ -116,6 +116,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="评优"
                                                                                   p:methodToCall="showAppriseDialog"
+                                                                                  p:render = "@{#form.canApprise}"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-check bg-red box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"

@@ -219,7 +219,7 @@
                                                                                                                   value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"/><!--p:style="display:@{#line.taName!=null?'block':'none'}"-->
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" p:style="display:@{#line.taName!=null?'block':'none'}"/>
                                                                                                         </property>
 
                                                                                                         <property
@@ -457,7 +457,7 @@
                                                                                                                       p:label="批次"
                                                                                                                       p:propertyName="sessionName"/>
                                                                                                                 <bean parent="Uif-InputField" p:propertyName="planFunding"
-                                                                                                                      p:readOnly="false" p:label="预算经费">
+                                                                                                                      p:readOnly="false" p:label="预算经费" p:style="display:@{#line.sessionName!=null?'block':'none'}">
                                                                                                                     <property name="validCharactersConstraint">
                                                                                                                         <bean parent="NumericPatternConstraint"/>
                                                                                                                     </property>
@@ -884,7 +884,7 @@
                                                                                                                                   p:propertyName="department"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="planFunding"
-                                                                                                                                  p:label="预算经费">
+                                                                                                                                  p:label="预算经费" p:style="display:@{#line.sessionName!=null?'block':'none'}">
                                                                                                                                 <property name="validCharactersConstraint">
                                                                                                                                     <bean parent="NumericPatternConstraint"/>
                                                                                                                                 </property>
@@ -895,6 +895,7 @@
                                                                                                                                   p:sortAs="numeric"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:label="批准经费"
+                                                                                                                                  p:style="display:@{#line.sessionName!=null?'block':'none'}"
                                                                                                                                   p:propertyName="actualFunding"
                                                                                                                                   p:sortAs="numeric" p:additionalCssClasses="searchBoxWidth">
                                                                                                                                 <property name="validCharactersConstraint">
@@ -1429,6 +1430,7 @@
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
+                                                                                                                      p:style="display:@{#line.department!=null?'block':'none'}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">
@@ -1703,6 +1705,7 @@
                                                                                                                       p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="分配经费"
+                                                                                                                      p:style="display:@{#line.departmentName!=null?'block':'none'}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">

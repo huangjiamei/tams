@@ -333,7 +333,7 @@
                                                                     <!--在这里后期更改rowDetails的图标-->
                                                                     <property
                                                                             name="layoutManager.expandDetailsActionPrototype">
-                                                                        <bean parent="Uif-ExpandDetailsImageAction"/>
+                                                                        <bean parent="Uif-ExpandDetailsImageAction" p:style="display:@{#line.courseName!=null?'block':'none'}"/>
                                                                     </property>
 
                                                                     <property name="items">

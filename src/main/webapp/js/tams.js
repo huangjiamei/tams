@@ -1030,15 +1030,18 @@ function getClassDetailPage(){
 }
 //统一的点击整行变色
 function setBgColor(id){
-    jQuery("#"+id).on('click','tbody>tr',function (e) { //checkbox为true时添加样式，为false时，去除样式
-        if(jQuery(this).find(":checkbox").attr("checked")){
-            jQuery(this).find("td").removeClass("selected")
-                .end().find(":checkbox").attr("checked",false);
-        }else{
-            jQuery(this).find("td").addClass("selected")
-                .end().find(":checkbox").attr("checked",true);
-        }
-    });
+    var tableLength=jQuery("#"+id).find('tbody').find('tr').length;
+    for(var i=0;i<tableLength;i++) {
+        jQuery("#" + id).on('click', 'tbody>tr:eq(' + i + ')>td:eq(0)>div>input', function (e) { //checkbox为true时添加样式，为false时，去除样式
+            if (jQuery(this).parent().parent().parent().find(":checkbox").attr("checked") != "checked") {
+                jQuery(this).parent().parent().parent().find("td").removeClass("selected")
+                    .end().find(":checkbox").attr("checked", false);
+            } else {
+                jQuery(this).parent().parent().parent().find("td").addClass("selected")
+                    .end().find(":checkbox").attr("checked", true);
+            }
+        });
+    }
 }
 
 //table上的鼠标滑过显示其他样式

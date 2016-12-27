@@ -74,7 +74,7 @@ function initNavDialog() {
     jQuery("#navDialog").removeClass("fade");
     //添加导航栏点击切换事件
     jQuery(".navigationDialog .nav a").click(function(e){
-        e.preventDefault();
+        //e.preventDefault();
         jQuery(this).tab('show');
     });
 
@@ -100,7 +100,7 @@ function drawStatusTransTable(boxid,tableJson){
 
     var topleft = document.createElement("th");
     topleft.style.width = '130px';
-    topleft.innerHTML = "<div class=\"out\"> <b>当前状态</b>  <em>新状态</em> </div>";
+    topleft.innerHTML = "<div class=\"out\"> <b>新状态</b>  <em>当前状态</em> </div>";
 
     thead.appendChild(topleft);
 
@@ -900,15 +900,15 @@ function showDialogMenu(){
     if(jQuery("#navDialog").css("display")=="none"){
         jQuery("#navDialog").show();
     }else{
-        jQuery("#navDialog").hide();
+        jQuery("#dismissNavDialog").click();
     }
 
     //header部分切换时进行隐藏
-    jQuery(".dropdown-toggle").click(function(a) {
-        jQuery("#navDialog").hide();
+    jQuery(".dropdown-toggle").click(function() {
+        jQuery("#dismissNavDialog").click();
     });
-    jQuery("#sessionTermInfo").click(function(a) {
-        jQuery("#navDialog").hide();
+    jQuery("#sessionTermInfo").click(function() {
+        jQuery("#dismissNavDialog").click();
     });
 }
 
@@ -918,14 +918,14 @@ function showDialogTerm(){
     if(jQuery("#sessionTermFinderDialog").css("display")=="none"){
         jQuery("#sessionTermFinderDialog").show();
     }else{
-        jQuery("#sessionTermFinderDialog").hide();
+        jQuery("#dissmissSessionTermDialog").click();
     }
 
     //header部分切换时进行隐藏
-    jQuery(".dropdown-toggle").click(function(a) {
+    jQuery(".dropdown-toggle").click(function() {
         jQuery("#sessionTermFinderDialog").hide();
     });
-    jQuery("#menuHeaderItem").click(function(a) {
+    jQuery("#menuHeaderItem").click(function() {
         jQuery("#sessionTermFinderDialog").hide();
     });
 }

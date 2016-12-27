@@ -86,8 +86,8 @@
                             <bean parent="Uif-SecondaryActionButton-Small"
                                   p:actionLabel="注销" p:methodToCall="logout"
                                   p:additionalCssClasses="userInfoBtn" p:style="float:right">
-                            </bean>
 
+                            </bean>
                         </list>
                     </property>
 
@@ -140,15 +140,17 @@
           p:dialogCssClass="navigationDialog"
           p:onShowDialogScript="initNavDialog();"
           p:style="overflow-y:hidden;">
-        <property name="layoutManager">
-            <bean parent="Uif-VerticalBoxLayout" />
-        </property>
         <property name="items">
             <list>
                 <bean parent="megamenu-items"/>
             </list>
         </property>
-
+        <property name="footer.items">
+            <list>
+                <bean id="dismissNavDialog" parent="Uif-DialogDismissButton" p:actionLabel="取消" p:dialogDismissOption="REQUEST"
+                p:style="display:none;"/>
+            </list>
+        </property>
     </bean>
 
     <bean id="sessionTermFinderDialog" parent="Uif-DialogGroup">
@@ -185,7 +187,7 @@
                       p:methodToCall="selectCurSession"  p:dialogDismissOption="REQUEST"
                       p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isSysAdmin(user.getCode())
                 or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isAcademicAffairsStaff(user.getCode())}"/>
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+                <bean id="dissmissSessionTermDialog" parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
 
             </list>
         </property>

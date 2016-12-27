@@ -3,7 +3,6 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSUniversityFundingDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSDeptFundingDraft;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSUniversityFunding;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
@@ -16,9 +15,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
@@ -55,10 +54,17 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
         //先添加当前学期的内容
         TAMSUniversityFunding current = new TAMSUniversityFunding();
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-        Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING t WHERE t.SESSION_ID = '"+curSession.getId()+"'",TAMSUniversityFunding.class);
-        list = qr.getResultList();
-        return list.size() != 0 ? list : null;
+//        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+//        Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING t WHERE t.SESSION_ID = '"+curSession.getId()+"'",TAMSUniversityFunding.class);
+//        list = qr.getResultList();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", curSession.getId())
+                )
+        );
+        QueryResults<TAMSUniversityFunding> qr = KradDataServiceLocator.getDataObjectService().findMatching(TAMSUniversityFunding.class,criteria.build());
+        return qr.getResults()==null?null:(qr.getResults().size()==0?null:qr.getResults());
+//        return list.size() != 0 ? list : null;
     }
 
     //显示历史学校经费

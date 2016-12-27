@@ -59,7 +59,7 @@ public class ClassConverterImpl implements IClassConverter {
             viewObject.setTaName(listone.getName());
             viewObject.setTaIdNumber(listone.getId());
             viewObject.setTaGender(listone.getGender());
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setContactPhone("缺失");
             //点击查看详细信息会用到的
             CMProgram program = listone.getProgram();
             if (program == null)

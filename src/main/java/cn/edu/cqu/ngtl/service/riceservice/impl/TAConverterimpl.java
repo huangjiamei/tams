@@ -549,7 +549,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setStuAppraise(ta.getStuEva());
             //暂时缺失的属性
             viewObject.setTaMajorName("缺失");
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setContactPhone("缺失");
             viewObject.setAdvisorName("缺失");
             viewObject.setVitality("缺失");
             viewObjects.add(viewObject);
@@ -579,7 +579,7 @@ public class TAConverterimpl implements ITAConverter {
 
             viewObject.setStatus(ta.getStatus());
             //暂时缺失的属性
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setContactPhone("缺失");
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
 
@@ -646,9 +646,9 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
             viewObject.setStatus(ta.getStatus());
-            viewObject.setContactPhone(ta.getPhoneNbr());
+            //viewObject.setContactPhone(ta.getPhoneNbr());
             //暂时缺失的属性
-
+            viewObject.setContactPhone("缺失");
             viewObject.setAdvisorName("缺失");
             viewObject.setPayDay("暂未设置");
 
@@ -715,7 +715,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setApplicationClassId(application.getApplicationClassId());
 
             //暂时缺失的属性
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
+            viewObject.setContactPhone("缺失");
             viewObject.setAdvisorName("缺失");
 
             viewObjects.add(viewObject);
@@ -737,7 +737,6 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaName(listone.getName());
             viewObject.setTaIdNumber(listone.getId());
             viewObject.setTaGender(listone.getGender());
-            viewObject.setContactPhone("玖洞玖洞玖扒洞");
             //点击查看详细信息会用到的
             CMProgram program = listone.getProgram();
             if (program == null)
@@ -745,6 +744,7 @@ public class TAConverterimpl implements ITAConverter {
             else
                 viewObject.setTaMajorName(listone.getProgram().getName().toString());
             viewObject.setAdvisorName("缺失");
+            viewObject.setContactPhone("缺失");
             viewObjects.add(viewObject);
         }
         return viewObjects;

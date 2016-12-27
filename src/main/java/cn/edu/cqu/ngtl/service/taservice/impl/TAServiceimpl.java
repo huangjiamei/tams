@@ -370,10 +370,10 @@ public class TAServiceimpl implements ITAService {
             if (utStudent != null) {
                 if (utStudent.getProgram() != null) {
                     if (utStudent.getProgram().getDuration() == 3) {
-                        newTa.setType("1");
+                        newTa.setType("1"); //硕士
                     }
                 } else
-                    newTa.setType("0");
+                    newTa.setType("3"); //本科
             }
             /**
              * 判断被聘人学历

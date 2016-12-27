@@ -188,6 +188,7 @@
                                                                             <bean id="approveButtonId" parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="审核"
                                                                                   p:actionImagePlacement="LEFT"
+                                                                                  p:render = "@{#form.canApprove}"
                                                                                   p:methodToCall="showApproveDialog"
                                                                                   p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
 

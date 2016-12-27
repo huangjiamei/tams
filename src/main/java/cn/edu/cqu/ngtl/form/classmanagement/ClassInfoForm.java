@@ -82,6 +82,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String returnReasonOptionFinder;//驳回optionfinder
     private String approveReasonOptionFinder;//审批optionfinder
 
+    private boolean canApprove;
+
     private List<ClassTeacherViewObject> classList;
 
     Boolean checkedClassListAll;//课程页面全选
@@ -491,5 +493,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setSubmitted(boolean submitted) {
         Submitted = submitted;
+    }
+
+    public boolean isCanApprove() {
+        return canApprove;
+    }
+
+    public void setCanApprove(boolean canApprove) {
+        this.canApprove = canApprove;
     }
 }

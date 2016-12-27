@@ -215,12 +215,17 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                     String queryRoomAndTWeek = "SELECT * FROM KCBC t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"'";
                     PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
-                    ResultSet res2 = pre2.executeQuery();
                     String teachWeek = "";
                     String roomName = "";
-                    while (res2.next()){
-                        teachWeek += res2.getString("STIMEZC")+"|";
-                        roomName = res2.getString("MC");
+                    try {
+                        ResultSet res2 = pre2.executeQuery();
+                        while (res2.next()) {
+                            teachWeek += res2.getString("STIMEZC") + "|";  //暂定已这种方式分割开
+                            roomName = res2.getString("MC");
+                        }
+                    }finally {
+                        if (pre2 != null)
+                            pre2.close();
                     }
 
                     if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师

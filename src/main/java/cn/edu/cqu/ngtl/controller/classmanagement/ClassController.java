@@ -20,6 +20,7 @@ import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
+import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
@@ -79,6 +80,9 @@ public class ClassController extends BaseController {
     @Autowired
     private WorkFlowService workFlowService;
 
+    @Autowired
+    private IUserInfoService userInfoService;
+
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
         UserSession userSession = GlobalVariables.getUserSession();
@@ -104,13 +108,19 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 //        try {
-            User user = (User) getUserSession().retrieveObject("user");
-            infoForm.setUser(user);
-                infoForm.setClassList(
-                        taConverter.classInfoToViewObject(
-                                classInfoService.getAllClassesFilterByUid(user.getCode())
-                        )
-                );
+        User user = (User) getUserSession().retrieveObject("user");
+
+        if(userInfoService.isSysAdmin(user.getCode())||userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isCollegeStaff(user.getCode())||userInfoService.isCourseManager(user.getCode())){
+            infoForm.setCanApprove(true);
+        }else{
+            infoForm.setCanApprove(false);
+        }
+        infoForm.setUser(user);
+        infoForm.setClassList(
+                taConverter.classInfoToViewObject(
+                        classInfoService.getAllClassesFilterByUid(user.getCode())
+                )
+        );
         infoForm.setCheckedClassListAll(false);//刷新页面，全选框不选。
 
             return this.getModelAndView(infoForm, "pageClassList");

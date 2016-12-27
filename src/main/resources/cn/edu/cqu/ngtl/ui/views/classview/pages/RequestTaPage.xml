@@ -325,10 +325,8 @@
                                                                                                                                 <property name="items">
                                                                                                                                     <list>
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                              p:ajaxSubmit="false"
                                                                                                                                               p:actionImagePlacement="LEFT"
                                                                                                                                               p:methodToCall="deleteEvaluationLine"
-                                                                                                                                              p:refreshId="EvaluationTable"
                                                                                                                                               p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>
                                                                                                                                     </list>
                                                                                                                                 </property>

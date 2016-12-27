@@ -31,6 +31,8 @@ public interface IClassInfoService {
 
     List<UTClassInformation> getAllClassesFilterByUid(String uId);
 
+    UTClassInformation getAllClassesFilterByCLassId(String classId);
+
     List<UTClassInformation> getAllClassesFilterByUidAndCondition(String uId, Map<String, String> conditions);
 
     List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId);

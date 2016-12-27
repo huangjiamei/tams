@@ -208,7 +208,7 @@ public class ClassController extends BaseController {
         }
 
         if(result)
-            return this.getModelAndView(infoForm, "pageClassList");
+            return this.getClassListPage(infoForm);
         else  //应当返回错误信息
             infoForm.setErrMsg("审核失败！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -461,8 +461,10 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
-            infoForm.setErrMsg("您已提交申请，无法新增教学日历！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         infoForm.setTeachCalendar(new TAMSTeachCalendar());
@@ -761,9 +763,11 @@ public class ClassController extends BaseController {
         /** calendarid **/
         String teachCalendarId = infoForm.getAllCalendar().get(index).getCode();
 
-        if(classInfoService.getClassApplicationByClassId(classId)!=null){
-            infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId)) {
@@ -901,9 +905,11 @@ public class ClassController extends BaseController {
         TAMSClassTaApplication tamsClassTaApplication =classInfoService.getClassApplicationByClassId(classId);
         if(tamsClassTaApplication!=null){
             infoForm.getApplyViewObject().setAssistantNumber(tamsClassTaApplication.getTaNumber().toString());
-            infoForm.setSubmitted(true);
-        }else {
-            infoForm.setSubmitted(false);
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setSubmitted(true);
+            }else {
+                infoForm.setSubmitted(false);
+            }
         }
         //设置成绩评定方式
         List<TAMSClassEvaluation> tamsClassEvaluation = classInfoService.getClassEvaluationByClassId(classId);
@@ -934,8 +940,10 @@ public class ClassController extends BaseController {
         int index = params.getSelectedLineIndex();
 
         if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
-            infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
-            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
         }
 
         infoForm.getClassEvaluations().remove(index);

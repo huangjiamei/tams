@@ -33,8 +33,7 @@ public class TAMSClassEvaluationDaoJpa implements TAMSClassEvaluationDao {
     @Override
     public boolean insertOneByEntity(TAMSClassEvaluation classEvaluation) {
         try {
-            String id = KradDataServiceLocator.getDataObjectService().save(classEvaluation).getId();
-            return id != null;
+            return KradDataServiceLocator.getDataObjectService().save(classEvaluation).getId()!=null;
         }
         catch (RuntimeException e) {
             e.printStackTrace();
@@ -56,5 +55,10 @@ public class TAMSClassEvaluationDaoJpa implements TAMSClassEvaluationDao {
         );
         return qr.getResults()==null?null:(qr.getResults().size()==0?null:qr.getResults());
 
+    }
+
+    @Override
+    public void deleteByEntity(TAMSClassEvaluation tamsClassEvaluation){
+        KradDataServiceLocator.getDataObjectService().delete(tamsClassEvaluation);
     }
 }

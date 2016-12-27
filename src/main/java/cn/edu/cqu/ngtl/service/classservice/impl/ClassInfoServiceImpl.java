@@ -143,6 +143,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         return studentDao.getUTStudentById(stuId);
     }
 
+
+    @Override
+    public UTClassInformation getAllClassesFilterByCLassId(String classId){
+        return classInfoDao.getOneById(classId);
+    }
+
+
+
     @Override
     public List<UTClassInformation> getAllClassesFilterByUid(String uId) {
 
@@ -363,13 +371,19 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         try {
             //添加课程考核信息
-            classEvaluationDao.deleteAllByClassId(classId);
+            List<TAMSClassEvaluation> currentEvaluation = getClassEvaluationByClassId(classId);
+            if(currentEvaluation!=null){
+                for(TAMSClassEvaluation tamsClassEvaluation:currentEvaluation){
+                    classEvaluationDao.deleteByEntity(tamsClassEvaluation);
+                }
+            }
+//            classEvaluationDao.deleteAllByClassId(classId);
             boolean flag;
             for (TAMSClassEvaluation classEvaluation : classEvaluations) {
                 classEvaluation.setClassId(classId);
                 flag = classEvaluationDao.insertOneByEntity(classEvaluation);
                 if (!flag) {
-                    classEvaluationDao.deleteAllByClassId(classId);
+//                    classEvaluationDao.deleteAllByClassId(classId);
                     return 4;
                 }
             }
@@ -392,7 +406,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             if (classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
                 classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
                 if (isExist != null)
-                    return 2;
+                    if(!classInfoDao.getOneById(isExist.getApplicationClassId()).getStatus().equals("1"))
+                        return 2;
                 //执行到这里既是成功
                 //如果新提交的课程的状态并非初始状态，则返回true，表示已经通过了提交
                 return 7;
@@ -667,7 +682,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         List<TAMSClassEvaluation> copy = new ArrayList<>();
         if(result!=null) {
             for (TAMSClassEvaluation tamsClassEvaluation : result) {
-                copy.add(tamsClassEvaluation);
+                TAMSClassEvaluation copyEntity = new TAMSClassEvaluation();
+                copyEntity.setEvaluationPercent(tamsClassEvaluation.getEvaluationPercent());
+                copyEntity.setEvaluationType(tamsClassEvaluation.getEvaluationType());
+                copy.add(copyEntity);
             }
             return copy;
         }

@@ -13,4 +13,6 @@ public interface TAMSClassEvaluationDao {
     boolean insertOneByEntity(TAMSClassEvaluation classEvaluation);
 
     List<TAMSClassEvaluation> getAllByClassId(String classId);
+
+    void deleteByEntity(TAMSClassEvaluation tamsClassEvaluation);
 }

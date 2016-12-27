@@ -25,7 +25,7 @@ public class departmentFinder extends KeyValuesBase {
             keyValues.add(new ConcreteKeyValue("", ""));
         }
 
-        List<UTDepartment> departments= new UTDepartmentDaoJpa().getAllUTDepartments();
+        List<UTDepartment> departments= new UTDepartmentDaoJpa().getAllHasCourseDepartment();
 
         for(UTDepartment department : departments) {
             keyValues.add(new ConcreteKeyValue(department.getId().toString(), department.getName()));

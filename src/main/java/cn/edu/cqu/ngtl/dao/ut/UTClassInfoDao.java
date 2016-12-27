@@ -12,6 +12,8 @@ public interface UTClassInfoDao {
 
     List<UTClassInformation> getAllCurrentClassInformation();
 
+    List<UTClassInformation> getAllCurrentClassInformationByDeptId(String departmentId);
+
     UTClassInformation getOneById(String id);
 
     List<UTClassInformation> selectBatchByIds(List<Object> classIds);

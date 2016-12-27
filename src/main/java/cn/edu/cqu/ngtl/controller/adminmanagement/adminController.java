@@ -833,7 +833,11 @@ public class adminController extends BaseController {
     }
 
 
-
+    /**
+     * 为课程添加课程负责人
+     * @param form
+     * @return
+     */
     @RequestMapping(params = "methodToCall=selectCourseManagerForCourse")
     public ModelAndView selectCourseManagerForCourse(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;

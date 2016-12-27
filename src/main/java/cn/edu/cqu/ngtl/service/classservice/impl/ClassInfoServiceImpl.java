@@ -8,10 +8,7 @@ import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_MBR_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
-import cn.edu.cqu.ngtl.dataobject.ut.UTStudentTimetable;
+import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
@@ -48,6 +45,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private UTStudentDao studentDao;
+
+    @Autowired
+    private UTInstructorDao utInstructorDao;
 
     @Autowired
     private IUserInfoService userInfoService;
@@ -151,6 +151,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
+
+        else if(userInfoService.isCollegeStaff(uId)){ //部门管理员
+            UTInstructor utInstructor = utInstructorDao.getInstructorByIdWithoutCache(uId);
+            List<UTClassInformation> result = classInfoDao.getAllCurrentClassInformationByDeptId(utInstructor.getDepartmentId().toString());
+            return result;
+        }
         else if (userInfoService.isCourseManager(uId)) {  //默认是课程负责人一定是教师
             //担任课程负责人的课程
             List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);

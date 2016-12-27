@@ -737,6 +737,22 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
+    public Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
+        Integer setTotalPlan = 0;
+        Integer setTotalAssigned = 0;
+        for(DepartmentFundingViewObject per: departmentFundingViewObjects) {
+            setTotalPlan = setTotalPlan + Integer.parseInt(per.getPlanFunding());
+            setTotalAssigned = setTotalAssigned + Integer.parseInt(per.getActualFunding());
+        }
+        if (setTotalPlan > Integer.parseInt(tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding()))
+            return 1;
+        if (setTotalAssigned > Integer.parseInt(tamsUniversityFundingDao.selectCurrBySession().get(0).getActualFunding()))
+            return 2;
+        else
+            return 3;
+    }
+
+    @Override
     public void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
         for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
@@ -772,6 +788,7 @@ public class AdminServiceImpl implements IAdminService {
         for (SessionFundingViewObject per : sessionFundingViewObjects) {
             TAMSUniversityFunding existFunding = tamsUniversityFundingDao.selectCurrBySession().get(0);
             existFunding.setPlanFunding(per.getPlanFunding());
+            existFunding.setActualFunding(per.getActualFunding());
             tamsUniversityFundingDao.insertOneByEntity(existFunding);
         }
     }
@@ -839,7 +856,7 @@ public class AdminServiceImpl implements IAdminService {
         else
             totalPlan = tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding();
 
-        return setted+"("+totalPlan+")";
+        return setted+"/"+totalPlan;
     }
 
 
@@ -851,17 +868,17 @@ public class AdminServiceImpl implements IAdminService {
             setted = setted+Integer.parseInt(deptFunding.getPlanFunding());
         }
 
-        return setted+"("+totalPlan+")";
+        return setted+"/"+totalPlan;
     }
 
     @Override
-    public String getSessionFundingTotalApprove() {
+    public String getSessionFundingTotalApprove(String totalAssigned) {
         List<TAMSDeptFunding> deptFundings = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();
         Long setted = 0l;
         for (TAMSDeptFunding deptFunding : deptFundings) {
             setted = setted+Integer.parseInt(deptFunding.getActualFunding());
         }
-        return setted.toString();
+        return setted.toString() + "/" + totalAssigned;
     }
 
     @Override
@@ -870,7 +887,12 @@ public class AdminServiceImpl implements IAdminService {
         for (DepartmentFundingViewObject departmentFundingViewObject : departmentFundingViewObjects) {
             totalApproved += Integer.parseInt(departmentFundingViewObject.getActualFunding());
         }
-        return totalApproved.toString();
+        String totalAssigned = "";
+        if (tamsUniversityFundingDao.selectCurrBySession() == null || tamsUniversityFundingDao.selectCurrBySession().size() == 0)
+            totalAssigned = "0";
+        else
+            totalAssigned = tamsUniversityFundingDao.selectCurrBySession().get(0).getActualFunding();
+        return totalApproved.toString() + "/" + totalAssigned;
     }
 
     //从学院经费的表查询出各个学院批准的经费，作为课程的总批准经费
@@ -879,7 +901,8 @@ public class AdminServiceImpl implements IAdminService {
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
         TAMSDeptFunding deptFunding;
         if (userInfoService.isSysAdmin(user.getCode()) || userInfoService.isAcademicAffairsStaff(user.getCode()))
-            return this.getSessionFundingTotalApprove();
+            return tamsUniversityFundingDao.selectCurrBySession() != null ?
+                    tamsUniversityFundingDao.selectCurrBySession().get(0).getActualFunding() : "0";
             //二级单位管理员看到该学院的批准经费
         else
             deptFunding = deptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), sessionDao.getCurrentSession().getId());

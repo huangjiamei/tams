@@ -219,7 +219,7 @@
                                                                                                                   value="false"/>
                                                                                                         <property
                                                                                                                 name="layoutManager.expandDetailsActionPrototype">
-                                                                                                            <bean parent="Uif-ExpandDetailsImageAction"/><!--p:style="display:@{#line.taName!=null?'block':'none'}"-->
+                                                                                                            <bean parent="Uif-ExpandDetailsImageAction" p:style="display:@{#line.taName!=null?'block':'none'}"/>
                                                                                                         </property>
 
                                                                                                         <property
@@ -383,25 +383,25 @@
                                                                                                           p:messageText="批次经费"
                                                                                                           p:additionalCssClasses="boxheaderTitle"/>
 
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="|"
-                                                                                                          p:additionalCssClasses="font-teal"/>
+                                                                                                    <!--   <bean parent="Uif-MessageField"
+                                                                                                             p:messageText="|"
+                                                                                                             p:additionalCssClasses="font-teal"/>
 
-                                                                                                 <!--   <bean parent="Uif-Message"
-                                                                                                          p:messageText="已设置/总预算经费："
-                                                                                                          p:style="font-weight:bold;"/>
-                                                                                                    <bean parent="Uif-Message"
-                                                                                                          p:messageText="@{sessionFundingStatistics}"
-                                                                                                          p:additionalCssClasses="label label-info"
-                                                                                                          p:style="font-size:15px;"/>
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="已设置/总预算经费："
+                                                                                                             p:style="font-weight:bold;"/>
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="@{sessionFundingStatistics}"
+                                                                                                             p:additionalCssClasses="label label-info"
+                                                                                                             p:style="font-size:15px;"/>
 
-                                                                                                    <bean parent="Uif-Message"
-                                                                                                          p:messageText="批准经费："
-                                                                                                          p:style="margin-left:20px;font-weight:bold;"/>
-                                                                                                    <bean parent="Uif-Message"
-                                                                                                          p:messageText="@{sessionFundingTotalApproved}"
-                                                                                                          p:additionalCssClasses="label label-success"
-                                                                                                          p:style="font-size:15px;"/>-->
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="批准经费："
+                                                                                                             p:style="margin-left:20px;font-weight:bold;"/>
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="@{sessionFundingTotalApproved}"
+                                                                                                             p:additionalCssClasses="label label-success"
+                                                                                                             p:style="font-size:15px;"/>-->
 
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:style="float: right!important;">
@@ -457,7 +457,7 @@
                                                                                                                       p:label="批次"
                                                                                                                       p:propertyName="sessionName"/>
                                                                                                                 <bean parent="Uif-InputField" p:propertyName="planFunding"
-                                                                                                                      p:readOnly="false" p:label="预算经费">
+                                                                                                                      p:readOnly="false" p:label="预算经费" p:style="display:@{#line.sessionName!=null?'block':'none'}">
                                                                                                                     <property name="validCharactersConstraint">
                                                                                                                         <bean parent="NumericPatternConstraint"/>
                                                                                                                     </property>
@@ -466,10 +466,17 @@
                                                                                                                       p:label="申报经费"
                                                                                                                       p:propertyName="applyFunding"
                                                                                                                       p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
                                                                                                                       p:propertyName="actualFunding"
-                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                      p:readOnly="false"
+                                                                                                                      p:sortAs="numeric"
+                                                                                                                      p:style="display:@{#line.sessionName!=null?'block':'none'}">
+                                                                                                                <property name="validCharactersConstraint">
+                                                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                                                </property>
+                                                                                                                </bean>
+
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="博士津贴"
                                                                                                                       p:propertyName="phdFunding"
@@ -649,7 +656,7 @@
 
 
                                                                                                     <!--柱状图-->
-                                                                                                     <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
+                                                                                                     <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                                                                                          <property name="items">
                                                                                                              <list>
                                                                                                                  <bean parent="Uif-VerticalBoxSection"
@@ -708,7 +715,7 @@
                                                                                                                  </bean>
                                                                                                              </list>
                                                                                                          </property>
-                                                                                                     </bean>
+                                                                                                     </bean>-->
 
                                                                                                 </list>
                                                                                             </property>
@@ -884,7 +891,7 @@
                                                                                                                                   p:propertyName="department"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:propertyName="planFunding"
-                                                                                                                                  p:label="预算经费">
+                                                                                                                                  p:label="预算经费" p:style="display:@{#line.sessionName!=null?'block':'none'}">
                                                                                                                                 <property name="validCharactersConstraint">
                                                                                                                                     <bean parent="NumericPatternConstraint"/>
                                                                                                                                 </property>
@@ -895,6 +902,7 @@
                                                                                                                                   p:sortAs="numeric"/>
                                                                                                                             <bean parent="Uif-InputField"
                                                                                                                                   p:label="批准经费"
+                                                                                                                                  p:style="display:@{#line.sessionName!=null?'block':'none'}"
                                                                                                                                   p:propertyName="actualFunding"
                                                                                                                                   p:sortAs="numeric" p:additionalCssClasses="searchBoxWidth">
                                                                                                                                 <property name="validCharactersConstraint">
@@ -1121,7 +1129,7 @@
                                                                                                                                               p:style="float: right!important;">
                                                                                                                                             <property name="items">
                                                                                                                                                 <list>
-                                                                                                                                                    <!--右上角btnlist-->
+
                                                                                                                                                 </list>
                                                                                                                                             </property>
                                                                                                                                         </bean>
@@ -1136,7 +1144,7 @@
                                                                                                                                               p:style="float: left!important;">
                                                                                                                                             <property name="items">
                                                                                                                                                 <list>
-                                                                                                                                                    <!--左上角btnlist-->
+
                                                                                                                                                 </list>
                                                                                                                                             </property>
                                                                                                                                         </bean>
@@ -1153,11 +1161,11 @@
                                                                                                                                     <list>
                                                                                                                                         <!--table-->
                                                                                                                                         <!--饼状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testPieChart" parent="Uif-VerticalBoxSection"
+                                                                                                                                        <!--<bean id="testPieChart" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
                                                                                                                                                       value="getPieChart('testPieChart','学院经费饼状图','@{pieChartsNameValuePairs}');"/>
-                                                                                                                                        </bean>
+                                                                                                                                        </bean>-->
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>
@@ -1429,6 +1437,7 @@
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
+                                                                                                                      p:style="display:@{#line.department!=null?'block':'none'}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">
@@ -1703,6 +1712,7 @@
                                                                                                                       p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="分配经费"
+                                                                                                                      p:style="display:@{#line.departmentName!=null?'block':'none'}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">

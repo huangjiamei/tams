@@ -1007,40 +1007,52 @@ public class adminController extends BaseController {
         else
             infoForm.setDeptManager(false);
 
+        //显示批次当前批次经费
         infoForm.setSessionFundings(
                 taConverter.sessionFundingToViewObject(
                         adminService.getCurrFundingBySession()
                 )
         );
 
-        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
-                adminService.getSessionFundingStatistics()
-        );
-        infoForm.setSessionFundingTotalApproved(      //已批准经费
-                adminService.getSessionFundingTotalApprove()
-        );
 
+        //显示历史批次经费
         infoForm.setPreviousSessionFundings(
                 taConverter.sessionFundingToViewObject(
                         adminService.getPreviousFundingBySession()
                 )
         );
 
+        //显示当前学期学院经费
         infoForm.setDepartmentCurrFundings(
                 taConverter.departmentFundingToViewObject(
                         adminService.getDepartmentCurrFundingBySession()
                 )
         );
+
+        //显示历史学期学院经费
         infoForm.setDepartmentPreFundings(
                 taConverter.departmentFundingToViewObject(
                         adminService.getDepartmentPreFundingBySession()
                 )
         );
 
+        //显示课程经费
         infoForm.setClassFundings(
                 taConverter.classFundingToViewObject(
                         adminService.getFundingByClass()
                 )
+        );
+
+
+        //学院经费处的预算经费：已设置/总预算
+        infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                adminService.getSessionFundingStatistics()
+        );
+
+        //学院经费处的批准经费：已设置/总批准
+        infoForm.setSessionFundingTotalApproved(      //已批准经费
+                adminService.getSessionFundingTotalApprove(infoForm.getSessionFundings() != null ?
+                        infoForm.getSessionFundings().get(0).getActualFunding() : "0")
         );
 
         /*
@@ -1062,6 +1074,7 @@ public class adminController extends BaseController {
 //                )
 //        );
 
+        //显示助教经费
         infoForm.setTaFunding(
                 adminConverter.taFundingToViewObject(
                         taService.getAllTaFilteredByUid(uId)
@@ -1069,6 +1082,7 @@ public class adminController extends BaseController {
         );
 
 
+        //显示经费明细
         infoForm.setDetailFunding(
                 adminConverter.detailFundingToViewObject(
                         taService.getAllTaFilteredByUid(uId)
@@ -1076,39 +1090,39 @@ public class adminController extends BaseController {
         );
 
 
-        Gson gson = new Gson();
+       // Gson gson = new Gson();
 
         //学院经费饼状图
-        List<PieChartsNameValuePair> list = new ArrayList<>();
-        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
-        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
-                adminService.getDepartmentCurrFundingBySession()
-        );
-        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
-            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
-                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
-            }
-        }
-        else
-            list.add(new PieChartsNameValuePair(null, null));
-        String json = gson.toJson(list);
-        infoForm.setPieChartsNameValuePairs(json);
+//        List<PieChartsNameValuePair> list = new ArrayList<>();
+//        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
+//        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
+//                adminService.getDepartmentCurrFundingBySession()
+//        );
+//        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
+//            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
+//                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
+//            }
+//        }
+//        else
+//            list.add(new PieChartsNameValuePair(null, null));
+//        String json = gson.toJson(list);
+//        infoForm.setPieChartsNameValuePairs(json);
 
         //批次经费柱状图
-        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
-        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
-                adminService.getPreviousFundingBySession()
-        );
-        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
-            for (SessionFundingViewObject per : sessionFundingViewObjects) {
-                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
-            }
-        }
-        else
-            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
-        String histojson = gson.toJson(histogramNameValuePairs);
-
-infoForm.setHistogram(histojson);
+//        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
+//        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
+//                adminService.getPreviousFundingBySession()
+//        );
+//        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
+//            for (SessionFundingViewObject per : sessionFundingViewObjects) {
+//                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
+//            }
+//        }
+//        else
+//            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
+//        String histojson = gson.toJson(histogramNameValuePairs);
+//
+//        infoForm.setHistogram(histojson);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
@@ -1140,7 +1154,7 @@ infoForm.setHistogram(histojson);
             );
 
             infoForm.setSessionFundingTotalApproved(      //已批准经费
-                    adminService.getSessionFundingTotalApprove()
+                    adminService.getSessionFundingTotalApprove(infoForm.getSessionFundings().get(0).getActualFunding())
             );
 
             //将变化体现到批次经费
@@ -1262,17 +1276,28 @@ infoForm.setHistogram(histojson);
         }
         else {
             List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
-            adminService.saveDeptFunding(draftDepartmentFunding);
 
-            infoForm.setSessionFundingStatistics(      //已设置经费/总经费
-                    adminService.getSessionFundingStatistics()
-            );
+            if(adminService.countDeptFunding(draftDepartmentFunding) == 1) {
+                infoForm.setErrMsg("预算经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            if(adminService.countDeptFunding(draftDepartmentFunding) == 2) {
+                infoForm.setErrMsg("批准经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            if(adminService.countDeptFunding(draftDepartmentFunding) == 3) {
+                adminService.saveDeptFunding(draftDepartmentFunding);
 
-            infoForm.setSessionFundingTotalApproved(      //已批准经费
-                    adminService.getSessionFundingTotalApprove(draftDepartmentFunding)
-            );
+                infoForm.setSessionFundingStatistics(      //已设置/总预算
+                        adminService.getSessionFundingStatistics()
+                );
 
+                infoForm.setSessionFundingTotalApproved(      //已批准/总批准
+                        adminService.getSessionFundingTotalApprove(draftDepartmentFunding)
+                );
+            }
             return this.getModelAndView(infoForm, "pageFundsManagement");
+
         }
     }
 

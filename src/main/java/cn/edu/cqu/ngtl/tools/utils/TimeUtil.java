@@ -46,6 +46,9 @@ public class TimeUtil {
         boolean between = false;
         if(timeSettingTypeId != null){
             TAMSTimeSettings timeSettings = new TAMSTimeSettingsDaoJpa().selectByTypeId(timeSettingTypeId);
+			if(timeSettings==null){
+				return false;
+			}
             try {
                 between = this.betweenPeriod(timeSettings.getStartTime(), timeSettings.getEndTime());
             } catch (ParseException e) {
@@ -60,6 +63,9 @@ public class TimeUtil {
 		boolean between = false;
 		if(sessionId != null && timeSettingTypeId != null){
 			TAMSTimeSettings timeSettings = new TAMSTimeSettingsDaoJpa().selectByTypeIdAndSessionId(timeSettingTypeId, sessionId);
+			if(timeSettings==null){
+				return false;
+			}
 			try {
 				between = this.betweenPeriod(timeSettings.getStartTime(), timeSettings.getEndTime());
 			} catch (ParseException e) {

@@ -41,13 +41,19 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
     @Autowired
     private UTDepartmentDao departmentDao;
 
+    //选取所有当先学期学院的草稿经费
+    @Override
+    public List<TAMSDeptFundingDraft> selectAll() {
+        List<TAMSDeptFundingDraft> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSDeptFundingDraft.class).getResults();
+        return list == null ?  null: list;
+    }
     //获取当前学期学院的草稿经费
     @Override
     public List<TAMSDeptFunding> selectDepartmentCurrDraftBySession() {
         List<TAMSDeptFunding> list = new ArrayList<>();
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING_DRAFT t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID ='"+curSession.getId()+"'ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
+        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING_DRAFT t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID ='"+curSession.getId()+"'JOIN UNITIME_DEPARTMENT d ON t.DEPARTMENT_ID = d.UNIQUEID ORDER BY d.CODE ASC");
         List<Object> columns = query.getResultList();
         for (Object column : columns) {
             TAMSDeptFunding deptFunding = new TAMSDeptFunding();
@@ -81,7 +87,7 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
         }
         //若输入框不为空
         //if(countNull != 7) {
-            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING_DRAFT t WHERE t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'");
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING_DRAFT t JOIN UNITIME_DEPARTMENT d ON t.DEPARTMENT_ID = d.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'  ORDER BY d.CODE ASC ");
             List<Object> columns = qr.getResultList();
             for (Object column : columns) {
                 TAMSDeptFunding deptFunding = new TAMSDeptFunding();

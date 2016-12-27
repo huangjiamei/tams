@@ -23,5 +23,7 @@ public interface TAMSDeptFundingDraftDao {
 
     TAMSDeptFundingDraft selectDeptDraftFundsByDeptId(Integer deptId);
 
+    List<TAMSDeptFundingDraft> selectAll();
+
 
 }

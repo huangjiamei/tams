@@ -115,7 +115,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID ='"+curSession.getId()+"' AND t.DEPARTMENT_ID = '"+departmentId+"' ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
+        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID ='"+curSession.getId()+"' AND t.DEPARTMENT_ID = '"+departmentId+"' JOIN UNITIME_DEPARTMENT d ON t.DEPARTMENT_ID = d.UNIQUEID ORDER BY d.CODE ASC");
         List<Object> columns = query.getResultList();
 
         for (Object column : columns) {
@@ -149,7 +149,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID !='"+curSession.getId()+"' AND t.DEPARTMENT_ID LIKE '"+departmentId+"' ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
+        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID=s.UNIQUEID AND t.SESSION_ID !='"+curSession.getId()+"' AND t.DEPARTMENT_ID LIKE '"+departmentId+"' JOIN UNITIME_DEPARTMENT d ON t.DEPARTMENT_ID = d.UNIQUEID ORDER BY s.YEAR DESC ,s.TERM DESC , d.CODE ASC ");
         List<Object> columns = query.getResultList();
 
         for (Object column : columns) {
@@ -280,7 +280,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         }
         //若输入框不为空
         //if(countNull != 7) {
-            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING t WHERE t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'", TAMSDeptFunding.class);
+            Query qr = em.createNativeQuery("SELECT * FROM TAMS_DEPT_FUNDING t JOIN UNITIME_DEPARTMENT d ON t.DEPARTMENT_ID = d.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' AND t.DEPARTMENT_ID LIKE '" + conditions.get("Dept") + "' AND t.PLAN_FUNDING LIKE '" + conditions.get("PlanFunding") + "' AND t.APPLY_FUNDING LIKE '" + conditions.get("ApplyFunding") + "' AND t.ACTUAL_FUNDING LIKE '" + conditions.get("ApprovalFunding") + "' AND t.PHD_FUNDING LIKE '" + conditions.get("PhdFunding") + "' AND t.BONUS LIKE '" + conditions.get("Bonus") + "' AND t.TRAVEL_SUBSIDY LIKE '" + conditions.get("TravelFunding") + "'  ORDER BY d.CODE ASC ", TAMSDeptFunding.class);
             List<TAMSDeptFunding> list = qr.getResultList();
             return list.size() !=0 ? list : null;
         }
@@ -305,7 +305,7 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
                 conditions.put(entry.getKey(), "%");
             }
         }
-        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID = s.UNIQUEID AND t.SESSION_ID != '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("dTimes")+"' AND t.DEPARTMENT_ID LIKE '"+conditions.get("deptId")+"' AND t.PLAN_FUNDING LIKE '"+conditions.get("dPreFunds")+"' AND t.APPLY_FUNDING LIKE '"+conditions.get("dApplyFunds")+"' AND t.ACTUAL_FUNDING LIKE '"+conditions.get("dApprovalFunds")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("dAddingFunds")+"' AND t.BONUS LIKE '"+conditions.get("dRewardFunds")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("dTrafficFunds")+"' ORDER BY s.YEAR DESC ,s.TERM DESC ,t.DEPARTMENT_ID ASC");
+        Query query = em.createNativeQuery("SELECT t.SESSION_ID,t.DEPARTMENT_ID,t.PLAN_FUNDING,t.APPLY_FUNDING,t.ACTUAL_FUNDING,t.PHD_FUNDING,t.BONUS,t.TRAVEL_SUBSIDY,s.YEAR,s.TERM FROM TAMS_DEPT_FUNDING t JOIN UNITIME_SESSION s ON t.SESSION_ID = s.UNIQUEID AND t.SESSION_ID != '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("dTimes")+"' AND t.DEPARTMENT_ID LIKE '"+conditions.get("deptId")+"' AND t.PLAN_FUNDING LIKE '"+conditions.get("dPreFunds")+"' AND t.APPLY_FUNDING LIKE '"+conditions.get("dApplyFunds")+"' AND t.ACTUAL_FUNDING LIKE '"+conditions.get("dApprovalFunds")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("dAddingFunds")+"' AND t.BONUS LIKE '"+conditions.get("dRewardFunds")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("dTrafficFunds")+"' JOIN UNITIME_DEPARTMENT d ON t.DEPARTMENT_ID = d.UNIQUEID  ORDER BY s.YEAR DESC ,s.TERM DESC , d.CODE ASC");
         List<Object> columns = query.getResultList();
         for (Object column : columns) {
             TAMSDeptFunding deptFunding = new TAMSDeptFunding();

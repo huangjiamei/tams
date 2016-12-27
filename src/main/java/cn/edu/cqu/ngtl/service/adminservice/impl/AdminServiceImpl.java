@@ -100,6 +100,10 @@ public class AdminServiceImpl implements IAdminService {
     private TAMSTaDao tamsTaDao;
 
     @Override
+    public List<TAMSDeptFundingDraft> getAllDeptFundingDraft() {
+        return tamsDeptFundingDraftDao.selectAll();
+    }
+    @Override
     public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions) {
         List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
         return tamsCourseManagers;
@@ -737,10 +741,10 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
+    public Integer countDeptFunding(List<TAMSDeptFundingDraft> departmentFundingViewObjects) {
         Integer setTotalPlan = 0;
         Integer setTotalAssigned = 0;
-        for(DepartmentFundingViewObject per: departmentFundingViewObjects) {
+        for(TAMSDeptFundingDraft per: departmentFundingViewObjects) {
             setTotalPlan = setTotalPlan + Integer.parseInt(per.getPlanFunding());
             setTotalAssigned = setTotalAssigned + Integer.parseInt(per.getActualFunding());
         }

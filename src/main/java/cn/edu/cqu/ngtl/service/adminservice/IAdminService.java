@@ -91,7 +91,7 @@ public interface IAdminService {
     //发布学院经费
     Long releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
-    Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
+    Integer countDeptFunding(List<TAMSDeptFundingDraft> departmentFundingViewObjects);
 
     //保存学院经费
     void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
@@ -160,4 +160,6 @@ public interface IAdminService {
     List<UTInstructor> getInstructorByNameAndCode(String Name, String code);
 
     List<TAMSCourseManager> getCourseManagerByUid(String uId);
+
+    List<TAMSDeptFundingDraft> getAllDeptFundingDraft();
 }

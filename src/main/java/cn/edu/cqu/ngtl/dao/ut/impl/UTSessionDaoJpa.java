@@ -10,6 +10,8 @@ import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +27,8 @@ import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 @Repository
 @Component("UTSessionDaoJpa")
 public class UTSessionDaoJpa implements UTSessionDao{
+
+    EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Override
     public UTSession getUTSessionById(Integer id)
@@ -63,9 +67,9 @@ public class UTSessionDaoJpa implements UTSessionDao{
 
     @Override
     public List<UTSession> selectAll() {
-
-        return KRADServiceLocator.getDataObjectService().findAll(UTSession.class).getResults();
-
+        Query query = em.createNativeQuery("SELECT * FROM UNITIME_SESSION s ORDER BY s.YEAR ASC ,s.TERM ASC", UTSession.class );
+        return query.getResultList() != null ? query.getResultList() : null;
+       // List<UTSession> list = KRADServiceLocator.getDataObjectService().findAll(UTSession.class).getResults().;
     }
 
     @Override

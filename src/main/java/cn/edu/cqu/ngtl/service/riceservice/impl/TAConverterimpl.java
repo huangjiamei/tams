@@ -824,10 +824,6 @@ public class TAConverterimpl implements ITAConverter {
             return nullObject;
         }
         List<DepartmentFundingViewObject> viewObjects = new ArrayList<>();
-        if (allFundingBySession == null || allFundingBySession.size() == 0) {
-            viewObjects.add(new DepartmentFundingViewObject());
-            return viewObjects;
-        }
         for (TAMSDeptFunding deptFunding : allFundingBySession) {
             DepartmentFundingViewObject viewObject = new DepartmentFundingViewObject();
             /*

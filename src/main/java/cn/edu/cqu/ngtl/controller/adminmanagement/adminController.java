@@ -1275,8 +1275,7 @@ public class adminController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else {
-            List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
-
+            List<TAMSDeptFundingDraft> draftDepartmentFunding = adminService.getAllDeptFundingDraft();
             if(adminService.countDeptFunding(draftDepartmentFunding) == 1) {
                 infoForm.setErrMsg("预算经费超支！请重新设置");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1285,17 +1284,18 @@ public class adminController extends BaseController {
                 infoForm.setErrMsg("批准经费超支！请重新设置");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
-            if(adminService.countDeptFunding(draftDepartmentFunding) == 3) {
-                adminService.saveDeptFunding(draftDepartmentFunding);
+            //if(adminService.countDeptFunding(draftDepartmentFunding) == 3) {
+            List<DepartmentFundingViewObject> draftDepartmentFundingViewObject = infoForm.getDepartmentCurrFundings();
+                adminService.saveDeptFunding(draftDepartmentFundingViewObject);
 
                 infoForm.setSessionFundingStatistics(      //已设置/总预算
                         adminService.getSessionFundingStatistics()
                 );
 
                 infoForm.setSessionFundingTotalApproved(      //已批准/总批准
-                        adminService.getSessionFundingTotalApprove(draftDepartmentFunding)
+                        adminService.getSessionFundingTotalApprove(draftDepartmentFundingViewObject)
                 );
-            }
+            //}
             return this.getModelAndView(infoForm, "pageFundsManagement");
 
         }
@@ -2289,8 +2289,7 @@ public class adminController extends BaseController {
      * 按条件选取学院历史经费
      */
     @RequestMapping(params = "methodToCall=searchPreDeptFundingByCondition")
-    public ModelAndView searchPreDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form,
-                                                        HttpServletRequest request) {
+    public ModelAndView searchPreDeptFundingByCondition(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 /*

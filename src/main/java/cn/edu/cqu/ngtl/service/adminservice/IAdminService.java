@@ -91,6 +91,8 @@ public interface IAdminService {
     //发布学院经费
     Long releaseDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
+    Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
+
     //保存学院经费
     void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects);
 
@@ -137,7 +139,7 @@ public interface IAdminService {
 
     String getSessionFundingStatistics();
 
-    String getSessionFundingTotalApprove();
+    String getSessionFundingTotalApprove(String totalAssigned);
 
     String getClassTotalAssignedFunding();
 

@@ -383,25 +383,25 @@
                                                                                                           p:messageText="批次经费"
                                                                                                           p:additionalCssClasses="boxheaderTitle"/>
 
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="|"
-                                                                                                          p:additionalCssClasses="font-teal"/>
+                                                                                                    <!--   <bean parent="Uif-MessageField"
+                                                                                                             p:messageText="|"
+                                                                                                             p:additionalCssClasses="font-teal"/>
 
-                                                                                                 <!--   <bean parent="Uif-Message"
-                                                                                                          p:messageText="已设置/总预算经费："
-                                                                                                          p:style="font-weight:bold;"/>
-                                                                                                    <bean parent="Uif-Message"
-                                                                                                          p:messageText="@{sessionFundingStatistics}"
-                                                                                                          p:additionalCssClasses="label label-info"
-                                                                                                          p:style="font-size:15px;"/>
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="已设置/总预算经费："
+                                                                                                             p:style="font-weight:bold;"/>
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="@{sessionFundingStatistics}"
+                                                                                                             p:additionalCssClasses="label label-info"
+                                                                                                             p:style="font-size:15px;"/>
 
-                                                                                                    <bean parent="Uif-Message"
-                                                                                                          p:messageText="批准经费："
-                                                                                                          p:style="margin-left:20px;font-weight:bold;"/>
-                                                                                                    <bean parent="Uif-Message"
-                                                                                                          p:messageText="@{sessionFundingTotalApproved}"
-                                                                                                          p:additionalCssClasses="label label-success"
-                                                                                                          p:style="font-size:15px;"/>-->
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="批准经费："
+                                                                                                             p:style="margin-left:20px;font-weight:bold;"/>
+                                                                                                       <bean parent="Uif-Message"
+                                                                                                             p:messageText="@{sessionFundingTotalApproved}"
+                                                                                                             p:additionalCssClasses="label label-success"
+                                                                                                             p:style="font-size:15px;"/>-->
 
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:style="float: right!important;">
@@ -466,10 +466,17 @@
                                                                                                                       p:label="申报经费"
                                                                                                                       p:propertyName="applyFunding"
                                                                                                                       p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
                                                                                                                       p:propertyName="actualFunding"
-                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                      p:readOnly="false"
+                                                                                                                      p:sortAs="numeric"
+                                                                                                                      p:style="display:@{#line.sessionName!=null?'block':'none'}">
+                                                                                                                <property name="validCharactersConstraint">
+                                                                                                                    <bean parent="NumericPatternConstraint"/>
+                                                                                                                </property>
+                                                                                                                </bean>
+
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="博士津贴"
                                                                                                                       p:propertyName="phdFunding"

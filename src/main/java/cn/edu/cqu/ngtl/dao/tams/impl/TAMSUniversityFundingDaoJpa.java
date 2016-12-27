@@ -55,7 +55,7 @@ public class TAMSUniversityFundingDaoJpa implements TAMSUniversityFundingDao{
         //先添加当前学期的内容
         TAMSUniversityFunding current = new TAMSUniversityFunding();
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-
+        em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         Query qr = em.createNativeQuery("SELECT * FROM TAMS_UNIVERSITY_FUNDING t WHERE t.SESSION_ID = '"+curSession.getId()+"'",TAMSUniversityFunding.class);
         list = qr.getResultList();
         return list.size() != 0 ? list : null;

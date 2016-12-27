@@ -1275,17 +1275,19 @@ public class adminController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else {
-            List<TAMSDeptFundingDraft> draftDepartmentFunding = adminService.getAllDeptFundingDraft();
-            if(adminService.countDeptFunding(draftDepartmentFunding) == 1) {
+            //List<TAMSDeptFundingDraft> draftDepartmentFunding = adminService.getAllDeptFundingDraft();
+            List<DepartmentFundingViewObject> draftDepartmentFundingViewObject = infoForm.getDepartmentCurrFundings();
+
+            if(adminService.countDeptFunding(draftDepartmentFundingViewObject) == 1) {
                 infoForm.setErrMsg("预算经费超支！请重新设置");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
-            if(adminService.countDeptFunding(draftDepartmentFunding) == 2) {
+            if(adminService.countDeptFunding(draftDepartmentFundingViewObject) == 2) {
                 infoForm.setErrMsg("批准经费超支！请重新设置");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
-            //if(adminService.countDeptFunding(draftDepartmentFunding) == 3) {
-            List<DepartmentFundingViewObject> draftDepartmentFundingViewObject = infoForm.getDepartmentCurrFundings();
+
+            if(adminService.countDeptFunding(draftDepartmentFundingViewObject) == 3) {
                 adminService.saveDeptFunding(draftDepartmentFundingViewObject);
 
                 infoForm.setSessionFundingStatistics(      //已设置/总预算
@@ -1295,7 +1297,7 @@ public class adminController extends BaseController {
                 infoForm.setSessionFundingTotalApproved(      //已批准/总批准
                         adminService.getSessionFundingTotalApprove(draftDepartmentFundingViewObject)
                 );
-            //}
+            }
             return this.getModelAndView(infoForm, "pageFundsManagement");
 
         }

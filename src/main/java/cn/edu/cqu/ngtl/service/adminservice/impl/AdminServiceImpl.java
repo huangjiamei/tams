@@ -38,6 +38,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Math.abs;
+
 /**
  * Created by tangjing on 16-10-25.
  */
@@ -741,16 +743,35 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public Integer countDeptFunding(List<TAMSDeptFundingDraft> departmentFundingViewObjects) {
+    public Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        List<Integer> departmentIds = new ArrayList<>();
+        for(DepartmentFundingViewObject per : departmentFundingViewObjects) {
+            Integer departmentId = per.getDepartmentId();
+            departmentIds.add(departmentId);
+        }
+        Integer subSetTotalPlan = 0;
+        Integer subSetTotalAssigned = 0;
+        for(int i=0; i<departmentIds.size(); i++) {
+            Integer data = Integer.parseInt(tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(departmentIds.get(i), curSession.getId()).getPlanFunding());
+            Integer data1 = Integer.parseInt(tamsDeptFundingDraftDao.selectDeptDraftFundsByDeptIdAndSession(departmentIds.get(i), curSession.getId()).getActualFunding());
+            subSetTotalPlan = subSetTotalPlan +
+                    Integer.parseInt(departmentFundingViewObjects.get(i).getPlanFunding()) - data
+            ;
+            subSetTotalAssigned = subSetTotalAssigned +
+                    Integer.parseInt(departmentFundingViewObjects.get(i).getActualFunding()) - data1
+            ;
+        }
         Integer setTotalPlan = 0;
         Integer setTotalAssigned = 0;
-        for(TAMSDeptFundingDraft per: departmentFundingViewObjects) {
-            setTotalPlan = setTotalPlan + Integer.parseInt(per.getPlanFunding());
+        List<TAMSDeptFundingDraft> tamsDeptFundingDraft = tamsDeptFundingDraftDao.selectAll();
+        for(TAMSDeptFundingDraft per : tamsDeptFundingDraft)  {
+            setTotalPlan  = setTotalPlan + Integer.parseInt(per.getPlanFunding());
             setTotalAssigned = setTotalAssigned + Integer.parseInt(per.getActualFunding());
         }
-        if (setTotalPlan > Integer.parseInt(tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding()))
+        if ((setTotalPlan + subSetTotalPlan )> Integer.parseInt(tamsUniversityFundingDao.selectCurrBySession().get(0).getPlanFunding()))
             return 1;
-        if (setTotalAssigned > Integer.parseInt(tamsUniversityFundingDao.selectCurrBySession().get(0).getActualFunding()))
+        if ((setTotalAssigned + subSetTotalAssigned) > Integer.parseInt(tamsUniversityFundingDao.selectCurrBySession().get(0).getActualFunding()))
             return 2;
         else
             return 3;

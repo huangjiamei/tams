@@ -44,7 +44,13 @@ public class TAMSDeptFundingDraftDaoJpa implements TAMSDeptFundingDraftDao {
     //选取所有当先学期学院的草稿经费
     @Override
     public List<TAMSDeptFundingDraft> selectAll() {
-        List<TAMSDeptFundingDraft> list = KradDataServiceLocator.getDataObjectService().findAll(TAMSDeptFundingDraft.class).getResults();
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", curSession.getId())
+                )
+        );
+        List<TAMSDeptFundingDraft> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFundingDraft.class,criteria.build()).getResults();
         return list == null ?  null: list;
     }
     //获取当前学期学院的草稿经费

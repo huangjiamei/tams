@@ -649,7 +649,7 @@
 
 
                                                                                                     <!--柱状图-->
-                                                                                                     <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
+                                                                                                     <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-lg-12 col-md-12">
                                                                                                          <property name="items">
                                                                                                              <list>
                                                                                                                  <bean parent="Uif-VerticalBoxSection"
@@ -708,7 +708,7 @@
                                                                                                                  </bean>
                                                                                                              </list>
                                                                                                          </property>
-                                                                                                     </bean>
+                                                                                                     </bean>-->
 
                                                                                                 </list>
                                                                                             </property>
@@ -1121,7 +1121,7 @@
                                                                                                                                               p:style="float: right!important;">
                                                                                                                                             <property name="items">
                                                                                                                                                 <list>
-                                                                                                                                                    <!--右上角btnlist-->
+
                                                                                                                                                 </list>
                                                                                                                                             </property>
                                                                                                                                         </bean>
@@ -1136,7 +1136,7 @@
                                                                                                                                               p:style="float: left!important;">
                                                                                                                                             <property name="items">
                                                                                                                                                 <list>
-                                                                                                                                                    <!--左上角btnlist-->
+
                                                                                                                                                 </list>
                                                                                                                                             </property>
                                                                                                                                         </bean>
@@ -1153,11 +1153,11 @@
                                                                                                                                     <list>
                                                                                                                                         <!--table-->
                                                                                                                                         <!--饼状图实体，通过js加载内容-->
-                                                                                                                                        <bean id="testPieChart" parent="Uif-VerticalBoxSection"
+                                                                                                                                        <!--<bean id="testPieChart" parent="Uif-VerticalBoxSection"
                                                                                                                                               p:additionalCssClasses="">
                                                                                                                                             <property name="onDocumentReadyScript"
                                                                                                                                                       value="getPieChart('testPieChart','学院经费饼状图','@{pieChartsNameValuePairs}');"/>
-                                                                                                                                        </bean>
+                                                                                                                                        </bean>-->
                                                                                                                                     </list>
                                                                                                                                 </property>
                                                                                                                             </bean>

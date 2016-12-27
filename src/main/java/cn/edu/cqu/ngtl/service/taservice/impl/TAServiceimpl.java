@@ -401,14 +401,15 @@ public class TAServiceimpl implements ITAService {
             if (taDao.insertByEntity(newTa)) {
                 //全局增加博士津贴 start
                 TAMSClassTaApplication currentClass = tamsClassTaApplicationDao.selectByClassId(per.getClassId());
-                Long workHour = Long.valueOf(currentClass.getWorkHour());
-                Long phdSalary = Long.valueOf(phdTA.getHourlyWage());
-                Long masterSalary = Long.valueOf(masterTA.getHourlyWage());
-                String phdFunds = String.valueOf(workHour * (phdSalary-masterSalary));
-                newTa.setPhdFunding(phdFunds); //给助教经费添加phd经费
-                this.addPhdFunds(phdFunds, per.getClassId());  //全局增加phd经费
-                //全局增加博士津贴 end
-
+                if(currentClass!=null) {
+                    Long workHour = Long.valueOf(currentClass.getWorkHour());
+                    Long phdSalary = Long.valueOf(phdTA.getHourlyWage());
+                    Long masterSalary = Long.valueOf(masterTA.getHourlyWage());
+                    String phdFunds = String.valueOf(workHour * (phdSalary-masterSalary));
+                    newTa.setPhdFunding(phdFunds); //给助教经费添加phd经费
+                    this.addPhdFunds(phdFunds, per.getClassId());  //全局增加phd经费
+                    //全局增加博士津贴 end
+                }
                 if (applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
                 } else

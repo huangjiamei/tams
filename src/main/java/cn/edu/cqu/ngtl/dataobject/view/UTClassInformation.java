@@ -103,6 +103,12 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "\"ORDER\"")
     private String order;
 
+    @Column(name = "ROOM_NAME")
+    private String roomName;
+
+    @Column(name = "TEACHING_WEEK")
+    private String teachingWeek;
+
     @Transient
     private String instructorName;
 
@@ -130,7 +136,6 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
         this.limit = limit;
     }
 
-
     public Integer getSessionId() {
         return sessionId;
     }
@@ -138,7 +143,6 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     public void setSessionId(Integer sessionId) {
         this.sessionId = sessionId;
     }
-
 
     public String getClassNumber() {
         return classNumber;
@@ -195,8 +199,6 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     public void setRoomId(Integer roomId) {
         this.roomId = roomId;
     }
-
-
 
     public Integer getDatePatternId() {
         return datePatternId;
@@ -332,5 +334,21 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
 
     public void setOrder(String order) {
         this.order = order;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getTeachingWeek() {
+        return teachingWeek;
+    }
+
+    public void setTeachingWeek(String teachingWeek) {
+        this.teachingWeek = teachingWeek;
     }
 }

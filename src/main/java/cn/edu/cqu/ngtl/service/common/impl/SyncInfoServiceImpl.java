@@ -212,12 +212,25 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String courseType = res.getString("KC_FLAG");
 
                 if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
+
+                    String queryRoomAndTWeek = "SELECT * FROM KCBC t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"'";
+                    PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
+                    ResultSet res2 = pre2.executeQuery();
+                    String teachWeek = "";
+                    String roomName = "";
+                    while (res2.next()){
+                        teachWeek += res2.getString("STIMEZC")+"|";
+                        roomName = res2.getString("MC");
+                    }
+
                     if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
                         classNbrs.add(classNbr);
                         /**
                          * Class对象
                          */
                         UTClass utClass = new UTClass();
+                        utClass.setRoomName(roomName);
+                        utClass.setTeachWeek(teachWeek);
                         utClass.setClassNumber(classNbr);
                         utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
                         utClass.setCourseOfferingId(sessionPrefix+editClassNbr);

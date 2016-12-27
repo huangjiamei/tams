@@ -657,9 +657,12 @@ public class ClassController extends BaseController {
     }
 
 
-
-
-
+    /**
+     * 创建并继续
+     * @param form
+     * @param request
+     * @return
+     */
     @RequestMapping(params = "methodToCall=submitThenContinue")
     public ModelAndView submitThenContinue(@ModelAttribute("KualiForm") UifFormBase form,
                                             HttpServletRequest request) {

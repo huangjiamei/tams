@@ -103,7 +103,6 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "\"ORDER\"")
     private String order;
 
-
     @Transient
     private String instructorName;
 

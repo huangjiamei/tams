@@ -194,14 +194,13 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             pre1.setQueryTimeout(10000);
             ResultSet res1 = pre1.executeQuery();
             while (res1.next()){
-                multiSubpartCourseList.add(res1.getString("USER_KCID"));
+                multiSubpartCourseList.add(res1.getString("USER_KCID"));  //将多教学环节的课程代码加入list
             }
         }finally {
             if (pre1 != null)
                 pre1.close();
         }
 
-        List<String> courseCodeList = new ArrayList<>();
         try {
             pre.setQueryTimeout(10000);
             ResultSet res = pre.executeQuery();
@@ -213,7 +212,6 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String courseType = res.getString("KC_FLAG");
 
                 if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
-                    courseCodeList.add(courseCode);
                     if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
                         classNbrs.add(classNbr);
                         /**

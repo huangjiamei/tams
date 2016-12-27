@@ -66,6 +66,12 @@ public class UTClass extends DataObjectBase implements Serializable {
 	@Column(name = "LIMIT")
 	private Integer limit;
 
+    @Column(name = "ROOM_NAME")
+    private String roomName;
+
+    @Column(name = "TEACHING_WEEK")
+    private String teachWeek;
+
 	@OneToMany
 	@JoinTable(name = "UNITIME_CLASS_INSTRUCTOR", joinColumns = @JoinColumn(name = "CLASS_ID"), inverseJoinColumns = @JoinColumn(name = "INSTRUCTOR_ID"))
 	@OrderBy("id")
@@ -218,5 +224,21 @@ public class UTClass extends DataObjectBase implements Serializable {
 
     public void setEvaluations(List<TAMSClassEvaluation> evaluations) {
         this.evaluations = evaluations;
+    }
+
+    public String getRoomName() {
+        return roomName;
+    }
+
+    public void setRoomName(String roomName) {
+        this.roomName = roomName;
+    }
+
+    public String getTeachWeek() {
+        return teachWeek;
+    }
+
+    public void setTeachWeek(String teachWeek) {
+        this.teachWeek = teachWeek;
     }
 }

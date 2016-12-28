@@ -188,7 +188,7 @@
 
 																<!--table-->
 																<bean id="UserRoleManagerTable" parent="Uif-Disclosure-TableCollectionSection"
-																	  p:onDocumentReadyScript="refreshTableFilter(userRoleManagerFields,UserRoleManagerTable);">
+																	  p:onDocumentReadyScript="refreshTableFilter(userRoleManagerFields,UserRoleManagerTable);tableHeightSet('UserRoleManagerTable');">
 																	<property name="collectionObjectClass"
 																			  value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor" />
 																	<property name="propertyName" value="URMutInstructors" />

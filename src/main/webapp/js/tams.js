@@ -1061,3 +1061,31 @@ function addPointer(id){
 //     }
 // }
 
+//给table设置高度值
+function tableHeightSet(id){
+    var tableListLength=jQuery("#"+id).find('tbody').find('tr').length;
+    if(tableListLength<6){
+        jQuery("#"+id).css("height",400);
+    }
+}
+
+//交通补贴弹框
+function travelSubsidyDialog(){
+    var listLength=jQuery('#FundsManagerAssistantTable tbody>tr').length;
+        for(var i=0;i<listLength;i++){
+            jQuery('#FundsManagerAssistantTable').on('click', 'tbody>tr:eq('+i+')>td:eq(8)', function (e) {
+                var targetid = FundsManagerAssistantTable;
+                var id = e.target.id;
+                var patt = new RegExp(".*line[0-9]+.*");
+                if (typeof(id) == "undefined" || id == "" || !patt.test(id))
+                    id = jQuery(e.target).children("*[id*='line']")[0].id;
+                var index = id.match("line[0-9]+")[0].match('[0-9]+');
+
+                document.getElementById('trafficIndex_control').value = index;
+
+                jQuery("#trafficButton").click();//通过按钮弹框，index得到行下标值
+
+                showDialog('confirmTrafficDialog');//后台弹框，此句不要
+            });
+    }
+}

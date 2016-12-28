@@ -58,7 +58,7 @@
 
                 <!--user info-->
                 <bean id="userInfo" parent="Uif-DropdownToggleMenu"
-                      p:iconClass="icon-user" p:style="float:right!important"><!--p:toggleText="@{user.getName()}"-->
+                      p:iconClass="icon-user" p:style="float:right!important">
                     <property name="menuItems">
                         <list>
                             <bean parent="Uif-VerticalBoxSection"
@@ -75,7 +75,7 @@
                                                     <bean id="userDeptName" parent="Uif-MessageField" p:messageText="@{user.getDepartment()}"/>
 
                                                     <bean parent="Uif-MessageField"
-                                                          p:style="font-size:16px" p:messageText="@{user.getName()}"/><!--p:messageText="@{user.getTag()}"-->
+                                                          p:style="font-size:16px" p:messageText="@{user.getName()}"/>
                                                 </list>
                                             </property>
                                         </bean>

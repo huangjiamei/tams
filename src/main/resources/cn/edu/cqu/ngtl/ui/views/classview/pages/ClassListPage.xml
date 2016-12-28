@@ -317,7 +317,7 @@
 
                                                                 <bean id="ClassListPageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable');getClassDetailPage();addPointer('ClassListPageTable');">
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable');getClassDetailPage();addPointer('ClassListPageTable');tableHeightSet('ClassListPageTable');">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>

@@ -218,6 +218,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String tBonus;
     private String tTotalFunds;
 
+    private String indexFundsManagerAssistantTable;
+
     /**
      * 经费管理页面————经费明细，过滤器的输入框
      * @return
@@ -1604,5 +1606,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setInstructorList(List<UTInstructor> instructorList) {
         this.instructorList = instructorList;
+    }
+
+    public String getIndexFundsManagerAssistantTable() {
+        return indexFundsManagerAssistantTable;
+    }
+
+    public void setIndexFundsManagerAssistantTable(String indexFundsManagerAssistantTable) {
+        this.indexFundsManagerAssistantTable = indexFundsManagerAssistantTable;
     }
 }

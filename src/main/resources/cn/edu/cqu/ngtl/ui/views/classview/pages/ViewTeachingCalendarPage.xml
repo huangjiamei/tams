@@ -115,13 +115,13 @@
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="getTeachingCalendar"
-                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
+                                                                                  p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="更新"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:navigateToPageId="pageViewTeachingCalendar"
-                                                                                  p:additionalCssClasses="icon-repeat bg-success tamsbtn">
+                                                                                  p:additionalCssClasses="icon-repeat bg-success box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

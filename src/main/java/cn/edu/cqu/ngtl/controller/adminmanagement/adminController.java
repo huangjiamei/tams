@@ -5,7 +5,6 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
-import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
@@ -26,6 +25,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import com.itextpdf.text.DocumentException;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -846,6 +846,38 @@ public class adminController extends BaseController {
         ));
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
+
+    /**
+     * 将课程负责人表格打印为PDF
+     * @param form
+     * @return
+     *
+     */
+    @RequestMapping(params = {"pageId=pageCourseManager","methodToCall=exportCourseManagerPDF"})
+    public ModelAndView exportCourseManagerPDF(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getCourseManagerViewObjects() == null || infoForm.getCourseManagerViewObjects().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getCourseManagerViewObjects().get(0).getId() == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+        List<CourseManagerViewObject> courseManagerViewObjectList=infoForm.getCourseManagerViewObjects();
+
+        String filePath=adminService.prepareCourseManagerToPDF(courseManagerViewObjectList );
+        if (filePath.equals("exception")){
+            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else{
+            String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+'/'+filePath);
+        }
+
+    }
+
+
 
 
     /**

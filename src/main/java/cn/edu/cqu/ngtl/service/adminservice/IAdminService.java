@@ -162,4 +162,6 @@ public interface IAdminService {
     List<TAMSCourseManager> getCourseManagerByUid(String uId);
 
     List<TAMSDeptFundingDraft> getAllDeptFundingDraft();
+
+    String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList);
 }

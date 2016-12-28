@@ -18,9 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
-import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
-import static org.kuali.rice.core.api.criteria.PredicateFactory.like;
+import static org.kuali.rice.core.api.criteria.PredicateFactory.*;
 
 @Repository
 @Component("UTInstructorDaoJpa")
@@ -155,4 +153,5 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 	public UTInstructor getInstructorByIdWithoutCache(String Id) {
 		return KradDataServiceLocator.getDataObjectService().find(UTInstructor.class, Id);
 	}
+
 }

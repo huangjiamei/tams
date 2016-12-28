@@ -102,7 +102,6 @@
 
                                                                 <bean parent="Uif-MessageField"
                                                                       p:messageText="|"
-                                                                      p:render="@{#form.academicAffairManager}"
                                                                       p:additionalCssClasses="font-teal"/>
 
                                                                 <bean parent="Uif-Message"
@@ -176,6 +175,7 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
+                                                                                              p:render="@{#line.travelTime==null?false:true}"
                                                                                               p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                             <property name="confirmationDialog">
                                                                                                 <ref bean="deleteTransAllowanceDialog" />

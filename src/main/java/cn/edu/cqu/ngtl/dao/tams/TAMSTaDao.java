@@ -68,4 +68,6 @@ public interface TAMSTaDao {
     String countHiredTa(String classId);
     void deleteOneByEntity(TAMSTa tamsTa);
     TAMSTa selectByClassIdAndSessionId(String classId, String sessionId);
+
+    TAMSTa selectByStudentIdAndClassIdAndSessionId(String stuId, String classId, String sessionId);
 }

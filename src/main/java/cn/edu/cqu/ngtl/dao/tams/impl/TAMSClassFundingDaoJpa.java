@@ -183,7 +183,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
             }
 
             String sql = conditions.substring(0,conditions.length()-1);
-            Query query = em.createNativeQuery("SELECT * FROM TAMS_CLASS_FUNDING t WHERE t.CLASS_ID in ("+sql+")",TAMSClassFunding.class);
+            Query query = em.createNativeQuery("SELECT * FROM TAMS_CLASS_FUNDING t WHERE t.SESSION_ID = '"+currentSession.getId()+"' AND t.CLASS_ID in ("+sql+")",TAMSClassFunding.class);
             List<TAMSClassFunding> list = query.getResultList();
             for (TAMSClassFunding per : list) {
                 per.setClassInformation(

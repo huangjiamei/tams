@@ -61,6 +61,8 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String travelNote;
     private String curClassId;
     private String travelTimeD;
+    private String totalTravelSubsidy;
+
     /**
      * 任务相关
      */
@@ -499,5 +501,13 @@ public class TaInfoForm extends BaseForm implements Serializable {
 
     public void setCanApprise(boolean canApprise) {
         this.canApprise = canApprise;
+    }
+
+    public String getTotalTravelSubsidy() {
+        return totalTravelSubsidy;
+    }
+
+    public void setTotalTravelSubsidy(String totalTravelSubsidy) {
+        this.totalTravelSubsidy = totalTravelSubsidy;
     }
 }

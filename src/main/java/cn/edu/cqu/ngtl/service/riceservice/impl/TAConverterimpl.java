@@ -105,6 +105,9 @@ public class TAConverterimpl implements ITAConverter {
     @Autowired
     private TAMSTaDao tamsTaDao;
 
+    @Autowired
+    private TAMSClassFundingDraftDao tamsClassFundingDraftDao;
+
     @Override
     public List<ClassTeacherViewObject> classInfoToViewObject(List<UTClassInformation> informationlist) {
         if (informationlist == null || informationlist.isEmpty()) {
@@ -1262,6 +1265,7 @@ public class TAConverterimpl implements ITAConverter {
         return totalsetted+"/"+totalAssignedFunding;
     }
 
+    /*
     @Override
     public String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings) {
         if (classFundings == null || classFundings.isEmpty())
@@ -1274,6 +1278,18 @@ public class TAConverterimpl implements ITAConverter {
                 totalApproved += Long.parseLong(classFunding.getAssignedFunding());
         }
 
+        return totalApproved.toString();
+    }
+    */
+    @Override
+    public String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings) {
+        if (classFundings == null || classFundings.isEmpty())
+            return "0";
+        Long totalApproved = 0l;
+        List<TAMSClassFunding> tamsClassFundings = tamsClassFundingDraftDao.selectAll();
+        for(TAMSClassFunding per : tamsClassFundings){
+            totalApproved = totalApproved + Long.parseLong(per.getAssignedFunding());
+        }
         return totalApproved.toString();
     }
 

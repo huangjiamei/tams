@@ -660,6 +660,22 @@ public class TAServiceimpl implements ITAService {
         else
             return false;
     }
+
+    //提交交通补贴
+    @Override
+    public void countTravelSubsidy(String stuId, String classId, String totalTravelSubsidy) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        TAMSTa tamsTa = tamstadao.selectByStudentIdAndClassIdAndSessionId(stuId, classId, curSession.getId().toString());
+        if(tamsTa != null) {
+            String traveSubsidyTa = tamsTa.getTravelSubsidy();
+            Integer sumTa = Integer.parseInt(traveSubsidyTa);
+            sumTa = sumTa + Integer.parseInt(totalTravelSubsidy);
+            tamsTa.setTravelSubsidy(sumTa.toString());
+            tamstadao.insertByEntity(tamsTa);
+        }
+    }
+
+/*
     //交通补贴
     @Override
     public void countTravelSubsidy(String stuId, String classId, String option) {
@@ -703,12 +719,6 @@ public class TAServiceimpl implements ITAService {
             tamsClassFundingDraft.setTravelSubsidy(sumClassDraft.toString());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
         }
-        /*List<TAMSTa> tamsTas = tamstadao.selectByClassId(classId);
-        for(TAMSTa per : tamsTas) {
-            sumClass = sumClass + Integer.parseInt(per.getTravelSubsidy());
-            sumClassDraft = sumClassDraft + Integer.parseInt(per.getTravelSubsidy());
-        }
-        */
 
         //改变学院交通补贴
         TAMSDeptFunding tamsDeptFunding = tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(
@@ -750,6 +760,7 @@ public class TAServiceimpl implements ITAService {
         }
 
     }
+*/
 
     /**
      * 各表体现博士津贴的变化

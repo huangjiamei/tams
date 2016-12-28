@@ -489,6 +489,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public List<TAMSDeptFunding> getDepartmentPreFundingBySession() {
 
+        //DAO里面直接通过根据不同的角色传deptId的值来区别学院管理员和学校管理员的显示
         return deptFundingDao.selectDepartmentPreBySession();
     }
 
@@ -748,6 +749,7 @@ public class AdminServiceImpl implements IAdminService {
         return true;
     }
 
+    //计算学院经费
     @Override
     public Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
@@ -756,6 +758,7 @@ public class AdminServiceImpl implements IAdminService {
             Integer departmentId = per.getDepartmentId();
             departmentIds.add(departmentId);
         }
+        //差值
         Integer subSetTotalPlan = 0;
         Integer subSetTotalAssigned = 0;
         for(int i=0; i<departmentIds.size(); i++) {
@@ -768,6 +771,7 @@ public class AdminServiceImpl implements IAdminService {
                     Integer.parseInt(departmentFundingViewObjects.get(i).getActualFunding()) - data1
             ;
         }
+        //原来的值
         Integer setTotalPlan = 0;
         Integer setTotalAssigned = 0;
         List<TAMSDeptFundingDraft> tamsDeptFundingDraft = tamsDeptFundingDraftDao.selectAll();
@@ -781,6 +785,36 @@ public class AdminServiceImpl implements IAdminService {
             return 2;
         else
             return 3;
+    }
+
+    //计算课程经费
+    @Override
+    public Integer countClassFunding (List<ClassFundingViewObject> classFundingViewObjects, String totalAssignedClass) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        List<String> classIds = new ArrayList<>();
+        for(ClassFundingViewObject per : classFundingViewObjects) {
+            String classId = per.getClassId();
+            classIds.add(classId);
+        }
+        //差值
+        Integer subSetTotalAssigned = 0;
+        for(int i=0; i<classIds.size(); i++){
+            Integer data = Integer.parseInt(tamsClassFundingDraftDao.selectOneByClassIdAndSessionId(classIds.get(i), curSession.getId().toString()).getAssignedFunding());
+            subSetTotalAssigned = subSetTotalAssigned +
+                    Integer.parseInt(classFundingViewObjects.get(i).getAssignedFunding()) - data;
+        }
+        //原来的值
+        Integer setTotalAssigned = 0;
+        List<TAMSClassFunding> tamsClassFundings = tamsClassFundingDraftDao.selectAll();
+        for(TAMSClassFunding per : tamsClassFundings) {
+            setTotalAssigned = setTotalAssigned + Integer.parseInt(per.getAssignedFunding());
+        }
+
+        if((setTotalAssigned + subSetTotalAssigned) > Integer.parseInt(totalAssignedClass))
+            return 1;
+        else
+            return 2;
+
     }
 
     @Override

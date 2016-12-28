@@ -1305,14 +1305,21 @@ public class adminController extends BaseController {
         }
         else {
             List<ClassFundingViewObject> draftClassFunding = infoForm.getClassFundings();
-            adminService.saveClassFunding(draftClassFunding);
-            infoForm.setClassFundingStatistics(
-                    taConverter.countClassFunding(
-                            infoForm.getClassFundings(),
-                            adminService.getClassTotalAssignedFunding(),
-                            taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
-                    )
-            );
+            String totalAssignedClass = adminService.getClassTotalAssignedFunding();
+            if(adminService.countClassFunding(draftClassFunding, totalAssignedClass) == 1) {
+                infoForm.setErrMsg("课程经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            if(adminService.countClassFunding(draftClassFunding, totalAssignedClass) == 2) {
+                adminService.saveClassFunding(draftClassFunding);
+                infoForm.setClassFundingStatistics(
+                        taConverter.countClassFunding(
+                                infoForm.getClassFundings(),
+                                adminService.getClassTotalAssignedFunding(),
+                                taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
+                        )
+                );
+            }
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }
     }

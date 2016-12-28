@@ -45,6 +45,8 @@ import java.util.*;
 @RequestMapping("/ta")
 public class TaController extends BaseController {
 
+    private static final Integer ONE_TRAVEL_SUBSIDY = 10;
+
     @Autowired
     private ITAConverter taConverter;
 
@@ -65,7 +67,6 @@ public class TaController extends BaseController {
 
     @Autowired
     private IUserInfoService userInfoService;
-
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
@@ -685,8 +686,8 @@ public class TaController extends BaseController {
      */
     @RequestMapping(params = "methodToCall=getTransAllowancePage")
     public ModelAndView getTransAllowancePage(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
-
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(taInfoForm, true);
         int index = params.getSelectedLineIndex();
@@ -696,7 +697,17 @@ public class TaController extends BaseController {
         String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
         List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,classId);
         taInfoForm.setCurClassId(classId);
-        taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
+        //显示总的交通补贴
+        if(tamsTaTravelSubsidies == null || tamsTaTravelSubsidies.size() == 0) {
+            List<TAMSTaTravelSubsidy> nullObject = new ArrayList<>();
+            nullObject.add(new TAMSTaTravelSubsidy());
+            taInfoForm.setTravelSubsidies(nullObject);
+            taInfoForm.setTotalTravelSubsidy("0");
+        }
+        else {
+            taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
+            taInfoForm.setTotalTravelSubsidy(String.valueOf(tamsTaTravelSubsidies.size() * ONE_TRAVEL_SUBSIDY));
+        }
         String tamstaId = taService.getTamsTaIdByStuIdAndClassId(taId,classId);
         if(tamstaId!=null)
             taInfoForm.setTaUniqueId(tamstaId);
@@ -720,7 +731,8 @@ public class TaController extends BaseController {
 
     @RequestMapping(params = "methodToCall=submitTravelRecord")
     public ModelAndView submitTravelRecord(@ModelAttribute("KualiForm") UifFormBase form) {
-        TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
         String travelTime = taInfoForm.getTravelTimeD();
         String travelNote = taInfoForm.getTravelNote();
         TAMSTaTravelSubsidy tamsTaTravelSubsidy = new TAMSTaTravelSubsidy();
@@ -730,6 +742,17 @@ public class TaController extends BaseController {
 
         String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
 
+        String totalTravelSubsidy = taInfoForm.getTotalTravelSubsidy();
+        if(taService.isTravelSubsidy(taId, taInfoForm.getCurClassId())) {
+            taService.saveTravelSubsidy(tamsTaTravelSubsidy);
+            Integer totalTS = Integer.parseInt(totalTravelSubsidy) + ONE_TRAVEL_SUBSIDY;
+            taInfoForm.setTotalTravelSubsidy(totalTS.toString());
+        }
+        else{
+            taInfoForm.setErrMsg("课程和助教位于同一个校区！不能申请交通补贴！");
+            return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+        }
+        /*
         if(taService.saveTravelSubsidy(tamsTaTravelSubsidy)){
             if(taService.isTravelSubsidy(taId, taInfoForm.getCurClassId()))
                 taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "add");
@@ -738,12 +761,37 @@ public class TaController extends BaseController {
                 return this.showDialog("refreshPageViewDialog", true, taInfoForm);
             }
         }
+        */
 
         List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,taInfoForm.getCurClassId());
         taInfoForm.setTravelSubsidies(tamsTaTravelSubsidies);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");
     }
 
+
+    /**
+     * 提交最终往返记录
+     */
+    @RequestMapping(params = "methodToCall=submitTotalTravelRecord")
+    public ModelAndView submitTotalTravelRecord(@ModelAttribute("KualiForm") UifFormBase form) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+
+        //直接全部提交
+        List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taInfoForm.getTravelSubsidies();
+
+        String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
+        if(tamsTaTravelSubsidies == null || tamsTaTravelSubsidies.size() == 0){
+            taInfoForm.setErrMsg("请先添加往返记录再提交交通补助申请！");
+            return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+        }
+        else {
+            Integer totalTravelSubsidy = tamsTaTravelSubsidies.size() * ONE_TRAVEL_SUBSIDY;
+            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), totalTravelSubsidy.toString());
+        }
+
+        return this.getModelAndView(taInfoForm, "pageTransAllowance");
+    }
 
     /**
      * 删除往返记录
@@ -758,11 +806,10 @@ public class TaController extends BaseController {
         int index = params.getSelectedLineIndex();
         TAMSTaTravelSubsidy tamsTaTravelSubsidy = taInfoForm.getTravelSubsidies().get(index);
 
-        String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
-
-        if(taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy)) {
-            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "sub");
-        }
+        String totalTravelSubsidy = taInfoForm.getTotalTravelSubsidy();
+        taService.deleteTravelSubsidyByEntity(tamsTaTravelSubsidy);
+        Integer totalTS = Integer.parseInt(totalTravelSubsidy) - ONE_TRAVEL_SUBSIDY;
+        taInfoForm.setTotalTravelSubsidy(totalTS.toString());
 
         taInfoForm.getTravelSubsidies().remove(index);
         return this.getModelAndView(taInfoForm, "pageTransAllowance");

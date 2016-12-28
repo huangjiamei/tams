@@ -163,5 +163,7 @@ public interface IAdminService {
 
     List<TAMSDeptFundingDraft> getAllDeptFundingDraft();
 
+    Integer countClassFunding (List<ClassFundingViewObject> classFundingViewObjects, String totalAssignedClass);
+
     String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList);
 }

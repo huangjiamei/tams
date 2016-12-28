@@ -1681,6 +1681,8 @@
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tCourseCode"/>
                                                                                                                 <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="tClassNbr"/>
+                                                                                                                <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tAssignedFunds" p:additionalCssClasses="searchBoxWidth"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tPhdFunds" p:additionalCssClasses="searchBoxWidth"/>

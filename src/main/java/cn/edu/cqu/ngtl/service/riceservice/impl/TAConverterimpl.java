@@ -36,8 +36,6 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -798,8 +796,14 @@ public class TAConverterimpl implements ITAConverter {
                     }
                 }
             }
+
             viewObject.setApplyFunding(classFunding.getApplyFunding());
-            viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+
+
+            if(classFunding.getAssignedFunding().equals("0")) //如果为0则设置一个默认值
+                viewObject.setAssignedFunding(classFunding.getApplyFunding());
+            else
+                viewObject.setAssignedFunding(classFunding.getAssignedFunding());
             viewObject.setPhdFunding(classFunding.getPhdFunding());
             viewObject.setBonus(classFunding.getBonus());
             viewObject.setTravelSubsidy(classFunding.getTravelSubsidy());
@@ -1033,7 +1037,7 @@ public class TAConverterimpl implements ITAConverter {
     @Override
     public String countCalendarTotalBudget(List<TeachCalendarViewObject> allCalendar) {
         Integer count = 0;
-        NumberFormat nf = new DecimalFormat(",###.00元");
+//        NumberFormat nf = new DecimalFormat(",###.00元");
         if (allCalendar == null || allCalendar.size() == 0)
             return count.toString();
         else
@@ -1042,14 +1046,16 @@ public class TAConverterimpl implements ITAConverter {
                     Integer budget = Integer.valueOf(calendar.getBudget());
                     count += budget;
 
-                    calendar.setBudget(nf.format(budget));
+//                    calendar.setBudget(nf.format(budget));
+                    calendar.setBudget(budget.toString());
                 } catch (NumberFormatException e) {
                     count += 0;
                 } finally {
                     // do nothing
                 }
             }
-        return nf.format(count);
+//        return nf.format(count);
+        return count.toString();
     }
 
     @Override

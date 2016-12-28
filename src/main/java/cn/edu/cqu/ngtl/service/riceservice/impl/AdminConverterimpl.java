@@ -1,15 +1,13 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
-import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
-import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
+import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
@@ -43,6 +41,9 @@ public class AdminConverterimpl implements IAdminConverter {
     private UTInstructorDao utInstructorDao;
     @Autowired
     private UTCourseDao utCourseDao;
+    @Autowired
+    private UTClassInfoDao utClassInfoDao;
+
 
     @Override
     public List<CourseManagerViewObject> getCourseManagerToTableViewObject(List<TAMSCourseManager> tamsCourseManagerList) {
@@ -61,25 +62,32 @@ public class AdminConverterimpl implements IAdminConverter {
             System.out.println(System.currentTimeMillis());
         }
 
-        List<CourseManagerViewObject> courseManagerViewObjectList = new ArrayList(tamsCourseManagerList.size());
-        for (TAMSCourseManager tamsCourseManager : tamsCourseManagerList) {
-//            UTCourse utCourse = new UTCourseDaoJpa().selectOneById(tamsCourseManager.getCourseId());
-//            if(utCourse!=null) {
-            CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
-            courseManagerViewObject.setCourseId(tamsCourseManager.getCourseId().toString());
-            courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
-            courseManagerViewObject.setCourseNm(courseNameIdMap.get(tamsCourseManager.getCourseId().toString()) == null ? "" :(String) courseNameIdMap.get(tamsCourseManager.getCourseId().toString()));
-            courseManagerViewObject.setCourseNmb(courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()) == null ? "" :(String) courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()));
-
-            if (tamsCourseManager.getCourseManagerId() != null) {
-                courseManagerViewObject.setCourseManager(insNameMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
-                courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()));
-            } else {
-                courseManagerViewObject.setCourseManager(null);
-                courseManagerViewObject.setInstructorCode(null);
+        List<String> curSessionCourseIds = new ArrayList<>();
+        List<UTClassInformation> curSessionClassInformation = utClassInfoDao.getAllCurrentClassInformation();
+        if(curSessionClassInformation!=null){
+            for(UTClassInformation utClassInformation:curSessionClassInformation){
+                curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
             }
-            courseManagerViewObjectList.add(courseManagerViewObject);
-//            }
+        }
+
+        List<CourseManagerViewObject> courseManagerViewObjectList = new ArrayList(tamsCourseManagerList.size());
+        for (TAMSCourseManager tamsCourseManager : tamsCourseManagerList) { //只显示本学期开课的课程
+            if(curSessionCourseIds.contains(tamsCourseManager.getCourseId())) {
+                CourseManagerViewObject courseManagerViewObject = new CourseManagerViewObject();
+                courseManagerViewObject.setCourseId(tamsCourseManager.getCourseId().toString());
+                courseManagerViewObject.setId(tamsCourseManager.getCourseManagerId());
+                courseManagerViewObject.setCourseNm(courseNameIdMap.get(tamsCourseManager.getCourseId().toString()) == null ? "" :(String) courseNameIdMap.get(tamsCourseManager.getCourseId().toString()));
+                courseManagerViewObject.setCourseNmb(courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()) == null ? "" :(String) courseNbrIdMap.get(tamsCourseManager.getCourseId().toString()));
+
+                if (tamsCourseManager.getCourseManagerId() != null) {
+                    courseManagerViewObject.setCourseManager(insNameMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insNameMap.get(tamsCourseManager.getCourseManagerId().toString()));
+                    courseManagerViewObject.setInstructorCode(insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()) == null ? "" :(String) insCodeMap.get(tamsCourseManager.getCourseManagerId().toString()));
+                } else {
+                    courseManagerViewObject.setCourseManager(null);
+                    courseManagerViewObject.setInstructorCode(null);
+                }
+                courseManagerViewObjectList.add(courseManagerViewObject);
+            }
         }
 
         return courseManagerViewObjectList;

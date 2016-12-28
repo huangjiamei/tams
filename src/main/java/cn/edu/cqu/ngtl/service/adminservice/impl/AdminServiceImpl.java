@@ -6,20 +6,16 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_MBR_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_PRNCPL_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
-import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
-import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
-import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
-import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
-import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
@@ -30,15 +26,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.Math.abs;
 
 /**
  * Created by tangjing on 16-10-25.
@@ -100,6 +93,8 @@ public class AdminServiceImpl implements IAdminService {
     private KRIM_PRNCPL_T_DaoJpa krim_prncpl_t_dao;
     @Autowired
     private TAMSTaDao tamsTaDao;
+    @Autowired
+    private UTClassInfoDao utClassInfoDao;
 
     @Override
     public List<TAMSDeptFundingDraft> getAllDeptFundingDraft() {
@@ -940,21 +935,34 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public boolean initCourseManagerData() {
-        boolean result = false;
         int i = 0;
-        List<UTCourse> needManagerCourse = utCourseDao.getAllNeedManagerCourse();
-        if (needManagerCourse != null) {
-            for (UTCourse utCourse : needManagerCourse) {
+
+        List<String> curCourseMangerCourseId = new ArrayList<>();
+        List<String> curSessionCourseIds = new ArrayList<>();
+        List<UTClassInformation> curSessionClassInformation = utClassInfoDao.getAllCurrentClassInformation();
+
+        if(curSessionClassInformation!=null){
+            for(UTClassInformation utClassInformation:curSessionClassInformation){
+                curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
+            }
+        }
+        List<TAMSCourseManager> allCourseManager = tamsCourseManagerDao.getAllCourseManager();
+        if(allCourseManager!=null){
+            for(TAMSCourseManager tamsCourseManager:allCourseManager){
+                curCourseMangerCourseId.add(tamsCourseManager.getCourseId());
+            }
+
+        }
+        for(String needToAdd:curSessionCourseIds) {
+            if(!curCourseMangerCourseId.contains(needToAdd)) {
                 TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
-                tamsCourseManager.setCourseId(utCourse.getId().toString());
+                tamsCourseManager.setCourseId(needToAdd);
                 tamsCourseManager.setCourseManagerId(null);
                 tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
-                System.out.println(i++);
             }
             return true;
         }
-        return result;
-
+        return false;
     }
 
     @Override
@@ -1033,14 +1041,41 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public List<TAMSCourseManager> getCourseManagerByUid(String uId){
+        /*
+         本学期开课课程
+         */
+        List<String> curSessionCourseIds = new ArrayList<>();
+        List<UTClassInformation> curSessionClassInformation = utClassInfoDao.getAllCurrentClassInformation();
+        if(curSessionClassInformation!=null){
+            for(UTClassInformation utClassInformation:curSessionClassInformation){
+                curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
+            }
+        }
+
+        List<TAMSCourseManager> result = new ArrayList<>();
+        /*
+            只显示本学期开课的课程
+         */
         if(iUserInfoService.isSysAdmin(uId)||iUserInfoService.isAcademicAffairsStaff(uId)){
-            return tamsCourseManagerDao.getAllCourseManager();
+            List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.getAllCourseManager();
+            for(TAMSCourseManager tamsCourseManager:tamsCourseManagers){
+                if(curSessionCourseIds.contains(tamsCourseManager.getCourseId())){
+                    result.add(tamsCourseManager);
+                }
+            }
+            return result;
         }
         if(iUserInfoService.isCollegeStaff(uId)){
             UTInstructor utInstructor = utInstructorDao.getInstructorByIdWithoutCache(uId);
             if(utInstructor!=null){
                 String departmentId = utInstructor.getDepartmentId().toString();
-                return tamsCourseManagerDao.getCourseManagerByDeptId(departmentId);
+                List<TAMSCourseManager> tamsCourseManagers =  tamsCourseManagerDao.getCourseManagerByDeptId(departmentId);
+                for(TAMSCourseManager tamsCourseManager:tamsCourseManagers){
+                    if(curSessionCourseIds.contains(tamsCourseManager.getCourseId())){
+                        result.add(tamsCourseManager);
+                    }
+                }
+                return result;
             }
             return null;
         }

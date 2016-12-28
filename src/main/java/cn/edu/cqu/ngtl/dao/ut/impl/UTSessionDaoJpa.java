@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.dao.ut.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
@@ -67,7 +66,7 @@ public class UTSessionDaoJpa implements UTSessionDao{
 
     @Override
     public List<UTSession> selectAll() {
-        Query query = em.createNativeQuery("SELECT * FROM UNITIME_SESSION s ORDER BY s.YEAR ASC ,s.TERM ASC", UTSession.class );
+        Query query = em.createNativeQuery("SELECT * FROM UNITIME_SESSION s ORDER BY s.YEAR DESC ,s.TERM DESC", UTSession.class );
         return query.getResultList() != null ? query.getResultList() : null;
        // List<UTSession> list = KRADServiceLocator.getDataObjectService().findAll(UTSession.class).getResults().;
     }

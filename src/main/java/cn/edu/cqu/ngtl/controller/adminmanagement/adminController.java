@@ -2625,7 +2625,6 @@ public class adminController extends BaseController {
             List<TAMSTaTravelSubsidy> result = tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
             adminInfoForm.setTravelSubsidies(result);
         }
-
         return this.showDialog("confirmTrafficDialog",true,adminInfoForm);
     }
 

@@ -997,7 +997,7 @@ public class ClassController extends BaseController {
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         String totalTime = infoForm.getTotalElapsedTime();
-        String totalBudget = infoForm.getTotalBudget();
+        String totalBudget = infoForm.getTotalBudget().replace(",",""); //去掉钱里面的逗号
         short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations,totalTime,totalBudget);
         if(result == 1) {
             infoForm.setErrMsg("不在教师申请助教期间!");

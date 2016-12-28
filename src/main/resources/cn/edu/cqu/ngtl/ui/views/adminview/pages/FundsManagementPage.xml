@@ -850,7 +850,7 @@
                                                                                                                 </bean>
                                                                                                                 <bean id="FundsManagerDepartmentTable"
                                                                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable);tableHeightSet('FundsManagerDepartmentTable');'}">
+                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'}">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
                                                                                                                             value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>

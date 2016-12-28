@@ -589,7 +589,7 @@ table.uif-tableCollectionLayout th {
     border-left:120px #BDBABD solid;/*左边框宽度等于表格第一行第一格宽度*/
     position:relative;/*让里面的两个子容器绝对定位*/
 }
-b{font-style:normal;display:block;position:absolute;top:-550px;left:-50px;width:50px;}
+b{font-style:normal;display:block;position:absolute;top:-50px;left:-50px;width:50px;}
 em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width:60px;}
 
 

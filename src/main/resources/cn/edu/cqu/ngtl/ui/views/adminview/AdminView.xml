@@ -57,7 +57,6 @@
         </property>
         <property name="additionalScriptFiles">
             <list>
-                <value>js/jquery.dataTables.min.js</value>
                 <value>js/highcharts/highcharts.js</value>
                 <value>js/highcharts/modules/exporting.js</value>
                 <value>js/highcharts/modules/data.js</value>
@@ -65,6 +64,7 @@
                 <value>js/fullcalendar.js</value>
                 <value>js/daterangepicker.js</value>
                 <value>js/json2.js</value>
+                <value>js/jquery.dataTables.min.js</value>
                 <value>js/tams.js</value>
             </list>
         </property>

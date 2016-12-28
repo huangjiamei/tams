@@ -658,7 +658,14 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private CourseManagerViewObject selectedCourseManagerObject;
     private Integer courseManagerIndex;
     private List<UTInstructor> instructorList;
+    private List<UTInstructor> instructorExcelList;
+    public List<UTInstructor> getInstructorExcelList() {
+        return instructorExcelList;
+    }
 
+    public void setInstructorExcelList(List<UTInstructor> instructorExcelList) {
+        this.instructorExcelList = instructorExcelList;
+    }
 
     /**
      * 页面错误信息

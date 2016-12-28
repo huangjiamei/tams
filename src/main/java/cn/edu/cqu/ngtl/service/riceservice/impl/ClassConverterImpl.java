@@ -74,11 +74,12 @@ public class ClassConverterImpl implements IClassConverter {
 
     //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
     @Override
-    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid) {
+    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid,String phoneNbr) {
 
         TAMSTaApplication tamsTaApplication = new TAMSTaApplication();
         tamsTaApplication.setApplicationClassId(classid);
         tamsTaApplication.setApplicationId(application.getTaIdNumber());
+        tamsTaApplication.setPhoneNbr(phoneNbr);
         //tamsTaApplication.setApplicationStatus("1");
         //tamsTaApplication.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
         return tamsTaApplication;

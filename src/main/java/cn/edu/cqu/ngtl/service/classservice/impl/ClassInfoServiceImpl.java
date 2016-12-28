@@ -696,7 +696,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public boolean canEmployByClassId(String classId){
         String maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1").toString();
         UTClassInformation utClassInformation = classInfoDao.getOneById(classId);
-        if(utClassInformation!=null){
+        if(utClassInformation==null){
             return false;
         }
         if(utClassInformation.getStatus().equals(maxOrder)){  //最终状态才可以聘用

@@ -993,24 +993,6 @@
                                                                                                                                                 <bean parent="Uif-DropdownControl"/>
                                                                                                                                             </property>
                                                                                                                                         </bean>
-                                                                                                                                        <!--<bean parent="Uif-InputField"-->
-                                                                                                                                              <!--p:propertyName="deptId"-->
-                                                                                                                                              <!--p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())}">-->
-                                                                                                                                            <!--<property-->
-                                                                                                                                                    <!--name="control">-->
-                                                                                                                                                <!--<bean parent="Uif-DropdownControl">-->
-                                                                                                                                                    <!--<property-->
-                                                                                                                                                            <!--name="options">-->
-                                                                                                                                                        <!--<list>-->
-                                                                                                                                                            <!--<bean parent="Uif-KeyLabelPair"-->
-                                                                                                                                                                  <!--p:key="@{user.getDepartmentId()}"-->
-                                                                                                                                                                  <!--p:value="@{user.getDepartment()}"/>-->
-                                                                                                                                                        <!--</list>-->
-                                                                                                                                                    <!--</property>-->
-                                                                                                                                                <!--</bean>-->
-                                                                                                                                            <!--</property>-->
-                                                                                                                                        <!--</bean>-->
-
 
                                                                                                                                         <!--文字搜索-->
                                                                                                                                         <bean parent="Uif-InputField"

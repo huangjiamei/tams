@@ -529,7 +529,7 @@ body{
 .table-condensed > thead > tr > td,
 .table-condensed > tbody > tr > td,
 .table-condensed > tfoot > tr > td {
-    padding: 9px;
+    padding: 8px;
 }
 
 table.uif-tableCollectionLayout {
@@ -589,7 +589,7 @@ table.uif-tableCollectionLayout th {
     border-left:120px #BDBABD solid;/*左边框宽度等于表格第一行第一格宽度*/
     position:relative;/*让里面的两个子容器绝对定位*/
 }
-b{font-style:normal;display:block;position:absolute;top:-550px;left:-50px;width:50px;}
+b{font-style:normal;display:block;position:absolute;top:-50px;left:-50px;width:50px;}
 em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width:60px;}
 
 
@@ -845,7 +845,7 @@ td.selected{
     color: white!important;
     border-radius: 5px;
     padding: 4px;
-    margin-top:7px;
+    margin-top:5px;
     width: 25px;
     height: 25px;
 }
@@ -962,7 +962,17 @@ td.selected{
     margin: auto;
 }
 
+/*菜单栏底部背景色为白色*/
 .navigationDialog .modal-footer{
     border:none;
     background-color: rgba(255, 255, 255, 0.15);
+}
+
+/*编辑课程负责人的dialog。table行间距变小*/
+#searchCourseManagerList .table-condensed > tbody > tr > td{
+    padding:2px;
+}
+
+#searchTaApplicantList .table-condensed > tbody > tr > td{
+    padding:2px;
 }

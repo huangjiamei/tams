@@ -867,7 +867,6 @@ function clickButton(id,buttonId){
             var key = e.which;
             if(key == 13){
                 e.preventDefault();
-                localStorage.clear();
                 jQuery("#"+buttonId).click();
             }
         }

@@ -193,8 +193,10 @@
                                                                                     <!--p:confirmationPromptText="Are you sure you wish to delete line: @{#line.field4}?"/>-->
                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                           p:methodToCall="updateCourseManager"
+                                                                                          p:render="@{#line.courseNm==null? false:true}"
                                                                                           p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
                                                                                     <bean parent="Uif-PrimaryActionButton"
+                                                                                          p:render="@{#line.courseNm==null? false:true}"
                                                                                           p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
                                                                                         <property name="confirmationDialog">
                                                                                             <ref bean="confirmDeleteManagerDialog" />
@@ -291,6 +293,7 @@
                                 <list>
                                     <bean parent="Uif-PrimaryActionButton"
                                           p:actionImagePlacement="LEFT"
+                                          p:render="@{#line.code==null? false:true}"
                                           p:methodToCall="selectCourseManagerForCourse"
                                           p:refreshId="CourseManagerTable"
                                           p:successCallback="jQuery('#dismissButtonId').click();"

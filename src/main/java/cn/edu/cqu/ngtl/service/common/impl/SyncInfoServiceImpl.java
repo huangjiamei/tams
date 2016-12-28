@@ -220,7 +220,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     try {
                         ResultSet res2 = pre2.executeQuery();
                         while (res2.next()) {
-                            teachWeek += res2.getString("STIMEZC") + "|";  //暂定已这种方式分割开
+                            teachWeek += res2.getString("ANALYSE") + ",";  //暂定已这种方式分割开
                             roomName = res2.getString("MC");
                         }
                     }finally {

@@ -10,7 +10,6 @@ import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
 import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
-import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
@@ -21,22 +20,25 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
+import com.itextpdf.text.DocumentException;
 import org.apache.log4j.Logger;
-import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
 /**
  * Created by tangjing on 16-10-25.
@@ -99,6 +101,9 @@ public class AdminServiceImpl implements IAdminService {
     @Autowired
     private TAMSTaDao tamsTaDao;
 
+    @Autowired
+    IPDFService PDFService;
+
     @Override
     public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions) {
         List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
@@ -115,7 +120,7 @@ public class AdminServiceImpl implements IAdminService {
     //课程经费过滤
     @Override
     public List<ClassFundingViewObject> getClassFundByCondition(Map<String, String> conditions) {
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
          */
         if (userInfoService.isAcademicAffairsStaff(user.getCode()) || userInfoService.isSysAdmin(user.getCode())) {
@@ -449,7 +454,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public List<TAMSDeptFunding> getDepartmentCurrFundingBySession() {
 
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
 
         /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
          */
@@ -461,7 +466,7 @@ public class AdminServiceImpl implements IAdminService {
 
     //学院当前经费过滤
     public List<TAMSDeptFunding> getDeptFundCurrByCondition(Map<String, String> conditions) {
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
 
         /**如果是教务处管理员或者系统管理员则显示过滤后草稿表的内容，在下拉框里显示发布的数据
          */
@@ -556,7 +561,7 @@ public class AdminServiceImpl implements IAdminService {
     public List<TAMSClassFunding> getFundingByClass() {
 
 
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
 
         /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据
          */
@@ -876,7 +881,7 @@ public class AdminServiceImpl implements IAdminService {
     //从学院经费的表查询出各个学院批准的经费，作为课程的总批准经费
     @Override
     public String getClassTotalAssignedFunding() {
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         TAMSDeptFunding deptFunding;
         if (userInfoService.isSysAdmin(user.getCode()) || userInfoService.isAcademicAffairsStaff(user.getCode()))
             return this.getSessionFundingTotalApprove();
@@ -997,6 +1002,41 @@ public class AdminServiceImpl implements IAdminService {
             return null;
         }
         return null;
+    }
+
+    /**
+     *封装的方法，用于获取导出的PDF文件的文件路径
+     * @param courseManagerViewObjectList 传入的参数
+     * @return filePath                   返回的PDF文件路径
+     */
+    @Override
+    public String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "课程管理人员列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"课程名称", "课程代码", "课程负责人", "职工号"};
+            List<String[]> Content = new ArrayList(courseManagerViewObjectList.size());
+            for(CourseManagerViewObject courseMVOList : courseManagerViewObjectList) {
+                String courseName = courseMVOList.getCourseNm() == null ? "" : courseMVOList.getCourseNm();
+                String courseNmb = courseMVOList.getCourseNmb() == null ? "" : courseMVOList.getCourseNmb();
+                String courseManager = courseMVOList.getCourseManager() == null ? "" : courseMVOList.getCourseManager();
+                String InstructorCode = courseMVOList.getInstructorCode() == null ? "" : courseMVOList.getInstructorCode();
+                String[] content = {
+                        courseName, courseNmb, courseManager, InstructorCode
+                };
+                Content.add(content);
+            }
+            filePath = PDFService.printNormalTable("课程信息列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+//            e.printStackTrace();
+//            infoForm.setErrMsg("系统导出PDF文件错误！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
     }
 
 }

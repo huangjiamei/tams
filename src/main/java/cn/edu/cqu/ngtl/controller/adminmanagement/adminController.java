@@ -25,7 +25,6 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
-import com.itextpdf.text.DocumentException;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -42,7 +41,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -806,7 +804,7 @@ public class adminController extends BaseController {
     }
 
     /**
-     * 将表格打印为PDF，整体可用，各列具体参数还需修改
+     * 将课程负责人表格打印为PDF
      * @param form
      * @return
      *
@@ -822,35 +820,17 @@ public class adminController extends BaseController {
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
-
         List<CourseManagerViewObject> courseManagerViewObjectList=infoForm.getCourseManagerViewObjects();
 
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String fileName = "课程管理人员列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
-        String filePath = "";
-        try{
-            String[] header = {"课程名称", "课程代码", "课程负责人", "职工号"};
-            List<String[]> Content = new ArrayList(courseManagerViewObjectList.size());
-            for(CourseManagerViewObject courseMVOList : courseManagerViewObjectList) {
-                String courseName = courseMVOList.getCourseNm() == null ? "" : courseMVOList.getCourseNm();
-                String courseNmb = courseMVOList.getCourseNmb() == null ? "" : courseMVOList.getCourseNmb();
-                String courseManager = courseMVOList.getCourseManager() == null ? "" : courseMVOList.getCourseManager();
-                String InstructorCode = courseMVOList.getInstructorCode() == null ? "" : courseMVOList.getInstructorCode();
-                String[] content = {
-                        courseName, courseNmb, courseManager, InstructorCode
-                };
-                Content.add(content);
-            }
-            filePath = PDFService.printNormalTable("课程信息列表", header, Content, fileName);
-
-        }catch(DocumentException | IOException e){
-            e.printStackTrace();
-            infoForm.setErrMsg("系统导出PDF文件错误！");
+        String filePath=adminService.prepareCourseManagerToPDF(courseManagerViewObjectList );
+        if (filePath.equals("exception")){
+            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else{
+            String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+'/'+filePath);
         }
-        String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
 
-        return this.performRedirect(infoForm,baseUrl+'/'+filePath);
     }
 
 

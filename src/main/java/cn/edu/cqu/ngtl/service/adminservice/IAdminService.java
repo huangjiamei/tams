@@ -158,4 +158,6 @@ public interface IAdminService {
     List<UTInstructor> getInstructorByNameAndCode(String Name, String code);
 
     List<TAMSCourseManager> getCourseManagerByUid(String uId);
+
+    String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList);
 }

@@ -110,6 +110,10 @@
                                                                               p:methodToCall=""
                                                                               p:additionalCssClasses="icon-list bg-orange box-btngroup"/>
                                                                         <bean parent="Uif-PrimaryActionButton"
+                                                                              p:actionLabel="PDF"
+                                                                              p:methodToCall="exportCourseManagerPDF"
+                                                                              p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                        <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="初始化课程负责人"
                                                                               p:methodToCall="initCourseManager"
                                                                               p:additionalCssClasses="icon-list bg-teal box-btngroup"/>

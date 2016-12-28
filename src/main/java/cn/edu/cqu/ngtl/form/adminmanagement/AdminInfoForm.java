@@ -660,6 +660,16 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private List<UTInstructor> instructorList;
 
 
+    public List<UTInstructor> getInstructorList() {
+        return instructorList;
+    }
+    public void setInstructorList(List<UTInstructor> instructorList) {
+        this.instructorList = instructorList;
+    }
+
+
+
+
     /**
      * 页面错误信息
      */
@@ -1598,11 +1608,5 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.deptManager = deptManager;
     }
 
-    public List<UTInstructor> getInstructorList() {
-        return instructorList;
-    }
 
-    public void setInstructorList(List<UTInstructor> instructorList) {
-        this.instructorList = instructorList;
-    }
 }

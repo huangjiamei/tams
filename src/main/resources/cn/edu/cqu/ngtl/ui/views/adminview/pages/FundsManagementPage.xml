@@ -1777,11 +1777,11 @@
         </property>
     </bean>
 
-    <bean id="confirmTrafficDialog" parent="Uif-DialogGroup"
-          p:headerText="交通" p:resetDataOnRefresh="true" p:retrieveViaAjax="true" >
+    <bean id="confirmTrafficDialog" parent="Uif-DialogGroup" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="headerText" value="交通"/>
+        <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="啦啦啦啦啦啦"/>
                 <!--table-->
                 <bean  parent="Uif-Disclosure-TableCollectionSection">
                     <property name="collectionObjectClass"
@@ -1811,9 +1811,11 @@
         </property>
         <property name="footer.items">
             <list>
-          <!--      <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST" />-->
+
+                <!--<bean parent="Uif-PrimaryActionButton" p:actionLabel="确认"-->
+                      <!--p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST"/>-->
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+
             </list>
         </property>
     </bean>

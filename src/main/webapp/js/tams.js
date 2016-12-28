@@ -1084,7 +1084,6 @@ function travelSubsidyDialog(){
 
                 jQuery("#trafficButton").click();//通过按钮弹框，index得到行下标值
 
-                showDialog('confirmTrafficDialog');//后台弹框，此句不要
             });
     }
 }

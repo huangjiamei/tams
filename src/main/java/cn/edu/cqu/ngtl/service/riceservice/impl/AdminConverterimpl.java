@@ -112,6 +112,7 @@ public class AdminConverterimpl implements IAdminConverter {
                     if (course != null) {
                         taFundingViewObject.setCourseName(course.getName());
                         taFundingViewObject.setCourseCode(course.getCodeR());
+                        taFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
                         taFundingViewObject.setDepartmentName(course.getDepartment().getName());
                     }
                 }
@@ -167,6 +168,7 @@ public class AdminConverterimpl implements IAdminConverter {
                     if (course != null) {
                         detailFundingViewObject.setCourseName(course.getName());
                         detailFundingViewObject.setCourseCode(course.getCodeR());
+                        detailFundingViewObject.setClassNbr(ta.getTaClass().getClassNumber());
                     }
                 }
             }

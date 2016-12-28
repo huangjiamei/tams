@@ -212,6 +212,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String tType;
     private String tCourseName;
     private String tCourseCode;
+    private String tClassNbr;
     private String tAssignedFunds;
     private String tPhdFunds;
     private String tTrafficFunds;
@@ -1630,5 +1631,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setTravelSubsidies(List<TAMSTaTravelSubsidy> travelSubsidies) {
         this.travelSubsidies = travelSubsidies;
+    }
+
+    public String gettClassNbr() {
+        return tClassNbr;
+    }
+
+    public void settClassNbr(String tClassNbr) {
+        this.tClassNbr = tClassNbr;
     }
 }

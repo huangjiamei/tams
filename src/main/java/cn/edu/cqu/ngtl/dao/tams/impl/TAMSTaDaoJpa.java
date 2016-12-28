@@ -386,13 +386,15 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
             else if(entry.getKey() == "CourseCode" )
                 conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getKey() == "ClassNbr" )
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
         }
 
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         List<TaFundingViewObject> list = new ArrayList<>();
         em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         //if(countNull != 12) {
-            Query qr = em.createNativeQuery(" SELECT d.NAME, s.UNIQUEID, s.NAME, co.NAME, co.CODE, tc.NAME, t.ASSIGNED_FUNDING, t.PHD_FUNDING, t.TRAVEL_SUBSIDY, t.BONUS, t.TA_CLASS, i.NAME from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("Number")+"' AND s.NAME LIKE '"+conditions.get("Name")+"' AND t.ASSIGNED_FUNDING LIKE '"+conditions.get("AssignedFunding")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("PhdFunding")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' AND t.BONUS LIKE '"+conditions.get("Bonus")+"' JOIN TAMS_TA_CATEGORY tc ON t.TA_TYPE = tc.UNIQUEID AND tc.NAME LIKE '"+conditions.get("Type")+"' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("CourseName")+"' AND co.CODE LIKE '"+conditions.get("CourseCode")+"' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID AND d.UNIQUEID LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS_INSTRUCTOR ci ON t.TA_CLASS = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.UNIQUEID LIKE '"+conditions.get("user")+"' ");
+            Query qr = em.createNativeQuery(" SELECT d.NAME, s.UNIQUEID, s.NAME, co.NAME, co.CODE, tc.NAME, t.ASSIGNED_FUNDING, t.PHD_FUNDING, t.TRAVEL_SUBSIDY, t.BONUS, t.TA_CLASS, i.NAME cl. CLASS_NBR FROM TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '"+curSession.getId()+"' AND s.UNIQUEID LIKE '"+conditions.get("Number")+"' AND s.NAME LIKE '"+conditions.get("Name")+"' AND t.ASSIGNED_FUNDING LIKE '"+conditions.get("AssignedFunding")+"' AND t.PHD_FUNDING LIKE '"+conditions.get("PhdFunding")+"' AND t.TRAVEL_SUBSIDY LIKE '"+conditions.get("TravelFunding")+"' AND t.BONUS LIKE '"+conditions.get("Bonus")+"' JOIN TAMS_TA_CATEGORY tc ON t.TA_TYPE = tc.UNIQUEID AND tc.NAME LIKE '"+conditions.get("Type")+"' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '"+conditions.get("CourseName")+"' AND co.CODE LIKE '"+conditions.get("CourseCode")+"' AND cl.CLASS_NBR = '"+conditions.get("ClassNbr")+"' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID AND d.UNIQUEID LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS_INSTRUCTOR ci ON t.TA_CLASS = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.UNIQUEID LIKE '"+conditions.get("user")+"' ");
             List<Object> columns = qr.getResultList();
             for(Object column : columns) {
                 Object[] tafunding = (Object[]) column;
@@ -409,6 +411,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 taFundingViewObject.setBonus(tafunding[9].toString() == null ? "0" : tafunding[9].toString());
                 taFundingViewObject.setClassNbr(tafunding[10].toString()); //converter中会用到
                 taFundingViewObject.setInstrucotrName(tafunding[11].toString());
+                taFundingViewObject.setClassNbr(tafunding[12].toString());
                 list.add(taFundingViewObject);
             }
             return list.size() != 0 ? list : null;
@@ -464,12 +467,14 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
             else if(entry.getKey() == "CourseCode")
                 conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+            else if(entry.getKey() == "ClassNbr" )
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
         }
         //若输入不为空，查询
         List<Object> columns = new ArrayList<>();
         //if(countNull != 21) {
             if (curSession.getTerm().equals("春")) {
-                Query qr = em.createNativeQuery("SELECT s.UNIQUEID, s.NAME, s.ID_NUMBER, co.NAME, co.CODE, t.MONTH_3, t.MONTH_4, t.MONTH_5, t.MONTH_6, t.MONTH_7, t.MONTH_8, t.TA_CLASS, i.NAME from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' AND s.UNIQUEID LIKE '" + conditions.get("Number") + "' AND s.NAME LIKE '" + conditions.get("Name") + "' AND s.ID_NUMBER LIKE '" + conditions.get("IdCard") + "' AND t.MONTH_3 LIKE '" + conditions.get("month3") + "' AND t.MONTH_4 LIKE '" + conditions.get("month4") + "' AND t.MONTH_5 LIKE '" + conditions.get("month5") + "' AND t.MONTH_6 LIKE '" + conditions.get("month6") + "' AND t.MONTH_7 LIKE '" + conditions.get("month7") + "' AND t.MONTH_8 LIKE '" + conditions.get("month8") + "'  JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID  JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '" + conditions.get("CourseName") + "' AND co.CODE LIKE '" + conditions.get("CourseCode") + "' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID AND d.NAME LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS_INSTRUCTOR ci ON t.TA_CLASS = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.UNIQUEID LIKE '"+conditions.get("user")+"' ");
+                Query qr = em.createNativeQuery("SELECT s.UNIQUEID, s.NAME, s.ID_NUMBER, co.NAME, co.CODE, t.MONTH_3, t.MONTH_4, t.MONTH_5, t.MONTH_6, t.MONTH_7, t.MONTH_8, t.TA_CLASS, i.NAME,cl.CLASS_NBR from TAMS_TA t JOIN UNITIME_STUDENT s ON t.TA_ID = s.UNIQUEID AND t.SESSION_ID = '" + curSession.getId() + "' AND s.UNIQUEID LIKE '" + conditions.get("Number") + "' AND s.NAME LIKE '" + conditions.get("Name") + "' AND s.ID_NUMBER LIKE '" + conditions.get("IdCard") + "' AND t.MONTH_3 LIKE '" + conditions.get("month3") + "' AND t.MONTH_4 LIKE '" + conditions.get("month4") + "' AND t.MONTH_5 LIKE '" + conditions.get("month5") + "' AND t.MONTH_6 LIKE '" + conditions.get("month6") + "' AND t.MONTH_7 LIKE '" + conditions.get("month7") + "' AND t.MONTH_8 LIKE '" + conditions.get("month8") + "'  JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID  JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID AND co.NAME LIKE '" + conditions.get("CourseName") + "' AND co.CODE LIKE '" + conditions.get("CourseCode") +"' AND cl.CLASS_NBR = '"+conditions.get("ClassNbr")+ "' JOIN UNITIME_DEPARTMENT d ON co.DEPARTMENT_ID = d.UNIQUEID AND d.NAME LIKE '"+conditions.get("dept")+"' JOIN UNITIME_CLASS_INSTRUCTOR ci ON t.TA_CLASS = ci.CLASS_ID JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID = i.UNIQUEID AND i.UNIQUEID LIKE '"+conditions.get("user")+"' ");
                 columns = qr.getResultList();
                 for(Object column : columns) {
                     Object[] detailFunding = (Object[]) column;
@@ -489,6 +494,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                     detailFundingViewObject.setMonthlySalary8(detailFunding[10].toString());
                     detailFundingViewObject.setClassNbr(detailFunding[11].toString()); //converter中使用
                     detailFundingViewObject.setInstructorName(detailFunding[12].toString());
+                    detailFundingViewObject.setClassNbr(detailFunding[13].toString());
                     int total = (
                             Integer.parseInt(detailFunding[5].toString()) + Integer.parseInt(detailFunding[6].toString()) +
                                     Integer.parseInt(detailFunding[7].toString()) + Integer.parseInt(detailFunding[8].toString()) +

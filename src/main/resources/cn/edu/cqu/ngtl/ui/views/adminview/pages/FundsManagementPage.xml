@@ -282,6 +282,9 @@
                                                                                                                       p:label="课程代码"
                                                                                                                       p:propertyName="courseCode"/>
                                                                                                                 <bean parent="Uif-DataField"
+                                                                                                                      p:label="教学班号"
+                                                                                                                      p:propertyName="classNbr"/>
+                                                                                                                <bean parent="Uif-DataField"
                                                                                                                       p:label="1月实发"
                                                                                                                       p:propertyName="monthlySalary1"
                                                                                                                       p:sortAs="numeric" p:render="@{#form.FallTerm}"/>
@@ -1757,6 +1760,9 @@
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="课程代码"
                                                                                                                       p:propertyName="courseCode"/>
+                                                                                                                <bean parent="Uif-DataField"
+                                                                                                                      p:label="教学班号"
+                                                                                                                      p:propertyName="classNbr"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="分配经费"
                                                                                                                       p:style="display:@{#line.departmentName!=null?'block':'none'}"

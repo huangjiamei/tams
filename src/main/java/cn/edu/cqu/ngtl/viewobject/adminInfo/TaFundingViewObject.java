@@ -18,6 +18,7 @@ public class TaFundingViewObject {
     private String taType;
 
     private String classNbr; //converter中会用到
+
     private String instrucotrName;
 
     private String courseName;

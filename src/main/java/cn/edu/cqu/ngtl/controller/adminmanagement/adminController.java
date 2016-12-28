@@ -1578,6 +1578,7 @@ public class adminController extends BaseController {
         conditions.put("Type", infoForm.gettType());
         conditions.put("CourseName", infoForm.gettCourseName());
         conditions.put("CourseCode", infoForm.gettCourseCode());
+        conditions.put("ClassNbr", infoForm.gettClassNbr());
         conditions.put("AssignedFunding", infoForm.gettAssignedFunds());
         conditions.put("PhdFunding", infoForm.gettPhdFunds());
         conditions.put("TravelFunding", infoForm.gettTrafficFunds());
@@ -1656,6 +1657,7 @@ public class adminController extends BaseController {
         conditions.put("IdCard", infoForm.getDetailsIDCard());
         conditions.put("CourseName", infoForm.getDetailsCourseName());
         conditions.put("CourseCode", infoForm.getDetailsCourseCode());
+        conditions.put("ClassNbr", infoForm.gettClassNbr());
         conditions.put("month1", infoForm.getMonth1());
         conditions.put("month2", infoForm.getMonth2());
         conditions.put("month3", infoForm.getMonth3());

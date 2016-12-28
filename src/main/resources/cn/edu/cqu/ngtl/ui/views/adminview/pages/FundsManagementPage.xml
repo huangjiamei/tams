@@ -103,6 +103,41 @@
                                                                     <!--<property name="tabsWidget.tabNavClass" value="nav nav-tabs pull-right ui-sortable-handle"/>-->
                                                                     <property name="items">
                                                                         <list>
+                                                                            <!--第0页 经费流程图-->
+                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                                  p:headerText="经费说明">
+                                                                                <property name="items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:additionalCssClasses="box-header">
+                                                                                            <property
+                                                                                                    name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-Icon"
+                                                                                                          p:iconClass="icon-book"/>
+                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                          p:messageText="经费模块指导书"
+                                                                                                          p:additionalCssClasses="boxheaderTitle"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="box-body"
+                                                                                              p:style="">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <!--内容。指导说明书-->
+                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                          p:messageText="这里要放东西的~~~~"
+                                                                                                          p:additionalCssClasses="boxheaderTitle"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                    </list>
+                                                                                </property>
+                                                                            </bean>
                                                                             <!--第一页tab经费明细-->
                                                                             <bean parent="Uif-VerticalBoxSection"
                                                                                   p:headerText="经费明细"
@@ -850,7 +885,7 @@
                                                                                                                 </bean>
                                                                                                                 <bean id="FundsManagerDepartmentTable"
                                                                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'}">
+                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'};tableHeightSet('FundsManagerDepartmentTable')">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
                                                                                                                             value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>

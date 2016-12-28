@@ -1087,3 +1087,16 @@ function travelSubsidyDialog(){
             });
     }
 }
+
+// function numberStyle(str){
+//     var len = str.length, str2 = '', max = Math.floor(len / 3);
+//     for(var i = 0 ; i < max ; i++){
+//         var s = str.slice(len - 3, len);
+//         str = str.substr(0, len - 3);
+//         str2 = (',' + s) + str2;
+//         len = str.length;
+//     }
+//     str += str2;
+//     return str
+// }
+

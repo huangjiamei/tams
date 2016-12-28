@@ -15,6 +15,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.adminmanagement.AdminInfoForm;
 import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
+import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
@@ -24,9 +25,9 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
-import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.form.UifFormBase;
@@ -40,11 +41,15 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
+
 /**
  * Created by awake on 2016-10-21.
  */
@@ -55,6 +60,8 @@ public class adminController extends BaseController {
     @Autowired
     private IAdminService adminService;
 
+    @Autowired
+    private ExcelService excelService;
     @Autowired
     private TAMSCourseManagerDao tamsCourseManagerDao;
 
@@ -81,7 +88,7 @@ public class adminController extends BaseController {
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
-        UserSession userSession = GlobalVariables.getUserSession();
+        UserSession userSession = getUserSession();
         if (userSession.isBackdoorInUse()) {
             userSession.clearBackdoorUser();
         }
@@ -440,7 +447,7 @@ public class adminController extends BaseController {
         String[] timeSets = infoForm.getSettingsTime().split("~");
         String startTime = timeSets[0];
         String endTime = timeSets[1];
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         if (user == null) //// TODO: 16-11-23 应当返回错误信息
             return this.getModelAndView(infoForm, "pageTimeSet");
         boolean result = adminService.addTimeSetting(user, typeId, startTime, endTime);
@@ -774,6 +781,45 @@ public class adminController extends BaseController {
         new KRIM_ROLE_MBR_T_DaoJpa().saveKrimRoleMbrTByPrncpltAndRoles(krimPrncplT, krimRoleTs);
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
+    /**
+     * 将表格打印为excel，整体可用，各列具体参数还需修改
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = {"pageId=pageCourseManager", "methodToCall=exportCourseManagerExcel"})
+    public ModelAndView exportCourseManagerExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request,
+                                             HttpServletResponse response) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+
+        if (infoForm.getCourseManagerViewObjects() == null || infoForm.getCourseManagerViewObjects().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getCourseManagerViewObjects().get(0).getId() == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+
+        List<CourseManagerViewObject> coursemanagerlist = infoForm.getCourseManagerViewObjects();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "课程负责人列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
+
+        try {
+            String filePath = excelService.printCourseManagerExcel(coursemanagerlist, "exportfolder", fileName, "2003");
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+
+            return this.performRedirect(infoForm, baseUrl + "/" + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
 
 
     /**
@@ -788,7 +834,7 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
-        User user = (User)GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
 
         infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
@@ -1376,7 +1422,7 @@ public class adminController extends BaseController {
 
         Map<String, String> conditions = new HashMap<>();
         //put conditions
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
             conditions.put("Dept", infoForm.getDepartmentId());
@@ -1417,7 +1463,7 @@ public class adminController extends BaseController {
         //put conditions
         Map<String, String> conditions = new HashMap<>();
 
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
             conditions.put("dept", infoForm.getcDept());
@@ -1466,7 +1512,7 @@ public class adminController extends BaseController {
         //put conditions
         Map<String, String> conditions = new HashMap<>();
 
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
             conditions.put("dept", infoForm.gettDept());
@@ -1529,7 +1575,7 @@ public class adminController extends BaseController {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
         */
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
         //若是系统管理员和教务处管理员，则查看全部
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)){
@@ -2301,7 +2347,7 @@ public class adminController extends BaseController {
 
         //put conditions
 
-        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
         if(userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)){
             conditions.put("deptId", infoForm.getDeptId());  //选择学院

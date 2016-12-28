@@ -107,7 +107,7 @@
                                                                         <!--右上角btnlist-->
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="EXCEL"
-                                                                              p:methodToCall=""
+                                                                              p:methodToCall="exportCourseManagerExcel"
                                                                               p:additionalCssClasses="icon-list bg-orange box-btngroup"/>
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="初始化课程负责人"

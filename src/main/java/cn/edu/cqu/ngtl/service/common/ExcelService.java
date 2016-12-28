@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.common;
 
 
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -14,4 +15,6 @@ public interface ExcelService {
 
     String printTaListExcel(List<TaInfoViewObject> taList, String folderPath, String filename, String version)
             throws IOException;
+    String printCourseManagerExcel(List<CourseManagerViewObject> coursemanagerlist, String folderPath, String filename, String version)
+           throws  IOException;
 }

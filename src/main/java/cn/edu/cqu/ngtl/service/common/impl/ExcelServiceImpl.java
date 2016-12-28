@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.service.common.impl;
 
 import cn.edu.cqu.ngtl.service.common.ExcelService;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 import org.apache.log4j.Logger;
@@ -188,6 +189,81 @@ public class ExcelServiceImpl implements ExcelService {
 //        String rootPath = System.getProperty("catalina.home");
         String rootPath = getServletContext().getRealPath("/");
 
+        File folder = new File(rootPath + folderPath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+        }
+
+        String filePath = folderPath + File.separator + filename;
+
+        FileOutputStream out = new FileOutputStream(rootPath + File.separator + filePath);
+        wb.write(out);
+        out.close();
+
+        return filePath;
+    }
+
+    public  String printCourseManagerExcel(List<CourseManagerViewObject> coursemanagerlist, String folderPath, String filename, String version)
+            throws  IOException
+    {
+        Workbook wb;
+        Sheet sheet;
+
+        //默认输出版本为03版
+        if (version.equals("2007")) {
+            wb = new XSSFWorkbook();
+        } else {
+            wb = new HSSFWorkbook();
+        }
+        sheet = wb.createSheet("课程负责人信息导出");
+
+        Map<String, CellStyle> styles = createStyles(wb);
+        String[] titles = CourseManagerViewObject.getAttrTittles();
+        CellRangeAddress cra1 = new CellRangeAddress(0, 0, 0, 15);
+        sheet.addMergedRegion(cra1);
+
+        int rowNum = 0; // 控制在excel的第几行输出文本
+        // 顶端一长排字
+        Row topRow = sheet.createRow(rowNum++);
+        Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
+        topCell.setCellValue("教务处(重庆大学助教管理系统)课程负责人导出模板");
+        topCell.setCellStyle(styles.get("content"));
+
+
+        Row titleRow = sheet.createRow(rowNum++);
+        Cell titleCell;
+        for (int i = 0; i < titles.length; i++) {
+            titleCell = titleRow.createCell(i);
+            titleCell.setCellValue(titles[i]);
+            titleCell.setCellType(Cell.CELL_TYPE_STRING);
+            titleCell.setCellStyle(styles.get("title"));
+        }
+
+        List<String[]> content = new ArrayList<>();
+        for (CourseManagerViewObject  courseObj: coursemanagerlist) {
+            content.add(courseObj.getContents());
+        }
+
+        for (int i = 0; i < content.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            String[] contentStrings = content.get(i);
+   int a=contentStrings.length;
+            for (int colNum = 0; colNum <contentStrings.length; colNum++) {
+                Cell cell = row.createCell(colNum);
+                if (version.equals("2007")) {
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
+                } else {
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
+                }
+                cell.setCellStyle(styles.get("content"));
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+            }
+            sheet.autoSizeColumn((short) i);
+        }
+
+//        String rootPath = System.getProperty("catalina.home");
+        String rootPath = getServletContext().getRealPath("/");
+
         File folder = new File(rootPath+folderPath);
         if (!folder.exists() || !folder.isDirectory()) {
             folder.mkdir();
@@ -201,6 +277,8 @@ public class ExcelServiceImpl implements ExcelService {
 
         return filePath;
     }
+
+
 
     @Override
     public String printTaListExcel(List<TaInfoViewObject> taList, String folderPath, String filename, String version) throws IOException {

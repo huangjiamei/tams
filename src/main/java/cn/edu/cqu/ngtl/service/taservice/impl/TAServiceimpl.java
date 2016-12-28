@@ -621,6 +621,41 @@ public class TAServiceimpl implements ITAService {
         return true;
     }
 
+    //判断是否可以申请交通补贴
+    @Override
+    public boolean isTravelSubsidy(String stuId, String classId) {
+        if(classDao.selectByClassId(classId).getRoomName() != null) {
+            String stuCampus = "";
+            if (studentDao.getUTStudentById(stuId).getUtCampus().getName().equals("重庆大学A区"))
+                stuCampus = "A";
+            if (studentDao.getUTStudentById(stuId).getUtCampus().getName().equals("重庆大学B区"))
+                stuCampus = "B";
+            if (studentDao.getUTStudentById(stuId).getUtCampus().getName().equals("重庆大学虎溪校区"))
+                stuCampus = "D";
+
+            String classCampus = "";
+            if (classDao.selectByClassId(classId).getRoomName().substring(0, 1).equals("A"))
+                classCampus = "A";
+            else if (classDao.selectByClassId(classId).getRoomName().substring(0, 1).equals("B"))
+                classCampus = "B";
+            else if (classDao.selectByClassId(classId).getRoomName().substring(0, 1).equals("D"))
+                classCampus = "D";
+            else if (classDao.selectByClassId(classId).getRoomName().substring(0, 1).equals("电")) {
+                classCampus = "A"; //电影学院，A区
+            }
+            else
+                classCampus = "E"; //金工实习之类的不用
+
+            if ((stuCampus.equals("A") || stuCampus.equals("B")) && classCampus.equals("D"))
+                return true;
+            else if (stuCampus.equals("D") && (classCampus.equals("A") || classCampus.equals("B")))
+                return true;
+            else
+                return false;
+        }
+        else
+            return false;
+    }
     //交通补贴
     @Override
     public void countTravelSubsidy(String stuId, String classId, String option) {

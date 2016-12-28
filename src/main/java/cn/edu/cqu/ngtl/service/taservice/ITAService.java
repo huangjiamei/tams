@@ -92,4 +92,6 @@ public interface ITAService {
 
     boolean addBonus(String phdBonus, String classId);
 
+    boolean isTravelSubsidy(String stuId, String classId);
+
 }

@@ -731,7 +731,12 @@ public class TaController extends BaseController {
         String taId = ((User)GlobalVariables.getUserSession().retrieveObject("user")).getCode();
 
         if(taService.saveTravelSubsidy(tamsTaTravelSubsidy)){
-            taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "add");
+            if(taService.isTravelSubsidy(taId, taInfoForm.getCurClassId()))
+                taService.countTravelSubsidy(taId, taInfoForm.getCurClassId(), "add");
+            else {
+                taInfoForm.setErrMsg("课程和助教位于同一个校区！不能申请交通补贴！");
+                return this.showDialog("refreshPageViewDialog", true, taInfoForm);
+            }
         }
 
         List<TAMSTaTravelSubsidy> tamsTaTravelSubsidies = taService.getTaTravelByStuIdAndClassId(taId,taInfoForm.getCurClassId());

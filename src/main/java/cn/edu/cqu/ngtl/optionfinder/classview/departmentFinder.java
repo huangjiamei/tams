@@ -1,10 +1,13 @@
 package cn.edu.cqu.ngtl.optionfinder.classview;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTDepartmentDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
+import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+import org.kuali.rice.krad.util.GlobalVariables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,10 +28,17 @@ public class departmentFinder extends KeyValuesBase {
             keyValues.add(new ConcreteKeyValue("", ""));
         }
 
-        List<UTDepartment> departments= new UTDepartmentDaoJpa().getAllHasCourseDepartment();
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        Boolean userInfo=new UserInfoServiceImpl().isCollegeStaff(user.getCode());//检测是否为而建单位管理员，如果是，则optionfinder只显示本学院
 
-        for(UTDepartment department : departments) {
-            keyValues.add(new ConcreteKeyValue(department.getId().toString(), department.getName()));
+        List<UTDepartment> departments= new UTDepartmentDaoJpa().getAllHasCourseDepartment();
+        if (!userInfo) {
+
+            for (UTDepartment department : departments) {
+                keyValues.add(new ConcreteKeyValue(department.getId().toString(), department.getName()));
+            }
+        }else{
+            keyValues.add(new ConcreteKeyValue(user.getDepartmentId().toString(), user.getDepartment()));
         }
 
         return keyValues;

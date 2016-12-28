@@ -1423,6 +1423,8 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         String classId = infoForm.getCurrClassId();
+        String taphoneNumber = infoForm.getCandidatePhoneNbr();
+
 
         MyTaViewObject curTa = infoForm.getSelectedTa();
         curTa.setApplicationClassId(classId);
@@ -1431,13 +1433,17 @@ public class ClassController extends BaseController {
         if (curTa.getTaIdNumber() == null) {
             infoForm.setErrMsg("请选择某位学生！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
+        } else if(infoForm.getCandidatePhoneNbr()==null) {
+            infoForm.setErrMsg("请填写助教申请人的联系电话！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         } else {
             curTa.setApplicationClassId(classId);
             needToBeAddToApplication.add(curTa);
-
+            String phoneNbr = infoForm.getCandidatePhoneNbr();
             short code = taService.submitApplicationAssistant(
-                    classConverter.TaViewObjectToTaApplication(curTa, classId)
+                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr)
             );
+            curTa.setContactPhone(phoneNbr);
             if (code == 10) {
                 infoForm.setErrMsg("管理员未设置申请时间！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1453,12 +1459,10 @@ public class ClassController extends BaseController {
             } else if (code == 7) {
                 infoForm.setErrMsg("该学生最多可申请两门课程的助教！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
-            }
-            else if (code == 8) {
+            } else if (code == 8) {
                 infoForm.setErrMsg("该学生最多可担任两门课程的助教！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
-            }
-            else if (code == 4) {
+            } else if (code == 4) {
                 //避免延迟刷新
                 //if (infoForm.getAllApplication() == null)
                 //    infoForm.setAllApplication(needToBeAddToApplication);

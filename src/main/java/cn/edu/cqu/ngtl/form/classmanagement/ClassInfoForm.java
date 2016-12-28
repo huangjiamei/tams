@@ -116,7 +116,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     /*
     助教管理页面
      */
-
+    private String candidatePhoneNbr;
     private boolean canEmploy;
     private List<MyTaViewObject> allMyTa;
     private List<MyTaViewObject> allApplication;
@@ -511,5 +511,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCanEmploy(boolean canEmploy) {
         this.canEmploy = canEmploy;
+    }
+
+    public String getCandidatePhoneNbr() {
+        return candidatePhoneNbr;
+    }
+
+    public void setCandidatePhoneNbr(String candidatePhoneNbr) {
+        this.candidatePhoneNbr = candidatePhoneNbr;
     }
 }

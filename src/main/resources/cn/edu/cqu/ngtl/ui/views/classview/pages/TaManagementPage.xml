@@ -349,9 +349,12 @@
                                                     <bean parent="Uif-MessageField"
                                                           p:label="导师"
                                                           p:messageText="@{selectedTa.advisorName}"/>
-                                                    <bean parent="Uif-MessageField"
-                                                          p:label="联系电话"
-                                                          p:messageText="@{selectedTa.contactPhone}"/>
+                                                    <bean parent="Uif-InputField" p:label="联系电话" p:required="true"
+                                                          p:propertyName="candidatePhoneNbr">
+                                                        <property name="validCharactersConstraint">
+                                                            <bean parent="NumericPatternConstraint"/>
+                                                        </property>
+                                                    </bean>
                                                 </list>
                                             </property>
                                         </bean>

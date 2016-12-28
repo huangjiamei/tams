@@ -366,22 +366,26 @@ public class TAServiceimpl implements ITAService {
             TAMSWorkflowFunctions function = workflowFunctionsDao.selectOneByName("评优");
             String workFlowStatus = tamsWorkflowStatusDao.getFirstStatusByFunctionId(function.getId());
             newTa.setOutStandingTaWorkflowStatusId(workFlowStatus == null ? "" :workFlowStatus);
-            UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
-            if (utStudent != null) {
-                if (utStudent.getProgram() != null) {
-                    if (utStudent.getProgram().getDuration() == 3) {
-                        newTa.setType("1"); //硕士
-                    }
-                } else
-                    newTa.setType("3"); //本科
-            }
+//            UTStudent utStudent = studentDao.getUTStudentById(per.getStuId());
+//            if (utStudent != null) {
+//                if (utStudent.getProgram() != null) {
+//                    if (utStudent.getProgram().getDuration() == 3) {
+//                        newTa.setType("1"); //硕士
+//                    }
+//                } else
+//                    newTa.setType("3"); //本科
+//            }
             /**
              * 判断被聘人学历
              */
             if (per.getStuId().length() > 8) {  //不是本科生
                 if (per.getStuId().substring(6, 6+2).equals("01")) { //是博士
                     newTa.setType("2");
+                }else{
+                    newTa.setType("1");
                 }
+            }else{
+                newTa.setType("3");
             }
             newTa.setPhdFunding("0");
             //初始状态设为已聘请

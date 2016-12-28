@@ -105,7 +105,7 @@ public class AdminConverterimpl implements IAdminConverter {
         List<TaFundingViewObject> taFundingViewObjects = new ArrayList<>(tamsTas.size());
         for (TAMSTa ta : tamsTas) {
             TaFundingViewObject taFundingViewObject = new TaFundingViewObject();
-
+            taFundingViewObject.setClassId(ta.getTaClassId());
             if (ta.getTaClass() != null) {
                 if (ta.getTaClass().getCourseOffering() != null) {
                     UTCourse course = ta.getTaClass().getCourseOffering().getCourse();

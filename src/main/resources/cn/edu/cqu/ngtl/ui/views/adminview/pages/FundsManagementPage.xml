@@ -1633,7 +1633,7 @@
 
                                                                                                     <bean id="trafficButton" parent="Uif-PrimaryActionButton"
                                                                                                           p:style="display:none;"
-                                                                                                          p:methodToCall="xxxx"/><!--此处根据index弹框-->
+                                                                                                          p:methodToCall="showTravelSubsidy"/><!--此处根据index弹框-->
 
                                                                                                     <bean id="FundsManagerAssistantSearchFields" parent="Uif-HorizontalBoxSection" p:additionalCssClasses="search-fields">
                                                                                                         <property name="items">
@@ -1796,7 +1796,7 @@
     </bean>
 
     <bean id="confirmTrafficDialog" parent="Uif-DialogGroup"
-          p:headerText="交通" p:retrieveViaAjax="true">
+          p:headerText="交通" p:resetDataOnRefresh="true" p:retrieveViaAjax="true" >
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="啦啦啦啦啦啦"/>
@@ -1829,9 +1829,9 @@
         </property>
         <property name="footer.items">
             <list>
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST" />
-                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+          <!--      <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST" />-->
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
             </list>
         </property>
     </bean>

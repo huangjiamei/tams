@@ -244,6 +244,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String month11;
     private String month12;
     private String detailsTotalFunds;
+    private List<TAMSTaTravelSubsidy> travelSubsidies;
 
     /*
     同步信息页面
@@ -1621,5 +1622,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setIndexFundsManagerAssistantTable(String indexFundsManagerAssistantTable) {
         this.indexFundsManagerAssistantTable = indexFundsManagerAssistantTable;
+    }
+
+    public List<TAMSTaTravelSubsidy> getTravelSubsidies() {
+        return travelSubsidies;
+    }
+
+    public void setTravelSubsidies(List<TAMSTaTravelSubsidy> travelSubsidies) {
+        this.travelSubsidies = travelSubsidies;
     }
 }

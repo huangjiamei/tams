@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
@@ -64,6 +65,9 @@ public class adminController extends BaseController {
     private ExcelService excelService;
     @Autowired
     private TAMSCourseManagerDao tamsCourseManagerDao;
+
+    @Autowired
+    private TAMSTaTravelSubsidyDao tamsTaTravelSubsidyDao;
 
     @Autowired
     private ITAConverter taConverter;
@@ -2606,4 +2610,25 @@ public class adminController extends BaseController {
 
         return this.getModelAndView(adminInfoForm, "pageManageStation");
     }
-}
+
+
+    @RequestMapping(params = "methodToCall=showTravelSubsidy")
+    public ModelAndView showTravelSubsidy(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+
+        String indexOFTaFunds = adminInfoForm.getIndexFundsManagerAssistantTable();
+        TaFundingViewObject taFundingViewObject = adminInfoForm.getTaFunding().get(Integer.parseInt(indexOFTaFunds));
+        if(taFundingViewObject!=null){
+            String taId = taFundingViewObject.getStuId();
+            String classId = taFundingViewObject.getClassId();
+            List<TAMSTaTravelSubsidy> result = tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+            adminInfoForm.setTravelSubsidies(result);
+        }
+
+        return this.showDialog("confirmTrafficDialog",true,adminInfoForm);
+    }
+
+
+
+    }

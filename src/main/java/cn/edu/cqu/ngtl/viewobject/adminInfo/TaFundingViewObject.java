@@ -7,6 +7,8 @@ public class TaFundingViewObject {
 
     private String sessionName;
 
+    private String classId;
+
     private String stuId;
 
     private String taName;
@@ -143,5 +145,13 @@ public class TaFundingViewObject {
 
     public void setCourseCode(String courseCode) {
         this.courseCode = courseCode;
+    }
+
+    public String getClassId() {
+        return classId;
+    }
+
+    public void setClassId(String classId) {
+        this.classId = classId;
     }
 }

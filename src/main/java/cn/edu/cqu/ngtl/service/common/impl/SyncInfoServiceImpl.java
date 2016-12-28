@@ -213,7 +213,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                 if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
 
-                    String queryRoomAndTWeek = "SELECT * FROM KCBC t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"'";
+                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"'";
                     PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
                     String teachWeek = "";
                     String roomName = "";

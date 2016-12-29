@@ -1400,6 +1400,33 @@ public class ClassController extends BaseController {
 
     }
 
+    /**
+     * 解聘助教弹框
+     * 属于TaManagementPage
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=showDismissDialog")
+    public ModelAndView showDismissDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        List<MyTaViewObject> objects = infoForm.getAllMyTa();
+
+        List<MyTaViewObject> needToFire = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox() )
+                needToFire.add(per);
+        }
+        if(needToFire.size()==0){
+            return this.getModelAndView(infoForm, "pageTaManagement");
+
+        }else{
+            return this.showDialog("confirmDismissDialog", true, infoForm);
+        }
+    }
 
 
     /**

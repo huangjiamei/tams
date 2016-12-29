@@ -1110,15 +1110,46 @@ function validatePhoneNum(id){
     }
 }
 
-// function numberStyle(str){
-//     var len = str.length, str2 = '', max = Math.floor(len / 3);
-//     for(var i = 0 ; i < max ; i++){
-//         var s = str.slice(len - 3, len);
-//         str = str.substr(0, len - 3);
-//         str2 = (',' + s) + str2;
-//         len = str.length;
-//     }
-//     str += str2;
-//     return str
-// }
+function comboSelectStyle(id,buttonId){
+
+    var searchFields = jQuery("#"+id).find('div');
+
+    for (var i = 0;i < searchFields.size();i++) {
+i
+        var field = jQuery(searchFields[i]);
+        if (field.children()[0].tagName == 'INPUT') {
+
+            jQuery(field.children()[0]).on(
+                {
+                    keydown: function (e) {
+                        var key = e.which;
+                        if (key == 13) {
+                            e.preventDefault();
+                            jQuery("#" + buttonId).click();
+                        }
+                    }
+                });
+        }
+        //为下拉框添加事件
+        if (field.children()[0].tagName == 'SELECT') {
+            jQuery(field.children()[0]).comboSelect();
+            jQuery(field.find("input")[0]).attr("class", "form-control input-sm uif-textControl column-filter");
+            jQuery(field.find("select")[0]).on('change', function () {
+                jQuery("#" + buttonId).click();
+            });
+        }
+    }
+}
+
+function numberStyle(str){
+    var len = str.length, str2 = '', max = Math.floor(len / 3);
+    for(var i = 0 ; i < max ; i++){
+        var s = str.slice(len - 3, len);
+        str = str.substr(0, len - 3);
+        str2 = (',' + s) + str2;
+        len = str.length;
+    }
+    str += str2;
+    return str
+}
 

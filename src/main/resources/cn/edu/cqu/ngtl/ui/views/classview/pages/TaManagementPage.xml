@@ -116,7 +116,7 @@
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="解聘"
-                                                                                  p:methodToCall="setTaToDismiss"
+                                                                                  p:methodToCall="showDismissDialog"
                                                                                   p:additionalCssClasses="icon-trash bg-orange box-btngroup"/>
                                                                         </list>
                                                                     </property>
@@ -440,7 +440,23 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="employ"  p:dialogDismissOption="REQUEST" />
+                      p:methodToCall="employ" p:dialogDismissOption="REQUEST" />
+            </list>
+        </property>
+    </bean>
+
+    <bean id="confirmDismissDialog" parent="Uif-DialogGroup"
+          p:headerText="解聘" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="您确定解聘当前助教吗？" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="setTaToDismiss" p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

@@ -19,6 +19,7 @@ import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
+import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -36,6 +37,7 @@ import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -63,6 +65,9 @@ public class adminController extends BaseController {
 
     @Autowired
     private ExcelService excelService;
+
+    @Autowired
+    private IPDFService  ipdfService;
     @Autowired
     private TAMSCourseManagerDao tamsCourseManagerDao;
 
@@ -868,7 +873,7 @@ public class adminController extends BaseController {
 
         String filePath=adminService.prepareCourseManagerToPDF(courseManagerViewObjectList );
         if (filePath.equals("exception")){
-            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+            infoForm.setErrMsg("系统导出PDF文件错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }else{
             String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
@@ -1117,8 +1122,8 @@ public class adminController extends BaseController {
                         adminService.getDepartmentPreFundingBySession()
                 )
         );
-
         //显示课程经费
+
         infoForm.setClassFundings(
                 taConverter.classFundingToViewObject(
                         adminService.getFundingByClass()
@@ -1208,6 +1213,208 @@ public class adminController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
+
+    /** create by luojizhou on 2016/12/30
+     *
+     * 输出经费明细到Excel
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportDetailFundingExcel"})
+    public ModelAndView  exportDetailFundingExcel(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm=(AdminInfoForm) form;
+        this.baseStart(infoForm);
+
+        if(infoForm.getDetailFunding()==null || infoForm.getDetailFunding().size()==1){//size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getDetailFunding().get(0).getStuId()==null){
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog",true,infoForm);
+            }
+        }
+
+        List<DetailFundingViewObject> detailFundingViewObjectList=infoForm.getDetailFunding();
+        SimpleDateFormat curTime=new SimpleDateFormat("yyyy-MM-dd");
+        String fileName="经费明细列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
+
+        try{
+            String filePath=excelService.printDetailFundingExcel(detailFundingViewObjectList,"exportfolder",fileName,"2003");
+            String baseUrl=CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+                    KRADConstants.ConfigParameters.APPLICATION_URL);
+             return this.performRedirect(infoForm,baseUrl+"/"+filePath);
+        }catch(IOException e){
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+    }
+
+    /** create by luojizhou on 2016/12/30
+     *
+     * 输出学校历史经费到Excel
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportPreviousSessionFundingsExcel"})
+    public ModelAndView exportPreviousSessionFundingsExcel(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm=(AdminInfoForm) form;
+        this.baseStart(infoForm);
+
+        if(infoForm.getPreviousSessionFundings()==null || infoForm.getPreviousSessionFundings().size()==1){//size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getPreviousSessionFundings().get(0)==null){
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog",true,infoForm);
+            }
+        }
+
+        List<SessionFundingViewObject> sessionFundingViewObjectList=infoForm.getPreviousSessionFundings();
+        SimpleDateFormat curTime=new SimpleDateFormat("yyyy-MM-dd");
+        String fileName="学校历史经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
+
+        try{
+            String filePath=excelService.printPreviousSessionFundingsExcel(sessionFundingViewObjectList,"exportfolder",fileName,"2003");
+            String baseUrl=CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+                    KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+"/"+filePath);
+        }catch(IOException e){
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+    }
+
+    /** create by luojizhou on 2016/12/30
+     *
+     * 输出学院经费到Excel
+     *
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodTocall=exportDepartmentCurrFundingsExcel"})
+    public ModelAndView exportDepartmentCurrFundingsExcel(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm=(AdminInfoForm) form;
+        this.baseStart(infoForm);
+
+        if(infoForm.getDepartmentCurrFundings()==null || infoForm.getDepartmentCurrFundings().size()==1){//size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getDepartmentCurrFundings().get(0)==null){
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog",true,infoForm);
+            }
+        }
+
+        List<DepartmentFundingViewObject> departmentFundingViewObjectList=infoForm.getDepartmentCurrFundings();
+        SimpleDateFormat curTime=new SimpleDateFormat("yyyy-MM-dd");
+        String fileName="学院经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
+
+        try{
+            String filePath=excelService.printDepartmentCurrFundingsExcel(departmentFundingViewObjectList,"exportfolder",fileName,"2003");
+            String baseUrl=CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+                    KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+"/"+filePath);
+        }catch(IOException e){
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+    }
+
+    /** create by luojizhou on 2016/12/30
+     *
+     * 输出学院历史经费
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportDepartmentPreFundingsExcel"})
+    public ModelAndView exportDepartmentPreFundingsExcel(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm=(AdminInfoForm) form;
+        this.baseStart(infoForm);
+
+        if(infoForm.getDepartmentPreFundings()==null || infoForm.getDepartmentPreFundings().size()==1){//size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getDepartmentPreFundings().get(0)==null){
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog",true,infoForm);
+            }
+        }
+
+        List<DepartmentFundingViewObject> departmentFundingViewObjectList=infoForm.getDepartmentPreFundings();
+        SimpleDateFormat curTime=new SimpleDateFormat("yyyy-MM-dd");
+        String fileName="学院经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
+
+        try{
+            String filePath=excelService.printDepartmentPreFundingsExcel(departmentFundingViewObjectList,"exportfolder",fileName,"2003");
+            String baseUrl=CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(
+                    KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+"/"+filePath);
+        }catch(IOException e){
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+    }
+
+
+    /** create by luojizhou on 2016/12/30
+     *
+     * 将课程经费表格打印为PDF
+     * @param form
+     * @return
+     *
+     */
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportClassFundingsPDF"})
+    public ModelAndView exportClassFundingsPDF(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getClassFundings() == null || infoForm.getClassFundings().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getClassFundings().get(0) == null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+        List<ClassFundingViewObject> classFundingViewObjectList=infoForm.getClassFundings();
+
+        String filePath=ipdfService.prepareClassFundingsToPDF(classFundingViewObjectList);
+        if (filePath.equals("exception")){
+            infoForm.setErrMsg("系统导出PDF文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else{
+            String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+'/'+filePath);
+        }
+
+    }
+
+    /** create by luojizhou on 2016/12/30
+     *
+     * 将助教经费表格打印为PDF
+     * @param form
+     * @return
+     *
+     */
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportTaFundingPDF"})
+    public ModelAndView exportTaFundingPDF(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getTaFunding() == null || infoForm.getTaFunding().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getTaFunding().get(0)== null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+
+        List<TaFundingViewObject> taFundingViewObjectList=infoForm.getTaFunding();
+
+        String filePath=ipdfService.prepareTaFundingToPDF(taFundingViewObjectList);
+        if (filePath.equals("exception")){
+            infoForm.setErrMsg("系统导出PDF文件错误！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else{
+            String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+'/'+filePath);
+        }
+
+    }
+
 
     /**
      * 发布学院经费

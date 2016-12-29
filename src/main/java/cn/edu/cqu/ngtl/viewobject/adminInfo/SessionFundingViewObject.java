@@ -1,5 +1,7 @@
 package cn.edu.cqu.ngtl.viewobject.adminInfo;
 
+import java.beans.Transient;
+
 /**
  * Created by tangjing on 16-11-9.
  */
@@ -20,6 +22,28 @@ public class SessionFundingViewObject {
     String trafficFunding;
 
     String total;
+
+    @Transient
+    public static String[] getAttrTittles() {
+        String[] attrTittles = {
+                "批次","预算经费","申报经费","批准经费","博士津贴","奖励经费","交通补贴","总经费"
+        };
+        return attrTittles;
+    }
+
+    @Transient
+    public  String[] getContents(){
+        String[] contents=new String[8];
+        contents[0]=getSessionName();
+        contents[1]=getPlanFunding();
+        contents[2]=getApplyFunding();
+        contents[3]=getActualFunding();
+        contents[4]=getPhdFunding();
+        contents[5]=getBonus();
+        contents[6]=getTrafficFunding();
+        contents[7]=getTotal();
+        return contents;
+    }
 
     public String getTotal() {
         return total;

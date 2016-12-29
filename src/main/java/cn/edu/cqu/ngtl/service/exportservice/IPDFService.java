@@ -1,5 +1,8 @@
 package cn.edu.cqu.ngtl.service.exportservice;
 
+import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import com.itextpdf.text.DocumentException;
 
@@ -33,4 +36,21 @@ public interface IPDFService {
      * @throws IOException
      */
     public void exportClassInformation(String path, List<ClassTeacherViewObject> classInformation) throws DocumentException, IOException;
+
+
+    /**create by luojizhou on 2016/12/30
+     *
+     *封装的方法，用于获取导出的课程经费PDF文件的文件路径
+     * @param classFundingViewObjectList  传入的参数
+     * @return filePath                   返回的PDF文件路径
+     */
+    String prepareClassFundingsToPDF(List<ClassFundingViewObject> classFundingViewObjectList);
+
+    /**create by luojizhou on 2016/12/30
+     *
+     *封装的方法，用于获取导出的助教经费PDF文件的文件路径
+     * @param taFundingViewObjectList     传入的参数
+     * @return filePath                   返回的PDF文件路径
+     */
+    String prepareTaFundingToPDF(List<TaFundingViewObject> taFundingViewObjectList);
 }

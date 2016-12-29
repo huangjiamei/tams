@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.viewobject.adminInfo;
 
+import java.beans.Transient;
 import java.io.Serializable;
 
 /**
@@ -7,49 +8,78 @@ import java.io.Serializable;
  */
 public class DetailFundingViewObject implements Serializable {
 
-    private String taName;
+    private String taName; //助教名
 
-    private String stuId;
+    private String stuId; //学号
 
-    private String bankName;
+    private String bankName; //银行
 
-    private String bankId;
+    private String bankId; //银行卡号
 
-    private String identity;
+    private String identity; //身份证号
 
     private String classNbr; //converter中会用到
     private String instructorName;
 
-    private String courseName;
+    private String courseName; //课程名
 
-    private String courseCode;
+    private String courseCode; //课程代码
 
-    private String monthlySalary1;
+    private String monthlySalary1; //1月实发
 
-    private String monthlySalary2;
+    private String monthlySalary2;//2月实发
 
-    private String monthlySalary3;
+    private String monthlySalary3;//3月实发
 
-    private String monthlySalary4;
+    private String monthlySalary4;//4月实发
 
-    private String monthlySalary5;
+    private String monthlySalary5;//5月实发
 
-    private String monthlySalary6;
+    private String monthlySalary6;//6月实发
 
-    private String monthlySalary7;
+    private String monthlySalary7;//7月实发
 
-    private String monthlySalary8;
+    private String monthlySalary8;//8月实发
 
-    private String monthlySalary9;
+    private String monthlySalary9;//9月实发
 
-    private String monthlySalary10;
+    private String monthlySalary10;//10月实发
 
-    private String monthlySalary11;
+    private String monthlySalary11;//11月实发
 
-    private String monthlySalary12;
+    private String monthlySalary12;//12月实发
 
 
-    private String total;
+    private String total; // 实发总额
+
+    @Transient
+    public static String[] getAttrTittles() {
+        String[] attrTittles = {
+                "助教","学号","银行","银行卡号","身份证号","课程","课程代码","教学班号","3月实发","4月实发","5月实发","6月实发","7月实发","8月实发","实发总额"
+        };
+        return attrTittles;
+    }
+
+    @Transient
+    public String[] getContents(){
+        String[] contents=new String[15];
+        contents[0]=getTaName();
+        contents[1]=getStuId();
+        contents[2]=getBankName();
+        contents[3]=getBankId();
+        contents[4]=getIdentity();
+        contents[5]=getCourseName();
+        contents[6]=getCourseCode();
+        contents[7]=getClassNbr();
+        contents[8]=getMonthlySalary3();
+        contents[9]=getMonthlySalary4();
+        contents[10]=getMonthlySalary5();
+        contents[11]=getMonthlySalary6();
+        contents[12]=getMonthlySalary7();
+        contents[13]=getMonthlySalary8();
+        contents[14]=getTotal();
+        return contents;
+    }
 
     public String getClassNbr() {
         return classNbr;

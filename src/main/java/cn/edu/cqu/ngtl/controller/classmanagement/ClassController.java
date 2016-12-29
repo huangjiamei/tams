@@ -1267,8 +1267,10 @@ public class ClassController extends BaseController {
         }
         if(result)
             return this.getModelAndView(infoForm, "pageTaManagement");
-        else
-            return this.getModelAndView(infoForm, "pageTaManagement"); //应该返回错误信息
+        else {
+            infoForm.setErrMsg("聘用出错！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
     }
 
 
@@ -1305,8 +1307,8 @@ public class ClassController extends BaseController {
         if (result)
             return this.getTaManagementPage(form, request);
         else {
-            // TODO: 2016/11/12 等待错误信息设计
-            return this.getTaManagementPage(form, request);
+                infoForm.setErrMsg("恢复出错！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 
@@ -1348,8 +1350,8 @@ public class ClassController extends BaseController {
         if (result)
             return this.getTaManagementPage(form, request);
         else {
-            // TODO: 2016/11/12 等待错误信息设计
-            return this.getTaManagementPage(form, request);
+                infoForm.setErrMsg("暂停助教出错！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 
@@ -1364,12 +1366,28 @@ public class ClassController extends BaseController {
                                        HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+        List<MyTaViewObject> objects = infoForm.getAllMyTa();
 
+        List<MyTaViewObject> needToFire = new ArrayList<>();
 
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox() )
+                needToFire.add(per);
+        }
 
+        if (needToFire.isEmpty()) {
+            return this.getModelAndView(infoForm, "pageTaManagement");
+        }
 
+        Boolean result = taService.dismissTa(classConverter.extractIdsAndClassIdsFromMyTaInfo(needToFire),GlobalVariables.getUserSession().getPrincipalId());
 
-        return this.getTaManagementPage(form, request);
+        if(result)
+            return this.getTaManagementPage(form, request);
+        else{
+            infoForm.setErrMsg("解聘助教出错！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
     }
 
 

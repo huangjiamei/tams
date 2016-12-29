@@ -48,6 +48,18 @@ public class ClassConverterImpl implements IClassConverter {
 
 
     @Override
+    public List<StuIdClassIdPair> extractIdsAndClassIdsFromMyTaInfo(List<MyTaViewObject> checkedList) {
+        List<StuIdClassIdPair> pairs = new ArrayList<>();
+
+        for (MyTaViewObject per : checkedList) {
+            StuIdClassIdPair pair = new StuIdClassIdPair(per.getTaIdNumber(),per.getApplicationClassId());
+            pairs.add(pair);
+        }
+        return pairs;
+    }
+
+
+    @Override
     public List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList) {
         if (studentList == null || studentList.size() == 0) {
             logger.error("数据为空！");

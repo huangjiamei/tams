@@ -17,6 +17,8 @@ public interface IClassConverter {
 
     List<String> extractIdsFromMyTaInfo(List<MyTaViewObject> checkedList);
 
+    List<StuIdClassIdPair> extractIdsAndClassIdsFromMyTaInfo(List<MyTaViewObject> checkedList);
+
     List<MyTaViewObject> studentInfoToMyTaViewObject(List<UTStudent> studentList);
 
     TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid,String phoneNbr);

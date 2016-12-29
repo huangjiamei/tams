@@ -22,4 +22,10 @@ public class TAMSTaBlackListDaoJpa implements TAMSTaBlackListDao {
         result = KradDataServiceLocator.getDataObjectService().findAll(TAMSTaBlackList.class).getResults();
         return result;
     }
+
+    @Override
+    public boolean insertOneByEntity(TAMSTaBlackList tamsTaBlackList){
+        return KradDataServiceLocator.getDataObjectService().save(tamsTaBlackList)!=null;
+
+    }
 }

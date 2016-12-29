@@ -59,6 +59,8 @@ public interface TAMSTaDao {
 
     List<TAMSTa> selectByTaId(String taId);
 
+    void deleteByTaIdAndClass(String taId,String classId);
+
     boolean changeStatusToSpecifiedStatus(String classId, String workflowStatusId);
 
     List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds ,String functionId,String taId);

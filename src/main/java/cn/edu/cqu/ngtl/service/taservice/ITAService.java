@@ -94,4 +94,6 @@ public interface ITAService {
 
     boolean isTravelSubsidy(String stuId, String classId);
 
+    boolean dismissTa(List<StuIdClassIdPair> pairs, String uId);
+
 }

@@ -80,6 +80,26 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
             return null;
     }
 
+
+    @Override
+    public void deleteByTaIdAndClass(String taId,String classId) {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("taId", taId),
+                        equal("taClassId", classId),
+                        equal("sessionId", curSession.getId())
+                )
+        );
+        KradDataServiceLocator.getDataObjectService().deleteMatching(
+                TAMSTa.class,
+                criteria.build()
+        );
+
+    }
+
+
+
     @Override
     public TAMSTa selectById(String id) {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(

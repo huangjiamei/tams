@@ -91,22 +91,8 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private TAMSTaCategoryDao tamsTaCategoryDao;
 
-    /*
     @Autowired
-    private UTClassInfoDao utClassInfoDao;
-
-    @Autowired
-    private TAMSClassFundingDao tamsClassFundingDao;
-
-    @Autowired
-    private TAMSClassFundingDraftDao tamsClassFundingDraftDao;
-
-    @Autowired
-    private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
-
-    @Autowired
-    private TAMSDeptFundingDao tamsDeptFundingDao;
-    */
+    private TAMSTaBlackListDao tamsTaBlackListDao;
 
     @Autowired
     private TAMSUniversityFundingDao tamsUniversityFundingDao;
@@ -674,6 +660,22 @@ public class TAServiceimpl implements ITAService {
             tamstadao.insertByEntity(tamsTa);
         }
     }
+
+    @Override
+    public boolean dismissTa(List<StuIdClassIdPair> pairs, String uId){
+        Boolean result = false;
+        for(StuIdClassIdPair pair :pairs){
+            tamstadao.deleteByTaIdAndClass(pair.getStuId(),pair.getStuId());
+
+            TAMSTaBlackList tamsTaBlackList = new TAMSTaBlackList();
+            tamsTaBlackList.setBeenFiredTime(new Date().toString());
+            tamsTaBlackList.setTaId(pair.getStuId());
+            tamsTaBlackList.setFiredBy(uId);
+            result = tamsTaBlackListDao.insertOneByEntity(tamsTaBlackList);
+        }
+        return result;
+    }
+
 
 /*
     //交通补贴

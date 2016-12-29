@@ -10,4 +10,9 @@ import java.util.List;
 public interface TAMSTaBlackListDao {
 
     List<TAMSTaBlackList> getAllBlackList();
+
+    boolean insertOneByEntity(TAMSTaBlackList tamsTaBlackList);
+
+
+
 }

@@ -1091,6 +1091,25 @@ function travelSubsidyDialog(){
     }
 }
 
+//电话号码规范
+function validatePhoneNum(id){
+    var cellPhone=document.getElementById(id);
+    var RegCellPhone = /^([0-9]{11})?$/;
+    var cellPhoneValue = cellPhone.value.trim();
+    if(cellPhoneValue==''){
+        alert("请填写手机号！");
+    }
+    else{
+        var falg=cellPhoneValue.search(RegCellPhone);
+        if (falg==-1){
+            alert("手机号不合法！");
+        }
+        else{
+            return true;
+        }
+    }
+}
+
 // function numberStyle(str){
 //     var len = str.length, str2 = '', max = Math.floor(len / 3);
 //     for(var i = 0 ; i < max ; i++){

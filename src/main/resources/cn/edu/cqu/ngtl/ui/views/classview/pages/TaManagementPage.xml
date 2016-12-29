@@ -350,12 +350,8 @@
                                                     <bean parent="Uif-MessageField"
                                                           p:label="导师"
                                                           p:messageText="@{selectedTa.advisorName}"/>
-                                                    <bean parent="Uif-InputField" p:label="联系电话" p:required="true"
-                                                          p:propertyName="candidatePhoneNbr">
-                                                        <property name="validCharactersConstraint">
-                                                            <bean parent="NumericPatternConstraint"/>
-                                                        </property>
-                                                    </bean>
+                                                    <bean id="candidatePhoneNbrField" parent="Uif-InputField" p:label="联系电话" p:required="true"
+                                                          p:propertyName="candidatePhoneNbr"/>
                                                 </list>
                                             </property>
                                         </bean>
@@ -423,6 +419,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:preSubmitCall="return validatePhoneNum('candidatePhoneNbrField_control');"
                       p:methodToCall="addSelectedTaApplicant" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>

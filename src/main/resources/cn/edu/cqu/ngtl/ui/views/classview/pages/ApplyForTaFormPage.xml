@@ -136,14 +136,10 @@
                                                                                   <!--p:messageText="@{applyAssistantViewObject.ug_Major}"/>-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="研究生专业" p:messageText="@{applyAssistantViewObject.g_Major}"/>
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:label="联系方式"
+                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
+                                                                                  p:label="电话号码"
                                                                                   p:propertyName="applicationPhoneNbr"
-                                                                                  p:required="true"
-                                                                                  p:readOnly="false" >
-                                                                                <property name="validCharactersConstraint">
-                                                                                    <bean parent="NumericPatternConstraint"/>
-                                                                                </property>
+                                                                                  p:required="true">
                                                                             </bean>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程名称" p:messageText="@{applyAssistantViewObject.courseName}"/>
@@ -186,6 +182,7 @@
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
+                                                                                  p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control');"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:render="@{applicationPhoneNbr==null}"
                                                                                   p:methodToCall="submitTaForm"

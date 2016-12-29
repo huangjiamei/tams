@@ -268,6 +268,18 @@
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
                                                                             </bean>
+
+                                                                            <!--学院-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condDepartmentName">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <!--课程名称-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseName"/>
@@ -287,18 +299,6 @@
                                                                             <!--助教经费-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="courseAppFunds" p:additionalCssClasses="searchBoxWidth"/>
-
-                                                                            <!--学院-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="condDepartmentName">
-                                                                                <property name="optionsFinder">
-                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
-                                                                                          p:blankOption="true"/>
-                                                                                </property>
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-DropdownControl"/>
-                                                                                </property>
-                                                                            </bean>
                                                                             <!--聘用助教数-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="taNumber" p:additionalCssClasses="searchBoxWidth"/>
@@ -350,6 +350,8 @@
                                                                             <bean parent="Uif-DataField" p:label="状态"
                                                                                   p:propertyName="status"
                                                                                   p:additionalCssClasses="@{#line.courseName == null?' ':(#line.order.equals('1')?'bg-table-success tams-form-label':(#line.order.equals('5')?'bg-table-red tams-form-label':'bg-table-grey tams-form-label'))}"/>
+                                                                            <bean parent="Uif-DataField" p:label="学院"
+                                                                                  p:propertyName="departmentName"/>
                                                                             <bean parent="Uif-DataField" p:label="课程名称"
                                                                                   p:propertyName="courseName"
                                                                                   p:sortAs="numeric"/>
@@ -364,8 +366,6 @@
                                                                                   p:propertyName="workTime"/>
                                                                             <bean parent="Uif-DataField" p:label="助教经费(元)"
                                                                                   p:propertyName="appFunds"/>
-                                                                            <bean parent="Uif-DataField" p:label="学院"
-                                                                                  p:propertyName="departmentName"/>
                                                                             <bean parent="Uif-DataField" p:label="已聘用/已申请"
                                                                                   p:propertyName="taCount"/>
 

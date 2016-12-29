@@ -1664,7 +1664,7 @@ public class adminController extends BaseController {
         conditions.put("IdCard", infoForm.getDetailsIDCard());
         conditions.put("CourseName", infoForm.getDetailsCourseName());
         conditions.put("CourseCode", infoForm.getDetailsCourseCode());
-        conditions.put("ClassNbr", infoForm.gettClassNbr());
+        conditions.put("classNbr", infoForm.getDetailsClassNbr());
         conditions.put("month1", infoForm.getMonth1());
         conditions.put("month2", infoForm.getMonth2());
         conditions.put("month3", infoForm.getMonth3());

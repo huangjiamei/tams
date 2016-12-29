@@ -1,11 +1,14 @@
 package cn.edu.cqu.ngtl.optionfinder.adminview;
 
+import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowFunctionsDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatus;
+import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import org.kuali.rice.core.api.util.ConcreteKeyValue;
 import org.kuali.rice.core.api.util.KeyValue;
 import org.kuali.rice.krad.keyvalues.KeyValuesBase;
+import org.kuali.rice.krad.util.GlobalVariables;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +32,18 @@ public class ApproveStatusFinder extends KeyValuesBase {
         String approveFunctionId = new TAMSWorkflowFunctionsDaoJpa().selectOneByName("审核").getId();
         List<TAMSWorkflowStatus> statuses = new TAMSWorkflowStatusDaoJpa().selectByFunctionId(approveFunctionId);
 
-        for(TAMSWorkflowStatus status : statuses) {
-            keyValues.add(new ConcreteKeyValue(status.getId(), status.getWorkflowStatus()));
+
+        User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
+        Boolean userInfo=new UserInfoServiceImpl().isStudent(user.getCode());//检测是否为学生，如果是，则optionfinder只显示工作状态
+
+        if(userInfo){
+            keyValues.add(new ConcreteKeyValue("5", "工作"));
+        }else{
+            for(TAMSWorkflowStatus status : statuses) {
+                keyValues.add(new ConcreteKeyValue(status.getId(), status.getWorkflowStatus()));
+            }
         }
+
 
         return keyValues;
     }

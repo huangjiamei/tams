@@ -232,6 +232,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String detailsIDCard;
     private String detailsCourseName;
     private String detailsCourseCode;
+    private String detailsClassNbr;
     private String month1;
     private String month2;
     private String month3;
@@ -654,6 +655,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String courseNmb;
     private String courseManager;
     private String instructorCode;
+    private String deptCode;
     private List<CourseManagerViewObject> courseManagerViewObjects;
     private String searchCourseNm;
     private String searchCourseNmb;
@@ -1639,5 +1641,21 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void settClassNbr(String tClassNbr) {
         this.tClassNbr = tClassNbr;
+    }
+
+    public String getDetailsClassNbr() {
+        return detailsClassNbr;
+    }
+
+    public void setDetailsClassNbr(String detailsClassNbr) {
+        this.detailsClassNbr = detailsClassNbr;
+    }
+
+    public String getDeptCode() {
+        return deptCode;
+    }
+
+    public void setDeptCode(String deptCode) {
+        this.deptCode = deptCode;
     }
 }

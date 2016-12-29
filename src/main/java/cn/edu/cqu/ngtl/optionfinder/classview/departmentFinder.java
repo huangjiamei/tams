@@ -29,7 +29,7 @@ public class departmentFinder extends KeyValuesBase {
         }
 
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
-        Boolean userInfo=new UserInfoServiceImpl().isCollegeStaff(user.getCode());//检测是否为而建单位管理员，如果是，则optionfinder只显示本学院
+        Boolean userInfo=new UserInfoServiceImpl().isCollegeStaff(user.getCode());//检测是否为二级单位管理员，如果是，则optionfinder只显示本学院
 
         List<UTDepartment> departments= new UTDepartmentDaoJpa().getAllHasCourseDepartment();
         if (!userInfo) {

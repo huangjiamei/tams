@@ -109,7 +109,8 @@
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="inputField1"
-                                                                                  p:style="width:100%;">
+                                                                                  p:style="width:100%;"
+                                                                                  p:readOnly="true">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
                                                                                           p:style="height:300px;resize: none;"/>

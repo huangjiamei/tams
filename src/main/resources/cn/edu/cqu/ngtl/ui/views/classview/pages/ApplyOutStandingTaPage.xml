@@ -33,7 +33,7 @@
                            http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
     <!--学生应聘助教-->
-    <bean id="ApplyOutStandingTaPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
+    <bean id="ApplyOutStandingClassPage" parent="Uif-VerticalBoxSection" p:additionalCssClasses="container"
           p:onDocumentReadyScript="setupAutoSideBar()">
         <property name="items">
             <list>
@@ -119,7 +119,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                 <bean parent="Uif-HorizontalBoxSection">
+                                                                <bean parent="Uif-HorizontalBoxSection">
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"

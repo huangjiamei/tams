@@ -108,7 +108,7 @@
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="EXCEL"
                                                                               p:methodToCall="exportCourseManagerExcel"
-                                                                              p:additionalCssClasses="icon-list bg-orange box-btngroup"/>
+                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="PDF"
                                                                               p:methodToCall="exportCourseManagerPDF"
@@ -116,7 +116,7 @@
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="初始化课程负责人"
                                                                               p:methodToCall="initCourseManager"
-                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                              p:additionalCssClasses="icon-list bg-success box-btngroup"/>
                                                                     </list>
                                                                 </property>
                                                             </bean>
@@ -236,20 +236,29 @@
                   p:additionalCssClasses="col-md-12 col-lg-12">
                 <property name="items">
                     <list>
-                        <!--<bean parent="Uif-InputField" p:label="课程名" p:readOnly="true"
-                              p:propertyName="courseNm"/>
-                        <bean parent="Uif-InputField" p:label="课程代码" p:readOnly="true"
-                              p:propertyName="courseNmb"/>
-                        <bean parent="Uif-InputField" p:label="现任课程负责人" p:readOnly="true"
-                              p:propertyName="courseManager"/>
-                        <bean parent="Uif-InputField" p:label="新任课程负责人职工号"
-                              p:propertyName="InstructorCode"/>-->
                         <bean id="courseManagerId" parent="Uif-InputField" p:label="姓名"
                               p:propertyName="courseManager"
+                              p:additionalCssClasses="col-md-12 col-lg-5"
                               p:onDocumentReadyScript="clickButton('courseManagerId','searchCourseManagerButton')"/>
                         <bean id="instructorCodeId" parent="Uif-InputField" p:label="职工号"
                               p:propertyName="instructorCode"
+                              p:additionalCssClasses="col-md-12 col-lg-5"
                               p:onDocumentReadyScript="clickButton('instructorCodeId','searchCourseManagerButton')"/>
+                        <!--学院-->
+                        <bean parent="Uif-InputField"
+                              p:propertyName="deptCode"
+                              p:additionalCssClasses="col-md-12 col-lg-5"
+                              p:label="学院">
+                            <property
+                                    name="optionsFinder">
+                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                      p:blankOption="true"/>
+                            </property>
+                            <property
+                                    name="control">
+                                <bean parent="Uif-DropdownControl"/>
+                            </property>
+                        </bean>
 
                         <bean id="searchCourseManagerButton" parent="Uif-PrimaryActionButton"
                               p:actionLabel="查询"

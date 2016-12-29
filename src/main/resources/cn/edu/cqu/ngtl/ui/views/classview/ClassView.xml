@@ -186,10 +186,10 @@
                         </list>
                     </property>
                 </bean>
-                <bean parent="Uif-Page" p:id="pageApplyOutStandingTa" p:title="申请优秀助教">
+                <bean parent="Uif-Page" p:id="pageApplyOutStandingClass" p:title="申请优秀助教">
                     <property name="items">
                         <list>
-                            <ref bean="ApplyOutStandingTaPage"/>
+                            <ref bean="ApplyOutStandingClassPage"/>
                         </list>
                     </property>
                 </bean>

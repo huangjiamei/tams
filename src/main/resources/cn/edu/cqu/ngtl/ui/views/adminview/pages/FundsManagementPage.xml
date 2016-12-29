@@ -1382,7 +1382,7 @@
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:actionImagePlacement="LEFT"
-                                                                                                                      p:methodToCall="SaveDeptFunding"
+                                                                                                                      p:methodToCall="SaveTaFunding"
                                                                                                                       p:render="true"
                                                                                                                       p:additionalCssClasses="icon-save bg-success box-btngroup"/><!--@{#form.academicAffairManager}-->
                                                                                                             </list>

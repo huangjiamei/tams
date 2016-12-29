@@ -815,6 +815,65 @@ public class AdminServiceImpl implements IAdminService {
 
     }
 
+    //计算助教经费
+    @Override
+    public Integer countTaFunding (List<TaFundingViewObject> taFundingViewObjects) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        List<String> classIds = new ArrayList<>();
+        for(TaFundingViewObject per : taFundingViewObjects) {
+            classIds.add(per.getClassId());
+        }
+        //获取不重复的classids
+        for(int i=0; i<classIds.size(); i++) {
+            for(int j=i+1; j<classIds.size(); j++) {
+                if(classIds.get(i).toString().equals(classIds.get(j).toString()))
+                    classIds.remove(j);
+            }
+        }
+        //获取原来的值
+        List<Integer> setTotalAssigneds = new ArrayList<>();
+        for(int i=0; i<classIds.size(); i++) {
+            List<TAMSTa> tamsTas = tamsTaDao.selectByClassId(classIds.get(i));
+            Integer setTotalAssigned = 0;
+            for(TAMSTa per : tamsTas) {
+                setTotalAssigned = setTotalAssigned + Integer.parseInt(per.getAssignedFunding());
+            }
+            setTotalAssigneds.add(setTotalAssigned);
+        }
+        //获取课程总经费
+        List<Integer> classFundingAssigned = new ArrayList<>();
+        List<TAMSClassFunding> classFunding = tamsClassFundingDao.selectByClassIds(classIds);
+        if(classFunding != null) {
+            for (TAMSClassFunding per : classFunding) {
+                classFundingAssigned.add(Integer.parseInt(per.getAssignedFunding()));
+            }
+        }
+        //获取差值
+        List<Integer> subs = new ArrayList<>();
+        for(int i=0; i<classIds.size(); i++) {
+            Integer sub =0;
+            for(int j=0; j<taFundingViewObjects.size(); j++) {
+                if(classIds.get(i).toString().equals(taFundingViewObjects.get(j).getClassId()))
+                    sub = sub + (Integer.parseInt(taFundingViewObjects.get(j).getAssignedFunding()) -
+                            Integer.parseInt(tamsTaDao.selectByStudentIdAndClassIdAndSessionId(
+                                    taFundingViewObjects.get(j).getStuId(), classIds.get(i), curSession.getId().toString()).getAssignedFunding()
+                            )
+                    );
+            }
+            subs.add(sub);
+        }
+
+        Integer code = 0;
+        for(int i=0; i<classFundingAssigned.size(); i++) {
+            if((subs.get(i) + setTotalAssigneds.get(i)) > classFundingAssigned.get(i)){
+                code = 1;
+                break;
+            }else
+                code = 2;
+        }
+        return code;
+    }
+
     @Override
     public void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
@@ -840,11 +899,12 @@ public class AdminServiceImpl implements IAdminService {
     public void saveTaFunding(List<TaFundingViewObject> taFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
         for (TaFundingViewObject per : taFundingViewObjects) {
-            TAMSTa exist = tamsTaDao.selectByClassIdAndSessionId(per.getClassNbr(), curSession.getId().toString());
+            TAMSTa exist = tamsTaDao.selectByStudentIdAndClassIdAndSessionId(per.getStuId(), per.getClassId(), curSession.getId().toString());
             exist.setAssignedFunding(per.getAssignedFunding());
             tamsTaDao.insertByEntity(exist);
         }
     }
+
 
     @Override
     public void saveSessionFunding(List<SessionFundingViewObject> sessionFundingViewObjects) {

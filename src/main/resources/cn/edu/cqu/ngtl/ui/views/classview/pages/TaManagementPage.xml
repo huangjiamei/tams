@@ -212,10 +212,8 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="聘用"
                                                                                   p:render = "@{#form.canEmploy}"
+                                                                                  p:methodToCall="showEmployDialog"
                                                                                   p:additionalCssClasses="icon-check bg-teal box-btngroup">
-                                                                                <property name="confirmationDialog">
-                                                                                    <ref bean="confirmEmployDialog" />
-                                                                                </property>
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"

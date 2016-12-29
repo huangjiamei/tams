@@ -366,6 +366,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
+        if(classInfoService.isInBlackList(infoForm.getApplyAssistantViewObject().getStudentId())){
+            infoForm.setErrMsg("您曾经被解聘，无法申请助教！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         short code = taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
         if(code == 10){
             infoForm.setErrMsg("管理员未设置相应的添加时间！");
@@ -1380,6 +1385,9 @@ public class ClassController extends BaseController {
         }
 
         Boolean result = taService.dismissTa(classConverter.extractIdsAndClassIdsFromMyTaInfo(needToFire),GlobalVariables.getUserSession().getPrincipalId());
+
+
+
 
         if(result)
             return this.getTaManagementPage(form, request);

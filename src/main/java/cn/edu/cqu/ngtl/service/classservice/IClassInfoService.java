@@ -15,6 +15,8 @@ public interface IClassInfoService {
 
     void validClassFunds(String classId);
 
+    boolean isInBlackList(String stuId);
+
     /**
      * 找出所有是工作状态的课程
      * @return

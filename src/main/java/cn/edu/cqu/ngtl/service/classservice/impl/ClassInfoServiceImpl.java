@@ -38,6 +38,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     private TAMSTaApplicationDao tamsTaApplicationDao;
 
     @Autowired
+    private TAMSTaBlackListDao tamsTaBlackListDao;
+
+    @Autowired
     private UTClassInfoDao classInfoDao;
 
     @Autowired
@@ -591,6 +594,25 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public List<TAMSClassApplyFeedback> getFeedBackByClassId(String classId) {
         return tamsClassApplyFeedbackDao.getFbByClassId(classId);
+    }
+
+    @Override
+    public boolean isInBlackList(String stuId){
+        List<String> blackManList = new ArrayList<>();
+        List<TAMSTaBlackList> allBlackMen = tamsTaBlackListDao.getAllBlackList(); //被加入黑名单的无法被查到
+        if(allBlackMen!=null&&allBlackMen.size()!=0){
+            for(TAMSTaBlackList tamsTaBlackList:allBlackMen) {
+                blackManList.add(tamsTaBlackList.getTaId());
+            }
+        }else{
+            blackManList.add("");
+        }
+
+        if(blackManList.contains(stuId)){
+            return  true;
+        }else{
+            return false;
+        }
     }
 
     @Override

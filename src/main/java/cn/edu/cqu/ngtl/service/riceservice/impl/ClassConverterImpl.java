@@ -1,13 +1,16 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.bo.StuIdClassIdPair;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaBlackListDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaBlackList;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -19,6 +22,9 @@ import java.util.List;
 
 @Service
 public class ClassConverterImpl implements IClassConverter {
+
+    @Autowired
+    private TAMSTaBlackListDao tamsTaBlackListDao;
 
 
     private static final Logger logger = Logger.getRootLogger();
@@ -66,20 +72,32 @@ public class ClassConverterImpl implements IClassConverter {
             return null;
         }
         List<MyTaViewObject> viewObjects = new ArrayList<>();
+        List<String> blackManList = new ArrayList<>();
+        List<TAMSTaBlackList> allBlackMen = tamsTaBlackListDao.getAllBlackList(); //被加入黑名单的无法被查到
+        if(allBlackMen!=null&&allBlackMen.size()!=0){
+            for(TAMSTaBlackList tamsTaBlackList:allBlackMen) {
+                blackManList.add(tamsTaBlackList.getTaId());
+            }
+        }else{
+            blackManList.add("");
+        }
+
         for (UTStudent listone : studentList) {
-            MyTaViewObject viewObject = new MyTaViewObject();
-            viewObject.setTaName(listone.getName());
-            viewObject.setTaIdNumber(listone.getId());
-            viewObject.setTaGender(listone.getGender());
-            viewObject.setContactPhone("缺失");
-            //点击查看详细信息会用到的
-            CMProgram program = listone.getProgram();
-            if (program == null)
-                viewObject.setTaMajorName("缺失");
-            else
-                viewObject.setTaMajorName(listone.getProgram().getName().toString());
-            viewObject.setAdvisorName("缺失");
-            viewObjects.add(viewObject);
+            if(!blackManList.contains(listone.getId())) {
+                MyTaViewObject viewObject = new MyTaViewObject();
+                viewObject.setTaName(listone.getName());
+                viewObject.setTaIdNumber(listone.getId());
+                viewObject.setTaGender(listone.getGender());
+                viewObject.setContactPhone("缺失");
+                //点击查看详细信息会用到的
+                CMProgram program = listone.getProgram();
+                if (program == null)
+                    viewObject.setTaMajorName("缺失");
+                else
+                    viewObject.setTaMajorName(listone.getProgram().getName().toString());
+                viewObject.setAdvisorName("缺失");
+                viewObjects.add(viewObject);
+            }
         }
         return viewObjects;
     }

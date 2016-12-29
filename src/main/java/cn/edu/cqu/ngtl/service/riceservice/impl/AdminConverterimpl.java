@@ -350,6 +350,7 @@ public class AdminConverterimpl implements IAdminConverter {
                 }
 
                 UTStudent blackMan = utStudentDao.getUTStudentById(tamsTaBlack.getTaId());
+                blackListViewObject.setStuId(tamsTaBlack.getTaId());
                 if(blackMan!=null){
                     blackListViewObject.setStuName(blackMan.getName());
                 }else{

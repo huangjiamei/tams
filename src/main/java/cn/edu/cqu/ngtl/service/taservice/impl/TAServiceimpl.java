@@ -667,7 +667,7 @@ public class TAServiceimpl implements ITAService {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Boolean result = false;
         for(StuIdClassIdPair pair :pairs){
-            tamstadao.deleteByTaIdAndClass(pair.getStuId(),pair.getStuId());
+            tamstadao.deleteByTaIdAndClass(pair.getStuId(),pair.getClassId());
 
             TAMSTaBlackList tamsTaBlackList = new TAMSTaBlackList();
             tamsTaBlackList.setBeenFiredTime((sdf.format(new Date())).toString());

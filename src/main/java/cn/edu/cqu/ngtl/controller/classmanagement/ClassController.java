@@ -1386,11 +1386,13 @@ public class ClassController extends BaseController {
 
         Boolean result = taService.dismissTa(classConverter.extractIdsAndClassIdsFromMyTaInfo(needToFire),GlobalVariables.getUserSession().getPrincipalId());
 
-
-
+        for(MyTaViewObject needTodelete : needToFire){
+            infoForm.getAllMyTa().remove(needTodelete);
+        }
 
         if(result)
-            return this.getTaManagementPage(form, request);
+//            return this.getTaManagementPage(form, request);
+            return this.getModelAndView(infoForm, "pageTaManagement");
         else{
             infoForm.setErrMsg("解聘助教出错！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);

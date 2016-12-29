@@ -99,12 +99,14 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="恢复"
                                                                                   p:actionImagePlacement="LEFT"
+                                                                                  p:render="false"
                                                                                   p:methodToCall="recover"
                                                                                   p:additionalCssClasses="icon-repeat bg-success box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="暂停"
                                                                                   p:actionImagePlacement="LEFT"
+                                                                                  p:render="false"
                                                                                   p:methodToCall="pause"
                                                                                   p:additionalCssClasses="icon-stop bg-orange box-btngroup">
                                                                             </bean>

@@ -868,7 +868,7 @@ public class adminController extends BaseController {
 
         String filePath=adminService.prepareCourseManagerToPDF(courseManagerViewObjectList );
         if (filePath.equals("exception")){
-            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+            infoForm.setErrMsg("系统导出PDF文件错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }else{
             String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
@@ -1032,7 +1032,7 @@ public class adminController extends BaseController {
      * @return
      *
      */
-    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportJingFeiPDF"})
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportFundsDetailPDF"})
     public ModelAndView exportJingFeiPDF(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
@@ -1047,7 +1047,7 @@ public class adminController extends BaseController {
             List<DetailFundingViewObject> JingFeiManager = infoForm.getDetailFunding();
             String filePath = adminService.prepareJingFeiToPDF(JingFeiManager);
             if (filePath.equals("exception")) {
-                infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+                infoForm.setErrMsg("系统导出PDF文件错误！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             } else {
                 String baseUrl = CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
@@ -1077,7 +1077,7 @@ public class adminController extends BaseController {
         List<SessionFundingViewObject> SchoolHistoryFundsManager=infoForm.getPreviousSessionFundings();
         String filePath = adminService.prepareSchoolHistoryFundsPDF(SchoolHistoryFundsManager);
         if (filePath.equals("exception")) {
-            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+            infoForm.setErrMsg("系统导出PDF文件错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         } else {
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
@@ -1107,7 +1107,7 @@ public class adminController extends BaseController {
         List<DepartmentFundingViewObject> CollegeHistoryFundsManager=infoForm.getDepartmentPreFundings();
         String filePath = adminService.prepareCollegeHistoryFundsPDF(CollegeHistoryFundsManager);
         if (filePath.equals("exception")) {
-            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+            infoForm.setErrMsg("系统导出PDF文件错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         } else {
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
@@ -1137,7 +1137,7 @@ public class adminController extends BaseController {
         List<DepartmentFundingViewObject> CollegeFundsManager=infoForm.getDepartmentCurrFundings();
         String filePath = adminService.prepareCollegeFundsPDF(CollegeFundsManager);
         if (filePath.equals("exception")) {
-            infoForm.setErrMsg("捕获到异常，系统导出PDF文件错误！");
+            infoForm.setErrMsg("系统导出PDF文件错误！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         } else {
             String baseUrl = CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);

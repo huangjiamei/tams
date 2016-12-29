@@ -160,9 +160,11 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
 
-        else if(userInfoService.isCollegeStaff(uId)){ //部门管理员
+        else if(userInfoService.isCollegeStaff(uId)){ //部门管理员 (部门管理员也可能是教师)
             UTInstructor utInstructor = utInstructorDao.getInstructorByIdWithoutCache(uId);
             List<UTClassInformation> result = classInfoDao.getAllCurrentClassInformationByDeptId(utInstructor.getDepartmentId().toString());
+
+
             return result;
         }
         else if (userInfoService.isCourseManager(uId)) {  //默认是课程负责人一定是教师

@@ -1,7 +1,6 @@
 package cn.edu.cqu.ngtl.dao.ut.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.UTStudentDao;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
@@ -15,7 +14,6 @@ import javax.persistence.Query;
 import java.util.List;
 import java.util.Map;
 
-import static org.kuali.rice.core.api.criteria.PredicateFactory.and;
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
 
 @Repository
@@ -55,7 +53,7 @@ public class UTStudentDaoJpa implements UTStudentDao {
 				conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
 		}
 		if(countNull != 2) {
-			Query qr = em.createNativeQuery("SELECT * FROM UNITIME_STUDENT s WHERE s.NAME LIKE '"+conditions.get("StudentName")+"' AND s.UNIQUEID LIKE '"+conditions.get("StudentId")+"' ", UTStudent.class);
+			Query qr = em.createNativeQuery("SELECT * FROM UNITIME_STUDENT s WHERE s.NAME LIKE '"+conditions.get("StudentName")+"' AND s.UNIQUEID LIKE '"+conditions.get("StudentId")+"' ORDER BY s.PROGRAM_ID DESC", UTStudent.class);
 			return qr.getResultList().size() !=0 ? qr.getResultList() : null;
 		}
 		//若输入为空，返回。。。。

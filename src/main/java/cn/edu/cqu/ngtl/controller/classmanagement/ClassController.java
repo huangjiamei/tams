@@ -1403,7 +1403,6 @@ public class ClassController extends BaseController {
 
 
     /**
-     * 测试用方法：
      * 助教管理页面，输入姓名或学号，查询助教
      * @param form
      * @return

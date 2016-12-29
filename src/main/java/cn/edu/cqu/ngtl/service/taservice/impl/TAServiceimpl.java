@@ -146,6 +146,22 @@ public class TAServiceimpl implements ITAService {
     //根据姓名和学号查找候选人
     public List<UTStudent> getConditionTaByNameAndId(Map<String, String> conditions) {
         List<UTStudent> studentInfo = studentDao.selectStudentByNameAndId(conditions);
+
+/*        Comparator<UTStudent> comparator = new Comparator<UTStudent>(){
+
+            public int compare(UTStudent s1, UTStudent s2) {
+                //先排年龄
+                if(s1.getId().length()>s2.getId().length()){
+                    return 1;
+                }
+                else{
+                    return 0;
+                }
+            }
+        };
+
+        Collections.sort(studentInfo,comparator);*/
+
         return studentInfo;
     }
 

@@ -2669,6 +2669,19 @@ public class adminController extends BaseController {
         return this.showDialog("confirmTrafficDialog",true,adminInfoForm);
     }
 
+    /**
+     * http://127.0.0.1:8080/tams/portal/admin?methodToCall=getBlackListPage&viewId=AdminView
+     *
+     * @param form
+     * @return 黑名单
+     * @throws Exception
+     */
+    @RequestMapping(params = "methodToCall=getBlackListPage")
+    public ModelAndView getBlackListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
 
-
+        return this.getModelAndView(adminInfoForm, "pageBlackList");
     }
+
+}

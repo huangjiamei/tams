@@ -497,6 +497,10 @@
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getSyncInfoPage&amp;viewId=AdminView"
                                   p:linkText="同步信息" p:iconClass="icon-retweet menuIcon"
                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewSyncInfoPage')}"/>
+                            <bean parent="Uif-Link"
+                                  p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getBlackListPage&amp;viewId=AdminView"
+                                  p:linkText="黑名单" p:iconClass="icon-lock menuIcon"
+                               />
 
                         </list>
                     </property>

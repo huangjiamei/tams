@@ -25,6 +25,8 @@ public class MyTaViewObject {
 
     private String applicationClassId;
 
+    private String departmentName ;
+
     public String getApplicationClassId() {
         return applicationClassId;
     }
@@ -102,5 +104,13 @@ public class MyTaViewObject {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 }

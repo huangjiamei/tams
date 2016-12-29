@@ -170,4 +170,11 @@ public interface IAdminService {
     String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList);
 
     List<TAMSTaBlackList> getAllBlackList();
+    String prepareJingFeiToPDF(List<DetailFundingViewObject> JingFeiManager);
+    String prepareSchoolHistoryFundsPDF(List<SessionFundingViewObject> SchoolHistoryFundsManager);
+    String prepareCollegeHistoryFundsPDF(List<DepartmentFundingViewObject> CollegeHistoryFundsManager);
+    String prepareCollegeFundsPDF(List<DepartmentFundingViewObject> CollegeFundsManager);
+
+
+    Integer countTaFunding (List<TaFundingViewObject> taFundingViewObjects);
 }

@@ -233,9 +233,17 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                         /**
                          * Class对象
                          */
+                        String teachWeekResult = "";
+                        String [] teachWeekPre = teachWeek.split(",");
+                        for(String s : teachWeekPre){
+                            if(!teachWeekResult.contains("s")){
+                                teachWeekResult+=s+"|";
+                            }
+                        }
+
                         UTClass utClass = new UTClass();
                         utClass.setRoomName(roomName);
-                        utClass.setTeachWeek(teachWeek);
+                        utClass.setTeachWeek(teachWeekResult);
                         utClass.setClassNumber(classNbr);
                         utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
                         utClass.setCourseOfferingId(sessionPrefix+editClassNbr);

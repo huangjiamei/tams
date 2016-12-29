@@ -166,4 +166,9 @@ public interface IAdminService {
     Integer countClassFunding (List<ClassFundingViewObject> classFundingViewObjects, String totalAssignedClass);
 
     String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList);
+    String prepareJingFeiToPDF(List<DetailFundingViewObject> JingFeiManager);
+    String prepareSchoolHistoryFundsPDF(List<SessionFundingViewObject> SchoolHistoryFundsManager);
+    String prepareCollegeHistoryFundsPDF(List<DepartmentFundingViewObject> CollegeHistoryFundsManager);
+    String prepareCollegeFundsPDF(List<DepartmentFundingViewObject> CollegeFundsManager);
+
 }

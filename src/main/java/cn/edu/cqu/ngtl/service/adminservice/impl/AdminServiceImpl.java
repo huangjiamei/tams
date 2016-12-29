@@ -1162,4 +1162,175 @@ public class AdminServiceImpl implements IAdminService {
         return filePath;
     }
 
+    /**
+     *获取经费明细PDF格式导出的路径
+     * @param  JingFeiManager
+     * @return filePath
+     */
+@Override
+    public String prepareJingFeiToPDF(List<DetailFundingViewObject> JingFeiManager){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "经费明细列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"助教","学号","银行","银行卡号","身份证号","课程","课程代码","教学班号","3月实发","4月实发","5月实发","6月实发","7月实发","8月实发","实发总额"};
+            List<String[]> Content = new ArrayList( JingFeiManager.size());
+            for(DetailFundingViewObject jingfeiMVOList :  JingFeiManager) {
+                String taName = jingfeiMVOList.getTaName()   == null ? "" : jingfeiMVOList.getTaName();
+                String stuId = jingfeiMVOList.getStuId()     == null ? "" : jingfeiMVOList.getStuId();
+                String bankName= jingfeiMVOList.getBankName()== null ? "" : jingfeiMVOList.getBankName();
+                String bankId = jingfeiMVOList.getBankId()   == null ? "" : jingfeiMVOList.getBankId();
+                String identity=jingfeiMVOList.getIdentity() == null ? "" : jingfeiMVOList.getIdentity();
+                String classNbr=jingfeiMVOList.getClassNbr() == null ? "" : jingfeiMVOList.getClassNbr();
+                String instructorName=jingfeiMVOList.getInstructorName()   == null ? "" :jingfeiMVOList.getInstructorName() ;
+                String courseName=jingfeiMVOList.getCourseName() == null ? "" :jingfeiMVOList.getCourseName();
+                String courseCode=jingfeiMVOList.getCourseCode() == null ? "" :jingfeiMVOList.getCourseCode();
+                String monthlySalary3=jingfeiMVOList.getMonthlySalary3() == null ? "" :jingfeiMVOList.getMonthlySalary3();
+                String monthlySalary4=jingfeiMVOList.getMonthlySalary4() == null ? "" :jingfeiMVOList.getMonthlySalary4();
+                String monthlySalary5=jingfeiMVOList.getMonthlySalary5() == null ? "" :jingfeiMVOList.getMonthlySalary5();
+                String monthlySalary6=jingfeiMVOList.getMonthlySalary6() == null ? "" :jingfeiMVOList.getMonthlySalary6();
+                String monthlySalary7=jingfeiMVOList.getMonthlySalary7() == null ? "" :jingfeiMVOList.getMonthlySalary7();
+                String monthlySalary8=jingfeiMVOList.getMonthlySalary8() == null ? "" :jingfeiMVOList.getMonthlySalary8();
+                String total=jingfeiMVOList.getTotal() == null ? "" :jingfeiMVOList.getTotal();
+                String[] content = {
+                        taName, stuId, bankName, bankId,identity,courseName,
+                        courseCode,classNbr,monthlySalary3,monthlySalary4,                                   monthlySalary5,monthlySalary6,monthlySalary7,monthlySalary8,total
+                };
+                Content.add(content);
+            }
+            filePath = PDFService.printNormalTable("经费明细列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+//            e.printStackTrace();
+//            infoForm.setErrMsg("系统导出PDF文件错误！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
+    }
+
+    /**
+     *获取学校历史经费PDF格式导出的路径
+     * @param  SchoolHistoryFundsManager
+     * @return filePath
+     */
+    @Override
+    public String prepareSchoolHistoryFundsPDF(List<SessionFundingViewObject> SchoolHistoryFundsManager){
+     SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+     String fileName = "学校历史经费列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+       String filePath="";
+        try{
+            String[] header = {"批次","预算经费","申报经费","批次经费","博士津贴","奖励经费","交通补贴","总经费"};
+            List<String[]> Content = new ArrayList( SchoolHistoryFundsManager.size());
+            for(SessionFundingViewObject SchoolHistoryFundsMVOList :  SchoolHistoryFundsManager) {
+                String sessionName = SchoolHistoryFundsMVOList.getSessionName() == null ? "" :SchoolHistoryFundsMVOList.getSessionName() ;
+                String planFunding = SchoolHistoryFundsMVOList.getPlanFunding() == null ? "" : SchoolHistoryFundsMVOList.getPlanFunding();
+                String applyFunding=SchoolHistoryFundsMVOList.getApplyFunding() == null ? "" : SchoolHistoryFundsMVOList.getApplyFunding();
+                String actualFunding = SchoolHistoryFundsMVOList.getActualFunding()   == null ? "" : SchoolHistoryFundsMVOList.getActualFunding();
+                String PhdFunding=SchoolHistoryFundsMVOList.getPhdFunding() == null ? "" :SchoolHistoryFundsMVOList.getPhdFunding();
+                String bonus=SchoolHistoryFundsMVOList.getBonus() == null ? "" : SchoolHistoryFundsMVOList.getBonus();
+                String trafficFunding=SchoolHistoryFundsMVOList.getTrafficFunding()   == null ? "" :SchoolHistoryFundsMVOList.getTrafficFunding() ;
+                String total=SchoolHistoryFundsMVOList.getTotal() == null ? "" :SchoolHistoryFundsMVOList.getTotal();
+
+                String[] content = {
+                        sessionName, planFunding, applyFunding, actualFunding,
+                        PhdFunding,bonus, trafficFunding,total
+                };
+                Content.add(content);
+            }
+            filePath = PDFService.printNormalTable("学校历史经费列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+//            e.printStackTrace();
+//            infoForm.setErrMsg("系统导出PDF文件错误！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            String errorMsg="exception";
+            return errorMsg;
+        }
+     return filePath;
+    }
+    /**
+     *获取学院经费PDF格式导出的路径
+     * @param  CollegeFundsManager
+     * @return filePath
+     */
+    @Override
+    public String prepareCollegeFundsPDF(List<DepartmentFundingViewObject> CollegeFundsManager){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "学院经费列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"批次","学院","预算经费","申报经费","批次经费","博士经费","奖励经费","交通补贴","总经费"};
+            List<String[]> Content = new ArrayList( CollegeFundsManager.size());
+            for(DepartmentFundingViewObject CollegeFundsMVOList :  CollegeFundsManager) {
+                String sessionName = CollegeFundsMVOList.getSessionName() == null ? "" :CollegeFundsMVOList.getSessionName() ;
+                String planFunding = CollegeFundsMVOList.getPlanFunding() == null ? "" : CollegeFundsMVOList.getPlanFunding();
+                String applyFunding=CollegeFundsMVOList.getApplyFunding() == null ? "" : CollegeFundsMVOList.getApplyFunding();
+                String actualFunding = CollegeFundsMVOList.getActualFunding()   == null ? "" : CollegeFundsMVOList.getActualFunding();
+                String PhdFunding=CollegeFundsMVOList.getPhdFunding() == null ? "" :CollegeFundsMVOList.getPhdFunding();
+                String bonus=CollegeFundsMVOList.getBonus() == null ? "" : CollegeFundsMVOList.getBonus();
+                String trafficFunding=CollegeFundsMVOList.getTrafficFunding()   == null ? "" :CollegeFundsMVOList.getTrafficFunding() ;
+                String total=CollegeFundsMVOList.getTotal() == null ? "" :CollegeFundsMVOList.getTotal();
+                String department=CollegeFundsMVOList.getDepartment() == null ? "" :CollegeFundsMVOList.getDepartment();
+                String[] content = {
+                        sessionName,department, planFunding, applyFunding, actualFunding,
+                        PhdFunding,bonus, trafficFunding,total
+                };
+                Content.add(content);
+            }
+            filePath = PDFService.printNormalTable("学院经费列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+//            e.printStackTrace();
+//            infoForm.setErrMsg("系统导出PDF文件错误！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
+    }
+    /**
+     *获取学院历史经费PDF格式导出的路径
+     * @param  CollegeHistoryFundsManager
+     * @return filePath
+     */
+    @Override
+    public String prepareCollegeHistoryFundsPDF(List<DepartmentFundingViewObject> CollegeHistoryFundsManager){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "学院历史经费列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"批次","学院","预算经费","申报经费","批次经费","博士津贴","奖励经费","交通补贴","总经费"};
+            List<String[]> Content = new ArrayList( CollegeHistoryFundsManager.size());
+            for(DepartmentFundingViewObject CollegeHistoryFundsMVOList :  CollegeHistoryFundsManager) {
+                String sessionName = CollegeHistoryFundsMVOList.getSessionName() == null ? "" :CollegeHistoryFundsMVOList.getSessionName() ;
+                String planFunding = CollegeHistoryFundsMVOList.getPlanFunding() == null ? "" : CollegeHistoryFundsMVOList.getPlanFunding();
+                String applyFunding=CollegeHistoryFundsMVOList.getApplyFunding() == null ? "" : CollegeHistoryFundsMVOList.getApplyFunding();
+                String actualFunding = CollegeHistoryFundsMVOList.getActualFunding()   == null ? "" : CollegeHistoryFundsMVOList.getActualFunding();
+                String PhdFunding=CollegeHistoryFundsMVOList.getPhdFunding() == null ? "" :CollegeHistoryFundsMVOList.getPhdFunding();
+                String bonus=CollegeHistoryFundsMVOList.getBonus() == null ? "" : CollegeHistoryFundsMVOList.getBonus();
+                String trafficFunding=CollegeHistoryFundsMVOList.getTrafficFunding()   == null ? "" :CollegeHistoryFundsMVOList.getTrafficFunding() ;
+                String total=CollegeHistoryFundsMVOList.getTotal() == null ? "" :CollegeHistoryFundsMVOList.getTotal();
+                String department=CollegeHistoryFundsMVOList.getDepartment() == null ? "" :CollegeHistoryFundsMVOList.getDepartment();
+                String[] content = {
+                        sessionName,department, planFunding, applyFunding, actualFunding,
+                        PhdFunding,bonus, trafficFunding,total
+                };
+                Content.add(content);
+            }
+            filePath = PDFService.printNormalTable("学院历史经费列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+//            e.printStackTrace();
+//            infoForm.setErrMsg("系统导出PDF文件错误！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
+    }
+
 }
+
+

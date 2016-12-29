@@ -2,13 +2,11 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSAttachments;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassTaApplication;
-import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -82,6 +80,10 @@ public class ClassController extends BaseController {
 
     @Autowired
     private IUserInfoService userInfoService;
+
+    @Autowired
+    private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
+
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
@@ -1236,6 +1238,11 @@ public class ClassController extends BaseController {
         super.baseStart(infoForm);
 
         List<MyTaViewObject> applicationList = infoForm.getAllApplication();
+        String classId = infoForm.getCurrClassId();
+        if(classId==null){
+            infoForm.setErrMsg("系统异常，请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
 
         //遍历所有list，找到选中的行
         List<MyTaViewObject> checkedList = new ArrayList<>();
@@ -1244,9 +1251,30 @@ public class ClassController extends BaseController {
                 checkedList.add(per);
         }
 
-        boolean result = taService.employBatchByStuIdsWithClassId(
+        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(infoForm.getCurrClassId());
+        if(tamsClassTaApplication==null){
+            infoForm.setErrMsg("您没有申请助教无法聘用！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        if(tamsClassTaApplication.getTaNumber() == null){
+            infoForm.setErrMsg("您没有申请助教无法聘用！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        int appTaNumber = tamsClassTaApplication.getTaNumber();
+
+
+        int addSize = taService.employBatchByStuIdsWithClassId(
                 classConverter.extractIdsFromApplication(checkedList)
         );
+
+        List<TAMSTa> taList = classInfoService.getAllTaFilteredByClassid(classId);
+
+
+        //开始释放剩下的tapplication
+
+
         for(MyTaViewObject needToAdd : checkedList){
             needToAdd.setCheckBox(false);
             needToAdd.setPayDay("暂未设置");
@@ -1262,7 +1290,9 @@ public class ClassController extends BaseController {
             //否则直接添加
             else
                 infoForm.getAllMyTa().add(needToAdd);
+
             infoForm.getAllApplication().remove(needToAdd);
+
             //聘用之后申请列表为空，往申请列表中添加一个空对象
             if(infoForm.getAllApplication().size() == 0){
                 List<MyTaViewObject> nullObject = new ArrayList<>();
@@ -1270,7 +1300,13 @@ public class ClassController extends BaseController {
                 infoForm.getAllApplication().addAll(nullObject);
             }
         }
-        if(result)
+
+        if(addSize+(taList==null?0:taList.size())>=appTaNumber){
+            classInfoService.releaseTaApplication(infoForm.getAllApplication());
+        }
+
+
+        if(addSize>=0)
             return this.getModelAndView(infoForm, "pageTaManagement");
         else {
             infoForm.setErrMsg("聘用出错！");
@@ -1479,8 +1515,6 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         String classId = infoForm.getCurrClassId();
-        String taphoneNumber = infoForm.getCandidatePhoneNbr();
-
 
         MyTaViewObject curTa = infoForm.getSelectedTa();
         curTa.setApplicationClassId(classId);

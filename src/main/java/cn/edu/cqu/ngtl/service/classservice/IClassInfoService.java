@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
+import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,8 @@ public interface IClassInfoService {
     void validClassFunds(String classId);
 
     boolean isInBlackList(String stuId);
+
+    void releaseTaApplication(List<MyTaViewObject> taViewObjects);
 
     /**
      * 找出所有是工作状态的课程

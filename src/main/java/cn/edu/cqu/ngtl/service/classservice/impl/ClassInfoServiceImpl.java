@@ -14,6 +14,7 @@ import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
+import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import org.apache.log4j.Logger;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -727,6 +728,19 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return true;
         }
         return false;
+    }
+
+
+    @Override
+    public void releaseTaApplication(List<MyTaViewObject> taViewObjects){
+        if(taViewObjects.size()!=0){
+            return;
+        }
+
+        //删除其他的申请
+        for(MyTaViewObject myTaViewObject:taViewObjects){
+            tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(),myTaViewObject.getApplicationClassId());
+        }
     }
 
 }

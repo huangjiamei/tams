@@ -332,7 +332,8 @@ public class TAServiceimpl implements ITAService {
 
     //聘用助教
     @Override
-    public boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs) {
+    public int employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs) {
+        int resultsize = 0;
         for (StuIdClassIdPair per : stuIdClassIdPairs) {
             TAMSTa isExist = taDao.selectByStudentIdAndClassId(per.getStuId(), per.getClassId());
             TAMSTaApplication readyToRemove = applicationDao.selectByStuIdAndClassId(per.getStuId(), per.getClassId());
@@ -403,9 +404,10 @@ public class TAServiceimpl implements ITAService {
             TAMSTaCategory masterTA = tamsTaCategoryDao.selectOneByName("硕士");
             TAMSTaCategory phdTA = tamsTaCategoryDao.selectOneByName("博士");
             if (masterTA == null || phdTA == null) {
-                return false;
+                return resultsize;
             }
             if (taDao.insertByEntity(newTa)) {
+                resultsize++;
                 //全局增加博士津贴 start
                 TAMSClassTaApplication currentClass = tamsClassTaApplicationDao.selectByClassId(per.getClassId());
                 if(currentClass!=null) {
@@ -421,12 +423,12 @@ public class TAServiceimpl implements ITAService {
                     continue;
                 } else
                     //删除申请信息失败
-                    return false;
+                    return resultsize;
             } else
                 //新建信息失败
-                return false;
+                return resultsize;
         }
-        return true;
+        return resultsize;
     }
 
 

@@ -62,7 +62,7 @@ public interface ITAService {
 
     boolean changeStatusBatchByTaIds(List<String> ids, String status);
 
-    boolean employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs);
+    int employBatchByStuIdsWithClassId(List<StuIdClassIdPair> stuIdClassIdPairs);
 
     boolean appraiseOutstandingToSpecifiedStatus(List<String> taIds, String uId, String workFlowStatusId);
 

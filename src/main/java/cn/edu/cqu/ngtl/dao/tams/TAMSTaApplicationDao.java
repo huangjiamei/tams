@@ -23,4 +23,6 @@ public interface TAMSTaApplicationDao {
     TAMSTaApplication selectByStuIdAndClassId(String stuId, String classId);
 
     boolean deleteByEntity(TAMSTaApplication readyToRemove);
+
+    void deleteBystuIdAndClassId(String stuId,String classId);
 }

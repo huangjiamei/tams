@@ -126,6 +126,17 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return true;
     }
 
+    @Override
+    public void deleteBystuIdAndClassId(String stuId, String classId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("applicationId", stuId),
+                        equal("applicationClassId", classId)
+                )
+        );
+        KradDataServiceLocator.getDataObjectService().deleteMatching(TAMSTaApplication.class,criteria.build());
+    }
+
 /*
     @Override
     public List<TAMSTaApplication> selectByClassId(String classId){

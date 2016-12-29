@@ -1,5 +1,7 @@
 package cn.edu.cqu.ngtl.viewobject.adminInfo;
 
+import javax.persistence.Transient;
+
 /**
  * Created by awake on 2016/11/29.
  */
@@ -34,6 +36,33 @@ public class TaFundingViewObject {
     private String bonus;
 
     private String total;
+    @Transient
+    public static String[] getAttrTittles(){
+        String[] attrTittles={
+                "学院","助教","学号","助教类别","课程","课程代码",
+                "教学班号","分配经费","博士津贴","交通补贴","奖励经费","总经费"
+
+        };
+        return attrTittles;
+    }
+
+    @Transient
+    public String[] getContents(){
+        String[] contents=new String[12];
+        contents[0]=getDepartmentName();
+        contents[1]=getTaName();
+        contents[2]=getStuId();
+        contents[3]=getTaType();
+        contents[4]=getCourseName();
+        contents[5]=getCourseCode();
+        contents[6]=getClassNbr();
+        contents[7]=getAssignedFunding();
+        contents[8]=getPhdFunding();
+        contents[9]=getTravelSubsidy();
+        contents[10]=getBonus();
+        contents[11]=getTotal();
+        return contents;
+    }
 
     public String getClassNbr() {
         return classNbr;

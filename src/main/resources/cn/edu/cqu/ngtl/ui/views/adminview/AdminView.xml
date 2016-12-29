@@ -212,6 +212,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageBlackList" p:title="黑名单">
+                    <property name="items">
+                        <list>
+                            <ref bean="BlackListPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

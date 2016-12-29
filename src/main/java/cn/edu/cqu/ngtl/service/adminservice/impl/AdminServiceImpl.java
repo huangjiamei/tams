@@ -1018,8 +1018,11 @@ public class AdminServiceImpl implements IAdminService {
             departmentId = "";
 
         List<UTInstructor> result = utInstructorDao.getInstructorByCodeAndNameAndDept(name, code,departmentId);
-        if (result == null)
-            result.add(new UTInstructor());  //填一个空对象
+        if (result == null) {
+            List<UTInstructor> emplyList = new ArrayList<>();
+            emplyList.add(new UTInstructor());  //填一个空对象
+            return emplyList;
+        }
         return result;
     }
 

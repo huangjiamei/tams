@@ -2666,9 +2666,12 @@ public class adminController extends BaseController {
             String classId = taFundingViewObject.getClassId();
             List<TAMSTaTravelSubsidy> result = tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
             if(result==null||result.size()==0){
-                result.add(new TAMSTaTravelSubsidy());
+                List<TAMSTaTravelSubsidy> emptyList = new ArrayList<>();
+                emptyList.add(new TAMSTaTravelSubsidy());
+                adminInfoForm.setTravelSubsidies(emptyList);
+            }else {
+                adminInfoForm.setTravelSubsidies(result);
             }
-            adminInfoForm.setTravelSubsidies(result);
         }
         return this.showDialog("confirmTrafficDialog",true,adminInfoForm);
     }

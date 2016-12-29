@@ -641,6 +641,7 @@ public class TAConverterimpl implements ITAConverter {
             cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject viewObject = new cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject();
             UTStudent taStu = ta.getTa();
             if (taStu != null) {
+                viewObject.setApplicationClassId(ta.getTaClassId());
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIdNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());

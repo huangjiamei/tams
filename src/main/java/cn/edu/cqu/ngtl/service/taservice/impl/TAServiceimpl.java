@@ -27,6 +27,7 @@ import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -663,12 +664,13 @@ public class TAServiceimpl implements ITAService {
 
     @Override
     public boolean dismissTa(List<StuIdClassIdPair> pairs, String uId){
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Boolean result = false;
         for(StuIdClassIdPair pair :pairs){
             tamstadao.deleteByTaIdAndClass(pair.getStuId(),pair.getStuId());
 
             TAMSTaBlackList tamsTaBlackList = new TAMSTaBlackList();
-            tamsTaBlackList.setBeenFiredTime(new Date().toString());
+            tamsTaBlackList.setBeenFiredTime((sdf.format(new Date())).toString());
             tamsTaBlackList.setTaId(pair.getStuId());
             tamsTaBlackList.setFiredBy(uId);
             result = tamsTaBlackListDao.insertOneByEntity(tamsTaBlackList);

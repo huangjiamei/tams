@@ -1194,6 +1194,33 @@ public class ClassController extends BaseController {
 
 
     /**
+     * 聘请弹dialog
+     */
+    @RequestMapping(params = "methodToCall=showEmployDialog")
+    public ModelAndView showEmployDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                               HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<MyTaViewObject> applicationList = infoForm.getAllApplication();
+
+        //遍历所有list，找到选中的行
+        List<MyTaViewObject> checkedList = new ArrayList<>();
+        for(MyTaViewObject per : applicationList) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+
+        if(checkedList.size()==0){
+            return this.getModelAndView(infoForm, "pageTaManagement");
+
+        }else{
+            return this.showDialog("confirmEmployDialog", true, infoForm);
+        }
+
+    }
+
+    /**
      * 聘请助教
      */
 

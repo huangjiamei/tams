@@ -211,9 +211,12 @@
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="聘用"
-                                                                                  p:methodToCall="employ"
                                                                                   p:render = "@{#form.canEmploy}"
-                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-check bg-teal box-btngroup">
+                                                                                <property name="confirmationDialog">
+                                                                                    <ref bean="confirmEmployDialog" />
+                                                                                </property>
+                                                                            </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:render = "@{#form.canEmploy}"
@@ -423,6 +426,22 @@
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
                       p:methodToCall="addSelectedTaApplicant" p:dialogDismissOption="REQUEST"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="confirmEmployDialog" parent="Uif-DialogGroup"
+          p:headerText="聘用" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <bean parent="Uif-MessageField" p:messageText="您确定聘用该申请人担任您的助教吗？" />
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:methodToCall="employ"  p:dialogDismissOption="REQUEST" />
             </list>
         </property>
     </bean>

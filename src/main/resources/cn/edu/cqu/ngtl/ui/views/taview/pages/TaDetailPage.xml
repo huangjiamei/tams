@@ -151,7 +151,7 @@
                                                                       p:required="true" p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                     <property name="control">
                                                                         <bean parent="Uif-TextAreaControl"
-                                                                              p:style="height:200px;resize: none;"/>
+                                                                              p:style="height:200px;"/>
                                                                     </property>
                                                                 </bean>
 

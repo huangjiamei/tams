@@ -942,6 +942,13 @@ td.selected{
     color: #000;
 }
 
+#ViewTeachingCalendarPage pre {
+    height: 300px;
+}
+
+#ApplyOutStandingTaPage pre{
+    height: 300px;
+}
 /*鼠标移动跟随*/
 .addPointer {
     cursor:pointer;

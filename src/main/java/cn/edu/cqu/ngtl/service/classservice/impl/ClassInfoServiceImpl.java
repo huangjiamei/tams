@@ -266,9 +266,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                     else {
                         //FIXME
                         //问题：需要判断过滤的教师的名字是否是自己，不能判断
-                        if(conditions.get("InstructorName").equals(
-                                ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName())
-                        )
+                        conditions.get("InstructorName").replace("%","");
+                        if(((User) GlobalVariables.getUserSession().retrieveObject("user")).getName().equals(conditions.get("InstructorName")))
                             conditions.put("DepartmentId", null);
                         else
                             conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());

@@ -1244,6 +1244,9 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
+        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(infoForm.getCurrClassId());
+        List<TAMSTa> taList = classInfoService.getAllTaFilteredByClassid(classId);
+        int appTaNumber = tamsClassTaApplication.getTaNumber();
         //遍历所有list，找到选中的行
         List<MyTaViewObject> checkedList = new ArrayList<>();
         for(MyTaViewObject per : applicationList) {
@@ -1251,7 +1254,11 @@ public class ClassController extends BaseController {
                 checkedList.add(per);
         }
 
-        TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(infoForm.getCurrClassId());
+        if(((taList==null?0:taList.size())+checkedList.size()) > appTaNumber){
+            infoForm.setErrMsg("您的聘用人数将超过限额！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         if(tamsClassTaApplication==null){
             infoForm.setErrMsg("您没有申请助教无法聘用！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1262,14 +1269,14 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
-        int appTaNumber = tamsClassTaApplication.getTaNumber();
+
 
 
         int addSize = taService.employBatchByStuIdsWithClassId(
                 classConverter.extractIdsFromApplication(checkedList)
         );
 
-        List<TAMSTa> taList = classInfoService.getAllTaFilteredByClassid(classId);
+
 
 
         //开始释放剩下的tapplication

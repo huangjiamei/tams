@@ -157,7 +157,7 @@ public interface IAdminService {
 
     boolean addCourseManagerByInsIdAndCourseId(String courseId, String instructorId);
 
-    List<UTInstructor> getInstructorByNameAndCode(String Name, String code);
+    List<UTInstructor> getInstructorByNameAndCodeAndDepartmentId(String Name, String code,String departmentId);
 
     List<TAMSCourseManager> getCourseManagerByUid(String uId);
 
@@ -166,4 +166,6 @@ public interface IAdminService {
     Integer countClassFunding (List<ClassFundingViewObject> classFundingViewObjects, String totalAssignedClass);
 
     String prepareCourseManagerToPDF(List<CourseManagerViewObject> courseManagerViewObjectList);
+
+    List<TAMSTaBlackList> getAllBlackList();
 }

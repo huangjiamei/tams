@@ -261,6 +261,12 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private String checkboxesTest;
     private String ConnectMessage;
 
+    /*
+        黑名单页面
+     */
+    private List<BlackListViewObject> taBlackList;
+
+
     public String getClassFundingStatistics() {
         return classFundingStatistics;
     }
@@ -1657,5 +1663,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setDeptCode(String deptCode) {
         this.deptCode = deptCode;
+    }
+
+    public List<BlackListViewObject> getTaBlackList() {
+        return taBlackList;
+    }
+
+    public void setTaBlackList(List<BlackListViewObject> taBlackList) {
+        this.taBlackList = taBlackList;
     }
 }

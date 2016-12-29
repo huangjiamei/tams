@@ -2664,6 +2664,9 @@ public class adminController extends BaseController {
             String taId = taFundingViewObject.getStuId();
             String classId = taFundingViewObject.getClassId();
             List<TAMSTaTravelSubsidy> result = tamsTaTravelSubsidyDao.getTAMSTaTravelSubsidyByStuIdAndTaId(taId,classId);
+            if(result==null||result.size()==0){
+                result.add(new TAMSTaTravelSubsidy());
+            }
             adminInfoForm.setTravelSubsidies(result);
         }
         return this.showDialog("confirmTrafficDialog",true,adminInfoForm);
@@ -2680,7 +2683,7 @@ public class adminController extends BaseController {
     public ModelAndView getBlackListPage(@ModelAttribute("KualiForm") UifFormBase form) {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
-
+        adminInfoForm.setTaBlackList(adminConverter.blackListToViewObject(adminService.getAllBlackList()));
         return this.getModelAndView(adminInfoForm, "pageBlackList");
     }
 

@@ -29,4 +29,6 @@ public interface UTInstructorDao {
 
 	List<UTInstructor> getInstructorByCode( String name ,String code);
 
+	List<UTInstructor> getInstructorByCodeAndNameAndDept( String name ,String code,String departmentId);
+
 }

@@ -107,7 +107,7 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		}else{
 			instructorsByconditions = this.getAllInstructors();
 		}
-		if(instructorsByconditions.size()!=0||instructorsByconditions!=null) {
+		if(instructorsByconditions.size()!=0&&instructorsByconditions!=null) {
 			return instructorsByconditions;
 		}else{
 			instructorsByconditions.add(new UTInstructor());
@@ -142,6 +142,22 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
 				(like("code" , "%"+ code + '%')),
 				(like("name" , "%"+ name + '%'))));
+		QueryResults<UTInstructor> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+				UTInstructor.class, criteria.build());
+
+		return qr.getResults().isEmpty()?null:qr.getResults();
+
+	}
+
+
+
+	@Override
+	public List<UTInstructor> getInstructorByCodeAndNameAndDept( String name ,String code,String departmentId) {
+
+		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
+				(like("code" , "%"+ code + '%')),
+				(like("name" , "%"+ name + '%')),
+				(like("departmentId" ,"%"+ departmentId + '%'))));
 		QueryResults<UTInstructor> qr = KradDataServiceLocator.getDataObjectService().findMatching(
 				UTInstructor.class, criteria.build());
 

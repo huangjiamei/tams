@@ -111,8 +111,8 @@
 																<!--table-->
 																<bean parent="Uif-Disclosure-TableCollectionSection">
 																	<property name="collectionObjectClass"
-																			  value="cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T" />
-																	<property name="propertyName" value="RMPkrimRoleTs" />
+																			  value="cn.edu.cqu.ngtl.viewobject.adminInfo.BlackListViewObject" />
+																	<property name="propertyName" value="taBlackList" />
 																	<property name="layoutManager.richTable.render"
 																			  value="false"/>
 
@@ -128,25 +128,19 @@
 																	<property name="renderLineActions" value="true"/>
 																	<property name="disclosure.render" value="false"/>
 
-
 																	<property name="items">
 																		<list>
-																			<bean parent="Uif-DataField" p:propertyName="name" p:label="角色名称" />
-																			<bean parent="Uif-DataField" p:propertyName="description"
-																				  p:label="角色描述" />
-																			<bean parent="Uif-InputField" p:propertyName="active"
-																				  p:label="角色状态" p:readOnly="true">
-																				<property name="control">
-																					<bean parent="Uif-DropdownControl">
-																						<property name="options">
-																							<list>
-																								<bean parent="Uif-KeyLabelPair" p:key="Y" p:value="可用" />
-																								<bean parent="Uif-KeyLabelPair" p:key="N" p:value="失效" />
-																							</list>
-																						</property>
-																					</bean>
-																				</property>
-																			</bean>
+																			<bean parent="Uif-DataField" p:propertyName="stuName"
+																				  p:label="名称" />
+																			<bean parent="Uif-DataField" p:propertyName="stuId"
+																				  p:label="学号" />
+																			<bean parent="Uif-DataField" p:propertyName="joinTime"
+																				  p:label="加入时间" />
+																			<bean parent="Uif-DataField" p:propertyName="executorName"
+																				  p:label="操作执行者名称" />
+																			<!--<bean parent="Uif-DataField" p:propertyName="active"
+																				  p:label="操作执行者角色" />-->
+
 																		</list>
 																	</property>
 
@@ -157,7 +151,7 @@
 																					<list>
 																						<bean parent="Uif-PrimaryActionButton"
 																							  p:ajaxSubmit="false"
-																							  p:methodToCall="xxxx"
+																							  p:methodToCall="deleteFromBlackList"
 																							  p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn"/>
 																					</list>
 																				</property>

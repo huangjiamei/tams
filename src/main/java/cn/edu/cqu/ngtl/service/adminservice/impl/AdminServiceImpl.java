@@ -7,10 +7,6 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_PRNCPL_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.*;
-import cn.edu.cqu.ngtl.dao.ut.UTCourseDao;
-import cn.edu.cqu.ngtl.dao.ut.UTDepartmentDao;
-import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
-import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
@@ -103,6 +99,8 @@ public class AdminServiceImpl implements IAdminService {
     private TAMSTaDao tamsTaDao;
     @Autowired
     private UTClassInfoDao utClassInfoDao;
+    @Autowired
+    private TAMSTaBlackListDao tamsTaBlackListDao;
 
     @Autowired
     IPDFService PDFService;
@@ -1011,13 +1009,15 @@ public class AdminServiceImpl implements IAdminService {
     }
 
     @Override
-    public List<UTInstructor> getInstructorByNameAndCode(String name, String code) {
+    public List<UTInstructor> getInstructorByNameAndCodeAndDepartmentId(String name, String code,String departmentId) {
         if (name == null)
             name = "";
         if (code == null)
             code = "";
+        if(departmentId==null)
+            departmentId = "";
 
-        List<UTInstructor> result = utInstructorDao.getInstructorByCode(name, code);
+        List<UTInstructor> result = utInstructorDao.getInstructorByCodeAndNameAndDept(name, code,departmentId);
         if (result == null)
             result.add(new UTInstructor());  //填一个空对象
         return result;
@@ -1083,6 +1083,14 @@ public class AdminServiceImpl implements IAdminService {
             }
         }
 */
+
+    @Override
+    public List<TAMSTaBlackList> getAllBlackList(){
+        List<TAMSTaBlackList> result = tamsTaBlackListDao.getAllBlackList();
+        return result;
+    }
+
+
 
     @Override
     public List<TAMSCourseManager> getCourseManagerByUid(String uId){

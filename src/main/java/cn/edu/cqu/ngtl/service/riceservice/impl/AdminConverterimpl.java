@@ -1,12 +1,11 @@
 package cn.edu.cqu.ngtl.service.riceservice.impl;
 
 import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.BlackListViewObject;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
-import cn.edu.cqu.ngtl.dataobject.ut.UTCourse;
-import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
-import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaBlackList;
+import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.service.riceservice.IAdminConverter;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
@@ -43,6 +42,9 @@ public class AdminConverterimpl implements IAdminConverter {
     private UTCourseDao utCourseDao;
     @Autowired
     private UTClassInfoDao utClassInfoDao;
+    @Autowired
+    private UTStudentDao utStudentDao;
+
 
 
     @Override
@@ -328,6 +330,41 @@ public class AdminConverterimpl implements IAdminConverter {
                 }
             }
             return list;
+        }
+    }
+
+
+
+    @Override
+    public List<BlackListViewObject> blackListToViewObject(List<TAMSTaBlackList> tamsTaBlackLists){
+        List<BlackListViewObject> result = new ArrayList<>();
+        if(tamsTaBlackLists!=null||tamsTaBlackLists.size()==0){
+            for(TAMSTaBlackList tamsTaBlack:tamsTaBlackLists){
+                BlackListViewObject blackListViewObject = new BlackListViewObject();
+
+                UTInstructor executor = utInstructorDao.getInstructorByIdWithoutCache(tamsTaBlack.getFiredBy()==null?"":tamsTaBlack.getFiredBy());
+                if(executor!=null){
+                    blackListViewObject.setExecutorName(executor.getName());
+                }else{
+                    blackListViewObject.setExecutorName("缺失");
+                }
+
+                UTStudent blackMan = utStudentDao.getUTStudentById(tamsTaBlack.getTaId());
+                if(blackMan!=null){
+                    blackListViewObject.setStuName(blackMan.getName());
+                }else{
+                    blackListViewObject.setStuName("缺失");
+                }
+
+                blackListViewObject.setJoinTime(tamsTaBlack.getBeenFiredTime()==null?"":tamsTaBlack.getBeenFiredTime());
+
+                result.add(blackListViewObject);
+            }
+            return result;
+
+        }else{
+            result.add(new BlackListViewObject());
+            return  result;
         }
     }
 }

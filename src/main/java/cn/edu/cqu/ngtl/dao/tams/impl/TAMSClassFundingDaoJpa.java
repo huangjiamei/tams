@@ -235,11 +235,13 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
     }
 
     public List<TAMSClassFunding> selectByClassIds(List<String> classids) {
+        UTSession curSession = sessionDao.getCurrentSession();
         List<TAMSClassFunding> tamsClassFunding = new ArrayList<>();
         for(String classid : classids) {
             QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                     and(
-                            equal("classId", classid)
+                            equal("classId", classid),
+                            equal("sessionId", curSession.getId().toString())
                     )
             );
             List<TAMSClassFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSClassFunding.class, criteria.build()).getResults();

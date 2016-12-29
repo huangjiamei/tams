@@ -175,4 +175,6 @@ public interface IAdminService {
     String prepareCollegeHistoryFundsPDF(List<DepartmentFundingViewObject> CollegeHistoryFundsManager);
     String prepareCollegeFundsPDF(List<DepartmentFundingViewObject> CollegeFundsManager);
 
+
+    Integer countTaFunding (List<TaFundingViewObject> taFundingViewObjects);
 }

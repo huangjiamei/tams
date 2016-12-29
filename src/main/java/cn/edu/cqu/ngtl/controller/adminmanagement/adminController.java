@@ -1542,7 +1542,12 @@ public class adminController extends BaseController {
         }
         else {
             List<TaFundingViewObject> taFundingViewObjects = infoForm.getTaFunding();
-            adminService.saveTaFunding(taFundingViewObjects);
+            if(adminService.countTaFunding(taFundingViewObjects) == 1) {
+                infoForm.setErrMsg("该课程的助教经费经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            if(adminService.countTaFunding(taFundingViewObjects) == 2)
+                adminService.saveTaFunding(taFundingViewObjects);
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }
     }

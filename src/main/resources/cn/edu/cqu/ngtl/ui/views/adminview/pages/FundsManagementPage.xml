@@ -231,7 +231,8 @@
                                                                                                                       p:label="批次"
                                                                                                                       p:propertyName="sessionName"/>
                                                                                                                 <bean parent="Uif-InputField" p:propertyName="planFunding"
-                                                                                                                      p:readOnly="false" p:label="预算经费" p:style="display:@{#line.sessionName!=null?'block':'none'}">
+                                                                                                                      p:readOnly="false" p:label="预算经费"
+                                                                                                                      p:style="display:@{#line.sessionName!=null?'block':'none'}">
                                                                                                                     <property name="validCharactersConstraint">
                                                                                                                         <bean parent="NumericPatternConstraint"/>
                                                                                                                     </property>
@@ -1043,7 +1044,7 @@
                                                                                 <property name="items">
                                                                                     <list>
 
-                                                                                        <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
+                                                                                        <!--因为用js移除了自带的'课程经费' 所以这里还需要添加一个header-->
                                                                                         <bean parent="Uif-HorizontalBoxSection"
                                                                                               p:additionalCssClasses="box-header">
                                                                                             <property
@@ -1361,7 +1362,7 @@
                                                                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
+                                                                                        <!--因为用js移除了自带的'助教经费' 所以这里还需要添加一个header-->
                                                                                         <bean parent="Uif-HorizontalBoxSection"
                                                                                               p:additionalCssClasses="box-header">
                                                                                             <property
@@ -1382,7 +1383,7 @@
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:actionImagePlacement="LEFT"
-                                                                                                                      p:methodToCall="SaveDeptFunding"
+                                                                                                                      p:methodToCall="SaveTaFunding"
                                                                                                                       p:render="true"
                                                                                                                       p:additionalCssClasses="icon-save bg-success box-btngroup"/><!--@{#form.academicAffairManager}-->
                                                                                                             </list>
@@ -1560,7 +1561,7 @@
                                                                                   p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewDetailFundsTab')}">
                                                                                 <property name="items">
                                                                                     <list>
-                                                                                        <!--因为用js移除了自带的'批次经费' 所以这里还需要添加一个header-->
+                                                                                        <!--因为用js移除了自带的'经费明细' 所以这里还需要添加一个header-->
                                                                                         <bean parent="Uif-HorizontalBoxSection"
                                                                                               p:additionalCssClasses="box-header">
                                                                                             <property
@@ -1858,8 +1859,8 @@
                     <property name="layoutManager.richTable.render" value="false"/>
 
                     <!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
-                    <property name="layoutManager.renderSequenceField" value="true"/>
-                    <property name="layoutManager.generateAutoSequence" value="true"/>
+                    <property name="layoutManager.renderSequenceField" value="false"/>
+                    <property name="layoutManager.generateAutoSequence" value="false"/>
                     <property name="useServerPaging" value="true"/>
 
                     <property name="renderAddLine" value="false"/>

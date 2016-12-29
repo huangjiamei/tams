@@ -229,40 +229,48 @@
 </bean>
 
 <bean id="confirmEditManagerDialog" parent="Uif-DialogGroup"
-      p:headerText="编辑课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+      p:headerText="编辑课程负责人"
+      p:onDocumentReadyScript="jQuery('#confirmEditManagerDialog').modal({backdrop: 'static', keyboard: false});jQuery('#confirmEditManagerDialog').children().css('width','90%');comboSelectStyle('searchCourseMangerFields','searchCourseManagerButton');"
+      p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
     <property name="items">
         <list>
-            <bean parent="Uif-HorizontalBoxSection"
-                  p:additionalCssClasses="col-md-12 col-lg-12">
+            <bean parent="Uif-HorizontalBoxSection">
                 <property name="items">
                     <list>
-                        <bean id="courseManagerId" parent="Uif-InputField" p:label="姓名"
-                              p:propertyName="courseManager"
-                              p:additionalCssClasses="col-md-12 col-lg-5"
-                              p:onDocumentReadyScript="clickButton('courseManagerId','searchCourseManagerButton')"/>
-                        <bean id="instructorCodeId" parent="Uif-InputField" p:label="职工号"
-                              p:propertyName="instructorCode"
-                              p:additionalCssClasses="col-md-12 col-lg-5"
-                              p:onDocumentReadyScript="clickButton('instructorCodeId','searchCourseManagerButton')"/>
-                        <!--学院-->
-                        <bean parent="Uif-InputField"
-                              p:propertyName="deptCode"
-                              p:additionalCssClasses="col-md-12 col-lg-5"
-                              p:label="学院">
-                            <property
-                                    name="optionsFinder">
-                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
-                                      p:blankOption="true"/>
-                            </property>
-                            <property
-                                    name="control">
-                                <bean parent="Uif-DropdownControl"/>
+
+                        <bean id="searchCourseMangerFields"
+                              parent="Uif-HorizontalBoxSection">
+                            <property name="items">
+                                <list>
+                                    <bean parent="Uif-MessageField" p:messageText="姓名：" />
+                                    <!--姓名-->
+                                    <bean id="courseManagerId" parent="Uif-InputField"
+                                          p:propertyName="courseManager"/>
+                                    <bean parent="Uif-MessageField" p:messageText="工号：" />
+                                    <!--职工号-->
+                                    <bean id="instructorCodeId" parent="Uif-InputField"
+                                          p:propertyName="instructorCode"/>
+
+                                    <bean parent="Uif-MessageField" p:messageText="学院：" />
+                                    <!--学院-->
+                                    <bean id="deptCodeId" parent="Uif-InputField"
+                                          p:propertyName="deptCode" >
+                                        <property
+                                                name="optionsFinder">
+                                            <bean class="cn.edu.cqu.ngtl.optionfinder.classview.departmentFinder"
+                                                  p:blankOption="true"/>
+                                        </property>
+                                        <property
+                                                name="control">
+                                            <bean parent="Uif-DropdownControl"/>
+                                        </property>
+                                    </bean>
+                                </list>
                             </property>
                         </bean>
 
                         <bean id="searchCourseManagerButton" parent="Uif-PrimaryActionButton"
                               p:actionLabel="查询"
-                              p:style="margin-top:18px;"
                               p:onClickScript="deleteCookie();"
                               p:actionImagePlacement="LEFT"
                               p:additionalCssClasses="icon-search box-btngroup"

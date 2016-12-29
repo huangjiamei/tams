@@ -164,12 +164,33 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId))
             return this.getAllCurSessionClasses();
 
-        else if(userInfoService.isCollegeStaff(uId)){ //部门管理员 (部门管理员也可能是教师)
+        else if(userInfoService.isCollegeStaff(uId)){ //部门管理员
             UTInstructor utInstructor = utInstructorDao.getInstructorByIdWithoutCache(uId);
-            List<UTClassInformation> result = classInfoDao.getAllCurrentClassInformationByDeptId(utInstructor.getDepartmentId().toString());
-
-
-            return result;
+            List<UTClassInformation> list = new ArrayList<>();
+            list = classInfoDao.getAllCurrentClassInformationByDeptId(utInstructor.getDepartmentId().toString());
+            //用于比较
+            List<Object> classIds = new ArrayList<>();
+            for(UTClassInformation listone : list) {
+                classIds.add(listone.getId());
+            }
+            //如果学院管理员同时是其他学学院课程的教师
+            if(userInfoService.isInstructor(uId)) {
+                List<UTClassInformation> listteacher = classInfoDao.selectBatchByIds(
+                        classInstructorDao.selectClassIdsByInstructorId(uId)
+                );
+                if(listteacher != null) {
+                    //用于比较
+                    List<Object> classIdTeacher = new ArrayList<>();
+                    for(UTClassInformation listtechaerone : listteacher) {
+                        classIdTeacher.add(listtechaerone.getId());
+                    }
+                    for(Object per: classIdTeacher) {
+                        if(!classIds.contains(per))
+                            list.add(classInfoDao.getOneById(per.toString()));
+                    }
+                }
+            }
+            return list;
         }
         else if (userInfoService.isCourseManager(uId)) {  //默认是课程负责人一定是教师
             //担任课程负责人的课程
@@ -212,10 +233,68 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         if (userInfoService.isSysAdmin(uId) || userInfoService.isAcademicAffairsStaff(uId)) {
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             return classInformations;
-        } else if (userInfoService.isCollegeStaff(uId)) { //如果是二级单位管理员则固定学院id
-            conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
-            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
-            return classInformations;
+        }
+        else if (userInfoService.isCollegeStaff(uId)) { //如果是二级单位管理员则固定学院id
+            if(conditions.get("DepartmentId") == null) {
+                //若只是二级单位管理员，设置departmenId
+                conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+                List<UTClassInformation> classInformations = new ArrayList<>();
+                classInformations = classInfoDao.selectByConditions(conditions);
+                //用于比较
+                List<Object> classIds = new ArrayList<>();
+                for(UTClassInformation listone : classInformations) {
+                    classIds.add(listone.getId());
+                }
+                //同时是其他学院课程的教师，固定教师Id
+                if(userInfoService.isInstructor(uId)) {
+                    if(conditions.get("InstructorName") == null) {
+                        conditions.put("DepartmentId", null);
+                        conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
+                        List<UTClassInformation> listteacher = classInfoDao.selectByConditions(conditions);
+                        if (listteacher != null) {
+                            //用于比较
+                            List<Object> classIdTeacher = new ArrayList<>();
+                            for (UTClassInformation listtechaerone : listteacher) {
+                                classIdTeacher.add(listtechaerone.getId());
+                            }
+                            for (Object per : classIdTeacher) {
+                                if (!classIds.contains(per))
+                                    classInformations.add(classInfoDao.getOneById(per.toString()));
+                            }
+                        }
+                    }
+                    else {
+                        //FIXME
+                        //问题：需要判断过滤的教师的名字是否是自己，不能判断
+                        if(conditions.get("InstructorName").equals(
+                                ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName())
+                        )
+                            conditions.put("DepartmentId", null);
+                        else
+                            conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+
+                        List<UTClassInformation> listteacher = classInfoDao.selectByConditions(conditions);
+                        if (listteacher != null) {
+                            //用于比较
+                            List<Object> classIdTeacher = new ArrayList<>();
+                            for (UTClassInformation listtechaerone : listteacher) {
+                                classIdTeacher.add(listtechaerone.getId());
+                            }
+                            for (Object per : classIdTeacher) {
+                                if (!classIds.contains(per))
+                                    classInformations.add(classInfoDao.getOneById(per.toString()));
+                            }
+                        }
+                    }
+                }
+                return classInformations;
+            }
+            else {
+                conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+                List<UTClassInformation> classInformations = new ArrayList<>();
+                classInformations = classInfoDao.selectByConditions(conditions);
+                return classInformations;
+            }
         } else if (userInfoService.isCourseManager(uId)) {
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
             List<Object> classIds = classInstructorDao.selectCourseManagerClassIdsByInstructorId(uId);

@@ -284,7 +284,7 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     @Override
     public boolean insertByEntity(TAMSTa newTa) {
 
-        return KRADServiceLocator.getDataObjectService().save(newTa) != null;
+      return KRADServiceLocator.getDataObjectService().save(newTa) != null;
 
     }
 
@@ -320,9 +320,11 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     @Override
     public List<TAMSTa> selectByClassId(String classId){
 
+        UTSession curSession = utSessionDao.getCurrentSession();
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
-                        equal("taClassId", classId)
+                        equal("taClassId", classId),
+                        equal("sessionId", curSession.getId().toString())
                 )
         );
         QueryResults<TAMSTa> qr = KradDataServiceLocator.getDataObjectService().findMatching(

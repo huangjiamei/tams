@@ -499,12 +499,34 @@ body{
 #addApplicantDialog>div>div{
     margin-top: 5%;
 }
+@media (max-width:767px) {
+    #addApplicantDialog>div>div{
+        margin-top: 15%;
+    }
+
+}
 #AddTransAllowanceDialog>div>div{
     margin-top: 15%;
+}
+@media (max-width:767px) {
+    #AddTransAllowanceDialog>div>div{
+        margin-top: 15%;
+    }
+
 }
 
 #sessionTermFinderDialog>div>div{
     margin-top: 15%;
+}
+
+#confirmEditManagerDialog>div>div{
+    margin-top: 5%;
+}
+@media (max-width:767px) {
+    #confirmEditManagerDialog>div>div{
+        margin-top: 15%;
+    }
+
 }
 
 

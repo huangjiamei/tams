@@ -86,11 +86,11 @@
                 <property name="items">
                     <list>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-calendar" p:actionLabel="教学日历" p:methodToCall="getTeachingCalendar" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTeachingCalendarPage')}"/>
-                        <bean parent="Uif-NavigationActionLink" p:iconClass="icon-user" p:actionLabel="选聘助教" p:methodToCall="getTaManagementPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaManagementPage')}"/>
+                        <bean parent="Uif-NavigationActionLink" p:iconClass="icon-info" p:actionLabel="课程信息" p:methodToCall="getClassInfoPageFromInside"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="提交申请" p:methodToCall="getRequestTaPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewRequestTaPage')}"/>
+                        <bean parent="Uif-NavigationActionLink" p:iconClass="icon-user" p:actionLabel="选聘助教" p:methodToCall="getTaManagementPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewTaManagementPage')}"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="申请助教" p:methodToCall="getApplyTAPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewApplyForTaFormPage')}"/>
                         <bean parent="Uif-NavigationActionLink" p:iconClass="icon-check" p:actionLabel="申请优秀" p:methodToCall="getApplyOutStandingClassPage" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewApplyOutStandingTaPage')}"/>
-                        <bean parent="Uif-NavigationActionLink" p:iconClass="icon-info" p:actionLabel="课程信息" p:methodToCall="getClassInfoPageFromInside"/>
                     </list>
                 </property>
             </bean>

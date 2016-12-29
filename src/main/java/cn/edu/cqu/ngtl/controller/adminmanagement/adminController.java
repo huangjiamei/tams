@@ -909,7 +909,8 @@ public class adminController extends BaseController {
 
         String courseManager = infoForm.getCourseManager();
         String instructorCode = infoForm.getInstructorCode();
-        infoForm.setInstructorList(adminService.getInstructorByNameAndCode(courseManager,instructorCode));
+        String departmentId = infoForm.getDeptCode();
+        infoForm.setInstructorList(adminService.getInstructorByNameAndCodeAndDepartmentId(courseManager,instructorCode,departmentId));
 
         return this.getModelAndView(infoForm, "pageCourseManager");
     }

@@ -1023,6 +1023,19 @@ public class AdminServiceImpl implements IAdminService {
         return result;
     }
 
+
+    @Override
+    public List<UTInstructor> getInstructorByNameAndCode(String name, String code) {
+        if (name == null)
+            name = "";
+        if (code == null)
+            code = "";
+        List<UTInstructor> result = utInstructorDao.getInstructorByCode(name, code);
+        if (result == null)
+            result.add(new UTInstructor());  //填一个空对象
+        return result;
+    }
+
     @Override
     public boolean addCourseManagerByInsIdAndCourseId(String instructorId, String courseId) {
         TAMSCourseManager tamsCourseManagerExit = tamsCourseManagerDao.getCourseManagerByCourseId(courseId);

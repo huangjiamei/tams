@@ -159,6 +159,8 @@ public interface IAdminService {
 
     List<UTInstructor> getInstructorByNameAndCodeAndDepartmentId(String Name, String code,String departmentId);
 
+    List<UTInstructor> getInstructorByNameAndCode(String Name, String code);
+
     List<TAMSCourseManager> getCourseManagerByUid(String uId);
 
     List<TAMSDeptFundingDraft> getAllDeptFundingDraft();

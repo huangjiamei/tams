@@ -161,11 +161,6 @@
                                                                                   p:label="银行名称"
                                                                                   p:propertyName="bankName"
                                                                                   p:required="true">
-                                                                            </bean>
-                                                                            <bean id="bankNbrField" parent="Uif-InputField"
-                                                                                  p:label="银行卡号"
-                                                                                  p:propertyName="bankNbr"
-                                                                                  p:required="true">
                                                                                 <property name="optionsFinder">
                                                                                     <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"
                                                                                           p:blankOption="true"/>
@@ -173,6 +168,11 @@
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-DropdownControl"/>
                                                                                 </property>
+                                                                            </bean>
+                                                                            <bean id="bankNbrField" parent="Uif-InputField"
+                                                                                  p:label="银行卡号"
+                                                                                  p:propertyName="bankNbr"
+                                                                                  p:required="true">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

@@ -478,7 +478,7 @@ public class ClassController extends BaseController {
 
         if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
             if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
-                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                infoForm.setErrMsg("您已提交申请，无法添加教学日历！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }

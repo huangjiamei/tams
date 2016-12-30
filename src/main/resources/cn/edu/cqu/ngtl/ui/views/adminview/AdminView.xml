@@ -63,7 +63,7 @@
                 <value>js/jquery.combo.select.js</value>
                 <value>js/fullcalendar.js</value>
                 <value>js/daterangepicker.js</value>
-                <value>js/json2.js</value>
+                <!--<value>js/json2.js</value>-->
                 <value>js/jquery.dataTables.min.js</value>
                 <value>js/tams.js</value>
             </list>

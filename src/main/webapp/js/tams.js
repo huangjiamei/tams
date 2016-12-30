@@ -1110,6 +1110,7 @@ function validatePhoneNum(id){
     }
 }
 
+//下拉列表的输入框
 function comboSelectStyle(id,buttonId){
 
     var searchFields = jQuery("#"+id).find('div');
@@ -1140,12 +1141,31 @@ i
         }
     }
 }
+function changeNumber(id,startIndex,endIndex){
+    var tablelength=jQuery("#"+id).find('tbody').find('tr').length;
 
+    for(var i=0;i<tablelength;i++){
+
+        for(var j=startIndex;j<endIndex;j++){
+            //span改变值样式
+            if(jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div').hasClass('uif-field')){
+                var changeNr=jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div>span').html();
+                var aa=numberStyle(changeNr);
+                jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div>span').html(aa);
+            }
+
+        }
+        //input改变值样式
+        // var changeNr=jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value;
+        //  var aa=numberStyle(changeNr);
+        // jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value=aa;
+    }
+}
 function numberStyle(str){
-    var len = str.length, str2 = '', max = Math.floor(len / 3);
+    var len = str.length, str2 = '', max = Math.floor(len / 4);
     for(var i = 0 ; i < max ; i++){
-        var s = str.slice(len - 3, len);
-        str = str.substr(0, len - 3);
+        var s = str.slice(len - 4, len);
+        str = str.substr(0, len - 4);
         str2 = (',' + s) + str2;
         len = str.length;
     }

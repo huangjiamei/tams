@@ -273,6 +273,7 @@ public class TAConverterimpl implements ITAConverter {
 
         if (clazz != null) {
             viewObject.setClassId(clazz.getId());
+            viewObject.setApplyCourseType(clazz.getClassType()==null?null:clazz.getClassType());
             viewObject.setCourseName(clazz.getCourseOffering().getCourse().getName());
             viewObject.setClassNbr(clazz.getClassNumber());
             viewObject.setCredit(clazz.getCourseOffering().getCourse().getCredit());
@@ -1106,6 +1107,7 @@ public class TAConverterimpl implements ITAConverter {
         viewObject.setTeacherType(instructorCode);
         if (classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() :null;
+            viewObject.setCourseType(classInfo.getClassType()==null?"":classInfo.getClassType());
             viewObject.setCredit(classInfo.getCourseOffering().getCourse().getCredit());
             viewObject.setCourseHour(course.getHour());
             viewObject.setClassNumber(classInfo.getClassNumber());

@@ -125,6 +125,15 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private TAMSTeachCalendarDao tamsTeachCalendarDao;
 
+
+    @Override
+    public TAMSTaApplication getApplicationByStuIdAndClassId(String stuId, String classId){
+        TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
+        return tamsTaApplication;
+    }
+
+
+
     @Override
     public String getApplicationPhoneNbr(String stuId, String classId) {
         TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);

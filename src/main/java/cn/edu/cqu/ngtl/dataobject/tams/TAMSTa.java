@@ -137,6 +137,29 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "PHONE_NUMBER")
     private String phoneNbr;
 
+    @Column(name = "BANK_NAME")
+    private String bankName;
+
+    @Column(name = "BANK_NUMBER")
+    private String bankNbr;
+
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankNbr() {
+        return bankNbr;
+    }
+
+    public void setBankNbr(String bankNbr) {
+        this.bankNbr = bankNbr;
+    }
+
     @ManyToOne(cascade = CascadeType.ALL) //更新级联
     @JoinColumn(name = "OUTSTANDING_TA", insertable = false, updatable = false)
     private TAMSWorkflowStatus outStandingTaWorkflowStatus;

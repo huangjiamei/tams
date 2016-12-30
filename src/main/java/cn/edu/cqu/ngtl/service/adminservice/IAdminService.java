@@ -177,4 +177,5 @@ public interface IAdminService {
 
 
     Integer countTaFunding (List<TaFundingViewObject> taFundingViewObjects);
+
 }

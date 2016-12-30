@@ -1,15 +1,21 @@
 package cn.edu.cqu.ngtl.service.exportservice.impl;
 
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import static org.kuali.rice.krad.uif.freemarker.FreeMarkerInlineRenderBootstrap.getServletContext;
+import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
 /**
  * Created by tangjing on 2016/12/15.
@@ -256,5 +262,89 @@ public class PDFServiceimpl implements IPDFService {
         table.addCell(cell);
 
         return table;
+    }
+
+
+    /**create by luojizhou on 2016/12/30
+     *
+     *封装的方法，用于获取导出的课程经费PDF文件的文件路径
+     * @param classFundingViewObjectList 传入的参数
+     * @return filePath                   返回的PDF文件路径
+     */
+    @Override
+    public String prepareClassFundingsToPDF(List<ClassFundingViewObject> classFundingViewObjectList){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "课程经费列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"学院","课程", "课程代码", "教学班号", "教师","申报经费","批准经费","博士津贴","奖励津贴","交通补贴","总经费"};
+            List<String[]> Content = new ArrayList(classFundingViewObjectList.size());
+            for(ClassFundingViewObject classFundingVOList : classFundingViewObjectList) {
+                String Department = classFundingVOList.getDepartment() == null ? "" : classFundingVOList.getDepartment();
+                String CourseName = classFundingVOList.getCourseName() == null ? "" : classFundingVOList.getCourseName();
+                String CourseCode = classFundingVOList.getCourseCode() == null ? "" : classFundingVOList.getCourseCode();
+                String ClassNumber = classFundingVOList.getClassNumber() == null ? "" : classFundingVOList.getClassNumber();
+                String InstructorName = classFundingVOList.getInstructorName() == null ? "" : classFundingVOList.getInstructorName();
+                String ApplyFunding = classFundingVOList.getApplyFunding() == null ? "" : classFundingVOList.getApplyFunding();
+                String AssignedFunding = classFundingVOList.getAssignedFunding() == null ? "" : classFundingVOList.getAssignedFunding();
+
+                String PhdFunding = classFundingVOList.getPhdFunding() == null ? "" : classFundingVOList.getPhdFunding();
+                String Bonus = classFundingVOList.getBonus() == null ? "" : classFundingVOList.getBonus();
+                String TravelSubsidy = classFundingVOList.getTravelSubsidy() == null ? "" : classFundingVOList.getTravelSubsidy();
+                String Total = classFundingVOList.getTotal() == null ? "" : classFundingVOList.getTotal();
+
+                String[] content = {
+                        Department, CourseName, CourseCode, ClassNumber,InstructorName,ApplyFunding,AssignedFunding,PhdFunding,Bonus,TravelSubsidy,Total
+                };
+                Content.add(content);
+            }
+            filePath = this.printNormalTable("课程信息列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
+    }
+
+    /**create by luojizhou on 2016/12/30
+     *
+     *封装的方法，用于获取导出的助教经费PDF文件的文件路径
+     * @param taFundingViewObjectList     传入的参数
+     * @return filePath                   返回的PDF文件路径
+     */
+    public  String prepareTaFundingToPDF(List<TaFundingViewObject> taFundingViewObjectList){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "助教经费列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"学院","助教", "学号", "助教类别", "课程","课程代码","教学班号","分配经费","博士津贴","交通补贴","奖励经费","总经费"};
+            List<String[]> Content = new ArrayList(taFundingViewObjectList.size());
+            for(TaFundingViewObject taFundingVOList : taFundingViewObjectList) {
+                String DepartmentName = taFundingVOList.getDepartmentName() == null ? "" : taFundingVOList.getDepartmentName();
+                String TaName = taFundingVOList.getTaName() == null ? "" : taFundingVOList.getTaName();
+                String StuId = taFundingVOList.getStuId() == null ? "" : taFundingVOList.getStuId();
+                String TaType = taFundingVOList.getTaType() == null ? "" : taFundingVOList.getTaType();
+                String CourseName = taFundingVOList.getCourseName() == null ? "" : taFundingVOList.getCourseName();
+                String CourseCode = taFundingVOList.getCourseCode() == null ? "" : taFundingVOList.getCourseCode();
+                String ClassNbr = taFundingVOList.getClassNbr() == null ? "" : taFundingVOList.getClassNbr();
+                String AssignedFunding = taFundingVOList.getAssignedFunding() == null ? "" : taFundingVOList.getAssignedFunding();
+                String PhdFunding = taFundingVOList.getPhdFunding() == null ? "" : taFundingVOList.getPhdFunding();
+                String TravelSubsidy = taFundingVOList.getTravelSubsidy() == null ? "" : taFundingVOList.getTravelSubsidy();
+                String Bonus = taFundingVOList.getBonus() == null ? "" : taFundingVOList.getBonus();
+                String Total = taFundingVOList.getTotal() == null ? "" : taFundingVOList.getTotal();
+
+                String[] content = {
+                        DepartmentName, TaName,StuId,TaType,CourseName, CourseCode, ClassNbr,AssignedFunding,PhdFunding,TravelSubsidy,Bonus,Total
+                };
+                Content.add(content);
+            }
+            filePath = this.printNormalTable("助教经费列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
     }
 }

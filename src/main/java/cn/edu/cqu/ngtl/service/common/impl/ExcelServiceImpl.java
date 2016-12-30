@@ -3,6 +3,9 @@ package cn.edu.cqu.ngtl.service.common.impl;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
@@ -355,6 +358,297 @@ public class ExcelServiceImpl implements ExcelService {
         return filePath;
     }
 
+
+
+    public String printDetailFundingExcel(List<DetailFundingViewObject> DFList, String folderPath, String filename, String version) throws IOException{
+        Workbook wb;
+        Sheet sheet;
+
+        //默认输出版本为03版
+        if (version.equals("2007")) {
+            wb = new XSSFWorkbook();
+        } else {
+            wb = new HSSFWorkbook();
+        }
+        sheet = wb.createSheet("经费明细信息导出");
+
+        Map<String, CellStyle> styles = createStyles(wb);
+        String[] titles = DetailFundingViewObject.getAttrTittles();
+
+        CellRangeAddress cra1 = new CellRangeAddress(0, 0, 0, 15);
+        sheet.addMergedRegion(cra1);
+
+        int rowNum = 0; // 控制在excel的第几行输出文本
+        // 顶端一长排字
+        Row topRow = sheet.createRow(rowNum++);
+        Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
+        topCell.setCellValue("教务处(重庆大学助教管理系统)经费明细信息导出");
+        topCell.setCellStyle(styles.get("content"));
+
+        Row titleRow = sheet.createRow(rowNum++);
+        Cell titleCell;
+        for (int i = 0; i < titles.length; i++) {
+            titleCell = titleRow.createCell(i);
+            titleCell.setCellValue(titles[i]);
+            titleCell.setCellType(Cell.CELL_TYPE_STRING);
+            titleCell.setCellStyle(styles.get("title"));
+        }
+
+        List<String[]> content = new ArrayList<>();
+        for (DetailFundingViewObject DFObj : DFList) {
+            content.add(DFObj.getContents());
+        }
+
+        for (int i = 0; i < content.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            String[] contentStrings = content.get(i);
+
+            for (int colNum = 0; colNum < contentStrings.length; colNum++) {
+                Cell cell = row.createCell(colNum);
+                if (version.equals("2007")) {
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
+                } else {
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
+                }
+                cell.setCellStyle(styles.get("content"));
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+            }
+            sheet.autoSizeColumn((short) i);
+        }
+
+        String rootPath = getServletContext().getRealPath("/");
+
+        File folder = new File(rootPath+File.separator+folderPath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+        }
+
+        String filePath = folderPath+File.separator+filename;
+
+        FileOutputStream out = new FileOutputStream(rootPath+File.separator+filePath);
+        wb.write(out);
+        out.close();
+
+        return filePath;
+    }
+
+
+    public String printPreviousSessionFundingsExcel(List<SessionFundingViewObject> SFList, String folderPath, String filename, String version) throws IOException{
+        Workbook wb;
+        Sheet sheet;
+
+        //默认输出版本为03版
+        if (version.equals("2007")) {
+            wb = new XSSFWorkbook();
+        } else {
+            wb = new HSSFWorkbook();
+        }
+        sheet = wb.createSheet("学校历史经费信息导出");
+
+        Map<String, CellStyle> styles = createStyles(wb);
+        String[] titles = SessionFundingViewObject.getAttrTittles();
+
+        CellRangeAddress cra1 = new CellRangeAddress(0, 0, 0, 15);
+        sheet.addMergedRegion(cra1);
+
+        int rowNum = 0; // 控制在excel的第几行输出文本
+        // 顶端一长排字
+        Row topRow = sheet.createRow(rowNum++);
+        Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
+        topCell.setCellValue("教务处(重庆大学助教管理系统)学校历史经费信息导出");
+        topCell.setCellStyle(styles.get("content"));
+
+        Row titleRow = sheet.createRow(rowNum++);
+        Cell titleCell;
+        for (int i = 0; i < titles.length; i++) {
+            titleCell = titleRow.createCell(i);
+            titleCell.setCellValue(titles[i]);
+            titleCell.setCellType(Cell.CELL_TYPE_STRING);
+            titleCell.setCellStyle(styles.get("title"));
+        }
+
+        List<String[]> content = new ArrayList<>();
+        for (SessionFundingViewObject SFObj : SFList) {
+            content.add(SFObj.getContents());
+        }
+
+        for (int i = 0; i < content.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            String[] contentStrings = content.get(i);
+
+            for (int colNum = 0; colNum < contentStrings.length; colNum++) {
+                Cell cell = row.createCell(colNum);
+                if (version.equals("2007")) {
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
+                } else {
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
+                }
+                cell.setCellStyle(styles.get("content"));
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+            }
+            sheet.autoSizeColumn((short) i);
+        }
+
+        String rootPath = getServletContext().getRealPath("/");
+
+        File folder = new File(rootPath+File.separator+folderPath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+        }
+
+        String filePath = folderPath+File.separator+filename;
+
+        FileOutputStream out = new FileOutputStream(rootPath+File.separator+filePath);
+        wb.write(out);
+        out.close();
+
+        return filePath;
+    }
+
+
+    public String printDepartmentCurrFundingsExcel(List<DepartmentFundingViewObject> departmentFundingViewObjectList, String folderPath, String filename, String version) throws IOException{
+        Workbook wb;
+        Sheet sheet;
+
+        //默认输出版本为03版
+        if (version.equals("2007")) {
+            wb = new XSSFWorkbook();
+        } else {
+            wb = new HSSFWorkbook();
+        }
+        sheet = wb.createSheet("学院经费信息导出");
+
+        Map<String, CellStyle> styles = createStyles(wb);
+        String[] titles = DepartmentFundingViewObject.getAttrTittles();
+
+        CellRangeAddress cra1 = new CellRangeAddress(0, 0, 0, 15);
+        sheet.addMergedRegion(cra1);
+
+        int rowNum = 0; // 控制在excel的第几行输出文本
+        // 顶端一长排字
+        Row topRow = sheet.createRow(rowNum++);
+        Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
+        topCell.setCellValue("教务处(重庆大学助教管理系统)学院经费信息导出");
+        topCell.setCellStyle(styles.get("content"));
+
+        Row titleRow = sheet.createRow(rowNum++);
+        Cell titleCell;
+        for (int i = 0; i < titles.length; i++) {
+            titleCell = titleRow.createCell(i);
+            titleCell.setCellValue(titles[i]);
+            titleCell.setCellType(Cell.CELL_TYPE_STRING);
+            titleCell.setCellStyle(styles.get("title"));
+        }
+
+        List<String[]> content = new ArrayList<>();
+        for (DepartmentFundingViewObject DFObj : departmentFundingViewObjectList) {
+            content.add(DFObj.getContents());
+        }
+
+        for (int i = 0; i < content.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            String[] contentStrings = content.get(i);
+
+            for (int colNum = 0; colNum < contentStrings.length; colNum++) {
+                Cell cell = row.createCell(colNum);
+                if (version.equals("2007")) {
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
+                } else {
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
+                }
+                cell.setCellStyle(styles.get("content"));
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+            }
+            sheet.autoSizeColumn((short) i);
+        }
+
+        String rootPath = getServletContext().getRealPath("/");
+
+        File folder = new File(rootPath+File.separator+folderPath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+        }
+
+        String filePath = folderPath+File.separator+filename;
+
+        FileOutputStream out = new FileOutputStream(rootPath+File.separator+filePath);
+        wb.write(out);
+        out.close();
+
+        return filePath;
+    }
+
+    public String printDepartmentPreFundingsExcel(List<DepartmentFundingViewObject> departmentFundingViewObjectList, String folderPath, String filename, String version) throws IOException{
+        Workbook wb;
+        Sheet sheet;
+
+        //默认输出版本为03版
+        if (version.equals("2007")) {
+            wb = new XSSFWorkbook();
+        } else {
+            wb = new HSSFWorkbook();
+        }
+        sheet = wb.createSheet("学院历史经费信息导出");
+
+        Map<String, CellStyle> styles = createStyles(wb);
+        String[] titles = DepartmentFundingViewObject.getAttrTittles();
+
+        CellRangeAddress cra1 = new CellRangeAddress(0, 0, 0, 15);
+        sheet.addMergedRegion(cra1);
+
+        int rowNum = 0; // 控制在excel的第几行输出文本
+        // 顶端一长排字
+        Row topRow = sheet.createRow(rowNum++);
+        Cell topCell = topRow.createCell(0, Cell.CELL_TYPE_STRING);
+        topCell.setCellValue("教务处(重庆大学助教管理系统)学院历史经费信息导出");
+        topCell.setCellStyle(styles.get("content"));
+
+        Row titleRow = sheet.createRow(rowNum++);
+        Cell titleCell;
+        for (int i = 0; i < titles.length; i++) {
+            titleCell = titleRow.createCell(i);
+            titleCell.setCellValue(titles[i]);
+            titleCell.setCellType(Cell.CELL_TYPE_STRING);
+            titleCell.setCellStyle(styles.get("title"));
+        }
+
+        List<String[]> content = new ArrayList<>();
+        for (DepartmentFundingViewObject DFObj : departmentFundingViewObjectList) {
+            content.add(DFObj.getContents());
+        }
+
+        for (int i = 0; i < content.size(); i++) {
+            Row row = sheet.createRow(rowNum++);
+            String[] contentStrings = content.get(i);
+
+            for (int colNum = 0; colNum < contentStrings.length; colNum++) {
+                Cell cell = row.createCell(colNum);
+                if (version.equals("2007")) {
+                    cell.setCellValue(new XSSFRichTextString(contentStrings[colNum]));
+                } else {
+                    cell.setCellValue(new HSSFRichTextString(contentStrings[colNum]));
+                }
+                cell.setCellStyle(styles.get("content"));
+                cell.setCellType(Cell.CELL_TYPE_STRING);
+            }
+            sheet.autoSizeColumn((short) i);
+        }
+
+        String rootPath = getServletContext().getRealPath("/");
+
+        File folder = new File(rootPath+File.separator+folderPath);
+        if (!folder.exists() || !folder.isDirectory()) {
+            folder.mkdir();
+        }
+
+        String filePath = folderPath+File.separator+filename;
+
+        FileOutputStream out = new FileOutputStream(rootPath+File.separator+filePath);
+        wb.write(out);
+        out.close();
+
+        return filePath;
+    }
     public  String printCourseClassExcel(List<ClassFundingViewObject> courseclasslist, String folderPath, String filename, String version)
             throws  IOException
     {

@@ -304,15 +304,29 @@
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condInstructorName" p:additionalCssClasses="searchBoxWidth"/>
 
-                                                                            <!--耗费工时-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="courseWorkTime" p:additionalCssClasses="searchBoxWidth"/>
-                                                                            <!--助教经费-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="courseAppFunds" p:additionalCssClasses="searchBoxWidth"/>
-                                                                            <!--聘用助教数-->
-                                                                            <bean parent="Uif-InputField"
-                                                                                  p:propertyName="taNumber" p:additionalCssClasses="searchBoxWidth"/>
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位"/>
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位"/>
+                                                                            <!--占位-->
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:additionalCssClasses="hidden-fields"
+                                                                                  p:messageText="占位"/>
+
+                                                                            <!--&lt;!&ndash;耗费工时&ndash;&gt;-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                            <!--p:propertyName="courseWorkTime" p:additionalCssClasses="searchBoxWidth"/>-->
+                                                                            <!--&lt;!&ndash;助教经费&ndash;&gt;-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                            <!--p:propertyName="courseAppFunds" p:additionalCssClasses="searchBoxWidth"/>-->
+                                                                            <!--&lt;!&ndash;聘用助教数&ndash;&gt;-->
+                                                                            <!--<bean parent="Uif-InputField"-->
+                                                                            <!--p:propertyName="taNumber" p:additionalCssClasses="searchBoxWidth"/>
+                                                                      -->
                                                                             <bean id="searchButton"
                                                                                   parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="查询"

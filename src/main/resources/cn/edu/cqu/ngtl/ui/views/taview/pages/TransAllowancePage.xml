@@ -207,7 +207,7 @@
           p:headerText="删除记录" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="删除往返记录后将无法恢复，请谨慎处理！" />
+                <bean parent="Uif-MessageField" p:messageText="删除往返记录后将无法恢复，请谨慎处理！" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">

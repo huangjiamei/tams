@@ -23,6 +23,7 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
+import com.itextpdf.awt.geom.CubicCurve2D;
 import com.itextpdf.text.DocumentException;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -43,6 +44,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
@@ -708,6 +711,24 @@ public class ClassController extends BaseController {
         String arr[] = infoForm.getAddTeachCTime().split("~");
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(added.getElapsedTime());
+        if(!isNum.matches()){
+            infoForm.setErrMsg("请输入整数！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        /*
+        else if(added.getElapsedTime().contains(".")){
+            infoForm.setErrMsg("教学日历耗时不能为小数！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        */
+        else if(Integer.parseInt(added.getElapsedTime()) > 11) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过11个小时！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         /*
             控制判断 start
          */

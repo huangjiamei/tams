@@ -7,6 +7,7 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_PRNCPL_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.*;
 import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMCourseClassification;
 import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
@@ -344,9 +345,12 @@ public class AdminServiceImpl implements IAdminService {
             tamsUniversityFunding.setBonus("0");
             tamsUniversityFunding.setTravelSubsidy("0");
             tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
-            //学院经费初始化
+            //学院经费草稿初始化
             List<TAMSDeptFundingDraft> tamsDeptFundingDrafts = new ArrayList<>();
-            List<UTDepartment> departments = utDepartmentDao.getAllHasCourseDepartment(); //只初始化有课程的学院
+            //学院经费表初始化
+            List<TAMSDeptFunding> tamsDeptFundings = new ArrayList<>();
+            //只初始化有课程的学院
+            List<UTDepartment> departments = utDepartmentDao.getAllHasCourseDepartment();
             for (int i = 0; i < departments.size(); i++) {
                 TAMSDeptFundingDraft tamsDeptFundingDraft = new TAMSDeptFundingDraft();
                 tamsDeptFundingDraft.setSessionId(sessionId);
@@ -358,8 +362,21 @@ public class AdminServiceImpl implements IAdminService {
                 tamsDeptFundingDraft.setBonus("0");
                 tamsDeptFundingDraft.setTravelSubsidy("0");
                 tamsDeptFundingDrafts.add(tamsDeptFundingDraft);
+
+                TAMSDeptFunding tamsDeptFunding = new TAMSDeptFunding();
+                tamsDeptFunding.setSessionId(sessionId);
+                tamsDeptFunding.setDepartmentId(departments.get(i).getId());
+                tamsDeptFunding.setPlanFunding("0");
+                tamsDeptFunding.setActualFunding("0");
+                tamsDeptFunding.setApplyFunding("0");
+                tamsDeptFunding.setPhdFunding("0");
+                tamsDeptFunding.setBonus("0");
+                tamsDeptFunding.setTravelSubsidy("0");
+                tamsDeptFundings.add(tamsDeptFunding);
             }
             tamsDeptFundingDraftDao.saveBatchByEntities(tamsDeptFundingDrafts);
+
+
             return true;
         } else
             return false;
@@ -874,6 +891,8 @@ public class AdminServiceImpl implements IAdminService {
         return code;
     }
 
+
+    //计算课程总预算经费
     @Override
     public void saveDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
@@ -966,6 +985,49 @@ public class AdminServiceImpl implements IAdminService {
         return timeSettingTypeDao.deleteOneByEntity(timeSettingType);
     }
 
+    //计算学院总预算经费
+    @Override
+    public String getSessionFundingTotalApply() {
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        User user = (User) getUserSession().retrieveObject("user");
+        List<TAMSDeptFundingDraft> deptFundingDrafts = new ArrayList<>();
+        List<TAMSDeptFunding> deptFundings = new ArrayList<>();
+        Integer sessionFundingTotalApply = 0;
+        if(userInfoService.isSysAdmin(user.getCode()) || userInfoService.isAcademicAffairsStaff(user.getCode())) {
+            deptFundingDrafts = tamsDeptFundingDraftDao.selectAll();
+            if(deptFundingDrafts != null) {
+                for (TAMSDeptFundingDraft per : deptFundingDrafts) {
+                    sessionFundingTotalApply = sessionFundingTotalApply + Integer.parseInt(per.getApplyFunding());
+                }
+            }
+        }
+        else {
+            deptFundings.add(
+                    tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), curSession.getId())
+            );
+            if(deptFundings != null)
+                sessionFundingTotalApply = Integer.parseInt(deptFundings.get(0).getApplyFunding());
+        }
+        return sessionFundingTotalApply.toString();
+    }
+
+    //计算课程总申报经费
+    @Override
+    public String getClassFundingTotalApply() {
+        User user = (User) getUserSession().retrieveObject("user");
+        Integer classFundingTotalApply = 0;
+        List<TAMSClassFunding> classFundings = new ArrayList<>();
+        if(userInfoService.isSysAdmin(user.getCode()) || userInfoService.isAcademicAffairsStaff(user.getCode()) || userInfoService.isCollegeStaff(user.getCode()))
+            classFundings = tamsClassFundingDraftDao.selectAll();
+        else
+            classFundings = tamsClassFundingDao.selectAll(user);
+        if(classFundings !=null) {
+            for(TAMSClassFunding per : classFundings) {
+                classFundingTotalApply = classFundingTotalApply + Integer.parseInt(per.getApplyFunding());
+            }
+        }
+        return classFundingTotalApply.toString();
+    }
     @Override
     public String getSessionFundingStatistics() {
         List<TAMSDeptFunding> deptFunds = tamsDeptFundingDraftDao.selectDepartmentCurrDraftBySession();

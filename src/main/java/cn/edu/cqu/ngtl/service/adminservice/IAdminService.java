@@ -178,4 +178,8 @@ public interface IAdminService {
 
     Integer countTaFunding (List<TaFundingViewObject> taFundingViewObjects);
 
+    String getSessionFundingTotalApply();
+
+    String getClassFundingTotalApply();
+
 }

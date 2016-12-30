@@ -1342,6 +1342,8 @@ public class adminController extends BaseController {
                         infoForm.getSessionFundings().get(0).getActualFunding() : "0")
         );
 
+        //学院经费的总申报经费
+        infoForm.setSessionFundingTotalApply(adminService.getSessionFundingTotalApply());
         /*
             课程经费的已设置/总经费
          */
@@ -1352,6 +1354,9 @@ public class adminController extends BaseController {
                         taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
                 )
         );
+
+        //课程经费的总预算经费
+        infoForm.setClassFundingTotalApply(adminService.getClassFundingTotalApply());
          /*
             课程经费的已批准经费
          */

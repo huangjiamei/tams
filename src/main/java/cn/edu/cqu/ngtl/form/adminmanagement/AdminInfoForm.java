@@ -100,6 +100,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private String sessionFundingTotalApproved;
 
+    private String sessionFundingTotalApply;
+
     //学院当前学期经费饼状图
     private String pieChartsNameValuePairs;
 
@@ -126,7 +128,8 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     private String classFundingStatistics;
 
-    private String classFundingTotalApproved;
+    //private String classFundingTotalApproved;
+    private String classFundingTotalApply;
 
     private List<TaFundingViewObject> taFunding;
 
@@ -276,6 +279,24 @@ public class AdminInfoForm extends BaseForm implements Serializable {
         this.classFundingStatistics = classFundingStatistics;
     }
 
+    public String getSessionFundingTotalApply() {
+        return sessionFundingTotalApply;
+    }
+
+    public void setSessionFundingTotalApply(String sessionFundingTotalApply) {
+        this.sessionFundingTotalApply = sessionFundingTotalApply;
+    }
+
+    public String getClassFundingTotalApply() {
+        return classFundingTotalApply;
+    }
+
+    public void setClassFundingTotalApply(String classFundingTotalApply) {
+        this.classFundingTotalApply = classFundingTotalApply;
+    }
+
+    /*
+
     public String getClassFundingTotalApproved() {
         return classFundingTotalApproved;
     }
@@ -283,6 +304,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setClassFundingTotalApproved(String classFundingTotalApproved) {
         this.classFundingTotalApproved = classFundingTotalApproved;
     }
+    */
 
     public String getSessionFundingStatistics() {
         return sessionFundingStatistics;

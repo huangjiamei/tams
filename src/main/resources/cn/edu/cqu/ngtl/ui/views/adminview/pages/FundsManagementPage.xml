@@ -550,11 +550,11 @@
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="总额："
+                                                                                                          p:messageText="申报总额："
                                                                                                           p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="@{sessionFundingStatistics}"
+                                                                                                          p:messageText="@{sessionFundingTotalApply}"
                                                                                                           p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="label label-warning"
                                                                                                           p:style="font-size:15px;"/>
@@ -1107,10 +1107,10 @@
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="总额："
+                                                                                                          p:messageText="申报总额："
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
-                                                                                                          p:messageText="@{classFundingStatistics}"
+                                                                                                          p:messageText="@{classFundingTotalApply}"
                                                                                                           p:additionalCssClasses="label label-warning"
                                                                                                           p:style="font-size:15px;"/>
 

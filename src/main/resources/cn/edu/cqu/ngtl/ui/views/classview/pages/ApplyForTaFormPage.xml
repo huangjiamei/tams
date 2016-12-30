@@ -136,15 +136,13 @@
                                                                                   <!--p:messageText="@{applyAssistantViewObject.ug_Major}"/>-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="研究生专业" p:messageText="@{applyAssistantViewObject.g_Major}"/>
-                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
-                                                                                  p:label="电话号码"
-                                                                                  p:propertyName="applicationPhoneNbr"
-                                                                                  p:required="true">
-                                                                            </bean>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程名称" p:messageText="@{applyAssistantViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="教学班号" p:messageText="@{applyAssistantViewObject.classNbr}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="申请课程类型"
+                                                                                  p:messageText="@{applyAssistantViewObject.applyCourseType}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学时数"
                                                                                   p:messageText="@{applyAssistantViewObject.classHour}"/>
@@ -154,9 +152,21 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="申请课程教师"
                                                                                   p:messageText="@{applyAssistantViewObject.applyTeacher}"/>
-                                                                            <!--<bean parent="Uif-MessageField"-->
-                                                                                  <!--p:label="申请课程类型"-->
-                                                                                  <!--p:messageText="@{applyAssistantViewObject.applyCourseType}"/>-->
+                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
+                                                                                  p:label="电话号码"
+                                                                                  p:propertyName="applicationPhoneNbr"
+                                                                                  p:required="true">
+                                                                            </bean>
+                                                                            <bean id="bankTypeField" parent="Uif-InputField"
+                                                                                  p:label="银行名称"
+                                                                                  p:propertyName="bankName"
+                                                                                  p:required="true">
+                                                                            </bean>
+                                                                            <bean id="bankNbrField" parent="Uif-InputField"
+                                                                                  p:label="银行卡号"
+                                                                                  p:propertyName="bankCode"
+                                                                                  p:required="true">
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

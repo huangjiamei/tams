@@ -101,6 +101,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String applyReason;
 
+    private String bankName;
+
+    private String bankNbr;
+
     /**
      * 老师提交申请页面相关
      */
@@ -528,5 +532,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCondClassType(String condClassType) {
         this.condClassType = condClassType;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankNbr() {
+        return bankNbr;
+    }
+
+    public void setBankNbr(String bankNbr) {
+        this.bankNbr = bankNbr;
     }
 }

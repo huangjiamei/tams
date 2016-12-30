@@ -331,9 +331,13 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
-        infoForm.setApplicationPhoneNbr(taService.getApplicationPhoneNbr(stuId,classId)); //设置申请人电话号码
-        infoForm.setApplyReason(taService.getApplicationReason(stuId,classId));   //设置申请人理由
-
+        TAMSTaApplication tamsTaApplication = taService.getApplicationByStuIdAndClassId(stuId,classId);
+        if(tamsTaApplication!=null) {
+            infoForm.setApplicationPhoneNbr(tamsTaApplication.getPhoneNbr()); //设置申请人电话号码
+            infoForm.setApplyReason(tamsTaApplication.getNote());   //设置申请人理由
+            infoForm.setBankName(tamsTaApplication.getBankName()); //银行名称
+            infoForm.setBankNbr(tamsTaApplication.getPhoneNbr());  //银行卡号
+        }
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
                         classInfoService.getStudentInfoById(stuId),
@@ -478,7 +482,7 @@ public class ClassController extends BaseController {
 
         if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
             if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
-                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                infoForm.setErrMsg("您已提交申请，无法添加教学日历！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }

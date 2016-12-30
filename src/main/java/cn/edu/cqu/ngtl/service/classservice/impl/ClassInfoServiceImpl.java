@@ -811,7 +811,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public void releaseTaApplication(List<MyTaViewObject> taViewObjects){
-        if(taViewObjects.size()!=0){
+        if(taViewObjects.size()==0){
             return;
         }
 

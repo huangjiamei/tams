@@ -1279,7 +1279,7 @@ public class ClassController extends BaseController {
 
 
 
-        //开始释放剩下的tapplication
+
 
 
         for(MyTaViewObject needToAdd : checkedList){
@@ -1308,10 +1308,13 @@ public class ClassController extends BaseController {
             }
         }
 
-        if(addSize+(taList==null?0:taList.size())>=appTaNumber){
+        //开始释放剩下的tapplication
+        if((addSize+(taList==null?0:taList.size()))>=appTaNumber){
             classInfoService.releaseTaApplication(infoForm.getAllApplication());
+            infoForm.getAllApplication().clear();
+            infoForm.getAllApplication().add(new MyTaViewObject());
+            infoForm.setAllApplication(infoForm.getAllApplication());
         }
-
 
         if(addSize>=0)
             return this.getModelAndView(infoForm, "pageTaManagement");
@@ -1432,6 +1435,11 @@ public class ClassController extends BaseController {
         for(MyTaViewObject needTodelete : needToFire){
             infoForm.getAllMyTa().remove(needTodelete);
         }
+
+        if(infoForm.getAllMyTa().size()==0){
+            infoForm.getAllMyTa().add(new MyTaViewObject());
+        }
+
 
         if(result)
 //            return this.getTaManagementPage(form, request);

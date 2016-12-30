@@ -199,7 +199,7 @@
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
-                                                                                  p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control');"
+                                                                                  p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control'),validateBank('bankNbrField_control');"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:render="@{!#form.taApplicationSubmitted}"
                                                                                   p:methodToCall="submitTaForm"

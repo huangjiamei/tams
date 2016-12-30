@@ -296,7 +296,7 @@
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="EXCEL"
                                                                                                                                   p:methodToCall="exportPreviousSessionFundingsExcel"
-                                                                                                                                  p:additionalCssClasses="icon-list bg-olive box-btngruop"/>
+                                                                                                                                  p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="PDF"
                                                                                                                                   p:methodToCall="exportSchoolHistoryFundsPDF"
@@ -377,7 +377,7 @@
                                                                                                                             value="false"/>
                                                                                                                     <property
                                                                                                                             name="layoutManager.richTable.render"
-                                                                                                                            value="true"/>
+                                                                                                                            value="false"/>
 
                                                                                                                     <property
                                                                                                                             name="useServerPaging"
@@ -576,7 +576,7 @@
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="EXCEL"
                                                                                                                       p:methodToCall="exportDepartmentCurrFundingsExcel"
-                                                                                                                      p:additionalCssClasses="icon-list bg-olive box-btngruop"/>
+                                                                                                                      p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                        p:actionLabel="PDF"
                                                                                                                        p:methodToCall="exportCollegeFundsPDF"
@@ -770,7 +770,7 @@
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="EXCEL"
                                                                                                                                               p:methodToCall="exportDepartmentPreFundingsExcel"
-                                                                                                                                              p:additionalCssClasses="icon-list bg-olive box-btngruop"/>
+                                                                                                                                              p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="PDF"
                                                                                                                                               p:methodToCall="exportCollegeHistoryFundsPDF"

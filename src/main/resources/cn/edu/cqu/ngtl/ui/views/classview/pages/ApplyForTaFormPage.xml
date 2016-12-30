@@ -201,13 +201,13 @@
                                                                                   p:actionLabel="提交"
                                                                                   p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control');"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:render="@{applicationPhoneNbr==null}"
+                                                                                  p:render="@{!#form.taApplicationSubmitted}"
                                                                                   p:methodToCall="submitTaForm"
                                                                                   p:id="submitTaFormBtn"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="取消申请"
-                                                                                  p:render="@{applicationPhoneNbr!=null}"
+                                                                                  p:render="@{#form.taApplicationSubmitted}"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup">
                                                                                 <property name="confirmationDialog">

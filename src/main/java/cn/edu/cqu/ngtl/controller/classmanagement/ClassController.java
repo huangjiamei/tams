@@ -23,7 +23,6 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
-import com.itextpdf.awt.geom.CubicCurve2D;
 import com.itextpdf.text.DocumentException;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
@@ -336,10 +335,13 @@ public class ClassController extends BaseController {
 
         TAMSTaApplication tamsTaApplication = taService.getApplicationByStuIdAndClassId(stuId,classId);
         if(tamsTaApplication!=null) {
+            infoForm.setTaApplicationSubmitted(true);
             infoForm.setApplicationPhoneNbr(tamsTaApplication.getPhoneNbr()); //设置申请人电话号码
             infoForm.setApplyReason(tamsTaApplication.getNote());   //设置申请人理由
             infoForm.setBankName(tamsTaApplication.getBankName()); //银行名称
             infoForm.setBankNbr(tamsTaApplication.getPhoneNbr());  //银行卡号
+        }else{
+            infoForm.setTaApplicationSubmitted(false);
         }
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
@@ -404,6 +406,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else if(code == 4) {
+            infoForm.setTaApplicationSubmitted(true);
             return this.getModelAndView(infoForm, "pageApplyForTaForm");
         }
         else if(code == 6){
@@ -435,6 +438,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         classInfoService.deleteTaApplicationByStuIdAndClassId(stuId,classId);
+        infoForm.setTaApplicationSubmitted(false);
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 

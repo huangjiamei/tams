@@ -84,7 +84,6 @@ public class ClassController extends BaseController {
     @Autowired
     private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
-
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
         UserSession userSession = GlobalVariables.getUserSession();

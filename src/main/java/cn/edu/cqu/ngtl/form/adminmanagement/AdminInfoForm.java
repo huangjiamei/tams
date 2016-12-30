@@ -136,6 +136,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private boolean fallTerm;
     private boolean academicAffairManager;
     private boolean deptManager;
+    private boolean studentRole;
 
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
@@ -1054,7 +1055,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     }
 
     public void setInstructorCode(String instructorCode) {
-        instructorCode = instructorCode;
+        this.instructorCode = instructorCode;
     }
 
     public List<CourseManagerViewObject> getCourseManagerViewObjects() {
@@ -1671,5 +1672,13 @@ public class AdminInfoForm extends BaseForm implements Serializable {
 
     public void setTaBlackList(List<BlackListViewObject> taBlackList) {
         this.taBlackList = taBlackList;
+    }
+
+    public boolean isStudentRole() {
+        return studentRole;
+    }
+
+    public void setStudentRole(boolean studentRole) {
+        this.studentRole = studentRole;
     }
 }

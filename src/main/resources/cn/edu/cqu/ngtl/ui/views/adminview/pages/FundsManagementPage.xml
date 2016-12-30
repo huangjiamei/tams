@@ -1440,10 +1440,14 @@
                                                                                                                       p:methodToCall="exportTaFundingPDF"
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="Excel"
+                                                                                                                      p:methodToCall="exportTaFundsExcel"
+                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
+                                                                                                                      p:render="@{!#form.studentRole}"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="SaveTaFunding"
-                                                                                                                      p:render="true"
                                                                                                                       p:additionalCssClasses="icon-save bg-success box-btngroup"/><!--@{#form.academicAffairManager}-->
                                                                                                             </list>
                                                                                                         </property>
@@ -1581,6 +1585,7 @@
                                                                                                                       p:label="分配经费"
                                                                                                                       p:style="display:@{#line.departmentName!=null?'block':'none'}"
                                                                                                                       p:propertyName="assignedFunding"
+                                                                                                                      p:readOnly="@{#form.studentRole}"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">
                                                                                                                         <bean parent="NumericPatternConstraint"/>

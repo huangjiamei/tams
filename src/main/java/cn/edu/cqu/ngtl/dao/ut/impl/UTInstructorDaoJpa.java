@@ -152,14 +152,25 @@ public class UTInstructorDaoJpa implements UTInstructorDao {
 
 
 	@Override
-	public List<UTInstructor> getInstructorByCodeAndNameAndDept( String name ,String code,String departmentId) {
+	public List<UTInstructor> getInstructorByCodeAndNameAndDept(String name ,String code,String departmentId) {
+		QueryResults<UTInstructor> qr ;
+		if(departmentId=="") {
+			QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
+					(like("code", "%"+code+'%')),
+					(like("name", "%"+name+'%'))
+					));
+			 qr = KradDataServiceLocator.getDataObjectService().findMatching(
+					UTInstructor.class, criteria.build());
+		}else{
+			QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
+					(like("code", "%"+code+'%')),
+					(like("name", "%"+name+'%')),
+					(equal("departmentId",departmentId))
+			));
+			 qr = KradDataServiceLocator.getDataObjectService().findMatching(
+					UTInstructor.class, criteria.build());
+		}
 
-		QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
-				(like("code" , "%"+ code + '%')),
-				(like("name" , "%"+ name + '%')),
-				(like("departmentId" ,"%"+ departmentId + '%'))));
-		QueryResults<UTInstructor> qr = KradDataServiceLocator.getDataObjectService().findMatching(
-				UTInstructor.class, criteria.build());
 
 		return qr.getResults().isEmpty()?null:qr.getResults();
 

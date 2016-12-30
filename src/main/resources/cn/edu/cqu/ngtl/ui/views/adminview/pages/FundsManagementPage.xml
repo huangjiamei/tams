@@ -1600,6 +1600,10 @@
                                                                                                           p:actionLabel="PDF"
                                                                                                           p:methodToCall="exportFundsDetailPDF"
                                                                                                           p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="Excel"
+                                                                                                          p:methodToCall="exportDetailFundingExcel"
+                                                                                                          p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>

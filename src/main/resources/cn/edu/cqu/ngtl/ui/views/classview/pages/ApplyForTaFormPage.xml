@@ -44,7 +44,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="applyForTaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('applyForTaHeaderTitle','icon-book','课程','学生申请助教')">
+                                  p:onDocumentReadyScript="initContentHeader('applyForTaHeaderTitle','icon-book','课程','申请助教')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

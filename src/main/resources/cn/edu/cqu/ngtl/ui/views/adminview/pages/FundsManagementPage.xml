@@ -295,9 +295,8 @@
                                                                                                                         <list>
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="EXCEL"
-                                                                                                                                  p:actionImagePlacement="LEFT"
                                                                                                                                   p:methodToCall="exportPreviousSessionFundingsExcel"
-                                                                                                                                  p:additionalCssClasses="icon-list bg-orange box-btngruop"/>
+                                                                                                                                  p:additionalCssClasses="icon-list bg-olive box-btngruop"/>
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                                                                   p:actionLabel="PDF"
                                                                                                                                   p:methodToCall="exportSchoolHistoryFundsPDF"
@@ -543,7 +542,7 @@
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="预算经费："
                                                                                                           p:render="@{#form.academicAffairManager}"
-                                                                                                          p:style="font-weight:bold;"/>
+                                                                                                          p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{sessionFundingStatistics}"
                                                                                                           p:render="@{#form.academicAffairManager}"
@@ -553,11 +552,11 @@
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="总额："
                                                                                                           p:render="@{#form.academicAffairManager}"
-                                                                                                          p:style="font-weight:bold;"/>
+                                                                                                          p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{sessionFundingStatistics}"
                                                                                                           p:render="@{#form.academicAffairManager}"
-                                                                                                          p:additionalCssClasses="label label-info"
+                                                                                                          p:additionalCssClasses="label label-warning"
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
@@ -576,9 +575,8 @@
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="EXCEL"
-                                                                                                                      p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="exportDepartmentCurrFundingsExcel"
-                                                                                                                      p:additionalCssClasses="icon-list bg-orange box-btngruop"/>
+                                                                                                                      p:additionalCssClasses="icon-list bg-olive box-btngruop"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                        p:actionLabel="PDF"
                                                                                                                        p:methodToCall="exportCollegeFundsPDF"
@@ -771,9 +769,8 @@
                                                                                                                                     <list>
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="EXCEL"
-                                                                                                                                              p:actionImagePlacement="LEFT"
                                                                                                                                               p:methodToCall="exportDepartmentPreFundingsExcel"
-                                                                                                                                              p:additionalCssClasses="icon-list bg-orange box-btngruop"/>
+                                                                                                                                              p:additionalCssClasses="icon-list bg-olive box-btngruop"/>
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                                                                               p:actionLabel="PDF"
                                                                                                                                               p:methodToCall="exportCollegeHistoryFundsPDF"
@@ -1103,7 +1100,7 @@
                                                                                                           p:additionalCssClasses="font-teal"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="已批准/总批准经费："
-                                                                                                          p:style="font-weight:bold;"/>
+                                                                                                          p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingStatistics}"
                                                                                                           p:additionalCssClasses="label label-info"
@@ -1111,10 +1108,10 @@
 
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="总额："
-                                                                                                          p:style="font-weight:bold;"/>
+                                                                                                          p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingStatistics}"
-                                                                                                          p:additionalCssClasses="label label-info"
+                                                                                                          p:additionalCssClasses="label label-warning"
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <!--<bean parent="Uif-Message"-->
@@ -1130,18 +1127,19 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="PDF"
-                                                                                                                      p:methodToCall="exportClassFundingsPDF"
-                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="Excel"
                                                                                                                       p:methodToCall="exportCourseFundsExcel"
-                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>                                                   <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="SaveClassFunding"
                                                                                                                       p:render="@{#form.deptManager}"
                                                                                                                       p:additionalCssClasses="icon-save bg-success box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="PDF"
+                                                                                                                      p:methodToCall="exportClassFundingsPDF"
+                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="发布"
                                                                                                                       p:actionImagePlacement="LEFT"
@@ -1434,6 +1432,10 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="Excel"
+                                                                                                                      p:methodToCall="exportTaFundsExcel"
+                                                                                                                      p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="PDF"
                                                                                                                       p:methodToCall="exportTaFundingPDF"
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
@@ -1641,12 +1643,12 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="PDF"
-                                                                                                                      p:methodToCall="exportFundsDetailPDF"
-                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="Excel"
                                                                                                                       p:methodToCall="exportDetailFundingExcel"
+                                                                                                                      p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="PDF"
+                                                                                                                      p:methodToCall="exportFundsDetailPDF"
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                             </list>
                                                                                                         </property>

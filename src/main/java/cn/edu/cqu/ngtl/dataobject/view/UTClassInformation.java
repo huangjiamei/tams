@@ -45,6 +45,9 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "COURSEOFFERING_ID")
     private String courseOfferingId;
 
+    @Column(name = "CLASS_TYPE")
+    private String classType;
+
 
     @Column(name = "SESSION_ID")
     private Integer sessionId;
@@ -350,5 +353,13 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
 
     public void setTeachingWeek(String teachingWeek) {
         this.teachingWeek = teachingWeek;
+    }
+
+    public String getClassType() {
+        return classType;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
     }
 }

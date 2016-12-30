@@ -72,6 +72,9 @@ public class UTClass extends DataObjectBase implements Serializable {
     @Column(name = "TEACHING_WEEK")
     private String teachWeek;
 
+    @Column(name = "CLASS_TYPE")
+    private String classType;
+
 	@OneToMany
 	@JoinTable(name = "UNITIME_CLASS_INSTRUCTOR", joinColumns = @JoinColumn(name = "CLASS_ID"), inverseJoinColumns = @JoinColumn(name = "INSTRUCTOR_ID"))
 	@OrderBy("id")
@@ -240,5 +243,13 @@ public class UTClass extends DataObjectBase implements Serializable {
 
     public void setTeachWeek(String teachWeek) {
         this.teachWeek = teachWeek;
+    }
+
+    public String getClassType() {
+        return classType;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
     }
 }

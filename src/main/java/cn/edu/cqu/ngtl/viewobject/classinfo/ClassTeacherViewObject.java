@@ -30,6 +30,8 @@ public class ClassTeacherViewObject {
 
     private String taCount;
 
+    private String classType;
+
     /**
      * 暂时缺失的参数
      */
@@ -270,5 +272,13 @@ public class ClassTeacherViewObject {
 
     public void setAppFunds(String appFunds) {
         this.appFunds = appFunds;
+    }
+
+    public String getClassType() {
+        return classType;
+    }
+
+    public void setClassType(String classType) {
+        this.classType = classType;
     }
 }

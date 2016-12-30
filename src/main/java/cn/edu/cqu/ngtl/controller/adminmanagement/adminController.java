@@ -1490,7 +1490,7 @@ public class adminController extends BaseController {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageFundsManagement","methodTocall=exportDepartmentCurrFundingsExcel"})
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportDepartmentCurrFundingsExcel"})
     public ModelAndView exportDepartmentCurrFundingsExcel(@ModelAttribute("KualiForm") UifFormBase form){
         AdminInfoForm infoForm=(AdminInfoForm) form;
         this.baseStart(infoForm);
@@ -1538,7 +1538,7 @@ public class adminController extends BaseController {
 
         List<DepartmentFundingViewObject> departmentFundingViewObjectList=infoForm.getDepartmentPreFundings();
         SimpleDateFormat curTime=new SimpleDateFormat("yyyy-MM-dd");
-        String fileName="学院经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
+        String fileName="学院历史经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
 
         try{
             String filePath=excelService.printDepartmentPreFundingsExcel(departmentFundingViewObjectList,"exportfolder",fileName,"2003");

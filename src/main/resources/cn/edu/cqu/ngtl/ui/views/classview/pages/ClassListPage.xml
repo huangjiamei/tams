@@ -286,6 +286,17 @@
                                                                             <!--课程代码-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condCourseCode"/>
+                                                                            <!--课程类型-->
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="condClassType">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.ClassTypeOptionFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <!--教学班-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condClassNumber" p:additionalCssClasses="searchBoxWidth"/>
@@ -357,6 +368,8 @@
                                                                                   p:sortAs="numeric"/>
                                                                             <bean parent="Uif-DataField" p:label="课程代码"
                                                                                   p:propertyName="courseCode"/>
+                                                                            <bean parent="Uif-DataField" p:label="课程类型"
+                                                                                  p:propertyName="classType"/>
                                                                             <bean parent="Uif-DataField" p:label="教学班"
                                                                                   p:propertyName="classNumber"
                                                                                   p:sortAs="numeric"/>

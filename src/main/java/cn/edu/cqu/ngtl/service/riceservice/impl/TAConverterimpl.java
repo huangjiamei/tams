@@ -159,6 +159,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setDepartmentName(information.getDeptName());
                 viewObject.setCourseName(information.getCourseName());
                 viewObject.setCourseCode(information.getCourseCode());
+                viewObject.setClassType(information.getClassType());
                 viewObject.setStatus(information.getStatusName());
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName((String) classInstructorMap.get(information.getId()));
@@ -187,6 +188,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setDepartmentName(information.getDeptName());
                 viewObject.setCourseName(information.getCourseName());
                 viewObject.setCourseCode(information.getCourseCode());
+                viewObject.setClassType(information.getClassType());
                 viewObject.setStatus(information.getStatusName());
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName(instructorname);

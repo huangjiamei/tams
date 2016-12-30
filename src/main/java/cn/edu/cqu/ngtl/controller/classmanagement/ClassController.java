@@ -868,6 +868,7 @@ public class ClassController extends BaseController {
         conditions.put("InstructorName", infoForm.getCondInstructorName());
         conditions.put("CourseName", infoForm.getCondCourseName());
         conditions.put("CourseCode", infoForm.getCondCourseCode());
+        conditions.put("ClassType", infoForm.getCondClassType());
         conditions.put("StatusId", infoForm.getCourseStatus());
 
         infoForm.setClassList(

@@ -57,6 +57,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String condCourseName;
     private String hintCourseName = "{[\"C++\",\"编译原理\",\"操作系统\"]}";
     private String condCourseCode;
+    private String condClassType;
     private String condClassNumber;
     private String condInstructorName;
     private String courseWorkTime;
@@ -519,5 +520,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCandidatePhoneNbr(String candidatePhoneNbr) {
         this.candidatePhoneNbr = candidatePhoneNbr;
+    }
+
+    public String getCondClassType() {
+        return condClassType;
+    }
+
+    public void setCondClassType(String condClassType) {
+        this.condClassType = condClassType;
     }
 }

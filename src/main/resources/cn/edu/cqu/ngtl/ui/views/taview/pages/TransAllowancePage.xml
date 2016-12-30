@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="taCourseCaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','icon-laptop','工作台','申请')">
+                                  p:onDocumentReadyScript="initContentHeader('taCourseCaHeaderTitle','icon-laptop','工作台','交通记录')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -106,7 +106,7 @@
 
                                                                 <bean parent="Uif-Message"
                                                                       p:messageText="交通总额："
-                                                                      p:style="font-weight:bold;"/>
+                                                                      p:style="font-weight:bold;margin-left:10px;"/>
                                                                 <bean parent="Uif-Message"
                                                                       p:messageText="@{totalTravelSubsidy}"
                                                                       p:additionalCssClasses="label label-info"

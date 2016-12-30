@@ -95,7 +95,7 @@
                                                 <list>
                                                     <!--第一个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
                                                           p:style="clear:none!important;">
                                                         <property name="items">
                                                             <list>
@@ -136,7 +136,7 @@
 
                                                     <!--第2个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
                                                           p:style="clear:none!important;">
                                                         <property name="items">
                                                             <list>
@@ -177,7 +177,7 @@
 
                                                     <!--第3个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
                                                           p:style="clear:none!important;">
                                                         <property name="items">
                                                             <list>
@@ -218,7 +218,7 @@
 
                                                     <!--第4个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
                                                           p:style="clear:none!important;">
                                                         <property name="items">
                                                             <list>
@@ -259,7 +259,7 @@
 
                                                     <!--第5个方块-->
                                                     <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="col-lg-3 col-xs-6"
+                                                          p:additionalCssClasses="col-lg-3 col-xs-12"
                                                           p:style="clear:none!important;">
                                                         <property name="items">
                                                             <list>

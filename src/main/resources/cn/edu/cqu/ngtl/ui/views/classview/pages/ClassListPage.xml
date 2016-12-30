@@ -288,7 +288,15 @@
                                                                                   p:propertyName="condCourseCode"/>
                                                                             <!--课程类型-->
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="condClassType"/>
+                                                                                  p:propertyName="condClassType">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.classview.ClassTypeOptionFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <!--教学班-->
                                                                             <bean parent="Uif-InputField"
                                                                                   p:propertyName="condClassNumber" p:additionalCssClasses="searchBoxWidth"/>

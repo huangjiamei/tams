@@ -37,7 +37,6 @@ import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -1377,6 +1376,12 @@ public class adminController extends BaseController {
                 )
         );
 
+        //判断当前角色是不是学生
+        if(userInfoService.isStudent(uId)){
+            infoForm.setStudentRole(true);
+        }else{
+            infoForm.setStudentRole(false);
+        }
 
        // Gson gson = new Gson();
 

@@ -439,6 +439,8 @@ public class TAConverterimpl implements ITAConverter {
         application.setApplicationId(form.getApplyAssistantViewObject().getStudentId());
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
+        application.setBankName(form.getBankName());
+        application.setBankNbr(form.getBankNbr());
         application.setNote(form.getApplyReason());
 
         return application;

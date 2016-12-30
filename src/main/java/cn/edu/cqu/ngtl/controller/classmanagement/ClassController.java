@@ -366,6 +366,14 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请申请人填写本人联系电话！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
+        if(infoForm.getBankName()==null){
+            infoForm.setErrMsg("请选择银行名称！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getBankNbr()==null){
+            infoForm.setErrMsg("请填写银行卡号！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         if(infoForm.getApplyReason()==null){
             infoForm.setErrMsg("请申请人填写申请理由！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);

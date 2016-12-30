@@ -164,8 +164,15 @@
                                                                             </bean>
                                                                             <bean id="bankNbrField" parent="Uif-InputField"
                                                                                   p:label="银行卡号"
-                                                                                  p:propertyName="bankCode"
+                                                                                  p:propertyName="bankNbr"
                                                                                   p:required="true">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
                                                                             </bean>
                                                                         </list>
                                                                     </property>

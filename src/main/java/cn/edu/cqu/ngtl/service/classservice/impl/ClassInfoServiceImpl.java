@@ -385,7 +385,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
-        if (userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
+        if (userInfoService.isSysAdmin(uId)) {
             TAMSTeachCalendar teachCalendar = teachCalendarDao.selectById(teachCalendarId);
             return teachCalendarDao.deleteByEntity(teachCalendar);
 

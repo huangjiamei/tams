@@ -1054,7 +1054,7 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     }
 
     public void setInstructorCode(String instructorCode) {
-        instructorCode = instructorCode;
+        this.instructorCode = instructorCode;
     }
 
     public List<CourseManagerViewObject> getCourseManagerViewObjects() {
@@ -1672,4 +1672,6 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     public void setTaBlackList(List<BlackListViewObject> taBlackList) {
         this.taBlackList = taBlackList;
     }
+
+
 }

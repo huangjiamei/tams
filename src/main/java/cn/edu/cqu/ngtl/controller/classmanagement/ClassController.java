@@ -1605,12 +1605,20 @@ public class ClassController extends BaseController {
         } else if(infoForm.getCandidatePhoneNbr()==null) {
             infoForm.setErrMsg("请填写助教申请人的联系电话！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
-        } else {
+        } else if(infoForm.getCandidateBankNbr()==null) {
+            infoForm.setErrMsg("请填写助教申请人的银行卡号！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(infoForm.getCandidateBankName()==null) {
+            infoForm.setErrMsg("请填写助教申请人的发卡行名称！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else {
             curTa.setApplicationClassId(classId);
             needToBeAddToApplication.add(curTa);
             String phoneNbr = infoForm.getCandidatePhoneNbr();
+            String bankName = infoForm.getCandidateBankName();
+            String bankNbr = infoForm.getCandidateBankNbr();
             short code = taService.submitApplicationAssistant(
-                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr)
+                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr,bankName,bankNbr)
             );
             curTa.setContactPhone(phoneNbr);
             if (code == 10) {

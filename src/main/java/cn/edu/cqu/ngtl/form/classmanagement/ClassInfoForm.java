@@ -107,6 +107,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private boolean taApplicationSubmitted;
 
+    private String candidateBankName;
+
+    private String candidateBankNbr;
+
 
     /**
      * 老师提交申请页面相关
@@ -559,5 +563,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setTaApplicationSubmitted(boolean taApplicationSubmitted) {
         this.taApplicationSubmitted = taApplicationSubmitted;
+    }
+
+    public String getCandidateBankName() {
+        return candidateBankName;
+    }
+
+    public void setCandidateBankName(String candidateBankName) {
+        this.candidateBankName = candidateBankName;
+    }
+
+    public String getCandidateBankNbr() {
+        return candidateBankNbr;
+    }
+
+    public void setCandidateBankNbr(String candidateBankNbr) {
+        this.candidateBankNbr = candidateBankNbr;
     }
 }

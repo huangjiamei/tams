@@ -356,6 +356,24 @@
                                                           p:messageText="@{selectedTa.advisorName}"/>
                                                     <bean id="candidatePhoneNbrField" parent="Uif-InputField" p:label="联系电话" p:required="true"
                                                           p:propertyName="candidatePhoneNbr"/>
+                                                    <bean id="bankTypeField" parent="Uif-InputField"
+                                                          p:label="银行名称"
+                                                          p:propertyName="candidateankName"
+                                                          p:required="true">
+                                                        <property name="optionsFinder">
+                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"
+                                                                  p:blankOption="true"/>
+                                                        </property>
+                                                        <property name="control">
+                                                            <bean parent="Uif-DropdownControl"/>
+                                                        </property>
+                                                    </bean>
+                                                    <bean id="bankNbrField" parent="Uif-InputField"
+                                                          p:label="银行卡号"
+                                                          p:propertyName="candidateBankNbr"
+                                                          p:required="true">
+                                                    </bean>
+
                                                 </list>
                                             </property>
                                         </bean>

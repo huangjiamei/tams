@@ -334,6 +334,7 @@ public class ClassController extends BaseController {
         String classId = infoForm.getCurrClassId();
 
         TAMSTaApplication tamsTaApplication = taService.getApplicationByStuIdAndClassId(stuId,classId);
+
         if(tamsTaApplication!=null) {
             infoForm.setTaApplicationSubmitted(true);
             infoForm.setApplicationPhoneNbr(tamsTaApplication.getPhoneNbr()); //设置申请人电话号码
@@ -343,6 +344,8 @@ public class ClassController extends BaseController {
         }else{
             infoForm.setTaApplicationSubmitted(false);
         }
+
+
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
                         classInfoService.getStudentInfoById(stuId),
@@ -460,9 +463,18 @@ public class ClassController extends BaseController {
         String classId = classObject.getId();
         infoForm.setCurrClassId(classId);
 
-
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
+
+        /*
+         * 是否已经是助教
+         */
+        TAMSTa tamsta = taService.getTaByTaId(uId,classId);
+        if(tamsta!=null){
+            infoForm.setBeenEmployed(true);
+        }else{
+            infoForm.setBeenEmployed(false);
+        }
 
         if (classId == null) {
 

@@ -48,6 +48,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private boolean Submitted;
 
+    private boolean beenEmployed;
 
     /**
      * 班级管理隐藏搜索框
@@ -110,6 +111,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String candidateBankName;
 
     private String candidateBankNbr;
+
+
 
 
     /**
@@ -579,5 +582,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCandidateBankNbr(String candidateBankNbr) {
         this.candidateBankNbr = candidateBankNbr;
+    }
+
+    public boolean isBeenEmployed() {
+        return beenEmployed;
+    }
+
+    public void setBeenEmployed(boolean beenEmployed) {
+        this.beenEmployed = beenEmployed;
     }
 }

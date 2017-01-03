@@ -405,7 +405,7 @@
                                                                                                           p:label="源状态"
                                                                                                           p:propertyName="oldStatue"/>
                                                                                                     <bean parent="Uif-DataField"
-                                                                                                          p:label="目的状态"
+                                                                                                          p:label="目标状态"
                                                                                                           p:propertyName="newStatus"/>
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="反馈信息"

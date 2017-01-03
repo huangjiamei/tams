@@ -129,8 +129,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
-        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
-        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(maxOrder.toString());
+        String statusId = tamsWorkflowStatusDao.getMaxOrderStatusIdByFunctionId(functionId);
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(statusId);
         return classInformations;
     }
 
@@ -804,7 +804,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         if(utClassInformation==null){
             return false;
         }
-        if(utClassInformation.getStatus().equals(maxOrder)){  //最终状态才可以聘用
+        if(utClassInformation.getOrder().equals(maxOrder)){  //最终状态才可以聘用
             return true;
         }
         return false;

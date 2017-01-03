@@ -811,12 +811,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public boolean canEmployByClassId(String classId){
-        String maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1").toString();
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1");
         UTClassInformation utClassInformation = classInfoDao.getOneById(classId);
         if(utClassInformation==null){
             return false;
         }
-        if(utClassInformation.getOrder().equals(maxOrder)){  //最终状态才可以聘用
+        if(utClassInformation.getOrder().equals(String.valueOf(maxOrder-1))){  //倒数第二个状态才可以聘用
             return true;
         }
         return false;

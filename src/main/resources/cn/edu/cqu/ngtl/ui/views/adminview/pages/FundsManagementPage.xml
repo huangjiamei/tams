@@ -1106,6 +1106,7 @@
                                                                                                           p:additionalCssClasses="font-teal"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="已批准/总批准经费："
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingStatistics}"
@@ -1114,6 +1115,7 @@
 
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="申报总额："
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingTotalApply}"

@@ -86,6 +86,8 @@ public class ClassController extends BaseController {
     @Autowired
     private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
+    private static int MAX_CALENDAR_HOUR = 10;
+
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
         UserSession userSession = GlobalVariables.getUserSession();
@@ -741,7 +743,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
         */
-        else if(Integer.parseInt(added.getElapsedTime()) > 11) {
+        else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
             infoForm.setErrMsg("单次教学日历耗时不能超过11个小时！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }

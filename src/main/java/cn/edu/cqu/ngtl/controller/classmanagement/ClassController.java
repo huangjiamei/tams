@@ -744,7 +744,7 @@ public class ClassController extends BaseController {
         }
         */
         else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
-            infoForm.setErrMsg("单次教学日历耗时不能超过11个小时！请重新输入");
+            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 

@@ -193,6 +193,13 @@
                         </list>
                     </property>
                 </bean>
+                <bean parent="Uif-Page" p:id="pageEditTeachingCalendar" p:title="编辑教学日历">
+                    <property name="items">
+                        <list>
+                            <ref bean="EditTeachingCalendarPage"/>
+                        </list>
+                    </property>
+                </bean>
             </list>
         </property>
     </bean>

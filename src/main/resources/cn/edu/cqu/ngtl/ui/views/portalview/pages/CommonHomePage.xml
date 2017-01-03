@@ -109,8 +109,7 @@
                                                           p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
                                                     <!--具体信息的表格-->
                                                     <bean parent="Uif-GridGroup"
-                                                          p:style="width=500px!important;"
-                                                          p:additionalCssClasses="box-body"
+                                                          p:additionalCssClasses="box-body heightDiv"
                                                           p:layoutManager.renderRowFirstCellHeader="false">
                                                         <property name="layoutManager.numberOfColumns" value="2"/>
                                                         <property name="items">

@@ -573,6 +573,47 @@ public class ClassController extends BaseController {
     }
 
     /**
+     * 编辑日历详情页面
+     **/
+    @RequestMapping(params = "methodToCall=getEditTeachCalendarPage")
+    public ModelAndView getEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                    HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            infoForm.setCurrentCalendarInfo(
+                    infoForm.getAllCalendar().get(index)
+            );
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+            infoForm.setAllCalendar(null);  //节省内存
+
+            String classId = infoForm.getCurrClassId();
+            String uId = getUserSession().getPrincipalId();
+           /* infoForm.setAllActivities(
+                    taConverter.activitiesToViewObject(
+                            classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
+                                    uId, classId)
+                    )
+            );*/
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+    }
+
+
+    /**
      * 下载教学日历的附件
      **/
     @RequestMapping(params = "methodToCall=downloadCalendarFile")

@@ -1019,6 +1019,16 @@ td.selected{
 }
 
 #Calendar{
-    float: none;s
+    float: none;
     margin:0;
+}
+
+.heightDiv{
+    margin-bottom: 327px;
+}
+@media (max-width:767px) {
+    .heightDiv{
+        margin-bottom: 0px;
+    }
+
 }

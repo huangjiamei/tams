@@ -112,6 +112,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String candidateBankNbr;
 
+    private String isAgree;
+
     /**
      * 学生申请优秀助教
      */
@@ -602,5 +604,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setBeenEmployed(boolean beenEmployed) {
         this.beenEmployed = beenEmployed;
+    }
+
+    public String getIsAgree() {
+        return isAgree;
+    }
+
+    public void setIsAgree(String isAgree) {
+        this.isAgree = isAgree;
     }
 }

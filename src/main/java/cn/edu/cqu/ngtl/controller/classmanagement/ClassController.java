@@ -389,6 +389,15 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
+        if(!(infoForm.getIsAgree().equals("1") || infoForm.getIsAgree().equals("2"))){
+            infoForm.setErrMsg("请申请人选择导师意见！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getIsAgree().equals("2")){
+            infoForm.setErrMsg("导师意见为不同意，无法申请助教！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         if(classInfoService.isInBlackList(infoForm.getApplyAssistantViewObject().getStudentId())){
             infoForm.setErrMsg("您曾经被解聘，无法申请助教！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);

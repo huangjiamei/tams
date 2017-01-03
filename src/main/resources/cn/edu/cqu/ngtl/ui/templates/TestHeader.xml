@@ -453,7 +453,8 @@
                             <bean p:linkText="管理台"
                                   parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getManageStationPage&amp;viewId=AdminView"
-                                  p:iconClass="fa fa-tachometer menuIcon"/>
+                                  p:iconClass="fa fa-tachometer menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewManagerDashboardPage')}"/>
                         </list>
                     </property>
                 </bean>

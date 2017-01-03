@@ -118,10 +118,10 @@
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="EXCEL"
+                                                                                  p:actionLabel="Excel"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="icon-table bg-teal box-btngroup">
+                                                                                  p:additionalCssClasses="icon-table bg-olive box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

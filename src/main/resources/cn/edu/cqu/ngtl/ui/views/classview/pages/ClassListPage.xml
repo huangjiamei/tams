@@ -190,12 +190,12 @@
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:render = "@{#form.canApprove}"
                                                                                   p:methodToCall="showApproveDialog"
-                                                                                  p:additionalCssClasses="icon-zoom-in bg-red  box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-zoom-in bg-red box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="EXCEL"
+                                                                                  p:actionLabel="Excel"
                                                                                   p:methodToCall="exportClassListExcel"
-                                                                                  p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                                  p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="PDF"

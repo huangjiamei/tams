@@ -500,7 +500,7 @@
                             <bean parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getBlackListPage&amp;viewId=AdminView"
                                   p:linkText="黑名单" p:iconClass="icon-lock menuIcon"
-                               />
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewBlackListPage')}"/>
 
                         </list>
                     </property>

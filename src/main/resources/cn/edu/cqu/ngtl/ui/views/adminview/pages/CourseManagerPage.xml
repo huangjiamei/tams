@@ -106,9 +106,9 @@
                                                                     <list>
                                                                         <!--右上角btnlist-->
                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                              p:actionLabel="EXCEL"
+                                                                              p:actionLabel="Excel"
                                                                               p:methodToCall="exportCourseManagerExcel"
-                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                              p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="PDF"
                                                                               p:methodToCall="exportCourseManagerPDF"

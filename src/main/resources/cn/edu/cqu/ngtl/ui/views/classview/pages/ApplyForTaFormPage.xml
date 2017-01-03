@@ -209,7 +209,7 @@
                                                                                   p:actionLabel="取消申请"
                                                                                   p:render="@{#form.taApplicationSubmitted}"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup">
+                                                                                  p:additionalCssClasses="icon-remove-circle bg-red box-btngroup">
                                                                                 <property name="confirmationDialog">
                                                                                     <ref bean="confirmCancelDialog" />
                                                                                 </property>

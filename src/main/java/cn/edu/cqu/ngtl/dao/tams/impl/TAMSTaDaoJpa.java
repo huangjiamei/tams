@@ -292,8 +292,10 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
     //在classinformation表及其他表里面找出所有课程相关信息
     @Override
     public List<WorkBenchViewObject> selectAllCourseInfoByIds(List<Object> ids) {
+        if(ids == null)
+            return null;
         UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
-        List<WorkBenchViewObject> list = new ArrayList<>(ids.size());
+        List<WorkBenchViewObject> list = new ArrayList<>();
         em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
         for(Object id : ids){
             Query qr = em.createNativeQuery("SELECT c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, SUM(t.ELAPSED_TIME) AS ELAPSED_TIME, c.UNIQUEID FROM UNITIME_CLASS_INFORMATION c JOIN UNITIME_CLASS_INSTRUCTOR uci ON c.UNIQUEID=uci.CLASS_ID AND c.UNIQUEID='"+ id +"' AND c.SESSION_ID = '"+curSession.getId()+"' JOIN UNITIME_INSTRUCTOR i ON uci.INSTRUCTOR_ID = i.UNIQUEID JOIN TAMS_TEACH_CALENDAR t ON t.CLASS_ID = c.UNIQUEID  GROUP BY c.DEPT_NAME, c.COURSE_NAME, c.COURSE_CODE, c.CLASS_NBR, i.NAME, c.UNIQUEID");

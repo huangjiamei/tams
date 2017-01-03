@@ -663,6 +663,9 @@ public class TaController extends BaseController {
     public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
         super.baseStart(taInfoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+
         //我担任助教的课程
         taInfoForm.setWorkbench(
                 taConverter.taCombineWorkbench(
@@ -671,12 +674,21 @@ public class TaController extends BaseController {
                         )
                 )
         );
-        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
+
         //我的课程
         taInfoForm.setMyClassViewObjects(taConverter.MyClassViewObject(
                 taService.getMycourseByUid(uId))
         );
+
+        //我申请的助教的课程
+        taInfoForm.setMyApplicationClass(
+                taConverter.taCombineMyApplicationClass(
+                        taService.getTaApplicationByClassIds(
+                                taService.getApplicationClassIdsByUid(uId)
+                        )
+                )
+        );
+
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 

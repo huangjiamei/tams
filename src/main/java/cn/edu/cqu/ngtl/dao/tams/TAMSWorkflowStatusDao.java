@@ -35,5 +35,5 @@ public interface TAMSWorkflowStatusDao {
 
     String getSecMaxOrderStatusIdByFunctionId(String functionId);
 
-    TAMSWorkflowStatus getOneByOrderAndFunctionId(String order,String functionId)
+    TAMSWorkflowStatus getOneByOrderAndFunctionId(String order,String functionId);
 }

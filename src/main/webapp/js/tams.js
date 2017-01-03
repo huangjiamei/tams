@@ -1110,6 +1110,25 @@ function validatePhoneNum(id){
     }
 }
 
+//银行卡号规范
+function validateBank(id){
+    var bankNumer=document.getElementById(id);
+    var RegBankNumer = /^([0-9])/;
+    var bankNumerValue = bankNumer.value.trim();
+    if(bankNumerValue==''){
+        alert("请填写银行卡号！");
+    }
+    else{
+        var falg=bankNumerValue.search(RegBankNumer);
+        if (falg==-1){
+            alert("银行卡号不合法！");
+        }
+        else{
+            return true;
+        }
+    }
+}
+
 //下拉列表的输入框
 function comboSelectStyle(id,buttonId){
 
@@ -1142,24 +1161,38 @@ i
     }
 }
 function changeNumber(id,startIndex,endIndex){
-    var tablelength=jQuery("#"+id).find('tbody').find('tr').length;
-
-    for(var i=0;i<tablelength;i++){
-
-        for(var j=startIndex;j<endIndex;j++){
-            //span改变值样式
-            if(jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div').hasClass('uif-field')){
-                var changeNr=jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div>span').html();
-                var aa=numberStyle(changeNr);
-                jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div>span').html(aa);
+   // window.onload = function () {
+        var tablelength = jQuery("#" + id).find('tbody').find('tr').length;
+        for (var i = 0; i < tablelength; i++) {
+            for (var j = startIndex; j < endIndex; j++) {
+                if(jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div').hasClass('uif-field')){
+                    var changeNr = jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div>span').html();
+                    var changedNumber = numberStyle(changeNr);
+                    jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div>span').html(changedNumber);
+                }
             }
-
         }
-        //input改变值样式
-        // var changeNr=jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value;
-        //  var aa=numberStyle(changeNr);
-        // jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value=aa;
-    }
+    //};
+
+    // for(var i=0;i<tablelength;i++){
+
+    // for(var j=startIndex;j<endIndex;j++){
+    //      //span改变值样式
+    //      if(jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div').hasClass('uif-field')){
+    //          var changeNr=jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').html();
+    //          //alert(changeNr)
+    //         var aa=numberStyle(changeNr);
+    //         jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').html(aa);
+    //         //alert(jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').html());
+    //          jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').val(aa);
+    //      }
+
+    // }
+    //input改变值样式
+    // var changeNr=jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value;
+    //  var aa=numberStyle(changeNr);
+    // jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value=aa;
+    //}
 }
 function numberStyle(str){
     var len = str.length, str2 = '', max = Math.floor(len / 4);

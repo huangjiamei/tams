@@ -44,7 +44,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="applyForTaHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('applyForTaHeaderTitle','icon-book','课程','学生申请助教')">
+                                  p:onDocumentReadyScript="initContentHeader('applyForTaHeaderTitle','icon-book','课程','申请助教')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -136,15 +136,13 @@
                                                                                   <!--p:messageText="@{applyAssistantViewObject.ug_Major}"/>-->
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="研究生专业" p:messageText="@{applyAssistantViewObject.g_Major}"/>
-                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
-                                                                                  p:label="电话号码"
-                                                                                  p:propertyName="applicationPhoneNbr"
-                                                                                  p:required="true">
-                                                                            </bean>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程名称" p:messageText="@{applyAssistantViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="教学班号" p:messageText="@{applyAssistantViewObject.classNbr}"/>
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="申请课程类型"
+                                                                                  p:messageText="@{applyAssistantViewObject.applyCourseType}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学时数"
                                                                                   p:messageText="@{applyAssistantViewObject.classHour}"/>
@@ -154,9 +152,28 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="申请课程教师"
                                                                                   p:messageText="@{applyAssistantViewObject.applyTeacher}"/>
-                                                                            <!--<bean parent="Uif-MessageField"-->
-                                                                                  <!--p:label="申请课程类型"-->
-                                                                                  <!--p:messageText="@{applyAssistantViewObject.applyCourseType}"/>-->
+                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
+                                                                                  p:label="电话号码"
+                                                                                  p:propertyName="applicationPhoneNbr"
+                                                                                  p:required="true">
+                                                                            </bean>
+                                                                            <bean id="bankTypeField" parent="Uif-InputField"
+                                                                                  p:label="银行名称"
+                                                                                  p:propertyName="bankName"
+                                                                                  p:required="true">
+                                                                                <property name="optionsFinder">
+                                                                                    <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"
+                                                                                          p:blankOption="true"/>
+                                                                                </property>
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl"/>
+                                                                                </property>
+                                                                            </bean>
+                                                                            <bean id="bankNbrField" parent="Uif-InputField"
+                                                                                  p:label="银行卡号"
+                                                                                  p:propertyName="bankNbr"
+                                                                                  p:required="true">
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -182,15 +199,15 @@
                                                                         <list>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
-                                                                                  p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control');"
+                                                                                  p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control'),validateBank('bankNbrField_control');"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:render="@{applicationPhoneNbr==null}"
+                                                                                  p:render="@{!#form.taApplicationSubmitted}"
                                                                                   p:methodToCall="submitTaForm"
                                                                                   p:id="submitTaFormBtn"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="取消申请"
-                                                                                  p:render="@{applicationPhoneNbr!=null}"
+                                                                                  p:render="@{#form.taApplicationSubmitted}"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup">
                                                                                 <property name="confirmationDialog">

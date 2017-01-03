@@ -43,6 +43,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
@@ -331,8 +333,18 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
-        infoForm.setApplicationPhoneNbr(taService.getApplicationPhoneNbr(stuId,classId)); //设置申请人电话号码
-        infoForm.setApplyReason(taService.getApplicationReason(stuId,classId));   //设置申请人理由
+        TAMSTaApplication tamsTaApplication = taService.getApplicationByStuIdAndClassId(stuId,classId);
+
+        if(tamsTaApplication!=null) {
+            infoForm.setTaApplicationSubmitted(true);
+            infoForm.setApplicationPhoneNbr(tamsTaApplication.getPhoneNbr()); //设置申请人电话号码
+            infoForm.setApplyReason(tamsTaApplication.getNote());   //设置申请人理由
+            infoForm.setBankName(tamsTaApplication.getBankName()); //银行名称
+            infoForm.setBankNbr(tamsTaApplication.getPhoneNbr());  //银行卡号
+        }else{
+            infoForm.setTaApplicationSubmitted(false);
+        }
+
 
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
@@ -362,6 +374,14 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请申请人填写本人联系电话！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
+        if(infoForm.getBankName()==null){
+            infoForm.setErrMsg("请选择银行名称！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getBankNbr()==null){
+            infoForm.setErrMsg("请填写银行卡号！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         if(infoForm.getApplyReason()==null){
             infoForm.setErrMsg("请申请人填写申请理由！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -389,6 +409,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else if(code == 4) {
+            infoForm.setTaApplicationSubmitted(true);
             return this.getModelAndView(infoForm, "pageApplyForTaForm");
         }
         else if(code == 6){
@@ -420,6 +441,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         classInfoService.deleteTaApplicationByStuIdAndClassId(stuId,classId);
+        infoForm.setTaApplicationSubmitted(false);
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 
@@ -441,9 +463,18 @@ public class ClassController extends BaseController {
         String classId = classObject.getId();
         infoForm.setCurrClassId(classId);
 
-
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
+
+        /*
+         * 是否已经是助教
+         */
+        TAMSTa tamsta = taService.getTaByTaId(uId,classId);
+        if(tamsta!=null){
+            infoForm.setBeenEmployed(true);
+        }else{
+            infoForm.setBeenEmployed(false);
+        }
 
         if (classId == null) {
 
@@ -478,7 +509,7 @@ public class ClassController extends BaseController {
 
         if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
             if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
-                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                infoForm.setErrMsg("您已提交申请，无法添加教学日历！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
@@ -696,6 +727,24 @@ public class ClassController extends BaseController {
         String arr[] = infoForm.getAddTeachCTime().split("~");
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(added.getElapsedTime());
+        if(!isNum.matches()){
+            infoForm.setErrMsg("请输入整数！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        /*
+        else if(added.getElapsedTime().contains(".")){
+            infoForm.setErrMsg("教学日历耗时不能为小数！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        */
+        else if(Integer.parseInt(added.getElapsedTime()) > 11) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过11个小时！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         /*
             控制判断 start
          */
@@ -1568,12 +1617,20 @@ public class ClassController extends BaseController {
         } else if(infoForm.getCandidatePhoneNbr()==null) {
             infoForm.setErrMsg("请填写助教申请人的联系电话！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
-        } else {
+        } else if(infoForm.getCandidateBankNbr()==null) {
+            infoForm.setErrMsg("请填写助教申请人的银行卡号！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(infoForm.getCandidateBankName()==null) {
+            infoForm.setErrMsg("请填写助教申请人的发卡行名称！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else {
             curTa.setApplicationClassId(classId);
             needToBeAddToApplication.add(curTa);
             String phoneNbr = infoForm.getCandidatePhoneNbr();
+            String bankName = infoForm.getCandidateBankName();
+            String bankNbr = infoForm.getCandidateBankNbr();
             short code = taService.submitApplicationAssistant(
-                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr)
+                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr,bankName,bankNbr)
             );
             curTa.setContactPhone(phoneNbr);
             if (code == 10) {

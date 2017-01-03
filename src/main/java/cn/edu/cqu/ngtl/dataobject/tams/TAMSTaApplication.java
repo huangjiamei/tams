@@ -68,6 +68,29 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     @Column(name = "PHONE_NUMBER")
     private String phoneNbr;
 
+    @Column(name = "BANK_NAME")
+    private String bankName;
+
+    @Column(name = "BANK_NUMBER")
+    private String bankNbr;
+
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankNbr() {
+        return bankNbr;
+    }
+
+    public void setBankNbr(String bankNbr) {
+        this.bankNbr = bankNbr;
+    }
+
     public UTStudent getApplicant() {
         return applicant;
     }
@@ -149,4 +172,6 @@ public class TAMSTaApplication extends DataObjectBase implements Serializable{
     public void setPhoneNbr(String phoneNbr) {
         this.phoneNbr = phoneNbr;
     }
+
+
 }

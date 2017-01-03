@@ -48,6 +48,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private boolean Submitted;
 
+    private boolean beenEmployed;
 
     /**
      * 班级管理隐藏搜索框
@@ -100,6 +101,19 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private ApplyAssistantViewObject applyAssistantViewObject;
 
     private String applyReason;
+
+    private String bankName;
+
+    private String bankNbr;
+
+    private boolean taApplicationSubmitted;
+
+    private String candidateBankName;
+
+    private String candidateBankNbr;
+
+
+
 
     /**
      * 老师提交申请页面相关
@@ -528,5 +542,53 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCondClassType(String condClassType) {
         this.condClassType = condClassType;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankNbr() {
+        return bankNbr;
+    }
+
+    public void setBankNbr(String bankNbr) {
+        this.bankNbr = bankNbr;
+    }
+
+    public boolean isTaApplicationSubmitted() {
+        return taApplicationSubmitted;
+    }
+
+    public void setTaApplicationSubmitted(boolean taApplicationSubmitted) {
+        this.taApplicationSubmitted = taApplicationSubmitted;
+    }
+
+    public String getCandidateBankName() {
+        return candidateBankName;
+    }
+
+    public void setCandidateBankName(String candidateBankName) {
+        this.candidateBankName = candidateBankName;
+    }
+
+    public String getCandidateBankNbr() {
+        return candidateBankNbr;
+    }
+
+    public void setCandidateBankNbr(String candidateBankNbr) {
+        this.candidateBankNbr = candidateBankNbr;
+    }
+
+    public boolean isBeenEmployed() {
+        return beenEmployed;
+    }
+
+    public void setBeenEmployed(boolean beenEmployed) {
+        this.beenEmployed = beenEmployed;
     }
 }

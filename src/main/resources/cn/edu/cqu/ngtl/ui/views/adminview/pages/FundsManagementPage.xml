@@ -1110,6 +1110,7 @@
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingStatistics}"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
@@ -1119,6 +1120,7 @@
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingTotalApply}"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="label label-warning"
                                                                                                           p:style="font-size:15px;"/>
 
@@ -1298,7 +1300,7 @@
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
-                                                                                                                      p:style="display:@{#line.department!=null?'block':'none'}"
+                                                                                                                      p:readOnly = "@{!#form.deptManager}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">

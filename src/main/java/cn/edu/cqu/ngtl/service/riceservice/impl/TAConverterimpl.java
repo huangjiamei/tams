@@ -794,7 +794,7 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
+    public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass,String uId) {
         List<ClassFundingViewObject> viewObjects = new ArrayList<>();
 
         if (allFundingByClass == null || allFundingByClass.size() == 0) {
@@ -832,12 +832,14 @@ public class TAConverterimpl implements ITAConverter {
             }
 
             viewObject.setApplyFunding(classFunding.getApplyFunding());
-
-
-            if(classFunding.getAssignedFunding().equals("0")) //如果为0则设置一个默认值
-                viewObject.setAssignedFunding(classFunding.getApplyFunding());
-            else
+            if(userInfoService.isCollegeStaff(uId)||userInfoService.isAcademicAffairsStaff(uId)||userInfoService.isSysAdmin(uId)) {
+                if (classFunding.getAssignedFunding().equals("0")) //如果为0则设置一个默认值
+                    viewObject.setAssignedFunding(classFunding.getApplyFunding());
+                else
+                    viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+            }else{
                 viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+            }
             viewObject.setPhdFunding(classFunding.getPhdFunding());
             viewObject.setBonus(classFunding.getBonus());
             viewObject.setTravelSubsidy(classFunding.getTravelSubsidy());

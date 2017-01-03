@@ -12,7 +12,6 @@ import cn.edu.cqu.ngtl.service.adminservice.IAdminService;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
-import org.apache.poi.ss.formula.functions.T;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
@@ -183,6 +182,7 @@ public class TAMSClassFundingDaoJpa implements TAMSClassFundingDao {
             }
 
             String sql = conditions.substring(0,conditions.length()-1);
+            em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
             Query query = em.createNativeQuery("SELECT * FROM TAMS_CLASS_FUNDING t WHERE t.SESSION_ID = '"+currentSession.getId()+"' AND t.CLASS_ID in ("+sql+")",TAMSClassFunding.class);
             List<TAMSClassFunding> list = query.getResultList();
             for (TAMSClassFunding per : list) {

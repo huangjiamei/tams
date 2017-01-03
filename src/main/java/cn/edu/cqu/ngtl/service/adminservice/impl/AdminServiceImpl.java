@@ -582,8 +582,6 @@ public class AdminServiceImpl implements IAdminService {
 
     @Override
     public List<TAMSClassFunding> getFundingByClass() {
-
-
         User user = (User) getUserSession().retrieveObject("user");
 
         /**如果是教务处管理员或者系统管理员则显示草稿表的内容，在下拉框里显示发布的数据

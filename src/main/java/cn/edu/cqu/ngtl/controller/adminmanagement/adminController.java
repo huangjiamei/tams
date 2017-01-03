@@ -1326,7 +1326,8 @@ public class adminController extends BaseController {
 
         infoForm.setClassFundings(
                 taConverter.classFundingToViewObject(
-                        adminService.getFundingByClass()
+                        adminService.getFundingByClass(),
+                        uId
                 )
         );
 

@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTStudentDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
@@ -608,9 +609,9 @@ public class TAConverterimpl implements ITAConverter {
             return nullObject;
         }
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
-
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         for(WorkBenchViewObject per : list) {
-            per.setStatus(tamsTaDao.selectByStudentIdAndClassId(user.getCode(), per.getClassId()).getStatus());
+            per.setStatus(tamsTaDao.selectByStudentIdAndClassIdAndSessionId(user.getCode(), per.getClassId(), curSession.getId().toString()).getStatus());
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -629,6 +630,27 @@ public class TAConverterimpl implements ITAConverter {
 
         return list;
     }
+
+    @Override
+    public List<WorkBenchViewObject> taCombineMyApplicationClass(List<WorkBenchViewObject> list) {
+
+        if (list == null || list.size() == 0) {
+            List<WorkBenchViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new WorkBenchViewObject());
+            return nullObject;
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i+1; j < list.size(); j++) {
+                if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
+                    list.get(i).setTeacher(list.get(i).getTeacher()+','+list.get(j).getTeacher());
+                    list.remove(j);
+                }
+            }
+        }
+        return list;
+    }
+
 
     //FIXME 迁移后删掉
     @Override

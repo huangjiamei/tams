@@ -101,5 +101,8 @@ public interface ITAService {
 
     String getOSReason(String stuId, String classId);
 
+    List<Object> getApplicationClassIdsByUid(String uId);
+
+    List<WorkBenchViewObject> getTaApplicationByClassIds(List<Object> classIds);
 
 }

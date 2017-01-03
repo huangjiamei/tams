@@ -911,10 +911,30 @@ public class TAServiceimpl implements ITAService {
         UTSession curSession = sessionDao.getCurrentSession();
         TAMSTa ta = tamstadao.selectByStudentIdAndClassIdAndSessionId(stuId, classId, curSession.getId().toString());
         String OSReason = "";
-        if(ta.getOsNote().equals(null))
+        if(ta.getOsNote() == null)
             OSReason = "暂未申请优秀！";
         else
             OSReason = ta.getOsNote();
         return OSReason;
+    }
+
+    //我申请的助教的课程
+    @Override
+    public List<WorkBenchViewObject> getTaApplicationByClassIds(List<Object> classIds) {
+        return tamstadao.selectAllCourseInfoByIds(classIds);
+    }
+
+    @Override
+    public List<Object> getApplicationClassIdsByUid(String uId) {
+        List<Object> classIds = new ArrayList<>();
+        if(tamsTaApplicationDao.selectByStuId(uId) == null)
+            return null;
+        else {
+            List<TAMSTaApplication> tamsTaApplications = tamsTaApplicationDao.selectByStuId(uId);
+            for(TAMSTaApplication per : tamsTaApplications) {
+                classIds.add(per.getApplicationClassId());
+            }
+        }
+        return classIds;
     }
 }

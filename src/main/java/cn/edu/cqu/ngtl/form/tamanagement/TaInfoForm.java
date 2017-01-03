@@ -57,6 +57,7 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private List<WorkBenchViewObject> workbench;
     private List<TAMSTaTravelSubsidy> travelSubsidies;
     private List<MyClassViewObject> myClassViewObjects;
+    private List<WorkBenchViewObject> myApplicationClass;
     private String taUniqueId;
     private String travelTime;
     private String travelNote;
@@ -93,6 +94,15 @@ public class TaInfoForm extends BaseForm implements Serializable {
     {
         // 赋初始空值测试
         conditionTAList.add(new MyTaViewObject());
+    }
+
+
+    public List<WorkBenchViewObject> getMyApplicationClass() {
+        return myApplicationClass;
+    }
+
+    public void setMyApplicationClass(List<WorkBenchViewObject> myApplicationClass) {
+        this.myApplicationClass = myApplicationClass;
     }
 
     public static long getSerialVersionUID() {

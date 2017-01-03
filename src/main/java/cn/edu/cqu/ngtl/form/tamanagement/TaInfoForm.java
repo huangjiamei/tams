@@ -50,6 +50,7 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String appraiseReason;//评优
     private String revocationReasonOptionFinder;//撤销optionfinder
     private String appraiseReasonOptionFinder;//评优optionfinder
+    private String applyOSReason; //助教申请优秀理由
     /**
      * 工作台相关
      */
@@ -114,10 +115,19 @@ public class TaInfoForm extends BaseForm implements Serializable {
         StudentNumber = studentNumber;
     }
 
+
     /**
      * Getter and Setter
      **/
 
+
+    public String getApplyOSReason() {
+        return applyOSReason;
+    }
+
+    public void setApplyOSReason(String applyOSReason) {
+        this.applyOSReason = applyOSReason;
+    }
     public List<IssueViewObject> getAllIssues() {
         return allIssues;
     }

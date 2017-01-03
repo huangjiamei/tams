@@ -905,4 +905,16 @@ public class TAServiceimpl implements ITAService {
         return false;
     }
 
+    //显示优秀助教申请表
+    @Override
+    public String getOSReason(String stuId, String classId) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        TAMSTa ta = tamstadao.selectByStudentIdAndClassIdAndSessionId(stuId, classId, curSession.getId().toString());
+        String OSReason = "";
+        if(ta.getOsNote().equals(null))
+            OSReason = "暂未申请优秀！";
+        else
+            OSReason = ta.getOsNote();
+        return OSReason;
+    }
 }

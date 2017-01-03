@@ -99,4 +99,7 @@ public interface ITAService {
 
     boolean dismissTa(List<StuIdClassIdPair> pairs, String uId);
 
+    String getOSReason(String stuId, String classId);
+
+
 }

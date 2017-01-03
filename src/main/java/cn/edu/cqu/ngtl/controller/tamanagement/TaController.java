@@ -617,6 +617,7 @@ public class TaController extends BaseController {
      * @param form
      * @return
      */
+    /*
     @RequestMapping(params = "methodToCall=getApplyOSTaPage")
     public ModelAndView getApplyOSTaPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
@@ -636,6 +637,7 @@ public class TaController extends BaseController {
 
         return this.getModelAndView(taInfoForm, "pageApplyOStA");
     }
+    */
 
 
     /**
@@ -991,5 +993,16 @@ public class TaController extends BaseController {
 
         return new TaInfoForm();
 
+    }
+
+    //显示优秀助教申请表
+    @RequestMapping(params =  {"methodToCall=getApplyOSTaPage"})
+    public ModelAndView getApplyOSTaPage(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+        String classId = taInfoForm.getSelectedTaInfo().getClassid();
+        String stuId = taInfoForm.getSelectedTaInfo().getTaId();
+        taInfoForm.setApplyOSReason(taService.getOSReason(stuId, classId));
+        return this.getModelAndView(taInfoForm, "pageApplyOStA");
     }
 }

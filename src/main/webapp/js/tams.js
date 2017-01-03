@@ -1161,18 +1161,17 @@ i
     }
 }
 function changeNumber(id,startIndex,endIndex){
-   // window.onload = function () {
         var tablelength = jQuery("#" + id).find('tbody').find('tr').length;
         for (var i = 0; i < tablelength; i++) {
             for (var j = startIndex; j < endIndex; j++) {
                 if(jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div').hasClass('uif-field')){
                     var changeNr = jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div>span').html();
-                    var changedNumber = numberStyle(changeNr);
+                    //var changedNumber = numberStyle(changeNr);//调用函数使用千分号；
+                    var changedNumber=changeNr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");//使用正则表达式添加千分号
                     jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div>span').html(changedNumber);
                 }
             }
         }
-    //};
 
     // for(var i=0;i<tablelength;i++){
 

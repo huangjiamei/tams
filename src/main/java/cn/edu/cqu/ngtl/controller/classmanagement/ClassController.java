@@ -1698,4 +1698,33 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
     }
 
+    @RequestMapping(params = "methodToCall=ApplyOutStanding")
+    public ModelAndView ApplyOutStanding(@ModelAttribute("KualiForm") UifFormBase form,
+                                                     HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String applyOSReason = infoForm.getApplyOutStandingReason();
+        String classId = infoForm.getCurrClassId();
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String stuId = userSession.getLoggedInUserPrincipalId();
+
+        if(applyOSReason.isEmpty()) {
+            infoForm.setErrMsg("请填写申请优秀助教理由！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 2){
+                infoForm.setErrMsg("您的申请已提交！请勿重复申请");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else {
+                infoForm.setErrMsg("申请成功！");
+                    //return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+
+        }
+        return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
+    }
+
 }

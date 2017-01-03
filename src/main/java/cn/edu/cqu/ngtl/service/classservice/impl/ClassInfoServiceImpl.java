@@ -823,4 +823,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
     }
 
+    @Override
+    public Integer applyOutStanding(String applyOTReason, String StuId, String classId) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        TAMSTa ta = taDao.selectByStudentIdAndClassIdAndSessionId(StuId, classId, curSession.getId().toString());
+        if(ta.getOutStandingTaWorkflowStatusId().equals("6") || ta.getOsNote().equals(null)){
+            ta.setOutStandingTaWorkflowStatusId("7");
+            ta.setOsNote(applyOTReason);
+            taDao.insertByEntity(ta);
+            return 1;
+        }
+        else
+            return 2;
+    }
+
 }

@@ -108,7 +108,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="inputField1"
+                                                                                  p:propertyName="applyOSReason"
                                                                                   p:style="width:100%;"
                                                                                   p:readOnly="true">
                                                                                 <property name="control">

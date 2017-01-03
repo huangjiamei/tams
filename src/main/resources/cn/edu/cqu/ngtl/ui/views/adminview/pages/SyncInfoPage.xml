@@ -179,7 +179,7 @@
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:style="margin-bottom:10px;float:right!important"
-                                                                                              p:actionLabel="保存"
+                                                                                              p:actionLabel="同步"
                                                                                               p:additionalCssClasses="icon-save bg-success box-btngroup"
                                                                                               p:methodToCall="syncInfo"
                                                                                         /><!--p:refreshId="xxxx"-->

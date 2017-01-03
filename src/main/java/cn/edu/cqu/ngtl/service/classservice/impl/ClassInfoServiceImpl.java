@@ -319,7 +319,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return result;
         } else if (userInfoService.isInstructor(uId)) {
             conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
-            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditionsWithUid(conditions,uId);
             return classInformations;
         }else if (userInfoService.isStudent(uId)){
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);

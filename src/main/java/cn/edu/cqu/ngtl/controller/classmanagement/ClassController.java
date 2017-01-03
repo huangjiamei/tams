@@ -477,7 +477,8 @@ public class ClassController extends BaseController {
         }
 
         if (classId == null) {
-
+            infoForm.setErrMsg("访问出错！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
         infoForm.setAllCalendar(

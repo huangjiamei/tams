@@ -201,18 +201,25 @@
                                                                                   p:actionLabel="提交"
                                                                                   p:preSubmitCall="return validatePhoneNum('applicationPhoneNbrField_control'),validateBank('bankNbrField_control');"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:render="@{!#form.taApplicationSubmitted}"
+                                                                                  p:render="@{!#form.taApplicationSubmitted and !#form.beenEmployed}"
                                                                                   p:methodToCall="submitTaForm"
                                                                                   p:id="submitTaFormBtn"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="取消申请"
-                                                                                  p:render="@{#form.taApplicationSubmitted}"
+                                                                                  p:render="@{#form.taApplicationSubmitted and !#form.beenEmployed}"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup">
                                                                                 <property name="confirmationDialog">
                                                                                     <ref bean="confirmCancelDialog" />
                                                                                 </property>
+                                                                            </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="已被聘用"
+                                                                                  p:render="@{#form.beenEmployed}"
+                                                                                  p:actionImagePlacement="LEFT"
+                                                                                  p:disabled = "true"
+                                                                                  p:additionalCssClasses="icon-remove-circle bg-orange box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>

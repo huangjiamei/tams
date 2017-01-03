@@ -177,7 +177,7 @@
 		</property>
 	</bean>
 	<bean id="deleteBlackListDialog" parent="Uif-DialogGroup"
-		  p:headerText="删除黑名单" p:retrieveViaAjax="true">
+		  p:headerText="提示：" p:retrieveViaAjax="true">
 		<property name="items">
 			<list>
 				<bean parent="Uif-MessageField" p:messageText="确定删除该黑名单吗？" p:additionalCssClasses="message-font-size"/>

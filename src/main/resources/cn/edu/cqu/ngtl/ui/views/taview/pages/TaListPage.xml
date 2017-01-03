@@ -327,7 +327,7 @@
     </bean>
 
     <bean id="confirmRevocationDialog" parent="Uif-DialogGroup"
-          p:headerText="撤销" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-InputField"  p:label="选择审批的状态"
@@ -359,7 +359,7 @@
     </bean>
 
     <bean id="confirmAppraiseDialog" parent="Uif-DialogGroup"
-          p:headerText="评优" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-InputField"  p:label="选择评优的状态"

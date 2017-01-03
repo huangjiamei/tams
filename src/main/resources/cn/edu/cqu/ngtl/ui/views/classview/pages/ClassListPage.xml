@@ -514,7 +514,7 @@
 
 
     <bean id="returnDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="驳回"/>
+        <property name="headerText" value="提示："/>
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>
@@ -548,7 +548,7 @@
         </property>
     </bean>
     <bean id="approveDialog" parent="Uif-DialogGroup" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
-        <property name="headerText" value="审核"/>
+        <property name="headerText" value="提示："/>
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>

@@ -1191,15 +1191,102 @@ function changeNumber(id,startIndex,endIndex){
     // jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value=aa;
     //}
 }
-function numberStyle(str){
-    var len = str.length, str2 = '', max = Math.floor(len / 4);
-    for(var i = 0 ; i < max ; i++){
-        var s = str.slice(len - 4, len);
-        str = str.substr(0, len - 4);
-        str2 = (',' + s) + str2;
-        len = str.length;
-    }
-    str += str2;
-    return str
+
+//金额千分号转换，没用该方法了，
+// function numberStyle(str){
+//     var len = str.length, str2 = '', max = Math.floor(len / 4);
+//     for(var i = 0 ; i < max ; i++){
+//         var s = str.slice(len - 4, len);
+//         str = str.substr(0, len - 4);
+//         str2 = (',' + s) + str2;
+//         len = str.length;
+//     }
+//     str += str2;
+//     return str
+// }
+
+
+function readyCalendar(){
+    /*
+     * initialize the calendar
+     * -----------------------------------------------------------------
+     */
+    // Date for the calendar events (dummy data)
+    var date = new Date();
+    var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+    jQuery('#Calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        buttonText: {// This is to add icons to the visible buttons
+            prev: "<span class='icon-angle-left'></span>",
+            next: "<span class='icon-angle-right'></span>",
+            today: '今天',
+            month: '月',
+            week: '周',
+            day: '日',
+        },
+
+        monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+        dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+        today: ["今天"],
+        firstDay: 1,
+        allDayText: '全天',
+        // Random default events
+        events: [
+            {
+                title: '元旦',
+                start: new Date(2016, 11, 31),
+                end: new Date(2017, 0, 2),
+                backgroundColor: "#00a65a", // Success (green)
+                borderColor: "#00a65a", //  Success (green)
+            },
+            {
+                title: '考试',
+                start: new Date(2017, 0, 9),
+                end: new Date(2017, 0,15),
+                backgroundColor: "#f56954", // red
+                borderColor: "#f56954", // red
+            },
+
+        ],
+        editable: false,
+        droppable: false, // this allows things to be dropped onto the
+        // calendar !!!
+        drop: function(date, allDay) { // this function is called when
+            // something is dropped
+
+            // retrieve the dropped element's stored Event Object
+            var originalEventObject = jQuery(this).data('eventObject');
+
+            // we need to copy it, so that multiple events don't have a
+            // reference to the same object
+            var copiedEventObject = jQuery.extend({}, originalEventObject);
+
+            // assign it the date that was reported
+            copiedEventObject.start = date;
+            copiedEventObject.allDay = allDay;
+            copiedEventObject.backgroundColor = jQuery(this).css("background-color");
+            copiedEventObject.borderColor = jQuery(this).css("border-color");
+
+            // render the event on the calendar
+            // the last `true` argument determines if the event "sticks"
+            // (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+            jQuery('#Calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+            // is the "remove after drop" checkbox checked?
+            if (jQuery('#drop-remove').is(':checked')) {
+                // if so, remove the element from the "Draggable Events" list
+                jQuery(this).remove();
+            }
+
+        }
+    });
 }
 

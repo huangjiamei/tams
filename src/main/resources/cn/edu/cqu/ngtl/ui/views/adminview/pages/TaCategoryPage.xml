@@ -239,7 +239,7 @@
 
 
     <bean id="editTaCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改助教类别" p:retrieveViaAjax="true"
+          p:headerText="提示：" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#editTaCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -275,7 +275,7 @@
     </bean>
 
     <bean id="deleteTaCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="删除助教类别" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除助教类别，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>

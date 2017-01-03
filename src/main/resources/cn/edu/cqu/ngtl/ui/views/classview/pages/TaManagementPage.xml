@@ -450,7 +450,7 @@
     </bean>
 
     <bean id="confirmEmployDialog" parent="Uif-DialogGroup"
-          p:headerText="聘用" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="您确定聘用该申请人担任您的助教吗？" p:additionalCssClasses="message-font-size"/>
@@ -466,7 +466,7 @@
     </bean>
 
     <bean id="confirmDismissDialog" parent="Uif-DialogGroup"
-          p:headerText="解聘" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="您确定解聘当前助教吗？" p:additionalCssClasses="message-font-size"/>

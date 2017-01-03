@@ -237,7 +237,7 @@
 
 
     <bean id="deletePermissionDialog" parent="Uif-DialogGroup"
-          p:headerText="删除权限" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除权限，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>

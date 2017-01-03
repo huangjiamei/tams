@@ -392,7 +392,7 @@
 
 
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
-          p:headerText="修改批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
     p:onDocumentReadyScript="jQuery('#confirmEditTermDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -492,7 +492,7 @@
     </bean>
 
     <bean id="confirmDeleteTermDialog" parent="Uif-DialogGroup"
-          p:headerText="删除批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除批次，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
@@ -508,7 +508,7 @@
     </bean>
 
     <bean id="confirmSetCurrentTermDialog" parent="Uif-DialogGroup"
-          p:headerText="设置系统当前批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="是否将本批次设置为系统当前批次？" p:additionalCssClasses="message-font-size"/>

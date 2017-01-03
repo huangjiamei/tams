@@ -241,6 +241,11 @@
                                                                                               p:render="@{#line.code==null? false:true}"
                                                                                               p:methodToCall="deleteTeachCalendar"
                                                                                               p:refreshId="calenderBox"
+                                                                                              p:additionalCssClasses="icon-edit bg-table-red tams-action-btn"/>
+                                                                                        <bean parent="Uif-ActionImage"
+                                                                                              p:render="@{#line.code==null? false:true}"
+                                                                                              p:methodToCall="deleteTeachCalendar"
+                                                                                              p:refreshId="calenderBox"
                                                                                               p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>
                                                                                     </list>
                                                                                 </property>

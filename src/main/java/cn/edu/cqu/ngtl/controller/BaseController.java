@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.form.TestForm;
+import org.apache.log4j.MDC;
 import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.web.controller.UifControllerBase;
 import org.kuali.rice.krad.web.form.UifFormBase;
@@ -38,6 +39,9 @@ public class BaseController extends UifControllerBase {
         String code = user.getCode();
         UTSession curSession = sessionDao.getCurrentSession();
         form.setCurrenSessionId(curSession.getId());
+        MDC.put("UserType",user.getType());
+        MDC.put("UserId",user.getTag());
+        MDC.put("UserName",user.getName());
         return super.start(form);
     }
 

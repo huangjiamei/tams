@@ -94,4 +94,6 @@ public interface IClassInfoService {
 
     boolean canEmployByClassId(String classId);
 
+    Integer applyOutStanding(String applyOTReason, String StuId, String classId);
+
 }

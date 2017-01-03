@@ -112,6 +112,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String candidateBankNbr;
 
+    /**
+     * 学生申请优秀助教
+     */
+    private String applyOutStandingReason;
 
 
 
@@ -140,6 +144,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
     private String StudentName;
     private String StudentNumber;
+
+    public String getApplyOutStandingReason() {
+        return applyOutStandingReason;
+    }
+
+    public void setApplyOutStandingReason(String applyOutStandingReason) {
+        this.applyOutStandingReason = applyOutStandingReason;
+    }
 
     public String getTaNumber() {
         return taNumber;

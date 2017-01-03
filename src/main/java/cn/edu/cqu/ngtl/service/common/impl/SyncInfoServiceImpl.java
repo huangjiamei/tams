@@ -181,7 +181,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         for (UTCourse course : allCourse) {
             courseMap.put(course.getCodeR(), course.getId());
         }
-        String queryCourse = "SELECT * FROM JSKB t WHERE t.SFRZH IS NOT NULL ";
+        String queryCourse = "SELECT * FROM JSKB t WHERE t.SFRZH IS NOT NULL AND t.XN = '" + year + "' AND t.XQ_ID = '" + term +"'";
 
         String mutiSubpartCourse = "select distinct a.xn,a.xq_id,a.user_kcid from "+
                 "(select * from cqdx_jwgl.t_kb_auto_table aa left join cqdx_jwgl.t_jh_setlessoninfo tt on aa.kcid = tt.dm where aa.KC_FLAG = 0 and aa.xn = '"+year+"' and aa.xq_id = '"+term+"') a, "+
@@ -215,7 +215,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                 if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
 
-                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"'";
+                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"' AND t.XN = '" + year + "' AND t.XQ_ID = '" + term +"'";
                     PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
                     String teachWeek = "";
                     String roomName = "";

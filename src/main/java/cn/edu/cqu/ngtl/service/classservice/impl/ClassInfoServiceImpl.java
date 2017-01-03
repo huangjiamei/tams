@@ -129,8 +129,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
-        String statusId = tamsWorkflowStatusDao.getMaxOrderStatusIdByFunctionId(functionId);
-        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(statusId);
+        String secMaxStatusId = tamsWorkflowStatusDao.getSecMaxOrderStatusIdByFunctionId(functionId);
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(secMaxStatusId);
         return classInformations;
     }
 
@@ -658,6 +658,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         return classApplyStatusDao.changeStatusToCertainStatus(classId, workflowStatusId);
     }
+
+    @Override
+    public boolean changeToSpecificStatus(String classId, String workFlowStatusId){
+
+        return classApplyStatusDao.changeStatusToCertainStatus(classId, workFlowStatusId);
+    }
+
+    @Override
+    public String getMaxOrderStatusIdOfSpecificFunction(String functionId){
+        return tamsWorkflowStatusDao.getMaxOrderStatusIdByFunctionId(functionId);
+    }
+
 
     @Override
     public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatusId) {

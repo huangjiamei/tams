@@ -203,11 +203,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        boolean isMax = workFlowService.isMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
+        boolean isSecMax = workFlowService.isSecMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
-            if(isMax){ //如果是该条工作流的最后一个状态，那么初始化课程经费
+            if(isSecMax){ //如果是该条工作流的倒数第二个状态，那么初始化课程经费
                 classInfoService.validClassFunds(classTeacherViewObject.getId());
             }
             result = classInfoService.classStatusToCertainStatus(
@@ -930,6 +930,7 @@ public class ClassController extends BaseController {
         //put conditions
         conditions.put("ClassNumber", infoForm.getCondClassNumber());
         conditions.put("DepartmentId", infoForm.getCondDepartmentName());
+        conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("InstructorName", infoForm.getCondInstructorName());
         conditions.put("CourseName", infoForm.getCondCourseName());
         conditions.put("CourseCode", infoForm.getCondCourseCode());
@@ -1377,6 +1378,9 @@ public class ClassController extends BaseController {
         //开始释放剩下的tapplication
         if((addSize+(taList==null?0:taList.size()))>=appTaNumber){
             classInfoService.releaseTaApplication(infoForm.getAllApplication());
+            //聘请满了之后将状态切换到最终工作状态
+            classInfoService.changeToSpecificStatus(classId,classInfoService.getMaxOrderStatusIdOfSpecificFunction("1"));
+
             infoForm.getAllApplication().clear();
             infoForm.getAllApplication().add(new MyTaViewObject());
             infoForm.setAllApplication(infoForm.getAllApplication());

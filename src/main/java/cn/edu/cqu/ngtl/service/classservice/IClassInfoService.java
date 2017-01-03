@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
+    boolean changeToSpecificStatus(String classId,String workFlowStatusId);
+
+    String getMaxOrderStatusIdOfSpecificFunction(String functionId);
+
     void validClassFunds(String classId);
 
     boolean isInBlackList(String stuId);

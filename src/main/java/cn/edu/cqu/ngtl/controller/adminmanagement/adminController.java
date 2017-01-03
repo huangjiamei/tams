@@ -37,7 +37,6 @@ import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl;
 import org.kuali.rice.krad.web.service.impl.CollectionControllerServiceImpl.CollectionActionParameters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -1032,7 +1031,7 @@ public class adminController extends BaseController {
 
     /**
      * PDF格式打印经费明细表格
-     *127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&viewId=AdminView
+     *127.0.0.1:8080/tams/portal/admin?methodToCall=exportFundsDetailPDF&viewId=AdminView
      * @param form
      * @return
      *

@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.controller;
 
 import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.form.TestForm;
+import org.apache.log4j.Logger;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -24,6 +25,7 @@ import java.util.regex.Pattern;
 @Controller
 @RequestMapping("/mytest")
 public class TestController extends BaseController {
+     static Logger logger=Logger.getLogger(TestController.class);
 
     /**
      * 测试用page
@@ -41,7 +43,7 @@ public class TestController extends BaseController {
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.3小节"));
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.4小节"));
         testForm.setGroupObjectList(groupObjectList);
-
+        logger.info("测试页面的日志记录createbyluojizhou");
         return this.getModelAndView(testForm, "pageTest");
     }
 

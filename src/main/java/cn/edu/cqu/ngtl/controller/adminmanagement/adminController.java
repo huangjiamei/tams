@@ -3250,4 +3250,73 @@ public class adminController extends BaseController {
         return this.getModelAndView(adminInfoForm, "pageBlackList");
     }
 
+    /**
+     * 将黑名单以Excel格式导出，create by lc
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = {"pageId=pageBlackList", "methodToCall=exportBlackListExcel"})
+    public ModelAndView exportBlackListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request, HttpServletResponse response) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+
+        if (infoForm.getCourseManagerViewObjects() == null || infoForm.getCourseManagerViewObjects().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getTaBlackList().get(0).getStuName()== null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+
+        List<BlackListViewObject> blackList = infoForm.getTaBlackList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "黑名单列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
+
+        try {
+            String filePath = excelService.printBlackListExcel(blackList, "exportfolder", fileName, "2003");
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+
+            return this.performRedirect(infoForm, baseUrl + "/" + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误!");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
+    /**
+     * 将黑名单表格打印为PDF，create by lc
+     * @param form
+     * @return
+     *
+     */
+    @RequestMapping(params = {"pageId=pageBlackList","methodToCall=exportBlackListPDF"})
+    public ModelAndView exportBlackListPDF(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getTaBlackList() == null || infoForm.getTaBlackList().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getTaBlackList().get(0).getStuName() == null) {
+                infoForm.setErrMsg(" 列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+        List<BlackListViewObject> blackListViewObjectList=infoForm.getTaBlackList();
+
+        String filePath=adminService.prepareBlacklistPDF(blackListViewObjectList );
+        if (filePath.equals("exception")){
+            infoForm.setErrMsg("系统导出PDF文件错误!");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else{
+            String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+'/'+filePath);
+        }
+
+    }
+
 }

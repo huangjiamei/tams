@@ -1476,6 +1476,41 @@ public class AdminServiceImpl implements IAdminService {
         return filePath;
     }
 
+    /**
+     *获取黑名单PDF格式导出的路径
+     * @param  BlacklistManager
+     * @return filePath
+     */
+    @Override
+    public String prepareBlacklistPDF(List<BlackListViewObject> BlacklistManager){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "黑名单列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"名称","学号","加入时间","操作执行者名称"};
+            List<String[]> Content = new ArrayList( BlacklistManager.size());
+            for(BlackListViewObject BlacklistMVOList : BlacklistManager) {
+                String stuName = BlacklistMVOList.getStuName() == null ? "" :BlacklistMVOList.getStuName() ;
+                String stuId=BlacklistMVOList.getStuId() == null ? "" : BlacklistMVOList.getStuId();
+                String joinTime=BlacklistMVOList.getJoinTime() == null ? "" : BlacklistMVOList.getJoinTime();
+                String executorName=BlacklistMVOList.getExecutorName()   == null ? "" : BlacklistMVOList.getExecutorName();
+
+                String[] content = {
+                        stuName,stuId,joinTime,executorName
+                };
+                Content.add(content);
+            }
+            filePath = PDFService.printNormalTable("黑名单列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+//            e.printStackTrace();
+//            infoForm.setErrMsg("系统导出PDF文件错误！");
+//            return this.showDialog("refreshPageViewDialog", true, infoForm);
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
+    }
 }
 
 

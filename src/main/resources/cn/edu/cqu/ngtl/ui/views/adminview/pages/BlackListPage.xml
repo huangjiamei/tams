@@ -100,6 +100,14 @@
 																<bean parent="Uif-Icon" p:iconClass="fa fa-list"/>
 																<bean parent="Uif-MessageField" p:messageText="黑名单列表"
 																	  p:additionalCssClasses="boxheaderTitle"/>
+																<bean parent="Uif-PrimaryActionButton"
+																	  p:actionLabel="Excel"
+																	  p:methodToCall="exportBlackListExcel"
+																	  p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
+																<bean parent="Uif-PrimaryActionButton"
+																	  p:actionLabel="PDF"
+																	  p:methodToCall="exportBlackListPDF"
+																	  p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
 															</list>
 														</property>
 													</bean>

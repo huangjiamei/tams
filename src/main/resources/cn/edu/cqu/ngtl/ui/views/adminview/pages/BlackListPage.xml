@@ -114,7 +114,7 @@
 																			  value="cn.edu.cqu.ngtl.viewobject.adminInfo.BlackListViewObject" />
 																	<property name="propertyName" value="taBlackList" />
 																	<property name="layoutManager.richTable.render"
-																			  value="false"/>
+																			  value="true"/>
 
 																	<!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
 																	<property name="layoutManager.renderSequenceField"
@@ -150,9 +150,11 @@
 																				<property name="items">
 																					<list>
 																						<bean parent="Uif-PrimaryActionButton"
-																							  p:ajaxSubmit="false"
-																							  p:methodToCall="deleteFromBlackList"
-																							  p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn"/>
+																							  p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
+																							<property name="confirmationDialog">
+																								<ref bean="deleteBlackListDialog" />
+																							</property>
+																						</bean>
 																					</list>
 																				</property>
 																			</bean>
@@ -171,6 +173,21 @@
 						</list>
 					</property>
 				</bean>
+			</list>
+		</property>
+	</bean>
+	<bean id="deleteBlackListDialog" parent="Uif-DialogGroup"
+		  p:headerText="提示：" p:retrieveViaAjax="true">
+		<property name="items">
+			<list>
+				<bean parent="Uif-MessageField" p:messageText="确定删除该黑名单吗？" p:additionalCssClasses="message-font-size"/>
+			</list>
+		</property>
+		<property name="footer.items">
+			<list>
+				<bean parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+				<bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+					  p:methodToCall="deleteFromBlackList" p:dialogDismissOption="REQUEST" />
 			</list>
 		</property>
 	</bean>

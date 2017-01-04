@@ -24,6 +24,8 @@ import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import com.itextpdf.text.DocumentException;
+import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -43,6 +45,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
@@ -53,6 +57,8 @@ import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 @Controller
 @RequestMapping("/class")
 public class ClassController extends BaseController {
+
+    static Logger logger=Logger.getLogger(ClassController.class);
 
     @Autowired
     private IClassInfoService classInfoService;
@@ -84,6 +90,7 @@ public class ClassController extends BaseController {
     @Autowired
     private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
+    private static int MAX_CALENDAR_HOUR = 10;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
@@ -200,12 +207,13 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        boolean isMax = workFlowService.isMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
+        boolean isSecMax = workFlowService.isSecMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
-            if(isMax){ //如果是该条工作流的最后一个状态，那么初始化课程经费
+            if(isSecMax){ //如果是该条工作流的倒数第二个状态，那么初始化课程经费
                 classInfoService.validClassFunds(classTeacherViewObject.getId());
+
             }
             result = classInfoService.classStatusToCertainStatus(
                     uid,
@@ -219,8 +227,12 @@ public class ClassController extends BaseController {
             infoForm.getClassList().get(i).setStatus(workFlowService.getWorkFlowStatusName(infoForm.getApproveReasonOptionFinder()));
         }
 
-        if(result)
+        if(result){
+//
+//            MDC.put("remoteHost",request.getRemoteAddr());
+//            logger.info("进行了审批操作,状态改为："+workFlowService.getWorkFlowStatusName(infoForm.getApproveReasonOptionFinder()));
             return this.getClassListPage(infoForm);
+        }
         else  //应当返回错误信息
             infoForm.setErrMsg("审核失败！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -256,10 +268,17 @@ public class ClassController extends BaseController {
                      infoForm.getReturnReasonOptionFinder()
             );
             classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatus);
+//            MDC.put("remoteHost",request.getRemoteAddr());
+//            logger.info("进行了驳回操作,将："+classTeacherViewObject.getStatus()+"变为："+newStatus);
         }
 
-        if(result)
+        if(result){
+
+
+
             return this.getClassListPage(infoForm);
+        }
+
         else  //应当返回错误信息
             return this.getClassListPage(infoForm);
     }
@@ -332,8 +351,18 @@ public class ClassController extends BaseController {
 
         String classId = infoForm.getCurrClassId();
 
-        infoForm.setApplicationPhoneNbr(taService.getApplicationPhoneNbr(stuId,classId)); //设置申请人电话号码
-        infoForm.setApplyReason(taService.getApplicationReason(stuId,classId));   //设置申请人理由
+        TAMSTaApplication tamsTaApplication = taService.getApplicationByStuIdAndClassId(stuId,classId);
+
+        if(tamsTaApplication!=null) {
+            infoForm.setTaApplicationSubmitted(true);
+            infoForm.setApplicationPhoneNbr(tamsTaApplication.getPhoneNbr()); //设置申请人电话号码
+            infoForm.setApplyReason(tamsTaApplication.getNote());   //设置申请人理由
+            infoForm.setBankName(tamsTaApplication.getBankName()); //银行名称
+            infoForm.setBankNbr(tamsTaApplication.getPhoneNbr());  //银行卡号
+        }else{
+            infoForm.setTaApplicationSubmitted(false);
+        }
+
 
         infoForm.setApplyAssistantViewObject(
                 taConverter.applyAssistantToTableViewObject(
@@ -351,7 +380,8 @@ public class ClassController extends BaseController {
      * @return
      */
     @RequestMapping(params = {"pageId=pageApplyForTaForm", "methodToCall=submitTaForm"})
-    public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView submitTaForm(@ModelAttribute("KualiForm") UifFormBase form,
+                                     HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
@@ -363,8 +393,25 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请申请人填写本人联系电话！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
+        if(infoForm.getBankName()==null){
+            infoForm.setErrMsg("请选择银行名称！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getBankNbr()==null){
+            infoForm.setErrMsg("请填写银行卡号！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         if(infoForm.getApplyReason()==null){
             infoForm.setErrMsg("请申请人填写申请理由！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+        if(!(infoForm.getIsAgree().equals("1") || infoForm.getIsAgree().equals("2"))){
+            infoForm.setErrMsg("请申请人选择导师意见！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getIsAgree().equals("2")){
+            infoForm.setErrMsg("导师意见为不同意，无法申请助教！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
@@ -374,6 +421,10 @@ public class ClassController extends BaseController {
         }
 
         short code = taService.submitApplicationAssistant(taConverter.submitInfoToTaApplication(infoForm));
+
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("学生提交申请助教操作");
+
         if(code == 10){
             infoForm.setErrMsg("管理员未设置相应的添加时间！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -390,16 +441,24 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else if(code == 4) {
+            infoForm.setTaApplicationSubmitted(true);
             return this.getModelAndView(infoForm, "pageApplyForTaForm");
         }
         else if(code == 6){
             infoForm.setErrMsg("您最多可以申请和担任两门课程的助教！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
+        else if(code == 8){
+            infoForm.setErrMsg("您已经是至少两门课程的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         else {
             infoForm.setErrMsg("未知错误");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
+
+
     }
 
     /**
@@ -421,6 +480,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         classInfoService.deleteTaApplicationByStuIdAndClassId(stuId,classId);
+        infoForm.setTaApplicationSubmitted(false);
+
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("取消了学生ID为："+stuId+"的助教申请操作");
+
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
 
@@ -442,12 +506,22 @@ public class ClassController extends BaseController {
         String classId = classObject.getId();
         infoForm.setCurrClassId(classId);
 
-
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
-        if (classId == null) {
+        /*
+         * 是否已经是助教
+         */
+        TAMSTa tamsta = taService.getTaByTaId(uId,classId);
+        if(tamsta!=null){
+            infoForm.setBeenEmployed(true);
+        }else{
+            infoForm.setBeenEmployed(false);
+        }
 
+        if (classId == null) {
+            infoForm.setErrMsg("访问出错！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
         infoForm.setAllCalendar(
@@ -479,7 +553,7 @@ public class ClassController extends BaseController {
 
         if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
             if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
-                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                infoForm.setErrMsg("您已提交申请，无法添加教学日历！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
@@ -507,15 +581,19 @@ public class ClassController extends BaseController {
                     infoForm.getAllCalendar().get(index)
             );
 
+
             //code 当做 id 用
             List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
+
+            infoForm.setCalendarId(infoForm.getAllCalendar().get(index).getCode());
+
             infoForm.setAllCalendar(null);  //节省内存
 
-            String classId = infoForm.getCurrClassId();
-            String uId = getUserSession().getPrincipalId();
+            //String classId = infoForm.getCurrClassId();
+           // String uId = getUserSession().getPrincipalId();
            /* infoForm.setAllActivities(
                     taConverter.activitiesToViewObject(
                             classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
@@ -528,6 +606,63 @@ public class ClassController extends BaseController {
             // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
+    }
+
+    /**
+     * 编辑日历详情页面
+     **/
+    @RequestMapping(params = "methodToCall=getEditTeachCalendarPage")
+    public ModelAndView getEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                    HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            infoForm.setCurrentCalenderInfoEdit(
+                    infoForm.getAllCalendar().get(index)
+            );
+
+            infoForm.setCalendarId(infoForm.getAllCalendar().get(index).getCode());
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+
+            //String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
+            //String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
+            //classInfoService.updateTeachCalendarInfo(infoForm.getAllCalendar().get(index).getCode().toString(), CalendarDescription, CalendarTaTask);
+
+            infoForm.setAllCalendar(null);  //节省内存
+
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+    }
+
+    /**
+     * 更新教学日历的操作
+     */
+    @RequestMapping(params = "methodToCall=updateTeachCalendar")
+    public ModelAndView updateTeachCalendar(@ModelAttribute("KualiForm") UifFormBase form,
+                                                 HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String calendarId = infoForm.getCalendarId();
+        String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
+        String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
+        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask);
+
+        return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+
     }
 
     /**
@@ -585,13 +720,19 @@ public class ClassController extends BaseController {
 
             classInfoService.removeCalendarFileById(classId, attachmentId);
             infoForm.getCalendarFiles().remove(index);
-            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");        }
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("删除ID为："+attachmentId+"的教学日历中附件");
+
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
         catch (IndexOutOfBoundsException e) {
-            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");        }
+            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+        }
     }
 
     /**
-     * 提交新建教学日历页面
+     * 创建
      **/
     @RequestMapping(params = "methodToCall=submitTeachCalendarPage")
     public ModelAndView submitTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -633,6 +774,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
+        if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
@@ -658,14 +804,21 @@ public class ClassController extends BaseController {
 
         //添加日历信息到数据库
         added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
+
         if(added == null){
             infoForm.setErrMsg("你不是该门课的主管教师，无法添加");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         if (added.getId() != null) { //添加数据库成功
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("添加了一条ID为："+added.getId()+"的教学日历信息到数据库");
+
             //添加附件
             if(added.isHasAttachment()) {
                 new TamsFileControllerServiceImpl().saveCalendarAttachments(uId, classId, added.getId(), infoForm.getFileList());
+
+                logger.info("上传新建教学日历的附件");
             }
 
             return this.getTeachingCalendar(infoForm, request);
@@ -697,6 +850,24 @@ public class ClassController extends BaseController {
         String arr[] = infoForm.getAddTeachCTime().split("~");
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(added.getElapsedTime());
+        if(!isNum.matches()){
+            infoForm.setErrMsg("请输入整数！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        /*
+        else if(added.getElapsedTime().contains(".")){
+            infoForm.setErrMsg("教学日历耗时不能为小数！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        */
+        else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         /*
             控制判断 start
          */
@@ -750,9 +921,15 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         if (added.getId() != null) { //添加数据库成功
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("添加了一条ID为："+added.getId()+"的教学日历信息到数据库");
+
             //添加附件
             if(added.isHasAttachment()) {
                 new TamsFileControllerServiceImpl().saveCalendarAttachments(uId, classId, added.getId(), infoForm.getFileList());
+
+                logger.info("上传新建教学日历的附件");
             }
 
             return this.getAddTeachCalendarPage(infoForm,request);
@@ -791,9 +968,15 @@ public class ClassController extends BaseController {
         }
 
         if (classInfoService.removeTeachCalenderById(uId, classId, teachCalendarId)) {
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("删除ID为："+teachCalendarId+"的教学日历信息");
+
             //删除教学日历的附件信息
             boolean result = classInfoService.removeAllCalendarFilesByClassIdAndCalendarId(
                     classId, teachCalendarId);
+
+            logger.info("删除ID为："+teachCalendarId+"的教学日历的附件");
 
             return this.getTeachingCalendar(infoForm, request);
         }
@@ -865,9 +1048,10 @@ public class ClassController extends BaseController {
         //put conditions
         conditions.put("ClassNumber", infoForm.getCondClassNumber());
         conditions.put("DepartmentId", infoForm.getCondDepartmentName());
+        conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("InstructorName", infoForm.getCondInstructorName());
         conditions.put("CourseName", infoForm.getCondCourseName());
-        conditions.put("CourseCode", infoForm.getCondCourseCode());
+        conditions.put("CourseCode", infoForm.getCondCourseCode() == null ? null : infoForm.getCondCourseCode().toUpperCase());
         conditions.put("ClassType", infoForm.getCondClassType());
         conditions.put("StatusId", infoForm.getCourseStatus());
 
@@ -932,6 +1116,7 @@ public class ClassController extends BaseController {
                 infoForm.setSubmitted(false);
             }
         }
+        /*
         //设置成绩评定方式
         List<TAMSClassEvaluation> tamsClassEvaluation = classInfoService.getClassEvaluationByClassId(classId);
         if(tamsClassEvaluation!=null){
@@ -939,6 +1124,7 @@ public class ClassController extends BaseController {
         }else{
             infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
         }
+        */
 
         infoForm.setFeedbacks(taConverter.feedBackToViewObject(classInfoService.getFeedBackByClassId(classId)));
 
@@ -952,10 +1138,12 @@ public class ClassController extends BaseController {
      * @param form
      * @return
      */
+    /*
     @RequestMapping(params = "methodToCall=deleteEvaluationLine")
-    public ModelAndView deleteEvaluationLine(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView deleteEvaluationLine(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
         CollectionControllerServiceImpl.CollectionActionParameters params =
                 new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -969,11 +1157,14 @@ public class ClassController extends BaseController {
 
         infoForm.getClassEvaluations().remove(index);
 
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("删除了ID为："+index+"的成绩评定辅助方法");
+
         return this.getModelAndView(infoForm, "pageRequestTa");
     }
-
+*/
     /**
-     * 教师提交申请助教的请求
+     * 提交申请
      */
     @RequestMapping(params = "methodToCall=submitRequestTaPage")
     public ModelAndView submitRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -987,6 +1178,7 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请填写本课程所需助教的数量！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
+        /*
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
         if(classEvaluations == null || classEvaluations.isEmpty()) {
             infoForm.setErrMsg("请填写至少一种成绩评定方式！");
@@ -1002,11 +1194,16 @@ public class ClassController extends BaseController {
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
+        */
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         String totalTime = infoForm.getTotalElapsedTime();
         String totalBudget = infoForm.getTotalBudget().replace(",",""); //去掉钱里面的逗号
-        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations,totalTime,totalBudget);
+        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, totalTime,totalBudget);
+
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"提交申请助教的请求");
+
         if(result == 1) {
             infoForm.setErrMsg("不在教师申请助教期间!");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1278,11 +1475,6 @@ public class ClassController extends BaseController {
         );
 
 
-
-
-
-
-
         for(MyTaViewObject needToAdd : checkedList){
             needToAdd.setCheckBox(false);
             needToAdd.setPayDay("暂未设置");
@@ -1299,6 +1491,9 @@ public class ClassController extends BaseController {
             else
                 infoForm.getAllMyTa().add(needToAdd);
 
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"聘用了助教："+needToAdd.getTaName());
+
             infoForm.getAllApplication().remove(needToAdd);
 
             //聘用之后申请列表为空，往申请列表中添加一个空对象
@@ -1312,13 +1507,18 @@ public class ClassController extends BaseController {
         //开始释放剩下的tapplication
         if((addSize+(taList==null?0:taList.size()))>=appTaNumber){
             classInfoService.releaseTaApplication(infoForm.getAllApplication());
+            //聘请满了之后将状态切换到最终工作状态
+            classInfoService.changeToSpecificStatus(classId,classInfoService.getMaxOrderStatusIdOfSpecificFunction("1"));
+
             infoForm.getAllApplication().clear();
             infoForm.getAllApplication().add(new MyTaViewObject());
             infoForm.setAllApplication(infoForm.getAllApplication());
         }
 
-        if(addSize>=0)
+        if(addSize>=0){
             return this.getModelAndView(infoForm, "pageTaManagement");
+        }
+
         else {
             infoForm.setErrMsg("聘用出错！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1356,8 +1556,14 @@ public class ClassController extends BaseController {
                 TA_STATUS.LIVING
         );
 
-        if (result)
+        if (result){
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"恢复了助教");
+
             return this.getTaManagementPage(form, request);
+        }
+
         else {
                 infoForm.setErrMsg("恢复出错！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1399,8 +1605,14 @@ public class ClassController extends BaseController {
                 TA_STATUS.PAUSED
         );
 
-        if (result)
+        if (result){
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"暂停了助教");
+
             return this.getTaManagementPage(form, request);
+        }
+
         else {
                 infoForm.setErrMsg("暂停助教出错！");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1442,9 +1654,14 @@ public class ClassController extends BaseController {
         }
 
 
-        if(result)
-//            return this.getTaManagementPage(form, request);
+        if(result){
+
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"暂停了助教");
+            //return this.getTaManagementPage(form, request);
             return this.getModelAndView(infoForm, "pageTaManagement");
+
+        }
         else{
             infoForm.setErrMsg("解聘助教出错！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1469,7 +1686,7 @@ public class ClassController extends BaseController {
         List<MyTaViewObject> needToFire = new ArrayList<>();
 
         for (MyTaViewObject per : objects) {
-            if (per.isCheckBox() )
+            if (per.isCheckBox())
                 needToFire.add(per);
         }
         if(needToFire.size()==0){
@@ -1569,12 +1786,20 @@ public class ClassController extends BaseController {
         } else if(infoForm.getCandidatePhoneNbr()==null) {
             infoForm.setErrMsg("请填写助教申请人的联系电话！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
-        } else {
+        } else if(infoForm.getCandidateBankNbr()==null) {
+            infoForm.setErrMsg("请填写助教申请人的银行卡号！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else if(infoForm.getCandidateBankName()==null) {
+            infoForm.setErrMsg("请填写助教申请人的发卡行名称！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else {
             curTa.setApplicationClassId(classId);
             needToBeAddToApplication.add(curTa);
             String phoneNbr = infoForm.getCandidatePhoneNbr();
+            String bankName = infoForm.getCandidateBankName();
+            String bankNbr = infoForm.getCandidateBankNbr();
             short code = taService.submitApplicationAssistant(
-                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr)
+                    classConverter.TaViewObjectToTaApplication(curTa,classId,phoneNbr,bankName,bankNbr)
             );
             curTa.setContactPhone(phoneNbr);
             if (code == 10) {
@@ -1610,6 +1835,10 @@ public class ClassController extends BaseController {
                 //否则直接添加
                 else
                     infoForm.getAllApplication().addAll(needToBeAddToApplication);
+
+                MDC.put("remoteHost",request.getRemoteAddr());
+                logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"将"+curTa.getTaName()+"加入了候选人列表");
+
                 infoForm.getConditionTAList().remove(curTa);
                 return this.getModelAndView(infoForm, "pageTaManagement");
             } else {
@@ -1632,12 +1861,47 @@ public class ClassController extends BaseController {
      * @param form
      * @return
      */
+
     @RequestMapping(params = "methodToCall=getApplyOutStandingClassPage")
     public ModelAndView getApplyOutStandingClassPage(@ModelAttribute("KualiForm") UifFormBase form,
                                           HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
+    }
+
+
+    @RequestMapping(params = "methodToCall=ApplyOutStanding")
+    public ModelAndView ApplyOutStanding(@ModelAttribute("KualiForm") UifFormBase form,
+                                                     HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String applyOSReason = infoForm.getApplyOutStandingReason();
+        String classId = infoForm.getCurrClassId();
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String stuId = userSession.getLoggedInUserPrincipalId();
+
+        if(applyOSReason.isEmpty()) {
+            infoForm.setErrMsg("请填写申请优秀助教理由！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 0){
+                infoForm.setErrMsg("您不是该课程的助教，不能申请优秀！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 2){
+                infoForm.setErrMsg("您的申请已提交！请勿重复申请");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else {
+                infoForm.setErrMsg("申请成功！");
+                    //return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+
+        }
         return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
     }
 

@@ -125,6 +125,15 @@ public class TAServiceimpl implements ITAService {
     @Autowired
     private TAMSTeachCalendarDao tamsTeachCalendarDao;
 
+
+    @Override
+    public TAMSTaApplication getApplicationByStuIdAndClassId(String stuId, String classId){
+        TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
+        return tamsTaApplication;
+    }
+
+
+
     @Override
     public String getApplicationPhoneNbr(String stuId, String classId) {
         TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
@@ -409,15 +418,17 @@ public class TAServiceimpl implements ITAService {
             if (taDao.insertByEntity(newTa)) {
                 resultsize++;
                 //全局增加博士津贴 start
-                TAMSClassTaApplication currentClass = tamsClassTaApplicationDao.selectByClassId(per.getClassId());
-                if(currentClass!=null) {
-                    Long workHour = Long.valueOf(currentClass.getWorkHour());
-                    Long phdSalary = Long.valueOf(phdTA.getHourlyWage());
-                    Long masterSalary = Long.valueOf(masterTA.getHourlyWage());
-                    String phdFunds = String.valueOf(workHour * (phdSalary-masterSalary));
-                    newTa.setPhdFunding(phdFunds); //给助教经费添加phd经费
-                    this.addPhdFunds(phdFunds, per.getClassId());  //全局增加phd经费
-                    //全局增加博士津贴 end
+                if(newTa.getType().equals("2")) {
+                    TAMSClassTaApplication currentClass = tamsClassTaApplicationDao.selectByClassId(per.getClassId());
+                    if (currentClass != null) {
+                        Long workHour = Long.valueOf(currentClass.getWorkHour());
+                        Long phdSalary = Long.valueOf(phdTA.getHourlyWage());
+                        Long masterSalary = Long.valueOf(masterTA.getHourlyWage());
+                        String phdFunds = String.valueOf(workHour * (phdSalary-masterSalary));
+                        newTa.setPhdFunding(phdFunds); //给助教经费添加phd经费
+                        this.addPhdFunds(phdFunds, per.getClassId());  //全局增加phd经费
+                        //全局增加博士津贴 end
+                    }
                 }
                 if (applicationDao.deleteByEntity(readyToRemove)) {
                     continue;
@@ -896,4 +907,36 @@ public class TAServiceimpl implements ITAService {
         return false;
     }
 
+    //显示优秀助教申请表
+    @Override
+    public String getOSReason(String stuId, String classId) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        TAMSTa ta = tamstadao.selectByStudentIdAndClassIdAndSessionId(stuId, classId, curSession.getId().toString());
+        String OSReason = "";
+        if(ta.getOsNote() == null)
+            OSReason = "暂未申请优秀！";
+        else
+            OSReason = ta.getOsNote();
+        return OSReason;
+    }
+
+    //我申请的助教的课程
+    @Override
+    public List<WorkBenchViewObject> getTaApplicationByClassIds(List<Object> classIds) {
+        return tamstadao.selectAllCourseInfoByIds(classIds);
+    }
+
+    @Override
+    public List<Object> getApplicationClassIdsByUid(String uId) {
+        List<Object> classIds = new ArrayList<>();
+        if(tamsTaApplicationDao.selectByStuId(uId) == null)
+            return null;
+        else {
+            List<TAMSTaApplication> tamsTaApplications = tamsTaApplicationDao.selectByStuId(uId);
+            for(TAMSTaApplication per : tamsTaApplications) {
+                classIds.add(per.getApplicationClassId());
+            }
+        }
+        return classIds;
+    }
 }

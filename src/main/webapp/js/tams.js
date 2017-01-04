@@ -931,18 +931,16 @@ function showDialogTerm(){
 
 //为当table中前学期设置背景色，该行字体大一点
 function setCurrentColor(){
-
     var currenTr=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody > tr");
     var currenSession=jQuery("#sessionTermMessage").text();
-
     for (var i = 0; i < currenTr.length; i++) {
-        var currenSpan=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody").children("tr:eq("+i+")").children("td:eq(0)").children("div:eq(0)").children("span:eq(0)");
-        if(currenSpan.text()==currenSession){//此处是用列表的批次名称和当前学期相同，显示背景色，
+        var currenSpan=jQuery("#TermManageTable table.uif-tableCollectionLayout>tbody>tr:eq("+i+")>td>div>span").html();
+        if(currenSpan==currenSession){//此处是用列表的批次名称和当前学期相同，显示背景色，
+            //alert(currenSpan);
             currenTr[i].style.background = "#d0e9c6";
             currenTr[i].style.fontSize="16px";
         }
     }
-
 }
 
 //table的隔行变色
@@ -1110,6 +1108,26 @@ function validatePhoneNum(id){
     }
 }
 
+//银行卡号规范
+function validateBank(id){
+    var bankNumer=document.getElementById(id);
+    var RegBankNumer = /^([0-9])/;
+    var bankNumerValue = bankNumer.value.trim();
+    if(bankNumerValue==''){
+        alert("请填写银行卡号！");
+    }
+    else{
+        var falg=bankNumerValue.search(RegBankNumer);
+        if (falg==-1){
+            alert("银行卡号不合法！");
+        }
+        else{
+            return true;
+        }
+    }
+}
+
+//下拉列表的输入框
 function comboSelectStyle(id,buttonId){
 
     var searchFields = jQuery("#"+id).find('div');
@@ -1140,16 +1158,135 @@ i
         }
     }
 }
+function changeNumber(id,startIndex,endIndex){
+        var tablelength = jQuery("#" + id).find('tbody').find('tr').length;
+        for (var i = 0; i < tablelength; i++) {
+            for (var j = startIndex; j < endIndex; j++) {
+                if(jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div').hasClass('uif-field')){
+                    var changeNr = jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div>span').html();
+                    //var changedNumber = numberStyle(changeNr);//调用函数使用千分号；
+                    var changedNumber=changeNr.replace(/\B(?=(\d{3})+(?!\d))/g, ",");//使用正则表达式添加千分号
+                    jQuery("#" + id).find('tbody>tr:eq(' + i + ')>td:eq(' + j + ')>div>span').html(changedNumber);
+                }
+            }
+        }
 
-function numberStyle(str){
-    var len = str.length, str2 = '', max = Math.floor(len / 3);
-    for(var i = 0 ; i < max ; i++){
-        var s = str.slice(len - 3, len);
-        str = str.substr(0, len - 3);
-        str2 = (',' + s) + str2;
-        len = str.length;
-    }
-    str += str2;
-    return str
+    // for(var i=0;i<tablelength;i++){
+
+    // for(var j=startIndex;j<endIndex;j++){
+    //      //span改变值样式
+    //      if(jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq('+j+')>div').hasClass('uif-field')){
+    //          var changeNr=jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').html();
+    //          //alert(changeNr)
+    //         var aa=numberStyle(changeNr);
+    //         jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').html(aa);
+    //         //alert(jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').html());
+    //          jQuery("#"+id).find('tbody>tr:eq(0)>td:eq(1)>div>span').val(aa);
+    //      }
+
+    // }
+    //input改变值样式
+    // var changeNr=jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value;
+    //  var aa=numberStyle(changeNr);
+    // jQuery("#"+id).find('tbody>tr:eq('+i+')>td:eq(1)>div').children()[0].value=aa;
+    //}
+}
+
+//金额千分号转换，没用该方法了，
+// function numberStyle(str){
+//     var len = str.length, str2 = '', max = Math.floor(len / 4);
+//     for(var i = 0 ; i < max ; i++){
+//         var s = str.slice(len - 4, len);
+//         str = str.substr(0, len - 4);
+//         str2 = (',' + s) + str2;
+//         len = str.length;
+//     }
+//     str += str2;
+//     return str
+// }
+
+
+function readyCalendar(){
+    /*
+     * initialize the calendar
+     * -----------------------------------------------------------------
+     */
+    // Date for the calendar events (dummy data)
+    var date = new Date();
+    var d = date.getDate(),
+        m = date.getMonth(),
+        y = date.getFullYear();
+    jQuery('#Calendar').fullCalendar({
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+        },
+        buttonText: {// This is to add icons to the visible buttons
+            prev: "<span class='icon-angle-left'></span>",
+            next: "<span class='icon-angle-right'></span>",
+            today: '今天',
+            month: '月',
+            week: '周',
+            day: '日',
+        },
+
+        monthNames: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        monthNamesShort: ["一月", "二月", "三月", "四月", "五月", "六月", "七月", "八月", "九月", "十月", "十一月", "十二月"],
+        dayNames: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+        dayNamesShort: ["周日", "周一", "周二", "周三", "周四", "周五", "周六"],
+        today: ["今天"],
+        firstDay: 1,
+        allDayText: '全天',
+        // Random default events
+        events: [
+            {
+                title: '元旦',
+                start: new Date(2016, 11, 31),
+                end: new Date(2017, 0, 2),
+                backgroundColor: "#00a65a", // Success (green)
+                borderColor: "#00a65a", //  Success (green)
+            },
+            {
+                title: '考试',
+                start: new Date(2017, 0, 9),
+                end: new Date(2017, 0,15),
+                backgroundColor: "#f56954", // red
+                borderColor: "#f56954", // red
+            },
+
+        ],
+        editable: false,
+        droppable: false, // this allows things to be dropped onto the
+        // calendar !!!
+        drop: function(date, allDay) { // this function is called when
+            // something is dropped
+
+            // retrieve the dropped element's stored Event Object
+            var originalEventObject = jQuery(this).data('eventObject');
+
+            // we need to copy it, so that multiple events don't have a
+            // reference to the same object
+            var copiedEventObject = jQuery.extend({}, originalEventObject);
+
+            // assign it the date that was reported
+            copiedEventObject.start = date;
+            copiedEventObject.allDay = allDay;
+            copiedEventObject.backgroundColor = jQuery(this).css("background-color");
+            copiedEventObject.borderColor = jQuery(this).css("border-color");
+
+            // render the event on the calendar
+            // the last `true` argument determines if the event "sticks"
+            // (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+            jQuery('#Calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+            // is the "remove after drop" checkbox checked?
+            if (jQuery('#drop-remove').is(':checked')) {
+                // if so, remove the element from the "Draggable Events" list
+                jQuery(this).remove();
+            }
+
+        }
+    });
 }
 

@@ -117,8 +117,8 @@
                                                                                   p:messageText="@{detailInfoViewObject.courseName}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="课程代码" p:messageText="@{detailInfoViewObject.courseId}"/>
-                                                                            <!--<bean parent="Uif-MessageField"-->
-                                                                                  <!--p:label="课程类别" p:messageText="@{detailInfoViewObject.courseClassification}"/>-->
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="课程类型" p:messageText="@{detailInfoViewObject.courseClassification}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="学时" p:messageText="@{detailInfoViewObject.classHour}"/>
                                                                             <bean parent="Uif-MessageField"
@@ -141,6 +141,7 @@
                                                                                   p:label="拟配备的助教数" p:messageText="@{detailInfoViewObject.taNumber==null?'':detailInfoViewObject.taNumber}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="助教预计工时" p:messageText="@{detailInfoViewObject.workHour==null?'':detailInfoViewObject.workHour}"/>
+
                                                                             <!--<bean parent="Uif-MessageField"-->
                                                                                   <!--p:label="成绩评定方式" p:messageText="??"/>-->
                                                                             <!--<bean parent="Uif-MessageField"-->

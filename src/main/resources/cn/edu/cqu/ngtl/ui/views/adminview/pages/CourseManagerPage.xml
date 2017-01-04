@@ -106,9 +106,9 @@
                                                                     <list>
                                                                         <!--右上角btnlist-->
                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                              p:actionLabel="EXCEL"
+                                                                              p:actionLabel="Excel"
                                                                               p:methodToCall="exportCourseManagerExcel"
-                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                              p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="PDF"
                                                                               p:methodToCall="exportCourseManagerPDF"
@@ -230,7 +230,7 @@
 
 <bean id="confirmEditManagerDialog" parent="Uif-DialogGroup"
       p:headerText="编辑课程负责人"
-      p:onDocumentReadyScript="jQuery('#confirmEditManagerDialog').modal({backdrop: 'static', keyboard: false});jQuery('#confirmEditManagerDialog').children().css('width','90%');comboSelectStyle('searchCourseMangerFields','searchCourseManagerButton');"
+      p:onDocumentReadyScript="jQuery('#confirmEditManagerDialog').modal({backdrop: 'static', keyboard: false});comboSelectStyle('searchCourseMangerFields','searchCourseManagerButton');"
       p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
     <property name="items">
         <list>
@@ -305,7 +305,8 @@
                                     <bean parent="Uif-DataField" p:label="工号"
                                           p:propertyName="code"/>
                                     <bean parent="Uif-DataField" p:label="性别"
-                                          p:propertyName="gender"/>
+                                          p:propertyName="gender"
+                                          p:readOnlyDisplayReplacement="@{#line.code==null? '':(#line.gender.equals('1')? '男':'女')}"/>
                                     <bean parent="Uif-DataField" p:label="学院"
                                           p:propertyName="department.name"/>
                                 </list>
@@ -338,10 +339,10 @@
 </bean>
 
 <bean id="confirmDeleteManagerDialog" parent="Uif-DialogGroup"
-      p:headerText="删除课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+      p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
     <property name="items">
         <list>
-            <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" />
+            <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
         </list>
     </property>
     <property name="footer.items">

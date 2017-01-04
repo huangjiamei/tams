@@ -46,8 +46,8 @@ public class DepartmentFundingViewObject {
         contents[2]=getPlanFunding();
         contents[3]=getApplyFunding();
         contents[4]=getActualFunding();
-        contents[5]=getBonus();
-        contents[6]=getPhdFunding();
+        contents[5]=getPhdFunding();
+        contents[6]=getBonus();
         contents[7]=getTrafficFunding();
         contents[8]=getTotal();
         return contents;

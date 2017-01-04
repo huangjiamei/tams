@@ -86,6 +86,7 @@ public class ClassConverterImpl implements IClassConverter {
             if(!blackManList.contains(listone.getId())) {
                 MyTaViewObject viewObject = new MyTaViewObject();
                 viewObject.setTaName(listone.getName());
+                viewObject.setDepartmentName(listone.getDepartment().getName());
                 viewObject.setTaIdNumber(listone.getId());
                 viewObject.setTaGender(listone.getGender());
                 viewObject.setContactPhone("缺失");
@@ -104,12 +105,14 @@ public class ClassConverterImpl implements IClassConverter {
 
     //添加申请人点击确定。将MyTaViewObject对象转化为TAMSTaApplication对象
     @Override
-    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid,String phoneNbr) {
+    public TAMSTaApplication TaViewObjectToTaApplication(MyTaViewObject application, String classid,String phoneNbr,String bankName,String bankNbr) {
 
         TAMSTaApplication tamsTaApplication = new TAMSTaApplication();
         tamsTaApplication.setApplicationClassId(classid);
         tamsTaApplication.setApplicationId(application.getTaIdNumber());
         tamsTaApplication.setPhoneNbr(phoneNbr);
+        tamsTaApplication.setBankName(bankName);
+        tamsTaApplication.setBankNbr(bankNbr);
         //tamsTaApplication.setApplicationStatus("1");
         //tamsTaApplication.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
         return tamsTaApplication;

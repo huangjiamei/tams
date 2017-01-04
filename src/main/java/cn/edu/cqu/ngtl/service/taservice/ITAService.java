@@ -15,6 +15,9 @@ import java.util.Map;
  */
 public interface ITAService {
 
+    TAMSTaApplication getApplicationByStuIdAndClassId(String stuId,String classId);
+
+
     //查询申请人电话
     String getApplicationPhoneNbr(String stuId, String classId);
 
@@ -95,5 +98,11 @@ public interface ITAService {
     boolean isTravelSubsidy(String stuId, String classId);
 
     boolean dismissTa(List<StuIdClassIdPair> pairs, String uId);
+
+    String getOSReason(String stuId, String classId);
+
+    List<Object> getApplicationClassIdsByUid(String uId);
+
+    List<WorkBenchViewObject> getTaApplicationByClassIds(List<Object> classIds);
 
 }

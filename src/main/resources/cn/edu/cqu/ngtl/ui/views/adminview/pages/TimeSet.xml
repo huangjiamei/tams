@@ -247,7 +247,6 @@
                                                                         </list>
                                                                     </property>
                                                                 </bean>
-
                                                 </list>
                                             </property>
                                         </bean>
@@ -262,10 +261,10 @@
     </bean>
 
     <bean id="deleteTimeSetDialog" parent="Uif-DialogGroup"
-          p:headerText="删除时间类型" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除时间类型，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除时间类型，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">

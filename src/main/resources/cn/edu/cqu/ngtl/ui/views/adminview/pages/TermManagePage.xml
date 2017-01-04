@@ -118,10 +118,10 @@
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="EXCEL"
+                                                                                  p:actionLabel="Excel"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="exportApplicantPhoto"
-                                                                                  p:additionalCssClasses="icon-table bg-teal box-btngroup">
+                                                                                  p:additionalCssClasses="icon-table bg-olive box-btngroup">
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -297,7 +297,7 @@
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需添加请联系系统维护人员！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加批次，如需添加请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
@@ -392,14 +392,14 @@
 
 
     <bean id="confirmEditTermDialog" parent="Uif-DialogGroup"
-          p:headerText="修改批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true"
     p:onDocumentReadyScript="jQuery('#confirmEditTermDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重修改批次，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重修改批次，如需修改请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
@@ -492,10 +492,10 @@
     </bean>
 
     <bean id="confirmDeleteTermDialog" parent="Uif-DialogGroup"
-          p:headerText="删除批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除批次，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除批次，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">
@@ -508,10 +508,10 @@
     </bean>
 
     <bean id="confirmSetCurrentTermDialog" parent="Uif-DialogGroup"
-          p:headerText="设置系统当前批次" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="是否将本批次设置为系统当前批次？" />
+                <bean parent="Uif-MessageField" p:messageText="是否将本批次设置为系统当前批次？" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">

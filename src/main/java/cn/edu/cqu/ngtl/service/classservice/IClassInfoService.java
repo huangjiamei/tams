@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
+    boolean changeToSpecificStatus(String classId,String workFlowStatusId);
+
+    String getMaxOrderStatusIdOfSpecificFunction(String functionId);
+
     void validClassFunds(String classId);
 
     boolean isInBlackList(String stuId);
@@ -63,7 +67,7 @@ public interface IClassInfoService {
      *
      * @return
      */
-    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime, String totalBudget);
+    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, String totalTime, String totalBudget);
 
     /**
      * 删除助教请求
@@ -93,5 +97,9 @@ public interface IClassInfoService {
     List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId);
 
     boolean canEmployByClassId(String classId);
+
+    Integer applyOutStanding(String applyOTReason, String StuId, String classId);
+
+    void updateTeachCalendarInfo(String calendarId, String description, String taTask);
 
 }

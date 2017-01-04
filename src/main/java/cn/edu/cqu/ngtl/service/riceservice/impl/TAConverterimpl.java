@@ -10,6 +10,7 @@ import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTStudentDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgram;
 import cn.edu.cqu.ngtl.dataobject.cm.CMProgramCourse;
@@ -273,6 +274,7 @@ public class TAConverterimpl implements ITAConverter {
 
         if (clazz != null) {
             viewObject.setClassId(clazz.getId());
+            viewObject.setApplyCourseType(clazz.getClassType()==null?null:clazz.getClassType());
             viewObject.setCourseName(clazz.getCourseOffering().getCourse().getName());
             viewObject.setClassNbr(clazz.getClassNumber());
             viewObject.setCredit(clazz.getCourseOffering().getCourse().getCredit());
@@ -328,6 +330,7 @@ public class TAConverterimpl implements ITAConverter {
 
         if (clazz != null) {
             classDetailInfoViewObject.setClassNumber(clazz.getClassNumber());
+            classDetailInfoViewObject.setCourseClassification(clazz.getClassType()==null?"":clazz.getClassType());
             classDetailInfoViewObject.setCourseDepartment(clazz.getCourseOffering().getCourse().getDepartment().getName());
             course = clazz.getCourseOffering() != null ? clazz.getCourseOffering().getCourse() :null;
 
@@ -437,6 +440,8 @@ public class TAConverterimpl implements ITAConverter {
         application.setApplicationId(form.getApplyAssistantViewObject().getStudentId());
         application.setApplicationClassId(form.getApplyAssistantViewObject().getClassId().toString());
         application.setApplicationTime(new StringDateConverter().convertToEntityAttribute(new Date()));
+        application.setBankName(form.getBankName());
+        application.setBankNbr(form.getBankNbr());
         application.setNote(form.getApplyReason());
 
         return application;
@@ -515,7 +520,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaId(ta.getTaId());
             viewObject.setClassid(ta.getTaClassId());
             viewObject.setApplicationReason(ta.getApplicationNote());
-            viewObject.setTaCategory(ta.getTamsTaCategory() == null ? " " :ta.getTamsTaCategory().getName());
+            viewObject.setTaCategory(ta.getTamsTaCategory() == null ? "缺失" :ta.getTamsTaCategory().getName());
             UTCourse course = null;
             List<UTInstructor> instructors = null;
             if (ta.getTaClass() != null) {
@@ -542,7 +547,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIDNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());
-                viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
+                //viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
 
             viewObject.setId(ta.getId());
@@ -604,9 +609,9 @@ public class TAConverterimpl implements ITAConverter {
             return nullObject;
         }
         User user = (User) GlobalVariables.getUserSession().retrieveObject("user");
-
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
         for(WorkBenchViewObject per : list) {
-            per.setStatus(tamsTaDao.selectByStudentIdAndClassId(user.getCode(), per.getClassId()).getStatus());
+            per.setStatus(tamsTaDao.selectByStudentIdAndClassIdAndSessionId(user.getCode(), per.getClassId(), curSession.getId().toString()).getStatus());
         }
 
         for (int i = 0; i < list.size(); i++) {
@@ -625,6 +630,27 @@ public class TAConverterimpl implements ITAConverter {
 
         return list;
     }
+
+    @Override
+    public List<WorkBenchViewObject> taCombineMyApplicationClass(List<WorkBenchViewObject> list) {
+
+        if (list == null || list.size() == 0) {
+            List<WorkBenchViewObject> nullObject = new ArrayList<>(1);
+            nullObject.add(new WorkBenchViewObject());
+            return nullObject;
+        }
+
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i+1; j < list.size(); j++) {
+                if (list.get(i).getClassNbr().toString().equals(list.get(j).getClassNbr().toString())) {
+                    list.get(i).setTeacher(list.get(i).getTeacher()+','+list.get(j).getTeacher());
+                    list.remove(j);
+                }
+            }
+        }
+        return list;
+    }
+
 
     //FIXME 迁移后删掉
     @Override
@@ -768,7 +794,7 @@ public class TAConverterimpl implements ITAConverter {
     }
 
     @Override
-    public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass) {
+    public List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass,String uId) {
         List<ClassFundingViewObject> viewObjects = new ArrayList<>();
 
         if (allFundingByClass == null || allFundingByClass.size() == 0) {
@@ -806,12 +832,14 @@ public class TAConverterimpl implements ITAConverter {
             }
 
             viewObject.setApplyFunding(classFunding.getApplyFunding());
-
-
-            if(classFunding.getAssignedFunding().equals("0")) //如果为0则设置一个默认值
-                viewObject.setAssignedFunding(classFunding.getApplyFunding());
-            else
+            if(userInfoService.isCollegeStaff(uId)||userInfoService.isAcademicAffairsStaff(uId)||userInfoService.isSysAdmin(uId)) {
+                if (classFunding.getAssignedFunding().equals("0")) //如果为0则设置一个默认值
+                    viewObject.setAssignedFunding(classFunding.getApplyFunding());
+                else
+                    viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+            }else{
                 viewObject.setAssignedFunding(classFunding.getAssignedFunding());
+            }
             viewObject.setPhdFunding(classFunding.getPhdFunding());
             viewObject.setBonus(classFunding.getBonus());
             viewObject.setTravelSubsidy(classFunding.getTravelSubsidy());
@@ -1105,6 +1133,7 @@ public class TAConverterimpl implements ITAConverter {
         viewObject.setTeacherType(instructorCode);
         if (classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() :null;
+            viewObject.setCourseType(classInfo.getClassType()==null?"":classInfo.getClassType());
             viewObject.setCredit(classInfo.getCourseOffering().getCourse().getCredit());
             viewObject.setCourseHour(course.getHour());
             viewObject.setClassNumber(classInfo.getClassNumber());

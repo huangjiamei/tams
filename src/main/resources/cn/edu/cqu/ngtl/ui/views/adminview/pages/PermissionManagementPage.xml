@@ -204,7 +204,7 @@
           p:onDocumentReadyScript="jQuery('#savePermissionDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重添加权限，如需添加请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重添加权限，如需添加请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
                 <bean parent="Uif-GridGroup">
                     <property name="items">
                         <list>
@@ -237,10 +237,10 @@
 
 
     <bean id="deletePermissionDialog" parent="Uif-DialogGroup"
-          p:headerText="删除权限" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除权限，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除权限，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">

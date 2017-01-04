@@ -26,7 +26,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<TeachCalendarViewObject> allActivities;
 
     /**
-     * 教学日历相关
+     * 教学日历查看相关
      */
 
     private String totalElapsedTime;
@@ -39,6 +39,12 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private List<FileViewObject> calendarFiles;
 
+    /**
+     * 教学日历编辑相关
+     */
+    private TeachCalendarViewObject currentCalenderInfoEdit;
+    private String calendarId;
+
    /*
     助教申报页面
     */
@@ -48,6 +54,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private boolean Submitted;
 
+    private boolean beenEmployed;
 
     /**
      * 班级管理隐藏搜索框
@@ -101,6 +108,25 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String applyReason;
 
+    private String bankName;
+
+    private String bankNbr;
+
+    private boolean taApplicationSubmitted;
+
+    private String candidateBankName;
+
+    private String candidateBankNbr;
+
+    private String isAgree;
+
+    /**
+     * 学生申请优秀助教
+     */
+    private String applyOutStandingReason;
+
+
+
     /**
      * 老师提交申请页面相关
      */
@@ -126,6 +152,30 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
     private String StudentName;
     private String StudentNumber;
+
+    public String getCalendarId() {
+        return calendarId;
+    }
+
+    public void setCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+    }
+
+    public TeachCalendarViewObject getCurrentCalenderInfoEdit() {
+        return currentCalenderInfoEdit;
+    }
+
+    public void setCurrentCalenderInfoEdit(TeachCalendarViewObject currentCalenderInfoEdit) {
+        this.currentCalenderInfoEdit = currentCalenderInfoEdit;
+    }
+
+    public String getApplyOutStandingReason() {
+        return applyOutStandingReason;
+    }
+
+    public void setApplyOutStandingReason(String applyOutStandingReason) {
+        this.applyOutStandingReason = applyOutStandingReason;
+    }
 
     public String getTaNumber() {
         return taNumber;
@@ -528,5 +578,61 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCondClassType(String condClassType) {
         this.condClassType = condClassType;
+    }
+
+    public String getBankName() {
+        return bankName;
+    }
+
+    public void setBankName(String bankName) {
+        this.bankName = bankName;
+    }
+
+    public String getBankNbr() {
+        return bankNbr;
+    }
+
+    public void setBankNbr(String bankNbr) {
+        this.bankNbr = bankNbr;
+    }
+
+    public boolean isTaApplicationSubmitted() {
+        return taApplicationSubmitted;
+    }
+
+    public void setTaApplicationSubmitted(boolean taApplicationSubmitted) {
+        this.taApplicationSubmitted = taApplicationSubmitted;
+    }
+
+    public String getCandidateBankName() {
+        return candidateBankName;
+    }
+
+    public void setCandidateBankName(String candidateBankName) {
+        this.candidateBankName = candidateBankName;
+    }
+
+    public String getCandidateBankNbr() {
+        return candidateBankNbr;
+    }
+
+    public void setCandidateBankNbr(String candidateBankNbr) {
+        this.candidateBankNbr = candidateBankNbr;
+    }
+
+    public boolean isBeenEmployed() {
+        return beenEmployed;
+    }
+
+    public void setBeenEmployed(boolean beenEmployed) {
+        this.beenEmployed = beenEmployed;
+    }
+
+    public String getIsAgree() {
+        return isAgree;
+    }
+
+    public void setIsAgree(String isAgree) {
+        this.isAgree = isAgree;
     }
 }

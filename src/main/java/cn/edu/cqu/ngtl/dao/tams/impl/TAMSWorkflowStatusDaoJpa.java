@@ -157,6 +157,52 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
         return maxOrder;
     }
 
+
+    @Override
+    public String getMaxOrderStatusIdByFunctionId(String functionId){
+        List<TAMSWorkflowStatus> tamsWorkflowStatuses = this.selectByFunctionId(functionId);
+        String statusId = "";
+        Integer maxOrder = 0;
+        for(TAMSWorkflowStatus tamsWorkflowStatus:tamsWorkflowStatuses){
+            if(tamsWorkflowStatus.getOrder()>maxOrder) {
+                maxOrder = tamsWorkflowStatus.getOrder();
+                statusId = tamsWorkflowStatus.getId();
+            }
+        }
+        return statusId;
+    }
+
+    @Override
+    public String getSecMaxOrderStatusIdByFunctionId(String functionId){
+        Integer maxOrder = this.getMaxOrderByFunctionId(functionId);
+        TAMSWorkflowStatus tamsWorkflowStatus = this.getOneByOrderAndFunctionId(String.valueOf(maxOrder-1),"1");
+        if(tamsWorkflowStatus!=null)
+            return tamsWorkflowStatus.getId();
+        return null;
+    }
+
+
+    @Override
+    public TAMSWorkflowStatus getOneByOrderAndFunctionId(String order,String functionId){
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(and(
+                equal("workflowFunctionId", functionId),
+                equal("order",order)
+                )
+        );
+
+        QueryResults<TAMSWorkflowStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSWorkflowStatus.class,
+                criteria.build()
+        );
+
+        if(qr.getResults()!=null){
+            return qr.getResults().get(0);
+        }
+        return null;
+    }
+
+
+
     @Override
     public TAMSWorkflowStatus getOneById(String id){
         return KradDataServiceLocator.getDataObjectService().find(TAMSWorkflowStatus.class, id);

@@ -50,12 +50,14 @@ public class TaInfoForm extends BaseForm implements Serializable {
     private String appraiseReason;//评优
     private String revocationReasonOptionFinder;//撤销optionfinder
     private String appraiseReasonOptionFinder;//评优optionfinder
+    private String applyOSReason; //助教申请优秀理由
     /**
      * 工作台相关
      */
     private List<WorkBenchViewObject> workbench;
     private List<TAMSTaTravelSubsidy> travelSubsidies;
     private List<MyClassViewObject> myClassViewObjects;
+    private List<WorkBenchViewObject> myApplicationClass;
     private String taUniqueId;
     private String travelTime;
     private String travelNote;
@@ -94,6 +96,15 @@ public class TaInfoForm extends BaseForm implements Serializable {
         conditionTAList.add(new MyTaViewObject());
     }
 
+
+    public List<WorkBenchViewObject> getMyApplicationClass() {
+        return myApplicationClass;
+    }
+
+    public void setMyApplicationClass(List<WorkBenchViewObject> myApplicationClass) {
+        this.myApplicationClass = myApplicationClass;
+    }
+
     public static long getSerialVersionUID() {
         return serialVersionUID;
     }
@@ -114,10 +125,19 @@ public class TaInfoForm extends BaseForm implements Serializable {
         StudentNumber = studentNumber;
     }
 
+
     /**
      * Getter and Setter
      **/
 
+
+    public String getApplyOSReason() {
+        return applyOSReason;
+    }
+
+    public void setApplyOSReason(String applyOSReason) {
+        this.applyOSReason = applyOSReason;
+    }
     public List<IssueViewObject> getAllIssues() {
         return allIssues;
     }

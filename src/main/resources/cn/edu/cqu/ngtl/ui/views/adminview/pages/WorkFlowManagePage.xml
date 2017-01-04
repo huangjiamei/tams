@@ -163,37 +163,43 @@
                                                                       p:style="float:right;margin:10px;"
                                                                       p:actionLabel="查询" p:additionalCssClasses="icon-search box-btngroup"
                                                                       p:methodToCall="search"
-                                                                      p:refreshId="workFlowTab"/>
+                                                                      p:refreshId="workFlowStatusGrid"/>
 
                                                             </list>
                                                         </property>
 
                                                     </bean>
-                                                    <bean parent="Uif-VerticalBoxSection"
-                                                          p:additionalCssClasses="box-body">
+
+                                                    <bean parent="Uif-VerticalBoxSection" id="workFlowStatusGrid"
+                                                          p:additionalCssClasses="box-body" p:style="margin-top:40px;">
                                                         <property name="items">
                                                             <list>
-                                                                <bean id="workFlowTab" parent="Uif-TabGroup">
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:additionalCssClasses="box-header">
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection" id="status"  p:headerText="状态转换"
-                                                                                 p:onDocumentReadyScript="drawStatusTransTable('status','@{workflowRelationTable}')">
+                                                                            <bean parent="Uif-Icon" p:iconClass="fa fa-hourglass"/>
+                                                                            <bean parent="Uif-MessageField" p:messageText="状态转换"
+                                                                                  p:additionalCssClasses="boxheaderTitle"/>
+                                                                            <bean parent="Uif-HorizontalBoxSection"
+                                                                                  p:style="float: right!important;">
                                                                                 <property name="items">
                                                                                     <list>
-
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection" id="auth" p:headerText="权限">
-                                                                                <property name="items">
-                                                                                    <list>
-
+                                                                                        <!--右上角按钮位置-->
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>
                                                                     </property>
-                                                                    <property name="tabsWidget.position" value="TOP"/>
+                                                                </bean>
+
+                                                                <bean parent="Uif-VerticalBoxSection" id="status"
+                                                                      p:onDocumentReadyScript="drawStatusTransTable('status','@{workflowRelationTable}')">
+                                                                    <property name="items">
+                                                                        <list>
+
+                                                                        </list>
+                                                                    </property>
                                                                 </bean>
 
                                                                 <bean id="hidden-statusTrans" parent="Uif-InputField"

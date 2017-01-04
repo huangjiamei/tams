@@ -129,8 +129,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
-        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
-        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(maxOrder.toString());
+        String secMaxStatusId = tamsWorkflowStatusDao.getSecMaxOrderStatusIdByFunctionId(functionId);
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(secMaxStatusId);
         return classInformations;
     }
 
@@ -319,7 +319,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return result;
         } else if (userInfoService.isInstructor(uId)) {
             conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
-            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditionsWithUid(conditions,uId);
             return classInformations;
         }else if (userInfoService.isStudent(uId)){
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
@@ -385,8 +385,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     @Override
     public boolean removeTeachCalenderById(String uId, String classId, String teachCalendarId) {
         //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
-        if (userInfoService.isSysAdmin(uId) && !userInfoService.isInstructor(uId)) {
-            return true;
+        if (userInfoService.isSysAdmin(uId)) {
+            TAMSTeachCalendar teachCalendar = teachCalendarDao.selectById(teachCalendarId);
+            return teachCalendarDao.deleteByEntity(teachCalendar);
+
         } else if (userInfoService.isInstructor(uId)) { //// FIXME: 16-11-17 因为测试加上了非 '!'，正式使用需要去掉
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
@@ -426,7 +428,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime, String totalBudget) {
+    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, String totalTime, String totalBudget) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("教师申请助教");
         TimeUtil timeUtil = new TimeUtil();
         if (timeSettingType == null) {
@@ -462,6 +464,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 }
             }
 //            classEvaluationDao.deleteAllByClassId(classId);
+            /*
             boolean flag;
             for (TAMSClassEvaluation classEvaluation : classEvaluations) {
                 classEvaluation.setClassId(classId);
@@ -471,6 +474,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                     return 4;
                 }
             }
+            */
             //更改课程申请状态
             //教师默认工作方法为“审核”
             List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(instructorId);
@@ -507,9 +511,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public boolean deleteTaApplicationByStuIdAndClassId(String stuId, String classId) {
-        TAMSTa tamsta = taDao.selectByStudentIdAndClassId(stuId, classId);
-        if (tamsta != null) {
-            taDao.deleteOneByEntity(tamsta);
+        TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
+        if (tamsTaApplication != null) {
+            tamsTaApplicationDao.deleteByEntity(tamsTaApplication);
             return true;
         }
         return false;
@@ -658,6 +662,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
+    public boolean changeToSpecificStatus(String classId, String workFlowStatusId){
+
+        return classApplyStatusDao.changeStatusToCertainStatus(classId, workFlowStatusId);
+    }
+
+    @Override
+    public String getMaxOrderStatusIdOfSpecificFunction(String functionId){
+        return tamsWorkflowStatusDao.getMaxOrderStatusIdByFunctionId(functionId);
+    }
+
+
+    @Override
     public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatusId) {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
@@ -797,12 +813,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public boolean canEmployByClassId(String classId){
-        String maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1").toString();
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1");
         UTClassInformation utClassInformation = classInfoDao.getOneById(classId);
         if(utClassInformation==null){
             return false;
         }
-        if(utClassInformation.getStatus().equals(maxOrder)){  //最终状态才可以聘用
+        if(utClassInformation.getOrder().equals(String.valueOf(maxOrder-1))){  //倒数第二个状态才可以聘用
             return true;
         }
         return false;
@@ -819,6 +835,31 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         for(MyTaViewObject myTaViewObject:taViewObjects){
             tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(),myTaViewObject.getApplicationClassId());
         }
+    }
+
+    @Override
+    public Integer applyOutStanding(String applyOTReason, String StuId, String classId) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        TAMSTa ta = taDao.selectByStudentIdAndClassIdAndSessionId(StuId, classId, curSession.getId().toString());
+        if(ta == null)
+            return 0;
+        else if(ta.getOutStandingTaWorkflowStatusId().equals("6") || ta.getOsNote().equals(null)){
+            ta.setOutStandingTaWorkflowStatusId("7");
+            ta.setOsNote(applyOTReason);
+            taDao.insertByEntity(ta);
+            return 1;
+        }
+        else
+            return 2;
+    }
+
+    //更新教学日历
+    @Override
+    public void updateTeachCalendarInfo(String calendarId, String description, String taTask) {
+        TAMSTeachCalendar tamsTeachCalendar = teachCalendarDao.selectById(calendarId);
+        tamsTeachCalendar.setDescription(description);
+        tamsTeachCalendar.setTaTask(taTask);
+        teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
 
 }

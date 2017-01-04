@@ -130,9 +130,8 @@ public class adminController extends BaseController {
 //            return this.getModelAndView(infoForm, "pageConsole");
 //        }
 //        StringBuilder redirectUrl = new StringBuilder(ConfigContext.getCurrentContextConfig().getProperty(KRADConstants.APPLICATION_URL_KEY));
-//         return this.performRedirect(form, redirectUrl.toString());
-//        logger.info("进入了管理台");
-//        logger.error("进入管理台出错");
+//        return this.performRedirect(form, redirectUrl.toString());
+
         return this.getModelAndView(infoForm, "pageConsole");
     }
     /**权限控制End**/
@@ -192,7 +191,7 @@ public class adminController extends BaseController {
         super.baseStart(infoForm);
         List<KRIM_PERM_T> krimPermTs = new ArrayList<KRIM_PERM_T>(new KRIM_PERM_T_DaoJpa().getAllPermissions());
         infoForm.setRMPkrimPermTs(krimPermTs);
-       // logger.info("进入了权限页面");
+
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
 
@@ -871,7 +870,10 @@ public class adminController extends BaseController {
 
         User user = (User) getUserSession().retrieveObject("user");
         String uId = user.getCode();
-        infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(adminService.getCourseManagerByUid(uId)));
+
+        infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
+                adminService.getCourseManagerByUid(uId)
+        ));
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
@@ -1033,8 +1035,8 @@ public class adminController extends BaseController {
 
         Map<String, String> conditions = new HashMap<>();
         //put conditions
-        conditions.put("CourseName", infoForm.getSearchCourseNm());
-        conditions.put("CourseNumber", infoForm.getSearchCourseNmb());
+        conditions.put("CourseName", infoForm.getSearchCourseNm() );
+        conditions.put("CourseNumber", infoForm.getSearchCourseNmb() == null ? null : infoForm.getSearchCourseNmb().toUpperCase());
         conditions.put("InstructorName", infoForm.getSearchCourseManager());
         conditions.put("InstructorCode", infoForm.getSearchCourseInsCode());
         //转换成页面所需要的数据对象并调用DAO
@@ -1055,7 +1057,7 @@ public class adminController extends BaseController {
 
     /**
      * PDF格式打印经费明细表格
-     *127.0.0.1:8080/tams/portal/admin?methodToCall=getFundsPage&viewId=AdminView
+     *127.0.0.1:8080/tams/portal/admin?methodToCall=exportFundsDetailPDF&viewId=AdminView
      * @param form
      * @return
      *
@@ -1350,7 +1352,8 @@ public class adminController extends BaseController {
 
         infoForm.setClassFundings(
                 taConverter.classFundingToViewObject(
-                        adminService.getFundingByClass()
+                        adminService.getFundingByClass(),
+                        uId
                 )
         );
 
@@ -1366,6 +1369,8 @@ public class adminController extends BaseController {
                         infoForm.getSessionFundings().get(0).getActualFunding() : "0")
         );
 
+        //学院经费的总申报经费
+        infoForm.setSessionFundingTotalApply(adminService.getSessionFundingTotalApply());
         /*
             课程经费的已设置/总经费
          */
@@ -1376,6 +1381,9 @@ public class adminController extends BaseController {
                         taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
                 )
         );
+
+        //课程经费的总预算经费
+        infoForm.setClassFundingTotalApply(adminService.getClassFundingTotalApply());
          /*
             课程经费的已批准经费
          */
@@ -1400,6 +1408,12 @@ public class adminController extends BaseController {
                 )
         );
 
+        //判断当前角色是不是学生
+        if(userInfoService.isStudent(uId)){
+            infoForm.setStudentRole(true);
+        }else{
+            infoForm.setStudentRole(false);
+        }
 
        // Gson gson = new Gson();
 
@@ -1513,7 +1527,7 @@ public class adminController extends BaseController {
      * @param form
      * @return
      */
-    @RequestMapping(params = {"pageId=pageFundsManagement","methodTocall=exportDepartmentCurrFundingsExcel"})
+    @RequestMapping(params = {"pageId=pageFundsManagement","methodToCall=exportDepartmentCurrFundingsExcel"})
     public ModelAndView exportDepartmentCurrFundingsExcel(@ModelAttribute("KualiForm") UifFormBase form){
         AdminInfoForm infoForm=(AdminInfoForm) form;
         this.baseStart(infoForm);
@@ -1561,7 +1575,7 @@ public class adminController extends BaseController {
 
         List<DepartmentFundingViewObject> departmentFundingViewObjectList=infoForm.getDepartmentPreFundings();
         SimpleDateFormat curTime=new SimpleDateFormat("yyyy-MM-dd");
-        String fileName="学院经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
+        String fileName="学院历史经费列表"+"-"+getUserSession().getLoggedInUserPrincipalId()+"-"+curTime.format(new Date())+".xls";
 
         try{
             String filePath=excelService.printDepartmentPreFundingsExcel(departmentFundingViewObjectList,"exportfolder",fileName,"2003");
@@ -1660,18 +1674,36 @@ public class adminController extends BaseController {
         }
         else {
             List<DepartmentFundingViewObject> draftDepartmentFunding = infoForm.getDepartmentCurrFundings();
-            Long needToChange = adminService.releaseDeptFunding(draftDepartmentFunding);
 
-            infoForm.setSessionFundingStatistics(      //已设置经费/总经费
-                    adminService.getSessionFundingStatistics()
-            );
+            if(adminService.countDeptFunding(draftDepartmentFunding) == 1) {
+                infoForm.setErrMsg("预算经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            if(adminService.countDeptFunding(draftDepartmentFunding) == 2) {
+                infoForm.setErrMsg("批准经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            if(adminService.countDeptFunding(draftDepartmentFunding) == 3) {
+                Long needToChange = adminService.releaseDeptFunding(draftDepartmentFunding);
 
-            infoForm.setSessionFundingTotalApproved(      //已批准经费
-                    adminService.getSessionFundingTotalApprove(infoForm.getSessionFundings().get(0).getActualFunding())
-            );
+                infoForm.setSessionFundingStatistics(      //已设置经费/总经费
+                        adminService.getSessionFundingStatistics()
+                );
+
+                infoForm.setSessionFundingTotalApproved(      //已批准经费
+                        adminService.getSessionFundingTotalApprove(infoForm.getSessionFundings().get(0).getActualFunding())
+                );
+
+                //避免延迟刷新
+                infoForm.setDepartmentCurrFundings(
+                        taConverter.departmentFundingToViewObject(
+                                adminService.getDepartmentCurrFundingBySession()
+                        )
+                );
+            }
 
             //将变化体现到批次经费
-            infoForm.getSessionFundings().get(0).setActualFunding(String.valueOf(Long.valueOf(infoForm.getSessionFundings().get(0).getActualFunding()) + needToChange));
+            //infoForm.getSessionFundings().get(0).setActualFunding(String.valueOf(Long.valueOf(infoForm.getSessionFundings().get(0).getActualFunding()) + needToChange));
 
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }
@@ -1684,9 +1716,11 @@ public class adminController extends BaseController {
      * @return
      */
     @RequestMapping(params = "methodToCall=ReleaseCourseFunding")
-    public ModelAndView ReleaseCourseFunding(@ModelAttribute("KualiForm") UifFormBase form ) {
+    public ModelAndView ReleaseCourseFunding(@ModelAttribute("KualiForm") UifFormBase form , HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
         short code = adminService.getWorkTime();
         if(code == 10){
             infoForm.setErrMsg("管理员未设置相应的时间！");
@@ -1705,15 +1739,31 @@ public class adminController extends BaseController {
                 classids.add(classid);
             }
             */
-            adminService.releaseClassFunding(classFundingViewObjects);
+            String totalAssignedClass = adminService.getClassTotalAssignedFunding();
 
-            infoForm.setClassFundingStatistics(
-                    taConverter.countClassFunding(
-                            infoForm.getClassFundings(),
-                            adminService.getClassTotalAssignedFunding(),
-                            taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
-                    )
-            );
+            if(adminService.countClassFunding(classFundingViewObjects, totalAssignedClass) == 1) {
+                infoForm.setErrMsg("课程经费超支！请重新设置");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+
+            if(adminService.countClassFunding(classFundingViewObjects, totalAssignedClass) == 2) {
+                adminService.releaseClassFunding(classFundingViewObjects);
+
+                infoForm.setClassFundingStatistics(
+                        taConverter.countClassFunding(
+                                infoForm.getClassFundings(),
+                                adminService.getClassTotalAssignedFunding(),
+                                taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
+                        )
+                );
+
+                //避免延迟刷新
+                infoForm.setClassFundings(
+                        taConverter.classFundingToViewObject(
+                                adminService.getFundingByClass(), uId
+                        )
+                );
+            }
 
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }
@@ -1723,9 +1773,11 @@ public class adminController extends BaseController {
      * 保存课程经费
      */
     @RequestMapping(params = "methodToCall=SaveClassFunding")
-    public ModelAndView SaveClassFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
+    public ModelAndView SaveClassFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
         short code = adminService.getWorkTime();
         if(code == 10){
             infoForm.setErrMsg("管理员未设置相应的时间！");
@@ -1756,6 +1808,12 @@ public class adminController extends BaseController {
                                 taConverter.countClassFundingTotalApproved(infoForm.getClassFundings())
                         )
                 );
+                //避免延迟刷新
+                infoForm.setClassFundings(
+                        taConverter.classFundingToViewObject(
+                                adminService.getFundingByClass(), uId
+                        )
+                );
             }
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }
@@ -1765,9 +1823,11 @@ public class adminController extends BaseController {
      *保存助教经费
      */
     @RequestMapping(params = "methodToCall=SaveTaFunding")
-    public ModelAndView SaveTaFunding(@ModelAttribute("KualiForm") UifFormBase form   ) {
+    public ModelAndView SaveTaFunding(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request   ) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
         short code = adminService.getWorkTime();
         if(code == 10){
             infoForm.setErrMsg("管理员未设置相应的时间！");
@@ -1782,7 +1842,7 @@ public class adminController extends BaseController {
                 infoForm.setErrMsg("该课程的助教经费经费超支！请重新设置");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
-            if(adminService.countTaFunding(taFundingViewObjects) == 2)
+            if(adminService.countTaFunding(taFundingViewObjects) == 2) {
                 adminService.saveTaFunding(taFundingViewObjects);
             String TaFundingMessage="保存修改";
             for (TaFundingViewObject TfViewObject :taFundingViewObjects)
@@ -1790,6 +1850,13 @@ public class adminController extends BaseController {
                 TaFundingMessage+="学院是"+TfViewObject.getDepartmentName()+"课程是"+TfViewObject.getCourseName()+"的助教"+TfViewObject.getTaName()+"的分配经费为"+TfViewObject.getAssignedFunding()+"、";
             }
             logger.info(TaFundingMessage+"的助教经费");
+                //避免延迟刷新
+                infoForm.setTaFunding(
+                        adminConverter.taFundingToViewObject(
+                                taService.getAllTaFilteredByUid(uId)
+                        )
+                );
+            }
             return this.getModelAndView(infoForm, "pageFundsManagement");
         }
     }
@@ -1839,6 +1906,14 @@ public class adminController extends BaseController {
                 infoForm.setSessionFundingTotalApproved(      //已批准/总批准
                         adminService.getSessionFundingTotalApprove(draftDepartmentFundingViewObject)
                 );
+
+                //避免延迟刷新
+                infoForm.setDepartmentCurrFundings(
+                        taConverter.departmentFundingToViewObject(
+                                adminService.getDepartmentCurrFundingBySession()
+                        )
+                );
+
             }
             return this.getModelAndView(infoForm, "pageFundsManagement");
 
@@ -1981,7 +2056,7 @@ public class adminController extends BaseController {
         }
 
         conditions.put("className", infoForm.getcName());
-        conditions.put("classCode", infoForm.getcCode());
+        conditions.put("classCode", infoForm.getcCode() == null ? null : infoForm.getcCode().toUpperCase());
         conditions.put("classNbr", infoForm.getcNbr());
         //conditions.put("teacher", infoForm.getcTeacher());
         conditions.put("applyFunding", infoForm.getcApplyFunds());
@@ -2043,7 +2118,7 @@ public class adminController extends BaseController {
 
         conditions.put("Type", infoForm.gettType());
         conditions.put("CourseName", infoForm.gettCourseName());
-        conditions.put("CourseCode", infoForm.gettCourseCode());
+        conditions.put("CourseCode", infoForm.gettCourseCode() == null ? null : infoForm.gettCourseCode().toUpperCase());
         conditions.put("ClassNbr", infoForm.gettClassNbr());
         conditions.put("AssignedFunding", infoForm.gettAssignedFunds());
         conditions.put("PhdFunding", infoForm.gettPhdFunds());
@@ -2122,7 +2197,7 @@ public class adminController extends BaseController {
         conditions.put("BankNbr", infoForm.getDetailsBankNumber());
         conditions.put("IdCard", infoForm.getDetailsIDCard());
         conditions.put("CourseName", infoForm.getDetailsCourseName());
-        conditions.put("CourseCode", infoForm.getDetailsCourseCode());
+        conditions.put("CourseCode", infoForm.getDetailsCourseCode() == null ? null : infoForm.getDetailsCourseCode().toUpperCase());
         conditions.put("classNbr", infoForm.getDetailsClassNbr());
         conditions.put("month1", infoForm.getMonth1());
         conditions.put("month2", infoForm.getMonth2());
@@ -2761,11 +2836,6 @@ public class adminController extends BaseController {
         }
     }
 
-    /**
-     *
-     * @param form
-     * @return
-     */
 
     @RequestMapping(params = {"methodToCall=setCurrentSession"})
     public ModelAndView setCurrentSession(@ModelAttribute("KualiForm") UifFormBase form) {
@@ -2987,6 +3057,7 @@ public class adminController extends BaseController {
         String rfId = adminService.setRoleFunctionIdByRoleIdAndFunctionId(infoForm.getRoleId(), infoForm.getFunctionId());
 
         adminService.setWorkflowStatusRelationByRoleFunctionId(infoForm.getFunctionId(), rfId, rt);
+
         return this.getModelAndView(infoForm, "pageWorkFlowManage");
     }
 

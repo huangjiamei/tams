@@ -228,13 +228,13 @@
     </bean>
 
     <bean id="addWorkFlowCaDialog" parent="Uif-DialogGroup"
-          p:headerText="工作流类别管理"><!--整个propertyName、methodToCall改动-->
+          p:headerText="提示："><!--整个propertyName、methodToCall改动-->
         <property name="items">
             <list>
                 <bean parent="Uif-VerticalBoxSection">
                     <property name="items">
                         <list>
-                            <bean parent="Uif-MessageField" p:messageText="请慎重添加或修改工作流类别，如需修改请联系系统维护人员！"/>
+                            <bean parent="Uif-MessageField" p:messageText="请慎重添加或修改工作流类别，如需修改请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
                             <bean parent="Uif-GridGroup">
                                 <property name="items">
                                     <list>
@@ -261,10 +261,10 @@
 
 
     <bean id="deleteWorkFlowCaDialog" parent="Uif-DialogGroup"
-          p:headerText="删除工作流类别" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="请慎重删除工作流类别，如需删除请联系系统维护人员！" />
+                <bean parent="Uif-MessageField" p:messageText="请慎重删除工作流类别，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">

@@ -52,7 +52,7 @@ public interface ITAConverter {
 
     List<SessionFundingViewObject> sessionFundingToViewObject(List<TAMSUniversityFunding> allFundingBySession);
 
-    List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass);
+    List<ClassFundingViewObject> classFundingToViewObject(List<TAMSClassFunding> allFundingByClass,String uId);
 
     RelationTable workflowStatusRtoJson(String functionId, List<TAMSWorkflowStatusR> workflowStatusRelationByRoleFunctionId);
 
@@ -95,4 +95,6 @@ public interface ITAConverter {
     String countClassFundingTotalApproved(List<ClassFundingViewObject> classFundings);
 
     List<ClassApplyFeedBackViewObject> feedBackToViewObject(List<TAMSClassApplyFeedback> tamsClassApplyFeedbacks);
+
+    List<WorkBenchViewObject> taCombineMyApplicationClass(List<WorkBenchViewObject> list);
 }

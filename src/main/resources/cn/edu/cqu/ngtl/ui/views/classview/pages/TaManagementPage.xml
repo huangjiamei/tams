@@ -42,7 +42,7 @@
                         <list>
                             <!-- 左上角 -->
                             <bean id="toManagerHeaderTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('toManagerHeaderTitle','icon-book','课程','管理助教')">
+                                  p:onDocumentReadyScript="initContentHeader('toManagerHeaderTitle','icon-book','课程','选聘助教')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->
@@ -164,8 +164,8 @@
                                                                                   p:propertyName="departmentName"/>
                                                                             <bean parent="Uif-DataField" p:label="专业"
                                                                                   p:propertyName="taMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="导师"
-                                                                                  p:propertyName="advisorName"/>
+                                                                        <!--    <bean parent="Uif-DataField" p:label="导师"
+                                                                                  p:propertyName="advisorName"/>-->
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
                                                                                   p:propertyName="contactPhone"/>
                                                                             <bean parent="Uif-DataField"
@@ -269,8 +269,8 @@
                                                                                   p:propertyName="departmentName"/>
                                                                             <bean parent="Uif-DataField" p:label="专业"
                                                                                   p:propertyName="taMajorName"/>
-                                                                            <bean parent="Uif-DataField" p:label="导师"
-                                                                                  p:propertyName="advisorName"/>
+                                                                            <!--<bean parent="Uif-DataField" p:label="导师"-->
+                                                                                  <!--p:propertyName="advisorName"/>-->
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
                                                                                   p:propertyName="contactPhone"/>
                                                                         </list>
@@ -306,7 +306,7 @@
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-lg-6">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人：" p:additionalCssClasses="col-md-12 col-lg-12"/>
+                                        <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人：" p:additionalCssClasses="message-font-size col-sm-12 col-md-12 col-lg-12"/>
 
                                         <bean id="nameTaM" parent="Uif-InputField" p:label="姓名"
                                               p:propertyName="StudentName"
@@ -356,6 +356,24 @@
                                                           p:messageText="@{selectedTa.advisorName}"/>
                                                     <bean id="candidatePhoneNbrField" parent="Uif-InputField" p:label="联系电话" p:required="true"
                                                           p:propertyName="candidatePhoneNbr"/>
+                                                    <bean id="bankTypeField" parent="Uif-InputField"
+                                                          p:label="银行名称"
+                                                          p:propertyName="candidateankName"
+                                                          p:required="true">
+                                                        <property name="optionsFinder">
+                                                            <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"
+                                                                  p:blankOption="true"/>
+                                                        </property>
+                                                        <property name="control">
+                                                            <bean parent="Uif-DropdownControl"/>
+                                                        </property>
+                                                    </bean>
+                                                    <bean id="bankNbrField" parent="Uif-InputField"
+                                                          p:label="银行卡号"
+                                                          p:propertyName="candidateBankNbr"
+                                                          p:required="true">
+                                                    </bean>
+
                                                 </list>
                                             </property>
                                         </bean>
@@ -369,7 +387,7 @@
                                   p:additionalCssClasses="col-md-6 col-lg-6">
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表："/>
+                                        <bean parent="Uif-MessageField" p:messageText="符合条件的学生列表：" p:additionalCssClasses="message-font-size"/>
 
                                         <bean id="searchTaApplicantList"
                                               p:additionalCssClasses="table-minY"
@@ -392,10 +410,12 @@
                                                     <bean parent="Uif-DataField" p:label="姓名" p:propertyName="taName"/>
                                                     <bean parent="Uif-DataField" p:label="学号"
                                                           p:propertyName="taIdNumber"/>
+                                                    <bean parent="Uif-DataField" p:label="学院"
+                                                          p:propertyName="taDepartmentName"/>
                                                     <bean parent="Uif-DataField" p:label="性别"
                                                           p:propertyName="taGender"/>
-                                                    <bean parent="Uif-DataField" p:label="联系电话"
-                                                          p:propertyName="contactPhone"/>
+                               <!--                     <bean parent="Uif-DataField" p:label="联系电话"
+                                                          p:propertyName="contactPhone"/>-->
                                                 </list>
                                             </property>
                                             <property name="lineActions">
@@ -422,7 +442,7 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="添加"
                       p:preSubmitCall="return validatePhoneNum('candidatePhoneNbrField_control');"
                       p:methodToCall="addSelectedTaApplicant" p:dialogDismissOption="REQUEST"/>
             </list>
@@ -430,10 +450,10 @@
     </bean>
 
     <bean id="confirmEmployDialog" parent="Uif-DialogGroup"
-          p:headerText="聘用" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="您确定聘用该申请人担任您的助教吗？" />
+                <bean parent="Uif-MessageField" p:messageText="您确定聘用该申请人担任您的助教吗？" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">
@@ -446,10 +466,10 @@
     </bean>
 
     <bean id="confirmDismissDialog" parent="Uif-DialogGroup"
-          p:headerText="解聘" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
         <property name="items">
             <list>
-                <bean parent="Uif-MessageField" p:messageText="您确定解聘当前助教吗？" />
+                <bean parent="Uif-MessageField" p:messageText="您确定解聘当前助教吗？" p:additionalCssClasses="message-font-size"/>
             </list>
         </property>
         <property name="footer.items">

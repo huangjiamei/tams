@@ -378,6 +378,16 @@ public class TAMSDeptFundingDaoJpa implements TAMSDeptFundingDao {
         return tamsDeptFundings;
     }
 
-
+    @Override
+    public List<TAMSDeptFunding> selectAll (){
+        UTSession curSession = new UTSessionDaoJpa().getCurrentSession();
+        QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
+                and(
+                        equal("sessionId", curSession.getId())
+                )
+        );
+        List<TAMSDeptFunding> list = KradDataServiceLocator.getDataObjectService().findMatching(TAMSDeptFunding.class, criteria.build()).getResults();
+        return list == null ?  null: list;
+    }
 
 }

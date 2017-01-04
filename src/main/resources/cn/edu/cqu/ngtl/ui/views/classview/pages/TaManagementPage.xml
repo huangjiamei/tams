@@ -595,7 +595,7 @@
                                                     <bean parent="Uif-PrimaryActionButton"
                                                           p:ajaxSubmit="true"
                                                           p:actionImagePlacement="LEFT"
-                                                          p:methodToCall="getSelectedTaInfo"
+                                                          p:methodToCall="getSelectedTaInfoForChange"
                                                           p:refreshId="taStuDetailInfoGrid"
                                                           p:render="@{#line.taName!=null}"
                                                           p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>

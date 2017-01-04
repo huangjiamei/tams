@@ -231,7 +231,6 @@ public class ClassController extends BaseController {
 //
 //            MDC.put("remoteHost",request.getRemoteAddr());
 //            logger.info("进行了审批操作,状态改为："+workFlowService.getWorkFlowStatusName(infoForm.getApproveReasonOptionFinder()));
-
             return this.getClassListPage(infoForm);
         }
         else  //应当返回错误信息
@@ -269,7 +268,6 @@ public class ClassController extends BaseController {
                      infoForm.getReturnReasonOptionFinder()
             );
             classInfoService.insertFeedBack(classTeacherViewObject.getId(),uid,feedBackReason,classTeacherViewObject.getStatus(),newStatus);
-
 //            MDC.put("remoteHost",request.getRemoteAddr());
 //            logger.info("进行了驳回操作,将："+classTeacherViewObject.getStatus()+"变为："+newStatus);
         }
@@ -427,7 +425,6 @@ public class ClassController extends BaseController {
         MDC.put("remoteHost",request.getRemoteAddr());
         logger.info("学生提交申请助教操作");
 
-
         if(code == 10){
             infoForm.setErrMsg("管理员未设置相应的添加时间！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -482,7 +479,6 @@ public class ClassController extends BaseController {
 
         MDC.put("remoteHost",request.getRemoteAddr());
         logger.info("取消了学生ID为："+stuId+"的助教申请操作");
-
 
         return this.getModelAndView(infoForm, "pageApplyForTaForm");
     }
@@ -703,7 +699,6 @@ public class ClassController extends BaseController {
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("删除ID为："+attachmentId+"的教学日历中附件");
 
-
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
         catch (IndexOutOfBoundsException e) {
@@ -793,7 +788,6 @@ public class ClassController extends BaseController {
 
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("添加了一条ID为："+added.getId()+"的教学日历信息到数据库");
-
 
             //添加附件
             if(added.isHasAttachment()) {
@@ -906,7 +900,6 @@ public class ClassController extends BaseController {
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("添加了一条ID为："+added.getId()+"的教学日历信息到数据库");
 
-
             //添加附件
             if(added.isHasAttachment()) {
                 new TamsFileControllerServiceImpl().saveCalendarAttachments(uId, classId, added.getId(), infoForm.getFileList());
@@ -954,13 +947,11 @@ public class ClassController extends BaseController {
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("删除ID为："+teachCalendarId+"的教学日历信息");
 
-
             //删除教学日历的附件信息
             boolean result = classInfoService.removeAllCalendarFilesByClassIdAndCalendarId(
                     classId, teachCalendarId);
 
             logger.info("删除ID为："+teachCalendarId+"的教学日历的附件");
-
 
             return this.getTeachingCalendar(infoForm, request);
         }
@@ -1141,7 +1132,6 @@ public class ClassController extends BaseController {
         MDC.put("remoteHost",request.getRemoteAddr());
         logger.info("删除了ID为："+index+"的成绩评定辅助方法");
 
-
         return this.getModelAndView(infoForm, "pageRequestTa");
     }
 
@@ -1183,7 +1173,6 @@ public class ClassController extends BaseController {
 
         MDC.put("remoteHost",request.getRemoteAddr());
         logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"提交申请助教的请求");
-
 
         if(result == 1) {
             infoForm.setErrMsg("不在教师申请助教期间!");
@@ -1475,7 +1464,6 @@ public class ClassController extends BaseController {
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"聘用了助教："+needToAdd.getTaName());
 
-
             infoForm.getAllApplication().remove(needToAdd);
 
             //聘用之后申请列表为空，往申请列表中添加一个空对象
@@ -1543,7 +1531,6 @@ public class ClassController extends BaseController {
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"恢复了助教");
 
-
             return this.getTaManagementPage(form, request);
         }
 
@@ -1593,7 +1580,6 @@ public class ClassController extends BaseController {
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"暂停了助教");
 
-
             return this.getTaManagementPage(form, request);
         }
 
@@ -1642,7 +1628,6 @@ public class ClassController extends BaseController {
 
             MDC.put("remoteHost",request.getRemoteAddr());
             logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"暂停了助教");
-
             //return this.getTaManagementPage(form, request);
             return this.getModelAndView(infoForm, "pageTaManagement");
 
@@ -1820,7 +1805,6 @@ public class ClassController extends BaseController {
                 //否则直接添加
                 else
                     infoForm.getAllApplication().addAll(needToBeAddToApplication);
-
 
                 MDC.put("remoteHost",request.getRemoteAddr());
                 logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"将"+curTa.getTaName()+"加入了候选人列表");

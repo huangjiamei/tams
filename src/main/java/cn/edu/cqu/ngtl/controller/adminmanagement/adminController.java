@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaBlackListDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -28,6 +29,7 @@ import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -59,6 +61,8 @@ import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 @Controller
 @RequestMapping("/admin")
 public class adminController extends BaseController {
+
+    static Logger logger=Logger.getLogger(adminController.class);
 
     @Autowired
     private IAdminService adminService;
@@ -94,7 +98,9 @@ public class adminController extends BaseController {
     @Autowired
     private IUserInfoService iUserInfoService;
 
-    static Logger logger=Logger.getLogger(adminController.class);
+    @Autowired
+    private TAMSTaBlackListDao tamsTaBlackListDao;
+
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
         UserSession userSession = getUserSession();
@@ -3247,6 +3253,99 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
         adminInfoForm.setTaBlackList(adminConverter.blackListToViewObject(adminService.getAllBlackList()));
+        return this.getModelAndView(adminInfoForm, "pageBlackList");
+    }
+    /**
+     * 将黑名单以Excel格式导出，create by lc
+     *
+     * @param form
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    @RequestMapping(params = {"pageId=pageBlackList", "methodToCall=exportBlackListExcel"})
+    public ModelAndView exportBlackListExcel(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request, HttpServletResponse response) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+
+        if (infoForm.getCourseManagerViewObjects() == null || infoForm.getCourseManagerViewObjects().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getTaBlackList().get(0).getStuName()== null) {
+                infoForm.setErrMsg("列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+
+        List<BlackListViewObject> blackList = infoForm.getTaBlackList();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "黑名单列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date()) + ".xls";
+
+        try {
+            String filePath = excelService.printBlackListExcel(blackList, "exportfolder", fileName, "2003");
+            String baseUrl = CoreApiServiceLocator.getKualiConfigurationService()
+                    .getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+
+            return this.performRedirect(infoForm, baseUrl + "/" + filePath);
+        } catch (IOException e) {
+            e.printStackTrace();
+            infoForm.setErrMsg("系统导出EXCEL文件错误!");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
+    /**
+     * 将黑名单表格打印为PDF，create by lc
+     * @param form
+     * @return
+     *
+     */
+    @RequestMapping(params = {"pageId=pageBlackList","methodToCall=exportBlackListPDF"})
+    public ModelAndView exportBlackListPDF(@ModelAttribute("KualiForm") UifFormBase form){
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        if (infoForm.getTaBlackList() == null || infoForm.getTaBlackList().size() == 1) { //size=1是因为会设置至少一个空object让表格不会消失
+            if(infoForm.getTaBlackList().get(0).getStuName() == null) {
+                infoForm.setErrMsg(" 列表为空！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+        List<BlackListViewObject> blackListViewObjectList=infoForm.getTaBlackList();
+
+        String filePath=adminService.prepareBlacklistPDF(blackListViewObjectList );
+        if (filePath.equals("exception")){
+            infoForm.setErrMsg("系统导出PDF文件错误!");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }else{
+            String baseUrl= CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+            return this.performRedirect(infoForm,baseUrl+'/'+filePath);
+        }
+
+    }
+
+    /**create by luojizhou on 2017/1/4
+     *
+     * 删除黑名单中的一条记录
+     * @param form
+     * @return 黑名单
+     */
+    @RequestMapping(params = "methodToCall=deleteFromBlackList")
+    public ModelAndView deleteFromBlackList(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+        //获取某一行
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = parameters.getSelectedLineIndex();
+
+        BlackListViewObject blackListViewObject = adminInfoForm.getTaBlackList().get(index);
+        tamsTaBlackListDao.deleteFromBlackList(tamsTaBlackListDao.getBlackListByStuId(blackListViewObject.getStuId()));
+
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("在黑名单中删除了学号为："+blackListViewObject.getStuId()+" 的助教。");
+
+        adminInfoForm.getTaBlackList().remove(index);
         return this.getModelAndView(adminInfoForm, "pageBlackList");
     }
 

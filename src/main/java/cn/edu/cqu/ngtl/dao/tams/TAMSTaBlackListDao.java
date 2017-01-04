@@ -1,5 +1,6 @@
 package cn.edu.cqu.ngtl.dao.tams;
 
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSCourseManager;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaBlackList;
 
 import java.util.List;
@@ -13,6 +14,8 @@ public interface TAMSTaBlackListDao {
 
     boolean insertOneByEntity(TAMSTaBlackList tamsTaBlackList);
 
+    TAMSTaBlackList getBlackListByStuId(String stuId);
 
+    void deleteFromBlackList(TAMSTaBlackList tamsTaBlackList);
 
 }

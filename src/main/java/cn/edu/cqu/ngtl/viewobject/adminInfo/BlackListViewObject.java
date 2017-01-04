@@ -1,5 +1,7 @@
 package cn.edu.cqu.ngtl.viewobject.adminInfo;
 
+import javax.persistence.Transient;
+
 /**
  * Created by awake on 2016/12/29.
  */
@@ -15,7 +17,25 @@ public class BlackListViewObject {
 
     private String executorRole;
 
+    @Transient
+    public static String[] getAttrTittles(){
+        String[] attrTittles={
+                "名称","学号","加入时间","操作执行者名称"
 
+        };
+        return attrTittles;
+    }
+
+    @Transient
+    public String[] getContents(){
+        String[] contents=new String[4];
+        contents[0]=getStuName();
+        contents[1]=getStuId();
+        contents[2]=getJoinTime();
+        contents[3]=getExecutorName();
+
+        return contents;
+    }
     public String getStuName() {
         return stuName;
     }

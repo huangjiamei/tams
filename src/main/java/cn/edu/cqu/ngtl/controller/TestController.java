@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.controller;
 import cn.edu.cqu.ngtl.dataobject.TestGroupObject;
 import cn.edu.cqu.ngtl.form.TestForm;
 import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -34,7 +35,7 @@ public class TestController extends BaseController {
      * @return
      */
     @RequestMapping(params = "methodToCall=getTestPage")
-    public ModelAndView getTestPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView getTestPage(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         TestForm testForm = (TestForm) form;
         super.baseStart(testForm);
         List<TestGroupObject> groupObjectList = new ArrayList<>();
@@ -43,7 +44,10 @@ public class TestController extends BaseController {
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.3小节"));
         groupObjectList.add(new TestGroupObject("学习掌握Chap1 极限 1.4小节"));
         testForm.setGroupObjectList(groupObjectList);
-        logger.info("测试页面的日志记录createbyluojizhou");
+
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("第四次测试create by luojihzou");
+
         return this.getModelAndView(testForm, "pageTest");
     }
 

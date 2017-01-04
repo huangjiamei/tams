@@ -667,7 +667,7 @@
                                                                                                                 </bean>
                                                                                                                 <bean id="FundsManagerDepartmentTable"
                                                                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'};tableHeightSet('FundsManagerDepartmentTable');changeNumber('FundsManagerDepartmentTable',2,9);">
+                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'};tableHeightSet('FundsManagerDepartmentTable');">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
                                                                                                                             value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
@@ -859,7 +859,7 @@
                                                                                                                             <!--学院历史经费的表格-->
                                                                                                                             <bean id="FundsManagerDeptTable"
                                                                                                                                   parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                                                  p:onDocumentReadyScript="refreshTableFilter(FundsManagerDeptSearchFields,FundsManagerDeptTable);tableHeightSet('FundsManagerDeptTable');changeNumber('FundsManagerDeptTable',2,9);">
+                                                                                                                                  p:onDocumentReadyScript="refreshTableFilter(FundsManagerDeptSearchFields,FundsManagerDeptTable);tableHeightSet('FundsManagerDeptTable');">
                                                                                                                                 <property
                                                                                                                                         name="collectionObjectClass"
                                                                                                                                         value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
@@ -905,9 +905,10 @@
                                                                                                                                               p:propertyName="planFunding"
                                                                                                                                               p:sortAs="numeric"/>
                                                                                                                                         <bean parent="Uif-DataField"
-                                                                                                                                              p:label="申报经费"
-                                                                                                                                              p:propertyName="applyFunding"
+                                                                                                                                              p:label="申报经费" p:propertyName="applyFunding"
                                                                                                                                               p:sortAs="numeric"/>
+                                                                                                                                        <!-- p:readOnlyDisplayReplacement="@{#line.sessionName!=null ? java.text.DecimalFormat(',###').format(#line.applyFunding):''}"
+                                                                                                                                        p:readOnlyDisplayReplacement="@{#line.sessionName!=null ? #line.planFunding.replace(/\B(?=(\d{3})+(?!\d))/g, ','):''}"-->
                                                                                                                                         <bean parent="Uif-DataField"
                                                                                                                                               p:label="批准经费"
                                                                                                                                               p:propertyName="actualFunding"

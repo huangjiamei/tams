@@ -580,6 +580,7 @@ public class ClassController extends BaseController {
                     infoForm.getAllCalendar().get(index)
             );
 
+
             //code 当做 id 用
             List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
             infoForm.setCalendarFiles(
@@ -587,8 +588,8 @@ public class ClassController extends BaseController {
             );
             infoForm.setAllCalendar(null);  //节省内存
 
-            String classId = infoForm.getCurrClassId();
-            String uId = getUserSession().getPrincipalId();
+            //String classId = infoForm.getCurrClassId();
+           // String uId = getUserSession().getPrincipalId();
            /* infoForm.setAllActivities(
                     taConverter.activitiesToViewObject(
                             classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
@@ -616,7 +617,7 @@ public class ClassController extends BaseController {
         int index = params.getSelectedLineIndex();
 
         try {
-            infoForm.setCurrentCalendarInfo(
+            infoForm.setCurrentCalenderInfoEdit(
                     infoForm.getAllCalendar().get(index)
             );
 
@@ -625,16 +626,13 @@ public class ClassController extends BaseController {
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
+
+            //String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
+            //String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
+            //classInfoService.updateTeachCalendarInfo(infoForm.getAllCalendar().get(index).getCode().toString(), CalendarDescription, CalendarTaTask);
+
             infoForm.setAllCalendar(null);  //节省内存
 
-            String classId = infoForm.getCurrClassId();
-            String uId = getUserSession().getPrincipalId();
-           /* infoForm.setAllActivities(
-                    taConverter.activitiesToViewObject(
-                            classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
-                                    uId, classId)
-                    )
-            );*/
             return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
         }
         catch (IndexOutOfBoundsException e) {
@@ -643,6 +641,42 @@ public class ClassController extends BaseController {
         }
     }
 
+    /**
+     * 更新教学日历的操作
+     */
+    @RequestMapping(params = "methodToCall=updateTeachCalendar")
+    public ModelAndView updateTeachCalendar(@ModelAttribute("KualiForm") UifFormBase form,
+                                                 HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            infoForm.setCurrentCalenderInfoEdit(
+                    infoForm.getAllCalendar().get(index)
+            );
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+
+            String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
+            String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
+            classInfoService.updateTeachCalendarInfo(infoForm.getAllCalendar().get(index).getCode().toString(), CalendarDescription, CalendarTaTask);
+
+            infoForm.setAllCalendar(null);  //节省内存
+
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+    }
 
     /**
      * 下载教学日历的附件
@@ -1035,7 +1069,7 @@ public class ClassController extends BaseController {
         conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("InstructorName", infoForm.getCondInstructorName());
         conditions.put("CourseName", infoForm.getCondCourseName());
-        conditions.put("CourseCode", infoForm.getCondCourseCode());
+        conditions.put("CourseCode", infoForm.getCondCourseCode() == null ? null : infoForm.getCondCourseCode().toUpperCase());
         conditions.put("ClassType", infoForm.getCondClassType());
         conditions.put("StatusId", infoForm.getCourseStatus());
 
@@ -1847,6 +1881,7 @@ public class ClassController extends BaseController {
      * @param form
      * @return
      */
+
     @RequestMapping(params = "methodToCall=getApplyOutStandingClassPage")
     public ModelAndView getApplyOutStandingClassPage(@ModelAttribute("KualiForm") UifFormBase form,
                                           HttpServletRequest request) {
@@ -1855,6 +1890,7 @@ public class ClassController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
     }
+
 
     @RequestMapping(params = "methodToCall=ApplyOutStanding")
     public ModelAndView ApplyOutStanding(@ModelAttribute("KualiForm") UifFormBase form,
@@ -1872,7 +1908,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         else {
-            if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 2){
+            if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 0){
+                infoForm.setErrMsg("您不是该课程的助教，不能申请优秀！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 2){
                 infoForm.setErrMsg("您的申请已提交！请勿重复申请");
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }

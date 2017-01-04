@@ -839,7 +839,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     public Integer applyOutStanding(String applyOTReason, String StuId, String classId) {
         UTSession curSession = sessionDao.getCurrentSession();
         TAMSTa ta = taDao.selectByStudentIdAndClassIdAndSessionId(StuId, classId, curSession.getId().toString());
-        if(ta.getOutStandingTaWorkflowStatusId().equals("6") || ta.getOsNote().equals(null)){
+        if(ta == null)
+            return 0;
+        else if(ta.getOutStandingTaWorkflowStatusId().equals("6") || ta.getOsNote().equals(null)){
             ta.setOutStandingTaWorkflowStatusId("7");
             ta.setOsNote(applyOTReason);
             taDao.insertByEntity(ta);
@@ -847,6 +849,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
         else
             return 2;
+    }
+
+    //更新教学日历
+    @Override
+    public void updateTeachCalendarInfo(String calendarId, String description, String taTask) {
+        TAMSTeachCalendar tamsTeachCalendar = teachCalendarDao.selectById(calendarId);
+        tamsTeachCalendar.setDescription(description);
+        tamsTeachCalendar.setTaTask(taTask);
+        teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
 
 }

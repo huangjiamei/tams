@@ -145,7 +145,7 @@ public class TaController extends BaseController {
         conditions.put("taId", taInfoForm.getTaAssitantIDNumber());
         conditions.put("taDegree", taInfoForm.getTaCategoryName());
         conditions.put("taCourseName", taInfoForm.getTaCourseName());
-        conditions.put("taCourseCode", taInfoForm.getTaCourseCode());
+        conditions.put("taCourseCode", taInfoForm.getTaCourseCode() == null ? null : taInfoForm.getTaCourseCode().toUpperCase());
         conditions.put("taClassNumber", taInfoForm.getTaClassNumber());
         conditions.put("taTeacherName", taInfoForm.getTaTeacherName());
         conditions.put("taTeacherAppraise", taInfoForm.getTaTeacherAppraise());

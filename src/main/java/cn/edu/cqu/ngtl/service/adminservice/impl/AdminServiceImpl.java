@@ -762,7 +762,7 @@ public class AdminServiceImpl implements IAdminService {
         return true;
     }
 
-    //计算学院经费
+    //保存时计算学院经费
     @Override
     public Integer countDeptFunding(List<DepartmentFundingViewObject> departmentFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();

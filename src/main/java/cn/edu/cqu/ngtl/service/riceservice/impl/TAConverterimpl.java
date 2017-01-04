@@ -520,7 +520,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setTaId(ta.getTaId());
             viewObject.setClassid(ta.getTaClassId());
             viewObject.setApplicationReason(ta.getApplicationNote());
-            viewObject.setTaCategory(ta.getTamsTaCategory() == null ? " " :ta.getTamsTaCategory().getName());
+            viewObject.setTaCategory(ta.getTamsTaCategory() == null ? "缺失" :ta.getTamsTaCategory().getName());
             UTCourse course = null;
             List<UTInstructor> instructors = null;
             if (ta.getTaClass() != null) {
@@ -547,7 +547,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaName(taStu.getName());
                 viewObject.setTaIDNumber(taStu.getId());
                 viewObject.setTaGender(taStu.getGender());
-                viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
+                //viewObject.setTaMajorName(taStu.getProgram() != null ? taStu.getProgram().getName() :null);
             }
 
             viewObject.setId(ta.getId());

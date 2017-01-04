@@ -49,6 +49,11 @@ public class AdminConverterimpl implements IAdminConverter {
 
     @Override
     public List<CourseManagerViewObject> getCourseManagerToTableViewObject(List<TAMSCourseManager> tamsCourseManagerList) {
+        if(tamsCourseManagerList == null || tamsCourseManagerList.size() == 0) {
+            List<CourseManagerViewObject> nullObject = new ArrayList<>();
+            nullObject.add(new CourseManagerViewObject());
+            return nullObject;
+        }
         if (insNameMap == null) {
             insNameMap = utInstructorDao.getAllInstructorNameIdMap();
             System.out.println(System.currentTimeMillis());

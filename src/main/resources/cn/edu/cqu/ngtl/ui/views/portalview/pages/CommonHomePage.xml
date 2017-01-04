@@ -89,7 +89,7 @@
                                 <property name="items"  >
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
-                                              p:additionalCssClasses="box box-success"
+                                              p:additionalCssClasses="box box-success heightDiv"
                                               p:style="padding:5px;width=250px!important;">
                                             <property name="items">
                                                 <list>
@@ -106,10 +106,11 @@
                                                     <!--头像-->
                                                     <bean id="user-header-img" parent="Uif-Image"
                                                           p:additionalCssClasses="photo"
+                                                          p:style="margin-bottom:30px;"
                                                           p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
                                                     <!--具体信息的表格-->
                                                     <bean parent="Uif-GridGroup"
-                                                          p:additionalCssClasses="box-body heightDiv"
+                                                          p:additionalCssClasses="box-body"
                                                           p:layoutManager.renderRowFirstCellHeader="false">
                                                         <property name="layoutManager.numberOfColumns" value="2"/>
                                                         <property name="items">

@@ -212,18 +212,17 @@
                                                                             </bean>-->
                                                                             <bean parent="Uif-DataField" p:label="编号" p:propertyName="code"/> <!-- id是否可以当做编号? -->
                                                                             <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
-                                                                            <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask" p:readOnly="true">
+                                                                            <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask"
+                                                                                  p:readOnly="true" p:style="width:500px;height:auto">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:auto;width:500px;resize:vertical;"/>
+                                                                                          p:style="resize:vertical;"/>
                                                                                 </property>
                                                                               </bean>
                                                                             <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"
-                                                                                   /><!--p:readOnlyDisplayReplacement="@{new java.text.SimpleDateFormat('yyyy-MM-dd').format(#line.startTime)}"-->
+                                                                                  p:readOnlyDisplayReplacement="@{#line.startTime!=null ? #line.startTime.split(' ')[0]:''}"/>
                                                                             <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="endTime"
-                                                                                 /><!-- p:readOnlyDisplayReplacement="@{new java.text.SimpleDateFormat('yyyy-MM-dd').format(#line.endTime)}"-->
-                                                                            <bean parent="Uif-DataField" p:label="更新于" p:propertyName="endTime"
-                                                                                 /><!-- p:readOnlyDisplayReplacement="@{new java.text.SimpleDateFormat('yyyy-MM-dd').format(#line.endTime)}"-->
+                                                                                  p:readOnlyDisplayReplacement="@{#line.endTime!=null ? #line.endTime.split(' ')[0]:''}"/>
                                                                             <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="elapsedTime"/>
                                                                         </list>
                                                                     </property>

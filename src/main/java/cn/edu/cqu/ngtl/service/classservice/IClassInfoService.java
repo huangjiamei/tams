@@ -100,4 +100,6 @@ public interface IClassInfoService {
 
     Integer applyOutStanding(String applyOTReason, String StuId, String classId);
 
+    void updateTeachCalendarInfo(String calendarId, String description, String taTask);
+
 }

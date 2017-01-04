@@ -116,12 +116,12 @@
                                                                                   p:actionLabel="添加"
                                                                                   p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"
+                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="copyxxxx"
+                                                                                  p:actionScript ="showDialog('confirmCopyDialog');"
                                                                                   p:additionalCssClasses="icon-copy bg-teal box-btngroup">
-                                                                            </bean>-->
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>
@@ -240,7 +240,7 @@
                                                                                               p:ajaxSubmit="false"
                                                                                               p:render="@{#line.code==null? false:true}"
                                                                                               p:methodToCall="getEditTeachCalendarPage"
-                                                                                              p:additionalCssClasses="icon-edit bg-table-success tams-action-btn"/>
+                                                                                              p:additionalCssClasses="icon-pencil bg-table-success tams-action-btn"/>
                                                                                         <bean parent="Uif-ActionImage"
                                                                                               p:render="@{#line.code==null? false:true}"
                                                                                               p:methodToCall="deleteTeachCalendar"
@@ -268,6 +268,59 @@
                 <bean id="getTaskDetailBtn" parent="Uif-PrimaryActionButton"
                       p:actionLabel="查看任务详情，此按钮隐藏" p:navigateToPageId="pageTaskList"
                       p:style="display:none"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="confirmCopyDialog" parent="Uif-DialogGroup"
+          p:headerText="复制教学日历"
+          p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="items">
+            <list>
+                <!--教学日历-->
+                <bean parent="Uif-VerticalBoxSection"
+                      p:additionalCssClasses="col-md-12 col-lg-12">
+                    <property name="items">
+                        <list>
+                            <bean id="copyTeachingCalendarList"
+                                  parent="Uif-Disclosure-TableCollectionSection">
+                                <property name="collectionObjectClass"
+                                          value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor"/>
+                                <property name="propertyName" value="instructorList"/><!--propertyNamehe optionfinder要更改-->
+                                <property name="layoutManager.renderSequenceField"
+                                          value="false"/>
+                                <property name="layoutManager.richTable.render"
+                                          value="true"/>
+
+                                <property name="useServerPaging" value="true"/>
+
+                                <property name="renderAddLine" value="false"/>
+                                <property name="renderLineActions" value="false"/>
+                                <property name="items">
+                                    <list>
+                                        <bean parent="Uif-InputField"
+                                              p:propertyName="checked" p:style="display:@{#line.name!=null?'block':'none'}">
+                                            <property name="control">
+                                                <bean parent="Uif-CheckboxControl"/>
+                                            </property>
+                                        </bean>
+                                        <bean parent="Uif-DataField" p:label="教学班号" p:propertyName="name"/>
+                                        <bean parent="Uif-DataField" p:label="课程名称"
+                                              p:propertyName="code"/>
+                                    </list>
+                                </property>
+                            </bean>
+                        </list>
+                    </property>
+                </bean>
+
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+                <bean id="dismissCopyButtonId" parent="Uif-DialogDismissButton" p:actionLabel="取消" />
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
+                      p:ajaxSubmit="true"  p:dialogDismissOption="REQUEST" /><!--p:methodToCall="xxxx"-->
             </list>
         </property>
     </bean>

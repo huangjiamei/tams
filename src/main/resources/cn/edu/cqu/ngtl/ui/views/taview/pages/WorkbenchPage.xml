@@ -245,7 +245,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="我申请的助教的课程"
+                                                                <bean parent="Uif-MessageField" p:messageText="我申请助教的课程"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>

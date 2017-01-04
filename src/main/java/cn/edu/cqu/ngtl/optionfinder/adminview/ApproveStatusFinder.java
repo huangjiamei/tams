@@ -37,7 +37,7 @@ public class ApproveStatusFinder extends KeyValuesBase {
         Boolean userInfo=new UserInfoServiceImpl().isStudent(user.getCode());//检测是否为学生，如果是，则optionfinder只显示工作状态
 
         if(userInfo){
-            keyValues.add(new ConcreteKeyValue("5", "工作"));
+            keyValues.add(new ConcreteKeyValue("5", "选聘中"));
         }else{
             for(TAMSWorkflowStatus status : statuses) {
                 keyValues.add(new ConcreteKeyValue(status.getId(), status.getWorkflowStatus()));

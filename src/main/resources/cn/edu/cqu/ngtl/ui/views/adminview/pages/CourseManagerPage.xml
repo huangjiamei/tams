@@ -106,6 +106,10 @@
                                                                     <list>
                                                                         <!--右上角btnlist-->
                                                                         <bean parent="Uif-PrimaryActionButton"
+                                                                              p:actionLabel="初始化课程负责人"
+                                                                              p:methodToCall="initCourseManager"
+                                                                              p:additionalCssClasses="icon-list bg-success box-btngroup"/>
+                                                                        <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="Excel"
                                                                               p:methodToCall="exportCourseManagerExcel"
                                                                               p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
@@ -113,10 +117,7 @@
                                                                               p:actionLabel="PDF"
                                                                               p:methodToCall="exportCourseManagerPDF"
                                                                               p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                              p:actionLabel="初始化课程负责人"
-                                                                              p:methodToCall="initCourseManager"
-                                                                              p:additionalCssClasses="icon-list bg-success box-btngroup"/>
+
                                                                     </list>
                                                                 </property>
                                                             </bean>

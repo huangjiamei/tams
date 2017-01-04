@@ -217,10 +217,12 @@
                                                                                                                       p:propertyName="theme"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="开始时间"
-                                                                                                                      p:propertyName="startTime"/>
+                                                                                                                      p:propertyName="startTime"
+                                                                                                                      p:readOnlyDisplayReplacement="@{#line.startTime!=null ? #line.startTime.split(' ')[0]:''}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="结束时间"
-                                                                                                                      p:propertyName="endTime"/>
+                                                                                                                      p:propertyName="endTime"
+                                                                                                                      p:readOnlyDisplayReplacement="@{#line.endTime!=null ? #line.endTime.split(' ')[0]:''}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="预计耗时(小时)"
                                                                                                                       p:propertyName="elapsedTime"/>

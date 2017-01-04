@@ -150,7 +150,7 @@
                 </bean>
 -->
                 <!--table1：由我担任助教的课程-->
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:render="@{#form.beenStuOrSys}">
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
@@ -230,7 +230,7 @@
                 </bean>
 
                 <!--table2：我申请的助教的课程-->
-                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row" p:render="@{#form.beenStuOrSys}">
                     <property name="items">
                         <list>
                             <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-12 col-lg-12">
@@ -245,7 +245,7 @@
                                                         <property name="items">
                                                             <list>
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-list"/>
-                                                                <bean parent="Uif-MessageField" p:messageText="我申请的助教的课程"
+                                                                <bean parent="Uif-MessageField" p:messageText="我申请助教的课程"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
                                                             </list>
                                                         </property>

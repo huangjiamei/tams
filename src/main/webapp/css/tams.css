@@ -497,13 +497,12 @@ body{
     margin-top: 25%;
 }
 #addApplicantDialog>div>div{
-    margin-top: 10%;
+    margin-top: 5%;
 }
 @media (max-width:767px) {
     #addApplicantDialog>div>div{
         margin-top: 15%;
     }
-
 }
 #AddTransAllowanceDialog>div>div{
     margin-top: 15%;
@@ -514,7 +513,6 @@ body{
     }
 
 }
-
 #sessionTermFinderDialog>div>div{
     margin-top: 15%;
 }
@@ -536,6 +534,14 @@ body{
         width:95%;
     }
 
+}
+#changeAssistantDialog>div>div{
+    margin-top: 5%;
+}
+@media (max-width:767px) {
+    #changeAssistantDialog>div>div{
+        margin-top: 15%;
+    }
 }
 
 

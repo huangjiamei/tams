@@ -303,6 +303,7 @@ public class adminController extends BaseController {
         }
         TAMSTimeSettingType timeSettingType = infoForm.getTimeSettingType();
         adminService.saveTimeCategory(timeSettingType);
+        logger.info("保存了"+timeSettingType.getTypeName()+"时间类别");
         return this.getTimeCategoryPage(infoForm);
     }
 
@@ -322,6 +323,7 @@ public class adminController extends BaseController {
         int index = parameters.getSelectedLineIndex();
         TAMSTimeSettingType timeSettingType = infoForm.getAllTimeTypes().get(index);
         adminService.deleteTimeCategory(timeSettingType);
+        logger.info("删除了"+timeSettingType.getTypeName()+"时间类别");
         return this.getTimeCategoryPage(infoForm);
     }
 
@@ -416,8 +418,10 @@ public class adminController extends BaseController {
             tamsWorkflowStatus1.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
             tamsWorkflowStatus1.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
             adminService.saveWorkFlowCategory(tamsWorkflowStatus1);
+            logger.info("编辑工作流类型:"+"工作流状态:"+tamsWorkflowStatus1.getWorkflowStatus()+"、工作流顺序："+tamsWorkflowStatus1.getWorkflowFunctionId()+"。");
         } else {
             adminService.saveWorkFlowCategory(tamsWorkflowStatus);
+            logger.info("保存工作流类型："+"工作流状态:"+tamsWorkflowStatus.getWorkflowStatus()+"、工作流顺序："+tamsWorkflowStatus.getWorkflowFunctionId()+"。");
         }
 //        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
         return  this.getWorkFlowCategoryPage(infoForm);
@@ -437,6 +441,7 @@ public class adminController extends BaseController {
         int index = parameters.getSelectedLineIndex();
         TAMSWorkflowStatus selectedWorkFlowStatus = infoForm.getTamsWorkflowStatuses().get(index);
         adminService.deleteWorkFlowCategory(selectedWorkFlowStatus);
+        logger.info("删除了"+"工作流状态为"+selectedWorkFlowStatus.getWorkflowStatus()+"、工作流顺序为"+selectedWorkFlowStatus.getWorkflowFunctionId()+"的工作流类型。");
 //        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
         return  this.getWorkFlowCategoryPage(infoForm);
     }
@@ -500,6 +505,7 @@ public class adminController extends BaseController {
         int index = params.getSelectedLineIndex();
         TAMSTimeSettings selectedTimeSettings = infoForm.getTimeSettingsList().get(index);
         boolean result = adminService.deleteOneTimeSetting(selectedTimeSettings);
+        logger.info("删除类型为"+selectedTimeSettings.getTimeSettingType().getTypeName()+"、起始时间为"+selectedTimeSettings.getStartTime()+"、结束时间为"+selectedTimeSettings.getEndTime()+"、修改时间为"+selectedTimeSettings.getEditTime()+"的一个时间段。");
         return this.getTimeSetPage(infoForm);
     }
 
@@ -620,10 +626,16 @@ public class adminController extends BaseController {
                                          HttpServletResponse response) throws Exception {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
+        String active="";
         CollectionActionParameters params = new CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
         KRIM_PERM_T selectedKrim_perm_t = infoForm.getRMPkrimPermTs().get(index);
+        if (selectedKrim_perm_t.getActive().equals("Y"))
+         active="可用";
+        else
+            active="失效";
         new KRIM_PERM_T_DaoJpa().delPermissions(selectedKrim_perm_t);
+        logger.info("删除权限名称为"+selectedKrim_perm_t.getName()+"、权限内容为"+selectedKrim_perm_t.getDescription()+"、权限状态为"+active+"的权限");
         infoForm.getRMPkrimPermTs().remove(index);
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
@@ -726,6 +738,12 @@ public class adminController extends BaseController {
             }
         }
         krimRoleT = krimRoleTDao.saveKrimRoleT(krimRoleT);
+       String active="";
+        if(krimRoleT.getActive().equals("Y"))
+            active="可用";
+        else
+            active="失效";
+        logger.info("保存角色名为"+krimRoleT.getName()+"、角色描述为"+krimRoleT.getDescription()+"、角色状态为"+active+"的角色。");
         infoForm.setRMPkrimRoleT(krimRoleT);
 
         List<KRIM_PERM_T> krimPermTs = infoForm.getRMPkrimPermTs();
@@ -794,6 +812,13 @@ public class adminController extends BaseController {
         KRIM_PRNCPL_T krimPrncplT = new KRIM_PRNCPL_T_DaoJpa().getKrimEntityEntTypTByPrncplId(utInstructor.getId());
         List<KRIM_ROLE_T> krimRoleTs = infoForm.getURMPkrimRoleTs();
         new KRIM_ROLE_MBR_T_DaoJpa().saveKrimRoleMbrTByPrncpltAndRoles(krimPrncplT, krimRoleTs);
+        String message="保存了赋予给"+infoForm.getURMutInstructor().getName()+"用户的角色名称为";
+        for(KRIM_ROLE_T  krimRoleT:krimRoleTs)
+        {if(krimRoleT.getChecked())
+            message+=krimRoleT.getName()+"、";
+
+        }
+        logger.info(message+"等角色");
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
     /**
@@ -1776,6 +1801,12 @@ public class adminController extends BaseController {
             }
             if(adminService.countClassFunding(draftClassFunding, totalAssignedClass) == 2) {
                 adminService.saveClassFunding(draftClassFunding);
+                String ClassFundingMessage="保存修改";
+                for (ClassFundingViewObject CfViewObject :draftClassFunding)
+                {
+                    ClassFundingMessage+="学院是"+CfViewObject.getDepartment()+"课程是"+CfViewObject.getCourseName()+"的批准经费为"+CfViewObject.getAssignedFunding()+"、";
+                }
+                logger.info(ClassFundingMessage+"的课程经费");
                 infoForm.setClassFundingStatistics(
                         taConverter.countClassFunding(
                                 infoForm.getClassFundings(),
@@ -1819,6 +1850,12 @@ public class adminController extends BaseController {
             }
             if(adminService.countTaFunding(taFundingViewObjects) == 2) {
                 adminService.saveTaFunding(taFundingViewObjects);
+            String TaFundingMessage="保存修改";
+            for (TaFundingViewObject TfViewObject :taFundingViewObjects)
+            {
+                TaFundingMessage+="学院是"+TfViewObject.getDepartmentName()+"课程是"+TfViewObject.getCourseName()+"的助教"+TfViewObject.getTaName()+"的分配经费为"+TfViewObject.getAssignedFunding()+"、";
+            }
+            logger.info(TaFundingMessage+"的助教经费");
                 //避免延迟刷新
                 infoForm.setTaFunding(
                         adminConverter.taFundingToViewObject(
@@ -1862,7 +1899,12 @@ public class adminController extends BaseController {
 
             if(adminService.countDeptFunding(draftDepartmentFundingViewObject) == 3) {
                 adminService.saveDeptFunding(draftDepartmentFundingViewObject);
-
+                String DepartmentFundingMessage="保存修改";
+                for (DepartmentFundingViewObject DfViewObject:draftDepartmentFundingViewObject)
+                {
+                    DepartmentFundingMessage+="批次是"+DfViewObject.getSessionName()+"学院是"+DfViewObject.getDepartment()+"的预算经费为"+DfViewObject.getPlanFunding()+"和批准经费为"+DfViewObject.getActualFunding()+"、";
+                }
+                logger.info(DepartmentFundingMessage+"的学院经费");
                 infoForm.setSessionFundingStatistics(      //已设置/总预算
                         adminService.getSessionFundingStatistics()
                 );
@@ -1903,7 +1945,13 @@ public class adminController extends BaseController {
         }
         else {
             List<SessionFundingViewObject> sessionFundingViewObjects = infoForm.getSessionFundings();
+            String SessionFundingMessage="保存修改";
+            for (SessionFundingViewObject SfViewObject:sessionFundingViewObjects)
+            {
+                SessionFundingMessage+="批次是"+SfViewObject.getSessionName()+"的预算经费为"+SfViewObject.getPlanFunding()+"和批准经费为"+SfViewObject.getActualFunding();
+            }
             adminService.saveSessionFunding(sessionFundingViewObjects);
+            logger.info(SessionFundingMessage+"的批次经费");
             infoForm.setSessionFundingStatistics(      //已设置经费/总经费
                     adminService.getSessionFundingStatistics(sessionFundingViewObjects.get(0).getPlanFunding())
             );
@@ -2223,6 +2271,7 @@ public class adminController extends BaseController {
         int index = params.getSelectedLineIndex();
         CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
         tamsCourseManagerDao.deleteCourseManager(tamsCourseManagerDao.getCourseManagerByInstructorId(selectedObject.getId()));
+        logger.info("删除课程为"+selectedObject.getCourseNm()+"课程代码为"+selectedObject.getCourseNmb()+"职工号为"+selectedObject.getInstructorCode()+"姓名为"+selectedObject.getCourseManager()+"的课程负责人");
         infoForm.getCourseManagerViewObjects().remove(index);
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
@@ -2291,6 +2340,7 @@ public class adminController extends BaseController {
         }
         adminService.changeCourseClassificationNameById(adminInfoForm.getClassification().getId(),
                 adminInfoForm.getClassification().getName());
+        logger.info("修改课程类别为"+adminInfoForm.getClassification().getName());
 
         return this.getCourseCategoryPage(form);
     }
@@ -2336,10 +2386,12 @@ public class adminController extends BaseController {
         CMCourseClassification cmCourseClassification = adminInfoForm.getAllClassifications().get(index);
 
         if (adminService.removeCourseClassificationById(cmCourseClassification.getId()))
-            return this.getCourseCategoryPage(form);
+        {logger.info("删除课程类别为"+cmCourseClassification.getName()+"的课程类别");
+            return this.getCourseCategoryPage(form);}
         else
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+        {   logger.error("删除课程类别为"+cmCourseClassification.getName()+"的课程类别失败");
+            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");}
         return this.showDialog("adminErrDialog", true, adminInfoForm);
     }
 
@@ -2411,11 +2463,16 @@ public class adminController extends BaseController {
 
 
         if (adminInfoForm.getTaIndex() != null) {
-            if (!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
-                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("编辑助教类别失败!");
-                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+            if (adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
+
+                logger.info("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+"、时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage());
             }
+            else {
+                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                logger.error("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+"、时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"失败");
+                adminInfoForm.setErrMsg("编辑助教类别失败!");
+                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);}
+
         } else {
             if (!adminService.addTaCategory(adminInfoForm.getOldTaCategory())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
@@ -2445,10 +2502,12 @@ public class adminController extends BaseController {
         TAMSTaCategory taCategory = adminInfoForm.getAllTaCategories().get(index);
 
         if (adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))) {
+            logger.info("删除助教类别为"+taCategory.getName()+"、时新为"+taCategory.getHourlyWage()+"的助教类别。");
             return this.getTaCategoryPage(form);
         } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            logger.error("删除助教类别为"+taCategory.getName()+"、时薪为"+taCategory.getHourlyWage()+"的助教类别失败。");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
     }
@@ -2520,12 +2579,18 @@ public class adminController extends BaseController {
 
             if (adminInfoForm.getIssueIndex() != null) {
             // index不为空说明要调用update
-            if (!adminService.changeIssueType(adminInfoForm.getIssueType())) {
+            if (adminService.changeIssueType(adminInfoForm.getIssueType())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("编辑失败！");
-                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
-            }
-        } else {
+                logger.info("编辑任务类别为"+adminInfoForm.getIssueType().getTypeName()+"。");}
+                else
+                {
+                    logger.error("编辑任务类别为"+adminInfoForm.getIssueType().getTypeName()+"失败。");}
+                    adminInfoForm.setErrMsg("编辑失败！");
+                    return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+                }
+
+
+         else {
             // add
             if (!adminService.addTaIssueType(adminInfoForm.getIssueType())) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
@@ -2555,9 +2620,11 @@ public class adminController extends BaseController {
         TAMSIssueType issueType = adminInfoForm.getAllIssueTypes().get(index);
 
         if (adminService.removeIssueTypeById(issueType.getId())) {
+            logger.info("删除任务类别为"+issueType.getTypeName()+"的任务类别。");
             return this.getTaskCategoryPage(form);
         } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+            logger.error("删除任务类别为"+issueType.getTypeName()+"的任务类别失败。");
             adminInfoForm.setErrMsg("删除失败！");
             return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
         }
@@ -2716,9 +2783,11 @@ public class adminController extends BaseController {
                             adminInfoForm.getCurrentTerm()
                     ))) {
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                logger.error("编辑批次名称为"+adminInfoForm.getCurrentTerm().getTermName()+"、开始时间为"+adminInfoForm.getCurrentTerm().getStartDate()+"、结束时间为"+adminInfoForm.getCurrentTerm().getEndDate()+"失败。");
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
+            logger.info("编辑批次名称为"+adminInfoForm.getCurrentTerm().getTermName()+"、开始时间为"+adminInfoForm.getCurrentTerm().getStartDate()+"、结束时间为"+adminInfoForm.getCurrentTerm().getEndDate()+"。");
         } else {
             // add
             //同时进行批次和学院经费初始化
@@ -2763,10 +2832,12 @@ public class adminController extends BaseController {
         String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("季"));
         if (adminService.removeTermByYearAndTerm(year,
                 term)) {
+            logger.info("删除批次名称为"+adminInfoForm.getCurrentTerm().getTermName()+"、开始时间为"+adminInfoForm.getCurrentTerm().getStartDate()+"、结束时间为"+adminInfoForm.getCurrentTerm().getEndDate()+"的批次。");
             return this.getTermManagePage(form);
         } else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+            logger.error("删除批次名称为"+adminInfoForm.getCurrentTerm().getTermName()+"、开始时间为"+adminInfoForm.getCurrentTerm().getStartDate()+"、结束时间为"+adminInfoForm.getCurrentTerm().getEndDate()+"的批次失败。");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
     }
@@ -2845,9 +2916,11 @@ public class adminController extends BaseController {
         TAMSTaCategory newTaReward = adminInfoForm.getOldTaCategory();
         if (!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
             // TODO: 2016/11/8 弹出错误提示，具体错误信息待补充
-            adminInfoForm.setErrMsg("编辑助教类别失败(修改为错误提示)");
+            logger.error("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+" 助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+" 时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳失败。");
+            adminInfoForm.setErrMsg("编辑助教酬劳失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
+        logger.info("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+" 助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+" 时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳。");
         return this.getTaRewardPage(form);
     }
 
@@ -2866,6 +2939,7 @@ public class adminController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
         new TAMSTaCategoryDaoJpa().deleteOneByEntity(adminInfoForm.getAllTaCategories().get(index));
+        logger.info("删除助教类别为"+adminInfoForm.getOldTaCategory().getName()+" 助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+" 时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳。");
         return this.getModelAndView(form, "pageTaReward");
     }
 

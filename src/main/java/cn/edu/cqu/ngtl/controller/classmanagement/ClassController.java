@@ -1752,7 +1752,8 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
-        infoForm.setSelectedTa(needToChange.get(0));
+        infoForm.setNeedToChangeTaName(needToChange.get(0).getTaName());
+        infoForm.setNeedToChangeTaId(needToChange.get(0).getTaIdNumber());
 
         return this.showDialog("changeAssistantDialog",true,infoForm);
 
@@ -1980,6 +1981,53 @@ public class ClassController extends BaseController {
             }
         }
     }
+
+
+    /**
+     * 更换助教
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params =  {"methodToCall=changeCurTa"})
+    public ModelAndView changeCurTa(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        String classId = infoForm.getCurrClassId();
+        String stuId = infoForm.getNeedToChangeTaId();
+
+        String newTaId = infoForm.getSelectedTaForChange().getTaIdNumber();
+        String newTaPhoneNbr = infoForm.getCandidatePhoneNbrForChange();
+        String newTaBankName = infoForm.getCandidateBankNameForChange();
+        String newTaBankNbr = infoForm.getCandidateBankNbrForChange();
+
+        if(newTaId==null){
+            infoForm.setErrMsg("请选择新助教人选");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if(newTaPhoneNbr==null){
+            infoForm.setErrMsg("新填写新助教的联系电话");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if(newTaBankName==null){
+            infoForm.setErrMsg("新填写新助教的发卡银行名称");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if(newTaBankNbr==null){
+            infoForm.setErrMsg("新填写新助教的银行卡号");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        boolean result = classInfoService.changeTa(classId,stuId,newTaId,newTaBankName,newTaBankNbr,newTaPhoneNbr);
+
+        if(result)
+            return this.getModelAndView(infoForm, "pageTaManagement");
+        else{
+            infoForm.setErrMsg("更换失败");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
 
     @RequestMapping(params =  {"methodToCall=selectCurSession"})
     public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {

@@ -14,6 +14,9 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
+
+    boolean changeTa(String classId,String needToChangeTaId, String newTaId,String bankName,String bankNbr,String phoneNbr);
+
     boolean changeToSpecificStatus(String classId,String workFlowStatusId);
 
     String getMaxOrderStatusIdOfSpecificFunction(String functionId);

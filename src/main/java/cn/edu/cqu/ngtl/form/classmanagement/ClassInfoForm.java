@@ -112,6 +112,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String bankNbr;
 
+    private String needToChangeTaName;
+
+    private String needToChangeTaId;
+
     private boolean taApplicationSubmitted;
 
     private String candidateBankName;
@@ -685,5 +689,37 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setCandidateBankNameForChange(String candidateBankNameForChange) {
         this.candidateBankNameForChange = candidateBankNameForChange;
+    }
+
+    public String getCandidateBankNbrForChange() {
+        return candidateBankNbrForChange;
+    }
+
+    public void setCandidateBankNbrForChange(String candidateBankNbrForChange) {
+        this.candidateBankNbrForChange = candidateBankNbrForChange;
+    }
+
+    public String getCandidatePhoneNbrForChange() {
+        return candidatePhoneNbrForChange;
+    }
+
+    public void setCandidatePhoneNbrForChange(String candidatePhoneNbrForChange) {
+        this.candidatePhoneNbrForChange = candidatePhoneNbrForChange;
+    }
+
+    public String getNeedToChangeTaName() {
+        return needToChangeTaName;
+    }
+
+    public void setNeedToChangeTaName(String needToChangeTaName) {
+        this.needToChangeTaName = needToChangeTaName;
+    }
+
+    public String getNeedToChangeTaId() {
+        return needToChangeTaId;
+    }
+
+    public void setNeedToChangeTaId(String needToChangeTaId) {
+        this.needToChangeTaId = needToChangeTaId;
     }
 }

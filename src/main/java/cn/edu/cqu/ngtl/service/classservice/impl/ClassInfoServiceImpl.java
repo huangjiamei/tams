@@ -509,9 +509,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public boolean deleteTaApplicationByStuIdAndClassId(String stuId, String classId) {
-        TAMSTa tamsta = taDao.selectByStudentIdAndClassId(stuId, classId);
-        if (tamsta != null) {
-            taDao.deleteOneByEntity(tamsta);
+        TAMSTaApplication tamsTaApplication = tamsTaApplicationDao.selectByStuIdAndClassId(stuId, classId);
+        if (tamsTaApplication != null) {
+            tamsTaApplicationDao.deleteByEntity(tamsTaApplication);
             return true;
         }
         return false;

@@ -448,6 +448,11 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("您最多可以申请和担任两门课程的助教！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
+        else if(code == 8){
+            infoForm.setErrMsg("您已经是至少两门课程的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
         else {
             infoForm.setErrMsg("未知错误");
             return this.showDialog("refreshPageViewDialog", true, infoForm);

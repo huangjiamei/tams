@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTaBlackListDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -27,6 +28,8 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import com.google.gson.Gson;
+import org.apache.log4j.Logger;
+import org.apache.log4j.MDC;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
@@ -58,6 +61,8 @@ import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 @Controller
 @RequestMapping("/admin")
 public class adminController extends BaseController {
+
+    static Logger logger=Logger.getLogger(adminController.class);
 
     @Autowired
     private IAdminService adminService;
@@ -93,6 +98,8 @@ public class adminController extends BaseController {
     @Autowired
     private IUserInfoService iUserInfoService;
 
+    @Autowired
+    private TAMSTaBlackListDao tamsTaBlackListDao;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
@@ -3172,6 +3179,31 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
         adminInfoForm.setTaBlackList(adminConverter.blackListToViewObject(adminService.getAllBlackList()));
+        return this.getModelAndView(adminInfoForm, "pageBlackList");
+    }
+
+    /**create by luojizhou on 2017/1/4
+     *
+     * 删除黑名单中的一条记录
+     * @param form
+     * @return 黑名单
+     */
+    @RequestMapping(params = "methodToCall=deleteFromBlackList")
+    public ModelAndView deleteFromBlackList(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
+        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
+        super.baseStart(adminInfoForm);
+        //获取某一行
+        CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
+        int index = parameters.getSelectedLineIndex();
+
+        BlackListViewObject blackListViewObject = adminInfoForm.getTaBlackList().get(index);
+        tamsTaBlackListDao.deleteFromBlackList(tamsTaBlackListDao.getBlackListByStuId(blackListViewObject.getStuId()));
+
+        MDC.put("remoteHost",request.getRemoteAddr());
+        logger.info("在黑名单中删除了学号为："+blackListViewObject.getStuId()+" 的助教。");
+
+        adminInfoForm.getTaBlackList().remove(index);
         return this.getModelAndView(adminInfoForm, "pageBlackList");
     }
 

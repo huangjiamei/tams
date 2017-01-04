@@ -6,7 +6,6 @@ import cn.edu.cqu.ngtl.dao.krim.KRIM_ROLE_T_Dao;
 import cn.edu.cqu.ngtl.dao.krim.impl.*;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
-import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaBlackListDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSTaCategoryDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTInstructorDaoJpa;
@@ -3250,24 +3249,6 @@ public class adminController extends BaseController {
         adminInfoForm.setTaBlackList(adminConverter.blackListToViewObject(adminService.getAllBlackList()));
         return this.getModelAndView(adminInfoForm, "pageBlackList");
     }
-    /**
-     * 删除黑名单
-     *
-     * @param form
-     * @return
-     */
-    @RequestMapping(params = "methodToCall=deleteFromBlackList")
-    public ModelAndView deleteFromBlackList(@ModelAttribute("KualiForm") UifFormBase form) {
-        AdminInfoForm adminInfoForm = (AdminInfoForm) form;
-        super.baseStart(adminInfoForm);
-        CollectionControllerServiceImpl.CollectionActionParameters params =
-                new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
-        int index=params.getSelectedLineIndex();
-        new TAMSTaBlackListDaoJpa().deleteOneByEntity(adminService.getAllBlackList().get(index));
-        logger.info("删除名称为"+adminInfoForm.getTaBlackList().get(index).getStuName()+"、学号为"+adminInfoForm.getTaBlackList().get(index).getStuId()+"、加入时间为"+adminInfoForm.getTaBlackList().get(index).getJoinTime()+"、操作执行者名称为"+adminInfoForm.getTaBlackList().get(index).getExecutorName()+"的黑名单。");
-        return this.getBlackListPage(form);
-    }
-
     /**
      * 将黑名单以Excel格式导出，create by lc
      *

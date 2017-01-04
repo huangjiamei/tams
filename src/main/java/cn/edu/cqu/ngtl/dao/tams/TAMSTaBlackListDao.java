@@ -12,7 +12,7 @@ public interface TAMSTaBlackListDao {
     List<TAMSTaBlackList> getAllBlackList();
 
     boolean insertOneByEntity(TAMSTaBlackList tamsTaBlackList);
-    boolean deleteOneByEntity(TAMSTaBlackList blacklist);
+
 
 
 }

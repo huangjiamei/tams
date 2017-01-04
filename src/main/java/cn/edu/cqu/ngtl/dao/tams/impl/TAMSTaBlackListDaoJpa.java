@@ -30,9 +30,5 @@ public class TAMSTaBlackListDaoJpa implements TAMSTaBlackListDao {
         return KradDataServiceLocator.getDataObjectService().save(tamsTaBlackList)!=null;
 
     }
-    @Override
-    public boolean deleteOneByEntity(TAMSTaBlackList blacklist) {
-        KRADServiceLocator.getDataObjectService().delete(blacklist);
-        return true;
-    }
+
 }

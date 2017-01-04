@@ -377,6 +377,7 @@ public class AdminServiceImpl implements IAdminService {
             tamsDeptFundingDraftDao.saveBatchByEntities(tamsDeptFundingDrafts);
 
 
+
             return true;
         } else
             return false;
@@ -1405,7 +1406,7 @@ public class AdminServiceImpl implements IAdminService {
         String fileName = "学院经费列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
         String filePath="";
         try{
-            String[] header = {"批次","学院","预算经费","申报经费","批次经费","博士经费","奖励经费","交通补贴","总经费"};
+            String[] header = {"批次","学院","预算经费","申报经费","批准经费","博士经费","奖励经费","交通补贴","总经费"};
             List<String[]> Content = new ArrayList( CollegeFundsManager.size());
             for(DepartmentFundingViewObject CollegeFundsMVOList :  CollegeFundsManager) {
                 String sessionName = CollegeFundsMVOList.getSessionName() == null ? "" :CollegeFundsMVOList.getSessionName() ;

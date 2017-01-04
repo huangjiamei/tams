@@ -1024,11 +1024,11 @@ td.selected{
 }
 
 .heightDiv{
-    margin-bottom: 327px;
+    height:600px;
 }
-@media (max-width:767px) {
+@media (max-width:1100px) {
     .heightDiv{
-        margin-bottom: 0px;
+        height:auto;
     }
 
 }

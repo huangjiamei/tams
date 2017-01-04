@@ -174,7 +174,7 @@ public interface IAdminService {
     String prepareSchoolHistoryFundsPDF(List<SessionFundingViewObject> SchoolHistoryFundsManager);
     String prepareCollegeHistoryFundsPDF(List<DepartmentFundingViewObject> CollegeHistoryFundsManager);
     String prepareCollegeFundsPDF(List<DepartmentFundingViewObject> CollegeFundsManager);
-
+    String prepareBlacklistPDF(List<BlackListViewObject> BlacklistManager);
 
     Integer countTaFunding (List<TaFundingViewObject> taFundingViewObjects);
 

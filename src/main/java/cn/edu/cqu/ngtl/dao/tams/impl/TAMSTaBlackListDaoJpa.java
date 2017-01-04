@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaBlackListDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaBlackList;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -23,9 +24,15 @@ public class TAMSTaBlackListDaoJpa implements TAMSTaBlackListDao {
         return result;
     }
 
+
     @Override
     public boolean insertOneByEntity(TAMSTaBlackList tamsTaBlackList){
         return KradDataServiceLocator.getDataObjectService().save(tamsTaBlackList)!=null;
 
+    }
+    @Override
+    public boolean deleteOneByEntity(TAMSTaBlackList blacklist) {
+        KRADServiceLocator.getDataObjectService().delete(blacklist);
+        return true;
     }
 }

@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
@@ -102,6 +103,9 @@ public class AdminServiceImpl implements IAdminService {
     private UTClassInfoDao utClassInfoDao;
     @Autowired
     private TAMSTaBlackListDao tamsTaBlackListDao;
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
+
 
     @Autowired
     IPDFService PDFService;
@@ -1119,10 +1123,26 @@ public class AdminServiceImpl implements IAdminService {
         }
         for(String needToAdd:curSessionCourseIds) {
             if(!curCourseMangerCourseId.contains(needToAdd)) {
-                TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
-                tamsCourseManager.setCourseId(needToAdd);
-                tamsCourseManager.setCourseManagerId(null);
-                tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                List<UTClassInformation> classes = utClassInfoDao.getClassesByCourseId(needToAdd);
+                if(classes!=null&&classes.size()==1){
+                    List<UTClassInstructor> classIns = utClassInstructorDao.selectByClassId(classes.get(0).getId());
+                    if(classIns!=null&&classIns.size()==1){
+                        TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                        tamsCourseManager.setCourseId(needToAdd);
+                        tamsCourseManager.setCourseManagerId(classIns.get(0).getInstructorId());
+                        tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                    }else {
+                        TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                        tamsCourseManager.setCourseId(needToAdd);
+                        tamsCourseManager.setCourseManagerId(null);
+                        tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                    }
+                }else {
+                    TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                    tamsCourseManager.setCourseId(needToAdd);
+                    tamsCourseManager.setCourseManagerId(null);
+                    tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                }
             }
             return true;
         }

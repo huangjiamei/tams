@@ -603,8 +603,37 @@ public class ClassController extends BaseController {
         }
     }
 
+    /**o
+     * 通过点击"更新"进入编辑日历详情页面
+     */
+    @RequestMapping(params = "methodToCall=ToEditTeachCalendarPage")
+    public ModelAndView ToEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                 HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        try {
+            infoForm.setCurrentCalenderInfoEdit(
+                    infoForm.getCurrentCalendarInfo()
+            );
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getCurrentCalendarInfo().getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+
+            infoForm.setAllCalendar(null);  //节省内存
+
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+    }
     /**
-     * 编辑日历详情页面
+     * 直接进入编辑日历详情页面
      **/
     @RequestMapping(params = "methodToCall=getEditTeachCalendarPage")
     public ModelAndView getEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -627,10 +656,6 @@ public class ClassController extends BaseController {
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
-
-            //String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
-            //String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
-            //classInfoService.updateTeachCalendarInfo(infoForm.getAllCalendar().get(index).getCode().toString(), CalendarDescription, CalendarTaTask);
 
             infoForm.setAllCalendar(null);  //节省内存
 
@@ -656,6 +681,8 @@ public class ClassController extends BaseController {
         String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
         classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask);
 
+        //避免延迟刷新
+        infoForm.setCurrentCalendarInfo(infoForm.getCurrentCalenderInfoEdit());
         return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
 
     }

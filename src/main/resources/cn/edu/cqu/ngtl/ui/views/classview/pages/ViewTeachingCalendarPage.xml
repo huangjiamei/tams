@@ -120,7 +120,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="更新"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="pageEditTeachingCalendar"
+                                                                                  p:methodToCall="ToEditTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-repeat bg-success box-btngroup">
                                                                             </bean>
                                                                         </list>

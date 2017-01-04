@@ -497,7 +497,7 @@ body{
     margin-top: 25%;
 }
 #addApplicantDialog>div>div{
-    margin-top: 5%;
+    margin-top: 10%;
 }
 @media (max-width:767px) {
     #addApplicantDialog>div>div{
@@ -520,7 +520,7 @@ body{
 }
 
 #confirmEditManagerDialog>div>div{
-    margin-top: 5%;
+    margin-top: 8%;
 }
 @media (max-width:767px) {
     #confirmEditManagerDialog>div>div{
@@ -1016,4 +1016,19 @@ td.selected{
 
 #searchTaApplicantList .table-condensed > tbody > tr > td{
     padding:2px;
+}
+
+#Calendar{
+    float: none;
+    margin:0;
+}
+
+.heightDiv{
+    margin-bottom: 327px;
+}
+@media (max-width:767px) {
+    .heightDiv{
+        margin-bottom: 0px;
+    }
+
 }

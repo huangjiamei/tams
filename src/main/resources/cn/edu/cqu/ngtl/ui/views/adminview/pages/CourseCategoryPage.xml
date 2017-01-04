@@ -203,7 +203,7 @@
     </bean>
 
     <bean id="addCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="添加课程类别" p:retrieveViaAjax="true"
+          p:headerText="提示：" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#addCourseCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -237,7 +237,7 @@
 
 
     <bean id="editCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改课程类别"
+          p:headerText="提示："
           p:onDocumentReadyScript="jQuery('#editCourseCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>
@@ -271,7 +271,7 @@
     </bean>
 
     <bean id="deleteCourseCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="删除课程类别" p:retrieveViaAjax="true">
+          p:headerText="提示：" p:retrieveViaAjax="true">
         <property name="items">
             <list>
                 <bean parent="Uif-MessageField" p:messageText="请慎重删除课程类别，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>

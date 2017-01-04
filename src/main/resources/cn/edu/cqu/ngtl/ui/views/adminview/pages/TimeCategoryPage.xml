@@ -231,7 +231,7 @@
 
 
     <bean id="editTimeCategoryDialog" parent="Uif-DialogGroup"
-          p:headerText="修改时间类别" p:retrieveViaAjax="true"
+          p:headerText="提示：" p:retrieveViaAjax="true"
           p:onDocumentReadyScript="jQuery('#editTaskCategoryDialog').modal({backdrop: 'static', keyboard: false});">
         <property name="items">
             <list>

@@ -114,7 +114,7 @@
 																			  value="cn.edu.cqu.ngtl.viewobject.adminInfo.BlackListViewObject" />
 																	<property name="propertyName" value="taBlackList" />
 																	<property name="layoutManager.richTable.render"
-																			  value="false"/>
+																			  value="true"/>
 
 																	<!--下面第一行打开每列开头的1,2,3...序号，第二行作用未知-->
 																	<property name="layoutManager.renderSequenceField"
@@ -177,7 +177,7 @@
 		</property>
 	</bean>
 	<bean id="deleteBlackListDialog" parent="Uif-DialogGroup"
-		  p:headerText="删除黑名单" p:retrieveViaAjax="true">
+		  p:headerText="提示：" p:retrieveViaAjax="true">
 		<property name="items">
 			<list>
 				<bean parent="Uif-MessageField" p:messageText="确定删除该黑名单吗？" p:additionalCssClasses="message-font-size"/>

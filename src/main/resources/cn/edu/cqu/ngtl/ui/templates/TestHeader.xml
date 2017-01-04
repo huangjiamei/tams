@@ -210,10 +210,10 @@
                                                             <list>
                                                                 <bean parent="Uif-Link" p:href="#nav-course"
                                                                       p:linkText="助教系统" p:iconClass="icon-users menuHeaderIcon"/>
-                                                                <bean parent="Uif-Link" p:href="#nav-Innovation"
-                                                                      p:linkText="创新实践平台" p:iconClass="icon-cogs2 menuHeaderIcon"/>
                                                                 <bean parent="Uif-Link" p:href="#nav-test"
                                                                       p:linkText="四六级系统" p:iconClass="icon-check menuHeaderIcon"/>
+                                                                <bean parent="Uif-Link" p:href="#nav-Innovation"
+                                                                      p:linkText="创新实践平台" p:iconClass="icon-cogs2 menuHeaderIcon"/>
                                                                 <bean parent="Uif-Link" p:href="#nav-file"
                                                                       p:linkText="教学档案管理系统" p:iconClass="icon-file menuHeaderIcon"/>
                                                             </list>
@@ -453,7 +453,8 @@
                             <bean p:linkText="管理台"
                                   parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getManageStationPage&amp;viewId=AdminView"
-                                  p:iconClass="fa fa-tachometer menuIcon"/>
+                                  p:iconClass="fa fa-tachometer menuIcon"
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewManagerDashboardPage')}"/>
                         </list>
                     </property>
                 </bean>
@@ -500,7 +501,7 @@
                             <bean parent="Uif-Link"
                                   p:href="@{#ConfigProperties['krad.url']}/admin?methodToCall=getBlackListPage&amp;viewId=AdminView"
                                   p:linkText="黑名单" p:iconClass="icon-lock menuIcon"
-                               />
+                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewBlackListPage')}"/>
 
                         </list>
                     </property>
@@ -574,7 +575,7 @@
     </bean>
 
     <bean id="refreshPageViewDialog" parent="Uif-DialogGroup">
-        <property name="headerText" value="错误信息提示："/>
+        <property name="headerText" value="提示："/>
         <property name="dialogCssClass" value="confirmDialog"/>
         <property name="items">
             <list>

@@ -45,7 +45,7 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-Icon" p:iconClass="icon-home5 pageIcon"/>
-                                        <bean parent="Uif-HeaderThree" p:headerText="公共主页"/>
+                                        <bean parent="Uif-HeaderThree" p:headerText="主页"/>
                                     </list>
                                 </property>
                             </bean>
@@ -109,8 +109,7 @@
                                                           p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
                                                     <!--具体信息的表格-->
                                                     <bean parent="Uif-GridGroup"
-                                                          p:style="width=500px!important;"
-                                                          p:additionalCssClasses="box-body"
+                                                          p:additionalCssClasses="box-body heightDiv"
                                                           p:layoutManager.renderRowFirstCellHeader="false">
                                                         <property name="layoutManager.numberOfColumns" value="2"/>
                                                         <property name="items">
@@ -119,12 +118,8 @@
                                                                       p:messageText="@{user.getCode()}"/>
                                                                 <bean parent="Uif-MessageField" p:label="姓名"
                                                                       p:messageText="@{user.getName()}"/>
-                                                                <bean parent="Uif-MessageField" p:label="专业"
-                                                                      p:messageText="软件工程"/>
-                                                                <bean parent="Uif-MessageField" p:label="电子邮箱"
-                                                                      p:messageText="niudun@cqu.edu.cn"/>
-                                                                <bean parent="Uif-MessageField" p:label="联系电话"
-                                                                      p:messageText="12345"/>
+                                                                <bean parent="Uif-MessageField" p:label="学院"
+                                                                      p:messageText="@{user.getDepartment()}"/>
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -155,24 +150,31 @@
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-info">
-                                                <property name="items">
-                                                    <list>
-                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                              p:additionalCssClasses="box-header">
-                                                            <property name="items">
-                                                                <list>
-                                                                    <bean parent="Uif-Icon" p:iconClass="icon-info"/>
-                                                                    <bean parent="Uif-MessageField" p:messageText="其他信息"
-                                                                          p:additionalCssClasses="boxheaderTitle"/>
-                                                                </list>
-                                                            </property>
-                                                        </bean>
-                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                              p:additionalCssClasses="box-body">
-                                                        </bean>
+                                            <property name="items">
+                                                <list>
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-header">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-Icon" p:iconClass="icon-calendar4"/>
+                                                                <bean parent="Uif-MessageField" p:messageText="日历"
+                                                                      p:additionalCssClasses="boxheaderTitle"/>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+                                                    <bean parent="Uif-HorizontalBoxSection"
+                                                          p:additionalCssClasses="box-body">
+                                                        <property name="onDocumentReadyScript" value="readyCalendar()"/>
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean id="Calendar" parent="Uif-VerticalBoxSection">
+                                                                </bean>
+                                                            </list>
+                                                        </property>
+                                                    </bean>
 
-                                                    </list>
-                                                </property>
+                                                </list>
+                                            </property>
                                         </bean>
 
                                     </list>

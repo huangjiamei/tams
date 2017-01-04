@@ -86,6 +86,7 @@ public class ClassConverterImpl implements IClassConverter {
             if(!blackManList.contains(listone.getId())) {
                 MyTaViewObject viewObject = new MyTaViewObject();
                 viewObject.setTaName(listone.getName());
+                viewObject.setDepartmentName(listone.getDepartment().getName());
                 viewObject.setTaIdNumber(listone.getId());
                 viewObject.setTaGender(listone.getGender());
                 viewObject.setContactPhone("缺失");

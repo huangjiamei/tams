@@ -86,6 +86,8 @@ public class ClassController extends BaseController {
     @Autowired
     private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
+    private static int MAX_CALENDAR_HOUR = 10;
+
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {
         UserSession userSession = GlobalVariables.getUserSession();
@@ -201,11 +203,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        boolean isMax = workFlowService.isMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
+        boolean isSecMax = workFlowService.isSecMaxOrderOfThisStatue(infoForm.getApproveReasonOptionFinder(),"1");
         boolean result = false;
         String feedBackReason = infoForm.getApproveReason();
         for(ClassTeacherViewObject classTeacherViewObject:checkedList) {
-            if(isMax){ //如果是该条工作流的最后一个状态，那么初始化课程经费
+            if(isSecMax){ //如果是该条工作流的倒数第二个状态，那么初始化课程经费
                 classInfoService.validClassFunds(classTeacherViewObject.getId());
             }
             result = classInfoService.classStatusToCertainStatus(
@@ -387,6 +389,15 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
+        if(!(infoForm.getIsAgree().equals("1") || infoForm.getIsAgree().equals("2"))){
+            infoForm.setErrMsg("请申请人选择导师意见！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        if(infoForm.getIsAgree().equals("2")){
+            infoForm.setErrMsg("导师意见为不同意，无法申请助教！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         if(classInfoService.isInBlackList(infoForm.getApplyAssistantViewObject().getStudentId())){
             infoForm.setErrMsg("您曾经被解聘，无法申请助教！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -477,7 +488,8 @@ public class ClassController extends BaseController {
         }
 
         if (classId == null) {
-
+            infoForm.setErrMsg("访问出错！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
         infoForm.setAllCalendar(
@@ -559,6 +571,47 @@ public class ClassController extends BaseController {
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
     }
+
+    /**
+     * 编辑日历详情页面
+     **/
+    @RequestMapping(params = "methodToCall=getEditTeachCalendarPage")
+    public ModelAndView getEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                    HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        try {
+            infoForm.setCurrentCalendarInfo(
+                    infoForm.getAllCalendar().get(index)
+            );
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+            infoForm.setAllCalendar(null);  //节省内存
+
+            String classId = infoForm.getCurrClassId();
+            String uId = getUserSession().getPrincipalId();
+           /* infoForm.setAllActivities(
+                    taConverter.activitiesToViewObject(
+                            classInfoService.getAllTaTeachActivityAsCalendarFilterByUidAndClassId(
+                                    uId, classId)
+                    )
+            );*/
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+    }
+
 
     /**
      * 下载教学日历的附件
@@ -663,6 +716,11 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
+        if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
         SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
@@ -740,8 +798,8 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
         */
-        else if(Integer.parseInt(added.getElapsedTime()) > 11) {
-            infoForm.setErrMsg("单次教学日历耗时不能超过11个小时！请重新输入");
+        else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
@@ -912,6 +970,7 @@ public class ClassController extends BaseController {
 
         //put conditions
         conditions.put("ClassNumber", infoForm.getCondClassNumber());
+        conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("DepartmentId", infoForm.getCondDepartmentName());
         conditions.put("InstructorName", infoForm.getCondInstructorName());
         conditions.put("CourseName", infoForm.getCondCourseName());
@@ -1360,6 +1419,9 @@ public class ClassController extends BaseController {
         //开始释放剩下的tapplication
         if((addSize+(taList==null?0:taList.size()))>=appTaNumber){
             classInfoService.releaseTaApplication(infoForm.getAllApplication());
+            //聘请满了之后将状态切换到最终工作状态
+            classInfoService.changeToSpecificStatus(classId,classInfoService.getMaxOrderStatusIdOfSpecificFunction("1"));
+
             infoForm.getAllApplication().clear();
             infoForm.getAllApplication().add(new MyTaViewObject());
             infoForm.setAllApplication(infoForm.getAllApplication());
@@ -1694,6 +1756,35 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
+    }
+
+    @RequestMapping(params = "methodToCall=ApplyOutStanding")
+    public ModelAndView ApplyOutStanding(@ModelAttribute("KualiForm") UifFormBase form,
+                                                     HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        String applyOSReason = infoForm.getApplyOutStandingReason();
+        String classId = infoForm.getCurrClassId();
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String stuId = userSession.getLoggedInUserPrincipalId();
+
+        if(applyOSReason.isEmpty()) {
+            infoForm.setErrMsg("请填写申请优秀助教理由！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            if(classInfoService.applyOutStanding(applyOSReason, stuId, classId) == 2){
+                infoForm.setErrMsg("您的申请已提交！请勿重复申请");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+            else {
+                infoForm.setErrMsg("申请成功！");
+                    //return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+
+        }
         return this.getModelAndView(infoForm, "pageApplyOutStandingClass");
     }
 

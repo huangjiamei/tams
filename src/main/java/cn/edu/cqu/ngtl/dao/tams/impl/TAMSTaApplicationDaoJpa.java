@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.dao.tams.TAMSTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.ut.impl.UTSessionDaoJpa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaApplication;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
+import cn.edu.cqu.ngtl.viewobject.tainfo.WorkBenchViewObject;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
@@ -152,4 +153,5 @@ public class TAMSTaApplicationDaoJpa implements TAMSTaApplicationDao {
         return qr.getResults();
     }
     */
+
 }

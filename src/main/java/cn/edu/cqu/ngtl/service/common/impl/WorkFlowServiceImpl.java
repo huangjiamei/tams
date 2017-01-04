@@ -26,6 +26,16 @@ public class WorkFlowServiceImpl implements WorkFlowService {
         return false;
     }
 
+    @Override
+    public boolean isSecMaxOrderOfThisStatue(String statusId, String functionId){
+        TAMSWorkflowStatus newStatus = tamsWorkflowStatusDao.getOneById(statusId);
+        Integer newStatusOrder = newStatus.getOrder();
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
+        if(newStatusOrder==(maxOrder-1))
+            return true;
+        return false;
+    }
+
 
     @Override
     public String getWorkFlowStatusName(String statusId){

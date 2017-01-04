@@ -108,7 +108,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="inputField1"
+                                                                                  p:propertyName="applyOutStandingReason"
                                                                                   p:style="width:100%;">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
@@ -125,7 +125,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="提交"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:methodToCall="xxxx"
+                                                                                  p:methodToCall="xxx"
                                                                                   p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup">
                                                                                 <property name="confirmationDialog">
                                                                                     <ref bean="applyOutStandingClassDialog" />
@@ -167,7 +167,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:methodToCall="xxxx" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="ApplyOutStanding" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

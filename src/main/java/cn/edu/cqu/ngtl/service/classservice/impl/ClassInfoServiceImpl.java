@@ -129,8 +129,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<UTClassInformation> getAllCurSessionClassesWithFinalStatus(String functionId){
-        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId(functionId);
-        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(maxOrder.toString());
+        String secMaxStatusId = tamsWorkflowStatusDao.getSecMaxOrderStatusIdByFunctionId(functionId);
+        List<UTClassInformation> classInformations = classInfoDao.getAllCurrentClassInformationBySepStatus(secMaxStatusId);
         return classInformations;
     }
 
@@ -319,7 +319,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             return result;
         } else if (userInfoService.isInstructor(uId)) {
             conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
-            List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
+            List<UTClassInformation> classInformations = classInfoDao.selectByConditionsWithUid(conditions,uId);
             return classInformations;
         }else if (userInfoService.isStudent(uId)){
             List<UTClassInformation> classInformations = classInfoDao.selectByConditions(conditions);
@@ -660,6 +660,18 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
+    public boolean changeToSpecificStatus(String classId, String workFlowStatusId){
+
+        return classApplyStatusDao.changeStatusToCertainStatus(classId, workFlowStatusId);
+    }
+
+    @Override
+    public String getMaxOrderStatusIdOfSpecificFunction(String functionId){
+        return tamsWorkflowStatusDao.getMaxOrderStatusIdByFunctionId(functionId);
+    }
+
+
+    @Override
     public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatusId) {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
@@ -799,12 +811,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public boolean canEmployByClassId(String classId){
-        String maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1").toString();
+        Integer maxOrder = tamsWorkflowStatusDao.getMaxOrderByFunctionId("1");
         UTClassInformation utClassInformation = classInfoDao.getOneById(classId);
         if(utClassInformation==null){
             return false;
         }
-        if(utClassInformation.getStatus().equals(maxOrder)){  //最终状态才可以聘用
+        if(utClassInformation.getOrder().equals(String.valueOf(maxOrder-1))){  //倒数第二个状态才可以聘用
             return true;
         }
         return false;
@@ -821,6 +833,20 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         for(MyTaViewObject myTaViewObject:taViewObjects){
             tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(),myTaViewObject.getApplicationClassId());
         }
+    }
+
+    @Override
+    public Integer applyOutStanding(String applyOTReason, String StuId, String classId) {
+        UTSession curSession = sessionDao.getCurrentSession();
+        TAMSTa ta = taDao.selectByStudentIdAndClassIdAndSessionId(StuId, classId, curSession.getId().toString());
+        if(ta.getOutStandingTaWorkflowStatusId().equals("6") || ta.getOsNote().equals(null)){
+            ta.setOutStandingTaWorkflowStatusId("7");
+            ta.setOsNote(applyOTReason);
+            taDao.insertByEntity(ta);
+            return 1;
+        }
+        else
+            return 2;
     }
 
 }

@@ -14,6 +14,10 @@ import java.util.Map;
  */
 public interface IClassInfoService {
 
+    boolean changeToSpecificStatus(String classId,String workFlowStatusId);
+
+    String getMaxOrderStatusIdOfSpecificFunction(String functionId);
+
     void validClassFunds(String classId);
 
     boolean isInBlackList(String stuId);
@@ -93,5 +97,7 @@ public interface IClassInfoService {
     List<TAMSClassEvaluation> getClassEvaluationByClassId(String classId);
 
     boolean canEmployByClassId(String classId);
+
+    Integer applyOutStanding(String applyOTReason, String StuId, String classId);
 
 }

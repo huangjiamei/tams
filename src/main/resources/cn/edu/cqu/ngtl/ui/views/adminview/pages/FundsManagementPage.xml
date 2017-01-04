@@ -176,7 +176,6 @@
                                                                                                              p:messageText="@{sessionFundingTotalApproved}"
                                                                                                              p:additionalCssClasses="label label-success"
                                                                                                              p:style="font-size:15px;"/>-->
-
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:style="float: right!important;">
                                                                                                         <property name="items">
@@ -274,7 +273,7 @@
 
                                                                                         <bean parent="Uif-VerticalBoxSection"
                                                                                               p:additionalCssClasses="box"
-                                                                                              p:style="margin-top:20px;">
+                                                                                              p:style="margin-top:40px;">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <!--学校历史经费部分-->
@@ -294,7 +293,7 @@
                                                                                                                     <property name="items">
                                                                                                                         <list>
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                  p:actionLabel="EXCEL"
+                                                                                                                                  p:actionLabel="Excel"
                                                                                                                                   p:methodToCall="exportPreviousSessionFundingsExcel"
                                                                                                                                   p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                                                                             <bean parent="Uif-PrimaryActionButton"
@@ -568,19 +567,26 @@
                                                                                                           p:messageText="@{sessionFundingTotalApproved}"
                                                                                                           p:additionalCssClasses="label label-success"
                                                                                                           p:style="font-size:15px;"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
 
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:additionalCssClasses="box-header" >
+                                                                                            <property name="items">
+                                                                                                <list>
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:style="float: right!important;">
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="EXCEL"
+                                                                                                                      p:actionLabel="Excel"
                                                                                                                       p:methodToCall="exportDepartmentCurrFundingsExcel"
                                                                                                                       p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                       p:actionLabel="PDF"
-                                                                                                                       p:methodToCall="exportCollegeFundsPDF"
-                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                                                                      p:actionLabel="PDF"
+                                                                                                                      p:methodToCall="exportCollegeFundsPDF"
+                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:actionImagePlacement="LEFT"
@@ -661,7 +667,7 @@
                                                                                                                 </bean>
                                                                                                                 <bean id="FundsManagerDepartmentTable"
                                                                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'};tableHeightSet('FundsManagerDepartmentTable');">
+                                                                                                                      p:onDocumentReadyScript="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())?'':'refreshTableFilter(FundsManagerDepartmentSearchFields,FundsManagerDepartmentTable)'};tableHeightSet('FundsManagerDepartmentTable');changeNumber('FundsManagerDepartmentTable',2,9);">
                                                                                                                     <property
                                                                                                                             name="collectionObjectClass"
                                                                                                                             value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
@@ -853,7 +859,7 @@
                                                                                                                             <!--学院历史经费的表格-->
                                                                                                                             <bean id="FundsManagerDeptTable"
                                                                                                                                   parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                                                  p:onDocumentReadyScript="refreshTableFilter(FundsManagerDeptSearchFields,FundsManagerDeptTable);tableHeightSet('FundsManagerDeptTable');">
+                                                                                                                                  p:onDocumentReadyScript="refreshTableFilter(FundsManagerDeptSearchFields,FundsManagerDeptTable);tableHeightSet('FundsManagerDeptTable');changeNumber('FundsManagerDeptTable',2,9);">
                                                                                                                                 <property
                                                                                                                                         name="collectionObjectClass"
                                                                                                                                         value="cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject"/>
@@ -1100,17 +1106,21 @@
                                                                                                           p:additionalCssClasses="font-teal"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="已批准/总批准经费："
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingStatistics}"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="label label-info"
                                                                                                           p:style="font-size:15px;"/>
 
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="申报总额："
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:style="font-weight:bold;margin-left:10px;"/>
                                                                                                     <bean parent="Uif-Message"
                                                                                                           p:messageText="@{classFundingTotalApply}"
+                                                                                                          p:render="@{#form.academicAffairManager}"
                                                                                                           p:additionalCssClasses="label label-warning"
                                                                                                           p:style="font-size:15px;"/>
 
@@ -1121,7 +1131,14 @@
                                                                                                     <!--p:messageText="@{classFundingTotalApproved}"-->
                                                                                                     <!--p:additionalCssClasses="label label-success"-->
                                                                                                     <!--p:style="font-size:15px;"/>-->
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
 
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:additionalCssClasses="box-header">
+                                                                                            <property name="items">
+                                                                                                <list>
                                                                                                     <bean parent="Uif-HorizontalBoxSection"
                                                                                                           p:style="float: right!important;">
                                                                                                         <property name="items">
@@ -1283,7 +1300,7 @@
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
-                                                                                                                      p:style="display:@{#line.department!=null?'block':'none'}"
+                                                                                                                      p:readOnly = "@{!#form.deptManager}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">
@@ -1438,10 +1455,6 @@
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="PDF"
                                                                                                                       p:methodToCall="exportTaFundingPDF"
-                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="Excel"
-                                                                                                                      p:methodToCall="exportTaFundsExcel"
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"

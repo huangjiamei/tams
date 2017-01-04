@@ -617,6 +617,7 @@ public class TaController extends BaseController {
      * @param form
      * @return
      */
+    /*
     @RequestMapping(params = "methodToCall=getApplyOSTaPage")
     public ModelAndView getApplyOSTaPage(@ModelAttribute("KualiForm") UifFormBase form) {
         TaInfoForm taInfoForm = (TaInfoForm) form; super.baseStart(taInfoForm);
@@ -636,6 +637,7 @@ public class TaController extends BaseController {
 
         return this.getModelAndView(taInfoForm, "pageApplyOStA");
     }
+    */
 
 
     /**
@@ -661,6 +663,9 @@ public class TaController extends BaseController {
     public ModelAndView getWorkbenchPage(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         TaInfoForm taInfoForm = (TaInfoForm) form;
         super.baseStart(taInfoForm);
+        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
+        String uId = userSession.getLoggedInUserPrincipalId();
+
         //我担任助教的课程
         taInfoForm.setWorkbench(
                 taConverter.taCombineWorkbench(
@@ -669,12 +674,21 @@ public class TaController extends BaseController {
                         )
                 )
         );
-        final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
-        String uId = userSession.getLoggedInUserPrincipalId();
+
         //我的课程
         taInfoForm.setMyClassViewObjects(taConverter.MyClassViewObject(
                 taService.getMycourseByUid(uId))
         );
+
+        //我申请的助教的课程
+        taInfoForm.setMyApplicationClass(
+                taConverter.taCombineMyApplicationClass(
+                        taService.getTaApplicationByClassIds(
+                                taService.getApplicationClassIdsByUid(uId)
+                        )
+                )
+        );
+
         return this.getModelAndView(taInfoForm, "pageWorkbench");
     }
 
@@ -991,5 +1005,16 @@ public class TaController extends BaseController {
 
         return new TaInfoForm();
 
+    }
+
+    //显示优秀助教申请表
+    @RequestMapping(params =  {"methodToCall=getApplyOSTaPage"})
+    public ModelAndView getApplyOSTaPage(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        TaInfoForm taInfoForm = (TaInfoForm) form;
+        super.baseStart(taInfoForm);
+        String classId = taInfoForm.getSelectedTaInfo().getClassid();
+        String stuId = taInfoForm.getSelectedTaInfo().getTaId();
+        taInfoForm.setApplyOSReason(taService.getOSReason(stuId, classId));
+        return this.getModelAndView(taInfoForm, "pageApplyOStA");
     }
 }

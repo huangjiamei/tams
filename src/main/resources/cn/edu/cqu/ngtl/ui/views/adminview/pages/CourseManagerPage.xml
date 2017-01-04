@@ -106,9 +106,9 @@
                                                                     <list>
                                                                         <!--右上角btnlist-->
                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                              p:actionLabel="EXCEL"
+                                                                              p:actionLabel="Excel"
                                                                               p:methodToCall="exportCourseManagerExcel"
-                                                                              p:additionalCssClasses="icon-list bg-teal box-btngroup"/>
+                                                                              p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                               p:actionLabel="PDF"
                                                                               p:methodToCall="exportCourseManagerPDF"
@@ -339,7 +339,7 @@
 </bean>
 
 <bean id="confirmDeleteManagerDialog" parent="Uif-DialogGroup"
-      p:headerText="删除课程负责人" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+      p:headerText="提示：" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
     <property name="items">
         <list>
             <bean parent="Uif-MessageField" p:messageText="请慎重删除课程负责人，如需删除请联系系统维护人员！" p:additionalCssClasses="message-font-size"/>

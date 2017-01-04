@@ -32,4 +32,6 @@ public interface TAMSDeptFundingDao {
     TAMSDeptFunding selectDeptFundsByDeptId(Integer deptId);
 
     List<TAMSDeptFunding> selectByDeptAndSessionId (List<Integer> depts, Integer sessionId);
+
+    List<TAMSDeptFunding> selectAll ();
 }

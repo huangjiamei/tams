@@ -43,7 +43,6 @@ public class BaseController extends UifControllerBase {
         MDC.put("UserId",user.getTag());
         MDC.put("UserName",user.getName());
 
-
         return super.start(form);
     }
 

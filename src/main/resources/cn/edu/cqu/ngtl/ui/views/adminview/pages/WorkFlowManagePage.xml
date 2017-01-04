@@ -163,14 +163,14 @@
                                                                       p:style="float:right;margin:10px;"
                                                                       p:actionLabel="查询" p:additionalCssClasses="icon-search box-btngroup"
                                                                       p:methodToCall="search"
-                                                                      p:refreshId="workFlowTab"/>
+                                                                      p:refreshId="workFlowStatusGrid"/>
 
                                                             </list>
                                                         </property>
 
                                                     </bean>
 
-                                                    <bean parent="Uif-VerticalBoxSection"
+                                                    <bean parent="Uif-VerticalBoxSection" id="workFlowStatusGrid"
                                                           p:additionalCssClasses="box-body" p:style="margin-top:40px;">
                                                         <property name="items">
                                                             <list>

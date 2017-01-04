@@ -428,7 +428,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
     }
 
     @Override
-    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime, String totalBudget) {
+    public short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, String totalTime, String totalBudget) {
         TAMSTimeSettingType timeSettingType = tamsTimeSettingTypeDao.selectByName("教师申请助教");
         TimeUtil timeUtil = new TimeUtil();
         if (timeSettingType == null) {
@@ -464,6 +464,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 }
             }
 //            classEvaluationDao.deleteAllByClassId(classId);
+            /*
             boolean flag;
             for (TAMSClassEvaluation classEvaluation : classEvaluations) {
                 classEvaluation.setClassId(classId);
@@ -473,6 +474,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                     return 4;
                 }
             }
+            */
             //更改课程申请状态
             //教师默认工作方法为“审核”
             List<KRIM_ROLE_MBR_T> roles = new KRIM_ROLE_MBR_T_DaoJpa().getKrimEntityEntTypTsByMbrId(instructorId);

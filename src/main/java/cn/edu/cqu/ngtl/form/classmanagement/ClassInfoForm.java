@@ -43,6 +43,7 @@ public class ClassInfoForm extends BaseForm implements Serializable {
      * 教学日历编辑相关
      */
     private TeachCalendarViewObject currentCalenderInfoEdit;
+    private String calendarId;
 
    /*
     助教申报页面
@@ -152,6 +153,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String StudentName;
     private String StudentNumber;
 
+    public String getCalendarId() {
+        return calendarId;
+    }
+
+    public void setCalendarId(String calendarId) {
+        this.calendarId = calendarId;
+    }
 
     public TeachCalendarViewObject getCurrentCalenderInfoEdit() {
         return currentCalenderInfoEdit;

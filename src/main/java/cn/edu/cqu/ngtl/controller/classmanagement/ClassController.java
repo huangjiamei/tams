@@ -1727,6 +1727,12 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        infoForm.setStudentNameForChange(null);
+        infoForm.setStudentNumberForChange(null);
+        infoForm.setSelectedTaForChange(new MyTaViewObject());
+        infoForm.setConditionTAListForChange(null);
+
+
         List<MyTaViewObject> objects = infoForm.getAllMyTa();
 
         List<MyTaViewObject> needToChange = new ArrayList<>();
@@ -1753,6 +1759,22 @@ public class ClassController extends BaseController {
     }
 
 
+
+    @RequestMapping(params = "methodToCall=showAddTaApplicationDialog")
+    public ModelAndView showAddTaApplicationDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        infoForm.setStudentName(null);
+        infoForm.setStudentNumber(null);
+        infoForm.setSelectedTa(new MyTaViewObject());
+        infoForm.setConditionTAList(null);
+
+        return this.showDialog("addApplicantDialog",true,infoForm);
+
+    }
 
 
     /**
@@ -1797,11 +1819,40 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageTaManagement");
     }
 
-    /**
-     * 助教管理页面，输入姓名或学号查询得到助教列表后，点击助教列表中某一行查看该助教的具体信息
-     * @param form
-     * @return
-     */
+
+    @RequestMapping(params = "methodToCall=searchTaByConditionForChange")
+    public ModelAndView searchTaByConditionForChange(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("StudentName", infoForm.getStudentNameForChange());
+        conditions.put("StudentId", infoForm.getStudentNumberForChange());
+        infoForm.setConditionTAListForChange(
+                classConverter.studentInfoToMyTaViewObject(
+                        taService.getConditionTaByNameAndId(conditions)
+                )
+        );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("searchChangedTaApplicantList").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("searchChangedTaApplicantList").setData(map);
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+
+    }
+
+
+
+        /**
+         * 助教管理页面，输入姓名或学号查询得到助教列表后，点击助教列表中某一行查看该助教的具体信息
+         * @param form
+         * @return
+         */
     @RequestMapping(params = "methodToCall=getSelectedTaInfo")
     public ModelAndView getSelectedTaInfo(@ModelAttribute("KualiForm") UifFormBase form,
                                           HttpServletRequest request) {
@@ -1813,6 +1864,29 @@ public class ClassController extends BaseController {
         int index = params.getSelectedLineIndex();
 
         infoForm.setSelectedTa(infoForm.getConditionTAList().get(index));
+
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+    }
+
+
+    /**
+     * 交换助教表的选择助教
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getSelectedTaInfoForChange")
+    public ModelAndView getSelectedTaInfoForChange(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        infoForm.setSelectedTaForChange(infoForm.getConditionTAListForChange().get(index));
 
         return this.getModelAndView(infoForm, "pageTaManagement");
     }
@@ -1897,6 +1971,8 @@ public class ClassController extends BaseController {
                 logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"将"+curTa.getTaName()+"加入了候选人列表");
 
                 infoForm.getConditionTAList().remove(curTa);
+
+
                 return this.getModelAndView(infoForm, "pageTaManagement");
             } else {
                 infoForm.setErrMsg("未知错误");

@@ -217,10 +217,12 @@
                                                                                                                       p:propertyName="theme"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="开始时间"
-                                                                                                                      p:propertyName="startTime"/>
+                                                                                                                      p:propertyName="startTime"
+                                                                                                                      p:readOnlyDisplayReplacement="@{#line.startTime!=null ? #line.startTime.split(' ')[0]:''}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="结束时间"
-                                                                                                                      p:propertyName="endTime"/>
+                                                                                                                      p:propertyName="endTime"
+                                                                                                                      p:readOnlyDisplayReplacement="@{#line.endTime!=null ? #line.endTime.split(' ')[0]:''}"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="预计耗时(小时)"
                                                                                                                       p:propertyName="elapsedTime"/>
@@ -249,129 +251,131 @@
                                                                                             </property>
                                                                                         </bean>
 
-                                                                                        <!--自定义成绩评定方式列表-->
-                                                                                       <bean id="EvaluationTable" parent="Uif-VerticalBoxSection"
-                                                                                              p:additionalCssClasses="box box-warning">
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:style="float: left!important;">
                                                                                             <property name="items">
                                                                                                 <list>
-                                                                                                    <!--<bean parent="Uif-HorizontalBoxSection"-->
-                                                                                                          <!--p:additionalCssClasses="box-header">-->
-                                                                                                        <!--<property-->
-                                                                                                                <!--name="items">-->
-                                                                                                            <!--<list>-->
-                                                                                                                <!--<bean parent="Uif-Icon"-->
-                                                                                                                      <!--p:iconClass="icon-leaf"/>-->
-                                                                                                                <!--<bean parent="Uif-MessageField"-->
-                                                                                                                      <!--p:messageText="成绩评定列表"-->
-                                                                                                                      <!--p:additionalCssClasses="boxheaderTitle"/>-->
-                                                                                                            <!--</list>-->
-                                                                                                        <!--</property>-->
-                                                                                                    <!--</bean>-->
-                                                                                                    <!--<bean parent="Uif-VerticalBoxSection"-->
-                                                                                                          <!--p:additionalCssClasses="box-body">-->
-                                                                                                        <!--<property-->
-                                                                                                                <!--name="items">-->
-                                                                                                            <!--<list>-->
-                                                                                                                <!--&lt;!&ndash;table&ndash;&gt;-->
-                                                                                                                <!--<bean parent="Uif-Disclosure-TableCollectionSection"-->
-                                                                                                                      <!--p:layoutManager.numberOfColumns="8">-->
-                                                                                                                    <!--<property-->
-                                                                                                                            <!--name="collectionObjectClass"-->
-                                                                                                                            <!--value="cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation"/>-->
-                                                                                                                    <!--<property name="propertyName" value="classEvaluations"/>-->
-                                                                                                                    <!--<property name="layoutManager.renderSequenceField" value="false"/>-->
-                                                                                                                    <!--<property name="layoutManager.richTable.render" value="false"/>-->
-                                                                                                                    <!--<property name="layoutManager.generateAutoSequence" value="true"/>-->
-                                                                                                                    <!--<property name="useServerPaging" value="true" />-->
-                                                                                                                    <!--<property name="renderAddLine" value="true"/>-->
-                                                                                                                    <!--<property name="renderLineActions" value="true"/>-->
-                                                                                                                    <!--<property name="disclosure.render" value="false"/>-->
-
-                                                                                                                    <!--&lt;!&ndash; 修改addlineAction，实现添加评定方式功能 &ndash;&gt;-->
-                                                                                                                    <!--<property name="addLineActions">-->
-                                                                                                                        <!--<list>-->
-                                                                                                                            <!--&lt;!&ndash;<bean parent="Uif-AddLineAction"/>&ndash;&gt;-->
-                                                                                                                            <!--<bean parent="Uif-SecondaryActionButton-Mini"-->
-                                                                                                                                  <!--p:methodToCall="addLine"-->
-                                                                                                                                  <!--p:actionEvent="addLine"-->
-                                                                                                                                  <!--p:loadingMessageText="请稍候..."-->
-                                                                                                                                  <!--p:focusOnIdAfterSubmit="LINE_FIRST"-->
-                                                                                                                                  <!--p:performClientSideValidation="true"-->
-                                                                                                                                  <!--p:dirtyOnAction="true"-->
-                                                                                                                                  <!--p:id="@{#collectionGroup.id}_add"-->
-                                                                                                                                  <!--p:defaultEnterKeyAction="true"-->
-                                                                                                                                  <!--p:additionalCssClasses="icon-plus bg-success tams-action-btn"/>-->
-                                                                                                                        <!--</list>-->
-                                                                                                                    <!--</property>-->
-
-                                                                                                                    <!--<property-->
-                                                                                                                            <!--name="items">-->
-                                                                                                                        <!--<list>-->
-                                                                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                                                                  <!--p:label="成绩评定方式"-->
-                                                                                                                                  <!--p:propertyName="evaluationType">-->
-                                                                                                                                <!--<property-->
-                                                                                                                                        <!--name="control">-->
-                                                                                                                                    <!--<bean parent="Uif-TextControl"-->
-                                                                                                                                          <!--p:watermarkText="评定方式如平时作业/期中考"/>-->
-                                                                                                                                <!--</property>-->
-                                                                                                                            <!--</bean>-->
-                                                                                                                            <!--<bean parent="Uif-InputField"-->
-                                                                                                                                  <!--p:label="成绩占比(%)"-->
-                                                                                                                                  <!--p:propertyName="evaluationPercent">-->
-                                                                                                                                <!--<property-->
-                                                                                                                                        <!--name="control">-->
-                                                                                                                                    <!--<bean parent="Uif-TextControl"-->
-                                                                                                                                          <!--p:watermarkText="如10,20"/>-->
-                                                                                                                                <!--</property>-->
-                                                                                                                                <!--<property name="validCharactersConstraint">-->
-                                                                                                                                    <!--<bean parent="NumericPatternConstraint"/>-->
-                                                                                                                                <!--</property>-->
-                                                                                                                            <!--</bean>-->
-                                                                                                                        <!--</list>-->
-                                                                                                                    <!--</property>-->
-                                                                                                                    <!--<property-->
-                                                                                                                            <!--name="lineActions">-->
-                                                                                                                        <!--<list>-->
-                                                                                                                            <!--<bean parent="Uif-HorizontalBoxSection">-->
-                                                                                                                                <!--<property name="items">-->
-                                                                                                                                    <!--<list>-->
-                                                                                                                                        <!--<bean parent="Uif-PrimaryActionButton"-->
-                                                                                                                                              <!--p:actionImagePlacement="LEFT"-->
-                                                                                                                                              <!--p:methodToCall="deleteEvaluationLine"-->
-                                                                                                                                              <!--p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>-->
-                                                                                                                                    <!--</list>-->
-                                                                                                                                <!--</property>-->
-                                                                                                                            <!--</bean>-->
-                                                                                                                        <!--</list>-->
-                                                                                                                    <!--</property>-->
-                                                                                                                <!--</bean>-->
-                                                                                                            <!--</list>-->
-                                                                                                        <!--</property>-->
-                                                                                                    <!--</bean>-->
-
-                                                                                                    <bean parent="Uif-HorizontalBoxSection"
-                                                                                                          p:style="float: left!important;">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="提交"
-                                                                                                                      p:actionImagePlacement="LEFT"
-                                                                                                                      p:methodToCall="submitRequestTaPage"
-                                                                                                                      p:render="@{!#form.submitted}"
-                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="已提交"
-                                                                                                                      p:actionImagePlacement="LEFT"
-                                                                                                                      p:disabled = "true"
-                                                                                                                      p:render="@{#form.submitted}"
-                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success box-btngroup"/>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="提交"
+                                                                                                          p:actionImagePlacement="LEFT"
+                                                                                                          p:methodToCall="submitRequestTaPage"
+                                                                                                          p:render="@{!#form.submitted}"
+                                                                                                          p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="已提交"
+                                                                                                          p:actionImagePlacement="LEFT"
+                                                                                                          p:disabled = "true"
+                                                                                                          p:render="@{#form.submitted}"
+                                                                                                          p:additionalCssClasses="icon-arrow-up bg-success box-btngroup"/>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
+
+                                                                                        <!--自定义成绩评定方式列表-->
+                                                                                       <!--<bean id="EvaluationTable" parent="Uif-VerticalBoxSection"-->
+                                                                                              <!--p:additionalCssClasses="box box-warning">-->
+                                                                                            <!--<property name="items">-->
+                                                                                                <!--<list>-->
+                                                                                                    <!--&lt;!&ndash;<bean parent="Uif-HorizontalBoxSection"&ndash;&gt;-->
+                                                                                                          <!--&lt;!&ndash;p:additionalCssClasses="box-header">&ndash;&gt;-->
+                                                                                                        <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;name="items">&ndash;&gt;-->
+                                                                                                            <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;<bean parent="Uif-Icon"&ndash;&gt;-->
+                                                                                                                      <!--&lt;!&ndash;p:iconClass="icon-leaf"/>&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;<bean parent="Uif-MessageField"&ndash;&gt;-->
+                                                                                                                      <!--&lt;!&ndash;p:messageText="成绩评定列表"&ndash;&gt;-->
+                                                                                                                      <!--&lt;!&ndash;p:additionalCssClasses="boxheaderTitle"/>&ndash;&gt;-->
+                                                                                                            <!--&lt;!&ndash;</list>&ndash;&gt;-->
+                                                                                                        <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+                                                                                                    <!--&lt;!&ndash;<bean parent="Uif-VerticalBoxSection"&ndash;&gt;-->
+                                                                                                          <!--&lt;!&ndash;p:additionalCssClasses="box-body">&ndash;&gt;-->
+                                                                                                        <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;name="items">&ndash;&gt;-->
+                                                                                                            <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;&lt;!&ndash;table&ndash;&gt;&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;<bean parent="Uif-Disclosure-TableCollectionSection"&ndash;&gt;-->
+                                                                                                                      <!--&lt;!&ndash;p:layoutManager.numberOfColumns="8">&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;name="collectionObjectClass"&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;value="cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="propertyName" value="classEvaluations"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="layoutManager.renderSequenceField" value="false"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="layoutManager.richTable.render" value="false"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="layoutManager.generateAutoSequence" value="true"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="useServerPaging" value="true" />&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="renderAddLine" value="true"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="renderLineActions" value="true"/>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="disclosure.render" value="false"/>&ndash;&gt;-->
+
+                                                                                                                    <!--&lt;!&ndash;&lt;!&ndash; 修改addlineAction，实现添加评定方式功能 &ndash;&gt;&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property name="addLineActions">&ndash;&gt;-->
+                                                                                                                        <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;&lt;!&ndash;<bean parent="Uif-AddLineAction"/>&ndash;&gt;&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;<bean parent="Uif-SecondaryActionButton-Mini"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:methodToCall="addLine"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:actionEvent="addLine"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:loadingMessageText="请稍候..."&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:focusOnIdAfterSubmit="LINE_FIRST"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:performClientSideValidation="true"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:dirtyOnAction="true"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:id="@{#collectionGroup.id}_add"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:defaultEnterKeyAction="true"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:additionalCssClasses="icon-plus bg-success tams-action-btn"/>&ndash;&gt;-->
+                                                                                                                        <!--&lt;!&ndash;</list>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+
+                                                                                                                    <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;name="items">&ndash;&gt;-->
+                                                                                                                        <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;<bean parent="Uif-InputField"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:label="成绩评定方式"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:propertyName="evaluationType">&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                                        <!--&lt;!&ndash;name="control">&ndash;&gt;-->
+                                                                                                                                    <!--&lt;!&ndash;<bean parent="Uif-TextControl"&ndash;&gt;-->
+                                                                                                                                          <!--&lt;!&ndash;p:watermarkText="评定方式如平时作业/期中考"/>&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;<bean parent="Uif-InputField"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:label="成绩占比(%)"&ndash;&gt;-->
+                                                                                                                                  <!--&lt;!&ndash;p:propertyName="evaluationPercent">&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                                        <!--&lt;!&ndash;name="control">&ndash;&gt;-->
+                                                                                                                                    <!--&lt;!&ndash;<bean parent="Uif-TextControl"&ndash;&gt;-->
+                                                                                                                                          <!--&lt;!&ndash;p:watermarkText="如10,20"/>&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;<property name="validCharactersConstraint">&ndash;&gt;-->
+                                                                                                                                    <!--&lt;!&ndash;<bean parent="NumericPatternConstraint"/>&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+                                                                                                                        <!--&lt;!&ndash;</list>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;<property&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;name="lineActions">&ndash;&gt;-->
+                                                                                                                        <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;<bean parent="Uif-HorizontalBoxSection">&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;<property name="items">&ndash;&gt;-->
+                                                                                                                                    <!--&lt;!&ndash;<list>&ndash;&gt;-->
+                                                                                                                                        <!--&lt;!&ndash;<bean parent="Uif-PrimaryActionButton"&ndash;&gt;-->
+                                                                                                                                              <!--&lt;!&ndash;p:actionImagePlacement="LEFT"&ndash;&gt;-->
+                                                                                                                                              <!--&lt;!&ndash;p:methodToCall="deleteEvaluationLine"&ndash;&gt;-->
+                                                                                                                                              <!--&lt;!&ndash;p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>&ndash;&gt;-->
+                                                                                                                                    <!--&lt;!&ndash;</list>&ndash;&gt;-->
+                                                                                                                                <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                                            <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+                                                                                                                        <!--&lt;!&ndash;</list>&ndash;&gt;-->
+                                                                                                                    <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                                <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+                                                                                                            <!--&lt;!&ndash;</list>&ndash;&gt;-->
+                                                                                                        <!--&lt;!&ndash;</property>&ndash;&gt;-->
+                                                                                                    <!--&lt;!&ndash;</bean>&ndash;&gt;-->
+
+
+                                                                                                <!--</list>-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

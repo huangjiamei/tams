@@ -666,6 +666,11 @@ public class TaController extends BaseController {
         final UserSession userSession = KRADUtils.getUserSessionFromRequest(request);
         String uId = userSession.getLoggedInUserPrincipalId();
 
+        //是否是系统管理员和学生
+        if(userInfoService.isSysAdmin(uId) || userInfoService.isSysAdmin(uId))
+            taInfoForm.setBeenStuOrSys(true);
+        else
+            taInfoForm.setBeenStuOrSys(false);
         //我担任助教的课程
         taInfoForm.setWorkbench(
                 taConverter.taCombineWorkbench(

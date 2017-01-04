@@ -13,6 +13,7 @@ import cn.edu.cqu.ngtl.dataobject.enums.SESSION_ACTIVE;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ROLE_T;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTDepartment;
 import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
@@ -102,6 +103,9 @@ public class AdminServiceImpl implements IAdminService {
     private UTClassInfoDao utClassInfoDao;
     @Autowired
     private TAMSTaBlackListDao tamsTaBlackListDao;
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
+
 
     @Autowired
     IPDFService PDFService;
@@ -1107,22 +1111,50 @@ public class AdminServiceImpl implements IAdminService {
 
         if(curSessionClassInformation!=null){
             for(UTClassInformation utClassInformation:curSessionClassInformation){
-                curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
+                if(!curSessionCourseIds.contains(utClassInformation.getCourseId().toString()))
+                    curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
             }
         }
-        List<TAMSCourseManager> allCourseManager = tamsCourseManagerDao.getAllCourseManager();
+/*        List<TAMSCourseManager> allCourseManager = tamsCourseManagerDao.getAllCourseManager();
         if(allCourseManager!=null){
             for(TAMSCourseManager tamsCourseManager:allCourseManager){
                 curCourseMangerCourseId.add(tamsCourseManager.getCourseId());
             }
 
-        }
+        }*/
         for(String needToAdd:curSessionCourseIds) {
             if(!curCourseMangerCourseId.contains(needToAdd)) {
-                TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
-                tamsCourseManager.setCourseId(needToAdd);
-                tamsCourseManager.setCourseManagerId(null);
-                tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                List<UTClassInformation> classes = utClassInfoDao.getClassesByCourseId(needToAdd);
+                if(classes!=null&&classes.size()==1){
+                    List<UTClassInstructor> classIns = utClassInstructorDao.selectByClassId(classes.get(0).getId());
+                    if(classIns!=null&&classIns.size()==1){
+                        TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                        tamsCourseManager.setCourseId(needToAdd);
+                        tamsCourseManager.setCourseManagerId(classIns.get(0).getInstructorId());
+                        tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+
+                        //添加课程负责人角色
+                        KRIM_ROLE_T krim_role_t = krim_role_t_dao.getKrimRoleTByName(COURSE_MANAGER_ROLE_NAME);
+                        krim_role_t.setChecked(true);
+                        List<KRIM_ROLE_T> needToAddRoleList = new ArrayList<>();
+                        needToAddRoleList.add(krim_role_t);
+                        KRIM_PRNCPL_T currentEntity = krim_prncpl_t_dao.getKrimEntityEntTypTByPrncplId(classIns.get(0).getInstructorId());
+                        if (krim_role_t != null && currentEntity != null) {
+                            krim_role_mbr_t_dao.saveKrimRoleMbrTByPrncpltAndRoles(currentEntity, needToAddRoleList);
+                        }
+
+                    }else {
+                        TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                        tamsCourseManager.setCourseId(needToAdd);
+                        tamsCourseManager.setCourseManagerId(null);
+                        tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                    }
+                }else {
+                    TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                    tamsCourseManager.setCourseId(needToAdd);
+                    tamsCourseManager.setCourseManagerId(null);
+                    tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+                }
             }
             return true;
         }

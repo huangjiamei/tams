@@ -26,4 +26,6 @@ public interface UTClassInfoDao {
     UTClassInformation getOneByIdAndDept(String id, Integer dept);
 
     List<UTClassInformation> getAllCurrentClassInformationBySepStatus(String statusId);
+
+    List<UTClassInformation> getClassesByCourseId(String courseId);
 }

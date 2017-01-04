@@ -405,11 +405,6 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请申请人填写申请理由！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
-
-        if(!(infoForm.getIsAgree().equals("1") || infoForm.getIsAgree().equals("2"))){
-            infoForm.setErrMsg("请申请人选择导师意见！");
-            return this.showDialog("refreshPageViewDialog",true,infoForm);
-        }
         if(infoForm.getIsAgree().equals("2")){
             infoForm.setErrMsg("导师意见为不同意，无法申请助教！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
@@ -608,8 +603,37 @@ public class ClassController extends BaseController {
         }
     }
 
+    /**o
+     * 通过点击"更新"进入编辑日历详情页面
+     */
+    @RequestMapping(params = "methodToCall=ToEditTeachCalendarPage")
+    public ModelAndView ToEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
+                                                 HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        try {
+            infoForm.setCurrentCalenderInfoEdit(
+                    infoForm.getCurrentCalendarInfo()
+            );
+
+            //code 当做 id 用
+            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getCurrentCalendarInfo().getCode());
+            infoForm.setCalendarFiles(
+                    taConverter.attachmentsToFileViewObject(attachments)
+            );
+
+            infoForm.setAllCalendar(null);  //节省内存
+
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+        catch (IndexOutOfBoundsException e) {
+            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
+            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
+        }
+    }
     /**
-     * 编辑日历详情页面
+     * 直接进入编辑日历详情页面
      **/
     @RequestMapping(params = "methodToCall=getEditTeachCalendarPage")
     public ModelAndView getEditTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -632,10 +656,6 @@ public class ClassController extends BaseController {
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
-
-            //String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
-            //String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
-            //classInfoService.updateTeachCalendarInfo(infoForm.getAllCalendar().get(index).getCode().toString(), CalendarDescription, CalendarTaTask);
 
             infoForm.setAllCalendar(null);  //节省内存
 
@@ -661,6 +681,8 @@ public class ClassController extends BaseController {
         String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
         classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask);
 
+        //避免延迟刷新
+        infoForm.setCurrentCalendarInfo(infoForm.getCurrentCalenderInfoEdit());
         return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
 
     }
@@ -1696,6 +1718,41 @@ public class ClassController extends BaseController {
             return this.showDialog("confirmDismissDialog", true, infoForm);
         }
     }
+
+
+    @RequestMapping(params = "methodToCall=changeTaDialog")
+    public ModelAndView changeTaDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<MyTaViewObject> objects = infoForm.getAllMyTa();
+
+        List<MyTaViewObject> needToChange = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox())
+                needToChange.add(per);
+        }
+
+        if(needToChange.size()==0){
+            infoForm.setErrMsg("请选择需更换的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        if(needToChange.size()>1){
+            infoForm.setErrMsg("只能选择1个需更换的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        infoForm.setSelectedTa(needToChange.get(0));
+
+        return this.showDialog("changeAssistantDialog",true,infoForm);
+
+    }
+
+
 
 
     /**

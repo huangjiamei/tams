@@ -629,7 +629,7 @@ public class adminController extends BaseController {
         else
             active="失效";
         new KRIM_PERM_T_DaoJpa().delPermissions(selectedKrim_perm_t);
-        logger.info("删除权限名称为"+selectedKrim_perm_t.getName()+"、权限内容为"+selectedKrim_perm_t.getDescription()+"权限状态为"+active+"的权限");
+        logger.info("删除权限名称为"+selectedKrim_perm_t.getName()+"、权限内容为"+selectedKrim_perm_t.getDescription()+"、权限状态为"+active+"的权限");
         infoForm.getRMPkrimPermTs().remove(index);
         return this.getModelAndView(infoForm, "pagePermissionManagement");
     }
@@ -737,7 +737,7 @@ public class adminController extends BaseController {
             active="可用";
         else
             active="失效";
-        logger.info("保存角色名为"+krimRoleT.getName()+"、角色描述为"+krimRoleT.getDescription()+"角色状态为"+active+"的角色。");
+        logger.info("保存角色名为"+krimRoleT.getName()+"、角色描述为"+krimRoleT.getDescription()+"、角色状态为"+active+"的角色。");
         infoForm.setRMPkrimRoleT(krimRoleT);
 
         List<KRIM_PERM_T> krimPermTs = infoForm.getRMPkrimPermTs();
@@ -812,7 +812,7 @@ public class adminController extends BaseController {
             message+=krimRoleT.getName()+"、";
 
         }
-        logger.info(message+"的角色");
+        logger.info(message+"等角色");
         return this.getModelAndView(infoForm, "pageUserRoleManager");
     }
     /**
@@ -2910,11 +2910,11 @@ public class adminController extends BaseController {
         TAMSTaCategory newTaReward = adminInfoForm.getOldTaCategory();
         if (!adminService.changeTaCategoryByEntiy(adminInfoForm.getOldTaCategory())) {
             // TODO: 2016/11/8 弹出错误提示，具体错误信息待补充
-            logger.error("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+"助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+"时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳失败。");
+            logger.error("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+" 助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+" 时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳失败。");
             adminInfoForm.setErrMsg("编辑助教酬劳失败(修改为错误提示)");
             return this.showDialog("adminErrDialog", true, adminInfoForm);
         }
-        logger.info("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+"助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+"时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳。");
+        logger.info("编辑助教类别为"+adminInfoForm.getOldTaCategory().getName()+" 助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+" 时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳。");
         return this.getTaRewardPage(form);
     }
 
@@ -2933,7 +2933,7 @@ public class adminController extends BaseController {
                 new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
         int index = params.getSelectedLineIndex();
         new TAMSTaCategoryDaoJpa().deleteOneByEntity(adminInfoForm.getAllTaCategories().get(index));
-        logger.info("删除助教类别为"+adminInfoForm.getOldTaCategory().getName()+"助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+"时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳。");
+        logger.info("删除助教类别为"+adminInfoForm.getOldTaCategory().getName()+" 助教级别为"+adminInfoForm.getOldTaCategory().getDescription()+" 时薪为"+adminInfoForm.getOldTaCategory().getHourlyWage()+"的助教酬劳。");
         return this.getModelAndView(form, "pageTaReward");
     }
 

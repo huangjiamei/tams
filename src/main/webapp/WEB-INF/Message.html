@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>错误页面</title>
+	<style>
+		body, div {
+			margin: 0;
+			padding: 0;
+		}
+		body {
+			background: url("../tams/images/error_bg.jpg") repeat-x scroll 0 0 #67ACE4;
+		}
+		#container {
+			margin: 0 auto;
+			padding-top: 100px;
+			text-align: center;
+			width: 700px;
+		}
+		#container img {
+			border: medium none;
+			margin-bottom: 50px;
+		}
+		#container .error {
+			height: 200px;
+			position: relative;
+		}
+		#container .error img {
+			bottom: -50px;
+			position: absolute;
+			right: -50px;
+		}
+		#container .msg {
+			margin-bottom: 65px;
+		}
+		#cloud {
+			background: url("../tams/images/error_cloud.png") repeat-x scroll 0 0 transparent;
+			bottom: 0;
+			height: 170px;
+			position: absolute;
+			width: 100%;
+		}
+		#error_meg{
+			color: #fff;
+			font-weight: 700;
+			font-size: 40px;
+
+		}
+	</style>
+</head>
+<body>
+	<!-- 代码 开始 -->
+	<div id="container">
+		<p id="error_meg">
+			(＞﹏＜)  很抱歉，请使用IE9.0或其以上的浏览器访问本网站！
+		</p>
+		<p>
+			<a href="http://mystudy.cqu.edu.cn/tams" target="_blank"><img class="png" src="../tams/images/404_to_index.png" /></a>
+		</p>
+	</div>
+	<div id="cloud" class="png"></div>
+</body>
+</html>

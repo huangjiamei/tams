@@ -1111,16 +1111,17 @@ public class AdminServiceImpl implements IAdminService {
 
         if(curSessionClassInformation!=null){
             for(UTClassInformation utClassInformation:curSessionClassInformation){
-                curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
+                if(!curSessionCourseIds.contains(utClassInformation.getCourseId().toString()))
+                    curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
             }
         }
-        List<TAMSCourseManager> allCourseManager = tamsCourseManagerDao.getAllCourseManager();
+/*        List<TAMSCourseManager> allCourseManager = tamsCourseManagerDao.getAllCourseManager();
         if(allCourseManager!=null){
             for(TAMSCourseManager tamsCourseManager:allCourseManager){
                 curCourseMangerCourseId.add(tamsCourseManager.getCourseId());
             }
 
-        }
+        }*/
         for(String needToAdd:curSessionCourseIds) {
             if(!curCourseMangerCourseId.contains(needToAdd)) {
                 List<UTClassInformation> classes = utClassInfoDao.getClassesByCourseId(needToAdd);
@@ -1131,6 +1132,17 @@ public class AdminServiceImpl implements IAdminService {
                         tamsCourseManager.setCourseId(needToAdd);
                         tamsCourseManager.setCourseManagerId(classIns.get(0).getInstructorId());
                         tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
+
+                        //添加课程负责人角色
+                        KRIM_ROLE_T krim_role_t = krim_role_t_dao.getKrimRoleTByName(COURSE_MANAGER_ROLE_NAME);
+                        krim_role_t.setChecked(true);
+                        List<KRIM_ROLE_T> needToAddRoleList = new ArrayList<>();
+                        needToAddRoleList.add(krim_role_t);
+                        KRIM_PRNCPL_T currentEntity = krim_prncpl_t_dao.getKrimEntityEntTypTByPrncplId(classIns.get(0).getInstructorId());
+                        if (krim_role_t != null && currentEntity != null) {
+                            krim_role_mbr_t_dao.saveKrimRoleMbrTByPrncpltAndRoles(currentEntity, needToAddRoleList);
+                        }
+
                     }else {
                         TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
                         tamsCourseManager.setCourseId(needToAdd);

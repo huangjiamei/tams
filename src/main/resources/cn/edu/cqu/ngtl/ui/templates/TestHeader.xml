@@ -255,7 +255,7 @@
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewManagementTable')}">
+                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12" p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewManagerDashboardPage')}">
                                                                                             <property name="items">
                                                                                                 <list>
                                                                                                     <bean parent="ClassMap"/>

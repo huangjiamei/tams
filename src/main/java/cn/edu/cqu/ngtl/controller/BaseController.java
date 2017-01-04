@@ -42,6 +42,8 @@ public class BaseController extends UifControllerBase {
         MDC.put("UserType",user.getType());
         MDC.put("UserId",user.getTag());
         MDC.put("UserName",user.getName());
+
+
         return super.start(form);
     }
 

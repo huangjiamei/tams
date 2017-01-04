@@ -851,7 +851,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         //删除其他的申请
         for(MyTaViewObject myTaViewObject:taViewObjects){
-            tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(),myTaViewObject.getApplicationClassId());
+            if(myTaViewObject.getTaIdNumber()!=null&&myTaViewObject.getApplicationClassId()!=null)
+                tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(), myTaViewObject.getApplicationClassId());
+
         }
     }
 

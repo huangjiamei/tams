@@ -1,12 +1,7 @@
 package cn.edu.cqu.ngtl.service.common;
 
 
-import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DepartmentFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.DetailFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.SessionFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.adminInfo.*;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.tainfo.TaInfoViewObject;
 
@@ -39,5 +34,7 @@ public interface ExcelService {
     String printCourseClassExcel(List<ClassFundingViewObject> courseclasslist, String folderPath, String filename, String version)
             throws  IOException;
     String printTafundingExcel(List<TaFundingViewObject> tafundinglist, String folderPath, String filename, String version)
+            throws  IOException;
+    public  String printBlackListExcel(List<BlackListViewObject> blacklist, String folderPath, String filename, String version)
             throws  IOException;
 }

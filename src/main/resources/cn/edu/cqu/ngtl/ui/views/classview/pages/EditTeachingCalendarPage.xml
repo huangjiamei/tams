@@ -118,7 +118,7 @@
                                                                                   p:additionalCssClasses="icon-circle-arrow-left bg-grey box-btngroup">
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="更新"
+                                                                                  p:actionLabel="保存"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:methodToCall="updateTeachCalendar"
                                                                                   p:additionalCssClasses="icon-repeat bg-success box-btngroup">

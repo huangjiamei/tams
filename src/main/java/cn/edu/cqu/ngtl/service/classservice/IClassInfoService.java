@@ -67,7 +67,7 @@ public interface IClassInfoService {
      *
      * @return
      */
-    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, List<TAMSClassEvaluation> classEvaluations, String totalTime, String totalBudget);
+    short instructorAddClassTaApply(String instructorId, String classId, String assistantNumber, String totalTime, String totalBudget);
 
     /**
      * 删除助教请求

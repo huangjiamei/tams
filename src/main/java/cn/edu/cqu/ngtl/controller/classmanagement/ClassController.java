@@ -587,6 +587,9 @@ public class ClassController extends BaseController {
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
+
+            infoForm.setCalendarId(infoForm.getAllCalendar().get(index).getCode());
+
             infoForm.setAllCalendar(null);  //节省内存
 
             //String classId = infoForm.getCurrClassId();
@@ -622,6 +625,8 @@ public class ClassController extends BaseController {
                     infoForm.getAllCalendar().get(index)
             );
 
+            infoForm.setCalendarId(infoForm.getAllCalendar().get(index).getCode());
+
             //code 当做 id 用
             List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
             infoForm.setCalendarFiles(
@@ -651,32 +656,13 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
-        CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
-        int index = params.getSelectedLineIndex();
+        String calendarId = infoForm.getCalendarId();
+        String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
+        String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
+        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask);
 
-        try {
-            infoForm.setCurrentCalenderInfoEdit(
-                    infoForm.getAllCalendar().get(index)
-            );
+        return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
 
-            //code 当做 id 用
-            List<TAMSAttachments> attachments = new TamsFileControllerServiceImpl().getAllCalendarAttachments(infoForm.getAllCalendar().get(index).getCode());
-            infoForm.setCalendarFiles(
-                    taConverter.attachmentsToFileViewObject(attachments)
-            );
-
-            String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
-            String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
-            classInfoService.updateTeachCalendarInfo(infoForm.getAllCalendar().get(index).getCode().toString(), CalendarDescription, CalendarTaTask);
-
-            infoForm.setAllCalendar(null);  //节省内存
-
-            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
-        }
-        catch (IndexOutOfBoundsException e) {
-            // 应该返回错误页面，选择数据在内存中不存在，可能存在脏数据
-            return this.getModelAndView(infoForm, "pageEditTeachingCalendar");
-        }
     }
 
     /**
@@ -746,7 +732,7 @@ public class ClassController extends BaseController {
     }
 
     /**
-     * 提交新建教学日历页面
+     * 创建
      **/
     @RequestMapping(params = "methodToCall=submitTeachCalendarPage")
     public ModelAndView submitTeachCalendarPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -1130,6 +1116,7 @@ public class ClassController extends BaseController {
                 infoForm.setSubmitted(false);
             }
         }
+        /*
         //设置成绩评定方式
         List<TAMSClassEvaluation> tamsClassEvaluation = classInfoService.getClassEvaluationByClassId(classId);
         if(tamsClassEvaluation!=null){
@@ -1137,6 +1124,7 @@ public class ClassController extends BaseController {
         }else{
             infoForm.setClassEvaluations(new ArrayList<TAMSClassEvaluation>());
         }
+        */
 
         infoForm.setFeedbacks(taConverter.feedBackToViewObject(classInfoService.getFeedBackByClassId(classId)));
 
@@ -1150,6 +1138,7 @@ public class ClassController extends BaseController {
      * @param form
      * @return
      */
+    /*
     @RequestMapping(params = "methodToCall=deleteEvaluationLine")
     public ModelAndView deleteEvaluationLine(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
@@ -1173,9 +1162,9 @@ public class ClassController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageRequestTa");
     }
-
+*/
     /**
-     * 教师提交申请助教的请求
+     * 提交申请
      */
     @RequestMapping(params = "methodToCall=submitRequestTaPage")
     public ModelAndView submitRequestTaPage(@ModelAttribute("KualiForm") UifFormBase form,
@@ -1189,6 +1178,7 @@ public class ClassController extends BaseController {
             infoForm.setErrMsg("请填写本课程所需助教的数量！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
+        /*
         List<TAMSClassEvaluation> classEvaluations = infoForm.getClassEvaluations();
         if(classEvaluations == null || classEvaluations.isEmpty()) {
             infoForm.setErrMsg("请填写至少一种成绩评定方式！");
@@ -1204,11 +1194,12 @@ public class ClassController extends BaseController {
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
+        */
         String classId = infoForm.getCurrClassId();
         String instructorId = GlobalVariables.getUserSession().getPrincipalId();
         String totalTime = infoForm.getTotalElapsedTime();
         String totalBudget = infoForm.getTotalBudget().replace(",",""); //去掉钱里面的逗号
-        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, classEvaluations,totalTime,totalBudget);
+        short result = classInfoService.instructorAddClassTaApply(instructorId, classId, assistantNumber, totalTime,totalBudget);
 
         MDC.put("remoteHost",request.getRemoteAddr());
         logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"提交申请助教的请求");

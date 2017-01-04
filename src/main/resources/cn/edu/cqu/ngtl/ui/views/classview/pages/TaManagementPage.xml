@@ -358,7 +358,7 @@
                                                           p:propertyName="candidatePhoneNbr"/>
                                                     <bean id="bankTypeField" parent="Uif-InputField"
                                                           p:label="银行名称"
-                                                          p:propertyName="candidateankName"
+                                                          p:propertyName="candidateBankName"
                                                           p:required="true">
                                                         <property name="optionsFinder">
                                                             <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"

@@ -1720,6 +1720,41 @@ public class ClassController extends BaseController {
     }
 
 
+    @RequestMapping(params = "methodToCall=changeTaDialog")
+    public ModelAndView changeTaDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<MyTaViewObject> objects = infoForm.getAllMyTa();
+
+        List<MyTaViewObject> needToChange = new ArrayList<>();
+
+        for (MyTaViewObject per : objects) {
+            if (per.isCheckBox())
+                needToChange.add(per);
+        }
+
+        if(needToChange.size()==0){
+            infoForm.setErrMsg("请选择需更换的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        if(needToChange.size()>1){
+            infoForm.setErrMsg("只能选择1个需更换的助教！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        infoForm.setSelectedTa(needToChange.get(0));
+
+        return this.showDialog("changeAssistantDialog",true,infoForm);
+
+    }
+
+
+
+
     /**
      * 助教管理页面，输入姓名或学号，查询助教
      * @param form

@@ -492,7 +492,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return 6;
             }
             if (classApplyStatusDao.isInitializedStatus(function.getId(), classId)) {
-                classApplyStatusDao.toNextStatus(roleIds, function.getId(), classId);
+                classApplyStatusDao.changeStatusToCertainStatus(classId,"2");
+//                toNextStatus(roleIds, function.getId(), classId);
                 if (isExist != null)
                     if(!classInfoDao.getOneById(isExist.getApplicationClassId()).getStatus().equals("1"))
                         return 2;

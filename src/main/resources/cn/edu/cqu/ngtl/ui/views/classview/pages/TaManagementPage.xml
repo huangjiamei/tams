@@ -120,8 +120,8 @@
                                                                                   p:additionalCssClasses="icon-trash bg-orange box-btngroup"/>
 
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="更改"
-                                                                                  p:actionScript ="showDialog('changeAssistantDialog');"
+                                                                                  p:actionLabel="更换助教"
+                                                                                  p:methodToCall ="changeTaDialog"
                                                                                   p:additionalCssClasses="icon-retweet bg-aqua box-btngroup"/>      <!--p:methodToCall="showChangeDialog"-->
                                                                         </list>
                                                                     </property>
@@ -398,7 +398,7 @@
                                               parent="Uif-Disclosure-TableCollectionSection"
                                               p:onDocumentReadyScript="searchTaApplicantListALengthMenu();">
                                             <property name="collectionObjectClass"
-                                                      value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                                                      value="cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject"/>
                                             <property name="propertyName" value="conditionTAList"/>
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
@@ -415,7 +415,7 @@
                                                     <bean parent="Uif-DataField" p:label="学号"
                                                           p:propertyName="taIdNumber"/>
                                                     <bean parent="Uif-DataField" p:label="学院"
-                                                          p:propertyName="taDepartmentName"/>
+                                                          p:propertyName="departmentName"/>
                                                     <bean parent="Uif-DataField" p:label="性别"
                                                           p:propertyName="taGender"/>
                                <!--                     <bean parent="Uif-DataField" p:label="联系电话"
@@ -500,7 +500,7 @@
                                                           p:onClickScript="deleteCookie();"
                                                           p:actionImagePlacement="LEFT"
                                                           p:additionalCssClasses="icon-search box-btngroup"
-                                                          p:methodToCall="xxxx"
+                                                          p:methodToCall="searchTaByCondition"
                                                           p:refreshId="searchChangedTaApplicantList"/>
                                                 </list>
                                             </property>
@@ -568,7 +568,7 @@
                                               p:additionalCssClasses="table-minY"
                                               parent="Uif-Disclosure-TableCollectionSection">
                                             <property name="collectionObjectClass"
-                                                      value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                                                      value="cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject"/>
                                             <property name="propertyName" value="conditionTAList"/> <!--要更改-->
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
@@ -585,7 +585,7 @@
                                                     <bean parent="Uif-DataField" p:label="学号"
                                                           p:propertyName="taIdNumber"/>
                                                     <bean parent="Uif-DataField" p:label="学院"
-                                                          p:propertyName="taDepartmentName"/>
+                                                          p:propertyName="departmentName"/>
                                                     <bean parent="Uif-DataField" p:label="性别"
                                                           p:propertyName="taGender"/>
                                                 </list>
@@ -595,7 +595,7 @@
                                                     <bean parent="Uif-PrimaryActionButton"
                                                           p:ajaxSubmit="true"
                                                           p:actionImagePlacement="LEFT"
-                                                          p:methodToCall="xxxx"
+                                                          p:methodToCall="getSelectedTaInfo"
                                                           p:refreshId="taStuDetailInfoGrid"
                                                           p:render="@{#line.taName!=null}"
                                                           p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>

@@ -54,6 +54,7 @@ public class TaInfoForm extends BaseForm implements Serializable {
     /**
      * 工作台相关
      */
+    private boolean beenStuOrSys;
     private List<WorkBenchViewObject> workbench;
     private List<TAMSTaTravelSubsidy> travelSubsidies;
     private List<MyClassViewObject> myClassViewObjects;
@@ -125,6 +126,14 @@ public class TaInfoForm extends BaseForm implements Serializable {
         StudentNumber = studentNumber;
     }
 
+
+    public boolean isBeenStuOrSys() {
+        return beenStuOrSys;
+    }
+
+    public void setBeenStuOrSys(boolean beenStuOrSys) {
+        this.beenStuOrSys = beenStuOrSys;
+    }
 
     /**
      * Getter and Setter

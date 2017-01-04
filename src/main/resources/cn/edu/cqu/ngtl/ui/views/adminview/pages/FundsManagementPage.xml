@@ -580,14 +580,6 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="Excel"
-                                                                                                                      p:methodToCall="exportDepartmentCurrFundingsExcel"
-                                                                                                                      p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="PDF"
-                                                                                                                      p:methodToCall="exportCollegeFundsPDF"
-                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="SaveDeptFunding"
@@ -599,6 +591,14 @@
                                                                                                                       p:methodToCall="ReleaseDeptFunding"
                                                                                                                       p:render="@{#form.academicAffairManager}"
                                                                                                                       p:additionalCssClasses="icon-share bg-teal box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="Excel"
+                                                                                                                      p:methodToCall="exportDepartmentCurrFundingsExcel"
+                                                                                                                      p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="PDF"
+                                                                                                                      p:methodToCall="exportCollegeFundsPDF"
+                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
@@ -729,7 +729,7 @@
                                                                                                                                 </property>
                                                                                                                             </bean>
                                                                                                                             <bean parent="Uif-DataField"
-                                                                                                                                  p:label="博士经费"
+                                                                                                                                  p:label="博士津贴"
                                                                                                                                   p:propertyName="phdFunding"
                                                                                                                                   p:sortAs="numeric"/>
                                                                                                                             <bean parent="Uif-DataField"
@@ -774,7 +774,7 @@
                                                                                                                                 <property name="items">
                                                                                                                                     <list>
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                                                                              p:actionLabel="EXCEL"
+                                                                                                                                              p:actionLabel="Excel"
                                                                                                                                               p:methodToCall="exportDepartmentPreFundingsExcel"
                                                                                                                                               p:additionalCssClasses="icon-list bg-olive box-btngroup"/>
                                                                                                                                         <bean parent="Uif-PrimaryActionButton"
@@ -1145,25 +1145,26 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="Excel"
-                                                                                                                      p:methodToCall="exportCourseFundsExcel"
-                                                                                                                      p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="SaveClassFunding"
                                                                                                                       p:render="@{#form.deptManager}"
                                                                                                                       p:additionalCssClasses="icon-save bg-success box-btngroup"/>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="PDF"
-                                                                                                                      p:methodToCall="exportClassFundingsPDF"
-                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="发布"
                                                                                                                       p:actionImagePlacement="LEFT"
                                                                                                                       p:methodToCall="ReleaseCourseFunding"
                                                                                                                       p:render="@{#form.deptManager}"
                                                                                                                       p:additionalCssClasses="icon-share bg-teal box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="Excel"
+                                                                                                                      p:methodToCall="exportCourseFundsExcel"
+                                                                                                                      p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="PDF"
+                                                                                                                      p:methodToCall="exportClassFundingsPDF"
+                                                                                                                      p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
@@ -1313,7 +1314,7 @@
                                                                                                                       p:propertyName="phdFunding"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
-                                                                                                                      p:label="奖励津贴"
+                                                                                                                      p:label="奖励经费"
                                                                                                                       p:propertyName="bonus"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
@@ -1450,6 +1451,12 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="保存"
+                                                                                                                      p:render="@{!#form.studentRole}"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="SaveTaFunding"
+                                                                                                                      p:additionalCssClasses="icon-save bg-success box-btngroup"/><!--@{#form.academicAffairManager}-->
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="Excel"
                                                                                                                       p:methodToCall="exportTaFundsExcel"
                                                                                                                       p:additionalCssClasses="icon-file bg-olive box-btngroup"/>
@@ -1457,12 +1464,7 @@
                                                                                                                       p:actionLabel="PDF"
                                                                                                                       p:methodToCall="exportTaFundingPDF"
                                                                                                                       p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="保存"
-                                                                                                                      p:render="@{!#form.studentRole}"
-                                                                                                                      p:actionImagePlacement="LEFT"
-                                                                                                                      p:methodToCall="SaveTaFunding"
-                                                                                                                      p:additionalCssClasses="icon-save bg-success box-btngroup"/><!--@{#form.academicAffairManager}-->
+
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
@@ -1522,9 +1524,9 @@
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tPhdFunds" p:additionalCssClasses="searchBoxWidth"/>
                                                                                                                 <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="tTrafficFunds" p:additionalCssClasses="searchBoxWidth"/>
-                                                                                                                <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tBonus" p:additionalCssClasses="searchBoxWidth"/>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="tTrafficFunds" p:additionalCssClasses="searchBoxWidth"/>
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tTotalFunds" p:additionalCssClasses="searchBoxWidth"/>
 
@@ -1611,13 +1613,13 @@
                                                                                                                       p:sortAs="numeric"/>
 
                                                                                                                 <bean parent="Uif-DataField"
+                                                                                                                      p:label="奖励经费"
+                                                                                                                      p:propertyName="bonus"
+                                                                                                                      p:sortAs="numeric"/>
+                                                                                                                <bean parent="Uif-DataField"
                                                                                                                       p:label="交通补贴"
                                                                                                                       p:propertyName="travelSubsidy"
                                                                                                                       p:additionalCssClasses="@{#line.taName == null?'':'icon-list-alt'}"
-                                                                                                                      p:sortAs="numeric"/>
-                                                                                                                <bean parent="Uif-DataField"
-                                                                                                                      p:label="奖励经费"
-                                                                                                                      p:propertyName="bonus"
                                                                                                                       p:sortAs="numeric"/>
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="总经费"

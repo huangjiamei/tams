@@ -206,9 +206,6 @@
                                                                                         <property name="options">
                                                                                             <list>
                                                                                                 <bean parent="Uif-KeyLabelPair"
-                                                                                                      p:key="0"
-                                                                                                      p:value=""/>
-                                                                                                <bean parent="Uif-KeyLabelPair"
                                                                                                       p:key="1"
                                                                                                       p:value="同意"/>
                                                                                                 <bean parent="Uif-KeyLabelPair"

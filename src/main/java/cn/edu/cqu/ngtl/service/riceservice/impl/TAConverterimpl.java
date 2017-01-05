@@ -181,11 +181,15 @@ public class TAConverterimpl implements ITAConverter {
 
             for (UTClassInformation information : informationlist) {
                 String instructorname = "";
+                List<String> instructorIds = new ArrayList<>();
                 List<UTClassInstructor> instructorName = classInstructorDao.selectByClassId(information.getId());
                 if (instructorName != null)
                     for (UTClassInstructor utClassInstructor : instructorName) {
-                        instructorname += utClassInstructor.getUtInstructor().getName()+" ";
-                    }
+                        if(utClassInstructor.getInstructorId() != null) {
+                            instructorname += utClassInstructor.getUtInstructor().getName() + " ";
+                            instructorIds.add(utClassInstructor.getInstructorId());
+                        }
+                }
 //                String workTime = tamsTeachCalendarDao.countWorkTimeByClassId(information.getId());
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
                 viewObject.setId(information.getId());
@@ -197,6 +201,7 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setStatus(information.getStatusName());
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName(instructorname);
+                viewObject.setInstructorList(instructorIds);
                 TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(information.getId());
                 String hiredTaNumber = taDao.countHiredTa(information.getId());
                 hiredTaNumber = hiredTaNumber == null ? "0" :hiredTaNumber;

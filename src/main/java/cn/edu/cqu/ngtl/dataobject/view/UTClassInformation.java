@@ -115,6 +115,17 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Transient
     private String instructorName;
 
+    private boolean isCheckBox;
+
+
+    public boolean isCheckBox() {
+        return isCheckBox;
+    }
+
+    public void setCheckBox(boolean checkBox) {
+        isCheckBox = checkBox;
+    }
+
     public String getStatusName() {
         return statusName;
     }

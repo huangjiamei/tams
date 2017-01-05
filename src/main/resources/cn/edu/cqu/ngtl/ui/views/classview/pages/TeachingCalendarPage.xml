@@ -123,9 +123,10 @@
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
+                                                                                  p:ajaxSubmit = "false"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:render = "@{!#form.studentRole}"
-                                                                                  p:actionScript ="showDialog('confirmCopyDialog');"
+                                                                                  p:methodToCall="getCopyTeachCalendarDialog"
                                                                                   p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                             </bean>
                                                                         </list>
@@ -290,8 +291,8 @@
                             <bean id="copyTeachingCalendarList"
                                   parent="Uif-Disclosure-TableCollectionSection">
                                 <property name="collectionObjectClass"
-                                          value="cn.edu.cqu.ngtl.dataobject.ut.UTInstructor"/>
-                                <property name="propertyName" value="instructorList"/><!--propertyNamehe optionfinder要更改-->
+                                          value="cn.edu.cqu.ngtl.dataobject.view.UTClassInformation"/>
+                                <property name="propertyName" value="utClassInformations"/>
                                 <property name="layoutManager.renderSequenceField"
                                           value="false"/>
                                 <property name="layoutManager.richTable.render"
@@ -303,15 +304,13 @@
                                 <property name="renderLineActions" value="false"/>
                                 <property name="items">
                                     <list>
-                                        <bean parent="Uif-InputField"
-                                              p:propertyName="checked" p:style="display:@{#line.name!=null?'block':'none'}">
+                                        <bean parent="Uif-InputField" p:propertyName="checkBox" p:style="display:@{#form.utClassInformations!=null?'block':'none'}">
                                             <property name="control">
                                                 <bean parent="Uif-CheckboxControl"/>
                                             </property>
                                         </bean>
-                                        <bean parent="Uif-DataField" p:label="教学班号" p:propertyName="name"/>
-                                        <bean parent="Uif-DataField" p:label="课程名称"
-                                              p:propertyName="code"/>
+                                        <bean parent="Uif-DataField" p:label="教学班号" p:propertyName="classNumber"/>
+                                        <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"/>
                                     </list>
                                 </property>
                             </bean>
@@ -324,8 +323,8 @@
         <property name="footer.items">
             <list>
                 <bean id="dismissCopyButtonId" parent="Uif-DialogDismissButton" p:actionLabel="取消" />
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定"
-                      p:ajaxSubmit="true"  p:dialogDismissOption="REQUEST" /><!--p:methodToCall="xxxx"-->
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确定" p:methodToCall="ConfirmCopyTeachCalendar"
+                      p:ajaxSubmit="true"  p:dialogDismissOption="REQUEST"/><!--p:methodToCall="xxxx"-->
             </list>
         </property>
     </bean>

@@ -105,4 +105,8 @@ public interface IClassInfoService {
 
     void updateTeachCalendarInfo(String calendarId, String description, String taTask);
 
+    List<UTClassInformation> getClassInfoByInstructorIds(List<String> InstructorId, String curClassId);
+
+    boolean copyTeachingCalendar (List<String> classIds, String curClassId);
+
 }

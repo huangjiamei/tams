@@ -4,10 +4,14 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
+import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
+import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
 import cn.edu.cqu.ngtl.service.common.ExcelService;
@@ -91,6 +95,9 @@ public class ClassController extends BaseController {
 
     @Autowired
     private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
+
+    @Autowired
+    private UTClassInstructorDao utClassInstructorDao;
 
     private static int MAX_CALENDAR_HOUR = 10;
 
@@ -530,6 +537,7 @@ public class ClassController extends BaseController {
         if(instructorList!=null){
             if(instructorList.contains(uId)||userInfoService.isSysAdmin(uId)){
                 infoForm.setInstructorHimSelf(true);
+                infoForm.setInstructorList(instructorList);
             }else {
                 infoForm.setInstructorHimSelf(false);
             }
@@ -740,6 +748,57 @@ public class ClassController extends BaseController {
         infoForm.setCurrentCalendarInfo(infoForm.getCurrentCalenderInfoEdit());
         return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
 
+    }
+
+    /**
+     * 复制教学日历：显示对话框
+     */
+    @RequestMapping(params = "methodToCall=getCopyTeachCalendarDialog")
+    public ModelAndView getCopyTeachCalendarDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                            HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        List<String> InstructorIds = infoForm.getInstructorList();
+        if(classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId()) == null) {
+            List<UTClassInformation> nullObject = new ArrayList<>(1);
+            nullObject.add(new UTClassInformation());
+            infoForm.setUtClassInformations(nullObject);
+        }
+        else
+            infoForm.setUtClassInformations(classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId()));
+        return this.showDialog("confirmCopyDialog", true, infoForm);
+    }
+
+    /**
+     * 复制教学日历：点击确定
+     */
+    @RequestMapping(params = "methodToCall=ConfirmCopyTeachCalendar")
+    public ModelAndView ConfirmCopyTeachCalendar(@ModelAttribute("KualiForm") UifFormBase form,
+                                                   HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        List<UTClassInformation> utClassInformations = infoForm.getUtClassInformations();
+        //遍历所有list，找到所选的行
+        List<UTClassInformation> checkedList = new ArrayList<>();
+        for(UTClassInformation per : utClassInformations) {
+            if(per.isCheckBox())
+                checkedList.add(per);
+        }
+        if(checkedList.size() == 0) {
+            infoForm.setErrMsg("请选择要复制教学日历的课程！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else {
+            List<String> classIds = new ArrayList<>();
+            for (UTClassInformation per : checkedList)
+                classIds.add(per.getId());
+            if(!classInfoService.copyTeachingCalendar(classIds, infoForm.getCurrClassId())){
+                infoForm.setErrMsg("您所选的教学班暂无教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+
+        }
+        return this.getTeachingCalendar(infoForm, request);
     }
 
     /**

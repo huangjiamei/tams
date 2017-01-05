@@ -215,7 +215,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 boolean flag = false;
                 if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
 
-                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '"+courseCode+"' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
+                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" +courseCode + "' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
                     PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
                     List<String> teachWeekList = new ArrayList<>();
 
@@ -223,22 +223,19 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     String roomName = "";
                     try {
                         ResultSet res2 = pre2.executeQuery();
-                        if (!res2.wasNull()) {
-                            flag = true;
-                            while (res2.next()) {
-                                teachWeek += res2.getString("ANALYSE")+",";  //暂定已这种方式分割开
-                                roomName = res2.getString("MC");
-                            }
-                        } else {
-                            flag = false;
+                        flag = true;
+                        while (res2.next()) {
+                            teachWeek += res2.getString("ANALYSE")+",";  //暂定已这种方式分割开
+                            roomName = res2.getString("MC");
                         }
+
                     } finally {
                         if (pre2 != null)
                             pre2.close();
                     }
 
                     //如果KCKB里面没有这个教学班的信息
-                    if (flag) {
+                    if (!teachWeek.equals("")&&!roomName.equals("")) {
                         if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
                             classNbrs.add(classNbr);
                             /**

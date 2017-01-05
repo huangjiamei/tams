@@ -117,13 +117,13 @@
                                                                                   p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
-                                                                                  p:render = "@{!#form.studentRole}"
+                                                                                  p:render = "@{#form.instructorHimSelf}"
                                                                                   p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:render = "@{!#form.studentRole}"
+                                                                                  p:render = "@{#form.instructorHimSelf}"
                                                                                   p:methodToCall="getCopyTeachCalendarDialog"
                                                                                   p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                             </bean>

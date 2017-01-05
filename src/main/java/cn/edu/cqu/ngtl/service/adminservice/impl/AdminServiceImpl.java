@@ -48,6 +48,7 @@ public class AdminServiceImpl implements IAdminService {
 
     private static final Logger logger = Logger.getRootLogger();
     private static final String COURSE_MANAGER_ROLE_NAME = "课程负责人";
+    private static final String TEACHER_ROLE_NAME = "教师";
     @Autowired
     private TAMSTimeSettingTypeDao timeSettingTypeDao;
     @Autowired
@@ -1008,7 +1009,7 @@ public class AdminServiceImpl implements IAdminService {
             deptFundings.add(
                     tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), curSession.getId())
             );
-            if(deptFundings != null)
+            if(deptFundings != null&&deptFundings.get(0)!=null)
                 sessionFundingTotalApply = Integer.parseInt(deptFundings.get(0).getApplyFunding());
         }
         return sessionFundingTotalApply.toString();
@@ -1107,12 +1108,12 @@ public class AdminServiceImpl implements IAdminService {
 
         List<String> curCourseMangerCourseId = new ArrayList<>();
         List<String> curSessionCourseIds = new ArrayList<>();
-        List<UTClassInformation> curSessionClassInformation = utClassInfoDao.getAllCurrentClassInformation();
+        List<UTClassInformation> curSessionClassInformation = utClassInfoDao.getAllCurrentClassInformation();//找到所有的课程信息
 
         if(curSessionClassInformation!=null){
             for(UTClassInformation utClassInformation:curSessionClassInformation){
                 if(!curSessionCourseIds.contains(utClassInformation.getCourseId().toString()))
-                    curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //当前学期开课的课程UNIQEUID
+                    curSessionCourseIds.add(utClassInformation.getCourseId().toString());  //开课的课程UNIQEUID
             }
         }
 /*        List<TAMSCourseManager> allCourseManager = tamsCourseManagerDao.getAllCourseManager();
@@ -1124,6 +1125,7 @@ public class AdminServiceImpl implements IAdminService {
         }*/
         for(String needToAdd:curSessionCourseIds) {
             if(!curCourseMangerCourseId.contains(needToAdd)) {
+                curCourseMangerCourseId.add(needToAdd);
                 List<UTClassInformation> classes = utClassInfoDao.getClassesByCourseId(needToAdd);
                 if(classes!=null&&classes.size()==1){
                     List<UTClassInstructor> classIns = utClassInstructorDao.selectByClassId(classes.get(0).getId());
@@ -1138,7 +1140,7 @@ public class AdminServiceImpl implements IAdminService {
                         krim_role_t.setChecked(true);
                         List<KRIM_ROLE_T> needToAddRoleList = new ArrayList<>();
                         needToAddRoleList.add(krim_role_t);
-                        KRIM_PRNCPL_T currentEntity = krim_prncpl_t_dao.getKrimEntityEntTypTByPrncplId(classIns.get(0).getInstructorId());
+                        KRIM_PRNCPL_T currentEntity = krim_prncpl_t_dao.getKrimEntityEntTypTByPrncplId(classIns.get(0).getInstructorId()==null?"0":classIns.get(0).getInstructorId());
                         if (krim_role_t != null && currentEntity != null) {
                             krim_role_mbr_t_dao.saveKrimRoleMbrTByPrncpltAndRoles(currentEntity, needToAddRoleList);
                         }
@@ -1156,10 +1158,40 @@ public class AdminServiceImpl implements IAdminService {
                     tamsCourseManagerDao.saveCourseManager(tamsCourseManager);
                 }
             }
-            return true;
         }
-        return false;
+        return true;
     }
+
+    @Override
+    public boolean initTeacherData(){
+        List<UTClassInstructor> allClassInstructors = utClassInstructorDao.getAllClassInstructor();
+        List<String> instructors = new ArrayList<>();
+        if(allClassInstructors!=null){
+            for(UTClassInstructor utClassInstructor:allClassInstructors){
+                if(utClassInstructor.getInstructorId()!=null) {
+                    if (!instructors.contains(utClassInstructor.getInstructorId())){
+                        instructors.add(utClassInstructor.getInstructorId());
+                    }
+
+                }
+            }
+        }
+
+        KRIM_ROLE_T krim_role_t = krim_role_t_dao.getKrimRoleTByName(TEACHER_ROLE_NAME);
+        krim_role_t.setChecked(true);
+        List<KRIM_ROLE_T> needToAddRoleList = new ArrayList<>();
+        needToAddRoleList.add(krim_role_t);
+        for(String s : instructors) {
+            KRIM_PRNCPL_T currentEntity = krim_prncpl_t_dao.getKrimEntityEntTypTByPrncplId(s);
+            if (krim_role_t != null && currentEntity != null) {
+                krim_role_mbr_t_dao.saveKrimRoleMbrTByPrncpltAndRoles(currentEntity, needToAddRoleList);
+            }
+        }
+
+        return true;
+    }
+
+
 
     @Override
     public List<UTInstructor> getInstructorByNameAndCodeAndDepartmentId(String name, String code,String departmentId) {

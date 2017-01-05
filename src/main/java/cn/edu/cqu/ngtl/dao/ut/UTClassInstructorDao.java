@@ -18,7 +18,7 @@ public interface UTClassInstructorDao {
 
     void saveClassInstructorByList(List<UTClassInstructor> utClassInstructors);
 
-    Map getAllClassIdAndInstructorId(Map InstructorMap);
+    List<Map> getAllClassIdAndInstructorId(Map InstructorMap);
 
     List<Object> selectCourseManagerClassIdsByInstructorId(String uId);
 

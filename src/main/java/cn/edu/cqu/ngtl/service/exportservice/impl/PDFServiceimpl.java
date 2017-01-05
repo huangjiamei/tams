@@ -4,6 +4,7 @@ import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.springframework.stereotype.Service;
@@ -225,7 +226,7 @@ public class PDFServiceimpl implements IPDFService {
         cell = new PdfPCell(new Paragraph(" ", font));
         cell.disableBorderSide(-1);
         table.addCell(cell);
-        cell = new PdfPCell(new Paragraph("        课程编号  "+classInformation.getCourseCode(), fontContent));
+        cell = new PdfPCell(new Paragraph("        课程代码  "+classInformation.getCourseCode(), fontContent));
         cell.disableBorderSide(-1);
         cell.setRotation(270);
         table.addCell(cell);
@@ -340,6 +341,39 @@ public class PDFServiceimpl implements IPDFService {
                 Content.add(content);
             }
             filePath = this.printNormalTable("助教经费列表", header, Content, fileName);
+
+        }catch(DocumentException | IOException e){
+            String errorMsg="exception";
+            return errorMsg;
+        }
+        return filePath;
+    }
+    /**
+     *获取教学日历PDF格式导出的路径
+     * @param  TeachCalendarManager
+     * @return filePath
+     */
+    @Override
+    public String prepareTeachCalendarPDF(List<TeachCalendarViewObject>  TeachCalendarManager){
+        SimpleDateFormat curTime = new SimpleDateFormat("yyyy-MM-dd");
+        String fileName = "教学日历列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
+        String filePath="";
+        try{
+            String[] header = {"编号","教学主题","助教任务描述","开始日期","结束日期","总耗时"};
+            List<String[]> Content = new ArrayList( TeachCalendarManager.size());
+            for( TeachCalendarViewObject TeachCalendarObj : TeachCalendarManager) {
+                String code = TeachCalendarObj.getCode() == null ? "" :TeachCalendarObj.getCode();
+                String theme = TeachCalendarObj.getTheme() == null ? "" :TeachCalendarObj.getTheme();
+                String description= TeachCalendarObj.getDescription() == null ? "" :TeachCalendarObj.getDescription();
+                String startTime=TeachCalendarObj.getStartTime() == null ? "" :TeachCalendarObj.getStartTime().substring(0,10);
+                String endTime= TeachCalendarObj.getEndTime()== null ? "" :TeachCalendarObj.getEndTime().substring(0,10);
+                String elapsedTime= TeachCalendarObj.getElapsedTime() == null ? "" :TeachCalendarObj.getElapsedTime();
+                String[] content = {
+                        code,theme,description,startTime,endTime,elapsedTime
+                };
+                Content.add(content);
+            }
+            filePath = this.printNormalTable("教学日历列表", header, Content, fileName);
 
         }catch(DocumentException | IOException e){
             String errorMsg="exception";

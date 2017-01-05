@@ -107,7 +107,7 @@
                                                     <bean id="user-header-img" parent="Uif-Image"
                                                           p:additionalCssClasses="photo"
                                                           p:style="margin-bottom:30px;"
-                                                          p:source="@{#ConfigProperties['application.url']}/images/user-header-default.jpg"/>
+                                                          p:source="@{#ConfigProperties['application.url']}/images/noPhoto-noWord.jpg"/>
                                                     <!--具体信息的表格-->
                                                     <bean parent="Uif-GridGroup"
                                                           p:additionalCssClasses="box-body"
@@ -119,7 +119,7 @@
                                                                       p:messageText="@{user.getCode()}"/>
                                                                 <bean parent="Uif-MessageField" p:label="姓名"
                                                                       p:messageText="@{user.getName()}"/>
-                                                                <bean parent="Uif-MessageField" p:label="学院"
+                                                                <bean parent="Uif-MessageField" p:label="部门"
                                                                       p:messageText="@{user.getDepartment()}"/>
                                                             </list>
                                                         </property>

@@ -1255,6 +1255,47 @@ function readyCalendar(){
                 backgroundColor: "#f56954", // red
                 borderColor: "#f56954", // red
             },
+            {
+                title: '除夕',
+                start: new Date(2017, 0, 27),
+                end: new Date(2017, 0,27),
+                backgroundColor: "#00a65a", // Success
+                borderColor: "#00a65a", // Success
+            },
+            {
+                title: '春节',
+                start: new Date(2017, 0, 28),
+                end: new Date(2017, 0,28),
+                backgroundColor: "#00a65a", // Success
+                borderColor: "#00a65a", // Success
+            }, {
+                title: '报到',
+                start: new Date(2017, 1, 18),
+                end: new Date(2017, 1,19),
+                backgroundColor: "#f56954", // red
+                borderColor: "#f56954", // red
+            },
+            {
+                title: '清明节',
+                start: new Date(2017, 3, 2),
+                end: new Date(2017, 3,4),
+                backgroundColor: "#00a65a", // Success
+                borderColor: "#00a65a", // Success
+            },
+            {
+                title: '劳动节',
+                start: new Date(2017, 3, 29),
+                end: new Date(2017, 4,1),
+                backgroundColor: "#00a65a", // Success
+                borderColor: "#00a65a", // Success
+            },
+            {
+                title: '端午',
+                start: new Date(2017, 4, 28),
+                end: new Date(2017, 4,30),
+                backgroundColor: "#00a65a", // Success
+                borderColor: "#00a65a", // Success
+            },
 
         ],
         editable: false,
@@ -1289,5 +1330,10 @@ function readyCalendar(){
 
         }
     });
+}
+
+//页面直接写herf会报js错误，
+function clickToExam(){
+    window.location=" http://mystudy.cqu.edu.cn/exam";
 }
 

@@ -90,137 +90,150 @@
                                               p:additionalCssClasses="box box-success">
                                             <property name="items">
                                                 <list>
+
+                                                    <bean parent="Uif-VerticalBoxSection">
+                                                        <property name="items">
+                                                            <list>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:additionalCssClasses="box-header">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-Icon" p:iconClass="icon-retweet"/>
+                                                                            <bean parent="Uif-MessageField" p:messageText="同步信息"
+                                                                                  p:additionalCssClasses="boxheaderTitle"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                                <bean parent="Uif-GridGroup"
+                                                                      p:layoutManager.numberOfColumns="2"
+                                                                      p:style="text-align:center"
+                                                                      p:layoutManager.renderAlternatingHeaderColumns="false">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="主机类型"
+                                                                                  p:propertyName="systemHostType">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-DropdownControl">
+                                                                                        <property
+                                                                                                name="options">
+                                                                                            <list>
+                                                                                                <bean parent="Uif-KeyLabelPair"
+                                                                                                      p:key="0"
+                                                                                                      p:value="Oracle"/>
+                                                                                            </list>
+                                                                                        </property>
+                                                                                    </bean>
+                                                                                </property>
+                                                                            </bean>
+
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="主机地址"
+                                                                                  p:propertyName="systemHostIP"
+                                                                                  p:required="true"/>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="端口"
+                                                                                  p:propertyName="systemHostPort"
+                                                                                  p:required="true"/>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="数据库名"
+                                                                                  p:propertyName="systemDbName"
+                                                                                  p:required="true"/>
+
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="用户名"
+                                                                                  p:propertyName="systemDbUserName"
+                                                                                  p:required="true"/>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:label="密码"
+                                                                                  p:propertyName="systemDbPassword"
+                                                                                  p:required="true"/>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-VerticalBoxSection"
+                                                                      p:style="margin: 20px;float: right!important;" >
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-InputField"
+                                                                                  p:propertyName="checkboxesTest">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-HorizontalCheckboxesControl">
+                                                                                        <property
+                                                                                                name="options">
+                                                                                            <list>
+                                                                                                <bean parent="Uif-KeyLabelPair"
+                                                                                                      p:key="1"
+                                                                                                      p:value="课程信息"/>
+                                                                                                <bean parent="Uif-KeyLabelPair"
+                                                                                                      p:key="2"
+                                                                                                      p:value="教学班信息"/>
+                                                                                                <bean parent="Uif-KeyLabelPair"
+                                                                                                      p:key="3"
+                                                                                                      p:value="同步学生课表"/>
+                                                                                            </list>
+                                                                                        </property>
+                                                                                    </bean>
+                                                                                </property>
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                      p:additionalCssClasses="box-header">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:style="margin-bottom:10px;float:right!important"
+                                                                                  p:actionLabel="同步"
+                                                                                  p:additionalCssClasses="icon-save bg-success box-btngroup"
+                                                                                  p:methodToCall="syncInfo"
+                                                                            /><!--p:refreshId="xxxx"-->
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
+                                                            </list>
+                                                        </property>
+                                                    </bean>
+
                                                     <bean parent="Uif-TabGroup"
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                      p:headerText="同步信息1">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-GridGroup"
-                                                                                  p:layoutManager.numberOfColumns="2"
-                                                                                  p:style="text-align:center"
-                                                                                  p:layoutManager.renderAlternatingHeaderColumns="false">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:label="主机类型"
-                                                                                              p:propertyName="systemHostType">
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-DropdownControl">
-                                                                                                    <property
-                                                                                                            name="options">
-                                                                                                        <list>
-                                                                                                            <bean parent="Uif-KeyLabelPair"
-                                                                                                                  p:key="0"
-                                                                                                                  p:value="Oracle"/>
-                                                                                                        </list>
-                                                                                                    </property>
-                                                                                                </bean>
-                                                                                            </property>
-                                                                                        </bean>
 
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:label="主机地址"
-                                                                                              p:propertyName="systemHostIP"
-                                                                                              p:required="true"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:label="端口"
-                                                                                              p:propertyName="systemHostPort"
-                                                                                              p:required="true"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:label="数据库名"
-                                                                                              p:propertyName="systemDbName"
-                                                                                              p:required="true"/>
+                                                                <!--<bean parent="Uif-VerticalBoxSection"-->
+                                                                      <!--p:headerText="同步信息2">-->
+                                                                    <!--<property name="items">-->
+                                                                        <!--<list>-->
+                                                                           <!--&lt;!&ndash;添加其他内容&ndash;&gt;-->
+                                                                            <!--<bean parent="Uif-GridGroup"-->
+                                                                                  <!--p:layoutManager.numberOfColumns="2"-->
+                                                                                  <!--p:style="text-align:center"-->
+                                                                                  <!--p:layoutManager.renderAlternatingHeaderColumns="false">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-InputField"-->
+                                                                                              <!--p:propertyName="test"-->
+                                                                                              <!--p:label="允许xxxxxx">-->
+                                                                                            <!--<property name="control">-->
+                                                                                                <!--<bean parent="Uif-CheckboxControl"/>-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
+                                                                                        <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                              <!--p:style="margin-bottom:10px;float:right!important"-->
+                                                                                              <!--p:actionLabel="保存"-->
+                                                                                              <!--p:additionalCssClasses="icon-save bg-success box-btngroup"-->
+                                                                                              <!--p:methodToCall="xxxx"-->
+                                                                                        <!--/>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
 
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:label="用户名"
-                                                                                              p:propertyName="systemDbUserName"
-                                                                                              p:required="true"/>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:label="密码"
-                                                                                              p:propertyName="systemDbPassword"
-                                                                                              p:required="true"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection"
-                                                                                p:style="margin: 20px;float: right!important;" >
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="checkboxesTest">
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-HorizontalCheckboxesControl">
-                                                                                                    <property
-                                                                                                            name="options">
-                                                                                                        <list>
-                                                                                                            <bean parent="Uif-KeyLabelPair"
-                                                                                                                  p:key="1"
-                                                                                                                  p:value="课程信息"/>
-                                                                                                            <bean parent="Uif-KeyLabelPair"
-                                                                                                                  p:key="2"
-                                                                                                                  p:value="教学班信息"/>
-                                                                                                            <bean parent="Uif-KeyLabelPair"
-                                                                                                                  p:key="3"
-                                                                                                                  p:value="同步学生课表"/>
-                                                                                                        </list>
-                                                                                                    </property>
-                                                                                                </bean>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-HorizontalBoxSection"
-                                                                                  p:additionalCssClasses="box-header">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:style="margin-bottom:10px;float:right!important"
-                                                                                              p:actionLabel="同步"
-                                                                                              p:additionalCssClasses="icon-save bg-success box-btngroup"
-                                                                                              p:methodToCall="syncInfo"
-                                                                                        /><!--p:refreshId="xxxx"-->
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
-                                                                <bean parent="Uif-VerticalBoxSection"
-                                                                      p:headerText="同步信息2">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                           <!--添加其他内容-->
-                                                                            <bean parent="Uif-GridGroup"
-                                                                                  p:layoutManager.numberOfColumns="2"
-                                                                                  p:style="text-align:center"
-                                                                                  p:layoutManager.renderAlternatingHeaderColumns="false">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-InputField"
-                                                                                              p:propertyName="test"
-                                                                                              p:label="允许xxxxxx">
-                                                                                            <property name="control">
-                                                                                                <bean parent="Uif-CheckboxControl"/>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                        <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:style="margin-bottom:10px;float:right!important"
-                                                                                              p:actionLabel="保存"
-                                                                                              p:additionalCssClasses="icon-save bg-success box-btngroup"
-                                                                                              p:methodToCall="xxxx"
-                                                                                        />
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                        <!--</list>-->
+                                                                    <!--</property>-->
+                                                                <!--</bean>-->
                                                             </list>
                                                         </property>
                                                     </bean>

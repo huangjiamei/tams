@@ -39,10 +39,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by tangjing on 16-10-19.
@@ -131,7 +128,10 @@ public class TAConverterimpl implements ITAConverter {
              */
 //            List<UTClassInstructor> utClassInstructors = classInstructorDao.getAllClassInstructor();
             System.out.println(System.currentTimeMillis());
-            Map classInstructorMap = classInstructorDao.getAllClassIdAndInstructorId(InstructorMap);
+            List<Map> result = classInstructorDao.getAllClassIdAndInstructorId(InstructorMap);
+            Map classInstructorMap = result.get(0);
+            Map classInsIdMap = result.get(1);
+
 //            for (UTClassInstructor utClassInstructor : utClassInstructors) {
 //                if (classInstructorMap.get(utClassInstructor.getClassId()) != null) //如果一门课有多个教师，则将教师名字进行组合
 //                    classInstructorMap.put(utClassInstructor.getClassId(), InstructorMap.get(utClassInstructor.getInstructorId()) + " " + classInstructorMap.get(utClassInstructor.getClassId()));
@@ -164,6 +164,10 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setStatus(information.getStatusName());
                 viewObject.setOrder(information.getOrder());
                 viewObject.setInstructorName((String) classInstructorMap.get(information.getId()));
+                String[] instructorIdList = classInsIdMap.get(information.getId()).toString().split(" ");
+                if(instructorIdList!=null){
+                    viewObject.setInstructorList(Arrays.asList(instructorIdList));
+                }
                 viewObjects.add(viewObject);
             }
             return viewObjects;

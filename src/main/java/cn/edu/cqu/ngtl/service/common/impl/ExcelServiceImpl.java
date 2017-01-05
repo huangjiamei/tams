@@ -130,7 +130,7 @@ public class ExcelServiceImpl implements ExcelService {
         InfoCell.setCellStyle(styles.get("content"));
 
         InfoCell = infoRow.createCell(1, Cell.CELL_TYPE_STRING);
-        InfoCell.setCellValue("课程编号");
+        InfoCell.setCellValue("课程代码");
         InfoCell.setCellStyle(styles.get("content"));
 
         InfoCell = infoRow.createCell(2, Cell.CELL_TYPE_STRING);

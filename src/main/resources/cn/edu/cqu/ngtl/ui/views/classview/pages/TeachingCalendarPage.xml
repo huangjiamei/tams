@@ -114,11 +114,13 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionScript=""
                                                                                   p:actionLabel="添加"
+                                                                                  p:render = "@{!#form.studentRole}"
                                                                                   p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
                                                                                   p:actionImagePlacement="LEFT"
+                                                                                  p:render = "@{!#form.studentRole}"
                                                                                   p:actionScript ="showDialog('confirmCopyDialog');"
                                                                                   p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                             </bean>

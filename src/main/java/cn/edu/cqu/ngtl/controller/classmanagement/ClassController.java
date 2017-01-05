@@ -514,6 +514,16 @@ public class ClassController extends BaseController {
             infoForm.setBeenEmployed(false);
         }
 
+        if(userInfoService.isStudent(uId)){
+            infoForm.setStudentRole(true);
+        }else{
+            infoForm.setStudentRole(false);
+        }
+
+
+
+
+
         if (classId == null) {
             infoForm.setErrMsg("访问出错！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);

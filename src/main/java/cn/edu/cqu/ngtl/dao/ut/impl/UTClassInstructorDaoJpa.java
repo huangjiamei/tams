@@ -83,7 +83,7 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
             }
             else {
                 classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]==null?"":insIdAndClassId[1].toString()));
-                classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId.toString());
+                classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId[1].toString());
             }
         }
         result.add(classInstructorMap);

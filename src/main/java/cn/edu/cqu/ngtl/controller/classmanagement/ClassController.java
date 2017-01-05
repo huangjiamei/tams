@@ -761,13 +761,14 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         List<String> InstructorIds = infoForm.getInstructorList();
-        if(classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId()) == null) {
+        List<UTClassInformation> result = classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId());
+        if(result == null) {
             List<UTClassInformation> nullObject = new ArrayList<>(1);
             nullObject.add(new UTClassInformation());
             infoForm.setUtClassInformations(nullObject);
         }
         else
-            infoForm.setUtClassInformations(classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId()));
+            infoForm.setUtClassInformations(result);
         return this.showDialog("confirmCopyDialog", true, infoForm);
     }
 

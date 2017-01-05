@@ -1321,10 +1321,13 @@ public class TAConverterimpl implements ITAConverter {
             return "0";
         Long totalApproved = 0l;
         List<TAMSClassFunding> tamsClassFundings = tamsClassFundingDraftDao.selectAll();
-        for(TAMSClassFunding per : tamsClassFundings){
-            totalApproved = totalApproved + Long.parseLong(per.getAssignedFunding());
+        if(tamsClassFundings!=null) {
+            for (TAMSClassFunding per : tamsClassFundings) {
+                totalApproved = totalApproved+Long.parseLong(per.getAssignedFunding());
+            }
+            return totalApproved.toString();
         }
-        return totalApproved.toString();
+        return "0";
     }
 
     @Override

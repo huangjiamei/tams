@@ -64,7 +64,7 @@
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2"
-                                                                  p:value="教学班列表"
+                                                                  p:value="课程"
                                                                   p:location.viewId="ClassView"
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>

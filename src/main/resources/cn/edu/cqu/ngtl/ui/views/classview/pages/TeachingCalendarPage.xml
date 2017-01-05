@@ -240,11 +240,11 @@
                                                                                               p:additionalCssClasses="icon-eye-open bg-btn-blue tams-action-btn"/>
                                                                                         <bean parent="Uif-ActionImage"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:render="@{#line.code==null? false:true}"
+                                                                                              p:render="@{#form.instructorHimSelf}"
                                                                                               p:methodToCall="getEditTeachCalendarPage"
                                                                                               p:additionalCssClasses="icon-pencil bg-table-success tams-action-btn"/>
                                                                                         <bean parent="Uif-ActionImage"
-                                                                                              p:render="@{#line.code==null? false:true}"
+                                                                                              p:render="@{#form.instructorHimSelf}"
                                                                                               p:methodToCall="deleteTeachCalendar"
                                                                                               p:refreshId="calenderBox"
                                                                                               p:additionalCssClasses="icon-trash bg-table-red tams-action-btn"/>

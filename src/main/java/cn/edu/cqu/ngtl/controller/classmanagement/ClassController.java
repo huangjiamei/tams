@@ -9,8 +9,6 @@ import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
 import cn.edu.cqu.ngtl.dataobject.enums.TA_STATUS;
 import cn.edu.cqu.ngtl.dataobject.tams.*;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
-import cn.edu.cqu.ngtl.dataobject.ut.UTInstructor;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.classmanagement.ClassInfoForm;
 import cn.edu.cqu.ngtl.service.classservice.IClassInfoService;
@@ -1194,7 +1192,7 @@ public class ClassController extends BaseController {
         conditions.put("CourseName", infoForm.getCondCourseName());
         conditions.put("CourseCode", infoForm.getCondCourseCode() == null ? null : infoForm.getCondCourseCode().toUpperCase());
         conditions.put("ClassType", infoForm.getCondClassType());
-        conditions.put("StatusId", infoForm.getCourseStatus());
+        conditions.put("StatusOrder", infoForm.getCourseStatus());
 
         infoForm.setClassList(
                 taConverter.classInfoToViewObject(

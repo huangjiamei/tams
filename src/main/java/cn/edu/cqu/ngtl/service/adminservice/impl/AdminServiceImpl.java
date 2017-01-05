@@ -1009,7 +1009,7 @@ public class AdminServiceImpl implements IAdminService {
             deptFundings.add(
                     tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), curSession.getId())
             );
-            if(deptFundings != null)
+            if(deptFundings != null&&deptFundings.get(0)!=null)
                 sessionFundingTotalApply = Integer.parseInt(deptFundings.get(0).getApplyFunding());
         }
         return sessionFundingTotalApply.toString();

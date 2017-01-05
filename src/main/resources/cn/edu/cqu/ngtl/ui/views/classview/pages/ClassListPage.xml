@@ -397,7 +397,7 @@
                                                                                   p:propertyName="instructorName"/>
                                                                             <bean parent="Uif-DataField" p:label="耗费工时"
                                                                                   p:propertyName="workTime"/>
-                                                                            <bean parent="Uif-DataField" p:label="助教经费(元)"
+                                                                            <bean parent="Uif-DataField" p:label="申报经费(元)"
                                                                                   p:propertyName="appFunds"/>
                                                                             <bean parent="Uif-DataField" p:label="已聘用/已申请"
                                                                                   p:propertyName="taCount"/>

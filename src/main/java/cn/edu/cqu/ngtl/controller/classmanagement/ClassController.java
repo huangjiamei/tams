@@ -1358,7 +1358,7 @@ public class ClassController extends BaseController {
         String fileName = "教学班列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
         String filePath = "";
         try {
-            String[] header = {"课程名称", "课程编号", "教学班", "教师", "耗费工时", "学院"};
+            String[] header = {"课程名称", "课程代码", "教学班", "教师", "耗费工时", "学院"};
             List<String[]> Content = new ArrayList(classList.size());
             for(ClassTeacherViewObject clazz : classList) {
                 String courseName = clazz.getCourseName() == null ? "" : clazz.getCourseName();

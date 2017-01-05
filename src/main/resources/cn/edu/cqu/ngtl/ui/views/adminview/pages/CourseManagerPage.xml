@@ -200,13 +200,13 @@
                                                                                           p:methodToCall="updateCourseManager"
                                                                                           p:render="@{#line.courseNm==null? false:true}"
                                                                                           p:additionalCssClasses="icon-pencil bg-btn-green tams-action-btn"/>
-                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                          p:render="@{#line.courseNm==null? false:true}"
-                                                                                          p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">
-                                                                                        <property name="confirmationDialog">
-                                                                                            <ref bean="confirmDeleteManagerDialog" />
-                                                                                        </property>
-                                                                                    </bean>
+                                                                                    <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                          <!--p:render="@{#line.courseNm==null? false:true}"-->
+                                                                                          <!--p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn">-->
+                                                                                        <!--<property name="confirmationDialog">-->
+                                                                                            <!--<ref bean="confirmDeleteManagerDialog" />-->
+                                                                                        <!--</property>-->
+                                                                                    <!--</bean>-->
                                                                                 </list>
                                                                             </property>
                                                                         </bean>

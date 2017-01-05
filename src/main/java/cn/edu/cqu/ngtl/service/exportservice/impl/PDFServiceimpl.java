@@ -225,7 +225,7 @@ public class PDFServiceimpl implements IPDFService {
         cell = new PdfPCell(new Paragraph(" ", font));
         cell.disableBorderSide(-1);
         table.addCell(cell);
-        cell = new PdfPCell(new Paragraph("        课程编号  "+classInformation.getCourseCode(), fontContent));
+        cell = new PdfPCell(new Paragraph("        课程代码  "+classInformation.getCourseCode(), fontContent));
         cell.disableBorderSide(-1);
         cell.setRotation(270);
         table.addCell(cell);

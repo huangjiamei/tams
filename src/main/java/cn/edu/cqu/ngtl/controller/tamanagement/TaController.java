@@ -1001,7 +1001,7 @@ public class TaController extends BaseController {
         String fileName = "助教列表" + "-" + GlobalVariables.getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
         String filePath = "";
         try {
-            String[] header = {"姓名", "学号", "学历", "课程名称", "课程编号", "教学班", "教师", "教师考核", "学生考核", "成绩"};
+            String[] header = {"姓名", "学号", "学历", "课程名称", "课程代码", "教学班", "教师", "教师考核", "学生考核", "成绩"};
             List<String[]> Content = new ArrayList(taList.size());
             for(TaInfoViewObject ta : taList) {
                 String name = ta.getTaName() == null ? "" : ta.getTaName();

@@ -103,7 +103,7 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Column(name = "WORKFLOW_STATUS")
     private String statusName;
 
-    @Column(name = "\"ORDER\"")
+    @Column(name = "STATUS_ORDER")
     private String order;
 
     @Column(name = "ROOM_NAME")

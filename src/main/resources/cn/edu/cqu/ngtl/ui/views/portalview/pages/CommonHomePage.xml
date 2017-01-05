@@ -107,7 +107,7 @@
                                                     <bean id="user-header-img" parent="Uif-Image"
                                                           p:additionalCssClasses="photo"
                                                           p:style="margin-bottom:30px;"
-                                                          p:source="@{#ConfigProperties['application.url']}/images/photo.png"/>
+                                                          p:source="@{#ConfigProperties['application.url']}/images/noPhoto.jpg"/>
                                                     <!--具体信息的表格-->
                                                     <bean parent="Uif-GridGroup"
                                                           p:additionalCssClasses="box-body"

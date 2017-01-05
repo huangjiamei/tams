@@ -116,14 +116,12 @@
                                                                                   p:methodToCall="exportTeachingCalendarPDF"
                                                                                   p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionScript=""
                                                                                   p:actionLabel="添加"
                                                                                   p:render = "@{!#form.studentRole}"
                                                                                   p:methodToCall="getAddTeachCalendarPage"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="复制"
-                                                                                  p:ajaxSubmit = "false"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:render = "@{!#form.studentRole}"
                                                                                   p:methodToCall="getCopyTeachCalendarDialog"
@@ -296,7 +294,7 @@
                                 <property name="layoutManager.renderSequenceField"
                                           value="false"/>
                                 <property name="layoutManager.richTable.render"
-                                          value="true"/>
+                                          value="false"/>
 
                                 <property name="useServerPaging" value="true"/>
 

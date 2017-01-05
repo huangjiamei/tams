@@ -2271,7 +2271,7 @@ public class adminController extends BaseController {
         int index = params.getSelectedLineIndex();
         CourseManagerViewObject selectedObject = infoForm.getCourseManagerViewObjects().get(index);
         tamsCourseManagerDao.deleteCourseManager(tamsCourseManagerDao.getCourseManagerByInstructorId(selectedObject.getId()));
-        logger.info("删除课程为"+selectedObject.getCourseNm()+"课程代码为"+selectedObject.getCourseNmb()+"职工号为"+selectedObject.getInstructorCode()+"姓名为"+selectedObject.getCourseManager()+"的课程负责人");
+//        logger.info("删除课程为"+selectedObject.getCourseNm()+"课程代码为"+selectedObject.getCourseNmb()+"职工号为"+selectedObject.getInstructorCode()+"姓名为"+selectedObject.getCourseManager()+"的课程负责人");
         infoForm.getCourseManagerViewObjects().remove(index);
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
@@ -2642,6 +2642,8 @@ public class adminController extends BaseController {
         AdminInfoForm adminInfoForm = (AdminInfoForm) form;
         super.baseStart(adminInfoForm);
 
+        List<UTSession> sessions=  adminService.getAllSessions();
+
         adminInfoForm.setAllTerms(
                 taConverter.termInfoToViewObject(
                         adminService.getAllSessions()
@@ -2732,11 +2734,14 @@ public class adminController extends BaseController {
                     new CollectionControllerServiceImpl.CollectionActionParameters(adminInfoForm, true);
             int index = params.getSelectedLineIndex();
             TermManagerViewObject termManagerViewObject = adminInfoForm.getAllTerms().get(index);
+
             String termName = termManagerViewObject.getTermName();
             String year = termName.substring(0, termName.indexOf("年"));
             String term = termName.substring(termName.indexOf("年") + 1);
+
             termManagerViewObject.setTermYear(year);
             termManagerViewObject.setTermTerm(term);
+
             adminInfoForm.setCurrentTerm(termManagerViewObject);
             adminInfoForm.setTermIndex(index);
             return this.showDialog("confirmEditTermDialog", true, adminInfoForm);
@@ -2782,6 +2787,9 @@ public class adminController extends BaseController {
                     taConverter.termToDataObject(
                             adminInfoForm.getCurrentTerm()
                     ))) {
+
+                adminInfoForm.getAllTerms().set(adminInfoForm.getTermIndex(),adminInfoForm.getCurrentTerm());
+
                 // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
                 logger.error("编辑批次名称为"+adminInfoForm.getCurrentTerm().getTermName()+"、开始时间为"+adminInfoForm.getCurrentTerm().getStartDate()+"、结束时间为"+adminInfoForm.getCurrentTerm().getEndDate()+"失败。");
                 adminInfoForm.setErrMsg("编辑失败(修改为错误提示)");
@@ -2806,7 +2814,7 @@ public class adminController extends BaseController {
                 return this.showDialog("adminErrDialog", true, adminInfoForm);
             }
         }
-        return this.getTermManagePage(form);
+        return this.getModelAndView(adminInfoForm,"pageTermManagement");
     }
 
     /**
@@ -3314,7 +3322,7 @@ public class adminController extends BaseController {
         List<BlackListViewObject> blackListViewObjectList=infoForm.getTaBlackList();
 
         String filePath=adminService.prepareBlacklistPDF(blackListViewObjectList );
-        if (filePath.equals("exception")){
+if (filePath.equals("exception")){
             infoForm.setErrMsg("系统导出PDF文件错误!");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }else{
@@ -3342,8 +3350,10 @@ public class adminController extends BaseController {
         BlackListViewObject blackListViewObject = adminInfoForm.getTaBlackList().get(index);
         tamsTaBlackListDao.deleteFromBlackList(tamsTaBlackListDao.getBlackListByStuId(blackListViewObject.getStuId()));
 
-        MDC.put("remoteHost",request.getRemoteAddr());
-        logger.info("在黑名单中删除了学号为："+blackListViewObject.getStuId()+" 的助教。");
+        if (blackListViewObject.getStuId()!=null){
+            MDC.put("remoteHost",request.getRemoteAddr());
+            logger.info("在黑名单中删除了学号为："+blackListViewObject.getStuId()+" 的助教。");
+        }
 
         adminInfoForm.getTaBlackList().remove(index);
         return this.getModelAndView(adminInfoForm, "pageBlackList");

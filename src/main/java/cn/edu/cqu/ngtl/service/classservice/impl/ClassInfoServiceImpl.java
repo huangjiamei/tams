@@ -16,7 +16,6 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import org.apache.log4j.Logger;
-import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -215,10 +214,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return null;
             }
             TimeUtil timeUtil = new TimeUtil();
-            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
-                return this.getAllCurSessionClassesWithFinalStatus("1"); //工作流是审批
-            }
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
+            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+                List<UTClassInformation> secMaxOrderStatus = this.getAllCurSessionClassesWithFinalStatus("1");
+                List<UTClassInformation> taClasses = classInfoDao.selectBatchByIds(classIds);
+                secMaxOrderStatus.addAll(taClasses);
+                return secMaxOrderStatus; //工作流是审批
+            }
+
             List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
             if (utStudentTimetables != null && utStudentTimetables.size() != 0) {
                 for (UTStudentTimetable utStudentTimetable : utStudentTimetables) {
@@ -338,6 +341,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 for(UTClassInformation utClassInformation:classInformationList){
                     stuCanSeeClassId.add(utClassInformation.getId());
                 }
+
+                //自己担任助教的课程
+                List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
+                for(Object classid :classIds){
+                    if(!stuCanSeeClassId.contains(classid.toString()))
+                        stuCanSeeClassId.add(classid.toString());
+                }
+
             }else{
                 List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
                 for(Object classid :classIds){

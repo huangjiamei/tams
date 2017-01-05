@@ -986,8 +986,8 @@ td.selected{
     height: 300px;
 }
 
-#ApplyOutStandingTaPage pre{
-    height: 300px;
+#taDetailId pre{
+    height: 250px;
 }
 /*鼠标移动跟随*/
 .addPointer {

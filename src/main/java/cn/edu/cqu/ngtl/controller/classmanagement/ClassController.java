@@ -1727,6 +1727,12 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        infoForm.setStudentNameForChange(null);
+        infoForm.setStudentNumberForChange(null);
+        infoForm.setSelectedTaForChange(new MyTaViewObject());
+        infoForm.setConditionTAListForChange(null);
+
+
         List<MyTaViewObject> objects = infoForm.getAllMyTa();
 
         List<MyTaViewObject> needToChange = new ArrayList<>();
@@ -1746,13 +1752,30 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
-        infoForm.setSelectedTa(needToChange.get(0));
+        infoForm.setNeedToChangeTaName(needToChange.get(0).getTaName());
+        infoForm.setNeedToChangeTaId(needToChange.get(0).getTaIdNumber());
 
         return this.showDialog("changeAssistantDialog",true,infoForm);
 
     }
 
 
+
+    @RequestMapping(params = "methodToCall=showAddTaApplicationDialog")
+    public ModelAndView showAddTaApplicationDialog(@ModelAttribute("KualiForm") UifFormBase form,
+                                       HttpServletRequest request) {
+
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        infoForm.setStudentName(null);
+        infoForm.setStudentNumber(null);
+        infoForm.setSelectedTa(new MyTaViewObject());
+        infoForm.setConditionTAList(null);
+
+        return this.showDialog("addApplicantDialog",true,infoForm);
+
+    }
 
 
     /**
@@ -1797,11 +1820,40 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageTaManagement");
     }
 
-    /**
-     * 助教管理页面，输入姓名或学号查询得到助教列表后，点击助教列表中某一行查看该助教的具体信息
-     * @param form
-     * @return
-     */
+
+    @RequestMapping(params = "methodToCall=searchTaByConditionForChange")
+    public ModelAndView searchTaByConditionForChange(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        Map<String, String> conditions = new HashMap<>();
+        //put conditions
+        conditions.put("StudentName", infoForm.getStudentNameForChange());
+        conditions.put("StudentId", infoForm.getStudentNumberForChange());
+        infoForm.setConditionTAListForChange(
+                classConverter.studentInfoToMyTaViewObject(
+                        taService.getConditionTaByNameAndId(conditions)
+                )
+        );
+
+        //清除table页面信息缓存
+        Map map = new HashMap();
+        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("searchChangedTaApplicantList").getData());
+        map.put("displayStart",0);
+        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("searchChangedTaApplicantList").setData(map);
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+
+    }
+
+
+
+        /**
+         * 助教管理页面，输入姓名或学号查询得到助教列表后，点击助教列表中某一行查看该助教的具体信息
+         * @param form
+         * @return
+         */
     @RequestMapping(params = "methodToCall=getSelectedTaInfo")
     public ModelAndView getSelectedTaInfo(@ModelAttribute("KualiForm") UifFormBase form,
                                           HttpServletRequest request) {
@@ -1813,6 +1865,29 @@ public class ClassController extends BaseController {
         int index = params.getSelectedLineIndex();
 
         infoForm.setSelectedTa(infoForm.getConditionTAList().get(index));
+
+
+        return this.getModelAndView(infoForm, "pageTaManagement");
+    }
+
+
+    /**
+     * 交换助教表的选择助教
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=getSelectedTaInfoForChange")
+    public ModelAndView getSelectedTaInfoForChange(@ModelAttribute("KualiForm") UifFormBase form,
+                                          HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+
+        CollectionControllerServiceImpl.CollectionActionParameters params =
+                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+        int index = params.getSelectedLineIndex();
+
+        infoForm.setSelectedTaForChange(infoForm.getConditionTAListForChange().get(index));
 
         return this.getModelAndView(infoForm, "pageTaManagement");
     }
@@ -1897,6 +1972,8 @@ public class ClassController extends BaseController {
                 logger.info("教师"+GlobalVariables.getUserSession().getPrincipalName()+"将"+curTa.getTaName()+"加入了候选人列表");
 
                 infoForm.getConditionTAList().remove(curTa);
+
+
                 return this.getModelAndView(infoForm, "pageTaManagement");
             } else {
                 infoForm.setErrMsg("未知错误");
@@ -1904,6 +1981,53 @@ public class ClassController extends BaseController {
             }
         }
     }
+
+
+    /**
+     * 更换助教
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params =  {"methodToCall=changeCurTa"})
+    public ModelAndView changeCurTa(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        String classId = infoForm.getCurrClassId();
+        String stuId = infoForm.getNeedToChangeTaId();
+
+        String newTaId = infoForm.getSelectedTaForChange().getTaIdNumber();
+        String newTaPhoneNbr = infoForm.getCandidatePhoneNbrForChange();
+        String newTaBankName = infoForm.getCandidateBankNameForChange();
+        String newTaBankNbr = infoForm.getCandidateBankNbrForChange();
+
+        if(newTaId==null){
+            infoForm.setErrMsg("请选择新助教人选");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if(newTaPhoneNbr==null){
+            infoForm.setErrMsg("新填写新助教的联系电话");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if(newTaBankName==null){
+            infoForm.setErrMsg("新填写新助教的发卡银行名称");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        if(newTaBankNbr==null){
+            infoForm.setErrMsg("新填写新助教的银行卡号");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        boolean result = classInfoService.changeTa(classId,stuId,newTaId,newTaBankName,newTaBankNbr,newTaPhoneNbr);
+
+        if(result)
+            return this.getModelAndView(infoForm, "pageTaManagement");
+        else{
+            infoForm.setErrMsg("更换失败");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
 
     @RequestMapping(params =  {"methodToCall=selectCurSession"})
     public ModelAndView selectCurSession(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {

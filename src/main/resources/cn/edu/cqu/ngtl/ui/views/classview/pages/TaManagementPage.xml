@@ -224,7 +224,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:render = "@{#form.canEmploy}"
-                                                                                  p:actionScript="showDialog('addApplicantDialog');"
+                                                                                  p:methodToCall = "showAddTaApplicationDialog"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup"/>
                                                                         </list>
                                                                     </property>
@@ -474,21 +474,21 @@
                                                 <list>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="学生详情：  姓名"
-                                                          p:messageText="@{selectedTa.taName}"/>
+                                                          p:messageText="@{#form.needToChangeTaName}"/>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="学号"
-                                                          p:messageText="@{selectedTa.taIdNumber}"/>
+                                                          p:messageText="@{#form.needToChangeTaId}"/>
                                                 </list>
                                             </property>
                                         </bean>
                                         <bean parent="Uif-MessageField" p:messageText="请输入姓名或学号来查找候选人：" p:additionalCssClasses="message-font-size col-sm-12 col-md-12 col-lg-12"/>
 
                                         <bean id="nameChangeTa" parent="Uif-InputField" p:label="姓名"
-                                              p:propertyName="StudentName"
+                                              p:propertyName="studentNameForChange"
                                               p:additionalCssClasses="col-sm-12 col-md-6 col-lg-6"
                                               p:onDocumentReadyScript="clickButton('nameChangeTa','searchChangeStu')"/>
                                         <bean id="numberChangeTa" parent="Uif-InputField" p:label="学号"
-                                              p:propertyName="StudentNumber"
+                                              p:propertyName="studentNumberForChange"
                                               p:additionalCssClasses="col-sm-12 col-md-6 col-lg-6"
                                               p:onDocumentReadyScript="clickButton('numberChangeTa','searchChangeStu')"/>
 
@@ -500,7 +500,7 @@
                                                           p:onClickScript="deleteCookie();"
                                                           p:actionImagePlacement="LEFT"
                                                           p:additionalCssClasses="icon-search box-btngroup"
-                                                          p:methodToCall="searchTaByCondition"
+                                                          p:methodToCall="searchTaByConditionForChange"
                                                           p:refreshId="searchChangedTaApplicantList"/>
                                                 </list>
                                             </property>
@@ -516,24 +516,24 @@
                                                 <list>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="姓名"
-                                                          p:messageText="@{selectedTa.taName}"/>
+                                                          p:messageText="@{selectedTaForChange.taName}"/>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="学号"
-                                                          p:messageText="@{selectedTa.taIdNumber}"/>
+                                                          p:messageText="@{selectedTaForChange.taIdNumber}"/>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="性别"
-                                                          p:messageText="@{selectedTa.taGender}"/>
+                                                          p:messageText="@{selectedTaForChange.taGender}"/>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="专业"
-                                                          p:messageText="@{selectedTa.taMajorName}"/>
+                                                          p:messageText="@{selectedTaForChange.taMajorName}"/>
                                                     <bean parent="Uif-MessageField"
                                                           p:label="导师"
-                                                          p:messageText="@{selectedTa.advisorName}"/>
+                                                          p:messageText="@{selectedTaForChange.advisorName}"/>
                                                     <bean id="phoneNumberField" parent="Uif-InputField" p:label="联系电话" p:required="true"
-                                                          p:propertyName="candidatePhoneNbr"/><!--propertyName要改-->
+                                                          p:propertyName="candidatePhoneNbrForChange"/><!--propertyName要改-->
                                                     <bean id="bankTypeFieldChange" parent="Uif-InputField"
                                                           p:label="银行名称"
-                                                          p:propertyName="candidateBankName"
+                                                          p:propertyName="candidateBankNameForChange"
                                                           p:required="true">
                                                         <property name="optionsFinder">
                                                             <bean class="cn.edu.cqu.ngtl.optionfinder.BankNameOptionFinder"
@@ -545,7 +545,7 @@
                                                     </bean>
                                                     <bean id="bankNumberField" parent="Uif-InputField"
                                                           p:label="银行卡号"
-                                                          p:propertyName="candidateBankNbr"
+                                                          p:propertyName="candidateBankNbrForChange"
                                                           p:required="true">
                                                     </bean>
 
@@ -569,7 +569,7 @@
                                               parent="Uif-Disclosure-TableCollectionSection">
                                             <property name="collectionObjectClass"
                                                       value="cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject"/>
-                                            <property name="propertyName" value="conditionTAList"/> <!--要更改-->
+                                            <property name="propertyName" value="conditionTAListForChange"/> <!--要更改-->
                                             <property name="layoutManager.renderSequenceField"
                                                       value="false"/>
                                             <property name="layoutManager.richTable.render"
@@ -595,7 +595,7 @@
                                                     <bean parent="Uif-PrimaryActionButton"
                                                           p:ajaxSubmit="true"
                                                           p:actionImagePlacement="LEFT"
-                                                          p:methodToCall="getSelectedTaInfo"
+                                                          p:methodToCall="getSelectedTaInfoForChange"
                                                           p:refreshId="taStuDetailInfoGrid"
                                                           p:render="@{#line.taName!=null}"
                                                           p:additionalCssClasses="icon-check bg-btn-blue tams-action-btn"/>
@@ -614,9 +614,9 @@
         <property name="footer.items">
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
-                <bean parent="Uif-PrimaryActionButton" p:actionLabel="添加"
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="更换助教"
                       p:preSubmitCall="return validatePhoneNum('phoneNumberField_control'),validateBank('bankNumberField_control');"
-                      p:methodToCall="addSelectedTaApplicant" p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="changeCurTa" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
     </bean>

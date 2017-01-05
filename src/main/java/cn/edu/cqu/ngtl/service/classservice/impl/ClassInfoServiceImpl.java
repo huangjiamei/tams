@@ -675,6 +675,23 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
 
     @Override
+    public boolean changeTa(String classId, String needToChangeTaId, String newTaId, String bankName, String bankNbr, String phoneNbr){
+        TAMSTa curTa = taDao.selectByStudentIdAndClassId(needToChangeTaId,classId);
+        if(curTa!=null){
+            curTa.setBankName(bankName);
+            curTa.setBankNbr(bankNbr);
+            curTa.setPhoneNbr(phoneNbr);
+            curTa.setTaId(newTaId);
+            return taDao.insertByEntity(curTa);
+        }
+        return false;
+
+
+
+    }
+
+
+    @Override
     public boolean insertFeedBack(String classId, String uId, String reasons, String oldStatus, String newStatusId) {
         DateFormat df1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         TAMSClassApplyFeedback tamsClassApplyFeedback = new TAMSClassApplyFeedback();
@@ -834,7 +851,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
         //删除其他的申请
         for(MyTaViewObject myTaViewObject:taViewObjects){
-            tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(),myTaViewObject.getApplicationClassId());
+            if(myTaViewObject.getTaIdNumber()!=null&&myTaViewObject.getApplicationClassId()!=null)
+                tamsTaApplicationDao.deleteBystuIdAndClassId(myTaViewObject.getTaIdNumber(), myTaViewObject.getApplicationClassId());
+
         }
     }
 

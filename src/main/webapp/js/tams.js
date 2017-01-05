@@ -1011,7 +1011,8 @@ function getClassDetailPage(){
 
             }
         });
-        if(jQuery('#checkedClassListAllId').css('display')!="none") {
+
+        if(jQuery('#ClassListPageTable tbody>tr>td>div>fieldset>div>a').css('display')!="none") {
             jQuery('#ClassListPageTable').on('click', 'tbody>tr:eq(' + i + ')>td:not(:eq(0),:eq(1))', function (e) {
                 var targetid = ClassListPageTable;
                 var id = e.target.id;

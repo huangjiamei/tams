@@ -250,7 +250,10 @@
                                                                                   p:messageText="占位"/>
 
                                                                             <bean id="checkedClassListAllId" parent="Uif-InputField"
-                                                                                  p:style="display:@{#line.courseName!=null?'block':'none'}"
+                                                                                  p:style="display:@{#line.courseName!=null and (new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isAcademicAffairsStaff(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isSysAdmin(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCourseManager(user.getCode()))?'block':'none'}"
                                                                                   p:propertyName="checkedClassListAll"
                                                                                   p:onClickScript="checkedAll('checkedClassAllButton');">
                                                                                 <property name="control">
@@ -342,7 +345,7 @@
 
                                                                 <bean id="ClassListPageTable"
                                                                       parent="Uif-Disclosure-TableCollectionSection"
-                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);initRightBtnMenu('ClassListPageTable');getClassDetailPage();addPointer('ClassListPageTable');tableHeightSet('ClassListPageTable');">
+                                                                      p:onDocumentReadyScript="refreshTableFilter(searchClassFields,ClassListPageTable);getClassDetailPage();addPointer('ClassListPageTable');tableHeightSet('ClassListPageTable');">
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject"/>
                                                                     <property name="propertyName" value="classList"/>
@@ -365,7 +368,10 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-InputField"
-                                                                                  p:propertyName="checked" p:style="display:@{#line.courseName!=null?'block':'none'}">
+                                                                                  p:propertyName="checked" p:style="display:@{#line.courseName!=null and (new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCollegeStaff(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isAcademicAffairsStaff(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isSysAdmin(user.getCode())
+                or new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().isCourseManager(user.getCode()))?'block':'none'}">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-CheckboxControl"/>
                                                                                 </property>

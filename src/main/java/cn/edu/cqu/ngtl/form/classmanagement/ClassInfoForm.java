@@ -112,11 +112,19 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String bankNbr;
 
+    private String needToChangeTaName;
+
+    private String needToChangeTaId;
+
     private boolean taApplicationSubmitted;
 
     private String candidateBankName;
 
     private String candidateBankNbr;
+
+    private String candidateBankNameForChange;
+
+    private String candidateBankNbrForChange;
 
     private String isAgree;
 
@@ -144,14 +152,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     助教管理页面
      */
     private String candidatePhoneNbr;
+    private String candidatePhoneNbrForChange;
     private boolean canEmploy;
     private List<MyTaViewObject> allMyTa;
     private List<MyTaViewObject> allApplication;
 
+
+    private MyTaViewObject selectedTaForChange;
     private MyTaViewObject selectedTa = new MyTaViewObject(); // 添加助教申请人时会用到，在搜索得到的助教列表中点击'查看'，把查询得到的ta数据放到这个变量中
     private List<MyTaViewObject> conditionTAList=new ArrayList<>(); // 查询时返回符合条件的talist，存储到这个list中
+    private List<MyTaViewObject> conditionTAListForChange;
     private String StudentName;
     private String StudentNumber;
+    private String studentNameForChange;
+    private String studentNumberForChange;
+
 
     public String getCalendarId() {
         return calendarId;
@@ -634,5 +649,77 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setIsAgree(String isAgree) {
         this.isAgree = isAgree;
+    }
+
+    public MyTaViewObject getSelectedTaForChange() {
+        return selectedTaForChange;
+    }
+
+    public void setSelectedTaForChange(MyTaViewObject selectedTaForChange) {
+        this.selectedTaForChange = selectedTaForChange;
+    }
+
+    public String getStudentNameForChange() {
+        return studentNameForChange;
+    }
+
+    public void setStudentNameForChange(String studentNameForChange) {
+        this.studentNameForChange = studentNameForChange;
+    }
+
+    public String getStudentNumberForChange() {
+        return studentNumberForChange;
+    }
+
+    public void setStudentNumberForChange(String studentNumberForChange) {
+        this.studentNumberForChange = studentNumberForChange;
+    }
+
+    public List<MyTaViewObject> getConditionTAListForChange() {
+        return conditionTAListForChange;
+    }
+
+    public void setConditionTAListForChange(List<MyTaViewObject> conditionTAListForChange) {
+        this.conditionTAListForChange = conditionTAListForChange;
+    }
+
+    public String getCandidateBankNameForChange() {
+        return candidateBankNameForChange;
+    }
+
+    public void setCandidateBankNameForChange(String candidateBankNameForChange) {
+        this.candidateBankNameForChange = candidateBankNameForChange;
+    }
+
+    public String getCandidateBankNbrForChange() {
+        return candidateBankNbrForChange;
+    }
+
+    public void setCandidateBankNbrForChange(String candidateBankNbrForChange) {
+        this.candidateBankNbrForChange = candidateBankNbrForChange;
+    }
+
+    public String getCandidatePhoneNbrForChange() {
+        return candidatePhoneNbrForChange;
+    }
+
+    public void setCandidatePhoneNbrForChange(String candidatePhoneNbrForChange) {
+        this.candidatePhoneNbrForChange = candidatePhoneNbrForChange;
+    }
+
+    public String getNeedToChangeTaName() {
+        return needToChangeTaName;
+    }
+
+    public void setNeedToChangeTaName(String needToChangeTaName) {
+        this.needToChangeTaName = needToChangeTaName;
+    }
+
+    public String getNeedToChangeTaId() {
+        return needToChangeTaId;
+    }
+
+    public void setNeedToChangeTaId(String needToChangeTaId) {
+        this.needToChangeTaId = needToChangeTaId;
     }
 }

@@ -865,10 +865,40 @@ public class TaController extends BaseController {
             int index=Integer.parseInt(taInfoForm.getIndexTaListPage());
             String classid = taInfoForm.getAllTaInfo().get(index).getClassid();
             String taid = taInfoForm.getAllTaInfo().get(index).getTaId();
+
+            //助教详情
             taInfoForm.setSelectedTaInfo(taInfoForm.getAllTaInfo().get(index));
             taInfoForm.setClassIdForDetailPage(classid);
             taInfoForm.setTaIdForDetailpage(taid);
             taInfoForm.setTaDeApplyReason(taInfoForm.getAllTaInfo().get(index).getApplicationReason());
+
+
+            //教师考核
+//            String classId = taInfoForm.getClassIdForDetailPage();
+//            String taId = taInfoForm.getTaIdForDetailpage();
+            if(taInfoForm.getAppraisalDetail()==null) {
+                taInfoForm.setAppraisalDetail(taConverter.teachCalendarToAppraisalViewObject(
+                        taService.getTeachCalendarByClassId(
+                                classid)));
+            }
+            taInfoForm.setEvaluateDetail(taService.getTaByTaId(taid,classid).getEvaluationDetail());
+
+
+            //学生考核
+           // String classId = taInfoForm.getClassIdForDetailPage();
+
+            if(taInfoForm.getAppraisalDetail()==null) {
+                taInfoForm.setAppraisalDetail(taConverter.teachCalendarToAppraisalViewObject(
+                        taService.getTeachCalendarByClassId(
+                                classid)));
+            }
+
+            //申请优秀
+//            String classId = taInfoForm.getSelectedTaInfo().getClassid();
+//            String stuId = taInfoForm.getSelectedTaInfo().getTaId();
+            taInfoForm.setApplyOSReason(taService.getOSReason(taid, classid));
+
+
         }catch (Exception e){
 
         }

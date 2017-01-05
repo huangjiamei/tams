@@ -212,89 +212,94 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String auId = res.getString("SFRZH");
                 String courseType = res.getString("KC_FLAG");
                 String classTypeName = res.getString("SKFS");
-
+                boolean flag = false;
                 if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
 
-                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" + courseCode +"' AND t.JXBH = '" + classNbr +"' AND t.XN = '2016' AND t.XQ_ID = '1'";
+                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" +courseCode + "' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
                     PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
-                    List<String> teachWeekList  = new ArrayList<>();
+                    List<String> teachWeekList = new ArrayList<>();
 
                     String teachWeek = "";
                     String roomName = "";
                     try {
                         ResultSet res2 = pre2.executeQuery();
+                        flag = true;
                         while (res2.next()) {
-                            teachWeek += res2.getString("ANALYSE") + ",";  //暂定已这种方式分割开
+                            teachWeek += res2.getString("ANALYSE")+",";  //暂定已这种方式分割开
                             roomName = res2.getString("MC");
                         }
-                    }finally {
+
+                    } finally {
                         if (pre2 != null)
                             pre2.close();
                     }
 
-                    if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
-                        classNbrs.add(classNbr);
-                        /**
-                         * Class对象
-                         */
-                        String teachWeekResult = "";
-                        String [] teachWeekPre = teachWeek.split(",");
-                        for(String s : teachWeekPre){
-                            if(!teachWeekResult.contains(s)){
-                                teachWeekResult+=s+"|";
+                    //如果KCKB里面没有这个教学班的信息
+                    if (!teachWeek.equals("")&&!roomName.equals("")) {
+                        if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
+                            classNbrs.add(classNbr);
+                            /**
+                             * Class对象
+                             */
+                            String teachWeekResult = "";
+                            String[] teachWeekPre = teachWeek.split(",");
+                            for (String s : teachWeekPre) {
+                                if (!teachWeekResult.contains(s)) {
+                                    teachWeekResult += s+"|";
+                                }
                             }
+
+                            UTClass utClass = new UTClass();
+                            utClass.setRoomName(roomName);
+                            utClass.setTeachWeek(teachWeekResult);
+                            utClass.setClassNumber(classNbr);
+                            utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
+                            utClass.setCourseOfferingId(sessionPrefix+editClassNbr);
+                            utClass.setClassType(classTypeName);
+                            utClasses.add(utClass);
+                            /**
+                             * CourseOffering对象
+                             */
+                            UTCourseOffering utCourseOffering = new UTCourseOffering();
+                            utCourseOffering.setId(sessionPrefix+editClassNbr);
+                            utCourseOffering.setCourseId((Integer) courseMap.get(courseCode));
+                            utCourseOffering.setSessionId(curSession.getId());
+                            utCourseOfferings.add(utCourseOffering);
+                            /**
+                             * offeringConfig对象
+                             */
+                            UTCourseOfferingConfig utCourseOfferingConfig = new UTCourseOfferingConfig();
+                            utCourseOfferingConfig.setId(sessionPrefix+editClassNbr);
+                            utCourseOfferingConfig.setCourseOfferingId(sessionPrefix+editClassNbr);
+                            utCourseOfferingConfig.setConfigName("1");
+                            utCourseOfferingConfigs.add(utCourseOfferingConfig);
+                            /**
+                             * configDetail对象
+                             */
+                            UTConfigDetail utConfigDetail = new UTConfigDetail();
+                            utConfigDetail.setId(sessionPrefix+editClassNbr);
+                            utConfigDetail.setConfigId(sessionPrefix+editClassNbr);
+                            utConfigDetail.setKlassId(sessionPrefix+editClassNbr);
+                            utConfigDetails.add(utConfigDetail);
+
+                            /**
+                             * ApplyStatus对象
+                             */
+                            TAMSClassApplyStatus tamsClassApplyStatus = new TAMSClassApplyStatus();
+                            tamsClassApplyStatus.setClassId(sessionPrefix+editClassNbr);
+                            tamsClassApplyStatus.setWorkflowStatusId("1");
+                            tamsClassApplyStatus.setId(sessionPrefix+editClassNbr);
+                            tamsClassApplyStatuses.add(tamsClassApplyStatus);
                         }
-
-                        UTClass utClass = new UTClass();
-                        utClass.setRoomName(roomName);
-                        utClass.setTeachWeek(teachWeekResult);
-                        utClass.setClassNumber(classNbr);
-                        utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
-                        utClass.setCourseOfferingId(sessionPrefix+editClassNbr);
-                        utClass.setClassType(classTypeName);
-                        utClasses.add(utClass);
-                        /**
-                         * CourseOffering对象
-                         */
-                        UTCourseOffering utCourseOffering = new UTCourseOffering();
-                        utCourseOffering.setId(sessionPrefix+editClassNbr);
-                        utCourseOffering.setCourseId((Integer) courseMap.get(courseCode));
-                        utCourseOffering.setSessionId(curSession.getId());
-                        utCourseOfferings.add(utCourseOffering);
-                        /**
-                         * offeringConfig对象
-                         */
-                        UTCourseOfferingConfig utCourseOfferingConfig = new UTCourseOfferingConfig();
-                        utCourseOfferingConfig.setId(sessionPrefix+editClassNbr);
-                        utCourseOfferingConfig.setCourseOfferingId(sessionPrefix+editClassNbr);
-                        utCourseOfferingConfig.setConfigName("1");
-                        utCourseOfferingConfigs.add(utCourseOfferingConfig);
-                        /**
-                         * configDetail对象
-                         */
-                        UTConfigDetail utConfigDetail = new UTConfigDetail();
-                        utConfigDetail.setId(sessionPrefix+editClassNbr);
-                        utConfigDetail.setConfigId(sessionPrefix+editClassNbr);
-                        utConfigDetail.setKlassId(sessionPrefix+editClassNbr);
-                        utConfigDetails.add(utConfigDetail);
-
-                        /**
-                         * ApplyStatus对象
-                         */
-                        TAMSClassApplyStatus tamsClassApplyStatus = new TAMSClassApplyStatus();
-                        tamsClassApplyStatus.setClassId(sessionPrefix+editClassNbr);
-                        tamsClassApplyStatus.setWorkflowStatusId("1");
-                        tamsClassApplyStatus.setId(sessionPrefix+editClassNbr);
-                        tamsClassApplyStatuses.add(tamsClassApplyStatus);
-                    }
-                    //教学班号和身份认证号的关系
+                        //教学班号和身份认证号的关系
 //                classInstructorMap.put(classNbr,auId);
 
-                    UTClassInstructor utClassInstructor = new UTClassInstructor();
-                    utClassInstructor.setId(sessionPrefix+editClassNbr);
-                    utClassInstructor.setClassId(sessionPrefix+editClassNbr);
-                    utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
-                    utClassInstructors.add(utClassInstructor);
+                        UTClassInstructor utClassInstructor = new UTClassInstructor();
+                        utClassInstructor.setId(sessionPrefix+editClassNbr);
+                        utClassInstructor.setClassId(sessionPrefix+editClassNbr);
+                        utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
+                        utClassInstructors.add(utClassInstructor);
+                    }
                 }
             }
 
@@ -344,7 +349,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             sessionPrefix += "02";
         }
         int i = 0;
-        String queryCourse = "SELECT * FROM XSKB t WHERE  t.XH LIKE '2016%'";
+        String queryCourse = "SELECT * FROM XSKB t WHERE  t.XH LIKE '2016%' AND t.XN = '2016' AND t.XQ_ID = '1'";
         PreparedStatement pre = connection.prepareStatement(queryCourse);
         try {
             pre.setQueryTimeout(10000);

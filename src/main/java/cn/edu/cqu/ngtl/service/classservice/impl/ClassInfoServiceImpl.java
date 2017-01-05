@@ -218,7 +218,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
                 List<UTClassInformation> secMaxOrderStatus = this.getAllCurSessionClassesWithFinalStatus("1");
                 List<UTClassInformation> taClasses = classInfoDao.selectBatchByIds(classIds);
-                secMaxOrderStatus.addAll(taClasses);
+                if(taClasses!=null)
+                    secMaxOrderStatus.addAll(taClasses);
                 return secMaxOrderStatus; //工作流是审批
             }
 

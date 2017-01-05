@@ -15,6 +15,7 @@ import cn.edu.cqu.ngtl.service.common.WorkFlowService;
 import cn.edu.cqu.ngtl.service.common.impl.IdstarIdentityManagerServiceImpl;
 import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.exportservice.IPDFService;
+import cn.edu.cqu.ngtl.service.exportservice.impl.PDFServiceimpl;
 import cn.edu.cqu.ngtl.service.riceservice.IClassConverter;
 import cn.edu.cqu.ngtl.service.riceservice.ITAConverter;
 import cn.edu.cqu.ngtl.service.taservice.ITAService;
@@ -22,6 +23,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassDetailInfoViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import com.itextpdf.text.DocumentException;
 import org.apache.log4j.Logger;
@@ -536,6 +538,33 @@ public class ClassController extends BaseController {
         return this.getModelAndView(infoForm, "pageTeachingCalendar");
     }
 
+    /**
+     * 将教学日历表格打印为PDF，create by liuchuan
+     * @param form
+     * @return
+     *
+     */
+    @RequestMapping(params = {"pageId=pageTeachingCalendar","methodToCall=exportTeachingCalendarPDF"})
+    public ModelAndView exportTeachingCalendarPDF(@ModelAttribute("KualiForm") UifFormBase form){
+        ClassInfoForm infoForm = (ClassInfoForm) form;
+        super.baseStart(infoForm);
+        if(infoForm.getAllCalendar()==null){
+            infoForm.setErrMsg("列表为空");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+
+        }
+        List<TeachCalendarViewObject> TeachCalendarList=infoForm.getAllCalendar();
+        String filePath=new PDFServiceimpl().prepareTeachCalendarPDF(TeachCalendarList);
+        if(filePath.equals("exception")){
+             infoForm.setErrMsg("系统导出PDF文件错误!");
+             return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+        else{
+             String baseUrl=CoreApiServiceLocator.getKualiConfigurationService().getPropertyValueAsString(KRADConstants.ConfigParameters.APPLICATION_URL);
+             return  this.performRedirect(infoForm,baseUrl+'/'+filePath);
+        }
+
+    }
 
     /**
      * 获取新建教学日历页面

@@ -16,13 +16,14 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import org.apache.log4j.Logger;
-import org.kuali.rice.krad.util.GlobalVariables;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
+import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
 /**
  * Created by CQU-CST-WuErli on 2016/10/21.
@@ -237,7 +238,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         else if (userInfoService.isCollegeStaff(uId)) { //如果是二级单位管理员则固定学院id
             if(conditions.get("DepartmentId") == null) {
                 //若只是二级单位管理员，设置departmenId
-                conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+                conditions.put("DepartmentId", ((User) getUserSession().retrieveObject("user")).getDepartmentId().toString());
                 List<UTClassInformation> classInformations = new ArrayList<>();
                 classInformations = classInfoDao.selectByConditions(conditions);
                 //用于比较
@@ -249,7 +250,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 if(userInfoService.isInstructor(uId)) {
                     if(conditions.get("InstructorName") == null) {
                         conditions.put("DepartmentId", null);
-                        conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
+                        conditions.put("InstructorName", ((User) getUserSession().retrieveObject("user")).getName());
                         List<UTClassInformation> listteacher = classInfoDao.selectByConditions(conditions);
                         if (listteacher != null) {
                             //用于比较
@@ -267,10 +268,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                         //FIXME
                         //问题：需要判断过滤的教师的名字是否是自己，不能判断
                         conditions.get("InstructorName").replace("%","");
-                        if(((User) GlobalVariables.getUserSession().retrieveObject("user")).getName().equals(conditions.get("InstructorName")))
+                        if(((User) getUserSession().retrieveObject("user")).getName().equals(conditions.get("InstructorName")))
                             conditions.put("DepartmentId", null);
                         else
-                            conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+                            conditions.put("DepartmentId", ((User) getUserSession().retrieveObject("user")).getDepartmentId().toString());
 
                         List<UTClassInformation> listteacher = classInfoDao.selectByConditions(conditions);
                         if (listteacher != null) {
@@ -289,7 +290,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return classInformations;
             }
             else {
-                conditions.put("DepartmentId", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getDepartmentId().toString());
+                conditions.put("DepartmentId", ((User) getUserSession().retrieveObject("user")).getDepartmentId().toString());
                 List<UTClassInformation> classInformations = new ArrayList<>();
                 classInformations = classInfoDao.selectByConditions(conditions);
                 return classInformations;
@@ -318,7 +319,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             }
             return result;
         } else if (userInfoService.isInstructor(uId)) {
-            conditions.put("InstructorName", ((User) GlobalVariables.getUserSession().retrieveObject("user")).getName());
+            conditions.put("InstructorName", ((User) getUserSession().retrieveObject("user")).getName());
             List<UTClassInformation> classInformations = classInfoDao.selectByConditionsWithUid(conditions,uId);
             return classInformations;
         }else if (userInfoService.isStudent(uId)){
@@ -541,7 +542,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         TAMSAttachments isExist = attachmentsDao.selectById(attachmentId);
         if (isExist == null)
             return false;
-        String uId = GlobalVariables.getUserSession().getPrincipalId();
+        String uId = getUserSession().getPrincipalId();
         if (uId.equals(isExist.getAuthorId()) || userInfoService.isInstructor(uId))
             return new TamsFileControllerServiceImpl().deleteOneAttachment(classId, isExist);
         else
@@ -881,5 +882,6 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         tamsTeachCalendar.setTaTask(taTask);
         teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
+
 
 }

@@ -1332,3 +1332,8 @@ function readyCalendar(){
     });
 }
 
+//页面直接写herf会报js错误，
+function clickToExam(){
+    window.location=" http://mystudy.cqu.edu.cn/exam";
+}
+

@@ -112,6 +112,10 @@
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="PDF"
+                                                                                  p:methodToCall="exportTeachingCalendarPDF"
+                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionScript=""
                                                                                   p:actionLabel="添加"
                                                                                   p:render = "@{!#form.studentRole}"

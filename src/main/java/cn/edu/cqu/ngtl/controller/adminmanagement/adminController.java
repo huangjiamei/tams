@@ -931,6 +931,23 @@ public class adminController extends BaseController {
     }
 
     /**
+     * 初始化课程负责人数据
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=initTeacher")
+    public ModelAndView initTeacher(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        if(adminService.initTeacherData())
+            return this.getCourseManagerPage(infoForm);
+        else {
+            infoForm.setErrMsg("初始化失败，请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
+    /**
      * 搜索职员表
      * @param form
      * @return

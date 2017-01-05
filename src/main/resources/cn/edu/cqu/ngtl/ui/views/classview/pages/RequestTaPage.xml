@@ -171,7 +171,8 @@
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="拟配备助教数"
                                                                                                           p:required="true"
-                                                                                                          p:style="width:80%"
+                                                                                                          p:readOnly="@{#form.submitted}"
+                                                                                                          p:style="@{#form.submitted ? 'margin-top:5px':'width:80%'}"
                                                                                                           p:propertyName="applyViewObject.assistantNumber">
                                                                                                         <property name="validCharactersConstraint">
                                                                                                             <bean parent="NumericPatternConstraint"/>

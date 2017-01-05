@@ -2545,24 +2545,25 @@ public class adminController extends BaseController {
 
             if (adminInfoForm.getIssueIndex() != null) {
             // index不为空说明要调用update
-            if (adminService.changeIssueType(adminInfoForm.getIssueType())) {
-                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                logger.info("编辑任务类别为"+adminInfoForm.getIssueType().getTypeName()+"。");}
-            else {
-                logger.error("编辑任务类别为"+adminInfoForm.getIssueType().getTypeName()+"失败。");}
-                adminInfoForm.setErrMsg("编辑失败！");
-                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+                if (adminService.changeIssueType(adminInfoForm.getIssueType())) {
+                    // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                    logger.info("编辑任务类别为"+adminInfoForm.getIssueType().getTypeName()+"。");
                 }
-
-
-         else {
-            // add
-            if (!adminService.addTaIssueType(adminInfoForm.getIssueType())) {
-                // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-                adminInfoForm.setErrMsg("添加失败！");
-                return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+                else {
+                    logger.error("编辑任务类别为"+adminInfoForm.getIssueType().getTypeName()+"失败。");
+                    adminInfoForm.setErrMsg("编辑失败！");
+                    return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+                }
             }
-        }
+
+            else {
+                // add
+                if (!adminService.addTaIssueType(adminInfoForm.getIssueType())) {
+                    // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
+                    adminInfoForm.setErrMsg("添加失败！");
+                    return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
+                }
+            }
         return this.getTaskCategoryPage(form);
     }
 

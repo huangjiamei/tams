@@ -68,7 +68,7 @@ public class ClassTeacherViewObject {
     public static String[] getAttrTittles(){
         String[] attrTittles={
                 "课程名称"
-                ,"课程编号"
+                ,"课程代码"
                 ,"教学班"
                 ,"教师"
                 ,"耗费工时"

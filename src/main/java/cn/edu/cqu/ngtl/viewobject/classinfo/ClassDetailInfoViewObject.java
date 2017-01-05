@@ -8,7 +8,7 @@ public class ClassDetailInfoViewObject {
     // 课程名称//
     private String courseName;
 
-    // 课程编号//
+    // 课程代码//
     private String courseId;
 
     // 课程类别//

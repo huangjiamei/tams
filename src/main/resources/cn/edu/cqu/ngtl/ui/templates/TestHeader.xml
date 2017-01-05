@@ -210,12 +210,12 @@
                                                             <list>
                                                                 <bean parent="Uif-Link" p:href="#nav-course"
                                                                       p:linkText="助教系统" p:iconClass="icon-users menuHeaderIcon"/>
-                                                                <bean parent="Uif-Link" p:href="#nav-test"
+                                                                <bean parent="Uif-Link" p:href="http://mystudy.cqu.edu.cn/exam"
                                                                       p:linkText="四六级系统" p:iconClass="icon-check menuHeaderIcon"/>
-                                                                <bean parent="Uif-Link" p:href="#nav-Innovation"
-                                                                      p:linkText="创新实践平台" p:iconClass="icon-cogs2 menuHeaderIcon"/>
-                                                                <bean parent="Uif-Link" p:href="#nav-file"
-                                                                      p:linkText="教学档案管理系统" p:iconClass="icon-file menuHeaderIcon"/>
+                                                                <!--<bean parent="Uif-Link" p:href="#nav-Innovation"-->
+                                                                      <!--p:linkText="创新实践平台" p:iconClass="icon-cogs2 menuHeaderIcon"/>-->
+                                                                <!--<bean parent="Uif-Link" p:href="#nav-file"-->
+                                                                      <!--p:linkText="教学档案管理系统" p:iconClass="icon-file menuHeaderIcon"/>-->
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -234,7 +234,7 @@
                                                                     <property name="items">
                                                                         <list>
 
-                                                                            <bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
+                                                                            <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-MessageField" p:messageText="助教系统"
@@ -245,7 +245,7 @@
                                                                                 </property>
                                                                             </bean>
 
-                                                                            <bean   parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
+                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
@@ -285,100 +285,100 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean  id="nav-test" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">
-                                                                    <property name="items">
-                                                                        <list>
+                                                                <!--<bean  id="nav-test" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">-->
+                                                                    <!--<property name="items">-->
+                                                                        <!--<list>-->
 
-                                                                            <bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-MessageField" p:messageText="四六级系统"
-                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
-                                                                                              p:additionalCssClasses="close pull-right"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
+                                                                            <!--<bean   parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-MessageField" p:messageText="四六级系统"-->
+                                                                                              <!--p:additionalCssClasses="boxheaderTitle"/>-->
+                                                                                        <!--<bean parent="Uif-ActionLink" p:actionLabel="×"-->
+                                                                                              <!--p:additionalCssClasses="close pull-right"/>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
 
-                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="TestMap2"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                            <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">-->
+                                                                                            <!--<property name="items">-->
+                                                                                                <!--<list>-->
+                                                                                                    <!--<bean parent="TestMap2"/>-->
+                                                                                                <!--</list>-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
+                                                                        <!--</list>-->
+                                                                    <!--</property>-->
+                                                                <!--</bean>-->
 
-                                                                <bean  id="nav-Innovation" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">
-                                                                    <property name="items">
-                                                                        <list>
+                                                                <!--<bean  id="nav-Innovation" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">-->
+                                                                    <!--<property name="items">-->
+                                                                        <!--<list>-->
 
-                                                                            <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-MessageField" p:messageText="创新实验平台"
-                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
-                                                                                              p:additionalCssClasses="close pull-right"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
+                                                                            <!--<bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-MessageField" p:messageText="创新实验平台"-->
+                                                                                              <!--p:additionalCssClasses="boxheaderTitle"/>-->
+                                                                                        <!--<bean parent="Uif-ActionLink" p:actionLabel="×"-->
+                                                                                              <!--p:additionalCssClasses="close pull-right"/>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
 
-                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="TestMap1"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                            <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-3 col-sm-4 col-xs-12">-->
+                                                                                            <!--<property name="items">-->
+                                                                                                <!--<list>-->
+                                                                                                    <!--<bean parent="TestMap1"/>-->
+                                                                                                <!--</list>-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
+                                                                        <!--</list>-->
+                                                                    <!--</property>-->
+                                                                <!--</bean>-->
 
-                                                                <bean id="nav-file" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">
-                                                                    <property name="items">
-                                                                        <list>
+                                                                <!--<bean id="nav-file" parent="Uif-VerticalBoxSection" p:additionalCssClasses="tab-pane active">-->
+                                                                    <!--<property name="items">-->
+                                                                        <!--<list>-->
 
-                                                                            <bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-MessageField" p:messageText="教学档案管理系统"
-                                                                                              p:additionalCssClasses="boxheaderTitle"/>
-                                                                                        <bean parent="Uif-ActionLink" p:actionLabel="×"
-                                                                                              p:additionalCssClasses="close pull-right"/>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                            <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-sm-6 col-xs-12">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="TestMap3"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                            <!--<bean parent="Uif-HorizontalBoxSection" p:additionalCssClasses="box-header visible-sm visible-xs menu-box-header">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-MessageField" p:messageText="教学档案管理系统"-->
+                                                                                              <!--p:additionalCssClasses="boxheaderTitle"/>-->
+                                                                                        <!--<bean parent="Uif-ActionLink" p:actionLabel="×"-->
+                                                                                              <!--p:additionalCssClasses="close pull-right"/>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
+                                                                            <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="row">-->
+                                                                                <!--<property name="items">-->
+                                                                                    <!--<list>-->
+                                                                                        <!--<bean parent="Uif-VerticalBoxSection" p:additionalCssClasses="col-md-6 col-sm-6 col-xs-12">-->
+                                                                                            <!--<property name="items">-->
+                                                                                                <!--<list>-->
+                                                                                                    <!--<bean parent="TestMap3"/>-->
+                                                                                                <!--</list>-->
+                                                                                            <!--</property>-->
+                                                                                        <!--</bean>-->
+                                                                                    <!--</list>-->
+                                                                                <!--</property>-->
+                                                                            <!--</bean>-->
+                                                                        <!--</list>-->
+                                                                    <!--</property>-->
+                                                                <!--</bean>-->
                                                             </list>
                                                         </property>
                                                     </bean>

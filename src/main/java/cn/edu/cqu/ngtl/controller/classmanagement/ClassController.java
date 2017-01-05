@@ -529,12 +529,7 @@ public class ClassController extends BaseController {
             }
         }else
             infoForm.setInstructorHimSelf(false);
-
-
-
-
-
-
+        
 
         if (classId == null) {
             infoForm.setErrMsg("访问出错！");
@@ -1753,6 +1748,9 @@ public class ClassController extends BaseController {
         infoForm.setStudentNumberForChange(null);
         infoForm.setSelectedTaForChange(new MyTaViewObject());
         infoForm.setConditionTAListForChange(null);
+        infoForm.setCandidateBankNameForChange(null);
+        infoForm.setCandidateBankNbrForChange(null);
+        infoForm.setCandidatePhoneNbrForChange(null);
 
 
         List<MyTaViewObject> objects = infoForm.getAllMyTa();
@@ -1794,6 +1792,9 @@ public class ClassController extends BaseController {
         infoForm.setStudentNumber(null);
         infoForm.setSelectedTa(new MyTaViewObject());
         infoForm.setConditionTAList(null);
+        infoForm.setCandidateBankName(null);
+        infoForm.setCandidateBankNbr(null);
+        infoForm.setCandidatePhoneNbr(null);
 
         return this.showDialog("addApplicantDialog",true,infoForm);
 

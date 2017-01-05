@@ -355,12 +355,13 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
-        if (userInfoService.isSysAdmin(uId)) {
-            List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
+      /*  if (userInfoService.isSysAdmin(uId)) {*/
+        List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
+        if(teachCalendar!=null)
             return teachCalendar;
-        } else if (userInfoService.isInstructor(uId)) {
-            return teachCalendarDao.selectAllByClassId(classId);
-        }
+//        } else if (userInfoService.isInstructor(uId)) {
+//            return teachCalendarDao.selectAllByClassId(classId);
+//        }
         return null;
     }
 

@@ -107,7 +107,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <!--第1页 助教详情-->
-                                                                            <bean parent="Uif-VerticalBoxSection"
+                                                                            <bean  id="taDetailId" parent="Uif-VerticalBoxSection"
                                                                                   p:headerText="助教详情">
                                                                                 <property name="items">
                                                                                     <list>
@@ -185,7 +185,7 @@
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="申请理由及特长"
                                                                                                           p:propertyName="taDeApplyReason"
-                                                                                                          p:required="true"
+                                                                                                          p:readOnly="true"
                                                                                                           p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                                                         <property
                                                                                                                 name="control">
@@ -193,6 +193,64 @@
                                                                                                                   p:style="height:200px;"/>
                                                                                                         </property>
                                                                                                     </bean>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:additionalCssClasses="box-header">
+                                                                                            <property
+                                                                                                    name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-Icon"
+                                                                                                          p:iconClass="icon-table"/>
+                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                          p:messageText="优秀助教申请表"
+                                                                                                          p:additionalCssClasses="boxheaderTitle"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+
+                                                                                        <bean parent="Uif-VerticalBoxSection"
+                                                                                              p:additionalCssClasses="box-body">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-VerticalBoxSection">
+                                                                                                        <property
+                                                                                                                name="items">
+                                                                                                            <list>
+                                                                                                                <bean parent="Uif-InputField"
+                                                                                                                      p:propertyName="applyOSReason"
+                                                                                                                      p:style="width:100%;"
+                                                                                                                      p:readOnly="true">
+                                                                                                                    <property
+                                                                                                                            name="control">
+                                                                                                                        <bean parent="Uif-TextAreaControl"
+                                                                                                                              p:style="height:300px;resize: none;"/>
+                                                                                                                    </property>
+                                                                                                                </bean>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>
+
+                                                                                                    <!-- <bean parent="Uif-HorizontalBoxSection">
+                                                                                                        <property name="items">
+                                                                                                            <list>
+                                                                                                               <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="提交"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="submitTaForm"
+                                                                                                                      p:successCallback="alert('提交成功，返回测试页面homepage，未来可换成dialog');"
+                                                                                                                      p:id="submitTaFormBtn"
+                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="取消"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:actionScript="alert('取消');"
+                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>
+                                                                                                            </list>
+                                                                                                        </property>
+                                                                                                    </bean>-->
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>
@@ -575,74 +633,6 @@
                                                                                                             </list>
                                                                                                         </property>
                                                                                                     </bean>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-
-                                                                                    </list>
-                                                                                </property>
-                                                                            </bean>
-
-                                                                            <!--第4页 申请优秀助教-->
-                                                                            <bean id="ApplyOutStandingTa"  parent="Uif-VerticalBoxSection"
-                                                                                  p:headerText="优秀助教申请"
-                                                                                  p:render="@{new cn.edu.cqu.ngtl.service.userservice.impl.UserInfoServiceImpl().hasPermission(#userSession.retrieveObject('user'),'ViewApplyOStAPage')}">
-                                                                                <property name="items">
-                                                                                    <list>
-                                                                                        <bean parent="Uif-HorizontalBoxSection"
-                                                                                              p:additionalCssClasses="box-header">
-                                                                                            <property
-                                                                                                    name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-Icon"
-                                                                                                          p:iconClass="icon-table"/>
-                                                                                                    <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="优秀助教申请表"
-                                                                                                          p:additionalCssClasses="boxheaderTitle"/>
-                                                                                                </list>
-                                                                                            </property>
-                                                                                        </bean>
-
-                                                                                        <bean parent="Uif-VerticalBoxSection"
-                                                                                              p:additionalCssClasses="box-body">
-                                                                                            <property name="items">
-                                                                                                <list>
-                                                                                                    <bean parent="Uif-VerticalBoxSection">
-                                                                                                        <property
-                                                                                                                name="items">
-                                                                                                            <list>
-                                                                                                                <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="applyOSReason"
-                                                                                                                      p:style="width:100%;"
-                                                                                                                      p:readOnly="true">
-                                                                                                                    <property
-                                                                                                                            name="control">
-                                                                                                                        <bean parent="Uif-TextAreaControl"
-                                                                                                                              p:style="height:300px;resize: none;"/>
-                                                                                                                    </property>
-                                                                                                                </bean>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>
-
-                                                                                                    <!-- <bean parent="Uif-HorizontalBoxSection">
-                                                                                                        <property name="items">
-                                                                                                            <list>
-                                                                                                               <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="提交"
-                                                                                                                      p:actionImagePlacement="LEFT"
-                                                                                                                      p:methodToCall="submitTaForm"
-                                                                                                                      p:successCallback="alert('提交成功，返回测试页面homepage，未来可换成dialog');"
-                                                                                                                      p:id="submitTaFormBtn"
-                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-success tamsbtn"/>
-                                                                                                                <bean parent="Uif-PrimaryActionButton"
-                                                                                                                      p:actionLabel="取消"
-                                                                                                                      p:actionImagePlacement="LEFT"
-                                                                                                                      p:actionScript="alert('取消');"
-                                                                                                                      p:additionalCssClasses="icon-arrow-up bg-orange tamsbtn"/>
-                                                                                                            </list>
-                                                                                                        </property>
-                                                                                                    </bean>-->
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>

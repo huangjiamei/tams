@@ -210,8 +210,8 @@
                                                             <list>
                                                                 <bean parent="Uif-Link" p:href="#nav-course"
                                                                       p:linkText="助教系统" p:iconClass="icon-users menuHeaderIcon"/>
-                                                                <bean parent="Uif-Link" p:href="http://mystudy.cqu.edu.cn/exam"
-                                                                      p:linkText="四六级系统" p:iconClass="icon-check menuHeaderIcon"/>
+                                                                <bean parent="Uif-Link" p:href="#"
+                                                                      p:linkText="四六级系统" p:iconClass="icon-check menuHeaderIcon" p:onClickScript="clickToExam();"/>
                                                                 <!--<bean parent="Uif-Link" p:href="#nav-Innovation"-->
                                                                       <!--p:linkText="创新实践平台" p:iconClass="icon-cogs2 menuHeaderIcon"/>-->
                                                                 <!--<bean parent="Uif-Link" p:href="#nav-file"-->

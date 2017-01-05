@@ -520,6 +520,18 @@ public class ClassController extends BaseController {
             infoForm.setStudentRole(false);
         }
 
+        List<String> instructorList = classObject.getInstructorList();
+        if(instructorList!=null){
+            if(instructorList.contains(uId)||userInfoService.isSysAdmin(uId)){
+                infoForm.setInstructorHimSelf(true);
+            }else {
+                infoForm.setInstructorHimSelf(false);
+            }
+        }else
+            infoForm.setInstructorHimSelf(false);
+
+
+
 
 
 

@@ -66,18 +66,30 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
     }
 
     @Override
-    public Map getAllClassIdAndInstructorId(Map InstructorMap){
+    public List<Map> getAllClassIdAndInstructorId(Map InstructorMap){
         Map classInstructorMap = new HashMap();
+
+        Map classInsIdMap = new HashMap();
+
+        List<Map> result = new ArrayList<>(2);
+
         Query query = em.createNativeQuery("SELECT t.CLASS_ID,t.INSTRUCTOR_ID FROM UNITIME_CLASS_INSTRUCTOR t");
         List<Object> columns = query.getResultList();
         for (Object column : columns) {
             Object[] insIdAndClassId = (Object[]) column;
-            if (classInstructorMap.get(insIdAndClassId[0].toString()) != null) //如果一门课有多个教师，则将教师名字进行组合
-                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]) + " " + classInstructorMap.get(insIdAndClassId[0].toString()));
-            else
+            if (classInstructorMap.get(insIdAndClassId[0].toString()) != null) { //如果一门课有多个教师，则将教师名字进行组合
+                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1])+" "+classInstructorMap.get(insIdAndClassId[0].toString()));
+                classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1].toString()+" "+classInsIdMap.get(insIdAndClassId[0].toString()));
+            }
+            else {
                 classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]));
+                classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId.toString());
+            }
         }
-        return classInstructorMap;
+
+        result.add(classInstructorMap);
+        result.add(classInsIdMap);
+        return result;
     }
 
     public List<Object> selectCourseManagerClassIdsByInstructorId(String uId){

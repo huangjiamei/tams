@@ -1,6 +1,7 @@
 package cn.edu.cqu.ngtl.viewobject.classinfo;
 
 import javax.persistence.Transient;
+import java.util.List;
 
 /**
  * Created by tangjing on 16-10-15.
@@ -31,6 +32,8 @@ public class ClassTeacherViewObject {
     private String taCount;
 
     private String classType;
+
+    private List<String> instructorList;
 
     /**
      * 暂时缺失的参数
@@ -280,5 +283,13 @@ public class ClassTeacherViewObject {
 
     public void setClassType(String classType) {
         this.classType = classType;
+    }
+
+    public List<String> getInstructorList() {
+        return instructorList;
+    }
+
+    public void setInstructorList(List<String> instructorList) {
+        this.instructorList = instructorList;
     }
 }

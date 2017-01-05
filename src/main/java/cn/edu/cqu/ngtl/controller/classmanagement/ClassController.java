@@ -770,7 +770,8 @@ public class ClassController extends BaseController {
             return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
         }
         catch (IndexOutOfBoundsException e) {
-            return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
+            infoForm.setErrMsg("下载出错！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
     }
 

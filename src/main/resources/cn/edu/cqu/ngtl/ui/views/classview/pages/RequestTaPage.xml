@@ -105,18 +105,18 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="float:right!important;margin-bottom:-55px;">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="PDF"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup">
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                <!--<bean parent="Uif-HorizontalBoxSection"-->
+                                                                      <!--p:style="float:right!important;margin-bottom:-55px;">-->
+                                                                    <!--<property name="items">-->
+                                                                        <!--<list>-->
+                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:actionLabel="PDF"-->
+                                                                                  <!--p:actionImagePlacement="LEFT"-->
+                                                                                  <!--p:additionalCssClasses="icon-file bg-orange box-btngroup">-->
+                                                                            <!--</bean>-->
+                                                                        <!--</list>-->
+                                                                    <!--</property>-->
+                                                                <!--</bean>-->
                                                                 <bean parent="Uif-TabGroup" ><!--p:onDocumentReadyScript="tabGroupIcon();"-->
                                                                     <property name="items">
                                                                         <list>

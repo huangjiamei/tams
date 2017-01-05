@@ -129,7 +129,7 @@
                                                                                                 <list>
                                                                                                     <!--内容。指导说明书-->
                                                                                                     <bean parent="Uif-MessageField"
-                                                                                                          p:messageText="这里要放东西的~~~~"
+                                                                                                          p:messageText="准备中~"
                                                                                                           p:additionalCssClasses="boxheaderTitle"/>
                                                                                                 </list>
                                                                                             </property>
@@ -1289,6 +1289,7 @@
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:label="批准经费"
                                                                                                                       p:readOnly = "@{!#form.deptManager}"
+                                                                                                                      p:style="display:@{#line.department!=null?'block':'none'}"
                                                                                                                       p:propertyName="assignedFunding"
                                                                                                                       p:sortAs="numeric">
                                                                                                                     <property name="validCharactersConstraint">

@@ -206,23 +206,22 @@
                                                                     </property>
                                                                     <property name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection">
+                                                                            <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="downloadCalendarFile"
-                                                                                              p:refreshId="fileTable"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
+                                                                                              p:refreshId="fileTableEdit"
+                                                                                              p:additionalCssClasses="icon-download bg-btn-orange tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
+                                                                                              p:render="@{#form.instructorHimSelf}"
                                                                                               p:methodToCall="removeCalendarFile"
-                                                                                              p:refreshId="fileTable"
-                                                                                              p:additionalCssClasses="icon-trash bg-btn-blue tamsbtn"/><!--添加methodToCall-->
+                                                                                              p:refreshId="fileTableEdit"
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn"/><!--添加methodToCall-->
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

@@ -78,11 +78,11 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         for (Object column : columns) {
             Object[] insIdAndClassId = (Object[]) column;
             if (classInstructorMap.get(insIdAndClassId[0].toString()) != null) { //如果一门课有多个教师，则将教师名字进行组合
-                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]==null?"":insIdAndClassId[1])+" "+classInstructorMap.get(insIdAndClassId[0].toString()));
+                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]==null?"":insIdAndClassId[1].toString())+" "+classInstructorMap.get(insIdAndClassId[0].toString()));
                 classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId[1]+" "+classInsIdMap.get(insIdAndClassId[0].toString()));
             }
             else {
-                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]==null?"":insIdAndClassId[1]));
+                classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]==null?"":insIdAndClassId[1].toString()));
                 classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId.toString());
             }
         }

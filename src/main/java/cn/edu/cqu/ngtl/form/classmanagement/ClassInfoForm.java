@@ -56,6 +56,10 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private boolean beenEmployed;
 
+    private boolean studentRole;
+
+    private boolean instructorHimSelf;
+
     /**
      * 班级管理隐藏搜索框
      *
@@ -721,5 +725,21 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setNeedToChangeTaId(String needToChangeTaId) {
         this.needToChangeTaId = needToChangeTaId;
+    }
+
+    public boolean isStudentRole() {
+        return studentRole;
+    }
+
+    public void setStudentRole(boolean studentRole) {
+        this.studentRole = studentRole;
+    }
+
+    public boolean isInstructorHimSelf() {
+        return instructorHimSelf;
+    }
+
+    public void setInstructorHimSelf(boolean instructorHimSelf) {
+        this.instructorHimSelf = instructorHimSelf;
     }
 }

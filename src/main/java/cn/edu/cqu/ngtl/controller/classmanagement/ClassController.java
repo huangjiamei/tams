@@ -516,6 +516,23 @@ public class ClassController extends BaseController {
             infoForm.setBeenEmployed(false);
         }
 
+        if(userInfoService.isStudent(uId)){
+            infoForm.setStudentRole(true);
+        }else{
+            infoForm.setStudentRole(false);
+        }
+
+        List<String> instructorList = classObject.getInstructorList();
+        if(instructorList!=null){
+            if(instructorList.contains(uId)||userInfoService.isSysAdmin(uId)){
+                infoForm.setInstructorHimSelf(true);
+            }else {
+                infoForm.setInstructorHimSelf(false);
+            }
+        }else
+            infoForm.setInstructorHimSelf(false);
+        
+
         if (classId == null) {
             infoForm.setErrMsg("访问出错！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
@@ -1365,7 +1382,7 @@ public class ClassController extends BaseController {
         String fileName = "教学班列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + sdf.format(new Date());
         String filePath = "";
         try {
-            String[] header = {"课程名称", "课程编号", "教学班", "教师", "耗费工时", "学院"};
+            String[] header = {"课程名称", "课程代码", "教学班", "教师", "耗费工时", "学院"};
             List<String[]> Content = new ArrayList(classList.size());
             for(ClassTeacherViewObject clazz : classList) {
                 String courseName = clazz.getCourseName() == null ? "" : clazz.getCourseName();
@@ -1760,6 +1777,9 @@ public class ClassController extends BaseController {
         infoForm.setStudentNumberForChange(null);
         infoForm.setSelectedTaForChange(new MyTaViewObject());
         infoForm.setConditionTAListForChange(null);
+        infoForm.setCandidateBankNameForChange(null);
+        infoForm.setCandidateBankNbrForChange(null);
+        infoForm.setCandidatePhoneNbrForChange(null);
 
 
         List<MyTaViewObject> objects = infoForm.getAllMyTa();
@@ -1801,6 +1821,9 @@ public class ClassController extends BaseController {
         infoForm.setStudentNumber(null);
         infoForm.setSelectedTa(new MyTaViewObject());
         infoForm.setConditionTAList(null);
+        infoForm.setCandidateBankName(null);
+        infoForm.setCandidateBankNbr(null);
+        infoForm.setCandidatePhoneNbr(null);
 
         return this.showDialog("addApplicantDialog",true,infoForm);
 

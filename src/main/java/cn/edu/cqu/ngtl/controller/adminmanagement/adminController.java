@@ -931,6 +931,23 @@ public class adminController extends BaseController {
     }
 
     /**
+     * 初始化课程负责人数据
+     * @param form
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=initTeacher")
+    public ModelAndView initTeacher(@ModelAttribute("KualiForm") UifFormBase form) {
+        AdminInfoForm infoForm = (AdminInfoForm) form;
+        super.baseStart(infoForm);
+        if(adminService.initTeacherData())
+            return this.getCourseManagerPage(infoForm);
+        else {
+            infoForm.setErrMsg("初始化失败，请联系管理员！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+    }
+
+    /**
      * 搜索职员表
      * @param form
      * @return
@@ -2242,7 +2259,6 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageCourseManager");
     }
 
-
     /**
      * 获取课程类别管理页面
      * 127.0.0.1:8080/tams/portal/admin?methodToCall=getCourseCategoryPage&viewId=AdminView
@@ -2351,13 +2367,15 @@ public class adminController extends BaseController {
 
         CMCourseClassification cmCourseClassification = adminInfoForm.getAllClassifications().get(index);
 
-        if (adminService.removeCourseClassificationById(cmCourseClassification.getId()))
-        {logger.info("删除课程类别为"+cmCourseClassification.getName()+"的课程类别");
-            return this.getCourseCategoryPage(form);}
-        else
+        if (adminService.removeCourseClassificationById(cmCourseClassification.getId())) {
+            logger.info("删除课程类别为"+cmCourseClassification.getName()+"的课程类别");
+            return this.getCourseCategoryPage(form);
+        }
+        else{
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
-        {   logger.error("删除课程类别为"+cmCourseClassification.getName()+"的课程类别失败");
-            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");}
+           logger.error("删除课程类别为"+cmCourseClassification.getName()+"的课程类别失败");
+            adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
+        }
         return this.showDialog("adminErrDialog", true, adminInfoForm);
     }
 
@@ -2470,7 +2488,8 @@ public class adminController extends BaseController {
         if (adminService.removeTaCategoryById(Integer.parseInt(taCategory.getId()))) {
             logger.info("删除助教类别为"+taCategory.getName()+"、时新为"+taCategory.getHourlyWage()+"的助教类别。");
             return this.getTaCategoryPage(form);
-        } else {
+        }
+        else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
             logger.error("删除助教类别为"+taCategory.getName()+"、时薪为"+taCategory.getHourlyWage()+"的助教类别失败。");
@@ -2588,7 +2607,8 @@ public class adminController extends BaseController {
         if (adminService.removeIssueTypeById(issueType.getId())) {
             logger.info("删除任务类别为"+issueType.getTypeName()+"的任务类别。");
             return this.getTaskCategoryPage(form);
-        } else {
+        }
+        else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             logger.error("删除任务类别为"+issueType.getTypeName()+"的任务类别失败。");
             adminInfoForm.setErrMsg("删除失败！");
@@ -2796,11 +2816,11 @@ public class adminController extends BaseController {
         String termName = termManagerViewObject.getTermName();
         String year = termName.substring(0, termName.indexOf("年"));
         String term = termName.substring(termName.indexOf("年") + 1, termName.indexOf("季"));
-        if (adminService.removeTermByYearAndTerm(year,
-                term)) {
+        if (adminService.removeTermByYearAndTerm(year, term)) {
             logger.info("删除批次名称为"+termManagerViewObject.getTermName()+"、开始时间为"+termManagerViewObject.getStartDate()+"、结束时间为"+termManagerViewObject.getEndDate()+"的批次。");
             return this.getTermManagePage(form);
-        } else {
+        }
+        else {
             // TODO: 2016/10/29 弹出错误提示，具体错误信息待补充
             adminInfoForm.setErrMsg("删除失败(修改为错误提示)");
             logger.error("删除批次名称为"+termManagerViewObject.getTermName()+"、开始时间为"+termManagerViewObject.getStartDate()+"、结束时间为"+termManagerViewObject.getEndDate()+"的批次失败。");

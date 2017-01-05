@@ -1,9 +1,9 @@
 package cn.edu.cqu.ngtl.service.exportservice;
 
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
-import cn.edu.cqu.ngtl.viewobject.adminInfo.CourseManagerViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject;
 import com.itextpdf.text.DocumentException;
 
 import java.io.IOException;
@@ -53,4 +53,11 @@ public interface IPDFService {
      * @return filePath                   返回的PDF文件路径
      */
     String prepareTaFundingToPDF(List<TaFundingViewObject> taFundingViewObjectList);
+
+    /**
+     * 教学日历PDF打印路径create by liuchuan
+     * @param  TeachCalendarManager
+     * @return filePath
+     */
+    String prepareTeachCalendarPDF(List<TeachCalendarViewObject>  TeachCalendarManager);
 }

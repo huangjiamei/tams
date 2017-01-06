@@ -120,24 +120,36 @@ public class ClassController extends BaseController {
      * http://127.0.0.1:8080/tams/portal/class?methodToCall=getClassListPage&viewId=ClassView
      **/
     @RequestMapping(params = "methodToCall=getClassListPage")
-    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form) {
+    public ModelAndView getClassListPage(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 //        try {
-        User user = (User) getUserSession().retrieveObject("user");
 
-        if(userInfoService.isSysAdmin(user.getCode())||userInfoService.isAcademicAffairsStaff(user.getCode())||userInfoService.isCollegeStaff(user.getCode())||userInfoService.isCourseManager(user.getCode())){
-            infoForm.setCanApprove(true);
-        }else{
-            infoForm.setCanApprove(false);
-        }
-        infoForm.setUser(user);
-        infoForm.setClassList(
-                taConverter.classInfoToViewObject(
-                        classInfoService.getAllClassesFilterByUid(user.getCode())
-                )
-        );
-        infoForm.setCheckedClassListAll(false);//刷新页面，全选框不选。
+
+        if(infoForm.getCondClassNumber()==null&&
+                infoForm.getCondDepartmentName()==null&&
+                infoForm.getCondDepartmentName()==null&&
+                infoForm.getCondInstructorName()==null&&
+                infoForm.getCondCourseName()==null&&
+                infoForm.getCondCourseCode()==null&&
+                infoForm.getCondClassType()==null&&
+                infoForm.getCourseStatus()==null) {
+
+
+            User user = (User) getUserSession().retrieveObject("user");
+
+            if (userInfoService.isSysAdmin(user.getCode()) || userInfoService.isAcademicAffairsStaff(user.getCode()) || userInfoService.isCollegeStaff(user.getCode()) || userInfoService.isCourseManager(user.getCode())) {
+                infoForm.setCanApprove(true);
+            } else {
+                infoForm.setCanApprove(false);
+            }
+            infoForm.setUser(user);
+            infoForm.setClassList(
+                    taConverter.classInfoToViewObject(
+                            classInfoService.getAllClassesFilterByUid(user.getCode())
+                    )
+            );
+            infoForm.setCheckedClassListAll(false);//刷新页面，全选框不选。
 
             return this.getModelAndView(infoForm, "pageClassList");
 //        } catch (Exception e) {
@@ -147,6 +159,11 @@ public class ClassController extends BaseController {
 //            return this.showDialog("refreshPageViewDialog", true, infoForm);
 //
 //        }
+        }
+        else{
+            this.searchClassByCondition(infoForm,request);
+        }
+        return this.getModelAndView(infoForm, "pageClassList");
     }
     /**
       * 课程页面checkbox全选
@@ -238,7 +255,7 @@ public class ClassController extends BaseController {
 //
 //            MDC.put("remoteHost",request.getRemoteAddr());
 //            logger.info("进行了审批操作,状态改为："+workFlowService.getWorkFlowStatusName(infoForm.getApproveReasonOptionFinder()));
-            return this.getClassListPage(infoForm);
+            return this.getClassListPage(infoForm,request);
         }
         else  //应当返回错误信息
             infoForm.setErrMsg("审核失败！");
@@ -283,11 +300,11 @@ public class ClassController extends BaseController {
 
 
 
-            return this.getClassListPage(infoForm);
+            return this.getClassListPage(infoForm,request);
         }
 
         else  //应当返回错误信息
-            return this.getClassListPage(infoForm);
+            return this.getClassListPage(infoForm,request);
     }
 
     /**
@@ -1206,10 +1223,12 @@ public class ClassController extends BaseController {
         );
 
         //清除table页面信息缓存
-        Map map = new HashMap();
-        map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable").getData());
-        map.put("displayStart",0);
-        infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable").setData(map);
+        if(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable")!=null) {
+            Map map = new HashMap();
+            map.putAll(infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable").getData());
+            map.put("displayStart", 0);
+            infoForm.getViewPostMetadata().getComponentPostMetadataMap().get("ClassListPageTable").setData(map);
+        }
 
         return this.getModelAndView(infoForm, "pageClassList");
     }
@@ -2174,7 +2193,7 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
         utSessionDao.setCurrentSession(utSessionDao.getUTSessionById(Integer.parseInt(infoForm.getSessionTermFinder())));
-        return this.getClassListPage(form);
+        return this.getClassListPage(form,request);
     }
 
     /**

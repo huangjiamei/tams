@@ -150,6 +150,9 @@
                                                                                   p:label="学分"
                                                                                   p:messageText="@{applyAssistantViewObject.credit}"/>
                                                                             <bean parent="Uif-MessageField"
+                                                                                  p:label="学生人数"
+                                                                                  p:messageText="@{applyAssistantViewObject.studentNumber}"/>
+                                                                            <bean parent="Uif-MessageField"
                                                                                   p:label="申请课程教师"
                                                                                   p:messageText="@{applyAssistantViewObject.applyTeacher}"/>
                                                                             <bean id="applicationPhoneNbrField" parent="Uif-InputField"

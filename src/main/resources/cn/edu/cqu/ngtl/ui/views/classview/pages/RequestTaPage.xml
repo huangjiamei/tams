@@ -105,18 +105,6 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <!--<bean parent="Uif-HorizontalBoxSection"-->
-                                                                      <!--p:style="float:right!important;margin-bottom:-55px;">-->
-                                                                    <!--<property name="items">-->
-                                                                        <!--<list>-->
-                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
-                                                                                  <!--p:actionLabel="PDF"-->
-                                                                                  <!--p:actionImagePlacement="LEFT"-->
-                                                                                  <!--p:additionalCssClasses="icon-file bg-orange box-btngroup">-->
-                                                                            <!--</bean>-->
-                                                                        <!--</list>-->
-                                                                    <!--</property>-->
-                                                                <!--</bean>-->
                                                                 <bean parent="Uif-TabGroup" ><!--p:onDocumentReadyScript="tabGroupIcon();"-->
                                                                     <property name="items">
                                                                         <list>
@@ -125,6 +113,17 @@
                                                                                   p:headerText="课程信息">
                                                                                 <property name="items">
                                                                                     <list>
+                                                                                        <bean parent="Uif-HorizontalBoxSection"
+                                                                                              p:style="float:right!important;margin-top:-45px;">
+                                                                                            <property name="items">
+                                                                                                <list>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="PDF"
+                                                                                                          p:methodToCall="exportSubmitRequestPDF"
+                                                                                                          p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
                                                                                         <bean parent="Uif-GridGroup"
                                                                                               p:layoutManager.renderRowFirstCellHeader="false">
                                                                                             <property name="layoutManager.numberOfColumns"
@@ -165,9 +164,9 @@
                                                                                                     <bean parent="Uif-MessageField"
                                                                                                           p:label="学分"
                                                                                                           p:messageText="@{applyViewObject.credit}"/>
-                                                                                                    <!--<bean parent="Uif-MessageField"-->
-                                                                                                          <!--p:label="学生人数"-->
-                                                                                                          <!--p:messageText="@{applyViewObject.studentNumber}"/>-->
+                                                                                                    <bean parent="Uif-MessageField"
+                                                                                                          p:label="学生人数"
+                                                                                                          p:messageText="@{applyViewObject.studentNumber}"/>
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="拟配备助教数"
                                                                                                           p:required="true"
@@ -262,10 +261,6 @@
                                                                                                           p:methodToCall="submitRequestTaPage"
                                                                                                           p:render="@{!#form.submitted}"
                                                                                                           p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
-                                                                                                    <bean parent="Uif-PrimaryActionButton"
-                                                                                                          p:actionLabel="PDF"
-                                                                                                          p:methodToCall="exportSubmitRequestPDF"
-                                                                                                          p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="已提交"
                                                                                                           p:actionImagePlacement="LEFT"

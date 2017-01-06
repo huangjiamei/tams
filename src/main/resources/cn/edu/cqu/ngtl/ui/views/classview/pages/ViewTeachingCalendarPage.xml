@@ -158,8 +158,7 @@
                                                                                   p:fieldLabel.colSpan="1"
                                                                                   p:propertyName="currentCalendarInfo.description" p:readOnly="true">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:auto;resize:vertical;"/>
+                                                                                    <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField"
@@ -168,8 +167,7 @@
                                                                                   p:fieldLabel.colSpan="1"
                                                                                   p:propertyName="currentCalendarInfo.taTask" p:readOnly="true">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:auto;resize:vertical;"/>
+                                                                                    <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                             </bean>
 

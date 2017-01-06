@@ -158,7 +158,7 @@
                                                                                   p:propertyName="currentCalenderInfoEdit.description">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;resize:vertical;"/>
+                                                                                          p:style="height:200px;resize:vertical;"/>
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField"
@@ -168,7 +168,7 @@
                                                                                   p:propertyName="currentCalenderInfoEdit.taTask">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;resize:vertical;"/>
+                                                                                          p:style="height:200px;resize:vertical;"/>
                                                                                 </property>
                                                                             </bean>
 

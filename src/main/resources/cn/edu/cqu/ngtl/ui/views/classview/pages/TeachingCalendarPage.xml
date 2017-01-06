@@ -217,10 +217,9 @@
                                                                             </bean>-->
                                                                             <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
                                                                             <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask"
-                                                                                  p:readOnly="true" p:style="width:500px;height:auto">
+                                                                                  p:readOnly="true">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="resize:vertical;"/>
+                                                                                    <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                               </bean>
                                                                             <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"

@@ -155,11 +155,6 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="申请课程教师"
                                                                                   p:messageText="@{applyAssistantViewObject.applyTeacher}"/>
-                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
-                                                                                  p:label="电话号码"
-                                                                                  p:propertyName="applicationPhoneNbr"
-                                                                                  p:required="true">
-                                                                            </bean>
                                                                             <bean id="bankTypeField" parent="Uif-InputField"
                                                                                   p:label="银行名称"
                                                                                   p:propertyName="bankName"
@@ -175,6 +170,11 @@
                                                                             <bean id="bankNbrField" parent="Uif-InputField"
                                                                                   p:label="银行卡号"
                                                                                   p:propertyName="bankNbr"
+                                                                                  p:required="true">
+                                                                            </bean>
+                                                                            <bean id="applicationPhoneNbrField" parent="Uif-InputField"
+                                                                                  p:label="电话号码"
+                                                                                  p:propertyName="applicationPhoneNbr"
                                                                                   p:required="true">
                                                                             </bean>
                                                                         </list>

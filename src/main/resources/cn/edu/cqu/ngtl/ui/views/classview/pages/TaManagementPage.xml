@@ -280,8 +280,7 @@
                                                                                   p:style="display:@{#line.taName!=null?'block':'none'}"
                                                                                   p:propertyName="applicationNote">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="width:300px;height:auto;resize:vertical;"/>
+                                                                                    <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>

@@ -986,11 +986,13 @@ td.selected{
 }
 
 #ViewTeachingCalendarPage pre {
-    height: 300px;
+    height: 250px;
+    resize:vertical;
 }
 
 #taDetailId pre{
-    height: 250px;
+    height: 200px;
+    resize:vertical;
 }
 /*鼠标移动跟随*/
 .addPointer {
@@ -1057,4 +1059,16 @@ td.selected{
 
 #teachCalendarTable .uif-message{
     margin-top: 0px;
+}
+
+#taManagerApplyTable pre {
+    width: 400px;
+    height:auto;
+    resize:vertical;
+}
+
+#teachCalendarTable pre {
+    width: 500px;
+    height:auto;
+    resize:vertical;
 }

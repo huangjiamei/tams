@@ -14,4 +14,7 @@ public interface UTClassDao {
 
     void saveUTClassesByList(List<UTClass> utClasses);
 
+    List<UTClass> getAllClasses();
+
+    void insertOneByEntity(UTClass utClass);
 }

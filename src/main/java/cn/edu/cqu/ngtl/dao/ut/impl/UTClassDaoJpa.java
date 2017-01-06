@@ -27,4 +27,18 @@ public class UTClassDaoJpa implements UTClassDao {
         }
     }
 
+    @Override
+    public List<UTClass> getAllClasses(){
+       return  KradDataServiceLocator.getDataObjectService().findAll(UTClass.class).getResults();
+
+    }
+
+    @Override
+    public void insertOneByEntity(UTClass utClass){
+
+        KradDataServiceLocator.getDataObjectService().save(utClass);
+    }
+
+
+
 }

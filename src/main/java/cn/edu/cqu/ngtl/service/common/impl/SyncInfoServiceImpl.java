@@ -80,6 +80,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             this.syncClassInfo(con);   //导入班次信息
         if (needToSync.contains("3"))
             this.syncStudentTimetableInfo(con);  //导入学生课表
+//            this.syncChangesOfClasses(con);
         return con;
     }
 
@@ -370,6 +371,41 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 pre.close();
         }
 
+    }
+
+
+    public void syncChangesOfClasses(Connection connection) throws SQLException{
+        List<UTClass> allClasses = utClassDao.getAllClasses();
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
+        Map classNbrAndStuNbr = new HashMap();
+        List<String> classNbrList = new ArrayList<>();
+
+        String queryKCKB = "SELECT * FROM KCKB t WHERE  t.XN = '2016' AND t.XQ_ID = '1'";
+        PreparedStatement pre = connection.prepareStatement(queryKCKB);
+        try {
+            pre.setQueryTimeout(10000);
+            ResultSet res = pre.executeQuery();
+
+            while (res.next()) {
+                String classNbr = res.getString("JXBH");
+                String stuNbr = res.getString("SKBJ_RS");
+                if(!classNbrList.contains(classNbr)){
+                    classNbrList.add(classNbr);
+                    classNbrAndStuNbr.put(classNbr,stuNbr);
+                }
+            }
+        }finally {
+            if (pre != null)
+                pre.close();
+        }
+        int i  = 0;
+
+        for(UTClass utClass:allClasses){
+            String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
+            utClass.setLimit(Integer.valueOf(stuNbr));
+            utClassDao.insertOneByEntity(utClass);
+            System.out.println(i++);
+        }
     }
 
 }

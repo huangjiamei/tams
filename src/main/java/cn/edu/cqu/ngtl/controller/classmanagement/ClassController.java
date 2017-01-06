@@ -97,7 +97,8 @@ public class ClassController extends BaseController {
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
 
-    private static int MAX_CALENDAR_HOUR = 10;
+    //教学日历耗时上限
+    private static int MAX_CALENDAR_HOUR = 12;
 
     @RequestMapping(params = "methodToCall=logout")
     public ModelAndView logout(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request) throws Exception {

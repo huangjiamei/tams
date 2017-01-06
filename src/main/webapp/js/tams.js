@@ -1090,42 +1090,28 @@ function travelSubsidyDialog(){
     }
 }
 
-//电话号码规范
-function validatePhoneNum(id){
-    var cellPhone=document.getElementById(id);
+//电话号码规范//银行卡号规范
+function validatePhoneNumAndBank(idPhoneNum,idBank){
+    var cellPhone=document.getElementById(idPhoneNum);
     var RegCellPhone = /^([0-9]{11})?$/;
     var cellPhoneValue = cellPhone.value.trim();
-    if(cellPhoneValue==''){
-        alert("请填写手机号！");
-    }
-    else{
-        var falg=cellPhoneValue.search(RegCellPhone);
-        if (falg==-1){
-            alert("手机号不合法！");
-        }
-        else{
-            return true;
-        }
-    }
-}
 
-//银行卡号规范
-function validateBank(id){
-    var bankNumer=document.getElementById(id);
-    var RegBankNumer = /^([0-9])/;
+    var bankNumer=document.getElementById(idBank);
+    var RegBankNumer = /^\+?[0-9]*$/;
     var bankNumerValue = bankNumer.value.trim();
-    if(bankNumerValue==''){
-        alert("请填写银行卡号！");
+
+    var falg=cellPhoneValue.search(RegCellPhone);
+    var falgBank=bankNumerValue.search(RegBankNumer);
+    if (falg==-1){
+        alert("手机号码填写不规范！");
+    }
+    else if(falgBank==-1){
+        alert("银行卡号填写不规范！");
     }
     else{
-        var falg=bankNumerValue.search(RegBankNumer);
-        if (falg==-1){
-            alert("银行卡号不合法！");
-        }
-        else{
-            return true;
-        }
+        return true;
     }
+
 }
 
 //下拉列表的输入框

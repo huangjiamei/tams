@@ -263,6 +263,10 @@
                                                                                                           p:render="@{!#form.submitted}"
                                                                                                           p:additionalCssClasses="icon-arrow-up bg-teal box-btngroup"/>
                                                                                                     <bean parent="Uif-PrimaryActionButton"
+                                                                                                          p:actionLabel="PDF"
+                                                                                                          p:methodToCall="exportSubmitRequestPDF"
+                                                                                                          p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
+                                                                                                    <bean parent="Uif-PrimaryActionButton"
                                                                                                           p:actionLabel="已提交"
                                                                                                           p:actionImagePlacement="LEFT"
                                                                                                           p:disabled = "true"

@@ -2,6 +2,7 @@ package cn.edu.cqu.ngtl.service.exportservice;
 
 import cn.edu.cqu.ngtl.viewobject.adminInfo.ClassFundingViewObject;
 import cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject;
+import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTaApplyViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.ClassTeacherViewObject;
 import cn.edu.cqu.ngtl.viewobject.classinfo.TeachCalendarViewObject;
 import com.itextpdf.text.DocumentException;
@@ -60,4 +61,7 @@ public interface IPDFService {
      * @return filePath
      */
     String prepareTeachCalendarPDF(List<TeachCalendarViewObject>  TeachCalendarManager);
+    public String printSubmitRequestTable(String title,String course,String teacher,String code,String courseCode,String courseType,String classCode,String period,String credits,String ta,String totalHours,String budgetTotal,String fileName,String[] calendarHeaders, List<String[]> T)
+            throws DocumentException, IOException;
+
 }

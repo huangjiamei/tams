@@ -2793,6 +2793,8 @@ public class adminController extends BaseController {
             }
         }
         return this.getTermManagePage(form);
+                //this.getModelAndView(adminInfoForm, "pageTermManagement");
+                //this.getTermManagePage(form);
     }
 
     /**

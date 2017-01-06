@@ -32,6 +32,8 @@ public class ApplyAssistantViewObject {
 
     private String credit;
 
+    private String studentNumber;
+
     //隐藏属性
     private String classId;
 
@@ -137,5 +139,13 @@ public class ApplyAssistantViewObject {
 
     public void setCredit(String credit) {
         this.credit = credit;
+    }
+
+    public String getStudentNumber() {
+        return studentNumber;
+    }
+
+    public void setStudentNumber(String studentNumber) {
+        this.studentNumber = studentNumber;
     }
 }

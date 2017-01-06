@@ -83,21 +83,23 @@ public class ClassConverterImpl implements IClassConverter {
         }
 
         for (UTStudent listone : studentList) {
-            if(!blackManList.contains(listone.getId())) {
-                MyTaViewObject viewObject = new MyTaViewObject();
-                viewObject.setTaName(listone.getName());
-                viewObject.setDepartmentName(listone.getDepartment().getName());
-                viewObject.setTaIdNumber(listone.getId());
-                viewObject.setTaGender(listone.getGender());
-                viewObject.setContactPhone("缺失");
-                //点击查看详细信息会用到的
-                CMProgram program = listone.getProgram();
-                if (program == null)
-                    viewObject.setTaMajorName("缺失");
-                else
-                    viewObject.setTaMajorName(listone.getProgram().getName().toString());
-                viewObject.setAdvisorName("缺失");
-                viewObjects.add(viewObject);
+            if(listone!=null) {
+                if (!blackManList.contains(listone.getId())) {
+                    MyTaViewObject viewObject = new MyTaViewObject();
+                    viewObject.setTaName(listone.getName());
+                    viewObject.setDepartmentName(listone.getDepartment()==null?"":listone.getDepartment().getName());
+                    viewObject.setTaIdNumber(listone.getId());
+                    viewObject.setTaGender(listone.getGender());
+                    viewObject.setContactPhone("缺失");
+                    //点击查看详细信息会用到的
+                    CMProgram program = listone.getProgram();
+                    if (program == null)
+                        viewObject.setTaMajorName("缺失");
+                    else
+                        viewObject.setTaMajorName(listone.getProgram().getName().toString());
+                    viewObject.setAdvisorName("缺失");
+                    viewObjects.add(viewObject);
+                }
             }
         }
         return viewObjects;

@@ -45,7 +45,7 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
     @Override
     public List<Object> selectClassIdsByInstructorId(String uId) {
         Query query = em.createNativeQuery("SELECT CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR t WHERE t.INSTRUCTOR_ID='" + uId + "'");
-        return query.getResultList();
+        return query.getResultList() == null ? null : query.getResultList();
     }
 
 
@@ -54,7 +54,7 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
         Query query = em.createNativeQuery("SELECT * FROM UNITIME_CLASS_INSTRUCTOR t",UTClassInstructor.class);
 //        KRADServiceLocator.getDataObjectService().findAll(UTClassInstructor.class).getResults();
 
-        return query.getResultList();
+        return query.getResultList() == null ? null : query.getResultList();
     }
 
 
@@ -83,7 +83,7 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
             }
             else {
                 classInstructorMap.put(insIdAndClassId[0].toString(), InstructorMap.get(insIdAndClassId[1]==null?"":insIdAndClassId[1].toString()));
-                classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId.toString());
+                classInsIdMap.put(insIdAndClassId[0].toString(),insIdAndClassId[1]==null?"":insIdAndClassId[1].toString());
             }
         }
         result.add(classInstructorMap);

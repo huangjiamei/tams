@@ -64,7 +64,7 @@
                                                                   p:location.controllerMapping="/home"
                                                                   p:location.methodToCall="getCommonHome"/>
                                                             <bean parent="Uif-KeyValueLocation" p:key="2"
-                                                                  p:value="教学班列表"
+                                                                  p:value="课程"
                                                                   p:location.viewId="ClassView"
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
@@ -105,18 +105,18 @@
                                                           p:additionalCssClasses="box-body">
                                                         <property name="items">
                                                             <list>
-                                                                <bean parent="Uif-HorizontalBoxSection"
-                                                                      p:style="float:right!important;margin-bottom:-55px;">
-                                                                    <property name="items">
-                                                                        <list>
-                                                                            <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="PDF"
-                                                                                  p:actionImagePlacement="LEFT"
-                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup">
-                                                                            </bean>
-                                                                        </list>
-                                                                    </property>
-                                                                </bean>
+                                                                <!--<bean parent="Uif-HorizontalBoxSection"-->
+                                                                      <!--p:style="float:right!important;margin-bottom:-55px;">-->
+                                                                    <!--<property name="items">-->
+                                                                        <!--<list>-->
+                                                                            <!--<bean parent="Uif-PrimaryActionButton"-->
+                                                                                  <!--p:actionLabel="PDF"-->
+                                                                                  <!--p:actionImagePlacement="LEFT"-->
+                                                                                  <!--p:additionalCssClasses="icon-file bg-orange box-btngroup">-->
+                                                                            <!--</bean>-->
+                                                                        <!--</list>-->
+                                                                    <!--</property>-->
+                                                                <!--</bean>-->
                                                                 <bean parent="Uif-TabGroup" ><!--p:onDocumentReadyScript="tabGroupIcon();"-->
                                                                     <property name="items">
                                                                         <list>
@@ -171,7 +171,8 @@
                                                                                                     <bean parent="Uif-InputField"
                                                                                                           p:label="拟配备助教数"
                                                                                                           p:required="true"
-                                                                                                          p:style="width:80%"
+                                                                                                          p:readOnly="@{#form.submitted}"
+                                                                                                          p:style="@{#form.submitted ? 'margin-top:5px':'width:80%'}"
                                                                                                           p:propertyName="applyViewObject.assistantNumber">
                                                                                                         <property name="validCharactersConstraint">
                                                                                                             <bean parent="NumericPatternConstraint"/>

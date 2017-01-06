@@ -922,9 +922,17 @@ public class AdminServiceImpl implements IAdminService {
     public void saveTaFunding(List<TaFundingViewObject> taFundingViewObjects) {
         UTSession curSession = sessionDao.getCurrentSession();
         for (TaFundingViewObject per : taFundingViewObjects) {
-            TAMSTa exist = tamsTaDao.selectByStudentIdAndClassIdAndSessionId(per.getStuId(), per.getClassId(), curSession.getId().toString());
-            exist.setAssignedFunding(per.getAssignedFunding());
-            tamsTaDao.insertByEntity(exist);
+            if(per.getAssignedFunding()!=null) {
+                TAMSTa exist = tamsTaDao.selectByStudentIdAndClassIdAndSessionId(per.getStuId(), per.getClassId(), curSession.getId().toString());
+                //初始化博士津贴
+                if (exist.getType()!=null&&exist.getType().equals("2")) {
+                    Integer assignedFunds = Integer.valueOf(per.getAssignedFunding());
+                    int phdFunds = (int)(assignedFunds*0.2);
+                    exist.setPhdFunding(String.valueOf(phdFunds));
+                }
+                exist.setAssignedFunding(per.getAssignedFunding());
+                tamsTaDao.insertByEntity(exist);
+            }
         }
     }
 
@@ -1009,7 +1017,7 @@ public class AdminServiceImpl implements IAdminService {
             deptFundings.add(
                     tamsDeptFundingDao.selectDeptFundsByDeptIdAndSession(user.getDepartmentId(), curSession.getId())
             );
-            if(deptFundings != null)
+            if(deptFundings != null&&deptFundings.get(0)!=null)
                 sessionFundingTotalApply = Integer.parseInt(deptFundings.get(0).getApplyFunding());
         }
         return sessionFundingTotalApply.toString();

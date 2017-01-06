@@ -2,6 +2,8 @@ package cn.edu.cqu.ngtl.form.classmanagement;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
+import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
+import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
@@ -45,7 +47,14 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TeachCalendarViewObject currentCalenderInfoEdit;
     private String calendarId;
 
-   /*
+    /**
+     * 复制教学日历相关
+     */
+    private List<UTClassInformation> utClassInformations;
+    private List<String> instructorList;
+    private boolean checked;
+
+   /**
     助教申报页面
     */
     private List<TeachCalendarViewObject> allCalendar;
@@ -169,8 +178,34 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private String StudentName;
     private String StudentNumber;
     private String studentNameForChange;
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
     private String studentNumberForChange;
 
+
+
+    public List<String> getInstructorList() {
+        return instructorList;
+    }
+
+    public void setInstructorList(List<String> instructorList) {
+        this.instructorList = instructorList;
+    }
+
+    public List<UTClassInformation> getUtClassInformations() {
+        return utClassInformations;
+    }
+
+    public void setUtClassInformations(List<UTClassInformation> utClassInformations) {
+        this.utClassInformations = utClassInformations;
+    }
 
     public String getCalendarId() {
         return calendarId;

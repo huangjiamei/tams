@@ -214,10 +214,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 return null;
             }
             TimeUtil timeUtil = new TimeUtil();
-            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
-                return this.getAllCurSessionClassesWithFinalStatus("1"); //工作流是审批
-            }
             List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
+            if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
+                List<UTClassInformation> secMaxOrderStatus = this.getAllCurSessionClassesWithFinalStatus("1");
+                List<UTClassInformation> taClasses = classInfoDao.selectBatchByIds(classIds);
+                if(taClasses!=null)
+                    secMaxOrderStatus.addAll(taClasses);
+                return secMaxOrderStatus; //工作流是审批
+            }
+
             List<UTStudentTimetable> utStudentTimetables = utStudentTimetableDao.getStudentTimetableByUid(uId);
             if (utStudentTimetables != null && utStudentTimetables.size() != 0) {
                 for (UTStudentTimetable utStudentTimetable : utStudentTimetables) {
@@ -337,6 +342,14 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 for(UTClassInformation utClassInformation:classInformationList){
                     stuCanSeeClassId.add(utClassInformation.getId());
                 }
+
+                //自己担任助教的课程
+                List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
+                for(Object classid :classIds){
+                    if(!stuCanSeeClassId.contains(classid.toString()))
+                        stuCanSeeClassId.add(classid.toString());
+                }
+
             }else{
                 List<Object> classIds = taDao.selectClassIdsByStudentId(uId);
                 for(Object classid :classIds){
@@ -884,5 +897,79 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
 
+    //根据教师Ids查找教学班
+    @Override
+    public List<UTClassInformation> getClassInfoByInstructorIds(List<String> InstructorIds, String curClassId) {
+        if(InstructorIds == null)
+            return null;
+        List<Object> classIds = new ArrayList<>();
+        for(String InstructorId : InstructorIds) {
+            List<Object> classIdList = classInstructorDao.selectClassIdsByInstructorId(InstructorId);
+            for(int i=0; i<classIdList.size(); i++) {
+                classIds.add(classIdList.get(i));
+            }
+        }
+        //除去当前课程的id
+        for(int i=0; i<classIds.size(); i++) {
+            if(classIds.get(i).toString().equals(curClassId))
+                classIds.remove(i);
+        }
+        List<UTClassInformation> utClassInformations = classInfoDao.selectBatchByIds(classIds);
+        return utClassInformations !=null ? utClassInformations : null;
+    }
 
+    //复制教学日历
+    @Override
+    public boolean copyTeachingCalendar (List<String> classIds, String curClassId) {
+        List<TAMSTeachCalendar> tamsTeachCalendarList = new ArrayList<>();
+        for(String classId : classIds) {
+            List<TAMSTeachCalendar> tamsTeachCalendars = teachCalendarDao.selectAllByClassId(classId);
+            if(tamsTeachCalendars != null) {
+                for (int i = 0; i < tamsTeachCalendars.size(); i++)
+                    tamsTeachCalendarList.add(tamsTeachCalendars.get(i));
+            }
+        }
+        if(tamsTeachCalendarList != null){
+            List<TAMSTeachCalendar> tamsTeachCalendars = new ArrayList<>(tamsTeachCalendarList.size());
+            List<TAMSAttachments> tamsAttachmentsList = new ArrayList<>();
+            for(TAMSTeachCalendar per : tamsTeachCalendarList) {
+                TAMSTeachCalendar tamsTeachCalendar = new TAMSTeachCalendar();
+                tamsTeachCalendar.setDescription(per.getDescription());
+                tamsTeachCalendar.setTaTask(per.getTaTask());
+                tamsTeachCalendar.setStartTime(per.getStartTime());
+                tamsTeachCalendar.setEndTime(per.getEndTime());
+                tamsTeachCalendar.setElapsedTime(per.getElapsedTime());
+                tamsTeachCalendar.setHasAttachment(per.isHasAttachment());
+                tamsTeachCalendar.setTheme(per.getTheme());
+                tamsTeachCalendar.setClassId(curClassId);
+                tamsTeachCalendars.add(tamsTeachCalendar);
+                //同时复制attachment
+                List<TAMSAttachments> tamsAttachments = attachmentsDao.selectCalendarFilesByCalendarId(per.getId());
+                if(tamsAttachments != null) {
+                    for (TAMSAttachments tamsAttachments1 : tamsAttachments) {
+                        TAMSAttachments tamsAttachments2 = new TAMSAttachments();
+                        tamsAttachments2.setContainerId(per.getId());
+                        tamsAttachments2.setContainerType(tamsAttachments1.getContainerType());
+                        tamsAttachments2.setFileName(tamsAttachments1.getFileName());
+                        tamsAttachments2.setDiskFileName(tamsAttachments1.getDiskFileName());
+                        tamsAttachments2.setFileSize(tamsAttachments1.getFileSize());
+                        tamsAttachments2.setAuthorId(tamsAttachments1.getAuthorId());
+                        tamsAttachments2.setDownloadTimes("0");
+                        tamsAttachments2.setCreateTime(tamsAttachments1.getCreateTime());
+                        tamsAttachments2.setDiskDirectory(tamsAttachments1.getDiskDirectory());
+                        tamsAttachmentsList.add(tamsAttachments2);
+                    }
+                }
+            }
+            for(TAMSTeachCalendar per : tamsTeachCalendars)
+                teachCalendarDao.insertByEntity(per);
+            if(tamsAttachmentsList != null) {
+                for (TAMSAttachments per : tamsAttachmentsList)
+                    attachmentsDao.insertOneByEntity(per);
+            }
+            return true;
+        }
+        else
+            return false;
+    }
 }

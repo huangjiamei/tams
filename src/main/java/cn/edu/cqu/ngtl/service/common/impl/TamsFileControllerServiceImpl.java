@@ -156,7 +156,7 @@ public class TamsFileControllerServiceImpl extends FileControllerServiceImpl imp
             is.close();
             response.getOutputStream().close();
         } catch (IOException e) {
-
+            System.out.println(e);
         }
     }
 

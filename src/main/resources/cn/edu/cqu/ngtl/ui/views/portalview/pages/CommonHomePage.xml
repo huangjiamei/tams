@@ -90,7 +90,7 @@
                                     <list>
                                         <bean parent="Uif-VerticalBoxSection"
                                               p:additionalCssClasses="box box-success heightDiv"
-                                              p:style="padding:5px;width=250px!important;">
+                                              p:style="padding:5px;width=250px!important;background-color: rgba(255,255,255,0.15);">
                                             <property name="items">
                                                 <list>
                                                     <bean parent="Uif-HorizontalBoxSection"
@@ -109,7 +109,7 @@
                                                           p:style="margin-bottom:30px;"
                                                           p:source="@{#ConfigProperties['application.url']}/images/noPhoto-noWord.jpg"/>
                                                     <!--具体信息的表格-->
-                                                    <bean parent="Uif-GridGroup"
+                                                    <bean id="infoTable" parent="Uif-GridGroup"
                                                           p:additionalCssClasses="box-body"
                                                           p:layoutManager.renderRowFirstCellHeader="false">
                                                         <property name="layoutManager.numberOfColumns" value="2"/>

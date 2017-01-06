@@ -192,7 +192,7 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-Icon" p:iconClass="icon-calendar2"/>
-                                                                            <bean parent="Uif-DataField" p:label="文件名称（后期不要title）"
+                                                                            <bean parent="Uif-DataField" p:label="文件名称"
                                                                                   p:propertyName="name"/>
                                                                             <bean parent="Uif-DataField" p:label="大小"
                                                                                   p:propertyName="sizeFormatted"/>
@@ -207,23 +207,22 @@
                                                                     </property>
                                                                     <property name="lineActions">
                                                                         <list>
-                                                                            <bean parent="Uif-VerticalBoxSection">
+                                                                            <bean parent="Uif-HorizontalBoxSection">
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel=""
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="downloadCalendarFile"
                                                                                               p:refreshId="fileTable"
-                                                                                              p:additionalCssClasses="icon-eye-open bg-btn-blue tamsbtn"/>
+                                                                                              p:additionalCssClasses="icon-download bg-btn-orange tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"
-                                                                                              p:actionLabel=""
+                                                                                              p:render="@{#form.instructorHimSelf}"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="removeCalendarFile"
                                                                                               p:refreshId="fileTable"
-                                                                                              p:additionalCssClasses="icon-trash bg-btn-blue tamsbtn"/><!--添加methodToCall-->
+                                                                                              p:additionalCssClasses="icon-trash bg-btn-red tams-action-btn"/><!--添加methodToCall-->
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

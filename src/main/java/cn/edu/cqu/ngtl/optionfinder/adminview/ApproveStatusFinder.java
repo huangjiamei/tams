@@ -41,7 +41,7 @@ public class ApproveStatusFinder extends KeyValuesBase {
             keyValues.add(new ConcreteKeyValue("6", "工作"));
         }else{
             for(TAMSWorkflowStatus status : statuses) {
-                keyValues.add(new ConcreteKeyValue(status.getId(), status.getWorkflowStatus()));
+                keyValues.add(new ConcreteKeyValue(status.getOrder().toString(), status.getWorkflowStatus()));
             }
         }
 

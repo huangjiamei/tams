@@ -256,7 +256,7 @@ public class ClassController extends BaseController {
 //
 //            MDC.put("remoteHost",request.getRemoteAddr());
 //            logger.info("进行了审批操作,状态改为："+workFlowService.getWorkFlowStatusName(infoForm.getApproveReasonOptionFinder()));
-            return this.getClassListPage(infoForm,request);
+            return this.getClassListPage(form,request);
         }
         else  //应当返回错误信息
             infoForm.setErrMsg("审核失败！");

@@ -447,7 +447,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="添加"
-                      p:preSubmitCall="return validatePhoneNum('candidatePhoneNbrField_control'),validateBank('bankNbrField_control');"
+                      p:preSubmitCall="return validatePhoneNumAndBank('candidatePhoneNbrField_control','bankNbrField_control');"
                       p:methodToCall="addSelectedTaApplicant" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>
@@ -615,7 +615,7 @@
             <list>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="更换助教"
-                      p:preSubmitCall="return validatePhoneNum('phoneNumberField_control'),validateBank('bankNumberField_control');"
+                      p:preSubmitCall="return validatePhoneNumAndBank('phoneNumberField_control','bankNumberField_control');"
                       p:methodToCall="changeCurTa" p:dialogDismissOption="REQUEST"/>
             </list>
         </property>

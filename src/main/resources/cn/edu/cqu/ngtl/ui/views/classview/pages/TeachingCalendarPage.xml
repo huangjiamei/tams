@@ -112,10 +112,6 @@
                                                                         <list>
                                                                             <!--左上角btnlist-->
                                                                             <bean parent="Uif-PrimaryActionButton"
-                                                                                  p:actionLabel="PDF"
-                                                                                  p:methodToCall="exportTeachingCalendarPDF"
-                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
-                                                                            <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
                                                                                   p:render = "@{#form.instructorHimSelf}"
                                                                                   p:methodToCall="getAddTeachCalendarPage"
@@ -127,6 +123,10 @@
                                                                                   p:methodToCall="getCopyTeachCalendarDialog"
                                                                                   p:additionalCssClasses="icon-copy bg-teal box-btngroup">
                                                                             </bean>
+                                                                            <bean parent="Uif-PrimaryActionButton"
+                                                                                  p:actionLabel="PDF"
+                                                                                  p:methodToCall="exportTeachingCalendarPDF"
+                                                                                  p:additionalCssClasses="icon-file bg-orange box-btngroup"/>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

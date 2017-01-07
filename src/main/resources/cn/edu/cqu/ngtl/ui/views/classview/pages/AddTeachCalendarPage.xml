@@ -205,6 +205,16 @@
                                                                                                 <bean parent="NumericPatternConstraint"/>
                                                                                             </property>
                                                                                         </bean>
+
+                                                                                        <bean parent="Uif-InputField" p:propertyName="teachWeek" p:required="true"  p:label="周次">
+                                                                                            <property name="optionsFinder">
+                                                                                                <bean class="cn.edu.cqu.ngtl.optionfinder.classview.ClassTeachWeekOptionFinder"
+                                                                                                      p:blankOption="true"/>
+                                                                                            </property>
+                                                                                            <property name="control">
+                                                                                                <bean parent="Uif-DropdownControl"/>
+                                                                                            </property>
+                                                                                        </bean>
                                                                                     </list>
                                                                                 </property>
                                                                             </bean>

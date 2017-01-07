@@ -119,7 +119,7 @@ public class AdminServiceImpl implements IAdminService {
     @Override
     public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions,User user) {
         List<TAMSCourseManager> tamsCourseManagers = new ArrayList<>();
-        if(userInfoService.isCourseManager(user.getCode())){
+        if(userInfoService.isCollegeStaff(user.getCode())){
             tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByConditionWithDeptId(conditions,user.getDepartmentId()==null?"":user.getDepartmentId().toString());
         }else {
             tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);

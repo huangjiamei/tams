@@ -1053,6 +1053,9 @@ public class adminController extends BaseController {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
 
+        User user = (User) getUserSession().retrieveObject("user");
+        String uId = user.getCode();
+
         Map<String, String> conditions = new HashMap<>();
         //put conditions
         conditions.put("CourseName", infoForm.getSearchCourseNm() );
@@ -1061,7 +1064,7 @@ public class adminController extends BaseController {
         conditions.put("InstructorCode", infoForm.getSearchCourseInsCode());
         //转换成页面所需要的数据对象并调用DAO
         infoForm.setCourseManagerViewObjects(adminConverter.getCourseManagerToTableViewObject(
-                adminService.getCourseManagerByCondition(conditions)
+                adminService.getCourseManagerByCondition(conditions,user)
                 )
         );
 

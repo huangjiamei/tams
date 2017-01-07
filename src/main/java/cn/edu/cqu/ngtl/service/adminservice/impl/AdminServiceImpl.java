@@ -115,9 +115,15 @@ public class AdminServiceImpl implements IAdminService {
     public List<TAMSDeptFundingDraft> getAllDeptFundingDraft() {
         return tamsDeptFundingDraftDao.selectAll();
     }
+
     @Override
-    public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions) {
-        List<TAMSCourseManager> tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
+    public List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions,User user) {
+        List<TAMSCourseManager> tamsCourseManagers = new ArrayList<>();
+        if(userInfoService.isCourseManager(user.getCode())){
+            tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByConditionWithDeptId(conditions,user.getDepartmentId()==null?"":user.getDepartmentId().toString());
+        }else {
+            tamsCourseManagers = tamsCourseManagerDao.selectCourseManagerByCondition(conditions);
+        }
         return tamsCourseManagers;
     }
 

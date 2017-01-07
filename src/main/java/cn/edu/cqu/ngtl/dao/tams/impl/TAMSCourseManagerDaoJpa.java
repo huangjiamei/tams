@@ -167,4 +167,61 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
         return list;
         */
 
+
+
+    @Override
+    public List<TAMSCourseManager> selectCourseManagerByConditionWithDeptId(Map<String, String> conditions,String departmentId){
+        int countNull = 0;
+        List<TAMSCourseManager> list = new ArrayList<>();
+        //加通配符
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            if (entry.getValue() == null) {
+                conditions.put(entry.getKey(), "%");
+                countNull++;
+            } else
+                conditions.put(entry.getKey(), "%" + entry.getValue() + "%");
+        }
+        if (countNull != 4) {
+            Query qr = null;
+            if(conditions.get("InstructorName").length()>2||conditions.get("InstructorCode").length()>2) {
+                qr = em.createNativeQuery("SELECT uc.UNIQUEID, T.COURSE_MANAGER_ID FROM UNITIME_COURSE uc WHERE uc.DEPARTMENT_ID = '"+departmentId+"' JOIN TAMS_COURSE_MANAGER t ON uc.UNIQUEID = t.COURSE_ID AND ((uc.NAME LIKE '"+conditions.get("CourseName")+"') AND (uc.CODE LIKE '"+conditions.get("CourseNumber")+"')) JOIN UNITIME_INSTRUCTOR ui ON t.COURSE_MANAGER_ID = ui.UNIQUEID AND ((ui.NAME LIKE '"+conditions.get("InstructorName")+"') AND (ui.CODE LIKE '"+conditions.get("InstructorCode")+"'))");
+            }else{
+                qr = em.createNativeQuery("SELECT uc.UNIQUEID, T.COURSE_MANAGER_ID FROM UNITIME_COURSE uc WHERE uc.DEPARTMENT_ID = '"+departmentId+"' JOIN TAMS_COURSE_MANAGER t ON uc.UNIQUEID = t.COURSE_ID AND ((uc.NAME LIKE '"+conditions.get("CourseName")+"') AND (uc.CODE LIKE '"+conditions.get("CourseNumber")+"'))");
+            }
+            //Query qr = em.createNativeQuery("SELECT uc.Name, uc.CODE, ui.NAME, ui.CODE FROM UNITIME_COURSE uc JOIN UNITIME_INSTRUCTOR ui JOIN TAMS_COURSE_MANAGERT t ON uc.UNICQUEID = t.COURSE_ID AND t.MANAGER_ID = ui.UNICQUEID AND ((uc.NAME LIKE '" + conditions.get("searchCourseName") + "') OR (uc.CODE LIKE '" + conditions.get("searchCourseNumber") + "') OR (ui.NAME LIKE '" + conditions.get("searchInstructorName") + "') OR (ui.CODE LIKE '" + conditions.get("searchInstructorCode") + "'))");
+            List<Object> column = qr.getResultList();
+            for(Object columns : column){
+                TAMSCourseManager tamsCourseManager = new TAMSCourseManager();
+                Object[] managers = (Object[]) columns;
+
+//                UTCourse utCourse = courseDao.selectOneById(Integer.parseInt(managers[0].toString()));
+//                UTInstructor utInstructor = instructorDao.getInstructorByIdWithoutCache(managers[1].toString());
+
+/*
+                utCourse.setName(managers[2].toString());
+                utCourse.setCodeR(managers[3].toString());
+                utInstructor.setName(managers[4].toString());
+                utInstructor.setCode(managers[5].toString());*/
+
+//                tamsCourseManager.setCourse(utCourse);
+//                tamsCourseManager.setUtInstructor(utInstructor);
+                if(managers[1]!=null)
+                    tamsCourseManager.setCourseManagerId(managers[1].toString());
+                tamsCourseManager.setCourseId(managers[0].toString());
+
+                list.add(tamsCourseManager);
+            }
+        }
+        //若返回为空，则显示全部课程负责人
+        else{
+            return this.getCourseManagerByDeptId(departmentId);
+        }
+        return list;
+
+
+    }
+
+
+
+
 }

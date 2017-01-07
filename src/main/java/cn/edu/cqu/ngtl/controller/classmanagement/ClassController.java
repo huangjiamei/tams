@@ -908,6 +908,8 @@ public class ClassController extends BaseController {
         String arr[] = infoForm.getAddTeachCTime().split("~");
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
+
+        added.setWeek(infoForm.getTeachWeek());
         /*
             控制判断 start
          */
@@ -936,7 +938,9 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+
+
+/*        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
             added.setStartTime(
@@ -955,7 +959,8 @@ public class ClassController extends BaseController {
             );
         } catch (Exception e) {
             //do nothing
-        }
+        }*/
+
         if(infoForm.getFileList() != null && infoForm.getFileList().size() != 0)
             added.setHasAttachment(true);
 

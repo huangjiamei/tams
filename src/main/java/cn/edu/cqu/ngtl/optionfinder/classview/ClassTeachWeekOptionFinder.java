@@ -30,7 +30,7 @@ public class ClassTeachWeekOptionFinder extends UifKeyValuesFinderBase {
             UTClass utClass = new UTClassDaoJpa().selectByClassId(classId);
             String teachWeek = utClass.getTeachWeek();
             if(teachWeek!=null){
-                String[] teachWeekList = teachWeek.split("|");
+                String[] teachWeekList = teachWeek.split("\\|");
                 List<String> result = Arrays.asList(teachWeekList);
                 Collections.sort(result);
                 for(String s: result){

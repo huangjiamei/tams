@@ -1068,7 +1068,7 @@ td.selected{
 }
 
 #teachCalendarTable pre {
-    width: 800px;
+    width: 600px;
     height:auto;
     resize:vertical;
 }

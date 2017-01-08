@@ -1068,7 +1068,15 @@ td.selected{
 }
 
 #teachCalendarTable pre {
-    width: 500px;
+    width: 800px;
     height:auto;
     resize:vertical;
+}
+@media (max-width:768px) {
+    #teachCalendarTable pre {
+        width: 200px;
+        height:auto;
+        resize:vertical;
+    }
+
 }

@@ -210,11 +210,6 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-CheckboxControl"/>
-                                                                                </property>
-                                                                            </bean>-->
                                                                             <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
                                                                             <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask"
                                                                                   p:readOnly="true">

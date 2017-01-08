@@ -99,7 +99,6 @@
                                                                 <bean parent="Uif-Icon" p:iconClass="icon-calendar2"/>
                                                                 <bean parent="Uif-MessageField" p:messageText="新建教学日历"
                                                                       p:additionalCssClasses="boxheaderTitle"/>
-                                                                <!--<bean parent="Uif-HeaderThree" p:headerText="任务信息"/>-->
 
                                                                 <bean parent="Uif-HorizontalBoxSection"
                                                                       p:style="float: right!important;">
@@ -199,14 +198,13 @@
                                                                                               p:required="true"
                                                                                               p:propertyName="addTeachCTime"
                                                                                               p:additionalCssClasses="dateTimeInput"/>-->
-                                                                                        <bean parent="Uif-MessageField" p:messageText="总耗时：" p:additionalCssClasses="messageStyle" />
-                                                                                        <bean parent="Uif-InputField" p:propertyName="teachCalendar.elapsedTime" p:required="true">
+                                                                                        <bean parent="Uif-InputField" p:propertyName="teachCalendar.elapsedTime" p:required="true" p:label="总耗时">
                                                                                             <property name="validCharactersConstraint">
                                                                                                 <bean parent="NumericPatternConstraint"/>
                                                                                             </property>
                                                                                         </bean>
 
-                                                                                        <bean parent="Uif-InputField" p:propertyName="teachWeek" p:required="true"  p:label="周次">
+                                                                                        <bean parent="Uif-InputField" p:propertyName="teachWeek" p:required="true" p:label="周次">
                                                                                             <property name="optionsFinder">
                                                                                                 <bean class="cn.edu.cqu.ngtl.optionfinder.classview.ClassTeachWeekOptionFinder"
                                                                                                       p:blankOption="false"/>

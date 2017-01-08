@@ -381,9 +381,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
-        if (!userInfoService.isInstructor(uId)) {
+        if (!userInfoService.isInstructor(uId)&&!userInfoService.isSysAdmin(uId)) {
             return null;
-        } else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)||userInfoService.isSysAdmin(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
             for (Object obj : classIds)

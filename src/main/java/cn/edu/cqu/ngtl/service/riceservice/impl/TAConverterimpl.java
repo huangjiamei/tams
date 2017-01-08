@@ -1041,6 +1041,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setDescription(calendar.getDescription());
             viewObject.setElapsedTime(calendar.getElapsedTime());
             viewObject.setStartTime(calendar.getStartTime());
+            viewObject.setWeek(calendar.getWeek()==null?"0":calendar.getWeek());
             viewObject.setEndTime(calendar.getEndTime());
             viewObject.setTaTask(calendar.getTaTask());
             if (needCount) {

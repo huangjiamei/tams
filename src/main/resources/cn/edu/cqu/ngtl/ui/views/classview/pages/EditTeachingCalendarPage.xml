@@ -140,12 +140,15 @@
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="总耗时"
                                                                                   p:messageText="@{currentCalenderInfoEdit.elapsedTime}"/>
-                                                                            <bean parent="Uif-MessageField"
+                                                                     <!--       <bean parent="Uif-MessageField"
                                                                                   p:label="起始时间"
                                                                                   p:messageText="@{currentCalenderInfoEdit.startTime}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="完成时间"
-                                                                                  p:messageText="@{currentCalenderInfoEdit.endTime}"/>
+                                                                                  p:messageText="@{currentCalenderInfoEdit.endTime}"/>-->
+                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:label="周次"
+                                                                                  p:messageText="@{currentCalenderInfoEdit.week}"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="教学描述"
                                                                                   p:colSpan="3"

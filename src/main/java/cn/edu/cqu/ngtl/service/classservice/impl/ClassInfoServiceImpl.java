@@ -936,8 +936,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 TAMSTeachCalendar tamsTeachCalendar = new TAMSTeachCalendar();
                 tamsTeachCalendar.setDescription(per.getDescription());
                 tamsTeachCalendar.setTaTask(per.getTaTask());
-                tamsTeachCalendar.setStartTime(per.getStartTime());
-                tamsTeachCalendar.setEndTime(per.getEndTime());
+               /* tamsTeachCalendar.setStartTime(per.getStartTime());
+                tamsTeachCalendar.setEndTime(per.getEndTime());*/
+                tamsTeachCalendar.setWeek(per.getWeek());
                 tamsTeachCalendar.setElapsedTime(per.getElapsedTime());
                 tamsTeachCalendar.setHasAttachment(per.isHasAttachment());
                 tamsTeachCalendar.setTheme(per.getTheme());

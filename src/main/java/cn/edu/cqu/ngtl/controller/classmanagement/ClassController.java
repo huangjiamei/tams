@@ -901,11 +901,11 @@ public class ClassController extends BaseController {
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-        if(infoForm.getAddTeachCTime()==null){
+       /* if(infoForm.getAddTeachCTime()==null){
             infoForm.setErrMsg("请申请人填写时间范围！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
-        String arr[] = infoForm.getAddTeachCTime().split("~");
+        String arr[] = infoForm.getAddTeachCTime().split("~");*/
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 

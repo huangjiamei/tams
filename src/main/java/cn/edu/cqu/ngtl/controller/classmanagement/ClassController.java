@@ -629,7 +629,7 @@ public class ClassController extends BaseController {
         }
 
         infoForm.setTeachCalendar(new TAMSTeachCalendar());
-        infoForm.setAddTeachCTime(null);
+        infoForm.setTeachWeek(null);
         infoForm.setFileList(new ArrayList<FileViewObject>());
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
     }
@@ -1026,7 +1026,7 @@ public class ClassController extends BaseController {
         }
         */
         else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
-            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
+            infoForm.setErrMsg("单次教学日历耗时不能超过"+MAX_CALENDAR_HOUR+"个小时！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 

@@ -1005,11 +1005,11 @@ public class ClassController extends BaseController {
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-        if(infoForm.getAddTeachCTime()==null){
+/*        if(infoForm.getAddTeachCTime()==null){
             infoForm.setErrMsg("请申请人填写时间范围！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
-        String arr[] = infoForm.getAddTeachCTime().split("~");
+        String arr[] = infoForm.getAddTeachCTime().split("~");*/
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
@@ -1053,7 +1053,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+/*        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
             added.setStartTime(
@@ -1072,7 +1072,7 @@ public class ClassController extends BaseController {
             );
         } catch (Exception e) {
             //do nothing
-        }
+        }*/
         if(infoForm.getFileList() != null && infoForm.getFileList().size() != 0)
             added.setHasAttachment(true);
 

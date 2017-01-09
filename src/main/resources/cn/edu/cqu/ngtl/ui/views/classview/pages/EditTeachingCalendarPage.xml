@@ -131,11 +131,13 @@
                                                                 <bean parent="Uif-GridGroup"
                                                                       p:layoutManager.renderRowFirstCellHeader="false">
                                                                     <property name="layoutManager.numberOfColumns"
-                                                                              value="6"/>
+                                                                              value="4"/>
                                                                     <property name="items">
-                                                                        <list><!--messageText要修改相应的-->
+                                                                        <list>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="教学主题"
+                                                                                  p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
                                                                                   p:messageText="@{currentCalenderInfoEdit.theme}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="总耗时"
@@ -151,7 +153,7 @@
                                                                                   p:messageText="@{currentCalenderInfoEdit.week}"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="教学描述"
-                                                                                  p:colSpan="5"
+                                                                                  p:colSpan="3"
                                                                                   p:fieldLabel.colSpan="1"
                                                                                   p:propertyName="currentCalenderInfoEdit.description">
                                                                                 <property name="control">
@@ -161,7 +163,7 @@
                                                                             </bean>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="助教任务描述"
-                                                                                  p:colSpan="5"
+                                                                                  p:colSpan="3"
                                                                                   p:fieldLabel.colSpan="1"
                                                                                   p:propertyName="currentCalenderInfoEdit.taTask">
                                                                                 <property name="control">

@@ -1,7 +1,13 @@
 package cn.edu.cqu.ngtl.service.common.impl;
 
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ENTITY_ENT_TYP_T_DaoJpa;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ENTITY_T_DaoJpa;
+import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_PRNCPL_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassApplyStatusDao;
 import cn.edu.cqu.ngtl.dao.ut.*;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ENTITY_ENT_TYP_T;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ENTITY_T;
+import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassApplyStatus;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
@@ -79,7 +85,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         if (needToSync.contains("2"))
             this.syncClassInfo(con);   //导入班次信息
         if (needToSync.contains("3")){
-
+            this.addNewUser(con);
         }
 
 //            this.syncStudentTimetableInfo(con);  //导入学生课表
@@ -564,5 +570,18 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         }
     }
 
+
+    public void addNewUser(Connection connection) throws SQLException {
+
+        KRIM_ENTITY_T krimEntity = new KRIM_ENTITY_T_DaoJpa().createKrimEntityT();
+        KRIM_ENTITY_ENT_TYP_T krimEntityEntTypT =
+                new KRIM_ENTITY_ENT_TYP_T_DaoJpa().createKrimEntityEntTypTByEntityId(krimEntity.getId());
+        KRIM_PRNCPL_T krimPrncplT =
+                new KRIM_PRNCPL_T_DaoJpa().createKrimPrncplT(krimEntityEntTypT.getEntId()
+                        , "2017191817"
+                        , "02022007"
+                        , ""
+                        , "Y");
+    }
 
 }

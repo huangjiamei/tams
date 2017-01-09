@@ -78,9 +78,13 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             this.syncCourseInfo(con);  //导入课程信息
         if (needToSync.contains("2"))
             this.syncClassInfo(con);   //导入班次信息
-        if (needToSync.contains("3"))
-            this.syncStudentTimetableInfo(con);  //导入学生课表
+        if (needToSync.contains("3")){
+
+        }
+
+//            this.syncStudentTimetableInfo(con);  //导入学生课表
 //            this.syncChangesOfClasses(con);
+//            this.syncSpecificClass(con);
         return con;
     }
 
@@ -160,10 +164,10 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         UTSession curSession = utSessionDao.getCurrentSession();
         String year = curSession.getYear();
         String term = curSession.getTerm();
-        if(term.equals("春")){
+        if (term.equals("春")) {
             term = "1";
             year = String.valueOf(Integer.parseInt(year)-1);
-        }else if (term.equals("秋")){
+        } else if (term.equals("秋")) {
             term = "0";
         }
         List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
@@ -192,13 +196,13 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         PreparedStatement pre1 = connection.prepareStatement(mutiSubpartCourse);
 
         List<String> multiSubpartCourseList = new ArrayList<>();
-        try{
+        try {
             pre1.setQueryTimeout(10000);
             ResultSet res1 = pre1.executeQuery();
-            while (res1.next()){
+            while (res1.next()) {
                 multiSubpartCourseList.add(res1.getString("USER_KCID"));  //将多教学环节的课程代码加入list
             }
-        }finally {
+        } finally {
             if (pre1 != null)
                 pre1.close();
         }
@@ -214,9 +218,9 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String courseType = res.getString("KC_FLAG");
                 String classTypeName = res.getString("SKFS");
                 boolean flag = false;
-                if (!multiSubpartCourseList.contains(courseCode)||(multiSubpartCourseList.contains(courseCode)&&courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
+                if (!multiSubpartCourseList.contains(courseCode) || (multiSubpartCourseList.contains(courseCode) && courseType.equals("0"))) {   //如果课程代码重复且不是理论课的教学班不再导入
 
-                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '" +courseCode + "' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
+                    String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '"+courseCode+"' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
                     PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
                     List<String> teachWeekList = new ArrayList<>();
 
@@ -236,7 +240,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     }
 
                     //如果KCKB里面没有这个教学班的信息
-                    if (!teachWeek.equals("")&&!roomName.equals("")) {
+                    if (!teachWeek.equals("") && !roomName.equals("")) {
                         if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
                             classNbrs.add(classNbr);
                             /**
@@ -374,7 +378,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     }
 
 
-    public void syncChangesOfClasses(Connection connection) throws SQLException{
+    public void syncChangesOfClasses(Connection connection) throws SQLException {
         List<UTClass> allClasses = utClassDao.getAllClasses();
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
         Map classNbrAndStuNbr = new HashMap();
@@ -389,23 +393,176 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             while (res.next()) {
                 String classNbr = res.getString("JXBH");
                 String stuNbr = res.getString("SKBJ_RS");
-                if(!classNbrList.contains(classNbr)){
+                if (!classNbrList.contains(classNbr)) {
                     classNbrList.add(classNbr);
-                    classNbrAndStuNbr.put(classNbr,stuNbr);
+                    classNbrAndStuNbr.put(classNbr, stuNbr);
                 }
             }
-        }finally {
+        } finally {
             if (pre != null)
                 pre.close();
         }
-        int i  = 0;
+        int i = 0;
 
-        for(UTClass utClass:allClasses){
-            String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
+        for (UTClass utClass : allClasses) {
+            String stuNbr = (String) (classNbrAndStuNbr.get(utClass.getClassNumber()) == null ? "0" :classNbrAndStuNbr.get(utClass.getClassNumber()));
             utClass.setLimit(Integer.valueOf(stuNbr));
             utClassDao.insertOneByEntity(utClass);
             System.out.println(i++);
         }
     }
+
+
+    /**
+     * 同步特定的班次
+     */
+
+    public void syncSpecificClass(Connection connection) throws SQLException {
+
+        List<UTClass> utClasses = new ArrayList<>();
+        List<UTCourseOffering> utCourseOfferings = new ArrayList<>();
+        List<UTCourseOfferingConfig> utCourseOfferingConfigs = new ArrayList<>();
+        List<UTConfigDetail> utConfigDetails = new ArrayList<>();
+        List<UTClassInstructor> utClassInstructors = new ArrayList<>();
+        List<TAMSClassApplyStatus> tamsClassApplyStatuses = new ArrayList<>();
+
+
+        UTSession curSession = utSessionDao.getCurrentSession();
+        String year = curSession.getYear();
+        String term = curSession.getTerm();
+        if (term.equals("春")) {
+            term = "1";
+            year = String.valueOf(Integer.parseInt(year)-1);
+        } else if (term.equals("秋")) {
+            term = "0";
+        }
+
+        String sessionPrefix = curSession.getYear();
+        if (curSession.getTerm().equals("春")) {
+            sessionPrefix += "01";
+        } else if (curSession.getTerm().equals("秋")) {
+            sessionPrefix += "02";
+        }
+
+        String queryKCKB = "SELECT * FROM JSKB t WHERE  t.XN = '2016' AND t.XQ_ID = '1' AND t.KC_FLAG = '2' AND KCDM = 'PHYS12010'";
+        PreparedStatement pre = connection.prepareStatement(queryKCKB);
+        pre.setQueryTimeout(10000);
+        ResultSet res = pre.executeQuery();
+        try {
+            while (res.next()) {
+                String courseCode = res.getString("KCDM");
+                String classNbr = res.getString("JXBH");
+                String editClassNbr = classNbr.replace("-", "");
+                String auId = res.getString("SFRZH");
+                String courseType = res.getString("KC_FLAG");
+                String classTypeName = res.getString("SKFS");
+
+
+                String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '"+courseCode+"' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
+                PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
+                List<String> teachWeekList = new ArrayList<>();
+
+                String teachWeek = "";
+                String roomName = "";
+                String stuNbr = "";
+                try {
+                    ResultSet res2 = pre2.executeQuery();
+
+                    while (res2.next()) {
+                        teachWeek += res2.getString("ANALYSE")+",";  //暂定已这种方式分割开
+                        roomName = res2.getString("MC");
+                        stuNbr = res2.getString("SKBJ_RS");
+                    }
+
+                } finally {
+                    if (pre2 != null)
+                        pre2.close();
+                }
+
+                String teachWeekResult = "";
+                String[] teachWeekPre = teachWeek.split(",");
+                for (String s : teachWeekPre) {
+                    if (!teachWeekResult.contains(s)) {
+                        teachWeekResult += s+"|";
+                    }
+                }
+
+                UTClass utClass = new UTClass();
+                utClass.setRoomName(roomName);
+                utClass.setTeachWeek(teachWeekResult);
+                utClass.setClassNumber(classNbr);
+                utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
+                utClass.setCourseOfferingId(sessionPrefix+editClassNbr);
+                utClass.setClassType(classTypeName);
+                utClass.setLimit(Integer.valueOf(stuNbr));
+                utClasses.add(utClass);
+                /**
+                 * CourseOffering对象
+                 */
+                UTCourseOffering utCourseOffering = new UTCourseOffering();
+                utCourseOffering.setId(sessionPrefix+editClassNbr);
+                utCourseOffering.setCourseId(2016308005); //固定的
+                utCourseOffering.setSessionId(curSession.getId());
+                utCourseOfferings.add(utCourseOffering);
+                /**
+                 * offeringConfig对象
+                 */
+                UTCourseOfferingConfig utCourseOfferingConfig = new UTCourseOfferingConfig();
+                utCourseOfferingConfig.setId(sessionPrefix+editClassNbr);
+                utCourseOfferingConfig.setCourseOfferingId(sessionPrefix+editClassNbr);
+                utCourseOfferingConfig.setConfigName("1");
+                utCourseOfferingConfigs.add(utCourseOfferingConfig);
+                /**
+                 * configDetail对象
+                 */
+                UTConfigDetail utConfigDetail = new UTConfigDetail();
+                utConfigDetail.setId(sessionPrefix+editClassNbr);
+                utConfigDetail.setConfigId(sessionPrefix+editClassNbr);
+                utConfigDetail.setKlassId(sessionPrefix+editClassNbr);
+                utConfigDetails.add(utConfigDetail);
+
+                /**
+                 * ApplyStatus对象
+                 */
+                TAMSClassApplyStatus tamsClassApplyStatus = new TAMSClassApplyStatus();
+                tamsClassApplyStatus.setClassId(sessionPrefix+editClassNbr);
+                tamsClassApplyStatus.setWorkflowStatusId("1");
+                tamsClassApplyStatus.setId(sessionPrefix+editClassNbr);
+                tamsClassApplyStatuses.add(tamsClassApplyStatus);
+
+                //教学班号和身份认证号的关系
+                //                classInstructorMap.put(classNbr,auId);
+
+                UTClassInstructor utClassInstructor = new UTClassInstructor();
+                utClassInstructor.setId(sessionPrefix+editClassNbr);
+                utClassInstructor.setClassId(sessionPrefix+editClassNbr);
+                utClassInstructor.setInstructorId("10004276"); //固定的ID
+                utClassInstructors.add(utClassInstructor);
+            }
+
+
+            System.out.println("开始导入CO");
+            utCourseOfferingDao.saveCourseOfferingByList(utCourseOfferings);
+
+            System.out.println("开始导入COC");
+            utOfferingConfigDao.saveUTOfferingConfigByList(utCourseOfferingConfigs);
+
+            System.out.println("开始导入CD");
+            utConfigDetailDao.saveUTConfigDetailDaoByList(utConfigDetails);
+
+            System.out.println("开始导入CLASS");
+            utClassDao.saveUTClassesByList(utClasses);
+
+            System.out.println("开始导入CI");
+            utClassInstructorDao.saveClassInstructorByList(utClassInstructors);
+
+            System.out.println("开始导入ApplyStatus");
+            tamsClassApplyStatusDao.saveApplyStatueByList(tamsClassApplyStatuses);
+        } finally {
+            if (pre != null)
+                pre.close();
+        }
+    }
+
 
 }

@@ -370,12 +370,18 @@ public class TAMSTaDaoJpa implements TAMSTaDao {
                 "' AND t .EVALUATION LIKE '"+conditions.get("taTeacherAppraise")+
                 "' AND t .STUDENT_EVALUATION LIKE '"+conditions.get("taStuAppraise")+
                 "' AND t .OUTSTANDING_TA LIKE '"+conditions.get("taStatus") +
-                "'JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID" +
-                " JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID JOIN TAMS_WORKFLOW_STATUS ws ON T .OUTSTANDING_TA = ws.UNIQUEID" +
-                " AND co.NAME LIKE '"+conditions.get("taCourseName")+
-                "' AND co.CODE LIKE '"+conditions.get("taCourseCode")+"' AND ws.WORKFLOW_FUNCTION_ID ='2" +
-                "' AND T.TA_CLASS IN (SELECT ci.CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR ci WHERE ci.INSTRUCTOR_ID IN (SELECT i.UNIQUEID FROM UNITIME_INSTRUCTOR i WHERE i.NAME like '" + conditions.get("taTeacherName")+"'))");
-
+                "' JOIN UNITIME_CLASS cl ON t.TA_CLASS = cl.UNIQUEID " +
+                "JOIN UNITIME_COURSE_OFFERING cf ON cl.COURSEOFFERING_ID = cf.UNIQUEID" +
+                " JOIN UNITIME_COURSE co ON cf.COURSE_ID = co.UNIQUEID " +
+                "AND co. NAME LIKE '"+conditions.get("taCourseName")+
+                "' AND co.CODE LIKE '"+conditions.get("taCourseCode")+
+                "' JOIN TAMS_WORKFLOW_STATUS ws ON T .OUTSTANDING_TA = ws.UNIQUEID" +
+                "  AND ws.WORKFLOW_FUNCTION_ID ='2" +
+                "' JOIN UNITIME_CLASS_INSTRUCTOR ci ON ci.CLASS_ID=cl.UNIQUEID"+
+                "  JOIN UNITIME_INSTRUCTOR i ON ci.INSTRUCTOR_ID=i.UNIQUEID"+
+                " AND t.TA_CLASS LIKE '"+conditions.get("taClassNumber")+
+                "' AND i.NAME LIKE '"+conditions.get("taTeacherName")+"'"
+        );
 
 
         List<Object> columns = query.getResultList();

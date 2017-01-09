@@ -85,9 +85,9 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         if (needToSync.contains("2"))
             this.syncClassInfo(con);   //导入班次信息
         if (needToSync.contains("3")){
-            this.addNewUser(con);
-        }
 
+        }
+//        this.addNewUser(con);
 //            this.syncStudentTimetableInfo(con);  //导入学生课表
 //            this.syncChangesOfClasses(con);
 //            this.syncSpecificClass(con);

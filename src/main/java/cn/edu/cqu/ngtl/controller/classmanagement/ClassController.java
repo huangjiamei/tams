@@ -1075,7 +1075,7 @@ public class ClassController extends BaseController {
         }*/
         if(infoForm.getFileList() != null && infoForm.getFileList().size() != 0)
             added.setHasAttachment(true);
-
+        added.setWeek(infoForm.getTeachWeek());
         //添加日历信息到数据库
         added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
         if(added == null){

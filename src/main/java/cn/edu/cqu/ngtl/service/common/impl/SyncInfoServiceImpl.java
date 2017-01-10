@@ -389,9 +389,11 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             while (res.next()) {
                 String classNbr = res.getString("JXBH");
                 String stuNbr = res.getString("SKBJ_RS");
+
                 if(!classNbrList.contains(classNbr)){
                     classNbrList.add(classNbr);
                     classNbrAndStuNbr.put(classNbr,stuNbr);
+
                 }
             }
         }finally {
@@ -403,6 +405,50 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         for(UTClass utClass:allClasses){
             String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
             utClass.setLimit(Integer.valueOf(stuNbr));
+            utClassDao.insertOneByEntity(utClass);
+            System.out.println(i++);
+        }
+    }
+    public void syncChangesOFClasses(Connection connection) throws SQLException{
+        List<UTClass> allClasses = utClassDao.getAllClasses();
+        System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
+        Map classNbrAndStuNbr = new HashMap();
+        Map classNbrAndRoomName = new HashMap();
+        Map classNbrAndTeachWeek = new HashMap();
+        List<String> classNbrList = new ArrayList<>();
+
+        String queryKCKB = "SELECT * FROM KCKB t WHERE  t.XN = '2016' AND t.XQ_ID = '1'";
+        PreparedStatement pre = connection.prepareStatement(queryKCKB);
+        try {
+            pre.setQueryTimeout(10000);
+            ResultSet res = pre.executeQuery();
+
+            while (res.next()) {
+                String classNbr = res.getString("JXBH");
+                String stuNbr = res.getString("SKBJ_RS");
+                String roomName=res.getString("MC");
+                String teachWeek=res.getString("ANALYSE");
+//                String ;
+                if(!classNbrList.contains(classNbr)){
+                    classNbrList.add(classNbr);
+                    classNbrAndStuNbr.put(classNbr,stuNbr);
+                    classNbrAndRoomName.put(classNbr,roomName);
+                    classNbrAndTeachWeek.put(classNbr,teachWeek);
+                }
+            }
+        }finally {
+            if (pre != null)
+                pre.close();
+        }
+        int i  = 0;
+
+        for(UTClass utClass:allClasses){
+            String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
+            String roomName=(String) (classNbrAndRoomName.get(utClass.getClassNumber())==null?"":classNbrAndRoomName.get(utClass.getClassNumber()));
+            String teachWeek=(String)(classNbrAndTeachWeek.get(utClass.getClassNumber()==null?"":classNbrAndTeachWeek.get(utClass.getClassNumber().replace(",","|"))));
+            utClass.setLimit(Integer.valueOf(stuNbr));
+            utClass.setRoomName(roomName);
+            utClass.setTeachWeek(teachWeek);
             utClassDao.insertOneByEntity(utClass);
             System.out.println(i++);
         }

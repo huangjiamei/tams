@@ -112,7 +112,7 @@
                                                                                   p:style="width:100%;">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;resize: none;"/>
+                                                                                          p:style="height:300px;resize:vertical;"/>
                                                                                 </property>
                                                                             </bean>
                                                                         </list>

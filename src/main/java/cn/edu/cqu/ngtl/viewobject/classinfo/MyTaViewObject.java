@@ -27,6 +27,8 @@ public class MyTaViewObject {
 
     private String departmentName ;
 
+    private String applicationNote;
+
     public String getApplicationClassId() {
         return applicationClassId;
     }
@@ -112,5 +114,13 @@ public class MyTaViewObject {
 
     public void setDepartmentName(String departmentName) {
         this.departmentName = departmentName;
+    }
+
+    public String getApplicationNote() {
+        return applicationNote;
+    }
+
+    public void setApplicationNote(String applicationNote) {
+        this.applicationNote = applicationNote;
     }
 }

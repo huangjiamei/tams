@@ -35,6 +35,7 @@ public class ClassTeacherViewObject {
 
     private List<String> instructorList;
 
+    private String stuNbr;
     /**
      * 暂时缺失的参数
      */
@@ -291,5 +292,13 @@ public class ClassTeacherViewObject {
 
     public void setInstructorList(List<String> instructorList) {
         this.instructorList = instructorList;
+    }
+
+    public String getStuNbr() {
+        return stuNbr;
+    }
+
+    public void setStuNbr(String stuNbr) {
+        this.stuNbr = stuNbr;
     }
 }

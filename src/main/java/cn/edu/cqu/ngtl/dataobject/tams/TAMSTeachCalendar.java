@@ -44,6 +44,9 @@ public class TAMSTeachCalendar {
     @Column(name = "CLASS_ID")
     private String classId;
 
+    @Column(name = "WEEK")
+    private String week;
+
     @Transient
     private List<TAMSActivity> activityList;
 
@@ -136,5 +139,13 @@ public class TAMSTeachCalendar {
 
     public void setHasAttachment(boolean hasAttachment) {
         this.hasAttachment = hasAttachment;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
     }
 }

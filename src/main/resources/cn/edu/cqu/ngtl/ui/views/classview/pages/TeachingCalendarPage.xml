@@ -210,23 +210,18 @@
 
                                                                     <property name="items">
                                                                         <list>
-                                                                            <!--<bean parent="Uif-InputField" p:label="" p:propertyName="checkBox">
-                                                                                <property name="control">
-                                                                                    <bean parent="Uif-CheckboxControl"/>
-                                                                                </property>
-                                                                            </bean>-->
                                                                             <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
                                                                             <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask"
-                                                                                  p:readOnly="true" p:style="width:500px;height:auto">
+                                                                                  p:readOnly="true">
                                                                                 <property name="control">
-                                                                                    <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="resize:vertical;"/>
+                                                                                    <bean parent="Uif-TextAreaControl"/>
                                                                                 </property>
                                                                               </bean>
-                                                                            <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"
+                                                                   <!--         <bean parent="Uif-DataField" p:label="开始日期" p:propertyName="startTime"
                                                                                   p:readOnlyDisplayReplacement="@{#line.startTime!=null ? #line.startTime.split(' ')[0]:''}"/>
                                                                             <bean parent="Uif-DataField" p:label="结束日期" p:propertyName="endTime"
-                                                                                  p:readOnlyDisplayReplacement="@{#line.endTime!=null ? #line.endTime.split(' ')[0]:''}"/>
+                                                                                  p:readOnlyDisplayReplacement="@{#line.endTime!=null ? #line.endTime.split(' ')[0]:''}"/>-->
+                                                                            <bean parent="Uif-DataField" p:label="周次" p:propertyName="week"/>
                                                                             <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="elapsedTime"/>
                                                                         </list>
                                                                     </property>

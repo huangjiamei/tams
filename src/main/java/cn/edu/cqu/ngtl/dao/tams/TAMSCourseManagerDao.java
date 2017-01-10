@@ -20,6 +20,8 @@ public interface TAMSCourseManagerDao {
 
      List<TAMSCourseManager> selectCourseManagerByCondition(Map<String, String> conditions);
 
+     List<TAMSCourseManager> selectCourseManagerByConditionWithDeptId(Map<String, String> conditions,String departmentId);
+
      TAMSCourseManager getCourseManagerByCourseId(String courseId);
 
      List<TAMSCourseManager> getCourseManagerByDeptId(String departmentId);

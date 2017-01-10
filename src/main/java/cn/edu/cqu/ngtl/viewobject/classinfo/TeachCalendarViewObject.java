@@ -27,6 +27,8 @@ public class TeachCalendarViewObject {
 
     private String budget;
 
+    private String week;
+
     private List<ActivityViewObject> activityViewObjects;
 
     public String getBudget() {
@@ -115,5 +117,13 @@ public class TeachCalendarViewObject {
 
     public void setElapsedTime(String elapsedTime) {
         this.elapsedTime = elapsedTime;
+    }
+
+    public String getWeek() {
+        return week;
+    }
+
+    public void setWeek(String week) {
+        this.week = week;
     }
 }

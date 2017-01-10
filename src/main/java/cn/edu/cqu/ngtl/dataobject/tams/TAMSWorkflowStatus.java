@@ -23,6 +23,8 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable,C
     @Column(name = "\"ORDER\"") //order为sql关键字
     private Integer order;
 
+    @Column(name = "WORKFLOW_FUNCTION_ID")
+    private String workflowFunctionId;
 
     public String getWorkflowFunctionId() {
         return workflowFunctionId;
@@ -32,8 +34,6 @@ public class TAMSWorkflowStatus extends DataObjectBase implements Serializable,C
         this.workflowFunctionId = workflowFunctionId;
     }
 
-    @Column(name = "WORKFLOW_FUNCTION_ID")
-    private String workflowFunctionId;
 
     @ManyToOne
     @JoinColumn(name = "WORKFLOW_FUNCTION_ID", insertable = false, updatable = false)

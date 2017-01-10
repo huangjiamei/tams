@@ -2,7 +2,6 @@ package cn.edu.cqu.ngtl.form.classmanagement;
 
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassEvaluation;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
-import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.form.BaseForm;
 import cn.edu.cqu.ngtl.viewobject.classinfo.*;
@@ -40,6 +39,8 @@ public class ClassInfoForm extends BaseForm implements Serializable {
     private TeachCalendarViewObject currentCalendarInfo;
 
     private List<FileViewObject> calendarFiles;
+
+    private String teachWeek;
 
     /**
      * 教学日历编辑相关
@@ -776,5 +777,13 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     public void setInstructorHimSelf(boolean instructorHimSelf) {
         this.instructorHimSelf = instructorHimSelf;
+    }
+
+    public String getTeachWeek() {
+        return teachWeek;
+    }
+
+    public void setTeachWeek(String teachWeek) {
+        this.teachWeek = teachWeek;
     }
 }

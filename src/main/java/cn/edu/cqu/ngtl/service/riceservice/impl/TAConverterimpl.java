@@ -155,6 +155,7 @@ public class TAConverterimpl implements ITAConverter {
                     viewObject.setWorkTime("");
                     viewObject.setAppFunds("");
                 }
+                viewObject.setStuNbr(information.getLimit()==null?"缺失":information.getLimit().toString());
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());
                 viewObject.setDepartmentName(information.getDeptName());
@@ -194,6 +195,7 @@ public class TAConverterimpl implements ITAConverter {
                 ClassTeacherViewObject viewObject = new ClassTeacherViewObject();
                 viewObject.setId(information.getId());
                 viewObject.setClassNumber(information.getClassNumber());
+                viewObject.setStuNbr(information.getLimit()==null?"缺失":information.getLimit().toString());
                 viewObject.setDepartmentName(information.getDeptName());
                 viewObject.setCourseName(information.getCourseName());
                 viewObject.setCourseCode(information.getCourseCode());
@@ -282,6 +284,7 @@ public class TAConverterimpl implements ITAConverter {
         }
 
         if (clazz != null) {
+            viewObject.setStudentNumber(clazz.getLimit()==null?"缺失":clazz.getLimit().toString());
             viewObject.setClassId(clazz.getId());
             viewObject.setApplyCourseType(clazz.getClassType()==null?null:clazz.getClassType());
             viewObject.setCourseName(clazz.getCourseOffering().getCourse().getName());
@@ -353,6 +356,7 @@ public class TAConverterimpl implements ITAConverter {
                     sb.append(instructor.getName()+" ");
                 }
             }
+            classDetailInfoViewObject.setStudentNumber(clazz.getLimit()==null?"缺失":clazz.getLimit().toString());
             classDetailInfoViewObject.setInstructor(sb.toString());
             classDetailInfoViewObject.setInstructorNumber(countTeacherNum.toString());
         }
@@ -719,7 +723,8 @@ public class TAConverterimpl implements ITAConverter {
                 viewObject.setTaGender(applicant.getGender());
                 viewObject.setTaMajorName(applicant.getProgram() != null ? applicant.getProgram().getName() :null);
             }
-
+            
+            viewObject.setApplicationNote(application.getNote());
             viewObject.setApplicationClassId(application.getApplicationClassId());
             viewObject.setContactPhone(application.getPhoneNbr()==null?null:application.getPhoneNbr());
             //暂时缺失的属性
@@ -1036,6 +1041,7 @@ public class TAConverterimpl implements ITAConverter {
             viewObject.setDescription(calendar.getDescription());
             viewObject.setElapsedTime(calendar.getElapsedTime());
             viewObject.setStartTime(calendar.getStartTime());
+            viewObject.setWeek(calendar.getWeek()==null?"0":calendar.getWeek());
             viewObject.setEndTime(calendar.getEndTime());
             viewObject.setTaTask(calendar.getTaTask());
             if (needCount) {
@@ -1142,6 +1148,7 @@ public class TAConverterimpl implements ITAConverter {
         viewObject.setTeacherType(instructorCode);
         if (classInfo != null) {
             UTCourse course = classInfo.getCourseOffering() != null ? classInfo.getCourseOffering().getCourse() :null;
+            viewObject.setStudentNumber(classInfo.getLimit()==null?"缺失":classInfo.getLimit().toString());
             viewObject.setCourseType(classInfo.getClassType()==null?"":classInfo.getClassType());
             viewObject.setCredit(classInfo.getCourseOffering().getCourse().getCredit());
             viewObject.setCourseHour(course.getHour());

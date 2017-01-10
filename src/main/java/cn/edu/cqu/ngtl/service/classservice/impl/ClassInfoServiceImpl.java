@@ -381,9 +381,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Override
     public TAMSTeachCalendar instructorAddTeachCalendar(String uId, String classId, TAMSTeachCalendar teachCalendar) {
-        if (!userInfoService.isInstructor(uId)) {
+        if (!userInfoService.isInstructor(uId)&&!userInfoService.isSysAdmin(uId)) {
             return null;
-        } else if (userInfoService.isInstructor(uId)) {
+        } else if (userInfoService.isInstructor(uId)||userInfoService.isSysAdmin(uId)) {
             List<Object> classIds = classInstructorDao.selectClassIdsByInstructorId(uId);
             Set<String> classIdStrings = new HashSet<>();
             for (Object obj : classIds)
@@ -749,12 +749,15 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         //草稿课程经费表
         TAMSClassFundingDraft tamsClassFundingDraftExist = tamsClassFundingDraftDao.selectOneByClassID(classId);
         TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId);
+
+        Integer needToChangeApplyFunds = 0;  //变化的申报经费
+
         if (tamsClassFundingDraftExist == null) {
             TAMSClassFundingDraft tamsClassFundingDraft = new TAMSClassFundingDraft();
             tamsClassFundingDraft.setClassId(classId);
             tamsClassFundingDraft.setApplyFunding(tamsClassTaApplication.getApplicationFunds());  //将申请经费设置到初始化的课程经费中
 
-
+            needToChangeApplyFunds = Integer.valueOf(tamsClassTaApplication.getApplicationFunds());
 
             tamsClassFundingDraft.setAssignedFunding("0");
             tamsClassFundingDraft.setPhdFunding("0");
@@ -763,9 +766,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             tamsClassFundingDraft.setSessionId(sessionDao.getCurrentSession().getId().toString());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraft);
         } else {
+
+            needToChangeApplyFunds = Integer.valueOf(tamsClassFundingDraftExist.getApplyFunding()) - Integer.valueOf(tamsClassTaApplication.getApplicationFunds()); //变化的值
+
             tamsClassFundingDraftExist.setApplyFunding(tamsClassTaApplication.getApplicationFunds());
             tamsClassFundingDraftDao.insertOneByEntity(tamsClassFundingDraftExist);
-        }
+         }
 
         //课程经费表
         TAMSClassFunding tamsClassFundingExist = tamsClassFundingDao.getOneByClassId(classId);
@@ -795,7 +801,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         );
         if(tamsDeptFundingDraft != null) {
             Integer sumApplyDeptDraft = Integer.parseInt(tamsDeptFundingDraft.getApplyFunding());
-            sumApplyDeptDraft = sumApplyDeptDraft + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
+            sumApplyDeptDraft = sumApplyDeptDraft + needToChangeApplyFunds;
             tamsDeptFundingDraft.setApplyFunding(sumApplyDeptDraft.toString());
             tamsDeptFundingDraftDao.saveOneByEntity(tamsDeptFundingDraft);
         }
@@ -806,7 +812,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         );
         if(tamsDeptFunding != null) {
             Integer sumApplyDept = Integer.parseInt(tamsDeptFunding.getApplyFunding());
-            sumApplyDept = sumApplyDept + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
+            sumApplyDept = sumApplyDept + needToChangeApplyFunds;
             tamsDeptFunding.setApplyFunding(sumApplyDept.toString());
             tamsDeptFundingDao.saveOneByEntity(tamsDeptFunding);
         }
@@ -815,7 +821,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         TAMSUniversityFunding tamsUniversityFunding = tamsUniversityFundingDao.getOneBySessionId(curSession.getId());
         if(tamsUniversityFunding != null) {
             Integer sumApplyUni = Integer.parseInt(tamsUniversityFunding.getApplyFunding());
-            sumApplyUni = sumApplyUni + Integer.parseInt(tamsClassTaApplication.getApplicationFunds().indexOf(".")>=0?tamsClassTaApplication.getApplicationFunds().substring(0,tamsClassTaApplication.getApplicationFunds().indexOf(".")):tamsClassTaApplication.getApplicationFunds());
+            sumApplyUni = sumApplyUni + needToChangeApplyFunds;
             tamsUniversityFunding.setApplyFunding(sumApplyUni.toString());
             tamsUniversityFundingDao.insertOneByEntity(tamsUniversityFunding);
         }
@@ -936,8 +942,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                 TAMSTeachCalendar tamsTeachCalendar = new TAMSTeachCalendar();
                 tamsTeachCalendar.setDescription(per.getDescription());
                 tamsTeachCalendar.setTaTask(per.getTaTask());
-                tamsTeachCalendar.setStartTime(per.getStartTime());
-                tamsTeachCalendar.setEndTime(per.getEndTime());
+               /* tamsTeachCalendar.setStartTime(per.getStartTime());
+                tamsTeachCalendar.setEndTime(per.getEndTime());*/
+                tamsTeachCalendar.setWeek(per.getWeek());
                 tamsTeachCalendar.setElapsedTime(per.getElapsedTime());
                 tamsTeachCalendar.setHasAttachment(per.isHasAttachment());
                 tamsTeachCalendar.setTheme(per.getTheme());

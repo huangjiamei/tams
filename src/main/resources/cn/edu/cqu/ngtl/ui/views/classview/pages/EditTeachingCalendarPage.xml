@@ -68,12 +68,7 @@
                                                                   p:location.viewId="ClassView"
                                                                   p:location.controllerMapping="/class"
                                                                   p:location.methodToCall="getClassListPage"/>
-                                                            <bean parent="Uif-KeyValueLocation" p:key="3"
-                                                                  p:value="教学日历"
-                                                                  p:location.viewId="ClassView"
-                                                                  p:location.controllerMapping="/class"
-                                                                  p:location.methodToCall="getTeachingCalendar"/>
-                                                            <bean parent="Uif-KeyLabelPair" p:key="4"
+                                                            <bean parent="Uif-KeyLabelPair" p:key="3"
                                                                   p:value="编辑教学日历"/>
                                                         </list>
                                                     </property>
@@ -138,19 +133,24 @@
                                                                     <property name="layoutManager.numberOfColumns"
                                                                               value="4"/>
                                                                     <property name="items">
-                                                                        <list><!--messageText要修改相应的-->
+                                                                        <list>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="教学主题"
+                                                                                  p:colSpan="3"
+                                                                                  p:fieldLabel.colSpan="1"
                                                                                   p:messageText="@{currentCalenderInfoEdit.theme}"/>
                                                                             <bean parent="Uif-MessageField"
                                                                                   p:label="总耗时"
                                                                                   p:messageText="@{currentCalenderInfoEdit.elapsedTime}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="起始时间"
-                                                                                  p:messageText="@{currentCalenderInfoEdit.startTime}"/>
-                                                                            <bean parent="Uif-MessageField"
-                                                                                  p:label="完成时间"
-                                                                                  p:messageText="@{currentCalenderInfoEdit.endTime}"/>
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="起始时间"-->
+                                                                                  <!--p:messageText="@{currentCalenderInfoEdit.startTime}"/>-->
+                                                                            <!--<bean parent="Uif-MessageField"-->
+                                                                                  <!--p:label="完成时间"-->
+                                                                                  <!--p:messageText="@{currentCalenderInfoEdit.endTime}"/>-->
+                                                                           <bean parent="Uif-MessageField"
+                                                                                  p:label="周次"
+                                                                                  p:messageText="@{currentCalenderInfoEdit.week}"/>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="教学描述"
                                                                                   p:colSpan="3"
@@ -158,7 +158,7 @@
                                                                                   p:propertyName="currentCalenderInfoEdit.description">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;resize:vertical;"/>
+                                                                                          p:style="height:200px;resize:vertical;"/>
                                                                                 </property>
                                                                             </bean>
                                                                             <bean parent="Uif-InputField"
@@ -168,7 +168,7 @@
                                                                                   p:propertyName="currentCalenderInfoEdit.taTask">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"
-                                                                                          p:style="height:300px;resize:vertical;"/>
+                                                                                          p:style="height:200px;resize:vertical;"/>
                                                                                 </property>
                                                                             </bean>
 

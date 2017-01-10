@@ -241,7 +241,7 @@
                                                                 <bean id="taManagerApplyTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:onDocumentReadyScript="setBgColor('taManagerApplyTable');">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject"/>
                                                                     <property name="propertyName"
                                                                               value="allApplication"/>
                                                                     <property name="layoutManager.renderSequenceField"
@@ -273,10 +273,16 @@
                                                                                   p:propertyName="departmentName"/>
                                                                             <bean parent="Uif-DataField" p:label="专业"
                                                                                   p:propertyName="taMajorName"/>
-                                                                            <!--<bean parent="Uif-DataField" p:label="导师"-->
-                                                                                  <!--p:propertyName="advisorName"/>-->
                                                                             <bean parent="Uif-DataField" p:label="联系电话"
                                                                                   p:propertyName="contactPhone"/>
+                                                                            <bean parent="Uif-InputField" p:label="申请理由"
+                                                                                  p:readOnly="true"
+                                                                                  p:style="display:@{#line.taName!=null?'block':'none'}"
+                                                                                  p:propertyName="applicationNote">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                         </list>
                                                                     </property>
                                                                 </bean>

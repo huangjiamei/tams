@@ -81,7 +81,7 @@ public interface IAdminService {
 
     List<TAMSClassFunding> getFundingByClass();
 
-    List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions);
+    List<TAMSCourseManager> getCourseManagerByCondition(Map<String, String> conditions,User user);
 
     //学校经费过滤
     List<TAMSUniversityFunding> getUniFundPreByCondition(Map<String, String> conditions);

@@ -118,11 +118,12 @@
                                                                             </bean>
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="添加"
+                                                                                  p:methodToCall="modifyWorkFlowCategory"
                                                                                   p:actionImagePlacement="LEFT"
                                                                                   p:additionalCssClasses="icon-plus bg-success box-btngroup">
-                                                                                <property name="confirmationDialog">
-                                                                                    <ref bean="addWorkFlowCaDialog" />
-                                                                                </property>
+                                                                                <!--<property name="confirmationDialog">-->
+                                                                                    <!--<ref bean="addWorkFlowCaDialog" />-->
+                                                                                <!--</property>-->
                                                                             </bean>
                                                                         </list>
                                                                     </property>
@@ -239,9 +240,9 @@
                                 <property name="items">
                                     <list>
                                         <bean parent="Uif-InputField" p:label="工作流状态"
-                                              p:propertyName="workflowstatus"/>
+                                              p:propertyName="tamsWorkflowStatus.workflowStatus"/>
                                         <bean parent="Uif-InputField" p:label="工作流顺序"
-                                              p:propertyName="workfloworder"/>
+                                              p:propertyName="tamsWorkflowStatus.order"/>
                                     </list>
                                 </property>
                             </bean>

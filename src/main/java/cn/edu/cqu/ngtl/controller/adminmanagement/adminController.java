@@ -379,16 +379,21 @@ public class adminController extends BaseController {
     public ModelAndView modifyWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        CollectionControllerServiceImpl.CollectionActionParameters parameters =
-                new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
-        int index = parameters.getSelectedLineIndex();
-        String status = infoForm.getTamsWorkflowStatuses().get(index).getWorkflowStatus();
-        String order = infoForm.getTamsWorkflowStatuses().get(index).getOrder().toString();
-        infoForm.setWorkflowstatus(status);
-        infoForm.setWorkfloworder(order);
-        //用于判断是修改还是添加
-        infoForm.setIndex(index);
-        return this.showDialog("addWorkFlowCaDialog", true, infoForm);
+        try{
+            //有index的值，说明为修改操作
+            CollectionControllerServiceImpl.CollectionActionParameters parameters =
+                    new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
+            int index = parameters.getSelectedLineIndex();
+
+            infoForm.setTamsWorkflowStatus(infoForm.getTamsWorkflowStatuses().get(index));
+            infoForm.setIndex(index);
+            return  this.showDialog("addWorkFlowCaDialog",true,infoForm);
+        }catch(RuntimeException e){
+            //如果捕获到异常，说明index的值不存在，则为添加操作。
+            infoForm.setTamsWorkflowStatus(new TAMSWorkflowStatus());
+            return this.showDialog("addWorkFlowCaDialog", true, infoForm);
+        }
+//        return this.showDialog("addWorkFlowCaDialog", true, infoForm);
     }
 
     /**
@@ -398,32 +403,25 @@ public class adminController extends BaseController {
     public ModelAndView saveWorkFlowCategory(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request) {
         AdminInfoForm infoForm = (AdminInfoForm) form;
         super.baseStart(infoForm);
-        if(infoForm.getWorkfloworder()==null){
+        if(infoForm.getTamsWorkflowStatus().getOrder()==null){
             infoForm.setErrMsg("请设置工作流顺序！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
-
-        if(infoForm.getWorkflowstatus()==null){
+        if(infoForm.getTamsWorkflowStatus().getWorkflowStatus()==null){
             infoForm.setErrMsg("请设置工作流状态！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
 
-        TAMSWorkflowStatus tamsWorkflowStatus = new TAMSWorkflowStatus();
-        tamsWorkflowStatus.setWorkflowStatus(infoForm.getWorkflowstatus());
-        tamsWorkflowStatus.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
-        tamsWorkflowStatus.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
-        if (infoForm.getIndex() != null) {
-            TAMSWorkflowStatus tamsWorkflowStatus1 = infoForm.getTamsWorkflowStatuses().get(infoForm.getIndex());
-            tamsWorkflowStatus1.setWorkflowStatus(infoForm.getWorkflowstatus());
-            tamsWorkflowStatus1.setOrder(Integer.parseInt(infoForm.getWorkfloworder()));
-            tamsWorkflowStatus1.setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
-            adminService.saveWorkFlowCategory(tamsWorkflowStatus1);
+        if (infoForm.getIndex() != null ) {
+            infoForm.getTamsWorkflowStatus().setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
+            adminService.saveWorkFlowCategory(infoForm.getTamsWorkflowStatus());
         } else {
-            adminService.saveWorkFlowCategory(tamsWorkflowStatus);
+            infoForm.getTamsWorkflowStatus().setWorkflowFunctionId(infoForm.getGetWorkFlowStatus());
+            adminService.saveWorkFlowCategory(infoForm.getTamsWorkflowStatus());
         }
 //        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
-        return  this.getWorkFlowCategoryPage(infoForm);
-
+//        return  this.getWorkFlowCategoryPage(infoForm);
+        return this.searchWorkFlowCategory(infoForm,request);
     }
 
     /**
@@ -439,8 +437,9 @@ public class adminController extends BaseController {
         int index = parameters.getSelectedLineIndex();
         TAMSWorkflowStatus selectedWorkFlowStatus = infoForm.getTamsWorkflowStatuses().get(index);
         adminService.deleteWorkFlowCategory(selectedWorkFlowStatus);
-//        return this.getModelAndView(infoForm, "pageWorkFlowCategory");
-        return  this.getWorkFlowCategoryPage(infoForm);
+//      return this.getModelAndView(infoForm, "pageWorkFlowCategory");
+//      return  this.getWorkFlowCategoryPage(infoForm);
+        return this.searchWorkFlowCategory(infoForm,request);
     }
 
 
@@ -2545,7 +2544,6 @@ public class adminController extends BaseController {
 
             return this.showDialog("addTaskCategoryDialog", true, adminInfoForm);
         }
-
     }
 
     /**
@@ -2564,9 +2562,6 @@ public class adminController extends BaseController {
             return this.showDialog("refreshPageViewDialog", true, adminInfoForm);
 
         }
-
-
-
             if (adminInfoForm.getIssueIndex() != null) {
             // index不为空说明要调用update
                 if (adminService.changeIssueType(adminInfoForm.getIssueType())) {

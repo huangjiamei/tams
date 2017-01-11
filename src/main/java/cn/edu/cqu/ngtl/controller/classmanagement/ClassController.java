@@ -731,6 +731,11 @@ public class ClassController extends BaseController {
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setSubmitted(true);
+            }else {
+                infoForm.setSubmitted(false);
+            }
 
             infoForm.setAllCalendar(null);  //节省内存
 

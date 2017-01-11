@@ -61,7 +61,7 @@ public interface IPDFService {
      * @return filePath
      */
     String prepareTeachCalendarPDF(List<TeachCalendarViewObject>  TeachCalendarManager);
-    public String printSubmitRequestTable(String title,String course,String teacher,String code,String courseCode,String courseType,String classCode,String period,String credits,String ta,String totalHours,String budgetTotal,String fileName,String[] calendarHeaders, List<String[]> T)
-            throws DocumentException, IOException;
 
+    public String printSubmitRequestTable(String title,String course,String teacher,String code,String courseCode,String courseType,String classCode,String period,String credits,String ta,String studentNumber,String totalHours,String budgetTotal,String fileName,String[] calendarHeaders, List<String[]> T)
+            throws DocumentException, IOException;
 }

@@ -422,16 +422,29 @@ public class SyncInfoServiceImpl implements SyncInfoService {
      *
      */
     public void updateClassesInformation(Connection connection) throws SQLException{
-        List<UTClass> allClasses = utClassDao.getAllClasses();
-        List<UTClassInstructor> utClassInstructors = utClassInstructorDao.getAllClassInstructor();
         List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
-        Map classNbrAndStuNbr = new HashMap();
-        Map classNbrAndRoomName = new HashMap();
-        Map classNbrAndTeachWeek = new HashMap();
         Map classInstructorMap = new HashMap();
         List<String> classNbrList = new ArrayList<>();
+        List<UTClass> utClasses = new ArrayList<>();
+        List<UTClassInstructor> utClassInstructors = new ArrayList<>();
         List<String> identityAuthenticationList = new ArrayList<>();
+        List<String> courseNumberList = new ArrayList<>();
+        UTSession curSession = utSessionDao.getCurrentSession();
+        String year = curSession.getYear();
+        String term = curSession.getTerm();
+        if (term.equals("春")) {
+            term = "1";
+            year = String.valueOf(Integer.parseInt(year)-1);
+        } else if (term.equals("秋")) {
+            term = "0";
+        }
+        String sessionPrefix = curSession.getYear();
+        if (curSession.getTerm().equals("春")) {
+            sessionPrefix += "01";
+        } else if (curSession.getTerm().equals("秋")) {
+            sessionPrefix += "02";
+        }
         for (UTInstructor utInstructor : utInstructorList) {
             classInstructorMap.put(utInstructor.getIdNumber(), utInstructor.getId());
         }
@@ -444,44 +457,55 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             ResultSet res = pre.executeQuery();
             ResultSet res1 =pre1.executeQuery();
             while (res.next()) {
-                String classNbr = res.getString("JXBH");
+                String classNumber = res.getString("JXBH");
                 String stuNbr = res.getString("SKBJ_RS");
                 String roomName=res.getString("MC");
                 String teachWeek=res.getString("ANALYSE");
-                if(!classNbrList.contains(classNbr)){
-                    classNbrList.add(classNbr);
-                    classNbrAndStuNbr.put(classNbr,stuNbr);
-                    classNbrAndRoomName.put(classNbr,roomName);
-                    classNbrAndTeachWeek.put(classNbr,teachWeek);
+                String editClassNumber=classNumber.replace("-","");
+                String editTeachWeek=teachWeek.replace(",","|");
+                if(!classNbrList.contains(classNumber)){
+                    classNbrList.add(classNumber);
+                    if(stuNbr==null){
+                        stuNbr="0";
+                    }
+                    UTClass utClass = new UTClass();
+                    utClass.setLimit(Integer.valueOf(stuNbr));
+                    utClass.setRoomName(roomName);
+                    utClass.setTeachWeek(editTeachWeek);
+                    utClass.setClassNumber(classNumber);
+                    utClass.setId(sessionPrefix+editClassNumber);
+                    utClass.setCourseOfferingId(sessionPrefix+editClassNumber);
+                    utClasses.add(utClass);
                 }
             }
             while (res1.next()){
                 String identityAuthenticationNumber = res1.getString("SFRZH");
-                if(!identityAuthenticationList.contains(identityAuthenticationNumber)){
+                String courseNumber=res1.getString("KCDM");
+                String classNumber=res1.getString("JXBH");
+                String editClassNumber =classNumber.replace("-", "");
+                if(!identityAuthenticationList.contains(identityAuthenticationNumber)&&!courseNumberList.contains(courseNumber)){
                     identityAuthenticationList.add(identityAuthenticationNumber);
-                    for (UTClassInstructor utClassInstructor: utClassInstructors){
-                        String instructorID=(String)(classInstructorMap.get(identityAuthenticationNumber)==null?"":classInstructorMap.get(identityAuthenticationNumber));
-                        utClassInstructor.setInstructorId(instructorID);
-                        utClassInstructorDao.savaClassInstructorByEntiy(utClassInstructor);
-                    }
+                    courseNumberList.add(courseNumber);
+
+//                    for (UTClassInstructor utClassInstructor: utClassInstructors){
+//                        String instructorID=(String)(classInstructorMap.get(identityAuthenticationNumber)==null?"":classInstructorMap.get(identityAuthenticationNumber));
+//                        utClassInstructor.setInstructorId(instructorID);
+//                        utClassInstructorDao.savaClassInstructorByEntiy(utClassInstructor);
+//                    }
+
+                    UTClassInstructor utClassInstructor = new UTClassInstructor();
+                    utClassInstructor.setId(sessionPrefix+editClassNumber);
+                    utClassInstructor.setClassId(sessionPrefix+editClassNumber);
+                    utClassInstructor.setInstructorId((String) classInstructorMap.get(identityAuthenticationNumber));
+                    utClassInstructors.add(utClassInstructor);
                 }
             }
+            utClassInstructorDao.saveClassInstructorByList(utClassInstructors);
 
+            utClassDao.saveUTClassesByList(utClasses);
         }finally {
             if (pre != null)
                 pre.close();
-        }
-        int i  = 0;
-
-        for(UTClass utClass:allClasses){
-           // String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
-            String roomName=(String) (classNbrAndRoomName.get(utClass.getClassNumber())==null?"":classNbrAndRoomName.get(utClass.getClassNumber()));
-            String teachWeek=(String)(classNbrAndTeachWeek.get(utClass.getClassNumber()==null?"":classNbrAndTeachWeek.get(utClass.getClassNumber().replace(",","|"))));
-           // utClass.setLimit(Integer.valueOf(stuNbr));
-            utClass.setRoomName(roomName);
-            utClass.setTeachWeek(teachWeek);
-            utClassDao.insertOneByEntity(utClass);
-            System.out.println(i++);
         }
     }
 

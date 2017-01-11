@@ -231,7 +231,7 @@
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="downloadCalendarFile"
-                                                                                              p:refreshId="fileTableEdit"
+                                                                                              p:successCallback="refreshPage();"
                                                                                               p:additionalCssClasses="icon-download bg-btn-orange tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"

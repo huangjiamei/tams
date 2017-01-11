@@ -629,7 +629,7 @@ public class ClassController extends BaseController {
         }
 
         infoForm.setTeachCalendar(new TAMSTeachCalendar());
-        infoForm.setAddTeachCTime(null);
+        infoForm.setTeachWeek(null);
         infoForm.setFileList(new ArrayList<FileViewObject>());
         return this.getModelAndView(infoForm, "pageAddTeachCalendar");
     }
@@ -1010,11 +1010,11 @@ public class ClassController extends BaseController {
         String uId = session.getPrincipalId();
 
         String classId = infoForm.getCurrClassId();
-        if(infoForm.getAddTeachCTime()==null){
+/*        if(infoForm.getAddTeachCTime()==null){
             infoForm.setErrMsg("请申请人填写时间范围！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
-        String arr[] = infoForm.getAddTeachCTime().split("~");
+        String arr[] = infoForm.getAddTeachCTime().split("~");*/
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
@@ -1031,7 +1031,7 @@ public class ClassController extends BaseController {
         }
         */
         else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
-            infoForm.setErrMsg("单次教学日历耗时不能超过10个小时！请重新输入");
+            infoForm.setErrMsg("单次教学日历耗时不能超过"+MAX_CALENDAR_HOUR+"个小时！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
@@ -1058,7 +1058,7 @@ public class ClassController extends BaseController {
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
-        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+/*        SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
         SimpleDateFormat outputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//infoForm.getTeachCalendar().getStartTime()  infoForm.getTeachCalendar().getEndTime()
         try {
             added.setStartTime(
@@ -1077,10 +1077,10 @@ public class ClassController extends BaseController {
             );
         } catch (Exception e) {
             //do nothing
-        }
+        }*/
         if(infoForm.getFileList() != null && infoForm.getFileList().size() != 0)
             added.setHasAttachment(true);
-
+        added.setWeek(infoForm.getTeachWeek());
         //添加日历信息到数据库
         added = classInfoService.instructorAddTeachCalendar(uId, classId, added);
         if(added == null){

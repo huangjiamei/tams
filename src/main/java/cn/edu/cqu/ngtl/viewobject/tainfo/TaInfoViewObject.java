@@ -13,23 +13,23 @@ public class TaInfoViewObject {
     private String taId;
 
     private boolean checkBox;
-
+    //课程名称
     private String courseName;
-
+    //课程代码
     private String courseCode;
-
+    //教学班
     private String classNumber;
-
+    //教师
     private String instructorName;
-
+    //姓名
     private String taName;
-
+    //学号
     private String taIDNumber;
 
     private String taGender;
 
     private String taMajorName;
-
+    //学历
     private String taCategory;
 
     private String advisorName;
@@ -37,17 +37,17 @@ public class TaInfoViewObject {
     private String contactPhone;
 
     private String vitality;
-
+    //教师考核
     private String teacherAppraise;
-
+    //学生考核
     private String stuAppraise;
 
     private String statusId;
-
+    //评优
     private String status;
 
     private String applicationReason;
-
+    //成绩
     private String score;
 
     private String credit;

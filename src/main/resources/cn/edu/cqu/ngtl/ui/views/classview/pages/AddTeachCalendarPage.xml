@@ -108,7 +108,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="返回"
                                                                                   p:actionImagePlacement="LEFT"
-                                                                                  p:navigateToPageId="pageTeachingCalendar"
+                                                                                  p:methodToCall = "getTeachingCalendar"
                                                                                   p:additionalCssClasses="icon-circle-arrow-left bg-grey tamsbtn">
                                                                             </bean>
                                                                         </list>

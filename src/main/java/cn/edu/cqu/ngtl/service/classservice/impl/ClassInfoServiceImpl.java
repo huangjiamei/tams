@@ -385,6 +385,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             for(TAMSTeachCalendar TTC:teachCalendar){
                 teachCalendarCopy.add(TTC);
             }
+
             String regEx="[^-0-9]";
             final Pattern pattern=Pattern.compile(regEx);
             Collections.sort(teachCalendarCopy,new  Comparator<TAMSTeachCalendar>(){

@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static org.kuali.rice.krad.util.GlobalVariables.getUserSession;
 
@@ -367,15 +369,43 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         return null;
     }
 
+    /**
+     *  Repair Bug by luojizhou on 2017/01/11
+     * @param uId
+     * @param classId
+     * @return
+     */
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
       /*  if (userInfoService.isSysAdmin(uId)) {*/
         List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
-        if(teachCalendar!=null)
-            return teachCalendar;
-//        } else if (userInfoService.isInstructor(uId)) {
-//            return teachCalendarDao.selectAllByClassId(classId);
-//        }
+        List<TAMSTeachCalendar> teachCalendarCopy=new ArrayList<>();
+
+        if(teachCalendar!=null){
+            for(TAMSTeachCalendar TTC:teachCalendar){
+                teachCalendarCopy.add(TTC);
+            }
+            String regEx="[^-0-9]";
+            final Pattern pattern=Pattern.compile(regEx);
+            Collections.sort(teachCalendarCopy,new  Comparator<TAMSTeachCalendar>(){
+                public int compare(TAMSTeachCalendar o1, TAMSTeachCalendar o2) {
+                    Matcher matcher;
+                    matcher=pattern.matcher(o1.getWeek());
+                    String o1Str=matcher.replaceAll("").trim();
+                    matcher=pattern.matcher(o2.getWeek());
+                    String o2Str=matcher.replaceAll("").trim();
+
+                    if (Integer.parseInt(o1Str)<Integer.parseInt(o2Str)){
+                        return -1;
+                    }else if (Integer.parseInt(o1Str)>Integer.parseInt(o2Str)){
+                        return 1;
+                    }else{
+                        return 0;
+                    }
+                }
+            });
+            return teachCalendarCopy;
+        }
         return null;
     }
 

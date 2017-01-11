@@ -671,6 +671,7 @@ public class TaController extends BaseController {
             taInfoForm.setBeenStuOrSys(true);
         else
             taInfoForm.setBeenStuOrSys(false);
+
         //我担任助教的课程
         taInfoForm.setWorkbench(
                 taConverter.taCombineWorkbench(

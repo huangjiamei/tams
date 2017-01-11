@@ -64,7 +64,10 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
             KradDataServiceLocator.getDataObjectService().save(utClassInstructor);
         }
     }
-
+    @Override
+    public  void savaClassInstructorByEntiy(UTClassInstructor utClassInstructor){
+        KradDataServiceLocator.getDataObjectService().save(utClassInstructor);
+    }
     @Override
     public List<Map> getAllClassIdAndInstructorId(Map InstructorMap){
         Map classInstructorMap = new HashMap();

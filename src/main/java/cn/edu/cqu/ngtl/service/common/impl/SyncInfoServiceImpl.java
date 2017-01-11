@@ -417,26 +417,37 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             System.out.println(i++);
         }
     }
-    public void syncChangesOFClasses(Connection connection) throws SQLException{
+    /**
+     * 更新教室，教学周期，授课教师
+     *
+     */
+    public void updateClassesInformation(Connection connection) throws SQLException{
         List<UTClass> allClasses = utClassDao.getAllClasses();
+        List<UTClassInstructor> utClassInstructors = utClassInstructorDao.getAllClassInstructor();
+        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
         Map classNbrAndStuNbr = new HashMap();
         Map classNbrAndRoomName = new HashMap();
         Map classNbrAndTeachWeek = new HashMap();
+        Map classInstructorMap = new HashMap();
         List<String> classNbrList = new ArrayList<>();
-
-        String queryKCKB = "SELECT * FROM KCKB t WHERE  t.XN = '2016' AND t.XQ_ID = '1'";
+        List<String> identityAuthenticationList = new ArrayList<>();
+        for (UTInstructor utInstructor : utInstructorList) {
+            classInstructorMap.put(utInstructor.getIdNumber(), utInstructor.getId());
+        }
+        String queryKCKB = "SELECT * FROM KCKB";
+        String queryJSKB = "SELECT * FROM JSKB";
         PreparedStatement pre = connection.prepareStatement(queryKCKB);
+        PreparedStatement pre1= connection.prepareStatement(queryJSKB);
         try {
             pre.setQueryTimeout(10000);
             ResultSet res = pre.executeQuery();
-
+            ResultSet res1 =pre1.executeQuery();
             while (res.next()) {
                 String classNbr = res.getString("JXBH");
                 String stuNbr = res.getString("SKBJ_RS");
                 String roomName=res.getString("MC");
                 String teachWeek=res.getString("ANALYSE");
-//                String ;
                 if(!classNbrList.contains(classNbr)){
                     classNbrList.add(classNbr);
                     classNbrAndStuNbr.put(classNbr,stuNbr);
@@ -444,6 +455,18 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     classNbrAndTeachWeek.put(classNbr,teachWeek);
                 }
             }
+            while (res1.next()){
+                String identityAuthenticationNumber = res1.getString("SFRZH");
+                if(!identityAuthenticationList.contains(identityAuthenticationNumber)){
+                    identityAuthenticationList.add(identityAuthenticationNumber);
+                    for (UTClassInstructor utClassInstructor: utClassInstructors){
+                        String instructorID=(String)(classInstructorMap.get(identityAuthenticationNumber)==null?"":classInstructorMap.get(identityAuthenticationNumber));
+                        utClassInstructor.setInstructorId(instructorID);
+                        utClassInstructorDao.savaClassInstructorByEntiy(utClassInstructor);
+                    }
+                }
+            }
+
         }finally {
             if (pre != null)
                 pre.close();
@@ -451,10 +474,10 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         int i  = 0;
 
         for(UTClass utClass:allClasses){
-            String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
+           // String stuNbr = (String)(classNbrAndStuNbr.get(utClass.getClassNumber())==null?"0":classNbrAndStuNbr.get(utClass.getClassNumber()));
             String roomName=(String) (classNbrAndRoomName.get(utClass.getClassNumber())==null?"":classNbrAndRoomName.get(utClass.getClassNumber()));
             String teachWeek=(String)(classNbrAndTeachWeek.get(utClass.getClassNumber()==null?"":classNbrAndTeachWeek.get(utClass.getClassNumber().replace(",","|"))));
-            utClass.setLimit(Integer.valueOf(stuNbr));
+           // utClass.setLimit(Integer.valueOf(stuNbr));
             utClass.setRoomName(roomName);
             utClass.setTeachWeek(teachWeek);
             utClassDao.insertOneByEntity(utClass);

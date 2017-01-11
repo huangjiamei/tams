@@ -122,7 +122,7 @@
                                                                             <bean parent="Uif-PrimaryActionButton"
                                                                                   p:actionLabel="更换助教"
                                                                                   p:methodToCall ="changeTaDialog"
-                                                                                  p:additionalCssClasses="icon-retweet bg-aqua box-btngroup"/>      <!--p:methodToCall="showChangeDialog"-->
+                                                                                  p:additionalCssClasses="icon-exchange bg-aqua box-btngroup"/>      <!--p:methodToCall="showChangeDialog"-->
                                                                         </list>
                                                                     </property>
                                                                 </bean>

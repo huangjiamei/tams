@@ -209,13 +209,13 @@
                                                                                 <property name="items">
                                                                                     <list>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
+
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="downloadCalendarFile"
-                                                                                              p:refreshId="fileTable"
+                                                                                              p:successCallback="refreshPage();"
                                                                                               p:additionalCssClasses="icon-download bg-btn-orange tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
-                                                                                              p:ajaxSubmit="false"
+
                                                                                               p:render="@{#form.instructorHimSelf}"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="removeCalendarFile"

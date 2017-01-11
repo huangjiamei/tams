@@ -134,23 +134,41 @@
                                                                               value="4"/>
                                                                     <property name="items">
                                                                         <list>
-                                                                            <bean parent="Uif-MessageField"
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:label="教学主题"
                                                                                   p:colSpan="3"
+                                                                                  p:readOnly="@{#form.submitted}"
                                                                                   p:fieldLabel.colSpan="1"
-                                                                                  p:messageText="@{currentCalenderInfoEdit.theme}"/>
-                                                                            <bean parent="Uif-MessageField"
+                                                                                  p:propertyName="currentCalenderInfoEdit.theme">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"
+                                                                                          p:style="width:100%;resize:vertical;"/>
+                                                                                </property>
+                                                                             </bean>
+                                                                            <bean parent="Uif-InputField"
                                                                                   p:label="总耗时"
-                                                                                  p:messageText="@{currentCalenderInfoEdit.elapsedTime}"/>
+                                                                                  p:readOnly="@{#form.submitted}"
+                                                                                  p:style="@{#form.submitted ? 'margin-top:5px':''}"
+                                                                                  p:propertyName="currentCalenderInfoEdit.elapsedTime"/>
                                                                             <!--<bean parent="Uif-MessageField"-->
                                                                                   <!--p:label="起始时间"-->
                                                                                   <!--p:messageText="@{currentCalenderInfoEdit.startTime}"/>-->
                                                                             <!--<bean parent="Uif-MessageField"-->
                                                                                   <!--p:label="完成时间"-->
                                                                                   <!--p:messageText="@{currentCalenderInfoEdit.endTime}"/>-->
-                                                                           <bean parent="Uif-MessageField"
+                                                                           <bean parent="Uif-InputField"
                                                                                   p:label="周次"
-                                                                                  p:messageText="@{currentCalenderInfoEdit.week}"/>
+                                                                                 p:style="@{#form.submitted ? 'margin-top:5px':''}"
+                                                                                 p:readOnly="@{#form.submitted}"
+                                                                                  p:propertyName="currentCalenderInfoEdit.week">
+                                                                               <property name="optionsFinder">
+                                                                                   <bean class="cn.edu.cqu.ngtl.optionfinder.classview.ClassTeachWeekOptionFinder"
+                                                                                         p:blankOption="false"/>
+                                                                               </property>
+                                                                               <property name="control">
+                                                                                   <bean parent="Uif-DropdownControl"/>
+                                                                               </property>
+                                                                            </bean>
                                                                             <bean parent="Uif-InputField"
                                                                                   p:label="教学描述"
                                                                                   p:colSpan="3"
@@ -213,7 +231,7 @@
                                                                                               p:ajaxSubmit="false"
                                                                                               p:actionImagePlacement="LEFT"
                                                                                               p:methodToCall="downloadCalendarFile"
-                                                                                              p:refreshId="fileTableEdit"
+                                                                                              p:successCallback="refreshPage();"
                                                                                               p:additionalCssClasses="icon-download bg-btn-orange tams-action-btn"/>
                                                                                         <bean parent="Uif-PrimaryActionButton"
                                                                                               p:ajaxSubmit="false"

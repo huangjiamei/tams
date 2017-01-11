@@ -580,10 +580,7 @@ table.uif-tableCollectionLayout td {
 
 }
 table.uif-tableCollectionLayout th {
-
     border:none!important;
-
-
 }
 /**  修改uif end   */
 
@@ -820,9 +817,8 @@ em{font-style:normal;display:block;position:absolute;top:-25px;left:-110px;width
     margin-top: 6px;
     width: 300px;
 }
-/*#sessionTermFinderDialog{*/
-    /*display:none;*/
-/*}*/
+
+/*dialog样式*/
 .modal-header{
     background-color: #357ca5!important;
 }
@@ -1068,7 +1064,7 @@ td.selected{
 }
 
 #teachCalendarTable pre {
-    width: 600px;
+    width: 550px;
     height:auto;
     resize:vertical;
 }

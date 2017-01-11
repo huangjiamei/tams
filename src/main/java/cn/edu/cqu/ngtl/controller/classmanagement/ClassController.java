@@ -731,6 +731,11 @@ public class ClassController extends BaseController {
             infoForm.setCalendarFiles(
                     taConverter.attachmentsToFileViewObject(attachments)
             );
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setSubmitted(true);
+            }else {
+                infoForm.setSubmitted(false);
+            }
 
             infoForm.setAllCalendar(null);  //节省内存
 
@@ -754,7 +759,10 @@ public class ClassController extends BaseController {
         String calendarId = infoForm.getCalendarId();
         String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
         String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
-        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask);
+        String spendTime = infoForm.getCurrentCalenderInfoEdit().getElapsedTime();
+        String week = infoForm.getCurrentCalenderInfoEdit().getWeek();
+        String theme = infoForm.getCurrentCalenderInfoEdit().getTheme();
+        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask,spendTime,week,theme);
 
         if (calendarId!=null){
             MDC.put("remoteHost",request.getRemoteAddr());

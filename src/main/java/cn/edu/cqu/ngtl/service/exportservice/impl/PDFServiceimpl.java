@@ -360,17 +360,16 @@ public class PDFServiceimpl implements IPDFService {
         String fileName = "教学日历列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
         String filePath = "";
         try {
-            String[] header = {"编号", "教学主题", "助教任务描述", "开始日期", "结束日期", "总耗时"};
+            String[] header = { "教学主题", "助教任务描述", "周次", "总耗时"};
             List<String[]> Content = new ArrayList(TeachCalendarManager.size());
             for (TeachCalendarViewObject TeachCalendarObj : TeachCalendarManager) {
-                String code = TeachCalendarObj.getCode() == null ? "" : TeachCalendarObj.getCode();
+
                 String theme = TeachCalendarObj.getTheme() == null ? "" : TeachCalendarObj.getTheme();
                 String description = TeachCalendarObj.getDescription() == null ? "" : TeachCalendarObj.getDescription();
-                String startTime = TeachCalendarObj.getStartTime() == null ? "" : TeachCalendarObj.getStartTime().substring(0, 10);
-                String endTime = TeachCalendarObj.getEndTime() == null ? "" : TeachCalendarObj.getEndTime().substring(0, 10);
+                String  weekly=TeachCalendarObj.getWeek()== null ? "" :TeachCalendarObj.getWeek() ;
                 String elapsedTime = TeachCalendarObj.getElapsedTime() == null ? "" : TeachCalendarObj.getElapsedTime();
                 String[] content = {
-                        code, theme, description, startTime, endTime, elapsedTime
+                         theme, description,weekly,  elapsedTime
                 };
                 Content.add(content);
             }
@@ -383,7 +382,7 @@ public class PDFServiceimpl implements IPDFService {
         return filePath;
     }
         @Override
-        public String printSubmitRequestTable(String title,String course,String teacher,String code,String courseCode,String courseType,String classCode,String period,String credits,String ta,String totalHours,String budgetTotal,String fileName,String[] calendarHeaders, List<String[]> T)
+        public String printSubmitRequestTable(String title,String course,String teacher,String code,String courseCode,String courseType,String classCode,String period,String credits,String ta,String studentNumber,String totalHours,String budgetTotal,String fileName,String[] calendarHeaders, List<String[]> T)
             throws DocumentException, IOException {
             Document document = new Document();
             String filePath = null;
@@ -421,7 +420,7 @@ public class PDFServiceimpl implements IPDFService {
                 blankCenter.setAlignment(Element.ALIGN_CENTER);
                 document.add(blankCenter);
             }
-            PdfPTable table = new PdfPTable(5);
+            PdfPTable table = new PdfPTable(calendarHeaders.length);
             table.setTotalWidth(520);
             table.setLockedWidth(true);
 
@@ -448,7 +447,10 @@ public class PDFServiceimpl implements IPDFService {
                 document.add(new Phrase("\n"));
             document.add(new Phrase("学分：",font1));
             document.add(new Phrase(credits,font));
-            document.add(new Phrase("   拟配备助教：",font1));
+            document.add(new Phrase("   学生人数：",font1));
+            document.add(new Phrase(studentNumber,font));
+                document.add(new Phrase("\n"));
+            document.add(new Phrase("拟配备助教数：",font1));
             document.add(new Phrase(ta,font));
                 document.add(new Paragraph("\n"));
             document.add(new Phrase("日历列表",font2));
@@ -492,7 +494,7 @@ public class PDFServiceimpl implements IPDFService {
         String fileName = "提交申请详细" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
         String filePath = "";
         try {
-            String[] Calendarheader = {"教学主题", "开始时间", "结束时间", "预计耗时(小时)", "预算"};
+            String[] Calendarheader = {"教学主题", "周次", "预计耗时(小时)", "预算"};
                 String course = applyViewObject.getCourseName() == null ? "" : applyViewObject.getCourseName();
                 String teacher = applyViewObject.getTeacherName() == null ? "" : applyViewObject.getTeacherName();
                 String code = applyViewObject.getTeacherType() == null ? "" : applyViewObject.getTeacherType();
@@ -504,17 +506,17 @@ public class PDFServiceimpl implements IPDFService {
                 String ta = applyViewObject.getAssistantNumber() == null ? "" : applyViewObject.getAssistantNumber();
                 String totalHours = totalElapsedTime == null ? "" : totalElapsedTime;
                 String budgetTotal = totalBudget == null ? "" : totalBudget;
+                String studentNumber=applyViewObject.getStudentNumber()==null ? "":applyViewObject.getStudentNumber();
             List<String[]> Content;
             if(allCalendarList!=null) {
                 Content = new ArrayList(allCalendarList.size());
                 for (TeachCalendarViewObject calendarObj : allCalendarList) {
                     String theme = calendarObj.getTheme() == null ? "" : calendarObj.getTheme();
                     String budget = calendarObj.getBudget() == null ? "" : calendarObj.getBudget();
-                    String startTime = calendarObj.getStartTime() == null ? "" : calendarObj.getStartTime().substring(0, 10);
-                    String endTime = calendarObj.getEndTime() == null ? "" : calendarObj.getEndTime().substring(0, 10);
+                    String weekly = calendarObj.getWeek() == null ? "" : calendarObj.getWeek();
                     String elapsedTime = calendarObj.getElapsedTime() == null ? "" : calendarObj.getElapsedTime();
                     String[] content = {
-                            theme, startTime, endTime, elapsedTime, budget
+                            theme, weekly, elapsedTime, budget
                     };
                     Content.add(content);
                 }
@@ -522,7 +524,7 @@ public class PDFServiceimpl implements IPDFService {
             else {
                 Content = new ArrayList(0);
             }
-            filePath = this .printSubmitRequestTable("提交申请详细", course, teacher, code, courseCode, courseType, classCode, period, credits, ta, totalHours, budgetTotal, fileName, Calendarheader, Content);
+            filePath = this .printSubmitRequestTable("提交申请详细", course, teacher, code, courseCode, courseType, classCode, period, credits, ta,studentNumber, totalHours, budgetTotal, fileName, Calendarheader, Content);
         } catch (DocumentException | IOException e) {
             String errorMsg = "exception";
             return errorMsg;

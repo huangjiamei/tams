@@ -759,7 +759,10 @@ public class ClassController extends BaseController {
         String calendarId = infoForm.getCalendarId();
         String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
         String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
-        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask);
+        String spendTime = infoForm.getCurrentCalenderInfoEdit().getElapsedTime();
+        String week = infoForm.getCurrentCalenderInfoEdit().getWeek();
+        String theme = infoForm.getCurrentCalenderInfoEdit().getTheme();
+        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask,spendTime,week,theme);
 
         if (calendarId!=null){
             MDC.put("remoteHost",request.getRemoteAddr());

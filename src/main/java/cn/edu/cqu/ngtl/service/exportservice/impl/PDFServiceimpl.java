@@ -360,7 +360,7 @@ public class PDFServiceimpl implements IPDFService {
         String fileName = "教学日历列表" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
         String filePath = "";
         try {
-            String[] header = { "教学主题", "助教任务描述", "周次", "总耗时"};
+            String[] header = { "周次","教学主题", "助教任务描述","总耗时"};
             List<String[]> Content = new ArrayList(TeachCalendarManager.size());
             for (TeachCalendarViewObject TeachCalendarObj : TeachCalendarManager) {
 
@@ -369,7 +369,7 @@ public class PDFServiceimpl implements IPDFService {
                 String  weekly=TeachCalendarObj.getWeek()== null ? "" :TeachCalendarObj.getWeek() ;
                 String elapsedTime = TeachCalendarObj.getElapsedTime() == null ? "" : TeachCalendarObj.getElapsedTime();
                 String[] content = {
-                         theme, description,weekly,  elapsedTime
+                        weekly,theme, description,  elapsedTime
                 };
                 Content.add(content);
             }
@@ -494,7 +494,7 @@ public class PDFServiceimpl implements IPDFService {
         String fileName = "提交申请详细" + "-" + getUserSession().getLoggedInUserPrincipalId() + "-" + curTime.format(new Date());
         String filePath = "";
         try {
-            String[] Calendarheader = {"教学主题", "周次", "预计耗时(小时)", "预算"};
+            String[] Calendarheader = {"周次","教学主题","预计耗时(小时)", "预算"};
                 String course = applyViewObject.getCourseName() == null ? "" : applyViewObject.getCourseName();
                 String teacher = applyViewObject.getTeacherName() == null ? "" : applyViewObject.getTeacherName();
                 String code = applyViewObject.getTeacherType() == null ? "" : applyViewObject.getTeacherType();
@@ -516,7 +516,7 @@ public class PDFServiceimpl implements IPDFService {
                     String weekly = calendarObj.getWeek() == null ? "" : calendarObj.getWeek();
                     String elapsedTime = calendarObj.getElapsedTime() == null ? "" : calendarObj.getElapsedTime();
                     String[] content = {
-                            theme, weekly, elapsedTime, budget
+                            weekly,theme,elapsedTime, budget
                     };
                     Content.add(content);
                 }

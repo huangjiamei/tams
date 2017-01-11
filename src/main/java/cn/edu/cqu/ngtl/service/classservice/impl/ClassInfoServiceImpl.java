@@ -896,10 +896,13 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     //更新教学日历
     @Override
-    public void updateTeachCalendarInfo(String calendarId, String description, String taTask) {
+    public void updateTeachCalendarInfo(String calendarId, String description, String taTask,String spendTime,String week,String theme) {
         TAMSTeachCalendar tamsTeachCalendar = teachCalendarDao.selectById(calendarId);
         tamsTeachCalendar.setDescription(description);
         tamsTeachCalendar.setTaTask(taTask);
+        tamsTeachCalendar.setWeek(week);
+        tamsTeachCalendar.setElapsedTime(spendTime);
+        tamsTeachCalendar.setTheme(theme);
         teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
 

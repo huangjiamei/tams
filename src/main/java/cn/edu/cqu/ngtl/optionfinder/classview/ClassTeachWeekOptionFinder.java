@@ -49,7 +49,7 @@ public class ClassTeachWeekOptionFinder extends UifKeyValuesFinderBase {
         keyValues.add(new ConcreteKeyValue("第7周", "第7周"));
         keyValues.add(new ConcreteKeyValue("第8周", "第8周"));
         keyValues.add(new ConcreteKeyValue("第9周", "第9周"));
-        keyValues.add(new ConcreteKeyValue("第10周", "第10"));
+        keyValues.add(new ConcreteKeyValue("第10周", "第10周"));
         keyValues.add(new ConcreteKeyValue("第11周", "第11周"));
         keyValues.add(new ConcreteKeyValue("第12周", "第12周"));
         keyValues.add(new ConcreteKeyValue("第13周", "第13周"));

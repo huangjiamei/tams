@@ -2,11 +2,12 @@ package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
-import org.kuali.rice.core.api.criteria.CountFlag;
-import org.kuali.rice.core.api.criteria.QueryByCriteria;
-import org.kuali.rice.core.api.criteria.QueryResults;
+import org.apache.commons.collections.bag.PredicatedBag;
+import org.apache.commons.collections.bag.PredicatedSortedBag;
+import org.kuali.rice.core.api.criteria.*;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.kuali.rice.krad.uif.UifConstants;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -29,6 +30,7 @@ public class TAMSTeachCalendarDaoJpa implements TAMSTeachCalendarDao {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 and(
                         equal("classId", classId)
+
                 )
         );
         QueryResults<TAMSTeachCalendar> qr = KradDataServiceLocator.getDataObjectService().findMatching(

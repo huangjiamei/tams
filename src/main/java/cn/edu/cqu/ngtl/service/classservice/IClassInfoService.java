@@ -103,7 +103,7 @@ public interface IClassInfoService {
 
     Integer applyOutStanding(String applyOTReason, String StuId, String classId);
 
-    void updateTeachCalendarInfo(String calendarId, String description, String taTask);
+    void updateTeachCalendarInfo(String calendarId, String description, String taTask,String spendTime,String week,String theme);
 
     List<UTClassInformation> getClassInfoByInstructorIds(List<String> InstructorId, String curClassId);
 

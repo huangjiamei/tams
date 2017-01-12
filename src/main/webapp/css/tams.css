@@ -1076,3 +1076,21 @@ td.selected{
     }
 
 }
+#editUploadCollection>div{
+    width:80%;
+}
+@media (max-width:768px) {
+    #editUploadCollection>div{
+        width:100%;
+    }
+
+}
+#addUploadCollection>div{
+    width:80%;
+}
+@media (max-width:768px) {
+    #addUploadCollection>div{
+        width:100%;
+    }
+
+}

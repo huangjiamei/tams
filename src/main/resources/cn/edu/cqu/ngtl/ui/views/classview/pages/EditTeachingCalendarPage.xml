@@ -247,6 +247,51 @@
                                                                     </property>
                                                                 </bean>
 
+                                                                <!--多文件上传器模板-->
+                                                                <bean id="editUploadCollection" parent="Uif-HorizontalBoxSection"
+                                                                      p:style="margin-top:20px"
+                                                                      p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                                                    <property name="items">
+                                                                        <list>
+                                                                            <bean parent="Uif-MultiFileUploadCollection"
+                                                                                  p:addFilesButtonText="添加文件">
+                                                                                <property name="collection.propertyName" value="fileList"/>
+                                                                                <property name="collection.collectionObjectClass"
+                                                                                          value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/>
+                                                                                <!--FIXME: 重写这个methodToCall来实现自定义添加文件-->
+                                                                                <!--<property name="methodToCall" value="addFileUploadLine"/>-->
+                                                                                <property name="collection.items">
+                                                                                    <list>
+                                                                                        <bean parent="Uif-LinkField" p:readOnly="true" p:label="文件名称" p:link.linkText="@{#line.name}"
+                                                                                              p:link.href="@{#line.url}&amp;selectedLineIndex=@{#index}" p:link.target="_blank"/>
+                                                                                        <bean parent="Uif-InputField" p:readOnly="true" p:label="大小" p:propertyName="sizeFormatted"/>
+                                                                                        <bean parent="Uif-InputField" p:readOnly="true" p:label="上传日期"
+                                                                                              p:propertyName="dateUploadedFormatted"/>
+                                                                                    </list>
+                                                                                </property>
+                                                                                <property name="collection.lineActions">
+                                                                                    <list>
+                                                                                        <!--FIXME: 重写这个methodToCall来实现自定义删除文件-->
+                                                                                        <bean parent="Uif-SecondaryActionButton" p:methodToCall="deleteFileUploadLine"
+                                                                                              p:title="Delete"
+                                                                                              p:onMouseOverScript="deleteLineMouseOver(this, 'uif-collectionDeleteHighlight');"
+                                                                                              p:onMouseOutScript="deleteLineMouseOut(this, 'uif-collectionDeleteHighlight');"
+                                                                                              p:onClickScript="writeCurrentPageToSession(this);" p:dirtyOnAction="true"
+                                                                                              p:loadingMessageText="正在删除...">
+                                                                                            <property name="cssClasses">
+                                                                                                <list merge="true">
+                                                                                                    <value>fa fa-trash bg-btn-red tams-action-btn</value>
+                                                                                                </list>
+                                                                                            </property>
+                                                                                        </bean>
+                                                                                    </list>
+                                                                                </property>
+
+                                                                            </bean>
+                                                                        </list>
+                                                                    </property>
+                                                                </bean>
+
                                                             </list>
                                                         </property>
                                                     </bean>
@@ -264,3 +309,4 @@
         </property>
     </bean>
 </beans>
+

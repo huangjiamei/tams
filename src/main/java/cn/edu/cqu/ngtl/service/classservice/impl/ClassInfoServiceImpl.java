@@ -377,23 +377,27 @@ public class ClassInfoServiceImpl implements IClassInfoService {
      */
     @Override
     public List<TAMSTeachCalendar> getAllTaTeachCalendarFilterByUidAndClassId(String uId, String classId) {
-      /*  if (userInfoService.isSysAdmin(uId)) {*/
+        /*  if (userInfoService.isSysAdmin(uId)) {*/
+        //通过teachCalendarDao，将从数据库获取的数据记录保存到teachCalendar这个TAMSTeachCalendar类型的集合中。
         List<TAMSTeachCalendar> teachCalendar = teachCalendarDao.selectAllByClassId(classId);
         List<TAMSTeachCalendar> teachCalendarCopy=new ArrayList<>();
 
-        if(teachCalendar!=null){
+        if(teachCalendar!=null){ //如果查询到的结果不为空，才进行排序操作。
+
+            //通过teachCalendarDao获取的数据直接操作会报错，因此将它复制一份出来再进行操作
             for(TAMSTeachCalendar TTC:teachCalendar){
                 teachCalendarCopy.add(TTC);
             }
-
+            //设置正则表达式，目的是为了过滤掉数据表中week字段中的汉字。例如：过滤掉“第02周”中的“第”和“周”,只留下数字字符串“02”
             String regEx="[^-0-9]";
             final Pattern pattern=Pattern.compile(regEx);
+            //下面这个方法是为了实现对集合中的对象进行排序，排序的依据是按照对象中的week来升序排列，具体往下看：
             Collections.sort(teachCalendarCopy,new  Comparator<TAMSTeachCalendar>(){
                 public int compare(TAMSTeachCalendar o1, TAMSTeachCalendar o2) {
                     Matcher matcher;
-                    matcher=pattern.matcher(o1.getWeek());
+                    matcher=pattern.matcher(o1.getWeek()==null?"第99周":o1.getWeek());
                     String o1Str=matcher.replaceAll("").trim();
-                    matcher=pattern.matcher(o2.getWeek());
+                    matcher=pattern.matcher(o2.getWeek()==null?"第99周":o2.getWeek());
                     String o2Str=matcher.replaceAll("").trim();
 
                     if (Integer.parseInt(o1Str)<Integer.parseInt(o2Str)){
@@ -405,8 +409,10 @@ public class ClassInfoServiceImpl implements IClassInfoService {
                     }
                 }
             });
+            //排序成功后，返回排序好了的List集合：teachCalendarCopy
             return teachCalendarCopy;
         }
+        //否则，查询到的结果为空，返回null.
         return null;
     }
 

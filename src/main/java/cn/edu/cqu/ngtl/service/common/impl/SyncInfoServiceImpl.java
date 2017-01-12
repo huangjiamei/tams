@@ -479,16 +479,17 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     utClasses.add(utClass);
                 }
             }
+            int i=1;
             while (res1.next()){
                 String identityAuthenticationNumber = res1.getString("SFRZH");
                 String courseNumber=res1.getString("KCDM");
                 String classNumber=res1.getString("JXBH");
                 String editClassNumber =classNumber.replace("-", "");
                 String classID=sessionPrefix+editClassNumber;
-                if(!identityAuthenticationList.contains(identityAuthenticationNumber)&&!courseNumberList.contains(courseNumber)){
+                if(!identityAuthenticationList.contains(identityAuthenticationNumber)||!courseNumberList.contains(courseNumber)){
                     identityAuthenticationList.add(identityAuthenticationNumber);
                     courseNumberList.add(courseNumber);
-                    int i=1;
+
 //                    for (UTClassInstructor utClassInstructor: utClassInstructors){
 //                        String instructorID=(String)(classInstructorMap.get(identityAuthenticationNumber)==null?"":classInstructorMap.get(identityAuthenticationNumber));
 //                        utClassInstructor.setInstructorId(instructorID);

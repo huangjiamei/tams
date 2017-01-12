@@ -100,7 +100,6 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 //            this.syncStudentTimetableInfo(con);  //导入学生课表
 //            this.syncChangesOfClasses(con);
 //            this.syncSpecificClass(con);
-//        this.synCalendar();
         return con;
     }
 
@@ -199,7 +198,9 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             sessionPrefix += "02";
         }
 
-
+        for (UTInstructor utInstructor : utInstructorList) {
+            classInstructorMap.put(utInstructor.getIdNumber(), utInstructor.getId());
+        }
 
         for (UTCourse course : allCourse) {
             courseMap.put(course.getCodeR(), course.getId());

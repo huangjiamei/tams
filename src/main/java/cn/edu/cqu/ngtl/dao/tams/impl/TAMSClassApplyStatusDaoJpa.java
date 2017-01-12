@@ -36,6 +36,9 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
 
+    EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
+
+
     @Override
     public boolean toNextStatus(String[] roleIds, String functionId, String classId) {
         List<TAMSWorkflowStatus> allStatus = workflowStatusDao.selectByFunctionId(functionId);

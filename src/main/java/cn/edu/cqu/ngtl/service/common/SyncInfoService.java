@@ -22,5 +22,7 @@ public interface SyncInfoService {
 
     void syncClassInfo(Connection connection) throws SQLException;
 
+    public void synCalendar();
+
 
 }

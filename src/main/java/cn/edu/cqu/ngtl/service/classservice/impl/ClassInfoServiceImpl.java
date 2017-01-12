@@ -15,6 +15,7 @@ import cn.edu.cqu.ngtl.service.common.impl.TamsFileControllerServiceImpl;
 import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -936,13 +937,17 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     //更新教学日历
     @Override
-    public void updateTeachCalendarInfo(String calendarId, String description, String taTask,String spendTime,String week,String theme) {
+    public void updateTeachCalendarInfo(String uId, String classId, String calendarId, String description, String taTask,String spendTime,String week,String theme, List<FileViewObject> CalendarFile) {
         TAMSTeachCalendar tamsTeachCalendar = teachCalendarDao.selectById(calendarId);
         tamsTeachCalendar.setDescription(description);
         tamsTeachCalendar.setTaTask(taTask);
         tamsTeachCalendar.setWeek(week);
         tamsTeachCalendar.setElapsedTime(spendTime);
         tamsTeachCalendar.setTheme(theme);
+        if(CalendarFile != null && CalendarFile.size() != 0) {
+            new TamsFileControllerServiceImpl().saveCalendarAttachments(uId, classId, calendarId, CalendarFile);
+            tamsTeachCalendar.setHasAttachment(true);
+        }
         teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
 
@@ -1022,4 +1027,5 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         else
             return false;
     }
+
 }

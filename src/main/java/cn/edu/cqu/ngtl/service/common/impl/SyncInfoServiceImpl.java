@@ -418,7 +418,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         }
     }
     /**
-     * 更新教室，教学周期，授课教师
+     * 更新人数，教室，教学周期，授课教师
      *
      */
     public void updateClassesInformation(Connection connection) throws SQLException{
@@ -430,6 +430,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         List<UTClassInstructor> utClassInstructors = new ArrayList<>();
         List<String> identityAuthenticationList = new ArrayList<>();
         List<String> courseNumberList = new ArrayList<>();
+        List<String> classIdList = new ArrayList<>();
         UTSession curSession = utSessionDao.getCurrentSession();
         String year = curSession.getYear();
         String term = curSession.getTerm();
@@ -483,19 +484,28 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 String courseNumber=res1.getString("KCDM");
                 String classNumber=res1.getString("JXBH");
                 String editClassNumber =classNumber.replace("-", "");
+                String classID=sessionPrefix+editClassNumber;
                 if(!identityAuthenticationList.contains(identityAuthenticationNumber)&&!courseNumberList.contains(courseNumber)){
                     identityAuthenticationList.add(identityAuthenticationNumber);
                     courseNumberList.add(courseNumber);
-
+                    int i=1;
 //                    for (UTClassInstructor utClassInstructor: utClassInstructors){
 //                        String instructorID=(String)(classInstructorMap.get(identityAuthenticationNumber)==null?"":classInstructorMap.get(identityAuthenticationNumber));
 //                        utClassInstructor.setInstructorId(instructorID);
 //                        utClassInstructorDao.savaClassInstructorByEntiy(utClassInstructor);
 //                    }
-
+                   if(classIdList.contains(classNumber)){
+                       classNumber+=String.valueOf(i);
+                       classIdList.add(classNumber);
+                       classID+=String.valueOf(i);
+                       i++;
+                   }
+                   else{
+                       classIdList.add(classNumber);
+                   }
                     UTClassInstructor utClassInstructor = new UTClassInstructor();
                     utClassInstructor.setId(sessionPrefix+editClassNumber);
-                    utClassInstructor.setClassId(sessionPrefix+editClassNumber);
+                    utClassInstructor.setClassId(classID);
                     utClassInstructor.setInstructorId((String) classInstructorMap.get(identityAuthenticationNumber));
                     utClassInstructors.add(utClassInstructor);
                 }

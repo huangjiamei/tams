@@ -492,8 +492,8 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         TAMSClassTaApplication isExist = classTaApplicationDao.selectByInstructorIdAndClassId(instructorId, classId);
         if (isExist != null) {
             isExist.setWorkHour(totalTime);
-            isExist.setApplicationFunds(totalBudget);
-            isExist.setTaNumber(Integer.valueOf(assistantNumber));
+            isExist.setApplicationFunds(totalBudget.replace("元", ""));
+            isExist.setTaNumber(Integer.parseInt(assistantNumber));
             classTaApplicationDao.insertOneByEntity(isExist);
         } else {
             TAMSClassTaApplication entity = new TAMSClassTaApplication();

@@ -221,7 +221,7 @@
                                                                 </bean>
 
                                                                 <!--多文件上传器模板-->
-                                                                <bean parent="Uif-HorizontalBoxSection"
+                                                                <bean id="addUploadCollection" parent="Uif-HorizontalBoxSection"
                                                                       p:style="margin-top:20px"
                                                                       p:additionalCssClasses="col-xs-12 col-sm-12 col-md-12 col-lg-12">
                                                                     <property name="items">
@@ -235,7 +235,7 @@
                                                                                 <!--<property name="methodToCall" value="addFileUploadLine"/>-->
                                                                                 <property name="collection.items">
                                                                                     <list>
-                                                                                        <bean parent="Uif-LinkField" p:readOnly="true" p:label="文件" p:link.linkText="@{#line.name}"
+                                                                                        <bean parent="Uif-LinkField" p:readOnly="true" p:label="文件名称" p:link.linkText="@{#line.name}"
                                                                                               p:link.href="@{#line.url}&amp;selectedLineIndex=@{#index}" p:link.target="_blank"/>
                                                                                         <bean parent="Uif-InputField" p:readOnly="true" p:label="大小" p:propertyName="sizeFormatted"/>
                                                                                         <bean parent="Uif-InputField" p:readOnly="true" p:label="上传日期"
@@ -253,7 +253,7 @@
                                                                                               p:loadingMessageText="正在删除...">
                                                                                             <property name="cssClasses">
                                                                                                 <list merge="true">
-                                                                                                    <value>icon-trash</value>
+                                                                                                    <value>fa fa-trash bg-btn-red tams-action-btn</value>
                                                                                                 </list>
                                                                                             </property>
                                                                                         </bean>

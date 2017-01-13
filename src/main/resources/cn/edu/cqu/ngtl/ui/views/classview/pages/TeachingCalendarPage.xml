@@ -42,8 +42,8 @@
                     <property name="items">
                         <list>
                             <!-- 左上角 -->
-                            <bean id="headerTitle" parent="Uif-VerticalBoxSection"
-                                  p:onDocumentReadyScript="initContentHeader('headerTitle','icon-book','课程','教学日历')">
+                            <bean id="TeachingCalendarPageHeaderTitle" parent="Uif-VerticalBoxSection"
+                                  p:onDocumentReadyScript="initContentHeader('TeachingCalendarPageHeaderTitle','icon-book','课程','教学日历')">
                             </bean>
 
                             <!-- 右上角 当前路径 -->

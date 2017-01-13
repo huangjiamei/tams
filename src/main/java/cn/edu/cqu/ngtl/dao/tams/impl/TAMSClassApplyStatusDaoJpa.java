@@ -17,6 +17,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import javax.persistence.EntityManager;
 import java.util.*;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;

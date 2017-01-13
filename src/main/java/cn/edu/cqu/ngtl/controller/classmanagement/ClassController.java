@@ -820,7 +820,6 @@ public class ClassController extends BaseController {
                 return this.showDialog("refreshPageViewDialog", true, infoForm);
             }
         }
-
         List<String> InstructorIds = infoForm.getInstructorList();
         List<UTClassInformation> result = classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId());
         if(result == null) {

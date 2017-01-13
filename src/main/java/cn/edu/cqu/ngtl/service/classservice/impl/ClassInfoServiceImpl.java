@@ -16,6 +16,7 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
+import org.apache.commons.collections.list.AbstractLinkedList;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -119,6 +120,9 @@ public class ClassInfoServiceImpl implements IClassInfoService {
 
     @Autowired
     private TAMSDeptFundingDraftDao tamsDeptFundingDraftDao;
+
+    @Autowired
+    private TAMSCourseManagerDao tamsCourseManagerDao;
 
     @Override
     public List<UTClassInformation> getAllCurSessionClasses() {
@@ -951,24 +955,51 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         teachCalendarDao.insertByEntity(tamsTeachCalendar);
     }
 
-    //根据教师Ids查找教学班
+    //根据教师Ids查找教学班 + 查出本课程的教学日历
     @Override
     public List<UTClassInformation> getClassInfoByInstructorIds(List<String> InstructorIds, String curClassId) {
         if(InstructorIds == null)
             return null;
         List<Object> classIds = new ArrayList<>();
+        //根据instructorId查到的classId
         for(String InstructorId : InstructorIds) {
             List<Object> classIdList = classInstructorDao.selectClassIdsByInstructorId(InstructorId);
             for(int i=0; i<classIdList.size(); i++) {
                 classIds.add(classIdList.get(i));
             }
         }
-        //除去当前课程的id
-        for(int i=0; i<classIds.size(); i++) {
-            if(classIds.get(i).toString().equals(curClassId))
-                classIds.remove(i);
+
+        //根据当前classId查询courseId，找到对应的所有classId
+        UTClassInformation utClassInformation = classInfoDao.getOneById(curClassId);
+        Integer courseId = utClassInformation.getCourseId();
+        List<Object> classIds1 = classInfoDao.getClassIdsByCourseId(courseId.toString());
+        for (int i = 0; i < classIds1.size(); i++) {
+            if(!classIds.contains(classIds1.get(i)))
+                classIds.add(classIds1.get(i));
         }
-        List<UTClassInformation> utClassInformations = classInfoDao.selectBatchByIds(classIds);
+
+        //再根据courseId查找课程负责人，然后找负责人的所有CourseId，再根据每个courseId查找对应的classId
+        TAMSCourseManager tamsCourseManager = tamsCourseManagerDao.getCourseManagerByCourseId(courseId.toString());
+        if(tamsCourseManager != null) {
+            String courseManagerId = tamsCourseManager.getCourseManagerId();
+            List<Object> courseIds = tamsCourseManagerDao.getCouseIdsByManagerId(courseManagerId);
+            for(Object per : courseIds){
+                List<Object> classIds2 = classInfoDao.getClassIdsByCourseId(per.toString());
+                for(int i=0; i<classIds2.size(); i++){
+                    if(!classIds.contains(classIds2.get(i)))
+                        classIds.add(classIds2.get(i));
+                }
+            }
+        }
+
+        //除去当前课程的id
+        List<Object> classIdsFinal = new ArrayList<>();
+        for(int i=0; i<classIds.size(); i++) {
+            if(!classIds.get(i).toString().equals(curClassId))
+                classIdsFinal.add(classIds.get(i));
+        }
+
+        List<UTClassInformation> utClassInformations = classInfoDao.selectBatchByIds(classIdsFinal);
         return utClassInformations !=null ? utClassInformations : null;
     }
 
@@ -978,12 +1009,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         List<TAMSTeachCalendar> tamsTeachCalendarList = new ArrayList<>();
         for(String classId : classIds) {
             List<TAMSTeachCalendar> tamsTeachCalendars = teachCalendarDao.selectAllByClassId(classId);
-            if(tamsTeachCalendars != null) {
+            if(tamsTeachCalendars != null || tamsTeachCalendarList.size() !=0) {
                 for (int i = 0; i < tamsTeachCalendars.size(); i++)
                     tamsTeachCalendarList.add(tamsTeachCalendars.get(i));
             }
         }
-        if(tamsTeachCalendarList != null){
+        if(tamsTeachCalendarList != null || tamsTeachCalendarList.size() != 0){
             List<TAMSTeachCalendar> tamsTeachCalendars = new ArrayList<>(tamsTeachCalendarList.size());
             List<TAMSAttachments> tamsAttachmentsList = new ArrayList<>();
             for(TAMSTeachCalendar per : tamsTeachCalendarList) {
@@ -1018,7 +1049,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             }
             for(TAMSTeachCalendar per : tamsTeachCalendars)
                 teachCalendarDao.insertByEntity(per);
-            if(tamsAttachmentsList != null) {
+            if(tamsAttachmentsList != null || tamsAttachmentsList.size() != 0) {
                 for (TAMSAttachments per : tamsAttachmentsList)
                     attachmentsDao.insertOneByEntity(per);
             }

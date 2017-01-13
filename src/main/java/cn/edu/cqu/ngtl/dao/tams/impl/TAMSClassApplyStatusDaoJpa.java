@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import java.util.*;
 
@@ -36,8 +37,7 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
 
-    EntityManager em = KRADServiceLocator.getEntityManagerFactory().createEntityManager();
-
+    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Override
     public boolean toNextStatus(String[] roleIds, String functionId, String classId) {

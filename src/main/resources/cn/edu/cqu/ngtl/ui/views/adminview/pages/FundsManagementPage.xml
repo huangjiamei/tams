@@ -1534,7 +1534,7 @@
                                                                                                     </bean>
 
                                                                                                     <bean id="FundsManagerAssistantTable" parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                          p:onDocumentReadyScript="refreshTableFilter(FundsManagerAssistantSearchFields,FundsManagerAssistantTable);tableHeightSet('FundsManagerAssistantTable');travelSubsidyDialog();">
+                                                                                                          p:onDocumentReadyScript="refreshTableFilter(FundsManagerAssistantSearchFields,FundsManagerAssistantTable);tableHeightSet('FundsManagerAssistantTable');travelSubsidyDialog();setBgColor('FundsManagerAssistantTable');">
                                                                                                         <property
                                                                                                                 name="collectionObjectClass"
                                                                                                                 value="cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject"/>

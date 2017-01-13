@@ -152,6 +152,11 @@ public class AdminInfoForm extends BaseForm implements Serializable {
     private boolean studentRole;
 
     /**
+     * 经费管理页面  ------助教经费
+     */
+    private String approveTravelSubsidyOptionFinder;
+
+    /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。
      * TAB_FLAG_SCHOOL：学校tab
      * TAB_FLAG_DEPARTMENT：学院tab

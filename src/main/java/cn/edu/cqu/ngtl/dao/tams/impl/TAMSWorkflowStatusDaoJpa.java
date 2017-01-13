@@ -107,6 +107,7 @@ public class TAMSWorkflowStatusDaoJpa implements TAMSWorkflowStatusDao {
         QueryByCriteria.Builder criteria = QueryByCriteria.Builder.create().setPredicates(
                 equal("workflowFunctionId", functionId)
         );
+
         OrderByField orderByField = OrderByField.Builder.create("order", OrderDirection.ASCENDING).build();
         criteria.setOrderByFields(orderByField);
         QueryResults<TAMSWorkflowStatus> qr = KradDataServiceLocator.getDataObjectService().findMatching(

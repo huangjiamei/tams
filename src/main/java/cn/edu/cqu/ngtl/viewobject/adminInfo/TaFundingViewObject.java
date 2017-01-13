@@ -36,6 +36,9 @@ public class TaFundingViewObject {
     private String bonus;
 
     private String total;
+
+    private boolean checked;
+
     @Transient
     public static String[] getAttrTittles(){
         String[] attrTittles={
@@ -184,4 +187,13 @@ public class TaFundingViewObject {
     public void setClassId(String classId) {
         this.classId = classId;
     }
+
+    public boolean isChecked() {
+        return checked;
+    }
+
+    public void setChecked(boolean checked) {
+        this.checked = checked;
+    }
+
 }

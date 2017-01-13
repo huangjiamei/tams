@@ -1438,6 +1438,12 @@
                                                                                                         <property name="items">
                                                                                                             <list>
                                                                                                                 <bean parent="Uif-PrimaryActionButton"
+                                                                                                                      p:actionLabel="审核交通补贴"
+                                                                                                                      p:actionImagePlacement="LEFT"
+                                                                                                                      p:methodToCall="showApproveTravelSubsidyDialog"
+                                                                                                                      p:additionalCssClasses="icon-zoom-in bg-red box-btngroup"/>
+
+                                                                                                                <bean parent="Uif-PrimaryActionButton"
                                                                                                                       p:actionLabel="保存"
                                                                                                                       p:render="@{!#form.studentRole}"
                                                                                                                       p:actionImagePlacement="LEFT"
@@ -1963,6 +1969,40 @@
 
                 <!--<bean parent="Uif-PrimaryActionButton" p:actionLabel="确认"-->
                       <!--p:methodToCall="xxxx"  p:dialogDismissOption="REQUEST"/>-->
+                <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
+
+            </list>
+        </property>
+    </bean>
+
+    <bean id="approveTravelSubsidyDialog" parent="Uif-DialogGroup" p:resetDataOnRefresh="true" p:retrieveViaAjax="true">
+        <property name="headerText" value="提示："/>
+        <property name="dialogCssClass" value="confirmDialog"/>
+        <property name="items">
+            <list>
+                <bean parent="Uif-InputField"  p:label="选择审核交通补贴的状态"
+                      p:propertyName="approveTravelSubsidyOptionFinder" >
+                    <property name="optionsFinder">
+                        <bean class="cn.edu.cqu.ngtl.optionfinder.adminview.ApproveTravelSubsidyOptionFinder" />
+                    </property>
+                    <property name="control">
+                        <bean parent="Uif-DropdownControl"/>
+                    </property>
+                </bean>
+                <bean parent="Uif-InputField" p:label="请填写审核交通补贴理由"
+                      p:propertyName="approveTravelSubsidyReason">
+                    <property name="control">
+                        <bean parent="Uif-TextAreaControl"
+                              p:style="height:100px;resize: none;"/>
+                    </property>
+                </bean>
+            </list>
+        </property>
+        <property name="footer.items">
+            <list>
+
+                <bean parent="Uif-PrimaryActionButton" p:actionLabel="确认"
+                      p:methodToCall=""  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
 
             </list>

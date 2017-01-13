@@ -1071,7 +1071,7 @@ function tableHeightSet(id){
 function travelSubsidyDialog(){
     var listLength=jQuery('#FundsManagerAssistantTable tbody>tr').length;
         for(var i=0;i<listLength;i++){
-            jQuery('#FundsManagerAssistantTable').on('click', 'tbody>tr:eq('+i+')>td:eq(11)', function (e) {
+            jQuery('#FundsManagerAssistantTable').on('click', 'tbody>tr:eq('+i+')>td:eq(10)', function (e) {
 
                 jQuery(this).addClass("addPointer");
 

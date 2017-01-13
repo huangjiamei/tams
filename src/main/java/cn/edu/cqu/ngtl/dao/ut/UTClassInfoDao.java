@@ -28,4 +28,6 @@ public interface UTClassInfoDao {
     List<UTClassInformation> getAllCurrentClassInformationBySepStatus(String statusId);
 
     List<UTClassInformation> getClassesByCourseId(String courseId);
+
+    public List<Object> getClassIdsByCourseId(String courseId);
 }

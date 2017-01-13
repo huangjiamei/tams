@@ -26,4 +26,6 @@ public interface TAMSCourseManagerDao {
 
      List<TAMSCourseManager> getCourseManagerByDeptId(String departmentId);
 
+     List<Object> getCouseIdsByManagerId(String managerId);
+
 }

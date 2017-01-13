@@ -4,11 +4,15 @@ import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ENTITY_ENT_TYP_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_ENTITY_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.krim.impl.KRIM_PRNCPL_T_DaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassApplyStatusDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
+import cn.edu.cqu.ngtl.dao.tams.TAMSTeachCalendarDao;
 import cn.edu.cqu.ngtl.dao.ut.*;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ENTITY_ENT_TYP_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_ENTITY_T;
 import cn.edu.cqu.ngtl.dataobject.krim.KRIM_PRNCPL_T;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassApplyStatus;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSClassTaApplication;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTeachCalendar;
 import cn.edu.cqu.ngtl.dataobject.ut.*;
 import cn.edu.cqu.ngtl.service.common.SyncInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +59,11 @@ public class SyncInfoServiceImpl implements SyncInfoService {
     @Autowired
     private UTStudentTimetableDao utStudentTimetableDao;
 
+    @Autowired
+    private TAMSTeachCalendarDao tamsTeachCalendarDao;
+
+    @Autowired
+    private TAMSClassTaApplicationDao tamsClassTaApplicationDao;
 
     @Override
     public Connection getConnection(String hostType, String hostIp, String hostPort, String dbName, String dbUserName,
@@ -177,6 +186,10 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             term = "0";
         }
         List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
+
+        for (UTInstructor utInstructor : utInstructorList) {
+            classInstructorMap.put(utInstructor.getIdNumber(), utInstructor.getId());
+        }
 
         String sessionPrefix = curSession.getYear();
         if (curSession.getTerm().equals("春")) {
@@ -535,6 +548,14 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         List<UTClassInstructor> utClassInstructors = new ArrayList<>();
         List<TAMSClassApplyStatus> tamsClassApplyStatuses = new ArrayList<>();
 
+        List<UTInstructor> utInstructorList = utInstructorDao.getAllInstructors();
+
+        Map classInstructorMap = new HashMap<>();
+
+
+        for (UTInstructor utInstructor : utInstructorList) {
+            classInstructorMap.put(utInstructor.getIdNumber(), utInstructor.getId());
+        }
 
         UTSession curSession = utSessionDao.getCurrentSession();
         String year = curSession.getYear();
@@ -553,7 +574,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             sessionPrefix += "02";
         }
 
-        String queryKCKB = "SELECT * FROM JSKB t WHERE  t.XN = '2016' AND t.XQ_ID = '1' AND t.KC_FLAG = '2' AND KCDM = 'PHYS12010'";
+        String queryKCKB = "SELECT * FROM JSKB t WHERE  t.XN = '2016' AND t.XQ_ID = '1'  AND KCDM = 'MGMT35201'";
         PreparedStatement pre = connection.prepareStatement(queryKCKB);
         pre.setQueryTimeout(10000);
         ResultSet res = pre.executeQuery();
@@ -573,7 +594,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                 String teachWeek = "";
                 String roomName = "";
-                String stuNbr = "";
+                String stuNbr = "0";
                 try {
                     ResultSet res2 = pre2.executeQuery();
 
@@ -589,10 +610,12 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 }
 
                 String teachWeekResult = "";
-                String[] teachWeekPre = teachWeek.split(",");
-                for (String s : teachWeekPre) {
-                    if (!teachWeekResult.contains(s)) {
-                        teachWeekResult += s+"|";
+                if(!teachWeek.equals("")) {
+                    String[] teachWeekPre = teachWeek.split(",");
+                    for (String s : teachWeekPre) {
+                        if (!teachWeekResult.contains(s)) {
+                            teachWeekResult += s+"|";
+                        }
                     }
                 }
 
@@ -610,7 +633,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                  */
                 UTCourseOffering utCourseOffering = new UTCourseOffering();
                 utCourseOffering.setId(sessionPrefix+editClassNbr);
-                utCourseOffering.setCourseId(2016308005); //固定的
+                utCourseOffering.setCourseId(2016028334); //固定的
                 utCourseOffering.setSessionId(curSession.getId());
                 utCourseOfferings.add(utCourseOffering);
                 /**
@@ -645,7 +668,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                 UTClassInstructor utClassInstructor = new UTClassInstructor();
                 utClassInstructor.setId(sessionPrefix+editClassNbr);
                 utClassInstructor.setClassId(sessionPrefix+editClassNbr);
-                utClassInstructor.setInstructorId("10004276"); //固定的ID
+                utClassInstructor.setInstructorId((String) classInstructorMap.get(auId)); //固定的ID
                 utClassInstructors.add(utClassInstructor);
             }
 
@@ -686,5 +709,30 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                         , ""
                         , "Y");
     }
+
+
+
+    public void synCalendar() {
+        List<Object> classIds = tamsClassApplyStatusDao.selectClassIdByStatus("1");
+        for(Object classId : classIds) {
+            List<TAMSTeachCalendar> tamsTeachCalendars = tamsTeachCalendarDao.selectAllByClassId(classId.toString());
+            Integer totalElalpsedTime = 0;
+            Integer applicationFunds = 0;
+            if(tamsTeachCalendars != null) {
+                for(int i=0; i<tamsTeachCalendars.size(); i++){
+                    totalElalpsedTime = totalElalpsedTime + Integer.parseInt(tamsTeachCalendars.get(i).getElapsedTime());
+                }
+            }
+            TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(classId.toString());
+            if(tamsClassTaApplication != null) {
+                tamsClassTaApplication.setWorkHour(totalElalpsedTime.toString());
+                applicationFunds = totalElalpsedTime * 12;
+                tamsClassTaApplication.setApplicationFunds(applicationFunds.toString());
+                tamsClassTaApplicationDao.insertOneByEntity(tamsClassTaApplication);
+            }
+        }
+    }
+
+
 
 }

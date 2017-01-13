@@ -2,7 +2,9 @@ package cn.edu.cqu.ngtl.controller.classmanagement;
 
 import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
+import cn.edu.cqu.ngtl.dao.tams.TAMSAttachmentsDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
+import cn.edu.cqu.ngtl.dao.tams.impl.TAMSAttachmentsDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -93,6 +95,9 @@ public class ClassController extends BaseController {
 
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
+
+    @Autowired
+    private TAMSAttachmentsDao tamsAttachmentsDao;
 
     //教学日历耗时上限
     private static int MAX_CALENDAR_HOUR = 12;
@@ -687,6 +692,13 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法更新教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
+
         try {
             infoForm.setCurrentCalenderInfoEdit(
                     infoForm.getCurrentCalendarInfo()
@@ -715,6 +727,13 @@ public class ClassController extends BaseController {
                                                     HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法更新教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
 
         CollectionControllerServiceImpl.CollectionActionParameters params = new CollectionControllerServiceImpl.CollectionActionParameters(infoForm, true);
         int index = params.getSelectedLineIndex();
@@ -756,13 +775,19 @@ public class ClassController extends BaseController {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
 
+        UserSession session = getUserSession();
+        String uId = session.getPrincipalId();
+
+        String classId = infoForm.getCurrClassId();
+
         String calendarId = infoForm.getCalendarId();
         String CalendarDescription = infoForm.getCurrentCalenderInfoEdit().getDescription();
         String CalendarTaTask = infoForm.getCurrentCalenderInfoEdit().getTaTask();
         String spendTime = infoForm.getCurrentCalenderInfoEdit().getElapsedTime();
         String week = infoForm.getCurrentCalenderInfoEdit().getWeek();
         String theme = infoForm.getCurrentCalenderInfoEdit().getTheme();
-        classInfoService.updateTeachCalendarInfo(calendarId, CalendarDescription, CalendarTaTask,spendTime,week,theme);
+        List<FileViewObject> fileList = infoForm.getFileList();
+        classInfoService.updateTeachCalendarInfo(uId, classId, calendarId, CalendarDescription, CalendarTaTask,spendTime,week,theme, fileList);
 
         if (calendarId!=null){
             MDC.put("remoteHost",request.getRemoteAddr());
@@ -771,6 +796,11 @@ public class ClassController extends BaseController {
 
         //避免延迟刷新
         infoForm.setCurrentCalendarInfo(infoForm.getCurrentCalenderInfoEdit());
+        List<TAMSAttachments> attachments =tamsAttachmentsDao.selectCalendarFilesByCalendarId(calendarId);
+        infoForm.setCalendarFiles(
+                taConverter.attachmentsToFileViewObject(attachments)
+        );
+        infoForm.setFileList(null);
         return this.getModelAndView(infoForm, "pageViewTeachingCalendar");
 
     }
@@ -783,6 +813,13 @@ public class ClassController extends BaseController {
                                             HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法复制教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
         List<String> InstructorIds = infoForm.getInstructorList();
         List<UTClassInformation> result = classInfoService.getClassInfoByInstructorIds(InstructorIds, infoForm.getCurrClassId());
         if(result == null) {
@@ -868,6 +905,13 @@ public class ClassController extends BaseController {
                                            HttpServletRequest request) {
         ClassInfoForm infoForm = (ClassInfoForm) form;
         super.baseStart(infoForm);
+
+        if(classInfoService.getClassApplicationByClassId(infoForm.getCurrClassId())!=null){
+            if(!classInfoService.getAllClassesFilterByCLassId(infoForm.getCurrClassId()).getStatus().equals("1")) {
+                infoForm.setErrMsg("您已提交申请，无法删除教学日历！");
+                return this.showDialog("refreshPageViewDialog", true, infoForm);
+            }
+        }
 
         String classId = infoForm.getCurrClassId();
         if (classId == null) {

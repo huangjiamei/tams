@@ -5,6 +5,7 @@ import cn.edu.cqu.ngtl.dataobject.ut.UTClass;
 import cn.edu.cqu.ngtl.dataobject.ut.UTStudent;
 import cn.edu.cqu.ngtl.dataobject.view.UTClassInformation;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
+import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
 
 import java.util.List;
 import java.util.Map;
@@ -103,7 +104,7 @@ public interface IClassInfoService {
 
     Integer applyOutStanding(String applyOTReason, String StuId, String classId);
 
-    void updateTeachCalendarInfo(String calendarId, String description, String taTask,String spendTime,String week,String theme);
+    void updateTeachCalendarInfo(String uId, String classId, String calendarId, String description, String taTask,String spendTime,String week,String theme, List<FileViewObject> CalendarFile);
 
     List<UTClassInformation> getClassInfoByInstructorIds(List<String> InstructorId, String curClassId);
 

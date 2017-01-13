@@ -194,7 +194,7 @@
                                                                     </property>
                                                                 </bean>
 
-                                                                <bean id="fileTableEdit" parent="Uif-Disclosure-TableCollectionSection"><!--后期改格式-->
+                                                                <bean id="fileTableEdit" parent="Uif-Disclosure-TableCollectionSection"  ><!--后期改格式-->
                                                                     <property name="collectionObjectClass"
                                                                               value="cn.edu.cqu.ngtl.viewobject.common.FileViewObject"/><!--改动collectionObjectClass和propertyName-->
                                                                     <property name="propertyName" value="calendarFiles"/>

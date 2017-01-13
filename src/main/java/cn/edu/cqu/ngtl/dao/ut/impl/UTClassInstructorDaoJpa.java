@@ -3,6 +3,7 @@ package cn.edu.cqu.ngtl.dao.ut.impl;
 import cn.edu.cqu.ngtl.dao.tams.TAMSCourseManagerDao;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dataobject.ut.UTClassInstructor;
+import cn.edu.cqu.ngtl.dataobject.ut.UTSession;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
@@ -44,7 +45,7 @@ public class UTClassInstructorDaoJpa implements UTClassInstructorDao {
     //根据教师的id查询批量class_id
     @Override
     public List<Object> selectClassIdsByInstructorId(String uId) {
-        Query query = em.createNativeQuery("SELECT CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR t WHERE t.INSTRUCTOR_ID='" + uId + "'");
+        Query query = em.createNativeQuery("SELECT CLASS_ID FROM UNITIME_CLASS_INSTRUCTOR t WHERE t.INSTRUCTOR_ID='" + uId + "' ");
         return query.getResultList() == null ? null : query.getResultList();
     }
 

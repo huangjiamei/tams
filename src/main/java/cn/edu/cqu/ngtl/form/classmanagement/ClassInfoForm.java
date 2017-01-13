@@ -190,8 +190,6 @@ public class ClassInfoForm extends BaseForm implements Serializable {
 
     private String studentNumberForChange;
 
-
-
     public List<String> getInstructorList() {
         return instructorList;
     }

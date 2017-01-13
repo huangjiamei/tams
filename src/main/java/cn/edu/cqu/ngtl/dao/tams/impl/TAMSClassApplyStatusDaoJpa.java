@@ -10,10 +10,14 @@ import cn.edu.cqu.ngtl.dataobject.tams.TAMSWorkflowStatusR;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
 import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
+import org.kuali.rice.krad.service.KRADServiceLocator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import javax.persistence.EntityManager;
 import java.util.*;
 
 import static org.kuali.rice.core.api.criteria.PredicateFactory.equal;
@@ -33,6 +37,8 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
 
     @Autowired
     private TAMSWorkflowStatusDao workflowStatusDao;
+
+    EntityManager em =  KRADServiceLocator.getEntityManagerFactory().createEntityManager();
 
     @Override
     public boolean toNextStatus(String[] roleIds, String functionId, String classId) {
@@ -208,4 +214,13 @@ public class TAMSClassApplyStatusDaoJpa implements TAMSClassApplyStatusDao {
         KradDataServiceLocator.getDataObjectService().save(current);
         return true;
     }
+
+    @Override
+    public List<Object> selectClassIdByStatus(String status){
+        List<Object> classIds = new ArrayList<>();
+        Query qr = KRADServiceLocator.getEntityManagerFactory().createEntityManager().createNativeQuery("SELECT CLASS_ID FROM TAMS_CLASS_APPLY_STATUS WHERE STATUS != '1' ");
+        classIds = qr.getResultList();
+        return classIds.size() != 0 ? classIds : null;
+    }
+
 }

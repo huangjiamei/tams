@@ -21,4 +21,6 @@ public interface TAMSClassApplyStatusDao {
     List<TAMSWorkflowStatus> getAvailableStatus(String[] roleIds, String functionId, String classId);
 
     boolean changeStatusToCertainStatus(String classId, String workflowStatusId);
+
+    List<Object> selectClassIdByStatus(String status);
 }

@@ -64,6 +64,12 @@ public class TAMSCourseManagerDaoJpa implements TAMSCourseManagerDao {
         return qr.getResults().isEmpty() ? null : qr.getResults().get(0);
     }
 
+    @Override
+    public List<Object> getCouseIdsByManagerId(String managerId) {
+        Query query = em.createNativeQuery("SELECT COURSE_ID FROM TAMS_COURSE_MANAGER WHERE COURSE_MANAGER_ID = '"+managerId+"'");
+        return query.getResultList() != null ? query.getResultList() : null;
+    }
+
 
     @Override
     public TAMSCourseManager getCourseManagerByCourseId(String courseId){

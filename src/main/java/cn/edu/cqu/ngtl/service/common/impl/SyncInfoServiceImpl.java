@@ -426,6 +426,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         System.out.println("@@@@@@@@@@@@@@@@@@@@@@");
         Map classInstructorMap = new HashMap();
         List<String> classNbrList = new ArrayList<>();
+        List<String> classNumberList = new ArrayList<>();
         List<UTClass> utClasses = new ArrayList<>();
         List<UTClassInstructor> utClassInstructors = new ArrayList<>();
         List<String> identityAuthenticationList = new ArrayList<>();
@@ -456,7 +457,6 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         try {
             pre.setQueryTimeout(10000);
             ResultSet res = pre.executeQuery();
-            ResultSet res1 =pre1.executeQuery();
             while (res.next()) {
                 String classNumber = res.getString("JXBH");
                 String stuNbr = res.getString("SKBJ_RS");
@@ -479,44 +479,45 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                     utClasses.add(utClass);
                 }
             }
+            utClassDao.saveUTClassesByList(utClasses);
+        }finally {
+            if (pre != null)
+                pre.close();
+        }
+        try{
+            pre1.setQueryTimeout(10000);
+            ResultSet res1 =pre1.executeQuery();
             int i=1;
             while (res1.next()){
                 String identityAuthenticationNumber = res1.getString("SFRZH");
                 String courseNumber=res1.getString("KCDM");
                 String classNumber=res1.getString("JXBH");
                 String editClassNumber =classNumber.replace("-", "");
-                String classID=sessionPrefix+editClassNumber;
-                if(!identityAuthenticationList.contains(identityAuthenticationNumber)||!courseNumberList.contains(courseNumber)){
+                String ID=sessionPrefix+editClassNumber;
+                if(!identityAuthenticationList.contains(identityAuthenticationNumber)||!courseNumberList.contains(courseNumber)||!classNumberList.contains(classNumber)){
                     identityAuthenticationList.add(identityAuthenticationNumber);
                     courseNumberList.add(courseNumber);
-
-//                    for (UTClassInstructor utClassInstructor: utClassInstructors){
-//                        String instructorID=(String)(classInstructorMap.get(identityAuthenticationNumber)==null?"":classInstructorMap.get(identityAuthenticationNumber));
-//                        utClassInstructor.setInstructorId(instructorID);
-//                        utClassInstructorDao.savaClassInstructorByEntiy(utClassInstructor);
-//                    }
-                   if(classIdList.contains(classNumber)){
-                       classNumber+=String.valueOf(i);
-                       classIdList.add(classNumber);
-                       classID+=String.valueOf(i);
-                       i++;
-                   }
-                   else{
-                       classIdList.add(classNumber);
-                   }
+                    classNumberList.add(classNumber);
+                    if(classIdList.contains(classNumber)){//班号重复
+                        classNumber+=String.valueOf(i);//班号后面加i(i从1开始自增的数)
+                        classIdList.add(classNumber);
+                        ID+=String.valueOf(i);//主键后面加i(i从1开始自增的数)
+                        i++;
+                    }
+                    else{
+                        classIdList.add(classNumber);
+                    }
                     UTClassInstructor utClassInstructor = new UTClassInstructor();
-                    utClassInstructor.setId(sessionPrefix+editClassNumber);
-                    utClassInstructor.setClassId(classID);
+                    utClassInstructor.setId(ID);
+                    utClassInstructor.setClassId(sessionPrefix+editClassNumber);
                     utClassInstructor.setInstructorId((String) classInstructorMap.get(identityAuthenticationNumber));
                     utClassInstructors.add(utClassInstructor);
                 }
             }
             utClassInstructorDao.saveClassInstructorByList(utClassInstructors);
-
-            utClassDao.saveUTClassesByList(utClasses);
         }finally {
-            if (pre != null)
-                pre.close();
+            if(pre1 !=null)
+                pre1.close();
         }
     }
 

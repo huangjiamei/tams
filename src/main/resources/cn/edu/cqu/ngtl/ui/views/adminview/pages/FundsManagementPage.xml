@@ -1480,10 +1480,10 @@
                                                                                                         <property name="items">
                                                                                                             <list>
 
-                                                                                                                <!--占位-->
-                                                                                                                <bean parent="Uif-MessageField"
-                                                                                                                      p:additionalCssClasses="hidden-fields"
-                                                                                                                      p:messageText="占位"/>
+                                                                                                                <!--&lt;!&ndash;占位&ndash;&gt;-->
+                                                                                                                <!--<bean parent="Uif-MessageField"-->
+                                                                                                                      <!--p:additionalCssClasses="hidden-fields"-->
+                                                                                                                      <!--p:messageText="占位"/>-->
                                                                                                                 <!--学院-->
                                                                                                                 <bean parent="Uif-InputField"
                                                                                                                       p:propertyName="tDept">
@@ -1534,7 +1534,7 @@
                                                                                                     </bean>
 
                                                                                                     <bean id="FundsManagerAssistantTable" parent="Uif-Disclosure-TableCollectionSection"
-                                                                                                          p:onDocumentReadyScript="refreshTableFilter(FundsManagerAssistantSearchFields,FundsManagerAssistantTable);tableHeightSet('FundsManagerAssistantTable');travelSubsidyDialog();">
+                                                                                                          p:onDocumentReadyScript="refreshTableFilter(FundsManagerAssistantSearchFields,FundsManagerAssistantTable);tableHeightSet('FundsManagerAssistantTable');travelSubsidyDialog();"><!--setBgColor('FundsManagerAssistantTable');-->
                                                                                                         <property
                                                                                                                 name="collectionObjectClass"
                                                                                                                 value="cn.edu.cqu.ngtl.viewobject.adminInfo.TaFundingViewObject"/>
@@ -1568,12 +1568,12 @@
                                                                                                         <property
                                                                                                                 name="items">
                                                                                                             <list>
-                                                                                                                <bean parent="Uif-InputField"
-                                                                                                                      p:propertyName="checked">
-                                                                                                                    <property name="control">
-                                                                                                                        <bean parent="Uif-CheckboxControl"/>
-                                                                                                                    </property>
-                                                                                                                </bean>
+                                                                                                                <!--<bean parent="Uif-InputField"-->
+                                                                                                                      <!--p:propertyName="checked">-->
+                                                                                                                    <!--<property name="control">-->
+                                                                                                                        <!--<bean parent="Uif-CheckboxControl"/>-->
+                                                                                                                    <!--</property>-->
+                                                                                                                <!--</bean>-->
                                                                                                                 <bean parent="Uif-DataField"
                                                                                                                       p:label="学院"
                                                                                                                       p:propertyName="departmentName"/>

@@ -1000,7 +1000,25 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         }
 
         List<UTClassInformation> utClassInformations = classInfoDao.selectBatchByIds(classIdsFinal);
-        return utClassInformations !=null ? utClassInformations : null;
+
+        if(utClassInformations != null && utClassInformations.size() != 0) {
+            for(UTClassInformation PER : utClassInformations) {
+                //根据classIds查询教师名字
+                String teacherNames = "";
+                List<UTClassInstructor> instructors = classInstructorDao.selectByClassId(PER.getId().toString());
+                if (instructors != null && instructors.size() != 0)
+                    for (int i = 0; i < instructors.size(); i++)
+                        teacherNames = teacherNames + instructors.get(i).getUtInstructor().getName() + (i == instructors.size() - 1 ? "" : ',');
+                PER.setInstructorName(teacherNames);
+                //根据classIds查询总耗时
+                TAMSClassTaApplication tamsClassTaApplication = tamsClassTaApplicationDao.selectByClassId(PER.getId().toString());
+                if(tamsClassTaApplication != null )
+                    PER.setWorkHour(tamsClassTaApplication.getWorkHour());
+            }
+            return utClassInformations;
+        }
+        else
+            return null;
     }
 
     //复制教学日历
@@ -1009,12 +1027,12 @@ public class ClassInfoServiceImpl implements IClassInfoService {
         List<TAMSTeachCalendar> tamsTeachCalendarList = new ArrayList<>();
         for(String classId : classIds) {
             List<TAMSTeachCalendar> tamsTeachCalendars = teachCalendarDao.selectAllByClassId(classId);
-            if(tamsTeachCalendars != null || tamsTeachCalendarList.size() !=0) {
+            if(tamsTeachCalendars != null && tamsTeachCalendars.size() !=0) {
                 for (int i = 0; i < tamsTeachCalendars.size(); i++)
                     tamsTeachCalendarList.add(tamsTeachCalendars.get(i));
             }
         }
-        if(tamsTeachCalendarList != null || tamsTeachCalendarList.size() != 0){
+        if(tamsTeachCalendarList != null && tamsTeachCalendarList.size() != 0){
             List<TAMSTeachCalendar> tamsTeachCalendars = new ArrayList<>(tamsTeachCalendarList.size());
             List<TAMSAttachments> tamsAttachmentsList = new ArrayList<>();
             for(TAMSTeachCalendar per : tamsTeachCalendarList) {

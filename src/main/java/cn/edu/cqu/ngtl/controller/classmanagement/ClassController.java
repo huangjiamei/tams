@@ -827,8 +827,9 @@ public class ClassController extends BaseController {
             nullObject.add(new UTClassInformation());
             infoForm.setUtClassInformations(nullObject);
         }
-        else
+        else {
             infoForm.setUtClassInformations(result);
+        }
         return this.showDialog("confirmCopyDialog", true, infoForm);
     }
 

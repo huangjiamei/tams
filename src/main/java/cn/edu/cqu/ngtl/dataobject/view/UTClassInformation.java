@@ -115,8 +115,19 @@ public class UTClassInformation extends DataObjectBase implements Serializable {
     @Transient
     private String instructorName;
 
+    @Transient
+    private String workHour;
+
     private boolean isCheckBox;
 
+
+    public String getWorkHour() {
+        return workHour;
+    }
+
+    public void setWorkHour(String workHour) {
+        this.workHour = workHour;
+    }
 
     public boolean isCheckBox() {
         return isCheckBox;

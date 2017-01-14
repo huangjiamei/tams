@@ -296,6 +296,9 @@
                                         </bean>
                                         <bean parent="Uif-DataField" p:label="教学班号" p:propertyName="classNumber"/>
                                         <bean parent="Uif-DataField" p:label="课程名称" p:propertyName="courseName"/>
+                                        <bean parent="Uif-DataField" p:label="教师" p:propertyName="instructorName"/>
+                                        <bean parent="Uif-DataField" p:label="教学班人数" p:propertyName="limit"/>
+                                        <bean parent="Uif-DataField" p:label="总耗时" p:propertyName="workHour"/>
                                     </list>
                                 </property>
                             </bean>

@@ -1446,7 +1446,7 @@ public class adminController extends BaseController {
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
 
-    /**
+    /** create by luojizhou on 2017/1/13
      * 助教经费页面的 审批交通补贴的提示框
      * @param form
      * @param request
@@ -1466,14 +1466,14 @@ public class adminController extends BaseController {
             }
         }
 
-//        if (checkedTaFundingList.size()==0){
-//            infoForm.setErrMsg("请选择需要审核交通补贴的助教！");
-//            return this.showDialog("refreshPageViewDialog",true,infoForm);
-//        }
+        if (checkedTaFundingList.size()==0){
+            infoForm.setErrMsg("请选择需要审核交通补贴的助教！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
         return this.showDialog("approveTravelSubsidyDialog",true,infoForm);
     }
 
-    /**
+    /** create by luojizhou on 2017/1/13
      *  助教经费页面 审批交通补贴的方法
      * @param form
      * @param request
@@ -1494,12 +1494,25 @@ public class adminController extends BaseController {
         }
 
         String uid = GlobalVariables.getUserSession().getPrincipalId();
-        if(infoForm==null){
-            infoForm.setErrMsg("请选择审批的状态！");
+        if(infoForm.getApproveTravelSubsidyOptionFinder()==null){
+            infoForm.setErrMsg("请选择审批交通补贴的状态！");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
+        boolean result = false;
+        for (TaFundingViewObject taFundingViewObject: checkedTaFundingList){
+            result=adminService.TravelSubsidyToCertainStatus(
+                    uid,
+                    taFundingViewObject.getStuId(),
+                    infoForm.getApproveTravelSubsidyOptionFinder()
+            );
+        }
 
-        return this.showDialog("",true,infoForm);
+        if (result){
+            return this.getFundsPage(infoForm,request);
+        }else {
+            infoForm.setErrMsg("审核失败！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
     }
 
 

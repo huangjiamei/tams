@@ -107,9 +107,12 @@ public class AdminServiceImpl implements IAdminService {
     @Autowired
     private UTClassInstructorDao utClassInstructorDao;
 
-
     @Autowired
     IPDFService PDFService;
+
+    @Autowired
+    private TAMSTaTravelSubsidyDao tamsTaTravelSubsidyDao;
+
 
     @Override
     public List<TAMSDeptFundingDraft> getAllDeptFundingDraft() {
@@ -840,6 +843,14 @@ public class AdminServiceImpl implements IAdminService {
         else
             return 2;
 
+    }
+
+    @Override
+    public  boolean TravelSubsidyToCertainStatus(String uid,String ta_id,String workflowStatusId){
+        if (uid == null)
+            return false;
+
+        return tamsTaTravelSubsidyDao.setTravelSubsidyToCertainStatus(ta_id,workflowStatusId);
     }
 
     //计算助教经费

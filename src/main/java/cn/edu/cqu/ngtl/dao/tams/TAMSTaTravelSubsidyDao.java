@@ -15,4 +15,6 @@ public interface TAMSTaTravelSubsidyDao {
     boolean insertOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
 
     boolean deleteOneByEntity(TAMSTaTravelSubsidy tamsTaTravelSubsidy);
+
+    boolean setTravelSubsidyToCertainStatus(String ta_id,String workflowStatusId);
 }

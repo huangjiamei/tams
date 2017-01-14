@@ -1,10 +1,13 @@
 package cn.edu.cqu.ngtl.dao.tams.impl;
 
 import cn.edu.cqu.ngtl.dao.tams.TAMSTaTravelSubsidyDao;
+import cn.edu.cqu.ngtl.dataobject.tams.TAMSTa;
 import cn.edu.cqu.ngtl.dataobject.tams.TAMSTaTravelSubsidy;
 import org.kuali.rice.core.api.criteria.QueryByCriteria;
+import org.kuali.rice.core.api.criteria.QueryResults;
 import org.kuali.rice.krad.data.KradDataServiceLocator;
 import org.kuali.rice.krad.service.KRADServiceLocator;
+import org.opensaml.xml.encryption.Q;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
@@ -49,6 +52,30 @@ public class TAMSTaTravelSubsidyDaoJpa implements TAMSTaTravelSubsidyDao {
         return true;
     }
 
+    @Override
+    public boolean setTravelSubsidyToCertainStatus(String ta_id,String workflowStatusId){
+        if (ta_id==null || workflowStatusId==null){
+            return false;
+        }
+        QueryByCriteria.Builder criteria=QueryByCriteria.Builder.create().setPredicates(
+                equal("tamsTaId",ta_id)
+        );
+        QueryResults<TAMSTaTravelSubsidy> qr=KradDataServiceLocator.getDataObjectService().findMatching(
+                TAMSTaTravelSubsidy.class,
+                criteria.build()
+        );
+        if (qr.getResults()==null || qr.getResults().size()==0){
+            return false;
+        }
+        List<TAMSTaTravelSubsidy> current=qr.getResults();
+        for (TAMSTaTravelSubsidy per:current){
+            per.setWorkflowStatusId(workflowStatusId);
+            KradDataServiceLocator.getDataObjectService().save(per);
+        }
 
-
+        TAMSTa ta=KradDataServiceLocator.getDataObjectService().find(TAMSTa.class,ta_id);
+        ta.setTravelSubsidy(String.valueOf(qr.getResults().size()*10));
+        KradDataServiceLocator.getDataObjectService().save(ta);
+        return true;
+    }
 }

@@ -184,4 +184,6 @@ public interface IAdminService {
 
     String getClassFundingTotalApply();
 
+    boolean TravelSubsidyToCertainStatus(String uid,String ta_id,String workflowStatusId);
+
 }

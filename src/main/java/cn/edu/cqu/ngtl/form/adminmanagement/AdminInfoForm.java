@@ -155,6 +155,21 @@ public class AdminInfoForm extends BaseForm implements Serializable {
      * 经费管理页面  ------助教经费
      */
     private String approveTravelSubsidyOptionFinder;
+    private String approveTravelSubsidyReason;
+
+    public String getApproveTravelSubsidyOptionFinder() {
+        return approveTravelSubsidyOptionFinder;
+    }
+    public void setApproveTravelSubsidyOptionFinder(String approveTravelSubsidyOptionFinder) {
+        this.approveTravelSubsidyOptionFinder = approveTravelSubsidyOptionFinder;
+    }
+
+    public String getApproveTravelSubsidyReason() {
+        return approveTravelSubsidyReason;
+    }
+    public void setApproveTravelSubsidyReason(String approveTravelSubsidyReason) {
+        this.approveTravelSubsidyReason = approveTravelSubsidyReason;
+    }
 
     /**
      * 通过input中转站将一个用于区分当前修改的到底是哪个tab的flag传到后台。

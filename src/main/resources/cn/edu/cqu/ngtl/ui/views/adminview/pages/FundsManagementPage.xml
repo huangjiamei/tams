@@ -2002,7 +2002,7 @@
             <list>
 
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确认"
-                      p:methodToCall=""  p:dialogDismissOption="REQUEST"/>
+                      p:methodToCall="approveTravelSubsidy"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>
 
             </list>

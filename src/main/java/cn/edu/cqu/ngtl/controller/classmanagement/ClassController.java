@@ -4,7 +4,6 @@ import cn.edu.cqu.ngtl.bo.User;
 import cn.edu.cqu.ngtl.controller.BaseController;
 import cn.edu.cqu.ngtl.dao.tams.TAMSAttachmentsDao;
 import cn.edu.cqu.ngtl.dao.tams.TAMSClassTaApplicationDao;
-import cn.edu.cqu.ngtl.dao.tams.impl.TAMSAttachmentsDaoJpa;
 import cn.edu.cqu.ngtl.dao.tams.impl.TAMSWorkflowStatusDaoJpa;
 import cn.edu.cqu.ngtl.dao.ut.UTClassInstructorDao;
 import cn.edu.cqu.ngtl.dao.ut.UTSessionDao;
@@ -1065,28 +1064,33 @@ public class ClassController extends BaseController {
 
         TAMSTeachCalendar added = infoForm.getTeachCalendar();
 
-        Pattern pattern = Pattern.compile("[0-9]*");
-        Matcher isNum = pattern.matcher(added.getElapsedTime());
-        if(!isNum.matches()){
-            infoForm.setErrMsg("请输入整数！");
-            return this.showDialog("refreshPageViewDialog",true,infoForm);
-        }
+
         /*
         else if(added.getElapsedTime().contains(".")){
             infoForm.setErrMsg("教学日历耗时不能为小数！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
         */
-        else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
-            infoForm.setErrMsg("单次教学日历耗时不能超过"+MAX_CALENDAR_HOUR+"个小时！请重新输入");
-            return this.showDialog("refreshPageViewDialog",true,infoForm);
-        }
 
         /*
             控制判断 start
          */
         if(added.getElapsedTime()==null){
             infoForm.setErrMsg("请申请人填写总耗时！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+
+        Pattern pattern = Pattern.compile("[0-9]*");
+        Matcher isNum = pattern.matcher(added.getElapsedTime()==null?"0":added.getElapsedTime());
+        if(!isNum.matches()){
+            infoForm.setErrMsg("请输入整数！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+
+
+        else if(Integer.parseInt(added.getElapsedTime()) > MAX_CALENDAR_HOUR) {
+            infoForm.setErrMsg("单次教学日历耗时不能超过"+MAX_CALENDAR_HOUR+"个小时！请重新输入");
             return this.showDialog("refreshPageViewDialog",true,infoForm);
         }
 
@@ -1394,6 +1398,11 @@ public class ClassController extends BaseController {
         String assistantNumber = infoForm.getApplyViewObject().getAssistantNumber();
         if(assistantNumber==null){
             infoForm.setErrMsg("请填写本课程所需助教的数量！");
+            return this.showDialog("refreshPageViewDialog", true, infoForm);
+        }
+
+        if(infoForm.getTotalElapsedTime().equals("0")){
+            infoForm.setErrMsg("您没有填写教学日历，无法申请助教！");
             return this.showDialog("refreshPageViewDialog", true, infoForm);
         }
         /*

@@ -966,7 +966,7 @@ function checkedAll(id) {
 
 //助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
 function getTaDetailPage(){
-    jQuery('#taListTable').on('click',function (e) {
+    jQuery('#taListTable').on('mouseover',function (e) {
         var listLength=jQuery('#taListTable tbody>tr').length;
         for(var i=0;i<listLength;i++){
             jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:eq(0)>div>input',function (e) { //checkbox为true时添加样式，为false时，去除样式
@@ -998,7 +998,7 @@ function getTaDetailPage(){
 }
 //课程页面点击整行进入详细页面
 function getClassDetailPage(){
-    jQuery('#ClassListPageTable').on('click',function (e) {
+    jQuery('#ClassListPageTable').on('mouseover',function (e) {
         var listLength=jQuery('#ClassListPageTable tbody>tr').length;
         for(var i=0;i<listLength;i++){
 

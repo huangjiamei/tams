@@ -94,7 +94,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
         if (needToSync.contains("2"))
             this.syncClassInfo(con);   //导入班次信息
         if (needToSync.contains("3")){
-            syncAddedClassInfo(con);
+
         }
 //        this.addNewUser(con);
 //            this.syncStudentTimetableInfo(con);  //导入学生课表
@@ -805,14 +805,17 @@ public class SyncInfoServiceImpl implements SyncInfoService {
             if (pre1 != null)
                 pre1.close();
         }
-
+            int i  =1;
         try {
             pre.setQueryTimeout(10000);
             ResultSet res = pre.executeQuery();
             while (res.next()) {
+                System.out.println(i++);
                 String courseCode = res.getString("KCDM");
                 String classNbr = res.getString("JXBH");
                 String editClassNbr = classNbr.replace("-", "");
+                editClassNbr = editClassNbr.replace("E","5");
+                editClassNbr = editClassNbr.replace("M","6");
                 String auId = "";
                 String[] teacherIds = res.getString("JSDM").split(",");
 
@@ -823,16 +826,18 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                 String queryRoomAndTWeek = "SELECT * FROM KCKB t WHERE t.KCDM = '"+courseCode+"' AND t.JXBH = '"+classNbr+"' AND t.XN = '2016' AND t.XQ_ID = '1'";
                 PreparedStatement pre2 = connection.prepareStatement(queryRoomAndTWeek);
-                List<String> teachWeekList = new ArrayList<>();
 
                 String teachWeek = "";
                 String roomName = "";
+                String stuNbr = "0";
                 try {
                     ResultSet res2 = pre2.executeQuery();
                     flag = true;
                     while (res2.next()) {
                         teachWeek += res2.getString("ANALYSE")+",";  //暂定已这种方式分割开
                         roomName = res2.getString("MC");
+                        stuNbr = res2.getString("SKBJ_RS");
+
                     }
 
                 } finally {
@@ -842,7 +847,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
 
                 //如果KCKB里面没有这个教学班的信息
 //                if (!teachWeek.equals("") && !roomName.equals("")) {
-//                    if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
+                    if (!classNbrs.contains(classNbr)) {  //重复的教学班代表该教学班有多个教师
                         classNbrs.add(classNbr);
                         /**
                          * Class对象
@@ -862,6 +867,7 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                         utClass.setId(sessionPrefix+editClassNbr);//所有的uniqueid都通用这个值，年份+教学班号，保证唯一不重复
                         utClass.setCourseOfferingId(sessionPrefix+editClassNbr);
                         utClass.setClassType(classTypeName);
+                        utClass.setLimit(stuNbr==null?0:Integer.valueOf(stuNbr));
                         utClasses.add(utClass);
                         /**
                          * CourseOffering对象
@@ -896,26 +902,32 @@ public class SyncInfoServiceImpl implements SyncInfoService {
                         tamsClassApplyStatus.setWorkflowStatusId("1");
                         tamsClassApplyStatus.setId(sessionPrefix+editClassNbr);
                         tamsClassApplyStatuses.add(tamsClassApplyStatus);
-//                    }
+                    }
                     //教学班号和身份认证号的关系
-//                classInstructorMap.put(classNbr,auId);
+                    classInstructorMap.put(classNbr,auId);
 
-
+                    Integer j =0;
                     if(teacherIds.length==1) {
+                        j++;
                         UTClassInstructor utClassInstructor = new UTClassInstructor();
-                        utClassInstructor.setId(sessionPrefix+editClassNbr);
+                        utClassInstructor.setId(sessionPrefix+editClassNbr+j.toString());
                         utClassInstructor.setClassId(sessionPrefix+editClassNbr);
                         auId = jsdmAndSfrzhMap.get(teacherIds[0]).toString();
                         utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
                         utClassInstructors.add(utClassInstructor);
                     }else{
                         for(String s : teacherIds){
-                            UTClassInstructor utClassInstructor = new UTClassInstructor();
-                            utClassInstructor.setId(sessionPrefix+editClassNbr);
-                            utClassInstructor.setClassId(sessionPrefix+editClassNbr);
-                            auId = jsdmAndSfrzhMap.get(s).toString();
-                            utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
-                            utClassInstructors.add(utClassInstructor);
+                            if(!s.equals("")&&s!=null) {
+                                j++;
+                                UTClassInstructor utClassInstructor = new UTClassInstructor();
+                                utClassInstructor.setId(sessionPrefix+editClassNbr+j);
+                                utClassInstructor.setClassId(sessionPrefix+editClassNbr);
+                                auId = jsdmAndSfrzhMap.get(s) == null ? "" :jsdmAndSfrzhMap.get(s).toString();
+                                if (!auId.equals("")) {
+                                    utClassInstructor.setInstructorId((String) classInstructorMap.get(auId));
+                                }
+                                utClassInstructors.add(utClassInstructor);
+                            }
 
                         }
                     }

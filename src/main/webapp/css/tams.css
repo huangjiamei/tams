@@ -1063,11 +1063,6 @@ td.selected{
     resize:vertical;
 }
 
-#teachCalendarTable pre {
-    width: 550px;
-    height:auto;
-    resize:vertical;
-}
 @media (max-width:768px) {
     #teachCalendarTable pre {
         width: 200px;

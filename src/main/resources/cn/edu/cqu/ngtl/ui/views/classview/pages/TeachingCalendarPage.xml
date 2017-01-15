@@ -203,8 +203,15 @@
                                                                     <property name="items">
                                                                         <list>
                                                                             <bean parent="Uif-DataField" p:label="周次" p:propertyName="week"/>
-                                                                            <bean parent="Uif-DataField" p:label="教学主题" p:propertyName="theme"/>
+                                                                            <bean parent="Uif-InputField" p:label="教学主题" p:propertyName="theme"
+                                                                                  p:style="width:300px!important; height:auto;resize:vertical;"
+                                                                                  p:readOnly="true">
+                                                                                <property name="control">
+                                                                                    <bean parent="Uif-TextAreaControl"/>
+                                                                                </property>
+                                                                            </bean>
                                                                             <bean parent="Uif-InputField" p:label="助教任务描述" p:propertyName="taTask"
+                                                                                  p:style="width:400px!important;height:auto;resize:vertical;"
                                                                                   p:readOnly="true">
                                                                                 <property name="control">
                                                                                     <bean parent="Uif-TextAreaControl"/>

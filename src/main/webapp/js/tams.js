@@ -966,65 +966,69 @@ function checkedAll(id) {
 
 //助教页面进入详细信息页面，因为课程页面有详细按钮，所以两个页面单独写
 function getTaDetailPage(){
+    jQuery('#taListTable').on('click',function (e) {
+        var listLength=jQuery('#taListTable tbody>tr').length;
+        for(var i=0;i<listLength;i++){
+            jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:eq(0)>div>input',function (e) { //checkbox为true时添加样式，为false时，去除样式
+                if(jQuery(this).parent().parent().parent().find(":checkbox").attr("checked")!="checked"){
+                    jQuery(this).parent().parent().parent().find("td").removeClass("selected")
+                        .end().find(":checkbox").attr("checked",false);
 
-    var listLength=jQuery('#taListTable tbody>tr').length;
-    for(var i=0;i<listLength;i++){
-        jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:eq(0)>div>input',function (e) { //checkbox为true时添加样式，为false时，去除样式
-            if(jQuery(this).parent().parent().parent().find(":checkbox").attr("checked")!="checked"){
-                jQuery(this).parent().parent().parent().find("td").removeClass("selected")
-                    .end().find(":checkbox").attr("checked",false);
+                }else{
+                    jQuery(this).parent().parent().parent().find("td").addClass("selected")
+                        .end().find(":checkbox").attr("checked",true);
 
-            }else{
-                jQuery(this).parent().parent().parent().find("td").addClass("selected")
-                    .end().find(":checkbox").attr("checked",true);
-
-            }
-        });
-        if(jQuery('#checkedTaListAllId').css('display')!="none"){
-            jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:not(:first)',function (e) {
-                var targetid=taListTable;
-                var id = e.target.id;
-                var patt = new RegExp(".*line[0-9]+.*");
-                if (typeof(id)=="undefined"||id==""||!patt.test(id))
-                    id = jQuery(e.target).children("*[id*='line']")[0].id;
-                var index=id.match("line[0-9]+")[0].match('[0-9]+');
-                document.getElementById('indexTaList_control').value=index;
-                jQuery("#taDetailPageId").click();
+                }
             });
+            if(jQuery('#checkedTaListAllId').css('display')!="none"){
+                jQuery('#taListTable').on('click','tbody>tr:eq('+i+')>td:not(:first)',function (e) {
+                    var targetid=taListTable;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id)=="undefined"||id==""||!patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index=id.match("line[0-9]+")[0].match('[0-9]+');
+                    document.getElementById('indexTaList_control').value=index;
+                    jQuery("#taDetailPageId").click();
+                });
+            }
         }
-    }
+    });
+
 }
 //课程页面点击整行进入详细页面
 function getClassDetailPage(){
-    var listLength=jQuery('#ClassListPageTable tbody>tr').length;
+    jQuery('#ClassListPageTable').on('click',function (e) {
+        var listLength=jQuery('#ClassListPageTable tbody>tr').length;
+        for(var i=0;i<listLength;i++){
 
-    for(var i=0;i<listLength;i++){
+            jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:eq(1)>div>input',function (e) { //checkbox为true时添加样式，为false时，去除样式
+                if(jQuery(this).parent().parent().parent().find(":checkbox").attr("checked")!="checked"){
+                    jQuery(this).parent().parent().parent().find("td").removeClass("selected")
+                        .end().find(":checkbox").attr("checked",false);
+                }else{
+                    jQuery(this).parent().parent().parent().find("td").addClass("selected")
+                        .end().find(":checkbox").attr("checked",true);
 
-        jQuery('#ClassListPageTable').on('click','tbody>tr:eq('+i+')>td:eq(1)>div>input',function (e) { //checkbox为true时添加样式，为false时，去除样式
-            if(jQuery(this).parent().parent().parent().find(":checkbox").attr("checked")!="checked"){
-                jQuery(this).parent().parent().parent().find("td").removeClass("selected")
-                    .end().find(":checkbox").attr("checked",false);
-
-            }else{
-                jQuery(this).parent().parent().parent().find("td").addClass("selected")
-                    .end().find(":checkbox").attr("checked",true);
-
-            }
-        });
-
-        if(jQuery('#ClassListPageTable tbody>tr>td>div>fieldset>div>a').css('display')!="none") {
-            jQuery('#ClassListPageTable').on('click', 'tbody>tr:eq(' + i + ')>td:not(:eq(0),:eq(1))', function (e) {
-                var targetid = ClassListPageTable;
-                var id = e.target.id;
-                var patt = new RegExp(".*line[0-9]+.*");
-                if (typeof(id) == "undefined" || id == "" || !patt.test(id))
-                    id = jQuery(e.target).children("*[id*='line']")[0].id;
-                var index = id.match("line[0-9]+")[0].match('[0-9]+');
-                document.getElementById('indexClassList_control').value = index;
-                jQuery("#classDetailPageId").click();
+                }
             });
+
+            if(jQuery('#ClassListPageTable tbody>tr>td>div>fieldset>div>a').css('display')!="none") {
+                jQuery('#ClassListPageTable').on('click', 'tbody>tr:eq(' + i + ')>td:not(:eq(0),:eq(1))', function (e) {
+                    var targetid = ClassListPageTable;
+                    var id = e.target.id;
+                    var patt = new RegExp(".*line[0-9]+.*");
+                    if (typeof(id) == "undefined" || id == "" || !patt.test(id))
+                        id = jQuery(e.target).children("*[id*='line']")[0].id;
+                    var index = id.match("line[0-9]+")[0].match('[0-9]+');
+                    document.getElementById('indexClassList_control').value = index;
+                    jQuery("#classDetailPageId").click();
+                });
+            }
         }
-    }
+    });
+
+
 }
 //统一的点击整行变色
 function setBgColor(id){
@@ -1069,12 +1073,12 @@ function tableHeightSet(id){
 
 //交通补贴弹框
 function travelSubsidyDialog(){
-    var listLength=jQuery('#FundsManagerAssistantTable tbody>tr').length;
+    //jQuery('#FundsManagerAssistantTable').on('click',function (e) {
+        var listLength=jQuery('#FundsManagerAssistantTable tbody>tr').length;
         for(var i=0;i<listLength;i++){
             jQuery('#FundsManagerAssistantTable').on('click', 'tbody>tr:eq('+i+')>td:eq(10)', function (e) {
 
                 jQuery(this).addClass("addPointer");
-
                 var targetid = FundsManagerAssistantTable;
                 var id = e.target.id;
                 var patt = new RegExp(".*line[0-9]+.*");
@@ -1087,7 +1091,9 @@ function travelSubsidyDialog(){
                 jQuery("#trafficButton").click();//通过按钮弹框，index得到行下标值
 
             });
-    }
+        }
+    //});
+
 }
 
 //电话号码规范//银行卡号规范

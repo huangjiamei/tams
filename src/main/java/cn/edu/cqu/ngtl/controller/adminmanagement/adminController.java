@@ -1500,6 +1500,7 @@ public class adminController extends BaseController {
         }
         boolean result = false;
         for (TaFundingViewObject taFundingViewObject: checkedTaFundingList){
+            //下面的方法通过传入参数：当前会话的ID、助教ID、审核交通补贴的状态ID，对审核交通补贴进行保存到数据表操作。
             result=adminService.TravelSubsidyToCertainStatus(
                     uid,
                     taFundingViewObject.getStuId(),

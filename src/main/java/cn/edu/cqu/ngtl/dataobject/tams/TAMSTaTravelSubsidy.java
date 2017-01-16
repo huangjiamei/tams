@@ -31,10 +31,6 @@ public class TAMSTaTravelSubsidy extends DataObjectBase implements Serializable 
     @Column(name = "DESCRIPTION")
     private String description;
 
-    @Column(name = "WORKFLOW_STATUS_ID")
-    private String workflowStatusId;
-
-
     @ManyToOne
     @JoinColumn(name = "TAMS_TA_ID", insertable = false, updatable = false)
     private TAMSTa tamsTa;
@@ -82,11 +78,4 @@ public class TAMSTaTravelSubsidy extends DataObjectBase implements Serializable 
         this.tamsTa = tamsTa;
     }
 
-    public String getWorkflowStatusId() {
-        return workflowStatusId;
-    }
-
-    public void setWorkflowStatusId(String workflowStatusId) {
-        this.workflowStatusId = workflowStatusId;
-    }
 }

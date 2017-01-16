@@ -89,6 +89,9 @@ public class TAMSTa extends DataObjectBase implements Serializable {
     @Column(name = "TRAVEL_SUBSIDY")
     private String travelSubsidy;
 
+    @Column(name = "TRAVEL_SUBSIDY_STATUSID")
+    private String travelSubsidyStatusID;
+
     @Column(name = "BONUS")
     private String bonus;
 
@@ -458,5 +461,13 @@ public class TAMSTa extends DataObjectBase implements Serializable {
 
     public void setPhoneNbr(String phoneNbr) {
         this.phoneNbr = phoneNbr;
+    }
+
+    public String getTravelSubsidyStatusID() {
+        return travelSubsidyStatusID;
+    }
+
+    public void setTravelSubsidyStatusID(String travelSubsidyStatusID) {
+        this.travelSubsidyStatusID = travelSubsidyStatusID;
     }
 }

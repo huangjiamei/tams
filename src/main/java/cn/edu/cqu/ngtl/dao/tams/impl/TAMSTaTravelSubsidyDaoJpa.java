@@ -67,13 +67,9 @@ public class TAMSTaTravelSubsidyDaoJpa implements TAMSTaTravelSubsidyDao {
         if (qr.getResults()==null || qr.getResults().size()==0){
             return false;
         }
-        List<TAMSTaTravelSubsidy> current=qr.getResults();
-        for (TAMSTaTravelSubsidy per:current){
-            per.setWorkflowStatusId(workflowStatusId);
-            KradDataServiceLocator.getDataObjectService().save(per);
-        }
 
         TAMSTa ta=KradDataServiceLocator.getDataObjectService().find(TAMSTa.class,ta_id);
+        ta.setTravelSubsidyStatusID(workflowStatusId);
         ta.setTravelSubsidy(String.valueOf(qr.getResults().size()*10));
         KradDataServiceLocator.getDataObjectService().save(ta);
         return true;

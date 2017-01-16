@@ -16,7 +16,6 @@ import cn.edu.cqu.ngtl.service.userservice.IUserInfoService;
 import cn.edu.cqu.ngtl.tools.utils.TimeUtil;
 import cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject;
 import cn.edu.cqu.ngtl.viewobject.common.FileViewObject;
-import org.apache.commons.collections.list.AbstractLinkedList;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -225,7 +224,7 @@ public class ClassInfoServiceImpl implements IClassInfoService {
             if (timeUtil.isBetweenPeriod(timeSettingType.getId(), sessionDao.getCurrentSession().getId().toString())) {
                 List<UTClassInformation> secMaxOrderStatus = this.getAllCurSessionClassesWithFinalStatus("1");
                 List<UTClassInformation> taClasses = classInfoDao.selectBatchByIds(classIds);
-                if(taClasses!=null)
+                if(taClasses!=null&&secMaxOrderStatus!=null)
                     secMaxOrderStatus.addAll(taClasses);
                 return secMaxOrderStatus; //工作流是审批
             }

@@ -33,6 +33,7 @@ import org.apache.log4j.MDC;
 import org.kuali.rice.core.api.CoreApiServiceLocator;
 import org.kuali.rice.core.api.config.property.ConfigContext;
 import org.kuali.rice.krad.UserSession;
+import org.kuali.rice.krad.util.GlobalVariables;
 import org.kuali.rice.krad.util.KRADConstants;
 import org.kuali.rice.krad.util.KRADUtils;
 import org.kuali.rice.krad.web.form.UifFormBase;
@@ -1444,6 +1445,78 @@ public class adminController extends BaseController {
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }
+
+    /** create by luojizhou on 2017/1/13
+     * 助教经费页面的 审批交通补贴的提示框
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=showApproveTravelSubsidyDialog")
+    public ModelAndView showApproveTravelSubsidyDialog(@ModelAttribute("KualiForm") UifFormBase form,HttpServletRequest request){
+        AdminInfoForm infoForm=(AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<TaFundingViewObject> taFundingViewObjectList=infoForm.getTaFunding();
+        List<TaFundingViewObject> checkedTaFundingList=new ArrayList<>();
+        //遍历所有的list，找到选中的行。
+        for(TaFundingViewObject per : taFundingViewObjectList){
+            if (per.isChecked()){
+                checkedTaFundingList.add(per);
+            }
+        }
+
+        if (checkedTaFundingList.size()==0){
+            infoForm.setErrMsg("请选择需要审核交通补贴的助教！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        return this.showDialog("approveTravelSubsidyDialog",true,infoForm);
+    }
+
+    /** create by luojizhou on 2017/1/13
+     *  助教经费页面 审批交通补贴的方法
+     * @param form
+     * @param request
+     * @return
+     */
+    @RequestMapping(params = "methodToCall=approveTravelSubsidy")
+    public ModelAndView approveTravelSubsidy(@ModelAttribute("KualiForm") UifFormBase form, HttpServletRequest request){
+        AdminInfoForm infoForm=(AdminInfoForm) form;
+        super.baseStart(infoForm);
+
+        List<TaFundingViewObject> taFundingViewObjectList=infoForm.getTaFunding();
+        List<TaFundingViewObject> checkedTaFundingList=new ArrayList<>();
+        //遍历所有的list，找到选中的行。
+        for(TaFundingViewObject per : taFundingViewObjectList){
+            if (per.isChecked()){
+                checkedTaFundingList.add(per);
+            }
+        }
+
+        String uid = GlobalVariables.getUserSession().getPrincipalId();
+        if(infoForm.getApproveTravelSubsidyOptionFinder()==null){
+            infoForm.setErrMsg("请选择审批交通补贴的状态！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+        boolean result = false;
+        for (TaFundingViewObject taFundingViewObject: checkedTaFundingList){
+            //下面的方法通过传入参数：当前会话的ID、助教ID、审核交通补贴的状态ID，对审核交通补贴进行保存到数据表操作。
+            result=adminService.TravelSubsidyToCertainStatus(
+                    uid,
+                    taFundingViewObject.getStuId(),
+                    infoForm.getApproveTravelSubsidyOptionFinder()
+            );
+        }
+
+        if (result){
+            return this.getFundsPage(infoForm,request);
+        }else {
+            infoForm.setErrMsg("审核失败！");
+            return this.showDialog("refreshPageViewDialog",true,infoForm);
+        }
+    }
+
+
 
     /** create by luojizhou on 2016/12/30
      *

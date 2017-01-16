@@ -584,7 +584,6 @@
         </property>
         <property name="footer.items">
             <list>
-
                 <bean parent="Uif-PrimaryActionButton" p:actionLabel="确认"
                       p:methodToCall="approveCourseApplicant"  p:dialogDismissOption="REQUEST"/>
                 <bean parent="Uif-DialogDismissButton" p:actionLabel="取消"/>

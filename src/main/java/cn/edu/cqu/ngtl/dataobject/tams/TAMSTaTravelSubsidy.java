@@ -36,6 +36,8 @@ public class TAMSTaTravelSubsidy extends DataObjectBase implements Serializable 
     private TAMSTa tamsTa;
 
 
+
+
     public String getId() {
         return id;
     }
@@ -75,4 +77,5 @@ public class TAMSTaTravelSubsidy extends DataObjectBase implements Serializable 
     public void setTamsTa(TAMSTa tamsTa) {
         this.tamsTa = tamsTa;
     }
+
 }

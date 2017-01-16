@@ -137,7 +137,7 @@
                                                                 <bean id="taManagerTable" parent="Uif-Disclosure-TableCollectionSection"
                                                                       p:onDocumentReadyScript="setBgColor('taManagerTable');">
                                                                     <property name="collectionObjectClass"
-                                                                              value="cn.edu.cqu.ngtl.viewobject.tainfo.MyTaViewObject"/>
+                                                                              value="cn.edu.cqu.ngtl.viewobject.classinfo.MyTaViewObject"/>
                                                                     <property name="propertyName" value="allMyTa"/>
                                                                     <property name="layoutManager.renderSequenceField"
                                                                               value="false"/>

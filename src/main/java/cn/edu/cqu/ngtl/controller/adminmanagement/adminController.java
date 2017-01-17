@@ -1409,39 +1409,39 @@ public class adminController extends BaseController {
             infoForm.setStudentRole(false);
         }
 
-       // Gson gson = new Gson();
 
+        Gson gson = new Gson();
         //学院经费饼状图
-//        List<PieChartsNameValuePair> list = new ArrayList<>();
-//        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
-//        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
-//                adminService.getDepartmentCurrFundingBySession()
-//        );
-//        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
-//            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
-//                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
-//            }
-//        }
-//        else
-//            list.add(new PieChartsNameValuePair(null, null));
-//        String json = gson.toJson(list);
-//        infoForm.setPieChartsNameValuePairs(json);
+        List<PieChartsNameValuePair> list = new ArrayList<>();
+        List<DepartmentFundingViewObject> departmentFundingViewObjects = new ArrayList<>();
+        departmentFundingViewObjects = taConverter.departmentFundingToViewObject(
+                adminService.getDepartmentCurrFundingBySession()
+        );
+        if(departmentFundingViewObjects.size() != 0 && departmentFundingViewObjects.get(0).getDepartmentId() != null) {
+            for (DepartmentFundingViewObject per : departmentFundingViewObjects) {
+                list.add(new PieChartsNameValuePair(per.getDepartment(), Integer.parseInt(per.getTotal())));
+            }
+        }
+        else
+            list.add(new PieChartsNameValuePair(null, null));
+        String json = gson.toJson(list);
+        infoForm.setPieChartsNameValuePairs(json);
 
         //批次经费柱状图
-//        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
-//        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
-//                adminService.getPreviousFundingBySession()
-//        );
-//        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
-//            for (SessionFundingViewObject per : sessionFundingViewObjects) {
-//                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
-//            }
-//        }
-//        else
-//            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
-//        String histojson = gson.toJson(histogramNameValuePairs);
-//
-//        infoForm.setHistogram(histojson);
+        List<HistogramNameValuePair> histogramNameValuePairs = new ArrayList<>();
+        List<SessionFundingViewObject> sessionFundingViewObjects = taConverter.sessionFundingToViewObject(
+                adminService.getPreviousFundingBySession()
+        );
+        if(sessionFundingViewObjects.size() != 0 && sessionFundingViewObjects.get(0).getSessionName() != null) {
+            for (SessionFundingViewObject per : sessionFundingViewObjects) {
+                histogramNameValuePairs.add(new HistogramNameValuePair(per.getSessionName(), Integer.parseInt(per.getTotal())));
+            }
+        }
+        else
+            histogramNameValuePairs.add(new HistogramNameValuePair(null, null));
+        String histojson = gson.toJson(histogramNameValuePairs);
+
+        infoForm.setHistogram(histojson);
 
         return this.getModelAndView(infoForm, "pageFundsManagement");
     }

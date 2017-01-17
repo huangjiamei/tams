@@ -181,49 +181,49 @@ function save(id) {
  * 或格式2：[{"name":"高数","y":10000},{"name":"线代","y":5000}]
  * @param chartId
  */
-// function getPieChart(chartId,title,data) {
-//     data = JSON.parse(data);
-//
-//     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
-//     Highcharts.setOptions({
-//         lang: {
-//             printChart:"打印图表",
-//             downloadJPEG: "下载JPEG 图片" ,
-//             downloadPDF: "下载PDF文档"  ,
-//             downloadPNG: "下载PNG 图片"  ,
-//             downloadSVG: "下载SVG 矢量图" ,
-//             exportButtonTitle: "导出图片"
-//         }
-//     });
-//
-//     jQuery('#' + chartId).highcharts({
-//         credits:{
-//           enabled:false     // 去除highcharts的水印
-//         },
-//         title: {
-//             text: title
-//         },
-//         tooltip: {
-//             // 除了此项占比，还需要加一个此项具体数值
-//             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> '
-//         },
-//         plotOptions: {
-//             pie: {
-//                 allowPointSelect: true, // 一块饼的提取
-//                 cursor: 'pointer', // 鼠标指针能否点击
-//                 dataLabels: {
-//                     enabled: false
-//                 },
-//                 showInLegend: true
-//             }
-//         },
-//         series: [{
-//             type: 'pie',
-//             name: ' ',
-//             data: data
-//         }]
-//     });
-// }
+function getPieChart(chartId,title,data) {
+    data = JSON.parse(data);
+
+    // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
+    Highcharts.setOptions({
+        lang: {
+            printChart:"打印图表",
+            downloadJPEG: "下载JPEG 图片" ,
+            downloadPDF: "下载PDF文档"  ,
+            downloadPNG: "下载PNG 图片"  ,
+            downloadSVG: "下载SVG 矢量图" ,
+            exportButtonTitle: "导出图片"
+        }
+    });
+
+    jQuery('#' + chartId).highcharts({
+        credits:{
+          enabled:false     // 去除highcharts的水印
+        },
+        title: {
+            text: title
+        },
+        tooltip: {
+            // 除了此项占比，还需要加一个此项具体数值
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b> '
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true, // 一块饼的提取
+                cursor: 'pointer', // 鼠标指针能否点击
+                dataLabels: {
+                    enabled: false
+                },
+                showInLegend: true
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: ' ',
+            data: data
+        }]
+    });
+}
 
 /**
  * barChart输入的data格式为(待定)
@@ -231,117 +231,117 @@ function save(id) {
  * @param title
  * @param dataTransferId
  */
-// function getBarChart(chartId,title,data) {
-//     //data = eval(data);
-//     data = JSON.parse(data);
-//
-//     // data = {
-//     //
-//     //     x: [
-//     //
-//     //         '高等数学',
-//     //
-//     //         '概率论',
-//     //
-//     //         '应用数学',
-//     //
-//     //         '离散数学',
-//     //
-//     //         '统计学',
-//     //
-//     //         '计算数学',
-//     //
-//     //         '运筹学与控制论',
-//     //
-//     //         '数学分析'],
-//     //
-//     //     y: [1200, 1000, 600, 900, 800, 500, 500, 900]
-//     //
-//     // }
-//     // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
-//     Highcharts.setOptions({
-//         lang: {
-//             printChart:"打印图表",
-//             downloadJPEG: "下载JPEG 图片" ,
-//             downloadPDF: "下载PDF文档"  ,
-//             downloadPNG: "下载PNG 图片"  ,
-//             downloadSVG: "下载SVG 矢量图" ,
-//             exportButtonTitle: "导出图片"
-//         }
-//     });
-//
-//     jQuery('#' + chartId).highcharts({
-//         legend:{
-//             enabled:false
-//         },
-//         credits:{
-//             enabled:false   // 去除highcharts的水印
-//         },
-//         chart: {
-//             type: 'column' // 竖柱图
-//         },
-//         title: {
-//             text: title
-//         },
-//         xAxis: {
-//             // objlist.name
-//             /*
-//             categories: [
-//                 '高等数学',
-//                 '概率论',
-//                 '应用数学',
-//                 '离散数学',
-//                 '统计学',
-//                 '计算数学',
-//                 '运筹学与控制论',
-//                 '数学分析']
-//              */
-//             title:{
-//                 text:"课程"
-//             },
-//             categories : data.x
-//         },
-//         yAxis: [
-//             {
-//                 title:{
-//                   text:"经费"
-//                 },
-//                 allowDecimals: false, // 坐标轴刻度不为小数
-//
-//                 labels: {
-//                     format: '{value} 元',
-//                     // format : '{series.y}'
-//                 }
-//             }
-//
-//         ],
-//         series: [{
-//             name: '经费',
-//             //color: '#ff4d4d',
-//             color: '#66a3ff',
-//             // objlist.y
-//             //data: [1200, 1000, 600, 900, 800, 500, 500, 900],
-//             data: data.y,
-//             tooltip: {
-//                 ySuffix: '元',
-//                 pointFormat:'<b>{point.y}</b> ',
-//                 headerFormat:'<span style="font-size: 10px">{point.key}: </span>',
-//             },
-//             pointPadding: 0.15,
-//             pointPlacement: -0.03
-//         }/*, {
-//             name: '助教优秀率',
-//             color: '#66a3ff',
-//             data: [60, 90, 85, 70, 80, 85, 80, 75],
-//             tooltip: {ySuffix: '%'},
-//             yAxis: 1, // 双y轴的关键
-//             pointPadding: 0.15,
-//             pointPlacement: 0.03
-//         }*/],
-//         tooltip: {shared: true}
-//     });
-//
-// }
+function getBarChart(chartId,title,data) {
+    //data = eval(data);
+    data = JSON.parse(data);
+
+    // data = {
+    //
+    //     x: [
+    //
+    //         '高等数学',
+    //
+    //         '概率论',
+    //
+    //         '应用数学',
+    //
+    //         '离散数学',
+    //
+    //         '统计学',
+    //
+    //         '计算数学',
+    //
+    //         '运筹学与控制论',
+    //
+    //         '数学分析'],
+    //
+    //     y: [1200, 1000, 600, 900, 800, 500, 500, 900]
+    //
+    // }
+    // 尝试过将下面这段setOptions代码提取为initHigicharts()但是没有效果
+    Highcharts.setOptions({
+        lang: {
+            printChart:"打印图表",
+            downloadJPEG: "下载JPEG 图片" ,
+            downloadPDF: "下载PDF文档"  ,
+            downloadPNG: "下载PNG 图片"  ,
+            downloadSVG: "下载SVG 矢量图" ,
+            exportButtonTitle: "导出图片"
+        }
+    });
+
+    jQuery('#' + chartId).highcharts({
+        legend:{
+            enabled:false
+        },
+        credits:{
+            enabled:false   // 去除highcharts的水印
+        },
+        chart: {
+            type: 'column' // 竖柱图
+        },
+        title: {
+            text: title
+        },
+        xAxis: {
+            // objlist.name
+            /*
+            categories: [
+                '高等数学',
+                '概率论',
+                '应用数学',
+                '离散数学',
+                '统计学',
+                '计算数学',
+                '运筹学与控制论',
+                '数学分析']
+             */
+            title:{
+                text:"批次"
+            },
+            categories : data.x
+        },
+        yAxis: [
+            {
+                title:{
+                  text:"经费"
+                },
+                allowDecimals: false, // 坐标轴刻度不为小数
+
+                labels: {
+                    format: '{value} 元',
+                    // format : '{series.y}'
+                }
+            }
+
+        ],
+        series: [{
+            name: '经费',
+            //color: '#ff4d4d',
+            color: '#66a3ff',
+            // objlist.y
+            //data: [1200, 1000, 600, 900, 800, 500, 500, 900],
+            data: data.y,
+            tooltip: {
+                ySuffix: '元',
+                pointFormat:'<b>{point.y}</b> ',
+                headerFormat:'<span style="font-size: 10px">{point.key}: </span>',
+            },
+            pointPadding: 0.15,
+            pointPlacement: -0.03
+        }/*, {
+            name: '助教优秀率',
+            color: '#66a3ff',
+            data: [60, 90, 85, 70, 80, 85, 80, 75],
+            tooltip: {ySuffix: '%'},
+            yAxis: 1, // 双y轴的关键
+            pointPadding: 0.15,
+            pointPlacement: 0.03
+        }*/],
+        tooltip: {shared: true}
+    });
+
+}
 
 
 var filterHintCache = {

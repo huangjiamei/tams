@@ -14,6 +14,10 @@ public class PieChartsNameValuePair {
             this.name = name;
             this.y = value;
         }
+        else{
+            this.name = null;
+            this.y = null;
+        }
     }
 
     public String getName() {return name;}
